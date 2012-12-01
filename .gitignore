@@ -15,28 +15,22 @@ Thumbs.db
 *.zip
 
 sitemap.xml
+release-notes.html
 
-content/*
-content/cache/*
-content/cache/templates_c/*
-
-content/avatars/*
+/content/**/*
+/content/cache/templates_c/*
 
 
-!content/cache/
 
-!content/files/
-!content/images/
-!content/plugins/
-!content/SQLite/
-!content/static/
-
+/modules/**/*
 /modules/*
 !index.html
 
 # styles, except blucent #
 /styles/**/*
 !/styles/blucent/*
+/styles/blucent/.DS_Store
 
 !index.html
+
 
