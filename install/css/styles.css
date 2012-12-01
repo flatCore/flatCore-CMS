@@ -1,0 +1,181 @@
+html, body {
+
+
+	background: #666 url(../images/install.jpg) no-repeat fixed center center;
+
+	color: #fff;
+	margin: 0;
+	padding: 0;
+	
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12px;
+
+}
+
+
+div#frame {
+	
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 650px;
+	height: 480px;
+	
+	margin-top: -240px;
+	margin-left: -325px;
+	border: none;
+	overflow: hidden;
+
+}
+
+#header {
+padding: 15px 0px 0px 350px;
+margin: 4px 25px;
+background: transparent;
+height: 80px;
+color: #777;
+text-align: center;
+height: 100px;
+border-bottom: 1px solid #222;
+}
+
+#footer {
+
+text-align: center;
+padding: 4px;
+margin: 4px 25px;
+border-top: 1px solid #222;
+background: transparent;
+height: 80px;
+
+}
+
+#body {
+height: 300px;
+text-align: left;
+margin: 4px 25px;
+color: #ccc;
+background: transparent;
+overflow: auto;
+}
+
+a {
+color: #9cf;
+text-decoration: none;
+}
+
+
+h1 {
+	color: #ccc;
+	margin: 0 6px;
+	font-size: 1.3em;
+	line-height: 1.9em;
+}
+
+h2 {
+
+	color: #fc6;
+	border-bottom: 1px solid #444;
+	padding: 4px;
+	margin: 8px 0px 8px 0px;
+	font-size: 1em;
+}
+
+
+code {
+	display: block;
+	background: #c4c7ff;
+	color: #222;
+	font: Verdana 0.7em/1.2em;
+	padding: 4px;
+	margin: 2px;
+	border: 1px solid #666;
+}
+
+p {
+
+	padding: 2px;
+	margin: 0 6px;
+}
+
+div#step {
+	display: block;
+	padding: 2px;
+	border:	1px solid #6699cc;
+	margin-bottom: 8px;
+}
+
+
+.block {
+	display: block;
+	padding: 2px;
+	margin: 1px;
+	border-bottom:	1px solid #444;
+}
+
+.left {
+	display: block;
+	float: left;
+	padding: 1px 6px;
+	width: 35%;
+	
+}
+
+.right {
+	display: block;
+	margin-left: 40%;
+	padding: 2px 6px 2px 20px;
+}
+
+.red {
+	display: block;
+	margin-left: 40%;
+	padding: 2px 6px 2px 20px;
+	color: #f30;
+	background-image: url(../images/error.png);
+	background-repeat: no-repeat;
+}
+
+.green {
+	display: block;
+	margin-left: 40%;
+	padding: 2px 6px 2px 20px;
+	color: #cf6;
+	background-image: url(../images/tick.png);
+	background-repeat: no-repeat;
+}
+
+.txtfield {
+	padding: 2px;
+	background-color: #FFF;
+	border: 1px solid #ccc;
+	width: 300px;
+}
+
+
+.formnav {
+	padding: 0;
+	margin: 5px 0;
+	text-align: right;
+}
+
+.submit {
+	font-weight: bold;
+	padding: 3px 8px;
+	margin: 2px;
+	background-color: #cf6;
+	color: #222;
+	border: 1px solid #111;
+}
+
+.submit:hover {
+	background-color: #111;
+	color: #cf6;
+	border: 1px solid #cf6;
+}
+
+
+
+
+
+

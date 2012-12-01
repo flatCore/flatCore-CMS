@@ -1,0 +1,14 @@
+<p>Hallo {USERNAME},</p>
+
+<p>Dein Account wurde erfolgreich erstellt.<br>
+Um Dich auf {SITENAME} anmelden zu können, musst Du Deinen Account freischalten.<br>
+Klicke dazu auf den folgenden Aktivierungslink oder kopiere die komplette Adresse in die Adresszeile Deines Browsers.</p>
+
+<p>Aktivierungslink:<br>
+{ACTIVATIONLINK}</p>
+
+<p>________________</p>
+
+<p>Dein Passwort ist aus Sicherheitsgründen nur in verschlüsselter Form auf dem Server gespeichert. Solltest Du Dein Passwort einmal vergessen, kannst Du Dir auf der Profilseite ein neues zuschicken lassen.</p>
+
+<p>Vielen Dank für deine Registrierung.</p>

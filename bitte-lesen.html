@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+	<meta charset="utf-8">
+	<title>flatCore - Bitte lesen ...</title>
+	<style type="text/css">
+
+		*{margin:0;padding:0;}
+		
+		body {
+			background-color: #e5e5e5;
+			color: #555;
+			font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+			font-size: 15px;
+			line-height: 19px;
+		}
+		
+		.container {
+			width: 800px;
+			margin: 25px auto;
+			padding: 15px;
+		}
+		
+		.box {
+			background-color: #f5f5f5;
+			border-radius: 9px;			
+		}
+		
+		h1, h2, h3, h4 { color: #69C; clear: both; font-weight: normal;}
+		
+		h1 { font-size: 28px; line-height: 35px; }
+		h2 { font-size: 20px; line-height: 31px; }
+		h3 { font-size: 16px; margin: 15px 0 5px 0;}
+		h4 { font-size: 14px; margin: 15px 0 5px 0;}
+		
+		p {
+			padding: 5px 0;
+		}
+		
+		hr {
+			border : 0;
+		  height : 1px;
+		  background-color: #ccc;
+		  margin : 18px 0;
+		}
+		
+		a {
+			color: #36c;
+			text-decoration: none;
+		}
+		
+		a:hover {
+			text-decoration: underline;
+		}
+		
+		.label {
+			background-color: #eee;
+			padding: 1px 2px;
+			border-radius: 3px;
+			border: 1px solid #e5e5e5;
+		}
+		
+		pre {
+			padding: 5px;
+			margin: 5px 0;
+			background-color: #fff;
+			border-radius: 5px;
+		}
+		
+		ul, ol {
+			margin-left: 25px;
+		}
+
+</style>
+
+</head>
+<body>
+
+<div class="container box">
+
+<h1>flatCore - Content Management System</h1>
+
+<h2>Installation</h2>
+
+<p>Die Installation dauert nur wenige Minuten. Bevor Du mit dem Upload der Daten auf den Webserver beginnen kannst, musst Du in der Datei <span class="label">config.php</span> ein paar Werte anpassen.</p>
+
+<h3>1. mod_rewrite</h3>
+<p>flatCore kann sowohl mit als auch ohne mod_rewrite betrieben werden. Wird mod_rewrite aktiviert, erzeugt flatCore <i>schönere</i> URLs für Dein Projekt.</p>
+<p>Beispiel mit mod_rewrite: http://example.com/news/</p>
+<pre>
+$fc_mod_rewrite = "permalink";
+</pre>
+
+<p>oder</p>
+
+<p>Beispiel ohne mod_rewrite: http://example.com/index.php?p=2</p>
+<pre>
+$fc_mod_rewrite = "off";
+</pre>
+
+<p>Damit mod_rewrite funktioniert, muss die Datei _htaccess in <b>.htaccess</b> umbenannt werden. Dateinamen die mit einem Punkt beginnen sind bei den meißten Systemen für das System selbst vorbehalten. Darum ist es am einfachsten Du benennst die Datei erst um, wenn Du sie auf den Server kopiert hast.</p>
+
+<h3>2. E-Mail Absender</h3>
+
+<p>Für Benachrichtigungen, Aktivierungslinks etc. versendet flatCore E-Mails. Damit die Empfänger sofort erkennen, woher die E-Mail kommt, solltest Du aussagekräftige Angaben wählen.</p>
+
+<pre>
+$fc_mailer_adr = "info@example.com";
+$fc_mailer_name = "Example Administrator";
+</pre>
+
+
+<p>Jetzt kannst Du die Dateien und Verzeichnisse auf Deinen Server kopieren und das Installationsscript starten.</p>
+
+<h3>3. Installieren</h3>
+
+<ol>
+	<li>Alle Dateien auf den Server kopieren (kann auch in ein Unterverzeichnis sein).</li>
+	<li>Im Webbrowser das Verzeichnis /install/ aufrufen und den Anweisungen folgen.
+	   <ul>
+	   		<li>Die gewünschten Daten für einen Administrator eingeben.</li>
+	   		<li>Auf "Installation starten" klicken.</li>
+	   </ul>
+	</li>
+	<li>Das Verzeichnis /install/ löschen oder umbenennen.
+		<ul>
+	   <li>Solange das Verzeichnis /install/ existiert, kann das Frontend nicht aufgerufen werden.</li>
+		</ul>
+	</li>
+</ol>
+
+<p>War die Installation erfolgreich, führt der nächste Weg in das ACP.<br>
+Im Browser das Verzeinis /acp/ aufrufen und mit den Zugangsdaten des Administrators anmelden.<br>
+Beispiel: http://www.example.com/acp/</p>
+
+
+</div>
+
+<div class="container box">
+
+
+<h3> Credits & THX</h3>
+
+<p>MooTools JavaScript Framework<br>
+<a href="http://mootools.net">http://mootools.net</a></p>
+
+<p>SimpleTabs - Unobtrusive Tabs + Ajax<br>
+<a href="http://digitarald.de">http://digitarald.de</a>
+</p>
+
+<p>Milkbox (Lightbox)<br>
+<a href="http://www.reghellin.com">http://www.reghellin.com</a>
+</p>
+
+<p>TinyMCE - Javascript WYSIWYG Editor<br>
+<a href="http://tinymce.moxiecode.com">http://tinymce.moxiecode.com</a>
+</p>
+
+<p>Smarty - Template System<br>
+<a href="http://www.smarty.net">http://www.smarty.net</a>
+</p>	
+
+<p>SWIFT - PHP Mailer<br>
+<a href="http://swiftmailer.org/">http://swiftmailer.org/</a>
+</p>
+
+<p>Twitter Bootstrap<br>
+<a href="http://twitter.github.com/bootstrap/">http://twitter.github.com/bootstrap/</a>
+</p>
+
+<p>SILK ICONS<br>
+<a href="http://famfamfam.com">http://famfamfam.com</a>
+</p>
+	
+<p>WooFunction Web Icon Set<br>
+<a href="http://www.woothemes.com">http://www.woothemes.com</a>
+</p>
+
+</div>
+
+<div class="container">
+
+<h4>Copyright (C) 2010-2012, Patrick Konstandin</h4>
+
+<p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License.</p>
+
+<p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</p>
+
+<p>You should have received a copy of the GNU General Public License along with this program.  If not, see <a href="http://www.gnu.org/licenses/gpl.html">http://www.gnu.org/licenses/gpl.html</a></p>
+
+
+
+
+
+
+</div>
+
+
+</body>
+</html>

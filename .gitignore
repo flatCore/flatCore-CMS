@@ -1,0 +1,42 @@
+# OS generated files #
+*.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+# Database files and generated content #
+*.sqlite
+*.sqlite3
+
+*.zip
+
+sitemap.xml
+
+content/*
+content/cache/*
+content/cache/templates_c/*
+
+content/avatars/*
+
+
+!content/cache/
+
+!content/files/
+!content/images/
+!content/plugins/
+!content/SQLite/
+!content/static/
+
+/modules/*
+!index.html
+
+# styles, except blucent #
+/styles/**/*
+!/styles/blucent/*
+
+!index.html
+

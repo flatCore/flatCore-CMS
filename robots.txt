@@ -1,0 +1,6 @@
+# robots.txt flatCore
+User-agent: *
+Disallow: /acp/
+Disallow: /core/
+Disallow: /lib/
+Disallow: /modules/
