@@ -27,7 +27,6 @@ time, mark, audio, video {
     visibility: hidden;
 }
 
- 
 * + html .clearfix { /* IE7 */
     display: inline-block;
 }
@@ -40,8 +39,6 @@ time, mark, audio, video {
 a, a:hover {
 	text-decoration: none;
 }
-
-
 
 body {
 	background-color: #666;
@@ -97,8 +94,6 @@ div#bigHeader {
 	color: #000;
 }
 
-
-
 div#wrapper{
 	float: right;
 	width: 100%;
@@ -115,8 +110,6 @@ div#wrapper{
   min-height: 500px;
 }
 
-
-
 #subnav h5 {
 	padding: 3px;
 	margin: 5px 0 2px 0;
@@ -127,15 +120,10 @@ div#wrapper{
 	border-top: 1px solid #eee;
 }
 
-
-
 div#container {
 	margin: 12px;
 	padding: 8px;
 }
-
-
-
 
 
 /* Footer */
@@ -224,7 +212,7 @@ i {
 	text-align: center;
 }
 
-a, a:link, a:visited {
+a {
 	color: #3376d9;
 }
 

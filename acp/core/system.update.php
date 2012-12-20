@@ -53,7 +53,6 @@ function start_update() {
 		copy("http://updates.flatcore.de/zip/$get_file","./update/$get_file");
 	}
 	
-	
 	$archive = new PclZip("update/$get_file");
 	
 	$list = $archive->extract(
@@ -95,22 +94,33 @@ function move_new_files() {
 	/* at first, the install folder */
 	copy_recursive("update/extract/$get_file/install","../install");
 	
-	/* now copy the other files/directories */
-
+	/* now copy the other files and directories */
 	foreach($new_files as $value) {
+	
+		$i++;
 	
 		if(preg_match("#\/install\/#i", "$value")) {
 			continue;
 		}
 		
-		if(substr($value, 0,1) == ".") {
-			continue;
-		}
+		if(substr($value, 0,1) == ".") { continue;}
+		if($value === '.' || $value === '..') {continue;}
 			
+			/**
+			 * copy files from 'update/extract/*'
+			 */
 			$target = "../" . substr($value, strlen("update/extract/$get_file/"));
-			//echo "COPY: $value | $target<br>";
-	
+			$copy_string .= "<tr><td>$i</td><td>$target</td>";
+			copy_recursive("$value","$target");
 	}
+	
+	echo "<h3>" . count($new_files) . " updated Files:</h3>";
+	echo '<div style="height:350px;overflow:auto;margin:0;">';
+	echo '<table class="table table-condensed table-bordered">';
+	echo "$copy_string";
+	echo '</table>';
+	echo '</div>';
+	
 }
 
 
@@ -148,23 +158,24 @@ function compare_versions() {
 		$fc_version_build = '';
 	}
 	
-	echo'<table class="table table-condensed table-bordered">';
-	echo'<thead>';
-	echo"<tr><th><i class='icon-hdd'></i> $_SERVER[SERVER_NAME]</th><th><i class='icon-globe'></i> updates.flatCore.de</th></tr>";
-	echo'</thead>';
+	echo '<table class="table table-condensed table-bordered">';
+	echo '<thead>';
+	echo '<tr><th><i class="icon-hdd"></i> '. $_SERVER[SERVER_NAME] .'</th><th><i class="icon-globe"></i> updates.flatCore.de</th></tr>';
+	echo '</thead>';
 	
 	echo '<tr>';
 	echo "<td>$fc_version_name (Build $fc_version_build)</td>";
 	echo "<td>$remote_versions[1] (Build $remote_versions[2])</td>";
 	echo '</tr>';
-	echo'</table>';
+	echo '</table>';
 	
+	/* compare build numbers */
 	if($remote_versions[2] > $fc_version_build) {
-		echo'<div class="alert alert-info"><p>' . $lang[msg_update_available] . '</p><hr>';
-		echo"<p><a href='$_SERVER[PHP_SELF]?tn=system&sub=update&a=start' class='btn'><i class='icon-download'></i> Update</a></p>";
-		echo'</div>';
+		echo '<div class="alert alert-info"><p>' . $lang[msg_update_available] . '</p><hr>';
+		echo "<p><a href='$_SERVER[PHP_SELF]?tn=system&sub=update&a=start' class='btn'><i class='icon-download'></i> Update</a></p>";
+		echo '</div>';
 	} else {
-		echo'<div class="alert alert-success"><p>' . $lang[msg_no_update_available] . '</p></div>';
+		echo '<div class="alert alert-success"><p>' . $lang[msg_no_update_available] . '</p></div>';
 	}
 	
 	
@@ -324,12 +335,6 @@ function update_database() {
 	}
 	
 }
-
-
-
-
-
-
 
 
 
