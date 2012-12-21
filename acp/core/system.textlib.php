@@ -85,7 +85,7 @@ switch ($text) {
 } // eo switch $text
 
 
-echo"<p style='text-align:right;padding:0;margin:0;'><a href='$_SERVER[PHP_SELF]?tn=$tn&sub=$sub&editor=toggle' class='btn btn-small'>$editor_btn</a></p>";
+show_editor_switch($tn,$sub);
 
 echo"<fieldset>";
 echo"<legend>$lang[system_textlib]</legend>";
@@ -94,7 +94,7 @@ echo"<form action='$_SERVER[PHP_SELF]?tn=system&sub=sys_textlib' method='POST' n
 
 echo '<div class="row-fluid">';
 echo '<div class="span4">';
-echo"<select name='text' onchange='javascript:document.sel_snippet.submit() '>";
+echo '<select name="text">';
 
 echo"<option value='agreement_text' $selected2>$lang[txtlib_agreement]</option>";
 echo"<option value='extra_content_text' $selected3>$lang[txtlib_extra_content]</option>";
@@ -103,12 +103,14 @@ echo"<option value='account_confirm' $selected5>$lang[txtlib_account_confirm]</o
 echo"<option value='account_confirm_mail' $selected6>$lang[txtlib_account_confirm_mail]</option>";
 echo"<option value='no_access' $selected7>$lang[txtlib_no_access]</option>";
 
-echo"</select><br />";
+echo'</select> ';
+
+echo"<input type='submit' class='btn' name='sel_snippet' value='$lang[edit]'>";
 
 echo '</div>';
 echo '<div class="span8">';
 
-echo"<p>$desc</p>";
+echo"<p><i class='icon-info-sign'></i> $desc</p>";
 echo '</div>';
 
 echo '</div>'; // gridcontainer

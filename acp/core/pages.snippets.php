@@ -178,9 +178,7 @@ if((($_POST[snip_id]) OR ($modus == "update")) AND (!isset($delete_snip_id)))  {
 /* EO open snippets */
 
 
-
-
-echo"<p style='text-align:right;padding:0;margin:0;'><a href='$_SERVER[PHP_SELF]?tn=$tn&sub=$sub&editor=toggle' class='btn btn-small'>$editor_btn</a></p>";
+show_editor_switch($tn,$sub);
 
 
 echo"<fieldset>";

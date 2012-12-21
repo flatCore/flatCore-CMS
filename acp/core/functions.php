@@ -682,6 +682,35 @@ function get_custom_fields() {
 
 
 
+/**
+ * show editor's switch buttons
+ * for plain text or wysiwyg
+ */
+
+
+function show_editor_switch($tn,$sub) {
+
+	if($_SESSION[editor_class] == "plain") {
+		$btn_primary_wysiwyg = '';
+		$btn_wysiwyg_link = "$_SERVER[PHP_SELF]?tn=$tn&sub=$sub&editor=toggle";
+		$btn_text_link = "#";
+		$btn_primary_text = 'btn-inverse disabled';
+	} else {
+		$btn_primary_wysiwyg = 'btn-inverse disabled';
+		$btn_text_link = "$_SERVER[PHP_SELF]?tn=$tn&sub=$sub&editor=toggle";
+		$btn_wysiwyg_link = "#";
+		$btn_primary_text = '';
+	}
+	
+	
+	echo '<div class="btn-group" style="float:right;">';
+	echo "<a href='$btn_wysiwyg_link' class='btn btn-small $btn_primary_wysiwyg'>WYSIWYG</a>";
+	echo "<a href='$btn_text_link' class='btn btn-small $btn_primary_text'>Text</a>";
+	echo '</div>';
+	echo '<div class="clearfix"></div>';
+	
+}
+
 
 
 

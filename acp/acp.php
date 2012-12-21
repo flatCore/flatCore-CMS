@@ -16,6 +16,7 @@ if(!isset($_SESSION[editor_class])) {
 	$_SESSION[editor_class] = "wysiwyg";
 }
 
+/* switch editor - plain text or wysiwyg */
 if($_GET[editor] == "toggle") {
 	if($_SESSION[editor_class] == "plain") {
 		$_SESSION[editor_class] = "wysiwyg";
