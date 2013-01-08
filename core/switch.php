@@ -5,9 +5,6 @@ include("current_page.php");
 include("nav.php");
 
 
-
-
-
 /**
  * visitor - register -> SHOW THE FORM
  */
@@ -20,8 +17,7 @@ if($p == "register") {
 	if($pref_userregistration != "yes") {
 	
 		$smarty->assign("msg_title","$lang[legend_register]");
-		$smarty->assign("msg_text","$lang[msg_register_intro_disabled]");
-	
+		$smarty->assign("msg_text","$lang[msg_register_intro_disabled]");	
 		$output = $smarty->fetch("status_message.tpl");
 		$smarty->assign('page_content', $output);
 	
@@ -30,7 +26,6 @@ if($p == "register") {
 		$smarty->assign("legend_register","$lang[legend_register]");
 		$smarty->assign("legend_required_fields","$lang[legend_required_fields]");
 		$smarty->assign("legend_optional_fields","$lang[legend_optional_fields]");
-	
 		$smarty->assign("button_login","$lang[button_login]");
 		$smarty->assign("label_firstname","$lang[label_firstname]");
 		$smarty->assign("label_lastname","$lang[label_lastname]");
@@ -45,10 +40,8 @@ if($p == "register") {
 		$smarty->assign("label_psw","$lang[label_psw]");
 		$smarty->assign("label_psw_repeat","$lang[label_psw_repeat]");
 		$smarty->assign("button_send_register","$lang[button_send_register]");
-	
 		$smarty->assign("msg_register_intro","$lang[msg_register_intro]");
 		$smarty->assign("msg_register_outro","$lang[msg_register_outro]");
-	
 	
 		// INCLUDE/SHOW AGREEMENT TEXT
 		$agreement_txt = get_textlib("agreement_text");
@@ -62,8 +55,6 @@ if($p == "register") {
 		$smarty->assign('page_content', $output);
 	
 	}
-
-
 }
 
 
@@ -94,8 +85,6 @@ if($p == "account") {
 
 }
 
-
-
 /**
  * user - edit profile -> show the form
  */
@@ -103,8 +92,6 @@ if($p == "account") {
 if(($p == "profile") AND ($goto != "logout")) {
 	include("user_updateprofile.php");
 }
-
-
 
 
 /**
@@ -115,9 +102,6 @@ if($p == "search") {
 	include("search.php");
 }
 
-
-
-
 /**
  * forgotten password
  */
@@ -125,17 +109,6 @@ if($p == "search") {
 if($p == "password") {
 	include("password.php");
 }
-
-
-/**
- * show the sitemap
- */
-
-if($p == "sitemap") {
-	include("sitemap.php");
-}
-
-
 
 if($p == "404") {
 	include("error.php");
@@ -147,7 +120,6 @@ if($p == "404") {
  * no page, no content
  * assign the 404 template
  */
-
 
 if((in_array("$p", $a_allowed_p)) OR ($p == "")) {
 	$show_404 = "false";
