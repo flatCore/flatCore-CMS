@@ -1,8 +1,9 @@
 <?php
 
-/*
-Used for tinyMCE
-*/
+/**
+ * list all images from content/images
+ * used in tinyMCE's filebrowser
+ */
 
 include("../../config.php");
 
@@ -25,6 +26,7 @@ if (is_dir($directory)) {
 
     while ($file = readdir($direc)) {
         if (!preg_match('~^\.~', $file)) { // no hidden files / directories here...
+        	if($file == "index.html") {continue;}
             if (is_file("$directory/$directory/$file")) {
                 // We got ourselves a file! Make an array entry:
                 

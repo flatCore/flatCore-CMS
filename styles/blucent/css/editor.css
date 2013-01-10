@@ -1,7 +1,13 @@
+@import url("../../../lib/css/bootstrap.css");
+
 body {
 	background-color:#d2e1f3;
 	color:#444;
 	font: normal 13px/18px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+body.mceContentBody {
+   padding: 5px;
 }
 
 body.mceForceColors {background:#d2e1f3;}
@@ -14,9 +20,7 @@ h5 {font-size:16px;line-height:16px;margin-bottom:10px;}
 h6 {font-size:14px;line-height:14px;margin-bottom:10px;}
 
 h1, h2, h3, h4, h5, h6 {
-	font-weight: normal;
 	color: #4b89d0;
-	text-shadow: #fff 1px 1px 1px;
 }
 
 .mceItemTable, .mceItemTable td, .mceItemTable th, .mceItemTable caption, .mceItemVisualAid {
