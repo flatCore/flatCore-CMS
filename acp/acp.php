@@ -104,34 +104,6 @@ if(!isset($_GET['sub'])){
 
 <title>flatCore:ACP @  <?php echo"$_SERVER[SERVER_NAME] /// $tn"; ?></title>
 		
-		
-
-<script type="text/javascript">
-/* <![CDATA[ */
-
-window.addEvent('load', function() {
-	new DatePicker('.dp', { months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-	days: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-	format: 'd.m.Y',
-	allowEmpty: true,
-	positionOffset: { x: 0, y: 5 }});
-});
-
-
-window.addEvent('load', function() {
-	new DatePicker('.dp_meta', { months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-	days: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-	inputOutputFormat: 'Y-m-d',
-	positionOffset: { x: 0, y: 5 }});
-});
-
-
-
-/* ]]> */
-</script>
-	
-
-		
 
 <?php
 /*
