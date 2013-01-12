@@ -359,16 +359,18 @@ function show_log($nbr) {
  * add new item to the feeds table
  */
 
-function add_feed($title,$text,$url,$sub_id, $feed_name = 'flatCore') {
+function add_feed($title, $text, $url, $sub_id, $feed_name, $time = NULL) {
 
 	$dbh = new PDO("sqlite:".CONTENT_DB);
 
 	$interval = time() - (30 * 86400); // 30 days
-	$time = time();
 	
 	$del_interval = $dbh->exec("DELETE FROM fc_feeds WHERE feed_time < '$interval'");
 	$del_dublicates = $dbh->exec("DELETE FROM fc_feeds WHERE feed_subid = '$sub_id'");
 
+	if(is_null($time)) {
+		$time = time();
+	}
 
 
 	$sql = "INSERT INTO fc_feeds	(

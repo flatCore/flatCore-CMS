@@ -5,37 +5,34 @@
  */
 
 
-/* define Folder structure */
-
-define('FC_CONTENT_DIR',  "content");
-define('FC_ACP_DIR',  "acp");
-
+/* Systemmessages, E-Mail & Name */
+$fc_mailer_adr	= "you@example.com";
+$fc_mailer_name	= "flatCore Administrator";
 
 /* Default Language -> de|en */
-
 $languagePack = "de";
 
 
 /* mod_rewrite -> off|permalink */
-
 $fc_mod_rewrite = "permalink";
 
-/* Systemmessages, E-Mail & Name */
 
-$fc_mailer_adr	= "you@example.com";
-$fc_mailer_name	= "flatCore Administrator";
+/* time offset for rss feeds in seconds */
+$fc_rss_time_offset = '1800';
+
 
 
 
 /**
  * from here make no more changes
  * except you know what you do
- *
- * $fc_db_content -> content database
- * $fc_db_user -> user database
- * $fc_db_stats -> database for logs and reports
  */
+ 
+/* define Folder structure */
+define('FC_CONTENT_DIR',  "content");
+define('FC_ACP_DIR',  "acp");
 
+/* Database Files */
 $fc_db_content 	= FC_CONTENT_DIR . "/SQLite/content.sqlite3";
 $fc_db_user 	= FC_CONTENT_DIR . "/SQLite/user.sqlite3";
 $fc_db_stats 	= FC_CONTENT_DIR . "/SQLite/flatTracker.sqlite3";

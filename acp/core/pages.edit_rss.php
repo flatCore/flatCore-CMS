@@ -26,28 +26,36 @@ $ts_now = time();
 
 for($i=0;$i<$cnt_rssItems;$i++) {
 
-	$ts_feed_time = $rssItems[$i]['feed_time'];
-	$feed_time = date("d.m.Y H:i:s",$ts_feed_time);
+	$feed_time = $rssItems[$i]['feed_time'];
+	$feed_date = date("d.m.Y H:i:s",$feed_time);
 	$feed_id = $rssItems[$i]['feed_id'];
-	$feed_title = $rssItems[$i]['feed_title'];
-	$feed_text = $rssItems[$i]['feed_text'];
+	$feed_title = stripslashes($rssItems[$i]['feed_title']);
+	$feed_text = stripslashes($rssItems[$i]['feed_text']);
 	$feed_url = $rssItems[$i]['feed_url'];
 	
-	$ts_release = $ts_feed_time + (60*60); // 1 hour
+	$ts_release = $feed_time + $fc_rss_time_offset;
 	$ts_diff = $ts_release-$ts_now;
 	
-	$min = floor($ts_diff/60);
-	$sek = $ts_diff - ($min * 60);
+	$days = floor($ts_diff / 86400);
+	$hrs = ($ts_diff / 3600) % 24;
+	$mins = ($ts_diff / 60) % 60;
+	$secs = ($ts_diff) % 60;
 	
-	$ts_diff_string = " | Release in: $min:$sek ";
+	if($hrs < 10) { $hrs = '0'.$hrs; }
+	if($mins < 10) { $mins = '0'.$mins; }
+	if($secs < 10) { $secs = '0'.$secs; }
 	
+	$ts_diff_string = " | Release in $days Days | $hrs:$mins:$secs";
+	$style_string = 'style="opacity:0.7";';
+
 	if($ts_diff <= 0) {
 		$ts_diff = 0;
 		$ts_diff_string = "";
+		$style_string = '';
 	}
-	
-	echo'<div class="modul_list_items">';
-	echo"<h4>$feed_time $ts_diff_string</h4>";
+
+	echo"<div class='modul_list_items' $style_string>";
+	echo"<h4>$feed_date $ts_diff_string</h4>";
 	echo"<h3>$feed_title</h3>";
 	echo"$feed_text";
 	echo"<p><a href='$feed_url' target='_blank'>$feed_url</a></p>";
@@ -55,6 +63,7 @@ for($i=0;$i<$cnt_rssItems;$i++) {
 	echo"<a class='btn btn-danger' href='$_SERVER[PHP_SELF]?tn=pages&sub=rss&delete=$feed_id' onclick=\"return confirm('$lang[confirm_delete_data]')\">$lang[delete]</a>";
 	echo"</div>";
 	echo"</div>";
+	
 
 
 } // eo $i
