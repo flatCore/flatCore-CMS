@@ -91,12 +91,9 @@ if(!isset($_GET['sub'])){
 		<script type="text/javascript" src="../lib/js/mootools/Request.File.js"></script>
 		<script type="text/javascript" src="../lib/js/mootools/Form.MultipleFileInput.js"></script>
 		<script type="text/javascript" src="../lib/js/mootools/Form.Upload.js"></script>
-		
-		<script type="text/javascript" src="../lib/js/mootools/datepicker.js"></script>
 				
 		<link rel="stylesheet" href="../lib/css/bootstrap.css" type="text/css" media="screen, projection">
 		<link rel="stylesheet" href="css/styles.css" type="text/css" media="screen, projection">
-		<link rel="stylesheet" href="css/datepicker.css" type="text/css" media="screen, projection">
 		<link rel="stylesheet" href="../lib/css/milkbox.css" media="screen" />
 		
 		
