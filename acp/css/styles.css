@@ -862,7 +862,8 @@ form-line:before,
 }
 
 
-label, .form-label {
+div.form-line > label,
+.form-label {
 	float: left;
 	width: 250px;
 	padding-top: 5px;

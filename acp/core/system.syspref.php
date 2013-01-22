@@ -89,14 +89,14 @@ echo"<fieldset>";
 
 echo"<legend>$lang[f_prefs_descriptions]</legend>";
 
-echo '<div class="control-group">';
+echo '<div class="form-line">';
 echo '<label>' . $lang[f_prefs_pagetitle] .'</label>';
 echo '<div class="form-controls">';
-echo "<input class='span6' type='text' name='prefs_pagetitle' value='$prefs_pagetitle'>";
+echo "<input class='input-block-level' type='text' name='prefs_pagetitle' value='$prefs_pagetitle'>";
 echo '</div>';
 echo '</div>';
 
-echo '<div class="control-group">';
+echo '<div class="form-line">';
 echo '<label>' . $lang[f_prefs_pagesubtitle] .'</label>';
 echo '<div class="form-controls">';
 echo "<input class='span6' type='text' name='prefs_pagesubtitle' value='$prefs_pagesubtitle'>";
@@ -116,7 +116,7 @@ echo"<fieldset>";
 echo"<legend>$lang[f_prefs_user]</legend>";
 
 
-echo '<div class="control-group">';
+echo '<div class="form-line">';
 echo '<label>' . $lang[f_prefs_registration] .'</label>';
 echo '<div class="form-controls">';
 		
@@ -137,7 +137,7 @@ echo '</div>';
 	 
 	 
 
-echo"<div class='control-group'>
+echo"<div class='form-line'>
 		<label>$lang[f_prefs_showloginform]</label>
 		<div class='form-controls'>";
 		
