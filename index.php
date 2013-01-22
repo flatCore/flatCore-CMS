@@ -138,6 +138,10 @@ if(is_dir('styles/'.$page_contents[page_template].'/templates/')) {
 }
 
 
+include('core/definitions.php');
+if(is_file('styles/'.$fc_template.'/php/definitions.php')) {
+	include('styles/'.$fc_template.'/php/definitions.php');
+}
 
 $smarty->template_dir = 'styles/'.$fc_template.'/templates/';
 $smarty->compile_dir = 'content/cache/templates_c/';

@@ -13,6 +13,7 @@ function show_mainmenu() {
 	global $result;
 	global $current_page_sort;
 	global $fc_mod_rewrite;
+	global $fc_defs;
 	
 	$count_result = count($result);
 	
@@ -32,10 +33,10 @@ function show_mainmenu() {
 			$menu[$i][page_title] = stripslashes($result[$i][page_title]);
 			$menu[$i][page_permalink] = $result[$i][page_permalink];
 			
-			$menu[$i][link_status] = "mainmenu";
+			$menu[$i][link_status] = "$fc_defs[main_nav_class]";
 		
 			if(left_string($current_page_sort) == left_string($menu[$i][page_sort]) ) {
-				$menu[$i][link_status] = "mainmenu_current";
+				$menu[$i][link_status] = "$fc_defs[main_nav_class_active]";
 				define('FC_MAIN_CAT', clean_filename($result[$i][page_linkname]));
 				define('FC_TOC_HEADER', $menu[$i][page_linkname]);
 			}
@@ -165,7 +166,8 @@ function show_this_level($num) {
 	global $result;
 	global $current_page_sort;
 	global $fc_mod_rewrite;
-	
+	global $fc_defs;
+		
 	unset($sort);
 	
 	$points_of_num = substr_count($num, '.');
@@ -199,10 +201,10 @@ function show_this_level($num) {
 				$menu[$i][page_permalink] = $result[$i][page_permalink];
 				$menu[$i][page_linkname] = stripslashes($result[$i][page_linkname]);
 				$menu[$i][page_title] = stripslashes($result[$i][page_title]);
-				$menu[$i][link_status] = "sub_link$points_of_sort";
+				$menu[$i][link_status] = "$fc_defs[sub_nav_prefix_class]".$points_of_sort;
 		
 				if($sort == $current_page_sort) {
-					$menu[$i][link_status] = "sub_current$points_of_sort";
+					$menu[$i][link_status] = "$fc_defs[sub_nav_prefix_class_active]".$points_of_sort;
 				}
 		
 				if($fc_mod_rewrite == "off") {

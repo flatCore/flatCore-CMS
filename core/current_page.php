@@ -6,9 +6,9 @@
  */
 
 if($p == "") {
-	$smarty->assign('homelink_status', "mainmenu_current");
+	$smarty->assign('homelink_status', "$fc_defs[main_nav_class_active]");
 } else {
-	$smarty->assign('homelink_status', "mainmenu");
+	$smarty->assign('homelink_status', "$fc_defs[main_nav_class]");
 }
 
 
