@@ -26,7 +26,7 @@ if(count($_FILES['imagesToUpload'])) {
 	    $org_name = $_FILES["imagesToUpload"]["name"][$key];
 	    $suffix 		= strtolower(substr(strrchr($org_name,'.'),1));
 	    $prefix			= basename($org_name,".$suffix");
-	    $img_name = clean_filename($prefix) . ".jpg";
+	    $img_name = clean_filename($prefix,$suffix);
 	    
 	    $target = "../../$destination/$img_name";
 	    
@@ -47,7 +47,7 @@ if(count($_FILES['filesToUpload'])) {
 	    $org_name = $_FILES["filesToUpload"]["name"][$key];
 	    $suffix 		= strtolower(substr(strrchr($org_name,'.'),1));
 	    $prefix			= basename($org_name,".$suffix");
-	    $files_name = clean_filename($prefix) . ".$suffix";
+	    $files_name = clean_filename($prefix,$suffix);
 	    
 	    $target = "../../$destination/$files_name";
 	    
@@ -57,9 +57,6 @@ if(count($_FILES['filesToUpload'])) {
 	}
 
 }
-
-
-
 
 
 
@@ -96,34 +93,89 @@ function resize_image($img, $name, $thumbnail_width, $thumbnail_height, $quality
 	if($arr_image_details[2]==3) { $imgt = "imagepng"; $imgcreatefrom = "imagecreatefrompng";  }
 
 
-	if($imgt) { 
+	if($imgt == 'imagejpeg') { 
 		$old_image	= $imgcreatefrom("$img");
 		$new_image	= imagecreatetruecolor($new_width, $new_height);
 		imagecopyresampled($new_image,$old_image,0,0,0,0,$new_width,$new_height,$original_width,$original_height);
 		imagejpeg($new_image,"$name",$quality);
 		imagedestroy($new_image);
 	}
+	
+	if($imgt == 'imagepng') { 
+		$old_image	= $imgcreatefrom("$img");
+		$new_image	= imagecreatetruecolor($new_width, $new_height);
+		imagealphablending($new_image, false);
+		imagesavealpha($new_image, true);
+		$transparency = imagecolorallocatealpha($new_image, 255, 255, 255, 127);
+		imagefilledrectangle($new_image, 0, 0, $new_width, $new_height, $transparency);
+		imagecopyresampled($new_image,$old_image,0,0,0,0,$new_width,$new_height,$original_width,$original_height);
+		imagepng($new_image,"$name",0);
+	}	
+	
+	if($imgt == 'imagegif') {	
+		return $name;
+	}	
+
 
 }
 
 
+function increment_prefix($cnt,$target) {
+
+	$nbr = $cnt+1;
+
+	$path = pathinfo($target);
+	$filepath = $path[dirname];
+	$filename = $path[filename];
+	$extension = $path[extension];
+	
+	if(substr("$filename", -2,1) == '_' AND is_numeric(substr("$filename", -1))) {
+		$filename_without_nbr = substr("$filename", 0,-2);
+		$new_filename = $filename_without_nbr.'_'.$nbr;
+		$new_target = "$filepath/$new_filename.$extension";
+		
+		if(is_file("$new_target")) {
+			$nbr = increment_prefix($nbr,$new_target);
+		}
+		
+	} else {
+		$new_target = "$filepath/$filename"."_$nbr.".$extension;
+		if(is_file("$new_target")) {
+			$nbr = increment_prefix($nbr,$new_target);
+		}
+	}
+	
+	return $nbr;
+}
 
 
+function clean_filename($prefix,$suffix) {
 
-function clean_filename($str) {
+	global $destination;
 
-	$str = strtolower($str);
+	$prefix = strtolower($prefix);
 
 	$a = array('ä','ö','ü','ß',' - ',' + ','_',' / ','/'); 
-	$b = array('ae','oe','ue','ss','-','-','-','-','-');
-	$str = str_replace($a, $b, $str);
+	$b = array('ae','oe','ue','ss','-','-','_','-','-');
+	$prefix = str_replace($a, $b, $prefix);
 
-	$str = preg_replace('/\s/s', '_', $str);  // replace blanks -> '_'
-	$str = preg_replace('/[^a-z0-9_-]/isU', '', $str); // only a-z 0-9
+	$prefix = preg_replace('/\s/s', '_', $prefix);  // replace blanks -> '_'
+	$prefix = preg_replace('/[^a-z0-9_-]/isU', '', $prefix); // only a-z 0-9
 
-	$str = trim($str); 
+	$prefix = trim($prefix);
+	
+	
+	$target = "../../$destination/$prefix.$suffix";
+	
+	if(is_file($target)) {
+		$prefix = $prefix . '_' . increment_prefix('0',"$target");	    
+	}
+	
+	
+	$filename = $prefix . '.' . $suffix;
+	
 
-	return $str; 
+	return $filename; 
 }
 
 
