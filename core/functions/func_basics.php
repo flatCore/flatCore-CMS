@@ -1,9 +1,10 @@
 <?php
 
+/**
+ * check if username exists in usergroup
+ */
 
 function is_user_in_group($user_id,$user_group) {
-
-/* check for username in usergroup */
 
 	global $fc_db_user;
 
@@ -25,25 +26,23 @@ function is_user_in_group($user_id,$user_group) {
 		$in_group = "false";
 	}
 
+	return $in_group;
 
-return $in_group;
-
-} // eol is_user_in_group()
-
+}
 
 
 
+/**
+ * buffer scripts placed in the plugin folder
+ * @param string $script filename of the script
+ * @param string $parameters query
+ */
 
+function buffer_script($script,$parameters=NULL) {
 
-
-
-
-function buffer_script($script) {
-
-/*
-buffer scripts placed in the plugin folder
-input: function text_parser($text)
-*/
+	if($parameters !== NULL) {
+		$parameter = parse_str(html_entity_decode($parameters));
+	}
 
 	ob_start();
 	if(is_file("./content/plugins/$script")) {
@@ -51,17 +50,19 @@ input: function text_parser($text)
 	}
 
 	$content = ob_get_clean();
-return $content;
+	$buffer = $parameter . $content;
+	
+	return $buffer;
+}
 
-} // eol buffer_script()
 
 
+/**
+ * find [include] [script] [plugin] and [snippet]
+ * except codes within <pre> … </pre>
+ */
+	 
 function text_parser($text) {
-
-	/**
-	 * find [include] [script] and [snippet]
-	 * except codes within <pre> … </pre>
-	 */
 
 	preg_match('#\<pre\>(.+)\</pre\>#i', $text, $matches);
 
@@ -72,21 +73,21 @@ function text_parser($text) {
  
 	$text = preg_replace("/\[include\](.*?)\[\/include\]/se","file_get_contents('./content/plugins/\\1')",$text);
 	$text = preg_replace("/\[script\](.*?)\[\/script\]/se","buffer_script('\\1')",$text);
+	$text = preg_replace("/\[plugin=(.*?)\](.*?)\[\/plugin\]/esi","buffer_script('\\1','\\2')",$text);
 	$text = preg_replace("/\[snippet\](.*?)\[\/snippet\]/esi","get_textlib_by_fn('\\1')",$text);
 
-return $text;
+	return $text;
 
-} // eol text_parser()
+}
 
 
 
+/**
+ * replace bbcodes with html tags
+ */
 
 function bbcode_encode($text) {
 
-	/*
-	replace bbcodes with html tags
-	*/
-	
 	$text = preg_replace("/\[b\](.*)\[\/b\]/Usi", "<b>\\1</b>", $text); 
 	$text = preg_replace("/\[i\](.*)\[\/i\]/Usi", "<i>\\1</i>", $text); 
 	$text = preg_replace("/\[u\](.*)\[\/u\]/Usi", "<u>\\1</u>", $text); 
@@ -100,35 +101,36 @@ function bbcode_encode($text) {
 } // eol bbcode
 
 
+
+/**
+ * remove tags [include] [script] [plugin] and [snippet]
+ */
+
 function clean_visitors_input($text) {
 
-/*
-remove tags [include] [script] and [snippet]
-*/
 	$text = preg_replace("/\[snippet\](.*?)\[\/snippet\]/esi","",$text);
 	$text = preg_replace("/\[script\](.*?)\[\/script\]/esi","",$text);
 	$text = preg_replace("/\[include\](.*?)\[\/include\]/esi","",$text);
-
-
-return $text;
+	$text = preg_replace("/\[plugin=(.*?)\](.*?)\[\/plugin\]/esi","",$text);
+	
+	return $text;
 
 } // eol bbcode
 
 
 
 
+/**
+ * clean filenames
+ * used for upload and SEO URL
+ */
 
 function clean_filename($str) {
-
-/*
-clean filenames
-used for upload and SEO URL
-*/
 
 	$str = strtolower($str);
 
 	$a = array('ä',    'ö',    'ü',    'ß',    ' - ',    ' + ',    '_',    ' / ',    '/'); 
-	$b = array('ae',   'oe',   'ue',   'ss',   '-',      '-',      '-',    '-',      '-');
+	$b = array('ae',   'oe',   'ue',   'ss',   '-',      '-',      '_',    '-',      '-');
 	$str = str_replace($a, $b, $str);
 
 	$str = preg_replace('/\s/s', '_', $str);  // replace blanks -> '_'
@@ -136,19 +138,16 @@ used for upload and SEO URL
 
 	$str = trim($str); 
 
-return $str; 
+	return $str; 
 }  
 
 
 
-
-
-
-
+/**
+ * get user avatar via e-mail adress
+ */
 
 function get_avatar($user_mail) {
-
-/* get user avatar via e-mail adress */
 
 	global $page_contents;
 	global $fc_inc_dir;
@@ -162,22 +161,21 @@ function get_avatar($user_mail) {
 		$avatar_str = "$fc_inc_dir/content/avatars/$mail_hash".".png";
 	}
 
-return $avatar_str;
+	return $avatar_str;
 }
 
 
 
 
-
+/** 
+ * get user avatar via md5(user_name)
+ */
 
 function get_avatar_by_username($user_name) {
-
-/* get user avatar via md5(user_name) */
 
 	global $page_contents;
 	global $fc_inc_dir;
 	global $fc_template;
-
 
 	$avatar_hash = md5($user_name);
 	$avatar_str = "$fc_inc_dir/styles/$fc_template/images/user_icon.jpg";
@@ -186,27 +184,23 @@ function get_avatar_by_username($user_name) {
 		$avatar_str = "$fc_inc_dir/content/avatars/$avatar_hash".".png";
 	}
 
-return $avatar_str;
+	return $avatar_str;
 }
 
 
 
-
-
-
+/**
+ * send a notification to admin
+ * $fc_mailer_adr is defined in config.php
+ */
 
 function mailto_admin($subject,$message) {
 
-/*
-send a notification to admin
-$fc_mailer_adr (defined in config.php)
-*/
-
-global $fc_mailer_adr;
-global $fc_mailer_name;
-
-$subject = preg_replace( "/(content-type:|bcc:|cc:|to:|from:)/im", "", $subject );
-$message = preg_replace( "/(content-type:|bcc:|cc:|to:|from:)/im", "", $message );
+	global $fc_mailer_adr;
+	global $fc_mailer_name;
+	
+	$subject = preg_replace( "/(content-type:|bcc:|cc:|to:|from:)/im", "", $subject );
+	$message = preg_replace( "/(content-type:|bcc:|cc:|to:|from:)/im", "", $message );
 
 	require_once("lib/Swift/lib/swift_required.php");
 	$transport = Swift_MailTransport::newInstance();
@@ -223,56 +217,46 @@ $message = preg_replace( "/(content-type:|bcc:|cc:|to:|from:)/im", "", $message 
 		echo"<hr>ERROR<hr>";
 	}
 
-
-} // eol mailto_admin()
-
+}
 
 
 
-
+/**
+ * create logs
+ * @param string $log_trigger system or username
+ * @param string $log_entry what's happened
+ * @param integer $log_priority 0-10
+ * @example record_log("$_SESSION[user_nick]","the message","5");
+ */
 
 function record_log($log_trigger = 'system', $log_entry, $log_priority = '0') {
 
-/*
-create logs
-$log_trigger	- (string) system or username
-$log_entry		- (string) what's happened
-$log_priority	- (integer) 0-10
-				
-example:
-record_log("$_SESSION[user_nick]","the message","5");
-*/
+	global $fc_db_stats;
+	
+	$log_time = time();
+	
+	$dbh = new PDO("sqlite:$fc_db_stats");
+	
+	
+	$sql = "INSERT INTO log
+			(	log_id , log_time , log_trigger , log_entry , log_priority
+			) VALUES (
+			NULL, '$log_time', '$log_trigger', '$log_entry', '$log_priority' ) ";
+											
+	$cnt_changes = $dbh->exec($sql);
+	
+	$dbh = null;
 
-global $fc_db_stats;
-
-$log_time = time();
-
-$dbh = new PDO("sqlite:$fc_db_stats");
-
-
-$sql = "INSERT INTO log
-		(	log_id , log_time , log_trigger , log_entry , log_priority
-		) VALUES (
-		NULL, '$log_time', '$log_trigger', '$log_entry', '$log_priority' ) ";
-										
-$cnt_changes = $dbh->exec($sql);
-
-$dbh = null;
+}
 
 
 
-} // eol record_log()
-
-
-
-
+/**
+ * returns the part of the $string
+ * before the first occurrence of $separator
+ */
 
 function get_left_string($string,$separator) {
-/*
-returns the part of the $string
-before the first occurrence of $separator
-*/
-
   $string = explode("$separator", $string);
   return $string[0];
 }
