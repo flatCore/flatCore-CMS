@@ -92,7 +92,7 @@ echo"<legend>$lang[f_prefs_descriptions]</legend>";
 echo '<div class="form-line">';
 echo '<label>' . $lang[f_prefs_pagetitle] .'</label>';
 echo '<div class="form-controls">';
-echo "<input class='input-block-level' type='text' name='prefs_pagetitle' value='$prefs_pagetitle'>";
+echo "<input class='span6' type='text' name='prefs_pagetitle' value='$prefs_pagetitle'>";
 echo '</div>';
 echo '</div>';
 
