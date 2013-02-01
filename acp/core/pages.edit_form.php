@@ -108,7 +108,7 @@ echo"<div class='form-line form-line-last'>
 echo'</div>'; // eo tabs content
 
 
-/* EOL tab_info ### ### ### */
+/* EOL tab_info */
 
 
 /* tab_content */
@@ -121,7 +121,7 @@ echo"<textarea name='page_content' class='mceEditor'>
 	 </textarea>";
 
 echo"</div>";
-/* EOL tab_content ### ### ### */
+/* EOL tab_content */
 
 
 /* tab_extracontent */
@@ -134,7 +134,7 @@ echo"<textarea name='page_extracontent' class='mceEditor_small'>
 	 </textarea>";
 
 echo"</div>";
-/* EOL tab_extracontent ### ### ### */
+/* EOL tab_extracontent */
 
 
 
@@ -187,7 +187,7 @@ echo"	</div>
 
 echo'</div>'; // eo tabs content
 
-/* EOL tab_meta ### ### ### */
+/* EOL tab_meta */
 
 
 
@@ -196,29 +196,19 @@ echo"<h4 title='$lang[tab_head_description]'>$lang[tab_head]</h4>";
 
 echo'<div class="tab-content">'; // tabs content
 
-echo"<div class='form-line'>
-		<label>$lang[f_head_styles]</label>
-		<div class='form-controls'>
-			<span class='silent'>&lt;style type=&quot;text/css&quot;&gt;</span><br/>
-				<textarea name='page_head_styles' class='span5' rows='6'>$page_head_styles</textarea><br />
-			<span class='silent'>&lt;/styles&gt;</span>
-		</div>
-		</div>";
+echo "$lang[f_head_styles]";
+echo '<span class="silent"> &lt;style type=&quot;text/css&quot;&gt;</span> ... <span class="silent">&lt;/styles&gt;</span>';
+echo "<textarea name='page_head_styles' class='input-block-level' rows='8'>$page_head_styles</textarea>";
 
-echo"	<div class='form-line form-line-last'>
-		<label>$lang[f_head_enhanced]</label>
-		<div class='form-controls'>
-			<span class='silent'>&lt;head&gt;</span><br />
-				<textarea name='page_head_enhanced' class='span5' rows='6'>$page_head_enhanced</textarea><br />
-			<span class='silent'>&lt;/head&gt;</span>
-		</div>
-		</div>";
+echo '<hr>';
 
-echo"<div style='clear:both;'></div>";
+echo "$lang[f_head_enhanced]";
+echo '<span class="silent"> &lt;head&gt;</span> ... <span class="silent">&lt;/head&gt;</span>';
+echo "<textarea name='page_head_enhanced' class='input-block-level' rows='8'>$page_head_enhanced</textarea>";
 
 echo'</div>'; // eo tabs content
 
-/* EOL tab_head ### ### ### */
+/* EOL tab_head */
 
 
 
@@ -308,11 +298,6 @@ echo"</select>";
 
 
 echo"</div></div>";
-
-
-
-
-
 
 
 
@@ -442,7 +427,7 @@ echo"</div>"; // .line
 
 echo'</div>'; // eo tabs content
 
-/* EOL tab_preferences ### ### ### */
+/* EOL tab_preferences */
 
 
 
@@ -462,8 +447,6 @@ echo'<div class="tab-content">'; // tabs content
 
 	for($i=0;$i<$cnt_result;$i++) {
 	
-		
-
 		if(substr($custom_fields[$i],0,10) == "custom_one") {
 			$label = substr($custom_fields[$i],11);
 			echo "<div class='form-line'>";
@@ -495,7 +478,7 @@ echo'<div class="tab-content">'; // tabs content
 
 echo'</div>'; // eo tabs content
 
-/* EOL tab custom fields ### ### ### */
+/* EOL tab custom fields */
 
 }
 
