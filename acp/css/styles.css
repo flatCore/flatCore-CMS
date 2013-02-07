@@ -2,38 +2,9 @@
  * Stylesheet > flatCore ACP
  */
 
-/* Reset and HTML5 Support */
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var, b, u, i, center,
-dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
-
-
-.clearfix:after { 
-    content: ".";  
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-}
-
-* + html .clearfix { /* IE7 */
-    display: inline-block;
-}
-
 ::selection {
-	background-color: #FFFFAA;
-	color: #222;
+	background-color: #222;
+	color: #ccc;
 }
 
 a, a:hover {
@@ -43,10 +14,6 @@ a, a:hover {
 body {
 	background-color: #666;
 	text-align: left;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 13px;
-	line-height: 18px;
-	font-weight: normal;
 	color: #444;
 }
 
@@ -148,11 +115,13 @@ div#footer a {
 
 /* TYPO */
 
+/*
 p {
 	margin: 0 0 9px;
 	font-size: 13px;
 	line-height: 18px;
 }
+*/
 
 h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
@@ -191,13 +160,7 @@ h6 {
   font-size: 11px;
 }
 
-b {
-	font-weight: bold;
-}
 
-i {
-	font-style: italic;
-}
 
 .silent {
 	font-size: 11px;
@@ -208,17 +171,13 @@ i {
 	font-size: 16px;
 }
 
-.center, .textcenter, td.textcenter {
+.center,
+.textcenter,
+td.textcenter {
 	text-align: center;
 }
 
-a {
-	color: #3376d9;
-}
 
-a:hover {
-	color: #039;
-}
 
 a.darklink, a.darklink:link, a.darklink:visited {
 	color: #333;
@@ -389,7 +348,6 @@ a.submenu_selected:hover {
 	color: #fff;
 }
 
-
 .submenu_disabled {
 	display: block;
 	padding: 4px 2px 4px 6px;
@@ -416,8 +374,6 @@ a.submenu_mods:hover {
 a.submenu_mods_selected {
 	font-weight: bold;
 }
-
-
 
 .dashboardbox {
 	margin: 3px;
@@ -619,7 +575,7 @@ div[class*='log_priority']  {
 
 .tab-wrapper {
 	padding: 8px 25px;
-	margin-top: -2px;
+	margin-top: -12px;
 	border-radius: 4px;
 	clear: both;
 	background-color: #f1f1f1;
@@ -752,6 +708,8 @@ fieldset legend {
 	background-color: #e5e5e5;
 	border-radius: 4px;
 	color: #369;
+	font-size: 14px;
+	line-height: 18px;
 }
 
 
@@ -792,47 +750,10 @@ a.buttonLink:active {
 }
 
 
-
-button, input, select, textarea {
-	margin: 0;
-	font-size: 100%;
-	vertical-align: middle;
-}
-
-button, input {
-	*overflow: visible;
-	line-height: normal;
-}
-
-button::-moz-focus-inner, input::-moz-focus-inner {
-	padding: 0;
-	border: 0;
-}
-
-button, input[type="button"], input[type="reset"], input[type="submit"] {
-	cursor: pointer;
-	-webkit-appearance: button;
-}
-
-textarea {
-	overflow: auto;
-	vertical-align: top;
-}
-
 textarea#textEditor {
 	width: 100%;
 	height: 350px;
 }
-
-
-.input50 { width: 50px; }
-.input100 {	width: 100px; }
-.input150 {	width: 150px; }
-.input200 {	width: 200px; }
-.input300 { width: 300px; }
-.input400 { width: 400px; }
-.input500 { width: 500px; }
-.input-full { width: 100%; }
 
 
 .form-line {
@@ -874,8 +795,6 @@ div.form-line > label,
 
 .form-controls {
 	margin-left: 265px;
-	/* Super jank IE7 fix to ensure the inputs in .input-append and input-prepend don't inherit the margin of the parent, in this case .controls */
-
 	*display: inline-block;
 	*margin-left: 0;
 	*padding-left: 20px;
@@ -885,8 +804,6 @@ div.form-line > label,
 fieldset > [class*="form-line"]:last-child {
   border-bottom: none;
 }
-
-
 
 
 .formfooter {
