@@ -92,10 +92,9 @@ echo"<a class='$sub_active[3]' href='$_SERVER[PHP_SELF]?tn=user&sub=groups'>$lan
 
 
 echo"<h5>$lang[h_search_user]</h5>";
-echo"<div style='padding: 0 4px;width:180px;'>
-<form action='$_SERVER[PHP_SELF]?tn=user' method='POST'>";
-echo"<input type='text' name='findUser' class='input100'> ";
-echo"<input type='submit' class='btn-green' value='$lang[submit]'>";
+echo"<div style='padding: 0 4px;'>
+<form action='$_SERVER[PHP_SELF]?tn=user' class='form-inline' method='POST'>";
+echo"<input type='text' name='findUser' class='input-block-level'> ";
 echo"</form></div>";
 
 

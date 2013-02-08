@@ -115,13 +115,6 @@ div#footer a {
 
 /* TYPO */
 
-/*
-p {
-	margin: 0 0 9px;
-	font-size: 13px;
-	line-height: 18px;
-}
-*/
 
 h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
@@ -626,8 +619,8 @@ div[class*='log_priority']  {
 
 
 dl.list_logfile {
-    margin-bottom: 1px;
-    padding: 2px 5px;
+  margin: 0 0 1px 0;
+  padding: 2px 5px;
 	border-bottom: 1px solid #FFF;
 }
  

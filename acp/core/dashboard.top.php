@@ -116,9 +116,9 @@ echo"<legend>$lang[db_user]</legend>";
 
 echo"<p class='loud'><b>$cnt_user</b> Benutzer gesamt</p>
 			<ul class='unstyled'>
-				<li><span class='label label-success'>$cnt_verified $lang[f_user_select_verified]</span></li>
-				<li><span class='label label-important'>$cnt_paused $lang[f_user_select_paused]</span></li>
-				<li><span class='label'>$cnt_admin $lang[f_administrators]</span></li>
+				<li><span class='label label-success'>$cnt_verified</span> $lang[f_user_select_verified]</li>
+				<li><span class='label label-important'>$cnt_paused</span> $lang[f_user_select_paused]</li>
+				<li><span class='label'>$cnt_admin</span> $lang[f_administrators]</li>
 			</ul>";
 echo '</fieldset>';
 echo"</div>";

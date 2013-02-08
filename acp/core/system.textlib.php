@@ -89,7 +89,7 @@ show_editor_switch($tn,$sub);
 
 echo"<fieldset>";
 echo"<legend>$lang[system_textlib]</legend>";
-echo"<form action='$_SERVER[PHP_SELF]?tn=system&sub=sys_textlib' method='POST' name='sel_snippet'>";
+echo"<form action='$_SERVER[PHP_SELF]?tn=system&sub=sys_textlib' method='POST' name='sel_snippet' class='form-inline'>";
 
 
 echo '<div class="row-fluid">';

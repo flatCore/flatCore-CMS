@@ -102,27 +102,33 @@ if($_POST[add_field]) {
 }
 
 
+echo '<div class="row-fluid"><div class="span12">';
+
 
 echo '<fieldset>';
 echo '<legend>' . $lang[add_custom_field] . '</legend>';
 
 
-echo '<form action="acp.php?tn=pages&sub=customize" method="POST">';
+echo '<form action="acp.php?tn=pages&sub=customize" method="POST" class="form-horizontal">';
 
-echo"<div class='form-line form-line-last'>
-			<label>$lang[custom_field_name]</label>";
+echo"<div class='control-group'>
+			<label class='control-label'>$lang[custom_field_name]</label>";
 
-echo"<div class='form-controls'>
-		<input type='text' class='input300' name='field_name' value='$field_name'>
-		<ul class='unstyled'>
-			<li><input type='radio' $sel1 name='field_type' value='one'> Einzeilig</li>
-			<li><input type='radio' $sel2 name='field_type' value='text'> Mehrzeilig</li>
-			<li><input type='radio' $sel3 name='field_type' value='wysiwyg'> Mehrzeilig (WYSIWYG)</li>
-		</ul>
+echo"<div class='controls'>
+		<input type='text' class='span8' name='field_name' value='$field_name'>";
+echo '</div>';
+echo '</div>';
+
+echo"<div class='control-group'>
+			<label class='control-label'></label>";
+			
+echo"<div class='controls'>	
+			<label class='radio inline'><input type='radio' $sel1 name='field_type' value='one'> &lt;input type=&quot;text&quot; ... </label>
+			<label class='radio inline'><input type='radio' $sel2 name='field_type' value='text'> &lt;textarea ... </label>
+			<label class='radio inline'><input type='radio' $sel3 name='field_type' value='wysiwyg'> &lt;textarea ... (WYSIWYG)</label>
 		</div>";
 		
 echo"</div>";
-
 
 echo"<div class='formfooter'>";
 echo"<input type='submit' class='btn btn-success' name='add_field' value='$lang[save]'>";
@@ -189,7 +195,7 @@ echo '</form>';
 echo '</fieldset>';
 
 
-
+echo '</div></div>';
 
 
 ?>

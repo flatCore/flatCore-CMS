@@ -188,7 +188,7 @@ echo"
 	<td class='$td_class'>$show_registerdate</td>
 	<td class='$td_class'>$user_firstname $user_lastname</td>
 	<td class='$td_class'>$user_mail</td>
-	<td class='$td_class'><a class='btn' href='$_SERVER[PHP_SELF]?tn=user&sub=edit&edituser=$user_id'>$lang[edit]</a></td>
+	<td class='$td_class'><a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=user&sub=edit&edituser=$user_id'>$lang[edit]</a></td>
 </tr>";
 
 

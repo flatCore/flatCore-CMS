@@ -155,7 +155,7 @@ $editgroup = (int) $_POST[editgroup];
 
 echo"<fieldset>";
 echo"<legend>$lang[choose_usergroup]</legend>";
-echo"<form action='$_SERVER[PHP_SELF]?tn=user&sub=groups' method='POST'>";
+echo"<form action='$_SERVER[PHP_SELF]?tn=user&sub=groups' class='form-inline' method='POST'>";
 echo"<select name='editgroup'>";
 
 for($i=0;$i<count($result);$i++) {
@@ -218,23 +218,19 @@ echo"<legend>Benutzergruppe bearbeiten</legend>";
 
 echo"<form action='$_SERVER[PHP_SELF]?tn=user&sub=groups' method='POST'>";
 
+
 echo'<div class="row-fluid">';
 
-echo"<div class='span12'>";
+echo"<div class='span8'>";
+
 echo"<p>Gruppenname<br />";
-echo"<input type='text' class='input300' name='group_name' value='$group_name'></p>";
-echo"</div>";
-
-echo'</div>';
-echo'<div class="row-fluid">';
-
-echo"<div class='span6'>";
+echo"<input type='text' class='input-block-level' name='group_name' value='$group_name'></p>";
 
 echo"<p>Beschreibung<br />";
 echo"<textarea class='mceEditor_small' rows='4' name='group_description'>$group_description</textarea></p>";
 
 echo"</div>";
-echo"<div class='span6'>";
+echo"<div class='span4'>";
 
 echo"<p>Benutzer hinzufügen/entfernen</p>";
 
@@ -250,7 +246,7 @@ unset($result);
    }
 
 
-echo"<table class='table-list'>";
+echo"<table class='table table-hover table-condensed'>";
 
 for($i=0;$i<count($result);$i++) {
 
@@ -271,7 +267,7 @@ for($i=0;$i<count($result);$i++) {
 		
 	
 	echo"<tr>";
-	echo"	<td><input type='checkbox' $checked name='incUser[]' value='$user_id'> $user_nick </td>
+	echo"	<td><label class='checkbox'><input type='checkbox' $checked name='incUser[]' value='$user_id'> $user_nick </label></td>
 			<td>$user_firstname $user_lastname</td>";
 	echo"</tr>\n";
 } //eol $i

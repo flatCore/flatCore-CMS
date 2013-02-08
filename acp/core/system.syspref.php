@@ -81,6 +81,8 @@ foreach($result as $k => $v) {
 
 /* print the form */
 
+echo '<div class="row-fluid"><div class="span12">';
+
 echo"<form action='$_SERVER[PHP_SELF]?tn=system&sub=sys_pref' method='POST' class='form-horizontal'>";
 
 /* page preferences */
@@ -89,20 +91,19 @@ echo"<fieldset>";
 
 echo"<legend>$lang[f_prefs_descriptions]</legend>";
 
-echo '<div class="form-line">';
-echo '<label>' . $lang[f_prefs_pagetitle] .'</label>';
-echo '<div class="form-controls">';
-echo "<input class='span6' type='text' name='prefs_pagetitle' value='$prefs_pagetitle'>";
+echo '<div class="control-group">';
+echo '<label class="control-label">' . $lang[f_prefs_pagetitle] .'</label>';
+echo '<div class="controls">';
+echo "<input class='span10' type='text' name='prefs_pagetitle' value='$prefs_pagetitle'>";
 echo '</div>';
 echo '</div>';
 
-echo '<div class="form-line">';
-echo '<label>' . $lang[f_prefs_pagesubtitle] .'</label>';
-echo '<div class="form-controls">';
-echo "<input class='span6' type='text' name='prefs_pagesubtitle' value='$prefs_pagesubtitle'>";
+echo '<div class="control-group">';
+echo '<label class="control-label">' . $lang[f_prefs_pagesubtitle] .'</label>';
+echo '<div class="controls">';
+echo "<input class='span10' type='text' name='prefs_pagesubtitle' value='$prefs_pagesubtitle'>";
 echo '</div>';
 echo '</div>';
-
 
 echo"</fieldset>";
 
@@ -116,9 +117,9 @@ echo"<fieldset>";
 echo"<legend>$lang[f_prefs_user]</legend>";
 
 
-echo '<div class="form-line">';
-echo '<label>' . $lang[f_prefs_registration] .'</label>';
-echo '<div class="form-controls">';
+echo '<div class="control-group">';
+echo '<label class="control-label">' . $lang[f_prefs_registration] .'</label>';
+echo '<div class="controls">';
 		
 if($prefs_userregistration == "yes") {
 	$checked_ur_yes = "selected";
@@ -126,7 +127,7 @@ if($prefs_userregistration == "yes") {
 	$checked_ur_no = "selected";
 }
 
-echo '<select name="prefs_userregistration" class="span2">';
+echo '<select name="prefs_userregistration" class="span3">';
 	echo"<option $checked_ur_yes value='yes'>$lang[yes]</option>";
 	echo"<option $checked_ur_no value='no'>$lang[no]</option>";
 echo '</select>';
@@ -135,11 +136,9 @@ echo '</div>';
 echo '</div>';
 
 	 
-	 
-
-echo"<div class='form-line'>
-		<label>$lang[f_prefs_showloginform]</label>
-		<div class='form-controls'>";
+echo '<div class="control-group">';
+echo '<label class="control-label">'. $lang[f_prefs_showloginform] . '</label>';
+echo '<div class="controls">';
 		
 if($prefs_showloginform == "yes") {
 	$checked_lf_yes = "selected";
@@ -147,7 +146,7 @@ if($prefs_showloginform == "yes") {
 	$checked_lf_no = "selected";
 }
 
-echo '<select name="prefs_showloginform" class="span2">';
+echo '<select name="prefs_showloginform" class="span3">';
 	echo"<option $checked_lf_yes value='yes'>$lang[yes]</option>";
 	echo"<option $checked_lf_no value='no'>$lang[no]</option>";
 echo '</select>';
@@ -169,32 +168,32 @@ echo"<fieldset>";
 echo"<legend>$lang[f_prefs_uploads]</legend>";
 
 
-echo"<div class='form-line'>
-		<label>$lang[f_prefs_imagesuffix]</label>
-		<div class='form-controls'><input class='span6' type='text' name='prefs_imagesuffix' value='$prefs_imagesuffix'></div>
+echo"<div class='control-group'>
+		<label class='control-label'>$lang[f_prefs_imagesuffix]</label>
+		<div class='controls'><input class='span6' type='text' name='prefs_imagesuffix' value='$prefs_imagesuffix'></div>
 	 </div>";
 	 
-echo"<div class='form-line'>
-		<label>$lang[f_prefs_maximage]</label>
-		<div class='form-controls'>
+echo"<div class='control-group'>
+		<label class='control-label'>$lang[f_prefs_maximage]</label>
+		<div class='controls'>
 		<input class='span2' type='text' name='prefs_maximagewidth' value='$prefs_maximagewidth'> x	<input class='span2' type='text' name='prefs_maximageheight' value='$prefs_maximageheight'>
 		</div>
 	 </div>";
 	 
-echo"<div class='form-line'>
-		<label>$lang[f_prefs_filesuffix]</label>
-		<div class='form-controls'><input class='span6' type='text' name='prefs_filesuffix' value='$prefs_filesuffix'></div>
+echo"<div class='control-group'>
+		<label class='control-label'>$lang[f_prefs_filesuffix]</label>
+		<div class='controls'><input class='span6' type='text' name='prefs_filesuffix' value='$prefs_filesuffix'></div>
 	 </div>";
 	 
-echo"<div class='form-line'>
-		<label>$lang[f_prefs_maxfilesize]</label>
-		<div class='form-controls'><input class='span6' type='text' name='prefs_maxfilesize' value='$prefs_maxfilesize'></div>
+echo"<div class='control-group'>
+		<label class='control-label'>$lang[f_prefs_maxfilesize]</label>
+		<div class='controls'><input class='span6' type='text' name='prefs_maxfilesize' value='$prefs_maxfilesize'></div>
 	 </div>";
 
 
-echo"<div class='form-line'>
-		<label>$lang[f_prefs_showfilesize]</label>
-		<div class='form-controls'>";
+echo"<div class='control-group'>
+		<label class='control-label'>$lang[f_prefs_showfilesize]</label>
+		<div class='controls'>";
 			 
 if($prefs_showfilesize == "yes") {
 	$checked_sfs_yes = "selected";
@@ -202,7 +201,7 @@ if($prefs_showfilesize == "yes") {
 	$checked_sfs_no = "selected";
 }
 
-echo"<select name='prefs_showfilesize'>";
+echo"<select name='prefs_showfilesize' class='span3'>";
 	echo"<option $checked_sfs_yes value='yes'>$lang[yes]</option>";
 	echo"<option $checked_sfs_no value='no'>$lang[no]</option>";
 echo"</select>";
@@ -226,9 +225,9 @@ echo"<fieldset>";
 echo"<legend>$lang[f_prefs_layout]</legend>";
 
 
-echo"<div class='form-line'>
-		<label>$lang[f_prefs_active_template]</label>
-		<div class='form-controls'>";
+echo"<div class='control-group'>
+		<label class='control-label'>$lang[f_prefs_active_template]</label>
+		<div class='controls'>";
 
 $arr_Styles = get_all_templates();
 
@@ -283,11 +282,11 @@ echo"</fieldset>";
 echo"<fieldset>";
 echo"<legend>$lang[f_prefs_global_header]</legend>";
 
-echo"<div class='form-line'>
-			<label>&lt;head&gt;<br>...<br>&lt;/head&gt;</label>";
+echo"<div class='control-group'>
+			<label class='control-label'>&lt;head&gt;<br>...<br>&lt;/head&gt;</label>";
 
-echo"<div class='form-controls'>
-		<textarea name='prefs_pagesglobalhead' class='span6' rows='10'>$prefs_pagesglobalhead</textarea>
+echo"<div class='controls'>
+		<textarea name='prefs_pagesglobalhead' class='span12' rows='10'>$prefs_pagesglobalhead</textarea>
 		</div>";
 		
 echo"</div>";
@@ -304,9 +303,9 @@ echo"<fieldset>";
 echo"<legend>$lang[system_statistics]</legend>";
 
 
-echo"<div class='form-line'>
-		<label>$lang[activate_logfile]</label>
-		<div class='form-controls'>";
+echo"<div class='control-group'>
+		<label class='control-label'>$lang[activate_logfile]</label>
+		<div class='controls'>";
 		
 if($prefs_logfile == "on") {
 	$selected_on = "selected";
@@ -327,9 +326,9 @@ echo"</div>
 	 
 	 
 	 
-echo"<div class='form-line'>
-		<label>$lang[activate_xml_sitemap]</label>
-		<div class='form-controls'>";
+echo"<div class='control-group'>
+		<label class='control-label'>$lang[activate_xml_sitemap]</label>
+		<div class='controls'>";
 		
 if($prefs_xml_sitemap == "on") {
 	$sel_xml_on = "selected";
@@ -360,4 +359,7 @@ echo"<input type='submit' class='btn btn-success' name='saveprefs' value='$lang[
 echo"</div>";
 
 echo"</form>";
+
+echo '</div></div>';
+
 ?>

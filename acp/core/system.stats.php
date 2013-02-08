@@ -45,8 +45,8 @@ $logfiles = glob("$log_dir/logfile*");
 
 echo"<fieldset>";
 echo"<legend>$lang[select_logfile]</legend>";
-echo"<form action='$_SERVER[PHP_SELF]?tn=system&sub=stats' method='POST'>";
-echo"<select name='select_logfile' size='1'>";
+echo"<form action='$_SERVER[PHP_SELF]?tn=system&sub=stats' method='POST' class='form-inline'>";
+echo"<select name='select_logfile'>";
 
 foreach($logfiles as $fn) {
 	
@@ -105,7 +105,7 @@ $sql = "SELECT * FROM fc_logfile
 				ORDER BY log_time DESC
 				LIMIT $start, $entries_per_page";
 
-
+unset($result);
 foreach ($dbh->query($sql) as $row) {
 	$result[] = $row;
 }
@@ -129,7 +129,7 @@ echo"<p style='background:#ddd;padding:4px;'><b>$month $get_year</b> » $cnt_ent
 echo"<div style='float:left;width:200px;padding:8px;'>";
 
 
-echo"<table width='100%' cellpadding='2' cellspacing='1' border='0'>";
+echo"<table class='table table-condensed'>";
 
 arsort($stat_result);
 

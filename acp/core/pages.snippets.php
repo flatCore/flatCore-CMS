@@ -180,10 +180,11 @@ if((($_POST[snip_id]) OR ($modus == "update")) AND (!isset($delete_snip_id)))  {
 
 show_editor_switch($tn,$sub);
 
+echo '<div class="row-fluid"><div class="span12">';
 
 echo"<fieldset>";
 echo"<legend>$lang[snippets]</legend>";
-echo"<form action='$_SERVER[PHP_SELF]?tn=pages&sub=snippets' method='POST' name='sel_snippet'>";
+echo"<form action='$_SERVER[PHP_SELF]?tn=pages&sub=snippets' method='POST' name='sel_snippet' class='form-horizontal'>";
 
 echo"<select name='snip_id'>";
 
@@ -235,6 +236,8 @@ if($modus == "new") {
 
 echo"</form>";
 echo"</fieldset>";
+
+echo '</div></div>';
 
 
 ?>

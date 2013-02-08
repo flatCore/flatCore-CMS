@@ -3,7 +3,10 @@
 //prohibit unauthorized access
 require("core/access.php");
 
-echo"<h3>Backup</h3>";
+echo '<fieldset>';
+echo"<legend>Backup</legend>";
+echo"<p>$lang[backup_description]</p>";
+echo '</fieldset>';
 
 
 $data_folder = "../" . FC_CONTENT_DIR . "/SQLite";
@@ -12,7 +15,7 @@ $data_folder = "../" . FC_CONTENT_DIR . "/SQLite";
 $dbfiles = glob("$data_folder/*.sqlite3");
 
 
-echo"<p>$lang[backup_description]</p>";
+
 
 foreach($dbfiles as $filename) {
 
