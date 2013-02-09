@@ -14,10 +14,8 @@ if($_POST[delete_snippet]) {
 	$delete_snip_id = (int) $_POST[snip_id];
 
 	$dbh = new PDO("sqlite:".CONTENT_DB);
-
 	$sql = "DELETE FROM fc_textlib
 			   WHERE textlib_id = $delete_snip_id";
-
   $cnt_changes = $dbh->exec($sql);
 
 	if($cnt_changes > 0){
@@ -49,13 +47,10 @@ if($_POST[save_snippet]) {
 	$snippet_title = clean_filename($_POST[snippet_title]);
 
 	$dbh = new PDO("sqlite:".CONTENT_DB);
-	
 	$sql = generate_sql_insert_str($pdo_fields,"fc_textlib");
-	
 	$sth = $dbh->prepare($sql);
 	
 	generate_bindParam_str($pdo_fields,$sth);
-
 	$sth->bindParam(':textlib_name', $snippet_title, PDO::PARAM_STR);
 	
 	$cnt_changes = $sth->execute();
@@ -90,15 +85,12 @@ if($_POST[update_snippet]) {
 	);
 	
 	$snip_id = (int) $_POST[snip_id];
-
 	$snippet_title = clean_filename($_POST[snippet_title]);
 
 	$dbh = new PDO("sqlite:".CONTENT_DB);
-	
 	$sql = generate_sql_update_str($pdo_fields,"fc_textlib","WHERE textlib_id = $snip_id");
 	$sth = $dbh->prepare($sql);
 
-				
 	$sth->bindParam(':textlib_name', $snippet_title, PDO::PARAM_STR);
 	$sth->bindParam(':textlib_content', $_POST[textlib_content], PDO::PARAM_STR);
 	
@@ -158,7 +150,6 @@ if((($_POST[snip_id]) OR ($modus == "update")) AND (!isset($delete_snip_id)))  {
     }
     
 		$dbh = new PDO("sqlite:".CONTENT_DB);
-
 		$sql = "SELECT * FROM fc_textlib WHERE textlib_id = $snip_id ";
 
 		$result = $dbh->query($sql);
@@ -171,7 +162,6 @@ if((($_POST[snip_id]) OR ($modus == "update")) AND (!isset($delete_snip_id)))  {
    				$$k = stripslashes($v);
 			}
 		}
-
 	$modus = "update";
 }
 
@@ -182,11 +172,11 @@ show_editor_switch($tn,$sub);
 
 echo '<div class="row-fluid"><div class="span12">';
 
-echo"<fieldset>";
-echo"<legend>$lang[snippets]</legend>";
-echo"<form action='$_SERVER[PHP_SELF]?tn=pages&sub=snippets' method='POST' name='sel_snippet' class='form-horizontal'>";
+echo '<fieldset>';
+echo "<legend>$lang[snippets]</legend>";
+echo "<form action='$_SERVER[PHP_SELF]?tn=pages&sub=snippets' method='POST' name='sel_snippet' class='form-horizontal'>";
 
-echo"<select name='snip_id'>";
+echo '<select name="snip_id">';
 
 for($i=0;$i<$cnt_snippets;$i++) {
 	$get_snip_id = $snippets_list[$i][textlib_id];
@@ -197,41 +187,44 @@ for($i=0;$i<$cnt_snippets;$i++) {
 			$sel = "selected";
 		}
 	
-	echo"<option value='$get_snip_id' $sel>$get_snip_name</option>";
+	echo "<option value='$get_snip_id' $sel>$get_snip_name</option>";
 } // eo $i
 
 
-echo"</select> ";
+echo '</select> ';
 
-echo"<input type='submit' class='btn' name='sel_snippet' value='$lang[edit]'>";
+echo "<input type='submit' class='btn' name='sel_snippet' value='$lang[edit]'>";
 
-echo"</form>";
-echo"</fieldset>";
-
-
-
-echo"<fieldset>";
-echo"<legend>$lang[tab_content]</legend>";
-echo"<form action='$_SERVER[PHP_SELF]?tn=pages&sub=snippets' method='POST'>";
-
-echo'<div class="form-line form-line-last">';
-echo"<label>$lang[filename]</label>";
-echo"<div class='form-controls'><input class='span5' type='text' name='snippet_title' value='$textlib_name'></div>";
-echo'</div>';
+echo '</form>';
+echo '</fieldset>';
 
 
-echo"<p>$lang[tab_content]<br />
-	<textarea class='$editor_class' id='textEditor' name='textlib_content'>$textlib_content</textarea>";
-echo"<input type='hidden' name='text' value='$text'>";
+
+echo '<fieldset>';
+echo "<legend>$lang[tab_content]</legend>";
+echo "<form action='$_SERVER[PHP_SELF]?tn=pages&sub=snippets' class='form-horizontal' method='POST'>";
+
+echo '<div class="control-group">';
+echo "<label class='control-label'>$lang[filename]</label>";
+echo "<div class='controls'><input class='span5' type='text' name='snippet_title' value='$textlib_name'></div>";
+echo '</div>';
+
+echo '<div class="control-group">';
+echo "<label class='control-label'>$lang[tab_content]</label>";
+echo '<div class="controls">';
+echo "<textarea class='$editor_class span12' id='textEditor' name='textlib_content'>$textlib_content</textarea>";
+echo "<input type='hidden' name='text' value='$text'>";
+echo '</div>';
+echo '</div>';
 
 if($modus == "new") {
-	echo"<div id='formfooter'><input type='submit' name='save_snippet' class='btn btn-success' value='$lang[save]'></div>";
+	echo "<div class='formfooter'><input type='submit' name='save_snippet' class='btn btn-success' value='$lang[save]'></div>";
 } else {
-	echo"<input type='hidden' name='snip_id' value='$snip_id'>";
-	echo"<div id='formfooter'>";
-	echo"<input type='submit' name='delete_snippet' class='btn btn-danger' value='$lang[delete]'> ";
-	echo"<input type='submit' name='update_snippet' class='btn btn-success' value='$lang[update]'>";
-	echo"</div>";
+	echo "<input type='hidden' name='snip_id' value='$snip_id'>";
+	echo '<div class="formfooter">';
+	echo "<input type='submit' name='delete_snippet' class='btn btn-danger' value='$lang[delete]'> ";
+	echo "<input type='submit' name='update_snippet' class='btn btn-success' value='$lang[update]'>";
+	echo '</div>';
 }
 
 echo"</form>";
