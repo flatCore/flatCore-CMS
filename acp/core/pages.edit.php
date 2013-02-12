@@ -389,6 +389,7 @@ $dbh = null;
 cache_lastedit();
 cache_keywords();
 mods_check_in();
+cache_url_paths();
 
 }
 

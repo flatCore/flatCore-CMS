@@ -3,8 +3,8 @@
  * flatCore - Free, Open Source, Content Management System
  * GNU General Public License (license.txt)
  *
- * copyright 2010-2012, Patrick Konstandin
- * Information and contribution at http://www.flatfiler.de
+ * copyright 2010-2013, Patrick Konstandin
+ * Information and contribution at http://www.flatcore.de
  * E-Mail: support@flatfiler.de
  */
  
@@ -53,18 +53,26 @@ if($query != "") {
 		include(FC_CONTENT_DIR . "/cache/active_mods.php");
 		$cnt_active_mods = count($active_mods);
 		
+		include(FC_CONTENT_DIR . "/cache/active_urls.php");
+		if(in_array("$query", $existing_url)) {
+			$query_is_cached = true;
+		}
+		
 		for($i=0;$i<$cnt_active_mods;$i++) {
 			
-			$str = $active_mods[$i][page_permalink];
-			$str_length = strlen($str);
+			$mod_permalink = $active_mods[$i][page_permalink];
+			$permalink_length = strlen($mod_permalink);
 			
-			if(strpos("$query", "$str") !== false) {
+			if(strpos("$query", "$mod_permalink") !== false) {
 						
-				if(strncmp($str, $query, $str_length) == 0) {
-        			$mod_slug = substr($query, $str_length);
-        			$fct_slug = substr("$query",0,$str_length); // cut filenames (set by modules)
-    			}
+				if(strncmp($mod_permalink, $query, $permalink_length) == 0) {
+        			$mod_slug = substr($query, $permalink_length);
+        			$fct_slug = substr("$query",0,$permalink_length);
+        			if($query_is_cached == true) {
+	        			$fct_slug = $query;
+        			}
     		}
+    	}
 			
 		}
 	

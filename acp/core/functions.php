@@ -612,9 +612,9 @@ function delete_cache_file($file='cache_mostclicked') {
 
 /**
  * check in active modules
- * generate list for .. /cache/ ..
+ * generate array from pages containing a module
+ * store in ... cache/active_mods.php
  */
-
 
 function mods_check_in() {
 
@@ -628,7 +628,6 @@ function mods_check_in() {
 	$dbh = null;
 	
 	$count_result = count($result);
-	
 	$x = 0;
 	for($i=0;$i<$count_result;$i++) {
 	
@@ -641,17 +640,46 @@ function mods_check_in() {
 	}
 	
 	$str = "<?php\n$string\n?>";
+		
+	$file = "../" . FC_CONTENT_DIR . "/cache/active_mods.php";
+	file_put_contents($file, $str, LOCK_EX);
+
+}
+
+
+/**
+ * cache all saved url paths
+ * generate array from pages where permalink is not empty
+ * store in ... cache/active_urls.php
+ */
+
+function cache_url_paths() {
+
+	$dbh = new PDO("sqlite:".CONTENT_DB);
+	$sql = "SELECT * FROM fc_pages";
 	
+	foreach ($dbh->query($sql) as $row) {
+		$result[] = $row;
+	}  
 	
-		$file = "../" . FC_CONTENT_DIR . "/cache/active_mods.php";
-		file_put_contents($file, $str, LOCK_EX);
-
-
-
-} //  eo function
-
-
-
+	$dbh = null;
+	
+	$count_result = count($result);
+	
+	$x = 0;
+	$string = "\$existing_url = array();\n";
+	for($i=0;$i<$count_result;$i++) {
+		
+		if($result[$i][page_permalink] != "") {
+			$string .= "\$existing_url[$x] = \"" . $result[$i][page_permalink] . "\";\n";
+			$x++;
+		}
+	}
+	
+	$str = "<?php\n$string\n?>";
+	$file = "../" . FC_CONTENT_DIR . "/cache/active_urls.php";
+	file_put_contents($file, $str, LOCK_EX);
+}
 
 
 /**
