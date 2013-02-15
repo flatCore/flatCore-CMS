@@ -15,22 +15,15 @@ $lang = array();
 $lang['legend_login']				= "Login";
 $lang['legend_register']			= "Register";
 $lang['legend_delete_account']		= "Delete Account";
-
 $lang['legend_required_fields']		= "Required fields";
 $lang['legend_optional_fields']		= "Optional Information";
-
 $lang['legend_adress_fields']		= "Adress";
 $lang['legend_access_data']			= "Login details";
-
 $lang['legend_avatar']				= "Avatar";
-
 $lang['legend_searchbox']			= "Search site";
-
 $lang['legend_lastedit']			= "Last edit";
 $lang['legend_mostclicked']			= "Most viewed";
 $lang['legend_tags']				= "Tags";
-
-
 $lang['legend_toc']					= "Contents";
 
 $lang['headline_editprofile']		= "Edit Profile";
@@ -38,6 +31,8 @@ $lang['headline_searchresults']		= "Search";
 
 $lang['title_404']					= "404 | Page not found";
 $lang['msg_404'] 					= "Sorry, the page does not exist";
+
+$lang['menu'] = 'Menu';
 
 /* Labels */
 $lang['label_login']			= "Login";

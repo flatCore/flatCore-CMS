@@ -166,6 +166,11 @@ $smarty->assign("p","$p");
 $smarty->assign("fc_inc_dir", FC_INC_DIR);
 
 
+foreach($lang as $key => $val) {
+	$smarty->assign("lang_$key", $val);
+}
+
+
 // display the template
 $smarty->display('index.tpl');
 

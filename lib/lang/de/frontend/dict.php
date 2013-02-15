@@ -30,6 +30,8 @@ $lang['headline_searchresults'] = "Suche";
 $lang['title_404'] = "404 | Seite nicht gefunden";
 $lang['msg_404'] = "Sorry, die Seite existiert nicht (oder nicht mehr).";
 
+$lang['menu'] = 'Menü';
+
 /* Labels */
 $lang['label_login'] = "Login";
 $lang['label_psw'] = "Passwort";
