@@ -44,6 +44,43 @@
 {$modul_head_enhanced}
 {$prefs_pagesglobalhead}
 
+{literal}
+<script type="text/javascript">
+window.addEvent('domready', function() {
+
+	var wsize = window.getSize();
+	
+	if(wsize.x < 767) {
+		var myVerticalSlide = new Fx.Slide('top-nav').hide();
+		$$('.nav-toggle').addEvent('click', function(event){
+		    event.stop();
+		    myVerticalSlide.toggle();
+		    $('nav_toggle').toggleClass('nav-toggle-open');
+		  });
+	}
+	
+	window.addEvent('resize', function() { 
+	  var wsize = window.getSize();
+	  	 if(wsize.x < 767) {
+				var myVerticalSlide = new Fx.Slide('top-nav').hide();
+				$$('.nav-toggle').addEvent('click', function(event){
+				    event.stop();
+				    myVerticalSlide.toggle();
+				  });
+			} else {
+				var myVerticalSlide = new Fx.Slide('top-nav').show();
+			}
+	
+	});
+
+
+});
+
+
+
+</script>
+{/literal}
+
 <!-- 
 	 
            / _| | __ _| |_  / __\___  _ __ ___ 

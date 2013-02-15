@@ -265,7 +265,6 @@ nav#top-nav {
 	text-decoration: none;
 	padding: 8px 10px 10px 10px;
 	margin-right: 1px;
-	height: 80px;
 	background: #111 url('../images/navButton.png') repeat-x left bottom;
 	color: #69f;
 	-webkit-transition: background 0.5s linear, color 0.5s linear;
@@ -425,6 +424,27 @@ div.pagination a {
 	background: transparent url(../images/white50.png) repeat top left;
 }
 
+a.nav-toggle {  
+	display: none;
+	background: #333 url(../images/nav-toggle.png) no-repeat right top; 
+	font-size: 16px;
+	height: 25px;
+	text-align: right;
+	color: #999;
+	text-decoration: none;
+	margin: 0;
+	padding: 0px 40px 0px 0px;
+}
+
+a.nav-toggle:hover {
+	background: #333 url(../images/nav-toggle.png) no-repeat right top; 
+}
+
+a.nav-toggle-open,
+a.nav-toggle-open:hover {  
+	background: #333 url(../images/nav-toggle.png) no-repeat right bottom; 
+}
+
 
 /**
  * layout max-width 480px
@@ -468,40 +488,43 @@ div.pagination a {
      padding: 0;
  }
  
-	ul#navlist {
-		text-align: center;
-		padding: 5px 0;
-		margin: 0 5px;
-	}
- 
  	ul#navlist li {
  		float: none;
-		display: inline;
 	}
-	
-	ul#navlist li.last {
-		margin-right: 0;
- }
  
 
 	ul#navlist li a,
 	ul#navlist li a:visited {
 		font-size: 14px;
-		line-height: 35px;
-		padding: 5px 10px;
-		margin: 0 2px 2px 0;
-		border: 1px solid #000;
-		background: #111 url('../images/navButton.png') repeat-x left bottom;
-		color: #69f;
-		border-radius: 5px;
+		line-height: 14px;
+		padding: 2px 5px;
+		margin: 0;
+		border-bottom: 1px solid #111;
+		background-image: none !important;
+		background-color: #222;
+		border-top-left-radius: 0 !important;
+		border-top-right-radius: 0 !important;
+		display: block;
+		text-align: left;
+		color: #eee !important;
 	}
 	
 	ul#navlist li a.mainmenu_current {
-		color: #111;
+		color: #ddd;
 		background-image: none;
-		background: #69e url('../images/navButton.png') repeat-x left bottom;
+		background-color: #111;
+		border: 0;
+		border-bottom: 1px solid #111;
 	}
 	
+	
+  nav#top-nav ul {   
+    height: auto;  
+  }
+  
+  a#nav_toggle {
+  	display: block;
+  } 
 
 }
 
@@ -542,34 +565,44 @@ div.pagination a {
 	}
 	
 	#navlist {
-		padding: 5px 0;
-		margin: 0 5px;
-		text-align: center;
+		padding: 0;
+		margin: 0;
 	}
+	
 	
  	ul#navlist li {
  		float: none;
 		display: inline;
 	}
 	
-	#navlist li a, #navlist li a:link, #navlist li a:visited,
-	#navlist li a:focus, #navlist li a:hover, #navlist li a:active {
+	ul#navlist li a,
+	ul#navlist li a:visited {
 		font-size: 14px;
-		line-height: 35px;
-		padding: 7px 10px;
+		line-height: 14px;
+		padding: 2px 5px;
 		margin: 0;
-		border: 1px solid #000;
-		background: #111 url('../images/navButton.png') repeat-x left bottom;
-		color: #69f;
-		border-radius: 5px;
+		border-bottom: 1px solid #111;
+		background-image: none !important;
+		background-color: #222;
+		border-top-left-radius: 0 !important;
+		border-top-right-radius: 0 !important;
+		display: block;
+		text-align: left;
+		color: #eee !important;
 	}
 	
-	#navlist li a.mainmenu_current {
-		color: #111;
+	ul#navlist li a.mainmenu_current {
+		color: #ddd;
 		background-image: none;
-		background: #69e url('../images/navButton.png') repeat-x left bottom;
+		background-color: #111;
+		border: 0;
+		border-bottom: 1px solid #111;
 	}
+	
 
+  a#nav_toggle {
+  	display: block;
+  } 
 }
 
 
@@ -591,6 +624,7 @@ div.pagination a {
 		float: left;
 		width: 260px;
 	}
+	
 
 }
 
