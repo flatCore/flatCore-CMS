@@ -72,8 +72,8 @@ class Smarty_Internal_Utility {
             $_compileDirs = new RecursiveDirectoryIterator($_dir);
             $_compile = new RecursiveIteratorIterator($_compileDirs);
             foreach ($_compile as $_fileinfo) {
-                if (substr($_fileinfo->getBasename(),0,1) == '.' || strpos($_fileinfo, '.svn') !== false) continue;
                 $_file = $_fileinfo->getFilename();
+                if (substr(basename($_fileinfo->getPathname()),0,1) == '.' || strpos($_file, '.svn') !== false) continue;
                 if (!substr_compare($_file, $extention, - strlen($extention)) == 0) continue;
                 if ($_fileinfo->getPath() == substr($_dir, 0, -1)) {
                    $_template_file = $_file;
@@ -87,6 +87,7 @@ class Smarty_Internal_Utility {
                     $_tpl = $smarty->createTemplate($_template_file,null,null,null,false);
                     if ($_tpl->mustCompile()) {
                         $_tpl->compileTemplateSource();
+                        $_count++;
                         echo ' compiled in  ', microtime(true) - $_start_time, ' seconds';
                         flush();
                     } else {
@@ -135,8 +136,8 @@ class Smarty_Internal_Utility {
             $_compileDirs = new RecursiveDirectoryIterator($_dir);
             $_compile = new RecursiveIteratorIterator($_compileDirs);
             foreach ($_compile as $_fileinfo) {
-                if (substr($_fileinfo->getBasename(),0,1) == '.' || strpos($_fileinfo, '.svn') !== false) continue;
                 $_file = $_fileinfo->getFilename();
+                if (substr(basename($_fileinfo->getPathname()),0,1) == '.' || strpos($_file, '.svn') !== false) continue;
                 if (!substr_compare($_file, $extention, - strlen($extention)) == 0) continue;
                 if ($_fileinfo->getPath() == substr($_dir, 0, -1)) {
                     $_config_file = $_file;
@@ -150,6 +151,7 @@ class Smarty_Internal_Utility {
                     $_config = new Smarty_Internal_Config($_config_file, $smarty);
                     if ($_config->mustCompile()) {
                         $_config->compileConfigSource();
+                        $_count++;
                         echo ' compiled in  ', microtime(true) - $_start_time, ' seconds';
                         flush();
                     } else {
@@ -189,20 +191,28 @@ class Smarty_Internal_Utility {
             $smarty->caching = false;
             $tpl = new $smarty->template_class($resource_name, $smarty);
             $smarty->caching = $_save_stat;
+
+            // remove from template cache
+            $tpl->source; // have the template registered before unset()
+            if ($smarty->allow_ambiguous_resources) {
+                $_templateId = $tpl->source->unique_resource . $tpl->cache_id . $tpl->compile_id;
+            } else {
+                $_templateId = $smarty->joined_template_dir . '#' . $resource_name . $tpl->cache_id . $tpl->compile_id;
+            }
+            if (isset($_templateId[150])) {
+                $_templateId = sha1($_templateId);
+            }
+            unset($smarty->template_objects[$_templateId]);
+
             if ($tpl->source->exists) {
                  $_resource_part_1 = basename(str_replace('^', '/', $tpl->compiled->filepath));
                  $_resource_part_1_length = strlen($_resource_part_1);
-                // remove from template cache
-                unset($smarty->template_objects[sha1($smarty->joined_template_dir.$tpl->template_resource . $tpl->cache_id . $tpl->compile_id)]);
             } else {
-                // remove from template cache
-                unset($smarty->template_objects[sha1($smarty->joined_template_dir.$tpl->template_resource . $tpl->cache_id . $tpl->compile_id)]);
                 return 0;
             }
+
             $_resource_part_2 = str_replace('.php','.cache.php',$_resource_part_1);
             $_resource_part_2_length = strlen($_resource_part_2);
-        } else {
-            $_resource_part = '';
         }
         $_dir = $_compile_dir;
         if ($smarty->use_sub_dirs && isset($_compile_id)) {
@@ -213,14 +223,19 @@ class Smarty_Internal_Utility {
             $_compile_id_part_length = strlen($_compile_id_part);
         }
         $_count = 0;
-        $_compileDirs = new RecursiveDirectoryIterator($_dir);
+        try {
+            $_compileDirs = new RecursiveDirectoryIterator($_dir);
+        // NOTE: UnexpectedValueException thrown for PHP >= 5.3
+        } catch (Exception $e) {
+            return 0;
+        }
         $_compile = new RecursiveIteratorIterator($_compileDirs, RecursiveIteratorIterator::CHILD_FIRST);
         foreach ($_compile as $_file) {
-            if (substr($_file->getBasename(), 0, 1) == '.' || strpos($_file, '.svn') !== false)
+            if (substr(basename($_file->getPathname()), 0, 1) == '.' || strpos($_file, '.svn') !== false)
                 continue;
-            
+
             $_filepath = (string) $_file;
-            
+
             if ($_file->isDir()) {
                 if (!$_compile->isDot()) {
                     // delete folder if empty
@@ -229,10 +244,10 @@ class Smarty_Internal_Utility {
             } else {
                 $unlink = false;
                 if ((!isset($_compile_id) || (isset($_filepath[$_compile_id_part_length]) && !strncmp($_filepath, $_compile_id_part, $_compile_id_part_length)))
-                    && (!isset($resource_name) 
-                        || (isset($_filepath[$_resource_part_1_length]) 
-                            && substr_compare($_filepath, $_resource_part_1, -$_resource_part_1_length, $_resource_part_1_length) == 0) 
-                        || (isset($_filepath[$_resource_part_2_length]) 
+                    && (!isset($resource_name)
+                        || (isset($_filepath[$_resource_part_1_length])
+                            && substr_compare($_filepath, $_resource_part_1, -$_resource_part_1_length, $_resource_part_1_length) == 0)
+                        || (isset($_filepath[$_resource_part_2_length])
                             && substr_compare($_filepath, $_resource_part_2, -$_resource_part_2_length, $_resource_part_2_length) == 0))) {
                     if (isset($exp_time)) {
                         if (time() - @filemtime($_filepath) >= $exp_time) {
@@ -242,7 +257,7 @@ class Smarty_Internal_Utility {
                         $unlink = true;
                     }
                 }
-                
+
                 if ($unlink && @unlink($_filepath)) {
                     $_count++;
                 }
@@ -287,6 +302,8 @@ class Smarty_Internal_Utility {
             echo "Testing template directory...\n";
         }
 
+        $_stream_resolve_include_path = function_exists('stream_resolve_include_path');
+
         // test if all registered template_dir are accessible
         foreach($smarty->getTemplateDir() as $template_dir) {
             $_template_dir = $template_dir;
@@ -295,11 +312,17 @@ class Smarty_Internal_Utility {
             if (!$template_dir) {
                 if ($smarty->use_include_path && !preg_match('/^([\/\\\\]|[a-zA-Z]:[\/\\\\])/', $_template_dir)) {
                     // try PHP include_path
-                    if (($template_dir = Smarty_Internal_Get_Include_Path::getIncludePath($_template_dir)) !== false) {
+                    if ($_stream_resolve_include_path) {
+                        $template_dir = stream_resolve_include_path($_template_dir);
+                    } else {
+                        $template_dir = Smarty_Internal_Get_Include_Path::getIncludePath($_template_dir);
+                    }
+
+                    if ($template_dir !== false) {
                         if ($errors === null) {
                             echo "$template_dir is OK.\n";
                         }
-                        
+
                         continue;
                     } else {
                         $status = false;
@@ -320,11 +343,11 @@ class Smarty_Internal_Utility {
                     } else {
                         $errors['template_dir'] = $message;
                     }
-                    
+
                     continue;
                 }
             }
-            
+
             if (!is_dir($template_dir)) {
                 $status = false;
                 $message = "FAILED: $template_dir is not a directory";
@@ -356,7 +379,7 @@ class Smarty_Internal_Utility {
         // test if registered compile_dir is accessible
         $__compile_dir = $smarty->getCompileDir();
         $_compile_dir = realpath($__compile_dir);
-        if (!$__compile_dir) {
+        if (!$_compile_dir) {
             $status = false;
             $message = "FAILED: {$__compile_dir} does not exist";
             if ($errors === null) {
@@ -410,11 +433,17 @@ class Smarty_Internal_Utility {
             if (!$plugin_dir) {
                 if ($smarty->use_include_path && !preg_match('/^([\/\\\\]|[a-zA-Z]:[\/\\\\])/', $_plugin_dir)) {
                     // try PHP include_path
-                    if (($plugin_dir = Smarty_Internal_Get_Include_Path::getIncludePath($_plugin_dir)) !== false) {
+                    if ($_stream_resolve_include_path) {
+                        $plugin_dir = stream_resolve_include_path($_plugin_dir);
+                    } else {
+                        $plugin_dir = Smarty_Internal_Get_Include_Path::getIncludePath($_plugin_dir);
+                    }
+
+                    if ($plugin_dir !== false) {
                         if ($errors === null) {
                             echo "$plugin_dir is OK.\n";
                         }
-                        
+
                         continue;
                     } else {
                         $status = false;
@@ -435,11 +464,11 @@ class Smarty_Internal_Utility {
                     } else {
                         $errors['plugins_dir'] = $message;
                     }
-                    
+
                     continue;
                 }
             }
-            
+
             if (!is_dir($plugin_dir)) {
                 $status = false;
                 $message = "FAILED: $plugin_dir is not a directory";
@@ -481,11 +510,11 @@ class Smarty_Internal_Utility {
             echo "Testing cache directory...\n";
         }
 
-        
+
         // test if all registered cache_dir is accessible
         $__cache_dir = $smarty->getCacheDir();
         $_cache_dir = realpath($__cache_dir);
-        if (!$__cache_dir) {
+        if (!$_cache_dir) {
             $status = false;
             $message = "FAILED: {$__cache_dir} does not exist";
             if ($errors === null) {
@@ -536,11 +565,17 @@ class Smarty_Internal_Utility {
             if (!$config_dir) {
                 if ($smarty->use_include_path && !preg_match('/^([\/\\\\]|[a-zA-Z]:[\/\\\\])/', $_config_dir)) {
                     // try PHP include_path
-                    if (($config_dir = Smarty_Internal_Get_Include_Path::getIncludePath($_config_dir)) !== false) {
+                    if ($_stream_resolve_include_path) {
+                        $config_dir = stream_resolve_include_path($_config_dir);
+                    } else {
+                        $config_dir = Smarty_Internal_Get_Include_Path::getIncludePath($_config_dir);
+                    }
+
+                    if ($config_dir !== false) {
                         if ($errors === null) {
                             echo "$config_dir is OK.\n";
                         }
-                        
+
                         continue;
                     } else {
                         $status = false;
@@ -561,11 +596,11 @@ class Smarty_Internal_Utility {
                     } else {
                         $errors['config_dir'] = $message;
                     }
-                    
+
                     continue;
                 }
             }
-            
+
             if (!is_dir($config_dir)) {
                 $status = false;
                 $message = "FAILED: $config_dir is not a directory";

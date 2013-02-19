@@ -100,9 +100,11 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
     public function writeCachedContent(Smarty_Internal_Template $_template, $content)
     {
         if (Smarty_Internal_Write_File::writeFile($_template->cached->filepath, $content, $_template->smarty) === true) {
-            $_template->cached->timestamp = filemtime($_template->cached->filepath);
+            $_template->cached->timestamp = @filemtime($_template->cached->filepath);
             $_template->cached->exists = !!$_template->cached->timestamp;
-            return true;
+            if ($_template->cached->exists) {
+                return true;
+            }
         }
         return false;
     }
@@ -151,13 +153,22 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
             $smarty->caching = true;
             $tpl = new $smarty->template_class($resource_name, $smarty);
             $smarty->caching = $_save_stat;
+
+            // remove from template cache
+            $tpl->source; // have the template registered before unset()
+            if ($smarty->allow_ambiguous_resources) {
+                $_templateId = $tpl->source->unique_resource . $tpl->cache_id . $tpl->compile_id;
+            } else {
+                $_templateId = $smarty->joined_template_dir . '#' . $resource_name . $tpl->cache_id . $tpl->compile_id;
+            }
+            if (isset($_templateId[150])) {
+                $_templateId = sha1($_templateId);
+            }
+            unset($smarty->template_objects[$_templateId]);
+
             if ($tpl->source->exists) {
                 $_resourcename_parts = basename(str_replace('^', '/', $tpl->cached->filepath));
-                // remove from template cache
-                unset($smarty->template_objects[sha1($smarty->joined_template_dir.$tpl->template_resource . $tpl->cache_id . $tpl->compile_id)]);
             } else {
-                // remove from template cache
-                unset($smarty->template_objects[sha1($smarty->joined_template_dir.$tpl->template_resource . $tpl->cache_id . $tpl->compile_id)]);
                 return 0;
             }
         }
@@ -167,7 +178,7 @@ class Smarty_Internal_CacheResource_File extends Smarty_CacheResource {
             $_cacheDirs = new RecursiveDirectoryIterator($_dir);
             $_cache = new RecursiveIteratorIterator($_cacheDirs, RecursiveIteratorIterator::CHILD_FIRST);
             foreach ($_cache as $_file) {
-                if (substr($_file->getBasename(),0,1) == '.' || strpos($_file, '.svn') !== false) continue;
+                if (substr(basename($_file->getPathname()),0,1) == '.' || strpos($_file, '.svn') !== false) continue;
                 // directory ?
                 if ($_file->isDir()) {
                     if (!$_cache->isDot()) {
