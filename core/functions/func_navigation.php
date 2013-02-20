@@ -223,6 +223,7 @@ function show_this_level($num) {
 /**
  * Build an unordered list <ul> with al pages and sub-pages
  * sort by page_sort
+ * use {$fc_sitemap} in your templates
  * @return string
 */
 
@@ -235,7 +236,7 @@ function show_sitemap() {
 	
 	$cnt_results = count($result);
 	
-	$sm_string .= "<ul>";
+	$sm_string .= '<ul class="fc-sitemap">';
 	
 	for($i=0;$i<$cnt_results;$i++) {
 	
@@ -254,7 +255,7 @@ function show_sitemap() {
 		
 		unset($next_level);
 		if($points_of_item[$i] > $points_of_item[$i-1]) {
-			$next_level = "<ul>";
+			$next_level = "<ul class='fc-sitemap-$points_of_item[$i]'>";
 		}
 			
 		unset($end_level);
@@ -270,10 +271,9 @@ function show_sitemap() {
 		}
 		
 		$sm_string .= "
-			$next_level
-			$end_level
-			<li><a href='$target' title='$page_title'>$page_linkname</a><span>$page_title</span></li>
-			";
+		$next_level
+		$end_level
+		<li><a href='$target' title='$page_title'>$page_linkname</a><span>$page_title ($current_page_sort)</span></li>";
 	}
 
 	$sm_string .= "</ul>";	

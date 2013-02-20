@@ -22,27 +22,7 @@ if($p == "register") {
 		$smarty->assign('page_content', $output);
 	
 	} else {
-	
-		$smarty->assign("legend_register","$lang[legend_register]");
-		$smarty->assign("legend_required_fields","$lang[legend_required_fields]");
-		$smarty->assign("legend_optional_fields","$lang[legend_optional_fields]");
-		$smarty->assign("button_login","$lang[button_login]");
-		$smarty->assign("label_firstname","$lang[label_firstname]");
-		$smarty->assign("label_lastname","$lang[label_lastname]");
-		$smarty->assign("label_username","$lang[label_username]");
-		$smarty->assign("label_mail","$lang[label_mail]");
-		$smarty->assign("label_mailrepeat","$lang[label_mailrepeat]");
-		$smarty->assign("label_street","$lang[label_street]");
-		$smarty->assign("label_nr","$lang[label_nr]");
-		$smarty->assign("label_zip","$lang[label_zip]");
-		$smarty->assign("label_town","$lang[label_town]");
-		$smarty->assign("label_about_you","$lang[label_about_you]");
-		$smarty->assign("label_psw","$lang[label_psw]");
-		$smarty->assign("label_psw_repeat","$lang[label_psw_repeat]");
-		$smarty->assign("button_send_register","$lang[button_send_register]");
-		$smarty->assign("msg_register_intro","$lang[msg_register_intro]");
-		$smarty->assign("msg_register_outro","$lang[msg_register_outro]");
-	
+		
 		// INCLUDE/SHOW AGREEMENT TEXT
 		$agreement_txt = get_textlib("agreement_text");
 		$smarty->assign("agreement_text","$agreement_txt");
@@ -111,7 +91,11 @@ if($p == "password") {
 }
 
 if($p == "404") {
-	include("error.php");
+	header("HTTP/1.0 404 Not Found");
+	header("Status: 404 Not Found");
+	$smarty->assign('page_title', "404 Page Not Found");
+	$output = $smarty->fetch("404.tpl");
+	$smarty->assign('page_content', $output);
 	$show_404 = "false";
 }
 
@@ -126,9 +110,6 @@ if((in_array("$p", $a_allowed_p)) OR ($p == "")) {
 }
 
 if($show_404 == "true") {
-	$smarty->assign("msg_404", "$lang[msg_404]");
-	$smarty->assign("title_404", "$lang[title_404]");
-
 	$output = $smarty->fetch("404.tpl");
 	$smarty->assign('page_content', $output);
 }

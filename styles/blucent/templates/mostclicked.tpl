@@ -1,6 +1,6 @@
 
 
-<h6>{$legend_mostclicked}</h6>
+<h6>{$lang_legend_mostclicked}</h6>
 
 <ul class="arrow_list">
 {foreach item=nav from=$arr_mostclicked}

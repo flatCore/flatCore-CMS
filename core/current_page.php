@@ -50,16 +50,11 @@ if(is_array($page_contents)) {
 	$show_404 = "true";
 }
 
-
 $current_page_sort = "$page_sort";
-
 
 if($page_title == "") {
 	$page_title = "$prefs_pagetitle";
 }
-
-
-
 
 
 
@@ -68,13 +63,10 @@ if($page_title == "") {
  */
 
 if($page_modul != "") {
-	
 	include("modules/$page_modul/index.php");
 	$page_content = "$page_content $modul_content";
 	$smarty->assign('modul_head_enhanced', $modul_head_enhanced);
-
 }
-
 
 
 /**
@@ -83,6 +75,7 @@ if($page_modul != "") {
  
 $page_content = text_parser($page_content);
 
+
 /** 
  * custom theme functions
  */
@@ -90,7 +83,6 @@ $page_content = text_parser($page_content);
 if(is_file("styles/$fc_template/php/index.php")) {
 	include("styles/$fc_template/php/index.php");
 }
-
 
 $smarty->assign('page_content', "$page_content");
 $smarty->assign('page_title', "$page_title");
@@ -113,8 +105,6 @@ if($page_head_styles != "") {
 }
 
 $smarty->assign('page_head_enhanced', $page_head_enhanced);
-$smarty->assign("legend_searchbox","$lang[legend_searchbox]");
-$smarty->assign("lang_button_search","$lang[button_search]");
 
 $textlib_footer = text_parser($textlib_footer);
 $smarty->assign("textlib_footer","$textlib_footer");
@@ -136,18 +126,11 @@ if($textlib_global_extracontent != "") {
 }
 
 
-
-
-
-
-
-
 /**
  * tag cloud | most clicked | last edit
  */
 
 
-	
 /* last edit */
 $le_cache_file = FC_CONTENT_DIR . "/cache/cache_lastedit.php";
 if(is_file("$le_cache_file")) {
@@ -155,7 +138,7 @@ if(is_file("$le_cache_file")) {
 } else {
 	$arr_lastedit = get_lastedit();
 }
-$smarty->assign('legend_lastedit', $lang[legend_lastedit]);
+
 $smarty->assign('arr_lastedit', $arr_lastedit);
 
 
@@ -172,8 +155,8 @@ if(is_file("$mc_cache_file")) {
 	cache_most_clicked();
 }
 
-$smarty->assign('legend_mostclicked', $lang[legend_mostclicked]);
 $smarty->assign('arr_mostclicked', $arr_mostclicked);
+
 
 /* tags */
 $tc_cache_file = FC_CONTENT_DIR . "/cache/cache_keywords.html";
@@ -183,11 +166,7 @@ if(is_file("$tc_cache_file")) {
 	$page_keywords = get_keywords();
 }
 
-$smarty->assign('legend_tags', $lang[legend_tags]);
 $smarty->assign('page_keywords', $page_keywords);
-
-
-
 
 
 /**
@@ -224,9 +203,6 @@ if($page_usergroup != "") {
 }
 
 
-
-
-
 /**
  * draft pages for administrators only
  */
@@ -236,11 +212,6 @@ if(($page_status == "draft") AND ($_SESSION[user_class] != "administrator")){
 	$smarty->assign('page_content', $text);
 	$smarty->assign('extra_content', "");
 }
-
-
-
-
-
 
 
 

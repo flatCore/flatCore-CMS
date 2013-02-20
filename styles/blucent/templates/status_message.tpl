@@ -1,6 +1,6 @@
 <div class="{$msg_status}">
 
 	{$msg_title}
-	{$msg_text}
+	<p>{$msg_text}</p>
 
 </div>

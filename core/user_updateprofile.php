@@ -162,7 +162,7 @@ if($count > 0){
 	$smarty->assign("msg_status","success");
 	$smarty->assign("register_message","$lang[msg_delete_account_success]");
 	session_destroy();
-unset($_SESSION[user_nick]);
+	unset($_SESSION[user_nick]);
 } else {
 	$smarty->assign("msg_status","error");
 	$smarty->assign("register_message","$lang[msg_delete_account_error]");
@@ -182,10 +182,6 @@ if($fc_mod_rewrite == "auto") {
 } else {
 	$form_url = "$_SERVER[PHP_SELF]?p=profile";
 }
-
-
-$link_delete_avatar = "<br /><a href='$_SERVER[PHP_SELF]?p=profile&delete_avatar=true'>$lang[link_delete_avatar]</a>";
-
 
 if(is_file("content/avatars/".md5($_SESSION[user_nick]) . ".png")){
 
@@ -214,61 +210,19 @@ $smarty->assign('form_url', $form_url);
 $get_my_userdata = get_my_userdata();
 //example: $get_my_userdata[user_nick]
 
+$smarty->assign("user_nick","$_SESSION[user_nick]");
+$smarty->assign("get_firstname","$get_my_userdata[user_firstname]");
+$smarty->assign("get_lastname","$get_my_userdata[user_lastname]");
+$smarty->assign("get_street","$get_my_userdata[user_street]");
+$smarty->assign("get_nr","$get_my_userdata[user_street_nbr]");
+$smarty->assign("get_zip","$get_my_userdata[user_zipcode]");
+$smarty->assign("get_city","$get_my_userdata[user_city]");
+$smarty->assign("send_about","$get_my_userdata[user_public_profile]");
 
-	$smarty->assign("headline_editprofile","$lang[headline_editprofile]");
-	$smarty->assign("legend_adress_fields","$lang[legend_adress_fields]");
-	$smarty->assign("label_firstname","$lang[label_firstname]");
-	$smarty->assign("user_nick","$_SESSION[user_nick]");
-	$smarty->assign("get_firstname","$get_my_userdata[user_firstname]");
-	$smarty->assign("get_lastname","$get_my_userdata[user_lastname]");
-	$smarty->assign("get_street","$get_my_userdata[user_street]");
-	$smarty->assign("get_nr","$get_my_userdata[user_street_nbr]");
-	$smarty->assign("get_zip","$get_my_userdata[user_zipcode]");
-	$smarty->assign("get_city","$get_my_userdata[user_city]");
-	$smarty->assign("send_about","$get_my_userdata[user_public_profile]");
-	$smarty->assign("label_lastname","$lang[label_lastname]");
-	$smarty->assign("label_street","$lang[label_street]");
-	$smarty->assign("label_nr","$lang[label_nr]");
-	$smarty->assign("label_zip","$lang[label_zip]");
-	$smarty->assign("label_town","$lang[label_town]");
-	$smarty->assign("label_about_you","$lang[label_about_you]");
-	
-	$smarty->assign("legend_access_data","$lang[legend_access_data]");
-	$smarty->assign("msg_edit_psw","$lang[msg_edit_psw]");
-	
-	$smarty->assign("msg_edit_mail","$lang[msg_edit_mail]");
-	
-	$smarty->assign("label_psw","$lang[label_psw]");
-	$smarty->assign("label_psw_repeat","$lang[label_psw_repeat]");
-	
-	$smarty->assign("label_mail","$lang[label_mail]");
-	$smarty->assign("label_mailrepeat","$lang[label_mailrepeat]");
-	
-	$smarty->assign("legend_avatar","$lang[legend_avatar]");
-	$smarty->assign("msg_avatar","$lang[msg_avatar]");
-	
-	
-	
-	$smarty->assign("lang_button_save","$lang[button_save]");
-	$smarty->assign("lang_button_delete","$lang[button_delete]");
-	
-	$smarty->assign("legend_delete_account","$lang[legend_delete_account]");
-	$smarty->assign("msg_confirm_delete_account","$lang[msg_confirm_delete_account]");
-	$smarty->assign("msg_delete_account","$lang[msg_delete_account]");
-
-	$output = $smarty->fetch("profile_main.tpl");
-	$smarty->assign('page_content', $output);
-
-
-
-
+$output = $smarty->fetch("profile_main.tpl");
+$smarty->assign('page_content', $output);
 
 }
-
-
-
-
-
 
 
 

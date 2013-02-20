@@ -1,7 +1,5 @@
+<h3>{$headline_searchresults}</h3>
 
-<h3>
-{$headline_searchresults}
-</h3>
 <p>
 {$msg_searchresults}
 </p>

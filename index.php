@@ -155,6 +155,11 @@ $smarty->template_dir = 'styles/'.$fc_template.'/templates/';
 $smarty->compile_dir = 'content/cache/templates_c/';
 $smarty->cache_dir = 'content/cache/cache/';
 
+
+foreach($lang as $key => $val) {
+	$smarty->assign("lang_$key", $val);
+}
+
 require("core/user_management.php");
 require("core/switch.php");
 
@@ -164,11 +169,6 @@ $smarty->assign('pref_pagetitle', $pref_pagetitle);
 $smarty->assign('pref_pagesubtitle', $pref_pagesubtitle);
 $smarty->assign("p","$p");
 $smarty->assign("fc_inc_dir", FC_INC_DIR);
-
-
-foreach($lang as $key => $val) {
-	$smarty->assign("lang_$key", $val);
-}
 
 
 // display the template

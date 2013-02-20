@@ -1,6 +1,6 @@
 
 
-<h6>{$legend_lastedit}</h6>
+<h6>{$lang_legend_lastedit}</h6>
 
 <ul class="arrow_list">
 {foreach item=nav from=$arr_lastedit}
