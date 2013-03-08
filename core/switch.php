@@ -77,7 +77,7 @@ $cnt_textlibs = count($textlibs);
 
 for($i=0;$i<$cnt_textlibs;$i++) {
 	$textlib_key = "fc_snippet_" . str_replace("-","_",$textlibs[$i][textlib_name]);
-	$smarty->assign("$textlib_key", stripslashes($textlibs[$i][textlib_content]));
+	$smarty->assign("$textlib_key", text_parser(stripslashes($textlibs[$i][textlib_content])));
 }
 
 
