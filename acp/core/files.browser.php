@@ -47,7 +47,7 @@ if($deleteFile !== "") {
 		} else {
 			echo"<div class='alert alert-error'>$lang[msg_file_delete_error]</div>";
 		}
-	
+		
 	} else {
 		echo"<div class='alert alert-error'>File not found</div>";
 	}
@@ -65,36 +65,39 @@ $x=0;
 
 foreach($a_files as $file) {
 
-
-/* no files like . or .. or .filename */ 
-if((substr($file, 0, 1) == ".")) {
-	continue;
-}
-
-	$f_suffix = substr (strrchr ($file, "."), 1 );
-	$f_time = date ("YmdHis", filemtime("$path/$file"));
-	
-	if($_SESSION[prefs_showfilesize] == "yes") {
-		$f_size =  filesize("$path/$file");
+	/* no files like . or .. or .filename */ 
+	if((substr($file, 0, 1) == ".")) {
+		continue;
 	}
 	
-
-	$imgsize = getimagesize("$path/$file");
-
+	if($file == 'index.html') {
+		continue;
+	}
 	
+		$f_suffix = substr (strrchr ($file, "."), 1 );
+		$f_time = date ("YmdHis", filemtime("$path/$file"));
+		
+		if($_SESSION[prefs_showfilesize] == "yes") {
+			$f_size =  filesize("$path/$file");
+		}
+		
 	
-if($imgsize[0] > 0) {
-	$fileinfo[$x][filetype] = "image";
-} else {
-	$fileinfo[$x][filetype] = "other";
-}
-
-$fileinfo[$x][filename] = "$file";
-$fileinfo[$x][size] = "$f_size";
-$fileinfo[$x][suffix] = "$f_suffix";
-$fileinfo[$x][time] = "$f_time";
-
-$x++;
+		$imgsize = getimagesize("$path/$file");
+	
+		
+		
+	if($imgsize[0] > 0) {
+		$fileinfo[$x][filetype] = "image";
+	} else {
+		$fileinfo[$x][filetype] = "other";
+	}
+	
+	$fileinfo[$x][filename] = "$file";
+	$fileinfo[$x][size] = "$f_size";
+	$fileinfo[$x][suffix] = "$f_suffix";
+	$fileinfo[$x][time] = "$f_time";
+	
+	$x++;
 } // eol foreach 
 
 
@@ -109,26 +112,24 @@ $cnt_pages = ceil($nbr_of_files/$files_per_page);
 
 
 if(isset($_GET[start])) {
-$start = (int) $_GET[start];
+	$start = (int) $_GET[start];
 }
 
 if($start<0) {
-$start = 0;
+	$start = 0;
 }
 
 
 $end = $start+$files_per_page;
-
 $next_start = $start+$files_per_page;
 $prev_start = $start-$files_per_page;
 
 if($start>($nbr_of_files-$files_per_page)) {
-$next_start = $start;
+	$next_start = $start;
 }
 
-
 if($end>$nbr_of_files) {
-$end = $nbr_of_files;
+	$end = $nbr_of_files;
 }
 
 
@@ -141,34 +142,26 @@ $pag_forwardlink = "<a class='buttonLink' href='$_SERVER[PHP_SELF]?tn=filebrowse
 unset($pag_string);
 for($x=0;$x<$cnt_pages;$x++) {
 
-$aclass = "buttonLink";
-$page_start = $x*$files_per_page;
-$page_nbr = $x+1;
-
-if($page_start == $start) {
-$aclass = "buttonLink_sel";
-
-$pag_start = 	$x-($show_numbers/2);
-
-
-
-if($pag_start < 0) {
-$pag_start = 0;
-}
-$pag_end = 		$pag_start+$show_numbers;
-
-if($pag_end > $cnt_pages) {
-$pag_end = $cnt_pages;
-}
-
-
-
-}
-
-$a_pag_string[] = "<a class='$aclass' href='$_SERVER[PHP_SELF]?tn=filebrowser&start=$page_start'>$page_nbr</a> ";
-
-
-
+	$aclass = "buttonLink";
+	$page_start = $x*$files_per_page;
+	$page_nbr = $x+1;
+	
+	if($page_start == $start) {
+		$aclass = "buttonLink_sel";
+		
+		$pag_start = 	$x-($show_numbers/2);
+		
+		if($pag_start < 0) {
+			$pag_start = 0;
+		}
+		
+		$pag_end = 		$pag_start+$show_numbers;
+		if($pag_end > $cnt_pages) {
+			$pag_end = $cnt_pages;
+		}
+	}
+	
+	$a_pag_string[] = "<a class='$aclass' href='$_SERVER[PHP_SELF]?tn=filebrowser&start=$page_start'>$page_nbr</a> ";
 
 } //eol for $x
 
