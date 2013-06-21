@@ -135,6 +135,8 @@ $lang['tab_page_preferences_description'] = "Templates....";
 
 $lang['lastedit'] = "Zuletzt aktualisiert";
 $lang['filesize'] = "Dateigröße";
+$lang['date_of_change'] = "Änderungsdatum";
+$lang['filename'] = "Name";
 
 
 $lang['browse_files'] = "Festplpatte nach Dateien durchsuchen";

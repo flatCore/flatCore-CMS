@@ -141,6 +141,8 @@ $lang['tab_page_preferences_description'] = "Templates, Rights Management ...";
 
 $lang['lastedit'] = "Last Edit";
 $lang['filesize'] = "Filesize";
+$lang['date_of_change'] = "Date of Change";
+$lang['filename'] = "Name";
 
 
 $lang['browse_files'] = "Browse Files";
