@@ -338,6 +338,10 @@ echo"</div></div>";
 
 
 
+echo"<div class='form-line'>
+		<label>$lang[f_page_modul_query]</label>
+		<div class='form-controls'><input class='span5' type='text' name='page_modul_query' value='$page_modul_query'></div>
+		</div>";
 
 
 unset($checked_status);

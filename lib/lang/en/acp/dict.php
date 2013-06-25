@@ -198,6 +198,7 @@ $lang['f_page_template'] = "Specific Template";
 $lang['use_standard'] = "Use Standard";
 
 $lang['f_page_modul'] = "Module";
+$lang['f_page_modul_query'] = "Module-Query";
 $lang['f_page_authorized_admins'] = "Allow editing";
 
 $lang['f_user_id'] = "User-ID";

@@ -46,6 +46,7 @@ $pdo_fields = array(
 	'page_head_styles' => 'STR',
 	'page_head_enhanced' => 'STR',
 	'page_modul' => 'STR',
+	'page_modul_query' => 'STR',
 	'page_authorized_users' => 'STR',
 	'page_version' => 'STR'
 );
@@ -72,6 +73,7 @@ $pdo_fields_new = array(
 	'page_head_styles' => 'STR',
 	'page_head_enhanced' => 'STR',
 	'page_modul' => 'STR',
+	'page_modul_query' => 'STR',
 	'page_authorized_users' => 'STR',
 	'page_version' => 'STR'
 );
@@ -99,6 +101,7 @@ $pdo_fields_cache = array(
 	'page_head_styles' => 'STR',
 	'page_head_enhanced' => 'STR',
 	'page_modul' => 'STR',
+	'page_modul_query' => 'STR',
 	'page_authorized_users' => 'STR',
 	'page_cache_type' => 'STR',
 	'page_version' => 'STR'
