@@ -77,17 +77,15 @@ if(!isset($_GET['sub'])){
 <html>
 	<head>
 		<meta charset="utf-8">
+		<title>flatCore:ACP @  <?php echo"$_SERVER[SERVER_NAME] /// $tn"; ?></title>
 		
 		<link rel="icon" type="image/x-icon" href="images/favicon.ico" />
 		
 		<script language="javascript" type="text/javascript" src="../lib/js/tiny_mce/tiny_mce.js"></script>
-		
 		<script type="text/javascript" src="../lib/js/mootools/mootools-core.js"></script>
 		<script type="text/javascript" src="../lib/js/mootools/mootools-more.js"></script>
-		
 		<script type="text/javascript" src="../lib/js/mootools/SimpleTabs.js"></script>
 		<script type="text/javascript" src="../lib/js/mootools/milkbox.js"></script>
-		
 		<script type="text/javascript" src="../lib/js/mootools/Request.File.js"></script>
 		<script type="text/javascript" src="../lib/js/mootools/Form.MultipleFileInput.js"></script>
 		<script type="text/javascript" src="../lib/js/mootools/Form.Upload.js"></script>
@@ -95,49 +93,31 @@ if(!isset($_GET['sub'])){
 		<link rel="stylesheet" href="../lib/css/bootstrap.css" type="text/css" media="screen, projection">
 		<link rel="stylesheet" href="css/styles.css" type="text/css" media="screen, projection">
 		<link rel="stylesheet" href="../lib/css/milkbox.css" media="screen" />
-		
-		
-		
-
-<title>flatCore:ACP @  <?php echo"$_SERVER[SERVER_NAME] /// $tn"; ?></title>
-		
-
-<?php
-/*
- * include individual header
- * otional
- */
-
-if(is_file("inc/head.$tn.php")){
-	include("inc/head.$tn.php");
-}
-		
-/*
- * individual modul header
- * optional
- */
- 
-if(is_file("../modules/$sub/backend/header.php")) {
-	include("../modules/$sub/backend/header.php");
-}
 
 
-include("inc/editors.php");
+		<?php
 
-?>
+		/*
+		 * individual modul header
+		 * optional
+		 */
+		 
+		if(is_file("../modules/$sub/backend/header.php")) {
+			include("../modules/$sub/backend/header.php");
+		}
 		
+		include("inc/editors.php");
 		
-
-		
+		?>	
 		
 	</head>
 	<body>
 	
 	<?php
 	if(is_dir('../install')) {
-		echo'<div style="padding:3px 15px;background-color:#b00;color:#000;border-bottom:1px solid #d00;">';
-		echo"$lang[msg_update_modus_activated]";
-		echo'</div>';
+		echo '<div style="padding:3px 15px;background-color:#b00;color:#000;border-bottom:1px solid #d00;">';
+		echo "$lang[msg_update_modus_activated]";
+		echo '</div>';
 	}
 	
 	?>
@@ -152,54 +132,42 @@ include("inc/editors.php");
 	
 	<div id="footer">
 	<b>flatCore</b> Content Management System<br />
-	copyright © 2010 - <?php echo date(Y); ?>, <a href="http://www.flatcore.de/" target="_blank">flatCore.de</a><br />
+	copyright © 2010 - <?php echo date(Y); ?>, <a href="http://www.flatcore.de/" target="_blank">flatCore.de</a>
 	</div>
 	
 
-<script type="text/javascript"> 
-
-/* <![CDATA[ */
-
-window.addEvent('domready', function() {
-
-var myTips = new Tips('.styledTip');
-
-new Fx.Accordion($('accordion'), '#accordion h5', '#accordion .content');
-
-
-
-var tabs = new SimpleTabs($('tabsBlock'), {
-	selector: 'h4'
-});
-
-
-
-
-var toggle_status = {
-    'true': '-',
-    'false': '+'
-  };
-  
-var myVerticalSlide = new Fx.Slide('vertical_slide').hide();
-
-$('v_toggle').addEvent('click', function(event){
-    event.stop();
-    myVerticalSlide.toggle();
-  });
-
-myVerticalSlide.addEvent('complete', function() {
-		$('vertical_status').set('html', toggle_status[myVerticalSlide.open]);
-	});
+	<script type="text/javascript"> 
+	/* <![CDATA[ */
 	
-
-
-}); // eo domready
-
-
-
-/* ]]> */
-
-</script>
+	window.addEvent('domready', function() {
+	
+		var myTips = new Tips('.styledTip');
+		new Fx.Accordion($('accordion'), '#accordion h5', '#accordion .content');
+		
+		var tabs = new SimpleTabs($('tabsBlock'), {
+			selector: 'h4'
+		});
+		
+		var toggle_status = {
+		    'true': '-',
+		    'false': '+'
+		  };
+		  
+		var myVerticalSlide = new Fx.Slide('vertical_slide').hide();
+		
+		$('v_toggle').addEvent('click', function(event){
+		    event.stop();
+		    myVerticalSlide.toggle();
+		  });
+		
+		myVerticalSlide.addEvent('complete', function() {
+				$('vertical_status').set('html', toggle_status[myVerticalSlide.open]);
+			});
+		
+	}); // eo domready
+	
+	/* ]]> */
+	</script>
 
 
 	</body>
