@@ -109,27 +109,18 @@ echo"</fieldset>";
 
 
 
-
-
 /* User Preferences */
 
 echo"<fieldset>";
 echo"<legend>$lang[f_prefs_user]</legend>";
 
-
 echo '<div class="control-group">';
 echo '<label class="control-label">' . $lang[f_prefs_registration] .'</label>';
 echo '<div class="controls">';
 		
-if($prefs_userregistration == "yes") {
-	$checked_ur_yes = "selected";
-} else {
-	$checked_ur_no = "selected";
-}
-
 echo '<select name="prefs_userregistration" class="span3">';
-	echo"<option $checked_ur_yes value='yes'>$lang[yes]</option>";
-	echo"<option $checked_ur_no value='no'>$lang[no]</option>";
+echo '<option value="yes" '.($prefs_userregistration == "yes" ? 'selected="selected"' :'').'>'.$lang[yes].'</option>';	
+echo '<option value="no" '.($prefs_userregistration == "no" ? 'selected="selected"' :'').'>'.$lang[no].'</option>';	
 echo '</select>';
 
 echo '</div>';
@@ -139,25 +130,16 @@ echo '</div>';
 echo '<div class="control-group">';
 echo '<label class="control-label">'. $lang[f_prefs_showloginform] . '</label>';
 echo '<div class="controls">';
-		
-if($prefs_showloginform == "yes") {
-	$checked_lf_yes = "selected";
-} else {
-	$checked_lf_no = "selected";
-}
 
 echo '<select name="prefs_showloginform" class="span3">';
-	echo"<option $checked_lf_yes value='yes'>$lang[yes]</option>";
-	echo"<option $checked_lf_no value='no'>$lang[no]</option>";
+echo '<option value="yes" '.($prefs_showloginform == "yes" ? 'selected="selected"' :'').'>'.$lang[yes].'</option>';	
+echo '<option value="no" '.($prefs_showloginform == "no" ? 'selected="selected"' :'').'>'.$lang[no].'</option>';	
 echo '</select>';
 
 echo '</div>';
 echo '</div>';
 
 echo"</fieldset>";
-
-
-
 
 
 
@@ -194,27 +176,18 @@ echo"<div class='control-group'>
 echo"<div class='control-group'>
 		<label class='control-label'>$lang[f_prefs_showfilesize]</label>
 		<div class='controls'>";
-			 
-if($prefs_showfilesize == "yes") {
-	$checked_sfs_yes = "selected";
-} else {
-	$checked_sfs_no = "selected";
-}
 
-echo"<select name='prefs_showfilesize' class='span3'>";
-	echo"<option $checked_sfs_yes value='yes'>$lang[yes]</option>";
-	echo"<option $checked_sfs_no value='no'>$lang[no]</option>";
-echo"</select>";
+
+echo '<select name="prefs_showfilesize" class="span3">';
+echo '<option value="yes" '.($prefs_showfilesize == "yes" ? 'selected="selected"' :'').'>'.$lang[yes].'</option>';	
+echo '<option value="no" '.($prefs_showfilesize == "no" ? 'selected="selected"' :'').'>'.$lang[no].'</option>';	
+echo '</select>';
 
 echo"</div>
 	 </div>";
 	 
 
-
-
 echo"</fieldset>";
-
-
 
 
 
@@ -234,35 +207,30 @@ $arr_Styles = get_all_templates();
 echo"<select name='select_template'>";
 
 
-
 /* templates list */
 foreach($arr_Styles as $template) {
 
-
-$arr_layout_tpl = glob("../styles/$template/templates/layout*.tpl");
-
-echo"<optgroup label='$template'>";
-
-foreach($arr_layout_tpl as $layout_tpl) {
-	$layout_tpl = basename($layout_tpl);
-
-
-	$selected = "";
-	if($template == "$prefs_template" && $layout_tpl == "$prefs_template_layout") {
-		$selected = "selected";
-	}
-
-
+	$arr_layout_tpl = glob("../styles/$template/templates/layout*.tpl");
 	
-	echo "<option $selected value='$template<|-|>$layout_tpl'>$template » $layout_tpl</option>";
+	echo"<optgroup label='$template'>";
+	
+	foreach($arr_layout_tpl as $layout_tpl) {
+		$layout_tpl = basename($layout_tpl);
+	
+	
+		$selected = "";
+		if($template == "$prefs_template" && $layout_tpl == "$prefs_template_layout") {
+			$selected = "selected";
+		}
+	
+	
+		
+		echo "<option $selected value='$template<|-|>$layout_tpl'>$template » $layout_tpl</option>";
+	}
+	
+	echo"</optgroup>";
+
 }
-
-echo"</optgroup>";
-    
-
-
-
-} // eo foreach template list
 
 echo"</select>";
 
@@ -273,8 +241,6 @@ echo"</div>
 
 
 echo"</fieldset>";
-
-
 
 
 /* global header enhancement */
@@ -295,8 +261,6 @@ echo"</div>";
 echo"</fieldset>";
 
 
-
-
 /* prefs_logfile and prefs_xml_sitemap */
 
 echo"<fieldset>";
@@ -306,40 +270,26 @@ echo"<legend>$lang[system_statistics]</legend>";
 echo"<div class='control-group'>
 		<label class='control-label'>$lang[activate_logfile]</label>
 		<div class='controls'>";
-		
-if($prefs_logfile == "on") {
-	$selected_on = "selected";
-} else {
-	$selected_off = "selected";
-}
 
-echo"<select name='prefs_logfile'>";
-	echo"<option $selected_on value='on'>$lang[yes]</option>";
-	echo"<option $selected_off value='off'>$lang[no]</option>";
-echo"</select>";
+
+echo '<select name="prefs_logfile" class="span3">';
+echo '<option value="on" '.($prefs_logfile == "on" ? 'selected="selected"' :'').'>'.$lang[yes].'</option>';	
+echo '<option value="off" '.($prefs_logfile == "off" ? 'selected="selected"' :'').'>'.$lang[no].'</option>';	
+echo '</select>';
 
 echo"</div>
 	 </div>";
 	 
-	 
-	 
-	 
-	 
-	 
+
 echo"<div class='control-group'>
 		<label class='control-label'>$lang[activate_xml_sitemap]</label>
 		<div class='controls'>";
 		
-if($prefs_xml_sitemap == "on") {
-	$sel_xml_on = "selected";
-} else {
-	$sel_xml_off = "selected";
-}
 
-echo"<select name='prefs_xml_sitemap'>";
-	echo"<option $sel_xml_on value='on'>$lang[yes]</option>";
-	echo"<option $sel_xml_off value='off'>$lang[no]</option>";
-echo"</select>";
+echo '<select name="prefs_xml_sitemap" class="span3">';
+echo '<option value="on" '.($prefs_xml_sitemap == "on" ? 'selected="selected"' :'').'>'.$lang[yes].'</option>';	
+echo '<option value="off" '.($prefs_xml_sitemap == "off" ? 'selected="selected"' :'').'>'.$lang[no].'</option>';	
+echo '</select>';
 
 echo"</div>
 	 </div>";
@@ -347,10 +297,6 @@ echo"</div>
 echo"</fieldset>";
 
 
-
-
-
-	
 
 
 //submit form to save data
