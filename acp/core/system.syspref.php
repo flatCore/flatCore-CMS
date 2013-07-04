@@ -3,8 +3,6 @@
 //prohibit unauthorized access
 require("core/access.php");
 
-
-
 /**
  * save the preferences
  */
@@ -91,22 +89,14 @@ echo"<fieldset>";
 
 echo"<legend>$lang[f_prefs_descriptions]</legend>";
 
-echo '<div class="control-group">';
-echo '<label class="control-label">' . $lang[f_prefs_pagetitle] .'</label>';
-echo '<div class="controls">';
-echo "<input class='span10' type='text' name='prefs_pagetitle' value='$prefs_pagetitle'>";
-echo '</div>';
-echo '</div>';
 
-echo '<div class="control-group">';
-echo '<label class="control-label">' . $lang[f_prefs_pagesubtitle] .'</label>';
-echo '<div class="controls">';
-echo "<input class='span10' type='text' name='prefs_pagesubtitle' value='$prefs_pagesubtitle'>";
-echo '</div>';
-echo '</div>';
+$prefs_pagetitle_input = "<input class='span10' type='text' name='prefs_pagetitle' value='$prefs_pagetitle'>";
+echo tpl_form_control_group('',$lang[f_prefs_pagetitle],$prefs_pagetitle_input);
+
+$prefs_pagesubtitle_input = "<input class='span10' type='text' name='prefs_pagesubtitle' value='$prefs_pagesubtitle'>";
+echo tpl_form_control_group('',$lang[f_prefs_pagesubtitle],$prefs_pagesubtitle_input);
 
 echo"</fieldset>";
-
 
 
 /* User Preferences */
@@ -114,85 +104,46 @@ echo"</fieldset>";
 echo"<fieldset>";
 echo"<legend>$lang[f_prefs_user]</legend>";
 
-echo '<div class="control-group">';
-echo '<label class="control-label">' . $lang[f_prefs_registration] .'</label>';
-echo '<div class="controls">';
-		
-echo '<select name="prefs_userregistration" class="span3">';
-echo '<option value="yes" '.($prefs_userregistration == "yes" ? 'selected="selected"' :'').'>'.$lang[yes].'</option>';	
-echo '<option value="no" '.($prefs_userregistration == "no" ? 'selected="selected"' :'').'>'.$lang[no].'</option>';	
-echo '</select>';
+$select_prefs_userregistration  = '<select name="prefs_userregistration" class="span3">';
+$select_prefs_userregistration .= '<option value="yes" '.($prefs_userregistration == "yes" ? 'selected="selected"' :'').'>'.$lang[yes].'</option>';	
+$select_prefs_userregistration .= '<option value="no" '.($prefs_userregistration == "no" ? 'selected="selected"' :'').'>'.$lang[no].'</option>';	
+$select_prefs_userregistration .= '</select>';
+echo tpl_form_control_group('',$lang[f_prefs_registration],$select_prefs_userregistration);
 
-echo '</div>';
-echo '</div>';
+$select_prefs_showloginform  = '<select name="prefs_showloginform" class="span3">';
+$select_prefs_showloginform .= '<option value="yes" '.($prefs_showloginform == "yes" ? 'selected="selected"' :'').'>'.$lang[yes].'</option>';	
+$select_prefs_showloginform .= '<option value="no" '.($prefs_showloginform == "no" ? 'selected="selected"' :'').'>'.$lang[no].'</option>';
+$select_prefs_showloginform .= '</select>';
+echo tpl_form_control_group('',$lang[f_prefs_showloginform],$select_prefs_showloginform);
 
-	 
-echo '<div class="control-group">';
-echo '<label class="control-label">'. $lang[f_prefs_showloginform] . '</label>';
-echo '<div class="controls">';
-
-echo '<select name="prefs_showloginform" class="span3">';
-echo '<option value="yes" '.($prefs_showloginform == "yes" ? 'selected="selected"' :'').'>'.$lang[yes].'</option>';	
-echo '<option value="no" '.($prefs_showloginform == "no" ? 'selected="selected"' :'').'>'.$lang[no].'</option>';	
-echo '</select>';
-
-echo '</div>';
-echo '</div>';
 
 echo"</fieldset>";
 
 
-
 /* Upload Preferences */
-
 
 echo"<fieldset>";
 echo"<legend>$lang[f_prefs_uploads]</legend>";
 
+echo tpl_form_control_group('',$lang[f_prefs_imagesuffix],"<input class='span6' type='text' name='prefs_imagesuffix' value='$prefs_imagesuffix'>");
+echo tpl_form_control_group('',$lang[f_prefs_maximage],"<input class='span2' type='text' name='prefs_maximagewidth' value='$prefs_maximagewidth'> x	<input class='span2' type='text' name='prefs_maximageheight' value='$prefs_maximageheight'>");
 
-echo"<div class='control-group'>
-		<label class='control-label'>$lang[f_prefs_imagesuffix]</label>
-		<div class='controls'><input class='span6' type='text' name='prefs_imagesuffix' value='$prefs_imagesuffix'></div>
-	 </div>";
-	 
-echo"<div class='control-group'>
-		<label class='control-label'>$lang[f_prefs_maximage]</label>
-		<div class='controls'>
-		<input class='span2' type='text' name='prefs_maximagewidth' value='$prefs_maximagewidth'> x	<input class='span2' type='text' name='prefs_maximageheight' value='$prefs_maximageheight'>
-		</div>
-	 </div>";
-	 
-echo"<div class='control-group'>
-		<label class='control-label'>$lang[f_prefs_filesuffix]</label>
-		<div class='controls'><input class='span6' type='text' name='prefs_filesuffix' value='$prefs_filesuffix'></div>
-	 </div>";
-	 
-echo"<div class='control-group'>
-		<label class='control-label'>$lang[f_prefs_maxfilesize]</label>
-		<div class='controls'><input class='span6' type='text' name='prefs_maxfilesize' value='$prefs_maxfilesize'></div>
-	 </div>";
+echo tpl_form_control_group('',$lang[f_prefs_filesuffix],"<input class='span6' type='text' name='prefs_filesuffix' value='$prefs_filesuffix'>");
+echo tpl_form_control_group('',$lang[f_prefs_maxfilesize],"<input class='span6' type='text' name='prefs_maxfilesize' value='$prefs_maxfilesize'>");
 
 
-echo"<div class='control-group'>
-		<label class='control-label'>$lang[f_prefs_showfilesize]</label>
-		<div class='controls'>";
+$select_prefs_showfilesize  = '<select name="prefs_showfilesize" class="span3">';
+$select_prefs_showfilesize .= '<option value="yes" '.($prefs_showfilesize == "yes" ? 'selected="selected"' :'').'>'.$lang[yes].'</option>';	
+$select_prefs_showfilesize .= '<option value="no" '.($prefs_showfilesize == "no" ? 'selected="selected"' :'').'>'.$lang[no].'</option>';
+$select_prefs_showfilesize .= '</select>';
+echo tpl_form_control_group('',$lang[f_prefs_showfilesize],$select_prefs_showfilesize);
 
-
-echo '<select name="prefs_showfilesize" class="span3">';
-echo '<option value="yes" '.($prefs_showfilesize == "yes" ? 'selected="selected"' :'').'>'.$lang[yes].'</option>';	
-echo '<option value="no" '.($prefs_showfilesize == "no" ? 'selected="selected"' :'').'>'.$lang[no].'</option>';	
-echo '</select>';
-
-echo"</div>
-	 </div>";
-	 
 
 echo"</fieldset>";
 
 
 
 /* Layout Preferences */
-
 
 echo"<fieldset>";
 echo"<legend>$lang[f_prefs_layout]</legend>";
@@ -216,18 +167,13 @@ foreach($arr_Styles as $template) {
 	
 	foreach($arr_layout_tpl as $layout_tpl) {
 		$layout_tpl = basename($layout_tpl);
-	
-	
+		
 		$selected = "";
 		if($template == "$prefs_template" && $layout_tpl == "$prefs_template_layout") {
 			$selected = "selected";
 		}
-	
-	
-		
 		echo "<option $selected value='$template<|-|>$layout_tpl'>$template » $layout_tpl</option>";
 	}
-	
 	echo"</optgroup>";
 
 }
@@ -248,14 +194,8 @@ echo"</fieldset>";
 echo"<fieldset>";
 echo"<legend>$lang[f_prefs_global_header]</legend>";
 
-echo"<div class='control-group'>
-			<label class='control-label'>&lt;head&gt;<br>...<br>&lt;/head&gt;</label>";
 
-echo"<div class='controls'>
-		<textarea name='prefs_pagesglobalhead' class='span12' rows='10'>$prefs_pagesglobalhead</textarea>
-		</div>";
-		
-echo"</div>";
+echo tpl_form_control_group('','&lt;head&gt;<br>...<br>&lt;/head&gt;',"<textarea name='prefs_pagesglobalhead' class='span12' rows='10'>$prefs_pagesglobalhead</textarea>");
 
 
 echo"</fieldset>";
@@ -266,33 +206,20 @@ echo"</fieldset>";
 echo"<fieldset>";
 echo"<legend>$lang[system_statistics]</legend>";
 
+$select_prefs_logfile  = '<select name="prefs_logfile" class="span3">';
+$select_prefs_logfile .= '<option value="on" '.($prefs_logfile == "on" ? 'selected="selected"' :'').'>'.$lang[yes].'</option>';	
+$select_prefs_logfile .= '<option value="off" '.($prefs_logfile == "off" ? 'selected="selected"' :'').'>'.$lang[no].'</option>';
+$select_prefs_logfile .= '</select>';
+echo tpl_form_control_group('',$lang[activate_logfile],$select_prefs_logfile);
 
-echo"<div class='control-group'>
-		<label class='control-label'>$lang[activate_logfile]</label>
-		<div class='controls'>";
+
+$select_prefs_xml_sitemap  = '<select name="prefs_xml_sitemap" class="span3">';
+$select_prefs_xml_sitemap .= '<option value="on" '.($prefs_xml_sitemap == "on" ? 'selected="selected"' :'').'>'.$lang[yes].'</option>';	
+$select_prefs_xml_sitemap .= '<option value="off" '.($prefs_xml_sitemap == "off" ? 'selected="selected"' :'').'>'.$lang[no].'</option>';	
+$select_prefs_xml_sitemap .= '</select>';
+echo tpl_form_control_group('',$lang[activate_xml_sitemap],$select_prefs_xml_sitemap);
 
 
-echo '<select name="prefs_logfile" class="span3">';
-echo '<option value="on" '.($prefs_logfile == "on" ? 'selected="selected"' :'').'>'.$lang[yes].'</option>';	
-echo '<option value="off" '.($prefs_logfile == "off" ? 'selected="selected"' :'').'>'.$lang[no].'</option>';	
-echo '</select>';
-
-echo"</div>
-	 </div>";
-	 
-
-echo"<div class='control-group'>
-		<label class='control-label'>$lang[activate_xml_sitemap]</label>
-		<div class='controls'>";
-		
-
-echo '<select name="prefs_xml_sitemap" class="span3">';
-echo '<option value="on" '.($prefs_xml_sitemap == "on" ? 'selected="selected"' :'').'>'.$lang[yes].'</option>';	
-echo '<option value="off" '.($prefs_xml_sitemap == "off" ? 'selected="selected"' :'').'>'.$lang[no].'</option>';	
-echo '</select>';
-
-echo"</div>
-	 </div>";
 	 
 echo"</fieldset>";
 
