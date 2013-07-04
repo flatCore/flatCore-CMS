@@ -4,7 +4,7 @@
 require("core/access.php");
 
 
-echo"\n <form id='editpage' action='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$editpage' method='POST'>\n";
+echo"\n <form id='editpage' action='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$editpage' class='form-horizontal' method='POST'>\n";
 
 // fancytabs
 echo'<div id="tabsBlock">';
@@ -14,10 +14,6 @@ echo'<h4 title="' . $lang[tab_info_description] . '">' . $lang[tab_info] . '</h4
 
 echo'<div class="tab-content">'; // tabs content
 
-echo'<div class="form-line">
-		<label>' . $lang[f_page_position] . '</label>
-		<div class="form-controls">';
-	
 $dbh = new PDO("sqlite:".CONTENT_DB);
 $sql = "SELECT page_linkname, page_sort FROM fc_pages
 		    WHERE page_sort != 'portal'
@@ -26,22 +22,22 @@ $all_pages = $dbh->query($sql)->fetchAll();
 
 $dbh = null;
 
-echo'<select name="page_position">';
 
-echo'<option value="null">' . $lang[legend_unstructured_pages] . '</option>';
-echo'<option value="portal">' . $lang[f_homepage] . '</option>';
+$select_page_position  = '<select name="page_position">';
+$select_page_position .= '<option value="null">' . $lang[legend_unstructured_pages] . '</option>';
+$select_page_position .= '<option value="portal">' . $lang[f_homepage] . '</option>';
 
 if($page_sort == "portal") {
-	echo'<option value="portal" selected>' . $lang[f_homepage] . '</option>';
+	$select_page_position .= '<option value="portal" selected>' . $lang[f_homepage] . '</option>';
 }
 
 if(ctype_digit($page_sort)) {
-	echo"<option value='mainpage' selected>$lang[f_mainpage]</option>";
+	$select_page_position .= '<option value="mainpage" selected>'.$lang[f_mainpage].'</option>';
 } else {
-	echo"<option value='mainpage'>$lang[f_mainpage]</option>";
+	$select_page_position .= '<option value="mainpage">'.$lang[f_mainpage].'</option>';
 }
 
-echo"<optgroup label='$lang[f_subpage]'>";
+$select_page_position .= '<optgroup label="'.$lang[f_subpage].'">';
 for($i=0;$i<count($all_pages);$i++) {
 
 	if($all_pages[$i][page_sort] == $page_sort) {
@@ -65,44 +61,29 @@ for($i=0;$i<count($all_pages);$i++) {
 		 
  
 	$indent = str_repeat("-",substr_count($parent_string,'.'));
-	echo"<option value='$parent_string' $selected> $indent " . $all_pages[$i][page_linkname] . "</option>";
+	$select_page_position .= "<option value='$parent_string' $selected> $indent " . $all_pages[$i][page_linkname] . "</option>";
 	
 }
-echo'</optgroup>';
-echo'</select>';
-	
-echo'</div></div>';
+$select_page_position .= '</optgroup>';
+$select_page_position .= '</select>';
+
+echo tpl_form_control_group('',$lang[f_page_position],$select_page_position);
 
 if($page_sort != "portal") {
 
-$page_order = substr (strrchr ($page_sort, "."), 1);
+	$page_order = substr (strrchr ($page_sort, "."), 1);
+	if(ctype_digit($page_sort)) {
+		$page_order = $page_sort;
+	}
+	
+	echo tpl_form_control_group('',$lang[f_page_order],"<input class='span2' type='text' name='page_order' value='$page_order'>");
+	
 
-if(ctype_digit($page_sort)) {
-	$page_order = $page_sort;
-}
-
-
-echo"<div class='form-line'>
-		<label>$lang[f_page_order]</label>
-		<div class='form-controls'><input class='span2' type='text' name='page_order' value='$page_order'></div>
-	</div>";
 }
 	
-		
-echo"<div class='form-line'>
-		<label>$lang[f_page_linkname]</label>
-		<div class='form-controls'><input class='span5' type='text' name='page_linkname' value='$page_linkname'></div>
-	</div>";
-		
-echo"<div class='form-line'>
-		<label>$lang[f_page_permalink]</label>
-		<div class='form-controls'><input class='span5' type='text' name='page_permalink' value='$page_permalink'></div>
-	</div>";
-
-echo"<div class='form-line form-line-last'>
-		<label>$lang[f_page_title]</label>
-		<div class='form-controls'><input class='span5' type='text' name='page_title' value='$page_title'></div>
-	</div>";
+echo tpl_form_control_group('',$lang[f_page_linkname],"<input class='span5' type='text' name='page_linkname' value='$page_linkname'>");
+echo tpl_form_control_group('',$lang[f_page_permalink],"<input class='span5' type='text' name='page_permalink' value='$page_permalink'>");
+echo tpl_form_control_group('',$lang[f_page_title],"<input class='span5' type='text' name='page_title' value='$page_title'>");
 
 
 echo'</div>'; // eo tabs content
@@ -147,41 +128,19 @@ if($page_meta_author == "") {
 	$page_meta_author = "$_SESSION[user_firstname] $_SESSION[user_lastname]";
 }
 
+echo tpl_form_control_group('',$lang[f_meta_author],"<input class='span5' type='text' name='page_meta_author' value='$page_meta_author'>");
+echo tpl_form_control_group('',$lang[f_meta_keywords],"<input class='span5' type='text' name='page_meta_keywords' value='$page_meta_keywords'>");
+echo tpl_form_control_group('',$lang[f_meta_description],"<textarea name='page_meta_description' class='span5' rows='5'>$page_meta_description</textarea>");
 
-echo"<div class='form-line'>
-		<label>$lang[f_meta_author]</label>
-		<div class='form-controls'><input class='span5' type='text' name='page_meta_author' value='$page_meta_author'></div>
-		</div>";
 		
-echo"<div class='form-line'>
-		<label>$lang[f_meta_keywords]</label>
-		<div class='form-controls'><input class='span5' type='text' name='page_meta_keywords' value='$page_meta_keywords'></div>
-		</div>";
-
-echo"<div class='form-line'>
-			<label>$lang[f_meta_description]</label>
-			<div class='form-controls'>
-				<textarea name='page_meta_description' class='span5' rows='5'>$page_meta_description</textarea>
-			</div>
-		</div>";
-		
-echo"<div class='form-line form-line-last'>
-		<label>$lang[f_meta_robots]</label>
-		<div class='form-controls'>";
-
-$selvar = "sel$page_meta_robots";
-${$selvar} = "selected";
-
-echo"<select name='page_meta_robots'>";
-	echo"<option value='all' $selall>all</option>";
-	echo"<option value='noindex' $selnoindex>noindex</option>";
-	echo"<option value='nofollow' $selnofollow>nofollow</option>";
-	echo"<option value='noodp' $selnoodp>noodp</option>";
-	echo"<option value='noydir' $selnoydir>noydir</option>";
-echo"</select>";
-	
-echo"	</div>
-		</div>";
+$select_page_meta_robots  = '<select name="page_meta_robots" class="span3">';
+$select_page_meta_robots .= '<option value="all" '.($page_meta_robots == "all" ? 'selected="selected"' :'').'>all</option>';
+$select_page_meta_robots .= '<option value="noindex" '.($page_meta_robots == "noindex" ? 'selected="selected"' :'').'>noindex</option>';
+$select_page_meta_robots .= '<option value="nofollow" '.($page_meta_robots == "nofollow" ? 'selected="selected"' :'').'>nofollow</option>';
+$select_page_meta_robots .= '<option value="noodp" '.($page_meta_robots == "noodp" ? 'selected="selected"' :'').'>noodp</option>';
+$select_page_meta_robots .= '<option value="noydir" '.($page_meta_robots == "noydir" ? 'selected="selected"' :'').'>noydir</option>';
+$select_page_meta_robots .= '</select>';
+echo tpl_form_control_group('',$lang[f_meta_robots],$select_page_meta_robots);
 
 
 
@@ -219,51 +178,34 @@ echo'<div class="tab-content">'; // tabs content
 
 
 
-echo"<div class='form-line'>
-		<label>$lang[f_page_language]</label>
-		<div class='form-controls'>";
 
 $arr_lang = get_all_languages();
 
-echo"<select id='select_lang' name='page_language'>";
-
+$select_page_language  = '<select name="page_language" class="span3">';
 for($i=0;$i<count($arr_lang);$i++) {
-
-	$selected = "";
 
 	$lang_sign = $arr_lang[$i][lang_sign];
 	$lang_desc = $arr_lang[$i][lang_desc];
 	$lang_folder = $arr_lang[$i][lang_folder];
-
-	if($lang_folder == "$page_language") {
-		$selected = "selected";
-	}
-
-	echo"<option value='$lang_folder' $selected>$lang_sign ($lang_desc)</option>";
+	$select_page_language .= "<option value='$lang_folder'".($page_language == "$lang_folder" ? 'selected="selected"' :'').">$lang_sign ($lang_desc)</option>";	
 
 } // eo $i
 
-echo"</select>";
+$select_page_language  .= "</select>";
+
+echo tpl_form_control_group('',$lang[f_page_language],$select_page_language);
 
 
-echo"</div></div>"; // eo lang
-
-
-
-
-echo"<div class='form-line'>
-		<label>$lang[f_page_template]</label>
-		<div class='form-controls'>";
 		
 $arr_Styles = get_all_templates();
 
-echo"<select id='select_template' name='select_template'>";
+$select_select_template = "<select id='select_template' name='select_template'>";
 
 if($page_template == "") {
 	$selected_standard = "selected";
 }
 
-echo "<option value='use_standard<|-|>use_standard' $selected_standard>$lang[use_standard]</option>";
+$select_select_template .= "<option value='use_standard<|-|>use_standard' $selected_standard>$lang[use_standard]</option>";
 
 /* templates list */
 foreach($arr_Styles as $template) {
@@ -271,48 +213,36 @@ foreach($arr_Styles as $template) {
 
 $arr_layout_tpl = glob("../styles/$template/templates/layout*.tpl");
 
-echo"<optgroup label='$template'>";
+$select_select_template .= "<optgroup label='$template'>";
 
 foreach($arr_layout_tpl as $layout_tpl) {
 	$layout_tpl = basename($layout_tpl);
-
 
 	$selected = "";
 	if($template == "$page_template" && $layout_tpl == "$page_template_layout") {
 		$selected = "selected";
 	}
-
-
 	
-	echo "<option $selected value='$template<|-|>$layout_tpl'>$template » $layout_tpl</option>";
+	$select_select_template .=  "<option $selected value='$template<|-|>$layout_tpl'>$template » $layout_tpl</option>";
 }
 
-echo"</optgroup>";
+$select_select_template .= "</optgroup>";
     
 
 
 
 } // eo foreach template list
 
-echo"</select>";
+$select_select_template .= "</select>";
 
-
-echo"</div></div>";
-
-
-
-echo"<div class='form-line'>
-	<label>$lang[f_page_modul]</label>
-	<div class='form-controls'>";
-
+echo tpl_form_control_group('',$lang[f_page_template],$select_select_template);
 
 
 $arr_iMods = get_all_moduls();
 
+$select_page_modul = "<select name='page_modul'>";
 
-echo"<select name='page_modul'>";
-
-echo"<option value=''>Kein Modul</option>";
+$select_page_modul .= "<option value=''>Kein Modul</option>";
 
 for($i=0;$i<count($arr_iMods);$i++) {
 
@@ -325,23 +255,17 @@ for($i=0;$i<count($arr_iMods);$i++) {
 		$selected = "selected";
 	}
 
-	echo"<option value='$mod_folder' $selected>$mod_name</option>";
+	$select_page_modul .= "<option value='$mod_folder' $selected>$mod_name</option>";
 
 } // eo $i
 
 
-echo"</select>";
+$select_page_modul .= "</select>";
 
 
-
-echo"</div></div>";
-
-
-
-echo"<div class='form-line'>
-		<label>$lang[f_page_modul_query]</label>
-		<div class='form-controls'><input class='span5' type='text' name='page_modul_query' value='$page_modul_query'></div>
-		</div>";
+echo tpl_form_control_group('',$lang[f_page_modul],$select_page_modul);
+		
+echo tpl_form_control_group('',$lang[f_page_modul_query],"<input class='span5' type='text' name='page_modul_query' value='$page_modul_query'>");
 
 
 unset($checked_status);
@@ -350,26 +274,22 @@ if($page_status == "") {
 	$page_status = "public";
 }
 
-$checked_status[$page_status] = "checked"; 
+$select_page_status = '<label class="radio">';
+$select_page_status .= "<input type='radio' name='page_status' value='public'".($page_status == "public" ? 'checked' :'')."> <span class='label label-success'>$lang[f_page_status_puplic]</span>";
+$select_page_status .= '</label>';
+
+$select_page_status .= '<label class="radio">';
+$select_page_status .= "<input type='radio' name='page_status' value='private'".($page_status == "private" ? 'checked' :'')."> <span class='label label-important'>$lang[f_page_status_private]</span>";
+$select_page_status .= '</label>';
+
+$select_page_status .= '<label class="radio">';
+$select_page_status .= "<input type='radio' name='page_status' value='draft'".($page_status == "draft" ? 'checked' :'')."> <span class='label'>$lang[f_page_status_draft]</span>";	
+$select_page_status .= '</label>';
+
+echo tpl_form_control_group('',$lang[f_page_status],$select_page_status);
 
 
-echo"<div class='form-line'>
-	<label>$lang[f_page_status]</label>
-	<div class='form-controls'>";
 
-echo"<input type='radio' name='page_status' value='public' $checked_status[public]> <span class='label label-success'>$lang[f_page_status_puplic]</span> <br />";
-echo"<input type='radio' name='page_status' value='private' $checked_status[private]> <span class='label label-important'>$lang[f_page_status_private]</span><br />";
-echo"<input type='radio' name='page_status' value='draft' $checked_status[draft]> <span class='label'>$lang[f_page_status_draft]</span>";
-
-echo"</div></div>";
-
-
-
-
-
-echo"<div class='form-line'>
-	<label>$lang[choose_usergroup]</label>
-	<div class='form-controls'>";
 
 $arr_groups = get_all_groups();
 $arr_checked_groups = explode(",",$page_usergroup);
@@ -379,27 +299,21 @@ for($i=0;$i<count($arr_groups);$i++) {
 	$group_id = $arr_groups[$i][group_id];
 	$group_name = $arr_groups[$i][group_name];
 
-if(in_array("$group_name", $arr_checked_groups)) {
-	$checked = "checked";
-} else {
-	$checked = "";
+	if(in_array("$group_name", $arr_checked_groups)) {
+		$checked = "checked";
+	} else {
+		$checked = "";
+	}
+	
+	$checkbox_usergroup .= '<label class="checkbox">';
+	$checkbox_usergroup .= "<input type='checkbox' $checked name='set_usergroup[]' value='$group_name'> $group_name";
+	$checkbox_usergroup .= '</label>';
 }
-	
-	
-	echo"<input type='checkbox' $checked name='set_usergroup[]' value='$group_name'> $group_name <br />";
-
-} // eo $i
 
 
-echo"</div>"; // .sectorRight
-echo"</div>"; // .line
+echo tpl_form_control_group('',$lang[choose_usergroup],$checkbox_usergroup);
 
 
-
-
-echo"<div class='form-line form-line-last'>
-	<label>$lang[f_page_authorized_admins]</label>
-	<div class='form-controls'>";
 
 $arr_admins = get_all_admins();
 
@@ -412,20 +326,18 @@ for($i=0;$i<$cnt_admins;$i++) {
 
 	$user_nick = $arr_admins[$i][user_nick];
 
-    if(in_array("$user_nick", $arr_checked_admins)) {
-			$checked_user = "checked";
-		} else {
-			$checked_user = "";
-		}
-	
- 	echo"<input type='checkbox' $checked_user name='set_authorized_admins[]' value='$user_nick'> $user_nick<br />";
-
+  if(in_array("$user_nick", $arr_checked_admins)) {
+		$checked_user = "checked";
+	} else {
+		$checked_user = "";
+	}
+		
+	$checkbox_set_authorized_admins .= '<label class="checkbox">';
+ 	$checkbox_set_authorized_admins .= "<input type='checkbox' $checked_user name='set_authorized_admins[]' value='$user_nick'> $user_nick";
+ 	$checkbox_set_authorized_admins .= '</label>';
 }
 
-
-
-echo"</div>"; // .sectorRight
-echo"</div>"; // .line
+echo tpl_form_control_group('',$lang[f_page_authorized_admins],$checkbox_set_authorized_admins);
 
 
 
@@ -445,53 +357,25 @@ if($cnt_result > 0) {
 
 /* tab custom fields */
 echo"<h4 title='$lang[legend_custom_fields]'>$lang[legend_custom_fields]</h4>";
-
 echo'<div class="tab-content">'; // tabs content
 
-
-	for($i=0;$i<$cnt_result;$i++) {
-	
+	for($i=0;$i<$cnt_result;$i++) {	
 		if(substr($custom_fields[$i],0,10) == "custom_one") {
 			$label = substr($custom_fields[$i],11);
-			echo "<div class='form-line'>";
-			echo "<label>$label</label>";
-			echo "<div class='form-controls'><input type='text' class='span5' name='$custom_fields[$i]' value='" . $$custom_fields[$i] . "'></div>";
-			echo "</div>";
-		}
-		
-		if(substr($custom_fields[$i],0,11) == "custom_text") {
+			echo tpl_form_control_group('',$label,"<input type='text' class='input-block-level' name='$custom_fields[$i]' value='" . $$custom_fields[$i] . "'>");
+		}	elseif(substr($custom_fields[$i],0,11) == "custom_text") {
 			$label = substr($custom_fields[$i],12);
-			echo "<div class='form-line'>";
-			echo "<label>$label</label>";
-			echo "<div class='form-controls'><textarea class='span5' rows='4' name='$custom_fields[$i]'>" . $$custom_fields[$i] . "</textarea></div>";
-			echo "</div>";
+			echo tpl_form_control_group('',$label,"<textarea class='input-block-level' rows='6' name='$custom_fields[$i]'>" . $$custom_fields[$i] . "</textarea>");
+		}	elseif(substr($custom_fields[$i],0,14) == "custom_wysiwyg") {
+			$label = substr($custom_fields[$i],15);
+			echo tpl_form_control_group('',$label,"<textarea class='mceEditor_small' name='$custom_fields[$i]'>" . $$custom_fields[$i] . "</textarea>");
 		}		
-		
-		if(substr($custom_fields[$i],0,14) == "custom_wysiwyg") {
-		$label = substr($custom_fields[$i],15);
-			echo "<div class='form-line'>";
-			echo "<label>$label</label>";
-			echo "<div class='form-controls'><textarea class='mceEditor_small' name='$custom_fields[$i]'>" . $$custom_fields[$i] . "</textarea></div>";
-			echo "</div>";
-		}		
-		
-
 	}
 
-
-
 echo'</div>'; // eo tabs content
-
 /* EOL tab custom fields */
 
 }
-
-
-
-
-
-
-
 
 echo"</div>"; // EOL fancytabs
 
@@ -499,20 +383,13 @@ echo"</div>"; // EOL fancytabs
 
 //submit form to save data
 
-if($page_sort == "portal") {
-	// It's not a good idea to delete the portal
-	// unset($delete_button);
-}
+echo '<div class="formfooter">';
+echo '<input type="hidden" name="page_version" value="'.$page_version.'">';
+echo '<div style="float:right;">'.$submit_button.' '.$previev_button.'</div>'. $delete_button;
+echo '<div style="clear:both;"></div>';
+echo '</div>';
 
-echo"<div class='formfooter'>";
-echo"<input type='hidden' name='page_version' value='$page_version'>";
-echo"<div style='float:right;'>$submit_button $previev_button</div> $delete_button";
-echo"<div style='clear:both;'></div>";
-echo"</div>";
-
-
-
-echo"</form>";
+echo '</form>';
 
 
 
