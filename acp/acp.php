@@ -106,7 +106,8 @@ if(!isset($_GET['sub'])){
 			include("../modules/$sub/backend/header.php");
 		}
 		
-		include("inc/editors.php");
+		include("core/editors.php");
+		include("core/templates.php");
 		
 		?>	
 		
