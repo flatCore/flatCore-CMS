@@ -18,7 +18,6 @@
 		{title : 'Div alert-error', block : 'div', classes : 'alert alert-error'},
 		{title : 'Div alert-success', block : 'div', classes : 'alert alert-success'},
 		{title : 'Div alert-info', block : 'div', classes : 'alert alert-info'},
-		{title : 'Div alert-info', block : 'div', classes : 'alert alert-info'},
 		{title : 'Div brightBox', block : 'div', classes : 'brightBox'},
 		{title : 'Div darkBox', block : 'div', classes : 'darkBox'}
 		],
@@ -66,7 +65,6 @@
 		{title : 'Lead paragraph', block : 'p', classes : 'lead'},
 		{title : 'Div alert-error', block : 'div', classes : 'alert alert-error'},
 		{title : 'Div alert-success', block : 'div', classes : 'alert alert-success'},
-		{title : 'Div alert-info', block : 'div', classes : 'alert alert-info'},
 		{title : 'Div alert-info', block : 'div', classes : 'alert alert-info'},
 		{title : 'Div brightBox', block : 'div', classes : 'brightBox'},
 		{title : 'Div darkBox', block : 'div', classes : 'darkBox'}
