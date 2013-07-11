@@ -8,6 +8,7 @@ $sub_active[0] = "submenu";
 $sub_active[1] = "submenu";
 $sub_active[2] = "submenu";
 $sub_active[3] = "submenu";
+$sub_active[4] = "submenu";
 
 switch ($sub) {
 
@@ -26,9 +27,14 @@ case "new":
 	$sub_active[2] = "submenu_selected";
 	break;
 	
+case "customize":
+	$subinc = "user.customize";
+	$sub_active[3] = "submenu_selected";
+	break;
+	
 case "groups":
 	$subinc = "user.groups";
-	$sub_active[3] = "submenu_selected";
+	$sub_active[4] = "submenu_selected";
 	break;
 	
 default:
@@ -41,11 +47,11 @@ default:
 
 
 if($_SESSION[acp_user] != "allowed" AND $subinc == "user.edit"){
-$subinc = "no_access";
+	$subinc = "no_access";
 }
 
 if($_SESSION[acp_user] != "allowed" AND $subinc == "user.groups"){
-$subinc = "no_access";
+	$subinc = "no_access";
 }
 
 
@@ -53,9 +59,6 @@ $subinc = "no_access";
 /*
 Output
 */
-
-
-
 
 
 
@@ -88,7 +91,8 @@ if($sub == "edit") {
 	echo"<span class='submenu_disabled'>$lang[edit_user]</span>";
 }
 
-echo"<a class='$sub_active[3]' href='$_SERVER[PHP_SELF]?tn=user&sub=groups'>$lang[edit_groups]</a>";
+echo"<a class='$sub_active[3]' href='$_SERVER[PHP_SELF]?tn=user&sub=customize'>$lang[customize_user]</a>";
+echo"<a class='$sub_active[4]' href='$_SERVER[PHP_SELF]?tn=user&sub=groups'>$lang[edit_groups]</a>";
 
 
 echo"<h5>$lang[h_search_user]</h5>";

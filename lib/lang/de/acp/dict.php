@@ -35,6 +35,7 @@ $lang['new_user'] = "Neuer Benutzer";
 $lang['edit_user'] = "Benutzer bearbeiten";
 $lang['new_user'] = "Neuen Benutzer anlegen";
 $lang['list_user'] = "Alle Benutzer anzeigen";
+$lang['customize_user'] = "Benutzer anpassen";
 
 $lang['edit_groups'] = "Benutzergruppen bearbeiten";
 

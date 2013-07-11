@@ -114,21 +114,18 @@ $pdo_fields_cache = array(
  */
  
 if(preg_match("/custom_/i", implode(",", array_keys($_POST))) ){
-    
-      $custom_fields = get_custom_fields();
-      $cnt_result = count($custom_fields);
-      
-      for($i=0;$i<$cnt_result;$i++) {
-      	if(substr($custom_fields[$i],0,7) == "custom_") {
-      		$cf = $custom_fields[$i];
-      		$pdo_fields[$cf] = 'STR';
-      		$pdo_fields_new[$cf] = 'STR';
-      		$pdo_fields_cache[$cf] = 'STR';
-      	}
-      
-      }
-      
-   }
+  $custom_fields = get_custom_fields();
+  $cnt_result = count($custom_fields);
+  
+  for($i=0;$i<$cnt_result;$i++) {
+  	if(substr($custom_fields[$i],0,7) == "custom_") {
+  		$cf = $custom_fields[$i];
+  		$pdo_fields[$cf] = 'STR';
+  		$pdo_fields_new[$cf] = 'STR';
+  		$pdo_fields_cache[$cf] = 'STR';
+  	}
+  }      
+}
 
 
 
@@ -341,9 +338,6 @@ if($modus == "new") {
 	$cnt_changes_c = $std->execute();
 
 } // eo modus new
-
-
-
 
 
 

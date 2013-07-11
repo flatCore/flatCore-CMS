@@ -261,7 +261,33 @@ echo"<div class='control-group'>
 echo"</div>";
 
 
+$custom_fields = get_custom_user_fields();
+sort($custom_fields);
+$cnt_result = count($custom_fields);
 
+if($cnt_result > 0) {
+
+/* tab custom fields */
+echo"<h4 title='$lang[legend_custom_fields]'>$lang[legend_custom_fields]</h4>";
+echo'<div class="tab-content">'; // tabs content
+
+	for($i=0;$i<$cnt_result;$i++) {	
+		if(substr($custom_fields[$i],0,10) == "custom_one") {
+			$label = substr($custom_fields[$i],11);
+			echo tpl_form_control_group('',$label,"<input type='text' class='input-block-level' name='$custom_fields[$i]' value='" . $$custom_fields[$i] . "'>");
+		}	elseif(substr($custom_fields[$i],0,11) == "custom_text") {
+			$label = substr($custom_fields[$i],12);
+			echo tpl_form_control_group('',$label,"<textarea class='input-block-level' rows='6' name='$custom_fields[$i]'>" . $$custom_fields[$i] . "</textarea>");
+		}	elseif(substr($custom_fields[$i],0,14) == "custom_wysiwyg") {
+			$label = substr($custom_fields[$i],15);
+			echo tpl_form_control_group('',$label,"<textarea class='mceEditor_small' name='$custom_fields[$i]'>" . $$custom_fields[$i] . "</textarea>");
+		}		
+	}
+
+echo'</div>'; // eo tabs content
+/* EOL tab custom fields */
+
+}
 
 
 

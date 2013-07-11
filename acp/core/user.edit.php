@@ -14,6 +14,59 @@ if($_REQUEST[edituser] != "") {
 }
 
 
+$pdo_fields = array(
+	'user_mail' => 'STR',
+	'user_verified' => 'STR',
+	'user_psw' => 'STR',
+	'user_drm' => 'STR',
+	'user_class' => 'STR',
+	'user_firstname' => 'STR',
+	'user_lastname' => 'STR',
+	'user_company' => 'STR',
+	'user_street' => 'STR',
+	'user_street_nbr' => 'STR',
+	'user_zipcode' => 'STR',
+	'user_city' => 'STR',
+	'user_newsletter' => 'STR'
+);
+
+$pdo_fields_new = array(
+	'user_id' => 'NULL',
+	'user_nick' => 'STR',
+	'user_mail' => 'STR',
+	'user_verified' => 'STR',
+	'user_registerdate' => 'STR',
+	'user_psw' => 'STR',
+	'user_drm' => 'STR',
+	'user_class' => 'STR',
+	'user_firstname' => 'STR',
+	'user_lastname' => 'STR',
+	'user_company' => 'STR',
+	'user_street' => 'STR',
+	'user_street_nbr' => 'STR',
+	'user_zipcode' => 'STR',
+	'user_city' => 'STR',
+	'user_newsletter' => 'STR'
+);
+
+/**
+ * if we have custom fields
+ * expand the array ($pdo_fields...)
+ */
+ 
+if(preg_match("/custom_/i", implode(",", array_keys($_POST))) ){
+  $custom_fields = get_custom_user_fields();
+  $cnt_result = count($custom_fields);
+  
+  for($i=0;$i<$cnt_result;$i++) {
+  	if(substr($custom_fields[$i],0,7) == "custom_") {
+  		$cf = $custom_fields[$i];
+  		$pdo_fields[$cf] = 'STR';
+  		$pdo_fields_new[$cf] = 'STR';
+  		$pdo_fields_cache[$cf] = 'STR';
+  	}
+  }      
+}
 
 
 /**
@@ -57,7 +110,6 @@ if($_POST[delete_the_user]) {
 
 
 
-
 /**
  * new user or update user
  */
@@ -81,11 +133,11 @@ if($user_psw_new != "") {
 
 	if($user_psw_new != $user_psw_reconfirmation) {
 		$db_status = "locked";
-		$error_message .= "$lang[msg_psw_error]<br />";
+		$error_message .= "$lang[msg_psw_error]<br>";
 	} else {
 		//generate password hash
 		$user_psw = md5("$user_psw_new$user_nick");
-		$success_message .= "$lang[msg_psw_changed]<br />";
+		$success_message .= "$lang[msg_psw_changed]<br>";
 	}
 
 }
@@ -96,26 +148,16 @@ if(is_numeric($edituser)) {
 
 	$dbh = new PDO("sqlite:".USER_DB);
 	
-	$sql = "UPDATE fc_user
-			SET user_mail = '$user_mail',
-				user_registerdate = '$user_registerdate',
-				user_verified = '$user_verified',
-				user_psw = '$user_psw',
-				user_drm = '$drm_string',
-				user_class = '$drm_acp_class',
-				user_firstname = '$user_firstname',
-				user_lastname = '$user_lastname',
-				user_company = '$user_company',
-				user_street = '$user_street',
-				user_street_nbr = '$user_street_nbr',
-				user_zipcode = '$user_zipcode',
-				user_city = '$user_city',
-				user_newsletter = '$user_newsletter'
-			WHERE user_id = $edituser";
-										
-	$cnt_changes = $dbh->exec($sql);
+	$sql_u = generate_sql_update_str($pdo_fields,"fc_user","WHERE user_id = $edituser");							
+	$sth = $dbh->prepare($sql_u);
+	generate_bindParam_str($pdo_fields,$sth);
 	
-	if($cnt_changes > 0){
+	$sth->bindParam(':user_drm', $drm_string, PDO::PARAM_STR);
+	$sth->bindParam(':user_class', $drm_acp_class, PDO::PARAM_STR);
+	
+	$cnt_changes = $sth->execute();
+								
+	if($cnt_changes == TRUE) {
 		$success_message .= "$lang[msg_user_updated]<br />";
 		record_log("$_SESSION[user_nick]","update user id: $edituser via acp","0");
 	}
@@ -126,57 +168,52 @@ if(is_numeric($edituser)) {
 //modus new user
 if(!is_numeric($edituser)) {
 
-$user_registerdate = time();
-
-/* unique check for user_nick and e-mail */
-
-$dbh = new PDO("sqlite:".USER_DB);
-
-$result = $dbh->query("SELECT user_nick FROM fc_user WHERE user_nick = '$user_nick' ")->fetchAll();
-
-if(count($result) > 0) {
-	$error_message .= "$lang[msg_user_exists]<br />";
-	$db_status = "locked";
-}
-
-$result = $dbh->query("SELECT user_mail FROM fc_user WHERE user_mail = '$user_mail' ")->fetchAll();
-
-if(count($result) > 0) {
-	$error_message .= "$lang[msg_usermail_exists]<br />";
-	$db_status = "locked";
-}
-
-
-if($db_status == "unlocked") {
-
-$sql = "INSERT INTO fc_user (
-					user_id, user_class, user_nick ,
-					user_registerdate, user_verified, user_drm ,
-					user_firstname , user_lastname , user_company ,
-					user_street ,user_street_nbr ,user_zipcode ,
-					user_city ,user_mail,user_newsletter,user_psw 
-					) VALUES (
-					NULL, '$drm_acp_class', '$user_nick',
-					'$user_registerdate','$user_verified','$drm_string',
-					'$user_firstname','$user_lastname','$user_company',
-					'$user_street','$user_street_nbr','$user_zipcode',
-					'$user_city','$user_mail','$user_newsletter','$user_psw' 
-					) ";
+	$user_registerdate = time();
+	
+	/* unique check for user_nick and e-mail */
+	
+	$dbh = new PDO("sqlite:".USER_DB);
+	$result = $dbh->query("SELECT user_nick FROM fc_user WHERE user_nick = '$user_nick' ")->fetchAll();
+	
+	if(count($result) > 0) {
+		$error_message .= "$lang[msg_user_exists]<br />";
+		$db_status = "locked";
+	}
+	
+	
+	$result = $dbh->query("SELECT user_mail FROM fc_user WHERE user_mail = '$user_mail' ")->fetchAll();
+	
+	if(count($result) > 0) {
+		$error_message .= "$lang[msg_usermail_exists]<br />";
+		$db_status = "locked";
+	}
+	
+	
+	if($db_status == "unlocked") {
+	
+		$user_id = null;
+		$sql = generate_sql_insert_str($pdo_fields_new,"fc_user");
+		$sth = $dbh->prepare($sql);
+		generate_bindParam_str($pdo_fields_new,$sth);
+		
+		$sth->bindParam(':user_psw', $user_psw, PDO::PARAM_STR);
+		$sth->bindParam(':user_drm', $drm_string, PDO::PARAM_STR);
+		$sth->bindParam(':user_registerdate', $user_registerdate, PDO::PARAM_STR);
+		$sth->bindParam(':user_class', $drm_acp_class, PDO::PARAM_STR);
 										
-$cnt_changes = $dbh->exec($sql);
-
-
-if($cnt_changes > 0){
-	$success_message .= "$lang[msg_new_user_saved]<br />";
-}
-										
-// don't show the form after saving
-$show_form = "false";
-
-}
-
-
-
+		$cnt_changes = $sth->execute();
+		
+		if($cnt_changes == TRUE) {
+			$success_message .= "$lang[msg_new_user_saved]<br>";
+			record_log("$_SESSION[user_nick]","new user <i>$user_nick</i>","0");
+		} else {
+			print_r($dbh->errorInfo());
+		}
+												
+		// don't show the form after saving
+		$show_form = "false";
+	
+	}
 }
 
 
@@ -188,44 +225,43 @@ $show_form = "false";
 
 if($db_status == "unlocked") {
 
-if($edituser != "") {
-	$enter_user_id = $edituser;
-} else {
-	$enter_user_id = $dbh->lastInsertId();
-}
-
-$user_groups = $_POST[user_groups];
-$this_group = $_POST[this_group]; // not checked checkbox
-$nbr_of_groups = $_POST[nbr_of_groups];
-
-
-for($i=0;$i<$nbr_of_groups;$i++) {
-
-if($user_groups[$i] == "") {
-	$user_groups[$i] = "$this_group[$i]";
-	$sign_out = "true"; // delete user from this list
-} else {
-	$sign_out = "false";
-}
-
-
-$result = $dbh->query("SELECT * FROM fc_groups WHERE group_id = $user_groups[$i] ");
-$result= $result->fetch(PDO::FETCH_ASSOC);
-
-$array_existing_users = explode(" ", $result[group_user]);        // userlist - to array
-array_push($array_existing_users, "$enter_user_id");              // add the user
-$array_existing_users = array_unique($array_existing_users);      // delete doubles
-$existing_users = implode(" ", $array_existing_users);            // generate the new userlist - back to a string
-
-if($sign_out == "true") {
-	$existing_users = str_replace("$enter_user_id","",$existing_users);
-}
-
-$existing_users = preg_replace("/ +/", ' ', $existing_users);     // delete multiple spaces
-
-$result = $dbh->query("UPDATE fc_groups SET group_user = '$existing_users' WHERE group_id = $user_groups[$i]");
-
-} // eol $i
+	if($edituser != "") {
+		$enter_user_id = $edituser;
+	} else {
+		$enter_user_id = $dbh->lastInsertId();
+	}
+	
+	$user_groups = $_POST[user_groups];
+	$this_group = $_POST[this_group]; // not checked checkbox
+	$nbr_of_groups = $_POST[nbr_of_groups];
+	
+	
+	for($i=0;$i<$nbr_of_groups;$i++) {
+	
+		if($user_groups[$i] == "") {
+			$user_groups[$i] = "$this_group[$i]";
+			$sign_out = "true"; // delete user from this list
+		} else {
+			$sign_out = "false";
+		}
+		
+		
+		$result = $dbh->query("SELECT * FROM fc_groups WHERE group_id = $user_groups[$i] ");
+		$result= $result->fetch(PDO::FETCH_ASSOC);
+		
+		$array_existing_users = explode(" ", $result[group_user]);        // userlist - to array
+		array_push($array_existing_users, "$enter_user_id");              // add the user
+		$array_existing_users = array_unique($array_existing_users);      // delete doubles
+		$existing_users = implode(" ", $array_existing_users);            // generate the new userlist - back to a string
+		
+		if($sign_out == "true") {
+			$existing_users = str_replace("$enter_user_id","",$existing_users);
+		}
+		
+		$existing_users = preg_replace("/ +/", ' ', $existing_users);     // delete multiple spaces	
+		$result = $dbh->query("UPDATE fc_groups SET group_user = '$existing_users' WHERE group_id = $user_groups[$i]");
+	
+	}
 
 }
 
@@ -241,9 +277,6 @@ $result = $dbh->query("UPDATE fc_groups SET group_user = '$existing_users' WHERE
 if($db_status == "locked") {
 	unset($success_message);
 }
-
-
-
 
 
 //print message(s)

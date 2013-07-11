@@ -39,6 +39,7 @@ $lang['new_user'] = "New User";
 $lang['edit_user'] = "Edit User";
 $lang['new_user'] = "Create new User";
 $lang['list_user'] = "Show all user";
+$lang['customize_user'] = "Customize";
 
 $lang['edit_groups'] = "Edit Usergroup";
 

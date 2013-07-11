@@ -68,9 +68,9 @@ function get_all_moduls() {
 	$handle = opendir($mdir);
 	while ($file = readdir($handle)) {
 	
-	if(eregi("^\.{1,2}$",$file)) {
-		continue;
-	}
+		if(eregi("^\.{1,2}$",$file)) {
+			continue;
+		}
 	
 		if(is_dir("$mdir/$file"))	{
 			if(is_file("$mdir/$file/info.inc.php")) {
@@ -80,13 +80,11 @@ function get_all_moduls() {
 				$cntMods++;
 			}
 		}
-	
 	}
 	
 	@closedir($handle);
 	return($arr_iMods);
 }
-
 
 
 
@@ -105,7 +103,6 @@ function get_all_groups() {
 	}
 	
 	return($result);
-
 }
 
 
@@ -119,9 +116,7 @@ function get_all_groups() {
 
 function get_all_admins() {
 
-	// connect to database
 	$dbh = new PDO("sqlite:".USER_DB);
-	
 	$sql = "SELECT * FROM fc_user WHERE user_class = 'administrator'";
 	
 	   foreach ($dbh->query($sql) as $row) {
@@ -131,7 +126,6 @@ function get_all_admins() {
 	$dbh = null;
 	
 	return($result);
-
 }
 
 
@@ -156,15 +150,11 @@ function get_all_templates() {
 			if(is_dir("$sdir/$file")) {
 				$arr_Styles[] = "$file";
 			}
-	
 	}
 	
 	@closedir($handle);
 	return($arr_Styles);
-
 }
-
-
 
 
 /**
@@ -172,29 +162,20 @@ function get_all_templates() {
  */
 
 function clean_vars($var) {
-
 	$chars = array('<', '>', '\\', '/', '=','..'); 
 	$var = str_replace($chars, "", $var);
-
 	$var = strip_tags($var);
-
 	return $var;
-
 }
 
 function clean_filename($str) {
-
 	$str = strtolower($str);
-
 	$a = array('ä','ö','ü','ß',' - ',' + ','_',' / ','/'); 
 	$b = array('ae','oe','ue','ss','-','-','-','-','-');
 	$str = str_replace($a, $b, $str);
-
 	$str = preg_replace('/\s/s', '_', $str);  // replace blanks -> '_'
 	$str = preg_replace('/[^a-z0-9_-]/isU', '', $str); // only a-z 0-9
-
 	$str = trim($str); 
-
 	return $str; 
 }  
 
@@ -206,15 +187,11 @@ function clean_filename($str) {
  */
 
 function readable_dates($date_string) {
-
 	$year = 	substr($date_string, 0, 4);
 	$month = 	substr($date_string, 5, 2);
 	$day = 		substr($date_string, 8, 2);
-
 	$new_string = "$day.$month.$year";
-
 	return $new_string;
-
 }
 
 /**
@@ -223,22 +200,22 @@ function readable_dates($date_string) {
  */
 
 function readable_timestring($date_string) {
-
 	$year = 	substr($date_string, 0, 4);
 	$month = 	substr($date_string, 4, 2);
 	$day = 		substr($date_string, 6, 2);
 	$hour = 	substr($date_string, 8, 2);
 	$min = 		substr($date_string, 10, 2);
 	$sec = 		substr($date_string, 12, 2);
-
 	$new_string = "$day.$month.$year $hour:$min:$sec";
 	return $new_string;
 }
+
 
 /**
  * converting bytes to KB, MB, GB
  * Snippet from PHP Share: http://www.phpshare.org
  */
+ 
 function readable_filesize($bytes) {
   if($bytes >= 1073741824) {
     $bytes = number_format($bytes / 1073741824, 2) . ' GB';
@@ -253,11 +230,8 @@ function readable_filesize($bytes) {
   } else {
       $bytes = '0 bytes';
   }
-
   return $bytes;
 }
-
-
 
 
 /**
@@ -277,7 +251,6 @@ function print_sysmsg($msg) {
 
 	$msg = substr(strstr($msg, '}'), 2);
 	echo"<div class=\"$style\"><p>$msg</p></div>";
-
 }
 
 
@@ -288,19 +261,15 @@ function print_sysmsg($msg) {
  * Get Page Impression
  */
 
-
 function get_page_impression($pid) {
 
 		$dbh = new PDO("sqlite:".STATS_DB);
-
 		$sql = $dbh->query("SELECT counter FROM hits WHERE page_id = '$pid' ");
 		$result = $sql->fetch(PDO::FETCH_ASSOC);
-
 		$dbh = null;
 
 		$counter = $result[counter];
 		return($counter);
-
 }
 
 
@@ -308,13 +277,10 @@ function get_page_impression($pid) {
  * write a log message
  */
 
-
 function record_log($log_trigger = 'system', $log_entry, $log_priority = '0') {
 
 	$log_time = time();
-	
 	$dbh = new PDO("sqlite:".STATS_DB);
-
 	$sql = "INSERT INTO log	(
 			log_id , log_time , log_trigger , log_entry , log_priority
 			) VALUES (
@@ -334,7 +300,6 @@ function record_log($log_trigger = 'system', $log_entry, $log_priority = '0') {
 function show_log($nbr) {
 
 	$dbh = new PDO("sqlite:".STATS_DB);
-
 	$interval = time() - (30 * 86400); // 30 days
 	$count = $dbh->exec("DELETE FROM log WHERE log_time < '$interval'");
 
@@ -349,7 +314,6 @@ function show_log($nbr) {
    		}
    
 	$cnt_result = count($result);
-
 
 	for($i=0;$i<$cnt_result;$i++) {
 
@@ -370,12 +334,7 @@ function show_log($nbr) {
 
 	} // eol $i
 
-
-
 } // eo func
-
-
-
 
 
 /**
@@ -385,16 +344,13 @@ function show_log($nbr) {
 function add_feed($title, $text, $url, $sub_id, $feed_name, $time = NULL) {
 
 	$dbh = new PDO("sqlite:".CONTENT_DB);
-
 	$interval = time() - (30 * 86400); // 30 days
-	
 	$del_interval = $dbh->exec("DELETE FROM fc_feeds WHERE feed_time < '$interval'");
 	$del_dublicates = $dbh->exec("DELETE FROM fc_feeds WHERE feed_subid = '$sub_id'");
 
 	if(is_null($time)) {
 		$time = time();
 	}
-
 
 	$sql = "INSERT INTO fc_feeds	(
 			feed_id , feed_subid, feed_time , feed_name , feed_title , feed_text, feed_url
@@ -483,13 +439,7 @@ function generate_xml_sitemap() {
 		file_put_contents($file, $file_content, LOCK_EX);
 	
 	}
-
-
-} // eo function
-
-
-
-
+}
 
 
 /**
@@ -521,7 +471,6 @@ function cache_lastedit($num = 5) {
 	
 	$dbh = null;
 	
-	
 	$count_result = count($result);
 	
 	$string = "<?php\n";
@@ -550,12 +499,7 @@ function cache_lastedit($num = 5) {
 	
 		$file = "../" . FC_CONTENT_DIR . "/cache/cache_lastedit.php";
 		file_put_contents($file, $string, LOCK_EX);
-
 }
-
-
-
-
 
 
 /**
@@ -563,57 +507,55 @@ function cache_lastedit($num = 5) {
  * tag cloud (keywords)
  */
 
-
 function cache_keywords() {
 
-global $languagePack;
-
-$dbh = new PDO("sqlite:".CONTENT_DB);
-
-$sql = "SELECT page_meta_keywords
-		FROM fc_pages
-		WHERE page_status != 'draft' AND page_language = '$languagePack' ";
-
-foreach ($dbh->query($sql) as $row) {
-	$clean_key = $row['page_meta_keywords'];
-	$clean_key = preg_replace("/ +/", " ", $clean_key);
-	$clean_key = trim($clean_key, " ");
-	$clean_key = strtolower($clean_key); 
-  if($clean_key != "") {
-  	$result .=  "$clean_key,";
-  }
-}  
-
-$dbh = null;
-
-$result = str_replace(", ",",",$result);
-$result = substr("$result", 0, -1);
-
-$array_keywords = array_count_values(explode(",",$result));
-arsort($array_keywords); // sort by strength
-
-$array_keywords = array_slice($array_keywords, 0, 25); // only the first 25
-ksort($array_keywords); // sort alphabetic
-
-$font_size = "90"; // %
-
-$x = 0;
-
-foreach($array_keywords as $key => $val) {
-	$x ++;
-
-	$skey = urlencode(trim($key));
-	$fz = $font_size+($val*10);
-	if($key == "") {continue;}
-	$page_keywords .= "<span style=\"font-size:$fz%;\"><a href='" . FC_ROOT . "/index.php?p=search&amp;s=$skey'>$key</a></span> ";
-
-} // eol foreach
-
-	$file = "../" . FC_CONTENT_DIR . "/cache/cache_keywords.html";
-	file_put_contents($file, $page_keywords, LOCK_EX);
+	global $languagePack;
+	
+	$dbh = new PDO("sqlite:".CONTENT_DB);
+	
+	$sql = "SELECT page_meta_keywords
+			FROM fc_pages
+			WHERE page_status != 'draft' AND page_language = '$languagePack' ";
+	
+	foreach ($dbh->query($sql) as $row) {
+		$clean_key = $row['page_meta_keywords'];
+		$clean_key = preg_replace("/ +/", " ", $clean_key);
+		$clean_key = trim($clean_key, " ");
+		$clean_key = strtolower($clean_key); 
+	  if($clean_key != "") {
+	  	$result .=  "$clean_key,";
+	  }
+	}  
+	
+	$dbh = null;
+	
+	$result = str_replace(", ",",",$result);
+	$result = substr("$result", 0, -1);
+	
+	$array_keywords = array_count_values(explode(",",$result));
+	arsort($array_keywords); // sort by strength
+	
+	$array_keywords = array_slice($array_keywords, 0, 25); // only the first 25
+	ksort($array_keywords); // sort alphabetic
+	
+	$font_size = "90"; // %
+	
+	$x = 0;
+	
+	foreach($array_keywords as $key => $val) {
+		$x ++;
+	
+		$skey = urlencode(trim($key));
+		$fz = $font_size+($val*10);
+		if($key == "") {continue;}
+		$page_keywords .= "<span style=\"font-size:$fz%;\"><a href='" . FC_ROOT . "/index.php?p=search&amp;s=$skey'>$key</a></span> ";
+	
+	} // eol foreach
+	
+		$file = "../" . FC_CONTENT_DIR . "/cache/cache_keywords.html";
+		file_put_contents($file, $page_keywords, LOCK_EX);
 
 }
-
 
 
 /**
@@ -630,7 +572,6 @@ function delete_cache_file($file='cache_mostclicked') {
 	}
 	
 }
-
 
 
 /**
@@ -710,12 +651,37 @@ function cache_url_paths() {
  * return array
  */
 
-
-
 function get_custom_fields() {
 
 	$dbh = new PDO("sqlite:".CONTENT_DB);
 	$sql = "SELECT * FROM fc_pages";
+	
+	$result = $dbh->query($sql)->fetch(PDO::FETCH_ASSOC);
+	$dbh = null;
+	
+	$result = array_keys($result);
+	$cnt_result = count($result);
+	
+	for($i=0;$i<$cnt_result;$i++) {
+		if(substr($result[$i],0,7) == "custom_") {
+			$customs_fields[] = $result[$i];
+		}
+	}
+	
+	return $customs_fields;
+
+}
+
+
+/**
+ * get custom columns from table fc_user
+ * return array
+ */
+
+function get_custom_user_fields() {
+
+	$dbh = new PDO("sqlite:".USER_DB);
+	$sql = "SELECT * FROM fc_user";
 	
 	$result = $dbh->query($sql)->fetch(PDO::FETCH_ASSOC);
 	$dbh = null;
@@ -739,7 +705,6 @@ function get_custom_fields() {
  * show editor's switch buttons
  * for plain text or wysiwyg
  */
-
 
 function show_editor_switch($tn,$sub) {
 
