@@ -12,23 +12,23 @@ function checkwritable($path) {
 	global $goto_install;
 	global $lang;
 	
-	echo"<div class='block'>";
-	echo"<div class='left'>$path</div>";
-	
+	echo '<div class="row-fluid">';
+	echo '<div class="span4">'.$path.'</div>';
+	echo '<div class="span8">';
 	if(!is_writable("$path")){
 	
-		echo"<span class='red'>$lang[permission_false]</span>";
+		echo '<div class="alert alert-error">' . $lang[permission_false] . '</div>';
 		$goto_install[] = "false";
 	
 	} else {
 	
-		echo"<span class='green'>$lang[permission_true]</span>";
+		echo '<div class="alert alert-success">' . $lang[permission_true] . '</div>';
 		$goto_install[] = "true";
 	
 	}
 	
-	echo"<div style='clear: both;'></div>";
-	echo"</div>";
+	echo '</div>';
+	echo '</div>';
 
 }
 
@@ -39,12 +39,13 @@ function checkexistingdir($path) {
 	global $goto_install;
 	
 	if(!is_dir("$path")){
-		echo"<div class='block'>";
-		echo"<div class='left'>$path</div>";
-		echo"<span class='red'>$lang[missing_folder]</span>";
+		echo '<div class="row-fluid">';
+		echo '<div class="span4">'.$path.'</div>';
+		echo '<div class="span8">';
+		echo '<div class="alert alert-error">' . $lang[missing_folder] . '</div>';
 		$goto_install[] = "false";
-		echo"<div style='clear: both;'></div>";
-		echo"</div>";
+		echo '</div>';
+		echo '</div>';
 	
 	}
 
@@ -76,7 +77,7 @@ $check_is_dir[] = "../acp/";
 $needed_phpversion = "5.2";
 
 
-echo"<h2>$lang[files_and_folders]</h2>";
+echo"<h3>$lang[files_and_folders]</h3>";
 
 foreach($check_this as $filepath){
 	checkwritable("$filepath");
@@ -86,39 +87,58 @@ foreach($check_is_dir as $dir){
 	checkexistingdir("$dir");
 }
 
-echo"<h2>$lang[system_requirements]</h2>";
+echo"<h3>$lang[system_requirements]</h3>";
 
 $version = phpversion();
 
-echo"<div class='left'>PHP Version</div>";
-
+echo '<div class="row-fluid">';
+echo '<div class="span4">PHP Version</div>';
+echo '<div class="span8">';
+	
 if($version < $needed_phpversion) {
-	echo"<span class='red'>$lang[php_false] ($needed_phpversion)</span>";
+	echo '<div class="alert alert-error">' . $lang[php_false] . '</div>';
 	$goto_install[] = "false";
 } else {
-	echo"<span class='green'>$lang[php_true] ($needed_phpversion)</span>";
+	echo '<div class="alert alert-success">' . $lang[php_true] . '</div>';
 	$goto_install[] = "true";
 }
 
+echo '</div>';
+echo '</div>';
 
-echo"<div class='left'>SQLITE</div>";
+
+echo '<div class="row-fluid">';
+echo '<div class="span4">PDO/SQLite</div>';
+echo '<div class="span8">';
 
 if (in_array("pdo_sqlite", get_loaded_extensions())) {
-	echo"<span class='green'>$lang[pdo_true]</span>";
+	echo '<div class="alert alert-success">' . $lang[pdo_true] . '</div>';
 	$goto_install[] = "true";
 } else {
-	echo"<span class='red'>$lang[pdo_false]</span>";
+	echo '<div class="alert alert-success">' . $lang[pdo_false] . '</div>';
 	$goto_install[] = "false";
 }
 
+echo '</div>';
+echo '</div>';
 
 
 
 if(!in_array("false",$goto_install)) {
 
-	echo"<hr><form class='formnav' action='index.php' method='POST'>
-	<input type='submit' class='submit' name='step2' value='$lang[step] 2'>
-	</form>";
+	echo"<hr><form class='' action='index.php' method='POST'>";
+	echo '<div class="row-fluid">';
+	echo '<div class="span4"></div>';
+	echo '<div class="span8">';
+
+	
+	echo"<input type='submit' class='btn btn-success btn-block' name='step2' value='$lang[step] 2'>";
+	
+
+	echo '</div>';
+	echo '</div>';
+	
+	echo"</form>";
 
 }
 

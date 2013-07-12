@@ -181,9 +181,8 @@ $dbh->query($sql_log_table);
 $dbh = null;
 
 
-echo"<hr>$lang[installed] | Admin: $username<hr>";
-echo"<hr><a href='../index.php' target='_blank'>$lang[link_home]</a><hr>";
-echo"<hr><a href='../acp/index.php' target='_blank'>$lang[link_admin]</a><hr>";
+echo"<div class='alert alert-success'>$lang[installed] | Admin: $username</div>";
+echo"<hr><a class='btn' href='../acp/index.php'>$lang[link_admin]</a><hr>";
 
 
 

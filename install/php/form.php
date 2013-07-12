@@ -4,30 +4,39 @@
 </p>
 
 
-<form action="index.php" method="POST">
+<form action="index.php" method="POST" class="form-horizontal">
 
-<div class="block">
-<div class="left"><?php echo"$lang[username]"; ?></div>
-<div class="right"><input type="text" name="username" value="" class="txtfield"></div>
-<div style="clear: both;"></div>
+<div class="control-group">
+	<label class="control-label"><?php echo"$lang[username]"; ?></label>
+	<div class="controls">
+		<input type="text" name="username" value="" class="input-block-level">
+	</div>
 </div>
 
-<div class="block">
-<div class="left"><?php echo"$lang[email]"; ?></div>
-<div class="right"><input type="text" name="mail" value="" class="txtfield"></div>
-<div style="clear: both;"></div>
+<div class="control-group">
+	<label class="control-label"><?php echo"$lang[email]"; ?></label>
+	<div class="controls">
+		<input type="text" name="mail" value="" class="input-block-level">
+	</div>
 </div>
 
-<div class="block">
-<div class="left"><?php echo"$lang[password]"; ?></div>
-<div class="right"><input type="password" name="psw" value="" class="txtfield"></div>
-<div style="clear: both;"></div>
+<div class="control-group">
+	<label class="control-label"><?php echo"$lang[password]"; ?></label>
+	<div class="controls">
+		<input type="password" name="psw" value="" class="input-block-level">
+	</div>
 </div>
 
+<hr>
 
-<p>
-<input type="submit" class="submit" name="step3" value="<?php echo"$lang[start_install]"; ?>"><br />
-<input type="submit" class="submit" name="step1" value="<?php echo"$lang[step]"; ?> 1">
-</p>
+<div class="row-fluid">
+	<div class="span4">
+		<input type="submit" class="btn btn-block" name="step1" value="<?php echo"$lang[step]"; ?> 1">
+	</div>
+	<div class="span8">
+		<input type="submit" class="btn btn-success btn-block" name="step3" value="<?php echo"$lang[start_install]"; ?>">
+	</div>
+</div>
+
 
 </form>

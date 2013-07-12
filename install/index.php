@@ -33,47 +33,39 @@ if($modus == "update") {
 
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xml:lang="en-us" xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-		<link media="screen" rel="stylesheet" type="text/css" href="css/styles.css" />
-		<title><?php echo"$modus"; ?> flatCore | Content Management System</title>
-		
-		
-		
+	<meta charset="utf-8">
+	<title><?php echo"$modus"; ?> flatCore | Content Management System</title>
+	<link media="screen" rel="stylesheet" type="text/css" href="../lib/css/bootstrap.css" />
+	<link media="screen" rel="stylesheet" type="text/css" href="css/styles.css" />
 </head>
 <body>
-	
-<div id="frame">
-	
-	<div id="header">
-		<h1>Installation & Setup</h1>
-		<p>Modus: <?php echo"$modus"; ?></p>
+<div id="inst-frame">
+	<div id="inst-background">
+		<div id="inst-header">
+			<h1>flatCore <small>Installation & Setup</small></h1>
+			<p>Modus: <span class="label label-inverse"><?php echo"$modus"; ?></span></p>
+		</div>
+		<div id="inst-body">
+			<?php
+			if($modus == "install") {
+				include("inc.install.php");
+			} else {
+				include("inc.update.php");
+			}
+			
+			?>
+		</div>
+		<div id="inst-footer">
+			<a href="http://www.flatcore.de">
+			<img src="images/logo.png" alt="flatCore Logo">
+			<h3>flatCore<br><small>Content Management System</small></h3>
+			</a>
+		</div>
 	</div>
-
-	<div id="body">
-	
-		<?php
-		
-		if($modus == "install") {
-			include("inc.install.php");
-		} else {
-			include("inc.update.php");
-		}
-		
-		?>
-	
-	</div>
-
-
-	<div id="footer">
-		<p>flatCore | Content Management System<br>
-		<a href="http://www.flatcore.de">powered by flatcore.de</a></p>
-	</div>
-
 </div>
-
 </body>
 </html>
+
