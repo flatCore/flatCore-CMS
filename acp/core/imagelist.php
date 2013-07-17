@@ -4,52 +4,51 @@
  * list all images from content/images
  * used in tinyMCE's filebrowser
  */
-
+ 
 include("../../config.php");
 
-// You can't simply echo everything right away because we need to set some headers first!
-$output = ''; // Here we buffer the JavaScript code we want to send to the browser.
-$delimiter = "\n"; // for eye candy... code gets new lines
+$path = "../../$img_path";
+$abspath = '/'.$img_path;
 
-$output .= 'var tinyMCEImageList = new Array(';
-
-$directory = "../../$img_path"; // Use your correct (relative!) path here
-
-
-// Since TinyMCE3.x you need absolute image paths in the list...
-
-$abspath = str_replace("acp/core","",FC_INC_DIR);
-$abspath = "$abspath"."$img_path";
-
-if (is_dir($directory)) {
-    $direc = opendir($directory);
-
-    while ($file = readdir($direc)) {
-        if (!preg_match('~^\.~', $file)) { // no hidden files / directories here...
-        	if($file == "index.html") {continue;}
-            if (is_file("$directory/$directory/$file")) {
-                // We got ourselves a file! Make an array entry:
-                
-                $output .= $delimiter
-                    . '["'
-                    . utf8_encode($file)
-                    . '", "'
-                    . utf8_encode("$abspath/$file")
-                    . '"],';
-            }
-        }
+$testmode = "off";
+$images = Array();
+$counter = 0;
+if($handle = @opendir($path)) {
+  while (false !== ($file=readdir($handle))){
+  	if($file == "index.html") {continue;}
+    if(strpos($file, ".") != 0) {
+      $images[$counter]['title'] = $file;
+      $images[$counter]['value'] = $abspath."/".$file;
+      $counter++;
     }
-
-    $output = substr($output, 0, -1); // remove last comma from array item list (breaks some browsers)
-    $output .= $delimiter;
-
-    closedir($direc);
+  }
+  closedir($handle);
+} elseif ($testmode == "on") {
+	echo "Error: Can't find directory. Please write a valid path.";
+  exit;
 }
 
-$output .= ');'; // Finish code: end of array definition. Now we have the JavaScript code ready!
+if($counter == 0 && $testmode == "on") {
+	echo "Error: This directory seems to be empty.";
+	exit;
+}
 
-header('Content-type: text/javascript'); // Make output a real JavaScript file!
+// Let PHP do the sorting an not the OS
+ksort($images);
 
-echo $output; // Now we can send data to the browser because all headers have been set!
+if($testmode == "off") {
+  // Make output a real JavaScript file!
+  // browser will now recognize the file as a valid JS file
+  header('Content-type: text/javascript');
+  // prevent browser from caching
+  header('pragma: no-cache');
+  header('expires: 0'); // i.e. contents have already expired
+}
+
+if($testmode == "on") {
+	echo "<p><strong>This is the JSON I'll be delivering:</strong></p>";
+}
+
+echo json_encode($images);
 
 ?>

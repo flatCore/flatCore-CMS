@@ -81,7 +81,7 @@ if(!isset($_GET['sub'])){
 		
 		<link rel="icon" type="image/x-icon" href="images/favicon.ico" />
 		
-		<script language="javascript" type="text/javascript" src="../lib/js/tiny_mce/tiny_mce.js"></script>
+		<script language="javascript" type="text/javascript" src="../lib/js/tinymce/tinymce.min.js"></script>
 		<script type="text/javascript" src="../lib/js/mootools/mootools-core.js"></script>
 		<script type="text/javascript" src="../lib/js/mootools/mootools-more.js"></script>
 		<script type="text/javascript" src="../lib/js/mootools/SimpleTabs.js"></script>

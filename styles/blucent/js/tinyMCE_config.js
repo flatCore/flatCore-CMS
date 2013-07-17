@@ -1,13 +1,31 @@
-	tinyMCE.init({
-		mode : "textareas",
-		theme : "advanced",
-		skin : "o2k7",
-		skin_variant : "black",
-		content_css : "../styles/blucent/css/editor.css",
-		theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
-		font_size_style_values : "10px,12px,13px,14px,16px,18px,20px",
-		plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
-		style_formats : [
+tinymce.init({
+  selector: 'textarea.mceEditor',
+  language : 'de',
+  toolbar_items_size: 'small',
+  content_css : "../styles/blucent/css/editor.css?v=12",
+  plugins: [
+    "advlist autolink lists link image charmap preview anchor",
+    "searchreplace visualblocks code fullscreen wordcount template",
+    "media table contextmenu paste textcolor"
+  ],
+  toolbar1: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link unlink anchor image media",
+  toolbar2: "forecolor backcolor fontsizeselect | table | hr removeformat | subscript superscript | fullscreen visualchars visualchars visualblocks | template",
+  image_list : "core/imagelist.php",
+  image_advtab: true,
+  convert_urls: false,
+  templates: [ 
+    {title: 'row-fluid [6|6]', description: 'Zwei Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_2cols.html'},
+    {title: 'row-fluid [4|4|4]', description: 'Drei Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_3cols.html'},
+    {title: 'row-fluid [3|3|3|3]', description: 'Vier Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_4cols.html'}
+  ],
+	style_formats : [
+		{title : 'Absatz', block : 'p'},
+		{title : 'Headline H1', block : 'h1'},
+		{title : 'Headline H2', block : 'h2'},
+		{title : 'Headline H3', block : 'h3'},
+		{title : 'Headline H4', block : 'h4'},
+		{title : 'Headline H5', block : 'h5'},
+		{title : 'Headline H6', block : 'h6'},
 		{title : 'Label', inline : 'span', classes : 'label'},
 		{title : 'Label Success', inline : 'span', classes : 'label label-success'},
 		{title : 'Label Warning', inline : 'span', classes : 'label label-warning'},
@@ -19,43 +37,48 @@
 		{title : 'Div alert-success', block : 'div', classes : 'alert alert-success'},
 		{title : 'Div alert-info', block : 'div', classes : 'alert alert-info'},
 		{title : 'Div brightBox', block : 'div', classes : 'brightBox'},
-		{title : 'Div darkBox', block : 'div', classes : 'darkBox'}
-		],
-	// Theme options
-		theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontsizeselect",
-		theme_advanced_buttons2 : "bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,code,syntaxhl,|,preview,|,forecolor,backcolor,|,styleprops,attribs,|,nonbreaking,template,advcode",
-		theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,iespell,media,|,fullscreen",
-		theme_advanced_buttons4 : "",
-		theme_advanced_toolbar_location : "top",
-		theme_advanced_toolbar_align : "left",
-		theme_advanced_statusbar_location : "bottom",
-		theme_advanced_styles : "img-rounded=img-rounded;img-circle=img-circle;img-polaroid=img-polaroid;a btn=btn;a btn-primary=btn btn-primary;a btn-info=btn btn-info;a btn-success=btn btn-success;a btn-warning=btn btn-warning;a btn-danger=btn btn-danger;a btn-inverse=btn btn-inverse;a btn-link=btn btn-link",
-		theme_advanced_resizing : true,
-		theme_advanced_resize_horizontal : false,
-		plugin_preview_width : "900",
-		width : "100%",
-		height : "480",
-		editor_selector : "mceEditor",
-		relative_urls : false,
-		remove_script_host : true,
-		external_image_list_url : "core/imagelist.php",
-		template_external_list_url : "core/templatelist.php",
-		extended_valid_elements : "textarea[cols|rows|disabled|name|readonly|class]",
-		visual : true,
-		language : "de"
-	});
-	
-	
-	tinyMCE.init({
-		mode : "textareas",
-		theme : "advanced",
-		skin : "o2k7",
-		skin_variant : "black",
-		content_css : "../styles/blucent/css/editor.css",
-		theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
-		font_size_style_values : "10px,12px,13px,14px,16px,18px,20px",
-		plugins : "style,advlink,advimage,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
-		style_formats : [
+		{title : 'Div darkBox', block : 'div', classes : 'darkBox'},
+		{title : 'Code PrettyPrint', block : 'pre', classes : 'prettyprint'},
+		{title : 'Code PrettyPrint Linenums', block : 'pre', classes : 'prettyprint linenums'},
+		{title : 'img-rounded', selector : 'img', classes : 'img-rounded'},
+		{title : 'img-polaroid', selector : 'img', classes : 'img-polaroid'},
+		{title : 'img-circle', selector : 'img', classes : 'img-circle'}
+	],
+  fontsize_formats : "10px 12px 13px 14px 16px 18px 20px",
+	width : "100%",
+	height : "480",
+	remove_script_host : true,
+	rel_list: [
+    {title: 'Lightbox', value: 'lightbox'}
+  ],
+	extended_valid_elements : "textarea[cols|rows|disabled|name|readonly|class]",
+	visual : true,
+	paste_as_text: true
+});
+
+
+tinymce.init({
+  selector: 'textarea.mceEditor_small',
+  language : 'de',
+  toolbar_items_size: 'small',
+  content_css : "../styles/blucent/css/editor.css",
+  plugins: [
+    "advlist autolink lists link image charmap preview anchor",
+    "searchreplace visualblocks code fullscreen wordcount template",
+    "media table contextmenu paste textcolor"
+  ],
+  toolbar1: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link unlink anchor image media",
+  toolbar2: "forecolor backcolor fontsizeselect | table | hr removeformat | subscript superscript | fullscreen visualchars visualchars visualblocks | template",
+  image_list : "core/imagelist.php",
+  image_advtab: true,
+  convert_urls: false,
+  templates: [ 
+  	{title: 'row-fluid [6|6]', description: 'Zwei Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_2cols.html'},
+    {title: 'row-fluid [4|4|4]', description: 'Drei Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_3cols.html'},
+    {title: 'row-fluid [3|3|3|3]', description: 'Vier Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_4cols.html'}
+  ],
+	style_formats : [
+		{title : 'Absatz', block : 'p'},
 		{title : 'Label', inline : 'span', classes : 'label'},
 		{title : 'Label Success', inline : 'span', classes : 'label label-success'},
 		{title : 'Label Warning', inline : 'span', classes : 'label label-warning'},
@@ -67,25 +90,18 @@
 		{title : 'Div alert-success', block : 'div', classes : 'alert alert-success'},
 		{title : 'Div alert-info', block : 'div', classes : 'alert alert-info'},
 		{title : 'Div brightBox', block : 'div', classes : 'brightBox'},
-		{title : 'Div darkBox', block : 'div', classes : 'darkBox'}
-		],
-	// Theme options
-		theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,forecolor,backcolor",
-		theme_advanced_buttons2 : "bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,code,|,preview",
-		theme_advanced_buttons3 : 
-		"hr,removeformat,visualaid,|,sub,sup,charmap,|,print,|,fullscreen,template",
-		theme_advanced_toolbar_location : "top",
-		theme_advanced_toolbar_align : "left",
-		theme_advanced_statusbar_location : "bottom",
-		theme_advanced_resizing : true,
-		theme_advanced_resize_horizontal : false,
-		width : "100%",
-		height : "350",
-		editor_selector : "mceEditor_small",
-		relative_urls : false,
-		remove_script_host : true,
-		external_image_list_url : "core/imagelist.php",
-		template_external_list_url : "core/templatelist.php",
-		visual : true,
-		language : "de"
-	});
+		{title : 'Div darkBox', block : 'div', classes : 'darkBox'},
+		{title : 'Code PrettyPrint', block : 'pre', classes : 'prettyprint'},
+		{title : 'Code PrettyPrint Linenums', block : 'pre', classes : 'prettyprint linenums'},
+		{title : 'img-rounded', selector : 'img', classes : 'img-rounded'},
+		{title : 'img-polaroid', selector : 'img', classes : 'img-polaroid'},
+		{title : 'img-circle', selector : 'img', classes : 'img-circle'}
+	],
+  fontsize_formats : "10px 12px 13px 14px 16px 18px 20px",
+	width : "100%",
+	height : "350",
+	remove_script_host : true,
+	extended_valid_elements : "textarea[cols|rows|disabled|name|readonly|class]",
+	visual : true,
+	paste_as_text: true
+});

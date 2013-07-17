@@ -1,12 +1,7 @@
 body, td, pre {color:#000; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:13px; margin:8px;}
 body {background:#FFF;}
 body.mceForceColors {background:#FFF; color:#000;}
-h1 {font-size: 20px}
-h2 {font-size: 18px}
-h3 {font-size: 16px}
-h4 {font-size: 15px}
-h5 {font-size: 14px}
-h6 {font-size: 12px}
+
 .mceItemTable, .mceItemTable td, .mceItemTable th, .mceItemTable caption, .mceItemVisualAid {border: 1px dashed #BBB;}
 a.mceItemAnchor {display:inline-block; width:11px !important; height:11px  !important; background:url(../../lib/js/tiny_mce/themes/advanced/skins/default/img/items.gif) no-repeat 0 0;}
 span.mceItemNbsp {background: #DDD}
@@ -20,21 +15,7 @@ cite {border-bottom:1px dashed blue}
 acronym {border-bottom:1px dotted #CCC; cursor:help}
 abbr {border-bottom:1px dashed #CCC; cursor:help}
 
-p {
-	border: 1px dotted #e5e5e5;
-	padding: 2px;
-}
 
-div {
-	border: 1px dashed #e5e5e5;
-	padding: 3px;
-}
-
-pre {
-font-family: Courier;
-background-color: #F5F5F5;
-border: 1px dashed #BBB;
-}
 
 
 /* IE */

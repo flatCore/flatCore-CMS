@@ -6,8 +6,8 @@ body {
 	font: normal 13px/18px 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-body.mceContentBody {
-   padding: 5px;
+body.mce-content-body  {
+	padding: 10px;
 }
 
 body.mceForceColors {background:#d2e1f3;}
@@ -27,11 +27,6 @@ h1, h2, h3, h4, h5, h6 {
 	border: 1px dashed #ccc;
 }
 
-a.mceItemAnchor {
-	display:inline-block; width:11px !important; height:11px  !important;
-	background:url(../../../lib/js/tiny_mce/themes/advanced/skins/default/img/items.gif) no-repeat 0 0;
-}
-
 span.mceItemNbsp {background: #ddd;}
 td.mceSelected, th.mceSelected {background-color:#3399ff !important}
 img {border:0;}
@@ -42,56 +37,3 @@ del {color:red; text-decoration:line-through}
 cite {border-bottom:1px dashed blue}
 acronym {border-bottom:1px dotted #CCC; cursor:help}
 abbr {border-bottom:1px dashed #CCC; cursor:help}
-
-p {
-	border: 1px dotted #fff;
-	padding: 2px;
-}
-
-div p {
-	margin-top: 1px;
-	margin-bottom: 1px;
-}
-
-p:contains("^span$") {
-	background-color: #fff;
-}
-
-div {
-	border: 1px solid #eee;
-	padding: 2px;
-}
-
-blockquote {
-	border: 1px dotted #fff;
-	padding: 2px;
-}
-
-blockquote p {
-	padding: 0;
-	border: none;
-	font-style: italic;
-	background: transparent;
-}
-
-div.clear {
-	height: 7px;
-	opacity: 0.5;
-	background: #eee;
-}
-
-
-pre {
-	font: 1em 'andale mono', 'lucida console', monospace;
-	line-height: 1.5;
-	border: 1px solid #fff;
-}
-
-
-img {
-	max-width: 100%;
-	height: auto;
-}
-
-img:-moz-broken {-moz-force-broken-image-icon:1; width:24px; height:24px}
-font[face=mceinline] {font-family:inherit !important}
