@@ -16,15 +16,24 @@ echo '<div class="row-fluid"><div class="span12">';
 
 echo"<form action='$_SEVER[PHP_SELF]?tn=user&sub=$sub&edituser=$edituser' class='form-horizontal' method='POST'>";
 
-// fancytabs
-echo"<div id='tabsBlock'>";
+$custom_fields = get_custom_user_fields();
+sort($custom_fields);
+$cnt_custom_fields = count($custom_fields);
 
-/* tab_info */
-echo"<h4 title='$lang[tab_user_info_description]'>$lang[tab_user_info]</h4>";
+echo '<ul class="nav nav-tabs" id="bsTabs">';
+echo '<li class="active"><a href="#info" data-toggle="tab">'.$lang[tab_user_info].'</a></li>';
+echo '<li><a href="#contact" data-toggle="tab">'.$lang[tab_contact].'</a></li>';
+echo '<li><a href="#psw" data-toggle="tab">'.$lang[tab_psw].'</a></li>';
+if($cnt_custom_fields > 0) {
+	echo '<li><a href="#custom" data-toggle="tab">'.$lang[legend_custom_fields].'</a></li>';
+}
+echo '</ul>';
 
 
+echo '<div class="tab-content">';
 
-echo"<div class='tab-content'>";
+
+echo'<div class="tab-pane fade in active" id="info">';
 
 
 
@@ -151,10 +160,8 @@ echo"</div>";
 
 
 /* tab_contact */
-echo"<h4 title='$lang[tab_contact_description]'>$lang[tab_contact]</h4>";
+echo'<div class="tab-pane fade" id="contact">';
 
-
-echo"<div class='tab-content'>";
 
 echo"<div class='control-group'>
 			<label class='control-label'>$lang[f_user_firstname]</label>
@@ -200,15 +207,12 @@ echo"<div class='control-group'>
 		</div>
 	</div>";
 
-echo"</div>"; // eol .formbox
+echo"</div>";
 
 /* EOL tab_contact ### ### ### */
 
-/* tab_password */
-echo"<h4 title='$lang[tab_psw_description]'>$lang[tab_psw]</h4>";
 
-
-echo"<div class='tab-content'>";
+echo'<div class="tab-pane fade" id="psw">';
 
 echo"<div class='control-group'>
 		<label class='control-label'>$lang[f_user_psw]</label>
@@ -261,17 +265,12 @@ echo"<div class='control-group'>
 echo"</div>";
 
 
-$custom_fields = get_custom_user_fields();
-sort($custom_fields);
-$cnt_result = count($custom_fields);
-
-if($cnt_result > 0) {
+if($cnt_custom_fields > 0) {
 
 /* tab custom fields */
-echo"<h4 title='$lang[legend_custom_fields]'>$lang[legend_custom_fields]</h4>";
-echo'<div class="tab-content">'; // tabs content
+echo'<div class="tab-pane fade" id="custom">';
 
-	for($i=0;$i<$cnt_result;$i++) {	
+	for($i=0;$i<$cnt_custom_fields;$i++) {	
 		if(substr($custom_fields[$i],0,10) == "custom_one") {
 			$label = substr($custom_fields[$i],11);
 			echo tpl_form_control_group('',$label,"<input type='text' class='input-block-level' name='$custom_fields[$i]' value='" . $$custom_fields[$i] . "'>");
@@ -284,8 +283,7 @@ echo'<div class="tab-content">'; // tabs content
 		}		
 	}
 
-echo'</div>'; // eo tabs content
-/* EOL tab custom fields */
+echo'</div>'; /* EOL tab custom fields */
 
 }
 
@@ -293,7 +291,6 @@ echo'</div>'; // eo tabs content
 
 
 echo"</div>";
-// EOL fancytabs
 
 //submit form to save data
 echo"<div class='formfooter'>";

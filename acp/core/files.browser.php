@@ -155,14 +155,12 @@ foreach ($fileinfo as $key => $row) {
 
 
 if($_SESSION[sort_by_name] != "") {
-	array_multisort($fi_filename, $sort_direction, $fileinfo);
+	@array_multisort($fi_filename, $sort_direction, $fileinfo);
 } elseif($_SESSION[sort_by_size] != "") {
-	array_multisort($fi_size, $sort_direction, $fileinfo);
+	@array_multisort($fi_size, $sort_direction, $fileinfo);
 } elseif($_SESSION[sort_by_time] != "") {
-	array_multisort($fi_time, $sort_direction, $fileinfo);
+	@array_multisort($fi_time, $sort_direction, $fileinfo);
 }
-
-
 
 $files_per_page = 20;
 $show_numbers = 6;
@@ -243,7 +241,7 @@ for($i=$start;$i<$end;$i++) {
 
 	if($fileinfo[$i][filetype] == "image") {
 		$set_style = '';
-		$preview_button = "<a href='$path/$filename' data-milkbox='single' title='$path/$filename' class='btn btn-mini'>Vorschau</a>";
+		$preview_button = "<a href='$path/$filename' title='$path/$filename' class='btn btn-mini fancybox'>Vorschau</a>";
 		$preview_img = "<img src='$path/$filename' style='max-width:80px;max-height:80px;'>";
 	} else {
 		$set_style = "background-image: url(images/no-preview.gif); background-position: center; background-repeat: no-repeat;";

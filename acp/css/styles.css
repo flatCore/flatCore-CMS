@@ -390,12 +390,6 @@ a.submenu_mods_selected {
 }
 
 
-
-#accordion h5:hover {
-	cursor: pointer;
-}
-
-
 .clear {
 	clear:both;
 }
@@ -566,87 +560,21 @@ div[class*='log_priority']  {
 
 /* AJAX TABS */
 
-.tab-wrapper {
-	padding: 8px 25px;
-	margin-top: -12px;
-	border-radius: 4px;
-	clear: both;
-	background-color: #f1f1f1;
-	margin-bottom: 18px;
+ul.nav-tabs > li > a {
+		background-color: #e5e5e5;
+}
+
+
+
+ul.nav-tabs > li.active > a,
+ul.nav-tabs > li.active > a:hover {
+		background-color: #eee;
 }
 
 .tab-content {
-	margin-top: 18px;
-}
-
-.tab-menu {
-	list-style: none;
-	overflow: auto;
-}
-
-.tab-menu li {
-	float: left;
-	line-height: 28px;
-}
-
-
-.tab-menu li a {
-	padding: 4px 6px;
-	margin: 0 1px 0 0;
-	color: #999;
-	font-size: 13px;
-	background: #333 url(../images/shiny_buttons.png) repeat-x 0px -105px;
-	border: 1px solid #888;
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
-
-}
-
-.tab-menu li a:hover,
-.tab-menu li a:focus {
-	background: #999 url(../images/shiny_buttons.png) repeat-x 0px -100px;
-	color: #222;
-	outline: none;
-}
-
-.tab-menu li.tab-selected a {
-	color: #3376d9;
-	border: 1px solid #f1f1f1;
-	border-bottom: 2px solid #f1f1f1;
-	background: #f1f1f1 url(../images/shiny_buttons.png) repeat-x top left;
-}
-
-
-
-dl.list_logfile {
-  margin: 0 0 1px 0;
-  padding: 2px 5px;
-	border-bottom: 1px solid #FFF;
-}
- 
-dl.list_logfile dt {
-    color: #333;
-    float: left;
-    font-weight: bold;
-    text-align: right;
-    padding: 1px;
-    width: 115px;
-}
- 
-dl.list_logfile dd {
-    padding: 1px 1px 1px 125px;
-    word-wrap: break-word;
-}
-
-
-
-
-
-/* +/- toggler */
-#vertical_status {
-	font-family: "Courier New", Courier, monospace;
-	font-weight: bold;
-	color: #666;
+	background-color: #eee;
+	padding: 20px 10px;
+	margin-top: -20px;
 }
 
 

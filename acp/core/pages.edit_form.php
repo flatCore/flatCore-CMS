@@ -6,13 +6,31 @@ require("core/access.php");
 
 echo"\n <form id='editpage' action='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$editpage' class='form-horizontal' method='POST'>\n";
 
-// fancytabs
-echo'<div id="tabsBlock">';
+$custom_fields = get_custom_fields();
+sort($custom_fields);
+$cnt_custom_fields = count($custom_fields);
+
+
+
+echo '<ul class="nav nav-tabs" id="bsTabs">';
+echo '<li class="active"><a href="#info" data-toggle="tab">'.$lang[tab_info].'</a></li>';
+echo '<li><a href="#content" data-toggle="tab">'.$lang[tab_content].'</a></li>';
+echo '<li><a href="#extracontent" data-toggle="tab">'.$lang[tab_extracontent].'</a></li>';
+echo '<li><a href="#meta" data-toggle="tab">'.$lang[tab_meta].'</a></li>';
+echo '<li><a href="#head" data-toggle="tab">'.$lang[tab_head].'</a></li>';
+echo '<li><a href="#preferences" data-toggle="tab">'.$lang[tab_page_preferences].'</a></li>';
+if($cnt_custom_fields > 0) {
+	echo '<li><a href="#custom" data-toggle="tab">'.$lang[legend_custom_fields].'</a></li>';
+}
+echo '</ul>';
+
+
+
+
+echo '<div class="tab-content">';
 
 /* tab_info */
-echo'<h4 title="' . $lang[tab_info_description] . '">' . $lang[tab_info] . '</h4>';
-
-echo'<div class="tab-content">'; // tabs content
+echo'<div class="tab-pane fade in active" id="info">';
 
 $dbh = new PDO("sqlite:".CONTENT_DB);
 $sql = "SELECT page_linkname, page_sort FROM fc_pages
@@ -83,19 +101,12 @@ if($page_sort != "portal") {
 	
 echo tpl_form_control_group('',$lang[f_page_linkname],"<input class='span5' type='text' name='page_linkname' value='$page_linkname'>");
 echo tpl_form_control_group('',$lang[f_page_permalink],"<input class='span5' type='text' name='page_permalink' value='$page_permalink'>");
-echo tpl_form_control_group('',$lang[f_page_title],"<input class='span5' type='text' name='page_title' value='$page_title'>");
 
-
-echo'</div>'; // eo tabs content
-
-
-/* EOL tab_info */
+echo'</div>'; /* EOL tab_info */
 
 
 /* tab_content */
-echo"<h4 title='$lang[tab_content_description]'>$lang[tab_content]</h4>";
-
-echo'<div class="tab-content">'; // tabs content
+echo'<div class="tab-pane fade" id="content">';
 
 echo"<textarea name='page_content' class='mceEditor'>
 	 $page_content
@@ -106,23 +117,21 @@ echo"</div>";
 
 
 /* tab_extracontent */
-echo"<h4 title='$lang[tab_extracontent_description]'>$lang[tab_extracontent]</h4>";
 
-echo'<div class="tab-content">'; // tabs content
+echo'<div class="tab-pane fade" id="extracontent">';
 
 echo"<textarea name='page_extracontent' class='mceEditor_small'>
 	 $page_extracontent
 	 </textarea>";
 
-echo"</div>";
-/* EOL tab_extracontent */
+echo"</div>"; /* EOL tab_extracontent */
 
 
 
 /* tab_meta */
-echo"<h4 title='$lang[tab_meta_description]'>$lang[tab_meta]</h4>";
+echo'<div class="tab-pane fade" id="meta">';
 
-echo'<div class="tab-content">'; // tabs content
+echo tpl_form_control_group('',$lang[f_page_title],"<input class='span5' type='text' name='page_title' value='$page_title'>");
 
 if($page_meta_author == "") {
 	$page_meta_author = "$_SESSION[user_firstname] $_SESSION[user_lastname]";
@@ -130,7 +139,7 @@ if($page_meta_author == "") {
 
 echo tpl_form_control_group('',$lang[f_meta_author],"<input class='span5' type='text' name='page_meta_author' value='$page_meta_author'>");
 echo tpl_form_control_group('',$lang[f_meta_keywords],"<input class='span5' type='text' name='page_meta_keywords' value='$page_meta_keywords'>");
-echo tpl_form_control_group('',$lang[f_meta_description],"<textarea name='page_meta_description' class='span5' rows='5'>$page_meta_description</textarea>");
+echo tpl_form_control_group('',$lang[f_meta_description],"<textarea name='page_meta_description' class='span5 cntValues' rows='5'>$page_meta_description</textarea>");
 
 		
 $select_page_meta_robots  = '<select name="page_meta_robots" class="span3">';
@@ -144,40 +153,29 @@ echo tpl_form_control_group('',$lang[f_meta_robots],$select_page_meta_robots);
 
 
 
-echo'</div>'; // eo tabs content
-
-/* EOL tab_meta */
+echo'</div>'; /* EOL tab_meta */
 
 
 
 /* tab_head */
-echo"<h4 title='$lang[tab_head_description]'>$lang[tab_head]</h4>";
-
-echo'<div class="tab-content">'; // tabs content
+echo'<div class="tab-pane fade" id="head">';
 
 echo "$lang[f_head_styles]";
 echo '<span class="silent"> &lt;style type=&quot;text/css&quot;&gt;</span> ... <span class="silent">&lt;/styles&gt;</span>';
-echo "<textarea name='page_head_styles' class='input-block-level' rows='8'>$page_head_styles</textarea>";
+echo "<textarea name='page_head_styles' class='input-block-level' rows='10'>$page_head_styles</textarea>";
 
 echo '<hr>';
 
 echo "$lang[f_head_enhanced]";
 echo '<span class="silent"> &lt;head&gt;</span> ... <span class="silent">&lt;/head&gt;</span>';
-echo "<textarea name='page_head_enhanced' class='input-block-level' rows='8'>$page_head_enhanced</textarea>";
+echo "<textarea name='page_head_enhanced' class='input-block-level' rows='10'>$page_head_enhanced</textarea>";
 
-echo'</div>'; // eo tabs content
-
-/* EOL tab_head */
+echo'</div>'; /* EOL tab_head */
 
 
 
 /* tab_preferences */
-echo"<h4 title='$lang[tab_page_preferences_description]'>$lang[tab_page_preferences]</h4>";
-
-echo'<div class="tab-content">'; // tabs content
-
-
-
+echo'<div class="tab-pane fade" id="preferences">';
 
 $arr_lang = get_all_languages();
 
@@ -191,18 +189,16 @@ for($i=0;$i<count($arr_lang);$i++) {
 
 } // eo $i
 
-$select_page_language  .= "</select>";
+$select_page_language .= '</select>';
 
 echo tpl_form_control_group('',$lang[f_page_language],$select_page_language);
 
-
-		
 $arr_Styles = get_all_templates();
 
-$select_select_template = "<select id='select_template' name='select_template'>";
+$select_select_template = '<select id="select_template" name="select_template"  class="span3">';
 
-if($page_template == "") {
-	$selected_standard = "selected";
+if($page_template == '') {
+	$selected_standard = 'selected';
 }
 
 $select_select_template .= "<option value='use_standard<|-|>use_standard' $selected_standard>$lang[use_standard]</option>";
@@ -218,31 +214,31 @@ $select_select_template .= "<optgroup label='$template'>";
 foreach($arr_layout_tpl as $layout_tpl) {
 	$layout_tpl = basename($layout_tpl);
 
-	$selected = "";
+	$selected = '';
 	if($template == "$page_template" && $layout_tpl == "$page_template_layout") {
-		$selected = "selected";
+		$selected = 'selected';
 	}
 	
 	$select_select_template .=  "<option $selected value='$template<|-|>$layout_tpl'>$template » $layout_tpl</option>";
 }
 
-$select_select_template .= "</optgroup>";
+$select_select_template .= '</optgroup>';
     
 
 
 
 } // eo foreach template list
 
-$select_select_template .= "</select>";
+$select_select_template .= '</select>';
 
 echo tpl_form_control_group('',$lang[f_page_template],$select_select_template);
 
 
 $arr_iMods = get_all_moduls();
 
-$select_page_modul = "<select name='page_modul'>";
+$select_page_modul = '<select name="page_modul"  class="span3">';
 
-$select_page_modul .= "<option value=''>Kein Modul</option>";
+$select_page_modul .= '<option value="">Kein Modul</option>';
 
 for($i=0;$i<count($arr_iMods);$i++) {
 
@@ -260,7 +256,7 @@ for($i=0;$i<count($arr_iMods);$i++) {
 } // eo $i
 
 
-$select_page_modul .= "</select>";
+$select_page_modul .= '</select>';
 
 
 echo tpl_form_control_group('',$lang[f_page_modul],$select_page_modul);
@@ -341,25 +337,16 @@ echo tpl_form_control_group('',$lang[f_page_authorized_admins],$checkbox_set_aut
 
 
 
-echo'</div>'; // eo tabs content
-
-/* EOL tab_preferences */
+echo'</div>'; /* EOL tab_preferences */
 
 
 
-
-
-$custom_fields = get_custom_fields();
-sort($custom_fields);
-$cnt_result = count($custom_fields);
-
-if($cnt_result > 0) {
+if($cnt_custom_fields > 0) {
 
 /* tab custom fields */
-echo"<h4 title='$lang[legend_custom_fields]'>$lang[legend_custom_fields]</h4>";
-echo'<div class="tab-content">'; // tabs content
+echo'<div class="tab-pane fade" id="custom">';
 
-	for($i=0;$i<$cnt_result;$i++) {	
+	for($i=0;$i<$cnt_custom_fields;$i++) {	
 		if(substr($custom_fields[$i],0,10) == "custom_one") {
 			$label = substr($custom_fields[$i],11);
 			echo tpl_form_control_group('',$label,"<input type='text' class='input-block-level' name='$custom_fields[$i]' value='" . $$custom_fields[$i] . "'>");
@@ -372,8 +359,7 @@ echo'<div class="tab-content">'; // tabs content
 		}		
 	}
 
-echo'</div>'; // eo tabs content
-/* EOL tab custom fields */
+echo'</div>'; /* EOL tab custom fields */
 
 }
 

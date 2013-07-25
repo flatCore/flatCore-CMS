@@ -5,85 +5,42 @@ require("core/access.php");
 
 
 $prefs = get_preferences();
-$form_img_action = "core/files.upload-script.php?w=$prefs[prefs_maximagewidth]&h=$prefs[prefs_maximageheight]&fz=$prefs[prefs_maxfilesize]&d=$img_path";
+$form_img_action = "core/files.upload-script.php";
 $files_d = FILES_FOLDER;
 $form_files_action = "core/files.upload-script.php?d=$files_d";
 
 ?>
 
+<div class="row-fluid">
+<div class="span6">
 <fieldset>
-		<legend><?php echo"$lang[upload_img_legend]";  ?></legend>
-		
-		<div id="hiddenImgMessage" class="alert alert-success" style="display:none;"><?php echo $lang['upload_complete']; ?></div>
-		
-	<form method="post" action="<?php echo $form_img_action ?>" enctype="multipart/form-data">
-
-
-		<div class="formRow">
-			<label for="url" class="floated">File: </label>
-			<input type="file" id="imagesToUpload" name="imagesToUpload[]" multiple><br>
+	<legend><?php echo $lang['upload_img_legend']; ?></legend>
+	<form action="core/files.upload-script.php" id="myDropzone" class="dropzone">
+		<input type="hidden" name="w" value="<?php echo $prefs[prefs_maximagewidth]; ?>" />
+		<input type="hidden" name="h" value="<?php echo $prefs[prefs_maximageheight]; ?>" />
+		<input type="hidden" name="fz" value="<?php echo $prefs[prefs_maxfilesize]; ?>" />
+		<input type="hidden" name="d" value="<?php echo $img_path; ?>" />
+		<input type="hidden" name="upload_type" value="images" />
+		<div class="fallback">
+			<input name="file" type="file" multiple />
 		</div>
-
-		<div class="formfooter">
-			<input type="submit" name="upload" value="<?php echo"$lang[upload_target_images]";  ?>" class="btn" />
-		</div>
-
 	</form>
+	<hr>
+	<?php echo $prefs[prefs_imagesuffix] ?>
 </fieldset>
-
-<script>
-
-window.addEvent('domready', function(){
-
-	var upload = new Form.Upload('imagesToUpload', {
-		onComplete: function(){
-		
-			$('hiddenImgMessage').setStyles({
-				display: 'block'
-    	});
-			
-			
-		}
-	});
-
-
-});
-
-</script>
-
+</div>
+<div class="span6">
 <fieldset>
-		<legend><?php echo"$lang[upload_files_legend]";  ?></legend>
-		<div id="hiddenFilesMessage" class="alert alert-success" style="display:none;"><?php echo $lang['upload_complete']; ?></div>
-		<form method="post" action="<?php echo $form_files_action ?>" enctype="multipart/form-data">
-
-
-		<div class="formRow">
-			<label for="url" class="floated">File: </label>
-			<input type="file" id="filesToUpload" name="filesToUpload[]" multiple><br>
-		</div>
-
-		<div class="formfooter">
-			<input type="submit" name="upload" value="<?php echo"$lang[upload_target_files]";  ?>" class="btn" />
-		</div>
-
-	</form>
+	<legend><?php echo $lang['upload_files_legend']; ?></legend>
+		<form action="core/files.upload-script.php" id="my-dropzone2" class="dropzone">
+			<input type="hidden" name="d" value="<?php echo $files_d; ?>" />
+			<input type="hidden" name="upload_type" value="files" />
+			<div class="fallback">
+				<input name="file" type="file" multiple />
+			</div>
+		</form>
+		<hr>
+		<?php echo $prefs[prefs_filesuffix] ?>
 </fieldset>
-
-<script>
-
-window.addEvent('domready', function(){
-
-	var upload = new Form.Upload('filesToUpload', {
-		onComplete: function(){
-			$('hiddenFilesMessage').setStyles({
-				display: 'block'
-    	});
-		}
-	});
-
-
-});
-
-</script>
-
-
+	</div>
+</div>

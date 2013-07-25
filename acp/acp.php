@@ -82,19 +82,25 @@ if(!isset($_GET['sub'])){
 		<link rel="icon" type="image/x-icon" href="images/favicon.ico" />
 		
 		<script language="javascript" type="text/javascript" src="../lib/js/tinymce/tinymce.min.js"></script>
-		<script type="text/javascript" src="../lib/js/mootools/mootools-core.js"></script>
-		<script type="text/javascript" src="../lib/js/mootools/mootools-more.js"></script>
-		<script type="text/javascript" src="../lib/js/mootools/SimpleTabs.js"></script>
-		<script type="text/javascript" src="../lib/js/mootools/milkbox.js"></script>
-		<script type="text/javascript" src="../lib/js/mootools/Request.File.js"></script>
-		<script type="text/javascript" src="../lib/js/mootools/Form.MultipleFileInput.js"></script>
-		<script type="text/javascript" src="../lib/js/mootools/Form.Upload.js"></script>
+		
+		<script src="../lib/js/jquery/jquery.min.js"></script>
+    <script src="../lib/js/jquery/bootstrap.min.js"></script>
+
+		<!-- Add fancyBox -->
+		<link rel="stylesheet" href="../lib/js/jquery/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+		<script type="text/javascript" src="../lib/js/jquery/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+		
+		<script type="text/javascript" src="../lib/js/jquery/jquery.textareaCounter.plugin.js"></script>
 				
 		<link rel="stylesheet" href="../lib/css/bootstrap.css" type="text/css" media="screen, projection">
+		<link rel="stylesheet" href="../lib/css/bootstrap-responsive.css" type="text/css" media="screen, projection">
 		<link rel="stylesheet" href="css/styles.css" type="text/css" media="screen, projection">
-		<link rel="stylesheet" href="../lib/css/milkbox.css" media="screen" />
-
-
+		
+		<!-- uploader -->
+		<script src="../lib/js/dropzone.js"></script>
+		<link rel="stylesheet" href="../lib/css/dropzone.css" type="text/css" media="screen, projection">
+		
+		
 		<?php
 
 		/*
@@ -136,38 +142,45 @@ if(!isset($_GET['sub'])){
 	copyright © 2010 - <?php echo date(Y); ?>, <a href="http://www.flatcore.de/" target="_blank">flatCore.de</a>
 	</div>
 	
-
-	<script type="text/javascript"> 
-	/* <![CDATA[ */
 	
-	window.addEvent('domready', function() {
-	
-		var myTips = new Tips('.styledTip');
-		new Fx.Accordion($('accordion'), '#accordion h5', '#accordion .content');
+	<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#bsTabs').tab();
+    });
+	</script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$(".fancybox").fancybox();
 		
-		var tabs = new SimpleTabs($('tabsBlock'), {
-			selector: 'h4'
+		$('#showVersions').collapse('hide');
+		
+		$('.tooltip_bottom').tooltip({
+			placement: 'bottom'
+		})
+		
+		$(".fancybox-iframe").fancybox({
+			type: 'iframe',
+			autoWidth: true,
+			autoHeight: true
 		});
 		
-		var toggle_status = {
-		    'true': '-',
-		    'false': '+'
-		  };
-		  
-		var myVerticalSlide = new Fx.Slide('vertical_slide').hide();
-		
-		$('v_toggle').addEvent('click', function(event){
-		    event.stop();
-		    myVerticalSlide.toggle();
-		  });
-		
-		myVerticalSlide.addEvent('complete', function() {
-				$('vertical_status').set('html', toggle_status[myVerticalSlide.open]);
+	Dropzone.options.myDropzone = {
+  	init: function() {
+    	this.on("success", function(file, responseText) {
+      	// Handle the responseText here. For example, add the text to the preview element:
+				file.previewTemplate.appendChild(document.createTextNode(responseText));
 			});
+		}
+	};
+
+    var options = {   
+        'originalStyle': 'text-right',
+        'displayFormat': '<span class="label">#input</span> <span class="label">#words</span>'  
+    };  
+    $('.cntValues').textareaCount(options);  
+  
 		
-	}); // eo domready
-	
-	/* ]]> */
+	});
 	</script>
 
 

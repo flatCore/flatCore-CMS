@@ -1,9 +1,9 @@
-<?php
-
-echo"<div id='liveBox'>";
-echo "<p><a class='' href='core/projector.php?tf=$tn' data-milkbox='single' data-milkbox-size='width:1024,height:650'><i class='icon-question-sign'></i> $lang[show_help]</a><br>
-<a class='' href='../'><i class='icon-home'></i> $lang[back_to_page]</a></p>";
-echo "<p><a class='' href='../index.php?goto=logout'><i class='icon-off'></i> $lang[logout]</a></p>";
-echo"</div>";
-
-?>
+<div id="liveBox">
+	<p>
+		<a class="fancybox-iframe" href="http://docs.flatcore.de/de/fc:uebersicht"><i class="icon-question-sign"></i> <?php echo $lang[show_help]; ?></a>
+		<a href='../'><i class='icon-home'></i> <?php echo $lang[back_to_page]; ?></a>
+	</p>
+	<p>
+		<a href='../index.php?goto=logout'><i class='icon-off'></i> <?php echo $lang[logout]; ?></a>
+	</p>
+</div>

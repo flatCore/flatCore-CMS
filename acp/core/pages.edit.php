@@ -485,80 +485,77 @@ if(!empty($_REQUEST['preview_the_page'])) {
 
 if($show_form == "true" AND $sub != "new") {
 
-$dbh = new PDO("sqlite:".CONTENT_DB);
-
-$max = 50;
-
-$cnt_all_sql = "SELECT COUNT(*) AS 'nbr' FROM fc_pages_cache WHERE page_id_original = $editpage AND page_cache_type = 'history' ";
-$cnt_all = $dbh->query("$cnt_all_sql")->fetch(PDO::FETCH_ASSOC);
-$delete_nbr = $cnt_all[nbr]-$max;
-
-
+	$dbh = new PDO("sqlite:".CONTENT_DB);
+	
+	$max = 50;
+	$cnt_all_sql = "SELECT COUNT(*) AS 'nbr' FROM fc_pages_cache WHERE page_id_original = $editpage AND page_cache_type = 'history' ";
+	$cnt_all = $dbh->query("$cnt_all_sql")->fetch(PDO::FETCH_ASSOC);
+	$delete_nbr = $cnt_all[nbr]-$max;
+	
 	$sql = "SELECT page_id, page_linkname, page_title, page_lastedit, page_lastedit_from, page_version
 			FROM fc_pages_cache
 			WHERE page_id_original = $editpage AND page_cache_type = 'history'
 			ORDER BY page_id DESC";
-
-   foreach ($dbh->query($sql) as $row) {
-     $cache_result[] = $row;
-   }
-   
-$cnt_result = count($cache_result);
-
-
-
-
-echo"<hr><fieldset><legend><span id='vertical_status'>+</span> <a id='v_toggle' href='#'>Versions</a></legend>";
-
-
-echo"<div id='vertical_slide'>";
-
-echo"<table class='table-list' border='0' cellpadding='0' cellspacing='0'>";
-
-for($i=0;$i<$cnt_result;$i++) {
-
-$nbr = $i+1;
-
-$page_id = $cache_result[$i][page_id];
-
-if($i >= $max) {
-	$del_sql = "DELETE FROM fc_pages_cache WHERE page_id = $page_id";
-	$cnt_changes = $dbh->exec($del_sql);
-	continue;
-}
-
-	$date = date("d.m.Y",$cache_result[$i][page_lastedit]);
-	$time = date("H:i:s",$cache_result[$i][page_lastedit]);
 	
-	$yesterday = date('d.m.Y', time()-(60*60*24));
-	$today = date('d.m.Y', time());
+	 foreach ($dbh->query($sql) as $row) {
+	   $cache_result[] = $row;
+	 }
 	
-	if($date == "$today") {
-		$setdate = "$lang[date_today]";
-	} elseif($date == "$yesterday") {
-		$setdate = "$lang[date_yesterday]";
-	} else {
-		$setdate = $date;
+	$dbh = null;
+	$cnt_result = count($cache_result);
+	
+	echo '<hr>';
+	
+	echo '<div class="accordion" id="versionsToggle">';
+	echo '<div class="accordion-group">';
+	echo '<div class="accordion-heading">';
+	echo '<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#showVersions">Versions</a>';
+	echo '</div>';
+	
+	echo '<div id="showVersions" class="accordion-body collapse in">';
+	echo '<div class="accordion-inner">';
+	echo '<table class="table table-condensed table-hover">';
+	
+	for($i=0;$i<$cnt_result;$i++) {
+	
+		$nbr = $i+1;
+		$page_id = $cache_result[$i][page_id];
+		
+		if($i >= $max) {
+			$del_sql = "DELETE FROM fc_pages_cache WHERE page_id = $page_id";
+			$cnt_changes = $dbh->exec($del_sql);
+			continue;
+		}
+		
+			$date = date("d.m.Y",$cache_result[$i][page_lastedit]);
+			$time = date("H:i:s",$cache_result[$i][page_lastedit]);
+			$yesterday = date('d.m.Y', time()-(60*60*24));
+			$today = date('d.m.Y', time());
+			
+			if($date == "$today") {
+				$setdate = "$lang[date_today]";
+			} elseif($date == "$yesterday") {
+				$setdate = "$lang[date_yesterday]";
+			} else {
+				$setdate = $date;
+			}
+			
+			echo "<tr>
+					<td>" . $cache_result[$i][page_version] . "</td>
+					<td width='100'>$setdate</td>
+					<td width='100'>$time</td>
+					<td>" . $cache_result[$i][page_title] . "</td>
+					<td> " . $cache_result[$i][page_lastedit_from] . "</td>
+					<td width='100' align='right'><a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&restore_id=$page_id&editpage=$editpage'>$lang[edit]</a></td>
+				</tr>";
 	}
 	
-	echo "<tr>
-			<td>" . $cache_result[$i][page_version] . "</td>
-			<td width='100'>$setdate</td>
-			<td width='100'>$time</td>
-			<td>" . $cache_result[$i][page_title] . "</td>
-			<td> " . $cache_result[$i][page_lastedit_from] . "</td>
-			<td width='100' align='right'>
-				<a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&restore_id=$page_id&editpage=$editpage'>$lang[edit]</a>
-			</td>
-		</tr>";
-	
-}
-
-echo"</table>";
-echo"</div>";
-echo"</fieldset>";
-
-$dbh = null;
+	echo '</table>';
+	echo '</div>';
+	echo '</div>';
+	echo '</div>';
+	echo '</div>';
+	echo '</fieldset>';
 
 }
 
