@@ -653,6 +653,8 @@ function cache_url_paths() {
 
 function get_custom_fields() {
 
+	$customs_fields = array();
+
 	$dbh = new PDO("sqlite:".CONTENT_DB);
 	$sql = "SELECT * FROM fc_pages";
 	
@@ -679,6 +681,8 @@ function get_custom_fields() {
  */
 
 function get_custom_user_fields() {
+
+	$customs_fields = array();
 
 	$dbh = new PDO("sqlite:".USER_DB);
 	$sql = "SELECT * FROM fc_user";
