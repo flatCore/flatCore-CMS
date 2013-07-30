@@ -3,19 +3,13 @@
 //prohibit unauthorized access
 require("core/access.php");
 
-/*
-var $set_filter was defined in inc.pages.php
-*/
+/* $_SESSION[filter_string] was defined in inc.pages.php */
 
 $dbh = new PDO("sqlite:".CONTENT_DB);
 
 unset($result);
 
-
-$sql = "SELECT page_id,	page_language, page_linkname,
-				page_title, page_sort, page_lastedit,
-				page_lastedit_from, page_status, page_template,
-				page_authorized_users, page_permalink
+$sql = "SELECT page_id,	page_language, page_linkname, page_title, page_sort, page_lastedit,	page_lastedit_from, page_status, page_template,	page_authorized_users, page_permalink
 		FROM fc_pages
 		$_SESSION[filter_string]
 		ORDER BY page_language ASC, page_sort ASC";
@@ -23,22 +17,26 @@ $sql = "SELECT page_id,	page_language, page_linkname,
 	foreach ($dbh->query($sql) as $row) {
 		$result[] = $row;
 	}
+	
+$dbh = null;
    
 $cnt_result = count($result);
 
 
-/*
-list all pages where page_sort != empty
-*/
+echo '<div style="float:right;">';
+echo $status_btn_group . ' ' . $lang_btn_group;
+echo '</div>';
 
+echo '<div class="clearfix"></div>';
 
+/**
+ * list all pages where page_sort != empty
+ */
 
+echo '<fieldset>';
+echo '<legend>' . $lang[legend_structured_pages] . '</legend>';
 
-echo"<fieldset>";
-echo"<legend>$lang[legend_structured_pages]</legend>";
-
-echo"<table class='table-list' border='0' cellpadding='0' cellspacing='0'>";
-
+echo '<table class="table-list table" border="0" cellpadding="0" cellspacing="0">';
 echo"<tr>
 <td class='head'>$lang[h_page_sort]</td>
 <td class='head'>$lang[h_page_linkname]</td>
@@ -50,10 +48,9 @@ echo"<tr>
 
 for($i=0;$i<$cnt_result;$i++) {
 
-
-if($result[$i]['page_sort'] == "" || $result[$i]['page_sort'] == 'portal') {
-	continue;
-}
+	if($result[$i]['page_sort'] == "" || $result[$i]['page_sort'] == 'portal') {
+		continue;
+	}
 
 	$page_id = $result[$i]['page_id'];
 	$page_sort = $result[$i]['page_sort'];
@@ -72,73 +69,59 @@ if($result[$i]['page_sort'] == "" || $result[$i]['page_sort'] == 'portal') {
 	} else {
 		$show_template_name = "$page_template";
 	}
+
+	$pi = get_page_impression($page_id);
 	
-
+	if($page_status == "public") {
+		$status = "<p class='badge badge-success'><i class='icon-globe icon-white'></i> | $lang[f_page_status_puplic]</p>";
+	} elseif($page_status == "private") {
+		$status = "<p class='badge badge-important'><i class='icon-lock icon-white'></i> | $lang[f_page_status_private]</p>";
+	} elseif($page_status == "draft") {
+		$status = "<p class='badge'><i class='icon-pencil icon-white'></i> | $lang[f_page_status_draft]</p>";
+	}
 	
-
-$pi = get_page_impression($page_id);
-
-
-if($page_status == "public") {
-	$status = "<p class='badge badge-success'><i class='icon-globe icon-white'></i> | $lang[f_page_status_puplic]</p>";
-} elseif($page_status == "private") {
-	$status = "<p class='badge badge-important'><i class='icon-lock icon-white'></i> | $lang[f_page_status_private]</p>";
-} elseif($page_status == "draft") {
-	$status = "<p class='badge'><i class='icon-pencil icon-white'></i> | $lang[f_page_status_draft]</p>";
-}
-
-
-$last_edit = date("d.m.Y H:i:s",$page_lastedit) . " ($page_lastedit_from)";
-
-
-/*
-check for display edit button
-*/
-
-if($_SESSION[acp_editpages] == "allowed"){
-	$edit_button = "<a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id'>$lang[edit]</a>";
-} else {
-	$edit_button = "<br />";
-}
-
-$arr_checked_admins = explode(",",$page_authorized_users);
-if(in_array("$_SESSION[user_nick]", $arr_checked_admins)) {
-	$edit_button = "<a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id'>$lang[edit]</a>";
-}
-
-/* mark main and subpages | or not */
-unset($subpage_marker,$td_class);
-if(strpos($page_sort, '.') !== false) {
-	$subpage_marker = "<span style='color:#666;'>»</span>";
-	$td_class = "subpage";
-} else {
-	$td_class = "mainpage";
-}
-
-
-
-if($fc_mod_rewrite == "permalink") {
-	$frontend_link = "../$page_permalink";
-} else {
-	$frontend_link = "../index.php?p=$page_id";
-}
-
-// print list
-
-echo"<tr>
-		<td class='$td_class'>$subpage_marker $page_sort</td>
-		<td class='$td_class'><a class='darklink' title='$frontend_link' href='$frontend_link'>$page_linkname</a></td>
-		<td class='$td_class'>$page_title<p class='extrainfo condensed'>$last_edit | Style: $show_template_name | $page_language</p></td>
-		<td class='$td_class' style='text-align:right;'>$pi</td>
-		<td class='$td_class'>$status</td>
-		<td  class='$td_class'style='text-align:right;'>$edit_button</td>
-	</tr>";
+	$last_edit = date("d.m.Y H:i:s",$page_lastedit) . " ($page_lastedit_from)";
 	
+	/* check for display edit button */
+	
+	if($_SESSION[acp_editpages] == "allowed"){
+		$edit_button = "<a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id'>$lang[edit]</a>";
+	} else {
+		$edit_button = "<br>";
+	}
+	
+	$arr_checked_admins = explode(",",$page_authorized_users);
+	if(in_array("$_SESSION[user_nick]", $arr_checked_admins)) {
+		$edit_button = "<a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id'>$lang[edit]</a>";
+	}
+	
+	/* mark main and subpages | or not */
+	unset($subpage_marker,$td_class);
+	if(strpos($page_sort, '.') !== false) {
+		$subpage_marker = "<span style='color:#666;'>»</span>";
+		$td_class = "subpage";
+	} else {
+		$td_class = "mainpage";
+	}
+	
+	if($fc_mod_rewrite == "permalink") {
+		$frontend_link = "../$page_permalink";
+	} else {
+		$frontend_link = "../index.php?p=$page_id";
+	}
+	
+	echo"<tr>
+			<td class='$td_class'>$subpage_marker $page_sort</td>
+			<td class='$td_class'><a class='darklink' title='$frontend_link' href='$frontend_link'>$page_linkname</a></td>
+			<td class='$td_class'>$page_title<p class='extrainfo condensed'>$last_edit | Style: $show_template_name | $page_language</p></td>
+			<td class='$td_class' style='text-align:right;'>$pi</td>
+			<td class='$td_class'>$status</td>
+			<td  class='$td_class'style='text-align:right;'>$edit_button</td>
+		</tr>";
 
 } // eol for $i
 
 echo"</table>";
-
 echo"</fieldset>";
 
 
@@ -151,11 +134,10 @@ echo"</fieldset>";
  * or page_sort == portal
  */
 
-echo"<fieldset>";
-echo"<legend>$lang[legend_unstructured_pages]</legend>";
+echo '<fieldset>';
+echo '<legend>' . $lang[legend_unstructured_pages] . '</legend>';
 
-echo"<table class='table-list' border='0' cellpadding='0' cellspacing='0'>";
-
+echo '<table class="table-list table" border="0" cellpadding="0" cellspacing="0">';
 echo"<tr>
 <td class='head'>$lang[h_page_linkname]</td>
 <td class='head'>$lang[h_page_title]</td>
@@ -166,10 +148,9 @@ echo"<tr>
 
 for($i=0;$i<$cnt_result;$i++) {
 
-
-if($result[$i][page_sort] != "" && $result[$i][page_sort] != 'portal') {
-	continue;
-}
+	if($result[$i][page_sort] != "" && $result[$i][page_sort] != 'portal') {
+		continue;
+	}
 
 	$page_id = $result[$i]['page_id'];
 	$page_sort = $result[$i]['page_sort'];
@@ -193,66 +174,53 @@ if($result[$i][page_sort] != "" && $result[$i][page_sort] != 'portal') {
 		$page_linkname = '<i class="icon-home"></i> ' . $page_linkname;
 	}
 	
-
-$hits_id = $page_id;	
-if($page_sort == "portal") {
-	$hits_id = "portal_$page_language";
-}
-
-$pi = get_page_impression($hits_id);
-
-
-if($page_status == "public") {
-	$status = "<p class='badge badge-success'><i class='icon-globe icon-white'></i> | $lang[f_page_status_puplic]</p>";
-} elseif($page_status == "private") {
-	$status = "<p class='badge badge-important'><i class='icon-lock icon-white'></i> | $lang[f_page_status_private]</p>";
-} elseif($page_status == "draft") {
-	$status = "<p class='badge'><i class='icon-pencil icon-white'></i> | $lang[f_page_status_draft]</p>";
-}
-
-
-$last_edit = date("d.m.Y H:i:s",$page_lastedit) . "($page_lastedit_from)";
-
-
-/*
-check for display edit button
-*/
-
-if($_SESSION[acp_editpages] == "allowed"){
-	$edit_button = "<a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id'>$lang[edit]</a>";
-} else {
-	$edit_button = "<br />";
-}
-
-$arr_checked_admins = explode(",",$page_authorized_users);
-if(in_array("$_SESSION[user_nick]", $arr_checked_admins)) {
-	$edit_button = "<a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id'>$lang[edit]</a>";
-}
-
-if($fc_mod_rewrite == "permalink") {
-	$frontend_link = "../$page_permalink";
-} else {
-	$frontend_link = "../index.php?p=$page_id";
-}
-
-
-// print list
-
-echo"<tr>
-		<td><a class='darklink' title='$frontend_link' href='$frontend_link'>$page_linkname</a></td>
-		<td><span class='bold'>$page_title</span><p class='extrainfo condensed'>$last_edit | Style: $show_template_name | $lang[f_page_language]: $page_language</p></td>
-		<td style='text-align:right;'>$pi</td>
-		<td>$status</td>
-		<td style='text-align:right;'>$edit_button</td>
-	</tr>";
+	$hits_id = $page_id;	
+	if($page_sort == "portal") {
+		$hits_id = "portal_$page_language";
+	}
 	
+	$pi = get_page_impression($hits_id);
+	
+	if($page_status == "public") {
+		$status = "<p class='badge badge-success'><i class='icon-globe icon-white'></i> | $lang[f_page_status_puplic]</p>";
+	} elseif($page_status == "private") {
+		$status = "<p class='badge badge-important'><i class='icon-lock icon-white'></i> | $lang[f_page_status_private]</p>";
+	} elseif($page_status == "draft") {
+		$status = "<p class='badge'><i class='icon-pencil icon-white'></i> | $lang[f_page_status_draft]</p>";
+	}
+	
+	$last_edit = date("d.m.Y H:i:s",$page_lastedit) . "($page_lastedit_from)";
+	
+	/* check for display edit button */
+	
+	if($_SESSION[acp_editpages] == "allowed"){
+		$edit_button = "<a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id'>$lang[edit]</a>";
+	} else {
+		$edit_button = "<br />";
+	}
+	
+	$arr_checked_admins = explode(",",$page_authorized_users);
+	if(in_array("$_SESSION[user_nick]", $arr_checked_admins)) {
+		$edit_button = "<a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id'>$lang[edit]</a>";
+	}
+	
+	if($fc_mod_rewrite == "permalink") {
+		$frontend_link = "../$page_permalink";
+	} else {
+		$frontend_link = "../index.php?p=$page_id";
+	}
+	
+	echo"<tr>
+			<td><a class='darklink' title='$frontend_link' href='$frontend_link'>$page_linkname</a></td>
+			<td><span class='bold'>$page_title</span><p class='extrainfo condensed'>$last_edit | Style: $show_template_name | $lang[f_page_language]: $page_language</p></td>
+			<td style='text-align:right;'>$pi</td>
+			<td>$status</td>
+			<td style='text-align:right;'>$edit_button</td>
+		</tr>";
 
 } // eol for $i
 
 echo"</table>";
-
-
 echo"</fieldset>";
-
 
 ?>
