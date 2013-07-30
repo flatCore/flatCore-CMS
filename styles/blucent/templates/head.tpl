@@ -22,12 +22,12 @@
 <link rel="stylesheet" media="all" href="{$fc_inc_dir}/lib/css/bootstrap-responsive.css" type="text/css" />
 <link rel="stylesheet" media="screen" href="{$fc_inc_dir}/styles/blucent/css/styles.css" />
 
-<!-- Mootools -->
-<script type="text/javascript" src="{$fc_inc_dir}/lib/js/mootools/mootools-core.js"></script>
-<script type="text/javascript" src="{$fc_inc_dir}/lib/js/mootools/mootools-more.js"></script>
+<!-- jQuery -->
+<script type="text/javascript" src="{$fc_inc_dir}/lib/js/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="{$fc_inc_dir}/lib/js/jquery/bootstrap.min.js"></script>
 
-<script type="text/javascript" src="{$fc_inc_dir}/lib/js/mootools/milkbox.js"></script>
-<link rel="stylesheet" href="{$fc_inc_dir}/lib/css/milkbox.css" type="text/css" media="screen, projection" />
+<script type="text/javascript" src="{$fc_inc_dir}/lib/js/jquery/fancybox/jquery.fancybox.js"></script>
+<link rel="stylesheet" href="{$fc_inc_dir}/lib/js/jquery/fancybox/jquery.fancybox.css" type="text/css" media="screen, projection" />
 
 
 <link href="{$fc_inc_dir}/lib/css/sunburst.css" type="text/css" rel="stylesheet" />
@@ -38,48 +38,10 @@
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
 
-
 {$page_head_styles}	
 {$page_head_enhanced}
 {$modul_head_enhanced}
 {$prefs_pagesglobalhead}
-
-{literal}
-<script type="text/javascript">
-window.addEvent('domready', function() {
-
-	var wsize = window.getSize();
-	
-	if(wsize.x < 767) {
-		var myVerticalSlide = new Fx.Slide('top-nav').hide();
-		$$('.nav-toggle').addEvent('click', function(event){
-		    event.stop();
-		    myVerticalSlide.toggle();
-		    $('nav_toggle').toggleClass('nav-toggle-open');
-		  });
-	}
-	
-	window.addEvent('resize', function() { 
-	  var wsize = window.getSize();
-	  	 if(wsize.x < 767) {
-				var myVerticalSlide = new Fx.Slide('top-nav').hide();
-				$$('.nav-toggle').addEvent('click', function(event){
-				    event.stop();
-				    myVerticalSlide.toggle();
-				  });
-			} else {
-				var myVerticalSlide = new Fx.Slide('top-nav').show();
-			}
-	
-	});
-
-
-});
-
-
-
-</script>
-{/literal}
 
 <!-- 
 	 

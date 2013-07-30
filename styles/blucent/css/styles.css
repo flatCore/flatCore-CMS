@@ -298,7 +298,11 @@ nav#top-nav {
 }
 
 
-
+.navbar-clear > .navbar-inner {
+	background: transparent;
+	padding: 0;
+	border: 0;
+}
 
 
 /**
@@ -476,8 +480,16 @@ a.nav-toggle-open:hover {
 		overflow: visible;
 	}
 	
+	.headertop {
+		height: auto;
+	}
+	
+	.navbar {
+		width: 92%;
+		margin: 0 auto;
+	}
+	
 	#navPosition {
-		width: 100%;
 		height: auto;
 		overflow: visible;
 	}
@@ -558,6 +570,15 @@ a.nav-toggle-open:hover {
 		overflow: visible;
 	}
 	
+	.headertop {
+		height: auto;
+	}
+	
+	.navbar {
+		width: 92%;
+		margin: 0 auto;
+	}
+	
 	#navPosition {
 		width: 100%;
 		height: auto;
@@ -568,7 +589,6 @@ a.nav-toggle-open:hover {
 		padding: 0;
 		margin: 0;
 	}
-	
 	
  	ul#navlist li {
  		float: none;
@@ -598,11 +618,7 @@ a.nav-toggle-open:hover {
 		border: 0;
 		border-bottom: 1px solid #111;
 	}
-	
 
-  a#nav_toggle {
-  	display: block;
-  } 
 }
 
 
@@ -624,6 +640,60 @@ a.nav-toggle-open:hover {
 		float: left;
 		width: 260px;
 	}
+	
+	header {
+		height: auto;
+		overflow: visible;
+	}
+	
+	.headertop {
+		height: auto;
+	}
+	
+	.navbar {
+		margin: 0 auto;
+	}
+	
+	#navPosition {
+		width: 100%;
+		height: auto;
+		overflow: visible;
+	}
+	
+	#navlist {
+		padding: 0;
+		margin: 0;
+	}
+	
+ 	ul#navlist li {
+ 		float: none;
+		display: inline;
+	}
+	
+	ul#navlist li a,
+	ul#navlist li a:visited {
+		font-size: 14px;
+		line-height: 14px;
+		padding: 2px 5px;
+		margin: 0;
+		border-bottom: 1px solid #111;
+		background-image: none !important;
+		background-color: #222;
+		border-top-left-radius: 0 !important;
+		border-top-right-radius: 0 !important;
+		display: block;
+		text-align: left;
+		color: #eee !important;
+	}
+	
+	ul#navlist li a.mainmenu_current {
+		color: #ddd;
+		background-image: none;
+		background-color: #111;
+		border: 0;
+		border-bottom: 1px solid #111;
+	}
+
 	
 
 }
