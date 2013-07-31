@@ -8,30 +8,39 @@
 		*{margin:0;padding:0;}
 		
 		body {
-			background-color: #e5e5e5;
+			background: rgb(238,238,238);
+			background: -moz-radial-gradient(center, ellipse cover,  rgba(238,238,238,1) 0%, rgba(153,153,153,1) 100%);
+			background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(238,238,238,1)), color-stop(100%,rgba(153,153,153,1)));
+			background: -webkit-radial-gradient(center, ellipse cover,  rgba(238,238,238,1) 0%,rgba(153,153,153,1) 100%);
+			background: -o-radial-gradient(center, ellipse cover,  rgba(238,238,238,1) 0%,rgba(153,153,153,1) 100%);
+			background: -ms-radial-gradient(center, ellipse cover,  rgba(238,238,238,1) 0%,rgba(153,153,153,1) 100%);
+			background: radial-gradient(ellipse at center,  rgba(238,238,238,1) 0%,rgba(153,153,153,1) 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#999999',GradientType=1 );
 			color: #555;
 			font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 			font-size: 15px;
-			line-height: 19px;
+			line-height: 1.45em;
 		}
 		
 		.container {
-			width: 800px;
-			margin: 25px auto;
+			width: 75%;
+			max-width: 1000px;
+			margin: 15px auto;
 			padding: 15px;
 		}
 		
 		.box {
-			background-color: #f5f5f5;
+			background: rgba(255,255,255,0.6);
 			border-radius: 9px;			
 		}
 		
-		h1, h2, h3, h4 { color: #69C; clear: both; font-weight: normal;}
+		h1, h2, h3, h4 { color: #369; clear: both; font-weight: normal;}
 		
-		h1 { font-size: 28px; line-height: 35px; }
-		h2 { font-size: 20px; line-height: 31px; }
-		h3 { font-size: 16px; margin: 15px 0 5px 0;}
-		h4 { font-size: 14px; margin: 15px 0 5px 0;}
+		h1 { font-size: 35px; line-height: 25px; text-align: center;}
+		h1 small { color: #888; font-size: 20px; }
+		h2 { font-size: 28px; line-height: 31px; }
+		h3 { font-size: 20px; margin: 15px 0 5px 0;}
+		h4 { font-size: 16px; margin: 15px 0 5px 0;}
 		
 		p {
 			padding: 5px 0;
@@ -54,7 +63,8 @@
 		}
 		
 		.label {
-			background-color: #eee;
+			background-color: #fff;
+			color: #999;
 			padding: 1px 2px;
 			border-radius: 3px;
 			border: 1px solid #e5e5e5;
@@ -65,6 +75,7 @@
 			margin: 5px 0;
 			background-color: #fff;
 			border-radius: 5px;
+			color: #693;
 		}
 		
 		ul, ol {
@@ -76,9 +87,11 @@
 </head>
 <body>
 
-<div class="container box">
+<div class="container">
+<h1>flatCore<br><small>Content Management System</small></h1>
+</div>
 
-<h1>flatCore - Content Management System</h1>
+<div class="container box">
 
 <h2>Installation</h2>
 
@@ -86,16 +99,16 @@
 
 <h3>1. mod_rewrite</h3>
 <p>flatCore kann sowohl mit als auch ohne mod_rewrite betrieben werden. Wird mod_rewrite aktiviert, erzeugt flatCore <i>schönere</i> URLs für Dein Projekt.</p>
-<p>Beispiel mit mod_rewrite: http://example.com/news/</p>
+<p>Beispiel mit mod_rewrite: <span class="label">http://example.com/news/</span></p>
 <pre>
 $fc_mod_rewrite = "permalink";
 </pre>
 
 <p>oder</p>
 
-<p>Beispiel ohne mod_rewrite: http://example.com/index.php?p=2</p>
+<p>Beispiel ohne mod_rewrite: <span class="label">http://example.com/index.php?p=2</span></p>
 <pre>
-$fc_mod_rewrite = "off";
+$fc_mod_rewrite = 'off';
 </pre>
 
 <p>Damit mod_rewrite funktioniert, muss die Datei _htaccess in <b>.htaccess</b> umbenannt werden. Dateinamen die mit einem Punkt beginnen sind bei den meißten Systemen für das System selbst vorbehalten. Darum ist es am einfachsten Du benennst die Datei erst um, wenn Du sie auf den Server kopiert hast.</p>
@@ -105,8 +118,8 @@ $fc_mod_rewrite = "off";
 <p>Für Benachrichtigungen, Aktivierungslinks etc. versendet flatCore E-Mails. Damit die Empfänger sofort erkennen, woher die E-Mail kommt, solltest Du aussagekräftige Angaben wählen.</p>
 
 <pre>
-$fc_mailer_adr = "info@example.com";
-$fc_mailer_name = "Example Administrator";
+$fc_mailer_adr = 'info@example.com';
+$fc_mailer_name = 'Example Administrator';
 </pre>
 
 
@@ -131,7 +144,7 @@ $fc_mailer_name = "Example Administrator";
 
 <p>War die Installation erfolgreich, führt der nächste Weg in das ACP.<br>
 Im Browser das Verzeinis /acp/ aufrufen und mit den Zugangsdaten des Administrators anmelden.<br>
-Beispiel: http://www.example.com/acp/</p>
+Beispiel: <span class="label">http://www.example.com/acp/</span></p>
 
 
 </div>
@@ -139,42 +152,29 @@ Beispiel: http://www.example.com/acp/</p>
 <div class="container box">
 
 
-<h3> Credits & THX</h3>
+<h3>Credits & THX</h3>
 
-<p>MooTools JavaScript Framework<br>
-<a href="http://mootools.net">http://mootools.net</a></p>
-
-<p>SimpleTabs - Unobtrusive Tabs + Ajax<br>
-<a href="http://digitarald.de">http://digitarald.de</a>
-</p>
-
-<p>Milkbox (Lightbox)<br>
-<a href="http://www.reghellin.com">http://www.reghellin.com</a>
-</p>
+<p>jQuery - JavaScript library<br>
+<a href="http://jquery.com">http://jquery.com</a></p>
 
 <p>TinyMCE - Javascript WYSIWYG Editor<br>
-<a href="http://tinymce.moxiecode.com">http://tinymce.moxiecode.com</a>
-</p>
+<a href="http://www.tinymce.com">http://www.tinymce.com</a></p>
 
 <p>Smarty - Template System<br>
-<a href="http://www.smarty.net">http://www.smarty.net</a>
-</p>	
+<a href="http://www.smarty.net">http://www.smarty.net</a></p>
 
 <p>SWIFT - PHP Mailer<br>
-<a href="http://swiftmailer.org/">http://swiftmailer.org/</a>
-</p>
+<a href="http://swiftmailer.org/">http://swiftmailer.org/</a></p>
 
 <p>Twitter Bootstrap<br>
-<a href="http://twitter.github.com/bootstrap/">http://twitter.github.com/bootstrap/</a>
-</p>
+<a href="http://twitter.github.com/bootstrap/">http://twitter.github.com/bootstrap/</a></p>
 
-<p>SILK ICONS<br>
-<a href="http://famfamfam.com">http://famfamfam.com</a>
-</p>
-	
-<p>WooFunction Web Icon Set<br>
-<a href="http://www.woothemes.com">http://www.woothemes.com</a>
-</p>
+<p>DropzoneJS<br>
+<a href="http://www.dropzonejs.com">http://www.dropzonejs.com</a></p>
+
+<p>fancyBox<br>
+<a href="http://fancyapps.com/fancybox/">http://fancyapps.com/fancybox/</a></p>
+
 
 </div>
 
