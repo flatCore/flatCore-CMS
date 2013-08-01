@@ -20,8 +20,8 @@ body {
 
 /* Layout */
 div#bigHeader {
-	height: 90px;
-	background: #222 url(../images/acp_header.jpg) no-repeat top right;
+	height: 80px;
+	background: #252525 url(../images/acp_header.png) no-repeat top right;
 	border-bottom: 1px solid #666;
 	overflow: hidden;
 }
@@ -196,37 +196,13 @@ ol {
 }
 
 
-.tip {
-	background-color: #222;
-	padding: 5px;
-	border: 1px solid #111;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	max-width: 200px;
-}
-
-
-.tip-title {
-	color: #999;
-	font-size: 12px;
-	line-height: 14px;
-	padding: 2px 5px;
-}
-
-.tip-text {
-	display: none;
-}
-
-
-
-
 
 /* Navigation */
 
 div#topNavBox {
 	float: left;
 	margin-left: 20px;
-	margin-top: 55px;
+	margin-top: 45px;
 }
 
 
@@ -290,21 +266,61 @@ a.topnav_selected {
 }
 
 
-a.topnavMini {
+span.mm,
+span.mm-dashboard,
+span.mm-pages,
+span.mm-modules,
+span.mm-files,
+span.mm-user,
+span.mm-system {
 	display: block;
 	float: left;
-	background: #444 url(../images/shiny_buttons.png) repeat-x 0px -100px;
-	color: #222;
-	padding: 4px;
-	margin: 10px 0 0 1px;
-	height: 20px;
-	border: 1px solid #111;
-	border-radius: 3px;
-	-moz-border-radius: 3px;
+	width: 32px;
+	height: 32px;
+	background: transparent url('../images/sprite.png') no-repeat -1000px -1000px;
 }
 
-a.topnavMini:hover {
-	background: #444 url(../images/shiny_buttons.png) repeat-x 0px -100px;
+a.topnav:hover span.mm-dashboard, span.mm-dashboard {
+	background-position: 0 0;
+}
+
+a.topnav_selected span.mm-dashboard {
+	background-position: -32px 0;
+}
+
+a.topnav:hover span.mm-pages, span.mm-pages {
+	background-position: -64px 0;
+}
+a.topnav_selected span.mm-pages {
+	background-position: -96px 0;
+}
+
+a.topnav:hover span.mm-modules, span.mm-modules {
+	background-position: -128px 0;
+}
+a.topnav_selected span.mm-modules {
+	background-position: -160px 0;
+}
+
+a.topnav:hover span.mm-files, span.mm-files {
+	background-position: -192px 0;
+}
+a.topnav_selected span.mm-files {
+	background-position: -224px 0;
+}
+
+a.topnav:hover span.mm-user, span.mm-user {
+	background-position: -256px 0;
+}
+a.topnav_selected span.mm-user {
+	background-position: -288px 0;
+}
+
+a.topnav:hover span.mm-system, span.mm-system {
+	background-position: 0 -32px;
+}
+a.topnav_selected span.mm-system {
+	background-position: -32px -32px;
 }
 
 
