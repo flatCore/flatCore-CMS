@@ -119,6 +119,9 @@ if($p == "" OR $p == "portal") {
 	$page_contents = get_content_by_pagesort('portal');
 }
 
+if(is_dir("lib/lang/$page_contents[page_language]")) {
+	$languagePack = $page_contents[page_language];
+}
 
 /* START SMARTY */
 require_once('lib/Smarty/Smarty.class.php');
