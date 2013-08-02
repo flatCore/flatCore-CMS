@@ -131,17 +131,16 @@ if($_POST[save_the_user]) {
 	
 	if($user_psw_new != "") {
 
-	if($user_psw_new != $user_psw_reconfirmation) {
-		$db_status = "locked";
-		$error_message .= "$lang[msg_psw_error]<br>";
-	} else {
-		//generate password hash
-		$user_psw = md5("$user_psw_new$user_nick");
-		$success_message .= "$lang[msg_psw_changed]<br>";
-	}
+		if($user_psw_new != $user_psw_reconfirmation) {
+			$db_status = "locked";
+			$error_message .= "$lang[msg_psw_error]<br>";
+		} else {
+			//generate password hash
+			$user_psw = md5("$user_psw_new$user_nick");
+			$success_message .= "$lang[msg_psw_changed]<br>";
+		}
 
-}
-	
+	}
 	
 	// modus update
 	if(is_numeric($edituser)) {
@@ -150,6 +149,10 @@ if($_POST[save_the_user]) {
 		$sql_u = generate_sql_update_str($pdo_fields,"fc_user","WHERE user_id = $edituser");							
 		$sth = $dbh->prepare($sql_u);
 		generate_bindParam_str($pdo_fields,$sth);
+		
+		if($db_status == "unlocked") {
+			$sth->bindParam(':user_psw', $user_psw, PDO::PARAM_STR);
+		}
 		
 		$sth->bindParam(':user_drm', $drm_string, PDO::PARAM_STR);
 		$sth->bindParam(':user_class', $drm_acp_class, PDO::PARAM_STR);
