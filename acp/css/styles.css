@@ -21,7 +21,7 @@ body {
 /* Layout */
 div#bigHeader {
 	height: 80px;
-	background: #252525 url(../images/acp_header.png) no-repeat top right;
+	background: #333 url(../images/acp_header.png) no-repeat top right;
 	border-bottom: 1px solid #666;
 	overflow: hidden;
 }
@@ -221,7 +221,7 @@ a.topnav:visited {
 	line-height: 32px;
 	font-weight: bold;
 	background: #444 url(../images/shiny_buttons.png) repeat-x 0 -100px;
-	color: #888;
+	color: #aaa;
 	padding: 2px 8px 6px 2px;
 	margin: 0 1px;
 	height: 30px;
