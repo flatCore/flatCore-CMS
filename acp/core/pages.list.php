@@ -23,11 +23,18 @@ $dbh = null;
 $cnt_result = count($result);
 
 
+echo '<div class="row-fluid">';
+echo '<div class="span5">';
+echo $kw_form;
+echo '<p style="padding:0;">' . $btn_remove_keyword . '</p>';
+echo '</div>';
+echo '<div class="span7">';
 echo '<div style="float:right;">';
 echo $status_btn_group . ' ' . $lang_btn_group;
 echo '</div>';
-
 echo '<div class="clearfix"></div>';
+echo '</div>';
+echo '</div>';
 
 /**
  * list all pages where page_sort != empty
@@ -98,7 +105,7 @@ for($i=0;$i<$cnt_result;$i++) {
 	/* mark main and subpages | or not */
 	unset($subpage_marker,$td_class);
 	if(strpos($page_sort, '.') !== false) {
-		$subpage_marker = "<span style='color:#666;'>»</span>";
+		$subpage_marker = '&raquo;';
 		$td_class = "subpage";
 	} else {
 		$td_class = "mainpage";
@@ -111,7 +118,7 @@ for($i=0;$i<$cnt_result;$i++) {
 	}
 	
 	echo"<tr>
-			<td class='$td_class'>$subpage_marker $page_sort</td>
+			<td class='$td_class'><p class='extrainfo condensed'>$subpage_marker $page_sort</p></td>
 			<td class='$td_class'><a class='darklink' title='$frontend_link' href='$frontend_link'>$page_linkname</a></td>
 			<td class='$td_class'>$page_title<p class='extrainfo condensed'>$last_edit | Style: $show_template_name | $page_language</p></td>
 			<td class='$td_class' style='text-align:right;'>$pi</td>

@@ -97,8 +97,10 @@ for($i=0;$i<count($arr_lang);$i++) {
 	}
 }
 
+$set_lang_filter = substr("$set_lang_filter", 0, -3); // cut the last ' OR'
 
 
+/* switch page status */
 
 if($_GET['switch']) {
 	$_SESSION[set_status] = true;
@@ -127,7 +129,6 @@ if($_GET['switch'] == 'statusPuplic' && $_SESSION[checked_public] == 'checked') 
 	$_SESSION[checked_public] = "checked";
 }
 
-
 $set_status_filter = "page_status = 'foobar' "; // reset -> result = 0
 
 
@@ -147,10 +148,48 @@ if($_SESSION[checked_public] == "checked") {
 }
 
 
-$set_lang_filter = substr("$set_lang_filter", 0, -3); // cut the last ' OR'
+
+/* filter pages by keywords $kw_filter */
+
+/* expand filter */
+if($_POST[kw_filter] != "") {
+	$_SESSION[kw_filter] = $_SESSION[kw_filter] . ' ' . $_POST[kw_filter];
+}
+
+$set_keyword_filter = "page_language = 'foobar' OR "; // reset -> result = 0
+$set_keyword_filter = '';
+
+/* remove keyword from filter list */
+if($_REQUEST[rm_keyword] != "") {
+	$all_filter = explode(" ", $_SESSION[kw_filter]);
+	unset($_SESSION[kw_filter],$f);
+	foreach($all_filter as $f) {
+		if($_REQUEST[rm_keyword] == "$f") { continue; }
+		if($f == "") { continue; }
+		$_SESSION[kw_filter] .= "$f ";
+	}
+}
+
+if($_SESSION[kw_filter] != "") {
+	unset($all_filter);
+	$all_filter = explode(" ", $_SESSION[kw_filter]);
+	
+	foreach($all_filter as $f) {
+		if($_REQUEST[rm_keyword] == "$f") { continue; }
+		if($f == "") { continue; }
+		$set_keyword_filter .= "(page_meta_keywords like '%$f%' OR page_title like '%$f%' OR page_linkname like '%$f%') AND";
+		$btn_remove_keyword .= "<a class='btn btn-mini btn-primary' href='acp.php?tn=pages&sub=list&rm_keyword=$f'><i class='icon-remove icon-white'></i> $f</a> ";
+	}
+	
+}
+
+$set_keyword_filter = substr("$set_keyword_filter", 0, -4); // cut the last ' AND'
 
 
-$filter_string = "WHERE page_status != 'foobar' "; // reset -> result = 0
+
+
+
+$filter_string = "WHERE page_status != 'foobar' "; // -> result = match all pages
 
 if($set_status_filter != "") {
 	$filter_string .= " AND ($set_status_filter) ";
@@ -158,6 +197,10 @@ if($set_status_filter != "") {
 
 if($set_lang_filter != "") {
 	$filter_string .= " AND ($set_lang_filter)";
+}
+
+if($set_keyword_filter != "") {
+	$filter_string .= " AND $set_keyword_filter";
 }
 
 
@@ -188,6 +231,14 @@ if($subinc == "pages.list") {
 	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPrivate" class="btn btn-small '.$btn_status_private.'">'.$lang[f_page_status_private].'</a>';
 	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusDraft" class="btn btn-small '.$btn_status_draft.'">'.$lang[f_page_status_draft].'</a>';
 	$status_btn_group .= '</div>';
+
+
+	$kw_form  = "<form action='acp.php?tn=pages&sub=list' method='POST' class='form-inline' style='margin-bottom:3px;'>";
+	$kw_form .= '<div class="input-prepend">';
+	$kw_form .= '<span class="add-on"><i class="icon-filter"></i></span>';
+	$kw_form .= '<input class="input-medium" type="text" name="kw_filter" value="" placeholder="Filter">';
+	$kw_form .= '</div>';
+	$kw_form .= '</form>';
 
 }
 
