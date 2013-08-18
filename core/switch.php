@@ -20,7 +20,7 @@ if($page_title == "") {
 	$page_title = "$prefs_pagetitle";
 }
 
-$fc_nav = get_navigation_data();
+
 
 /**
  * gereate mainmenu, submenu, breadcrumps and sitemap
@@ -226,7 +226,7 @@ if($p == "register") {
 	$form_url = "$_SERVER[PHP_SELF]?p=register";
 	$smarty->assign("form_url","$form_url");
 
-	if($pref_userregistration != "yes") {
+	if($prefs_userregistration != "yes") {
 	
 		$smarty->assign("msg_title","$lang[legend_register]");
 		$smarty->assign("msg_text","$lang[msg_register_intro_disabled]");	

@@ -29,7 +29,6 @@ if(is_dir(FC_CORE_DIR . "/install/")) {
 
 
 require(FC_CORE_DIR . "/lib/lang/$languagePack/frontend/dict.php");
-require(FC_CORE_DIR . '/core/get_preferences.php');
 require(FC_CORE_DIR . '/core/functions.php');
 
 
@@ -66,20 +65,18 @@ if($query != "") {
 			if(strpos("$query", "$mod_permalink") !== false) {
 						
 				if(strncmp($mod_permalink, $query, $permalink_length) == 0) {
-        			$mod_slug = substr($query, $permalink_length);
-        			$fct_slug = substr("$query",0,$permalink_length);
-        			if($query_is_cached == true) {
-	        			$fct_slug = $query;
-        			}
+    			$mod_slug = substr($query, $permalink_length);
+    			$fct_slug = substr("$query",0,$permalink_length);
+    			if($query_is_cached == true) {
+      			$fct_slug = $query;
+    			}
     		}
     	}
 			
 		}
-	
 
-		$page_contents = get_content_by_permalink($fct_slug);
+		list($page_contents,$fc_nav,$fc_prefs) = get_content($fct_slug,'permalink');
 		$p = $page_contents['page_id'];
-		
 		
 		if($p == "") {		
 			$p = "404";					
@@ -91,17 +88,14 @@ if($query != "") {
 		}
 			
 	}
-		
 } // eo $query
-
 
 
 if($preview != "") {
 	$p = (int) $preview;
-	$page_contents = get_content_for_preview($p);
-	unset($pref_logfile);
+	list($page_contents,$fc_nav,$fc_prefs) = get_content($p,'preview');
+	unset($prefs_logfile);
 }
-    
 
 
 if(preg_match('/[^0-9A-Za-z]/', $p)) {
@@ -110,18 +104,25 @@ if(preg_match('/[^0-9A-Za-z]/', $p)) {
 
 
 if(!is_array($page_contents) AND ($p != "")) {
-	$page_contents = get_content($p);
+	list($page_contents,$fc_nav,$fc_prefs) = get_content($p);
 }
 
 
 /* no page contents -> switch to the homepage */
 if($p == "" OR $p == "portal") {
-	$page_contents = get_content_by_pagesort('portal');
+	list($page_contents,$fc_nav,$fc_prefs) = get_content('portal','page_sort');
 }
 
-if(is_dir("lib/lang/$page_contents[page_language]")) {
+
+if(is_dir("lib/lang/$page_contents[page_language]") AND ($page_contents[page_language] != '')) {
 	$languagePack = $page_contents[page_language];
 }
+
+/* preferences (data from get_content() ) */
+foreach($fc_prefs as $key => $val) {
+	$$key = stripslashes($val); 
+}
+
 
 /* START SMARTY */
 require_once('lib/Smarty/Smarty.class.php');
@@ -132,15 +133,15 @@ $smarty->compile_check = true;
 //$smarty->debugging = true;
 
 // default template
-$fc_template = $pref_template;
-$fc_template_layout = $pref_template_layout;
+$fc_template = $prefs_template;
+$fc_template_layout = $prefs_template_layout;
 
 if($page_contents[page_template] == "use_standard") {
-	$fc_template = $pref_template;
+	$fc_template = $prefs_template;
 }
 
 if($page_contents[page_template_layout] == "use_standard") {
-	$fc_template_layout = $pref_template_layout;
+	$fc_template_layout = $prefs_template_layout;
 }
 
 if(is_dir('styles/'.$page_contents[page_template].'/templates/')) {
@@ -168,8 +169,8 @@ require("core/switch.php");
 
 
 // parse template vars
-$smarty->assign('pref_pagetitle', $pref_pagetitle);
-$smarty->assign('pref_pagesubtitle', $pref_pagesubtitle);
+$smarty->assign('pref_pagetitle', $prefs_pagetitle);
+$smarty->assign('pref_pagesubtitle', $prefs_pagesubtitle);
 $smarty->assign("p","$p");
 $smarty->assign("fc_inc_dir", FC_INC_DIR);
 
@@ -184,7 +185,7 @@ if(!isset($preview)) {
 }
 
 /* track more statistics */
-if($pref_logfile == "on") {
+if($prefs_logfile == "on") {
 	include_once('core/logfile.php');
 }
 

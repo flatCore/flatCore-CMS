@@ -55,7 +55,7 @@ $email_msg = str_replace("{RESET_LINK}","$reset_link",$email_msg);
 	$transport = Swift_MailTransport::newInstance();
 	$mailer = Swift_Mailer::newInstance($transport);
 	$message = Swift_Message::newInstance()
-		->setSubject("$lang[forgotten_psw_mail_subject] | $pref_pagetitle")
+		->setSubject("$lang[forgotten_psw_mail_subject] | $prefs_pagetitle")
   		->setFrom(array("$fc_mailer_adr" => "$fc_mailer_name"))
   		->setTo(array("$mail" => "$user_nick"))
   		->setBody("$email_msg", 'text/html')
@@ -120,7 +120,7 @@ $email_msg = str_replace("{temp_psw}","$temp_psw",$email_msg);
 	$transport = Swift_MailTransport::newInstance();
 	$mailer = Swift_Mailer::newInstance($transport);
 	$message = Swift_Message::newInstance()
-		->setSubject("$lang[forgotten_psw_mail_subject] | $pref_pagetitle")
+		->setSubject("$lang[forgotten_psw_mail_subject] | $prefs_pagetitle")
   		->setFrom(array("$fc_mailer_adr" => "$fc_mailer_name"))
   		->setTo(array("$user_mail" => "$user_nick"))
   		->setBody("$email_msg", 'text/html')

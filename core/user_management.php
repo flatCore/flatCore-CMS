@@ -116,7 +116,7 @@ if($_SESSION[user_nick] != "") {
 } else {
 	// show the login form
 	
-	if($pref_showloginform == "yes") {
+	if($prefs_showloginform == 'yes') {
 		$smarty->assign("legend_login","$lang[legend_login]");
 		$smarty->assign("label_login","$lang[label_login]");
 		$smarty->assign("label_username","$lang[label_username]");
@@ -136,7 +136,7 @@ if($_SESSION[user_nick] != "") {
 		
 		$smarty->assign("show_forgotten_psw_link","<a href='$show_forgotten_psw_link'>$lang[forgotten_psw]</a>");
 		
-		if($pref_userregistration == "yes") {
+		if($prefs_userregistration == "yes") {
 			$smarty->assign("show_register_link","<a href='$show_register_link'>$lang[link_register]</a>");
 			$smarty->assign("msg_register","$lang[msg_register]");
 			$smarty->assign("link_register","$lang[link_register]");

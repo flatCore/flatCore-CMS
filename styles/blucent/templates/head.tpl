@@ -11,7 +11,7 @@
 
 <link rel="icon" type="image/x-icon" href="{$fc_inc_dir}/styles/blucent/images/fav.ico" />
 
-<link rel="alternate" type="application/rss+xml" title="{$pref_pagetitle} | RSS" href="/rss.php" />
+<link rel="alternate" type="application/rss+xml" title="{$prefs_pagetitle} | RSS" href="/rss.php" />
 
 {$page_meta_enhanced}
 		

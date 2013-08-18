@@ -2,7 +2,7 @@
 
 
 
-if($pref_userregistration != "yes") {
+if($prefs_userregistration != 'yes') {
 	die("unauthorized access");
 }
 
@@ -16,32 +16,32 @@ foreach($_POST as $key => $val) {
 
 if($accept_terms == "") {
 	$send_data = "false";
-	$register_message = $lang['msg_register_accept']."<br />";
+	$register_message = $lang['msg_register_accept'].'<br>';
 }
 
 //required fields
 if( ($username == "") || ($psw == "") || ($mail == "")  ){
 	$send_data = "false";
-	$register_message .= $lang['msg_register_requiredfields']."<br />";
+	$register_message .= $lang['msg_register_requiredfields'].'<br>';
 }
 
 //mail and mailrepeat
 if($mail != $mailrepeat) {
 	$send_data = "false";
-	$register_message .= $lang['msg_register_mailrepeat_error']."<br />";
+	$register_message .= $lang['msg_register_mailrepeat_error'].'<br>';
 }
 
 //psw and psw_repeat
 if($psw != $psw_repeat) {
 	$send_data = "false";
-	$register_message .= $lang['msg_register_pswrepeat_error']."<br />";
+	$register_message .= $lang['msg_register_pswrepeat_error'].'<br>';
 }
 
 
 //no special chars are allowed
 if(!preg_match("/^[a-zA-Z0-9-_]{2,20}$/",$username)) {
 	$send_data = "false";
-	$register_message .= $lang['msg_register_userchars']."<br />";
+	$register_message .= $lang['msg_register_userchars'].'<br>';
 }
 
 
@@ -51,7 +51,7 @@ $all_usernames_array = get_all_usernames("$fc_db_user");
 foreach ($all_usernames_array as $entry) {
     if($username == $entry[user_nick]) {
     	$send_data = "false";
-			$register_message .= $lang['msg_register_existinguser']."<br />";
+			$register_message .= $lang['msg_register_existinguser'].'<br>';
 			break;
     }
 }
@@ -63,7 +63,7 @@ $all_usermail_array = get_all_usermail("$fc_db_user");
 foreach ($all_usermail_array as $entry) {    
     if($mail == $entry[user_mail]) {
     	$send_data = "false";
-			$register_message .= $lang['msg_register_existingusermail']."<br />";
+			$register_message .= $lang['msg_register_existingusermail'].'<br>';
 			break;
     }  
 }
@@ -125,7 +125,7 @@ if($send_data == "true") {
 	/* generate the message */
 	$email_msg = get_textlib("account_confirm_mail");
 	$email_msg = str_replace("{USERNAME}","$username",$email_msg);
-	$email_msg = str_replace("{SITENAME}","$pref_pagetitle",$email_msg);
+	$email_msg = str_replace("{SITENAME}","$prefs_pagetitle",$email_msg);
 	$email_msg = str_replace("{ACTIVATIONLINK}","$user_activationlink",$email_msg);
 	
 	/* send register mail to the new user */
@@ -133,7 +133,7 @@ if($send_data == "true") {
 		$transport = Swift_MailTransport::newInstance();
 		$mailer = Swift_Mailer::newInstance($transport);
 		$message = Swift_Message::newInstance()
-				->setSubject("Registrierungsdaten | $pref_pagetitle")
+				->setSubject("Registrierungsdaten | $prefs_pagetitle")
 	  		->setFrom(array("$fc_mailer_adr" => "$fc_mailer_name"))
 	  		->setTo(array("$mail" => "$username"))
 	  		->setBody("$email_msg", 'text/html');
