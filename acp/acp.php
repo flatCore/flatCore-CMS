@@ -158,6 +158,8 @@ if(!isset($_GET['sub'])){
 			placement: 'bottom'
 		})
 		
+		$('.tooltip').tooltip()
+		
 		$(".fancybox-iframe").fancybox({
 			type: 'iframe',
 			autoWidth: true,
