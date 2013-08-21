@@ -169,8 +169,8 @@ require("core/switch.php");
 
 
 // parse template vars
-$smarty->assign('pref_pagetitle', $prefs_pagetitle);
-$smarty->assign('pref_pagesubtitle', $prefs_pagesubtitle);
+$smarty->assign('prefs_pagetitle', $prefs_pagetitle);
+$smarty->assign('prefs_pagesubtitle', $prefs_pagesubtitle);
 $smarty->assign("p","$p");
 $smarty->assign("fc_inc_dir", FC_INC_DIR);
 
