@@ -6,7 +6,6 @@
 
 unset($status_msg);
 
-
 if($goto == "logout") {
 	session_destroy();
 	unset($_SESSION[user_nick]);
@@ -23,7 +22,6 @@ if(isset($_POST[login])) {
 	$login_psw  = strip_tags($_POST[login_psw]);
 	
 	$dbh = new PDO("sqlite:$fc_db_user");
-	
 	$sql = "SELECT user_id, user_class, user_nick, user_mail, user_psw, user_drm, user_firstname, user_lastname
 			FROM fc_user
 			WHERE user_nick = :login_name AND user_verified = 'verified' ";
@@ -100,11 +98,9 @@ if($_SESSION[user_nick] != "") {
 	$smarty->assign('link_profile', $link_profile);
 	$smarty->assign('lang_button_profile', $lang[button_profile]);
 	$smarty->assign("link_logout","$link_logout");
-	$smarty->assign('lang_button_logout', $lang[button_logout]);
-	
+	$smarty->assign('lang_button_logout', $lang[button_logout]);	
 	$smarty->assign("link_acp","$link_acp");
 	$smarty->assign('lang_button_acp', $lang[button_acp]);
-	
 	$smarty->assign("link_edit_page","$link_edit_page");
 	$smarty->assign('lang_button_edit_page', $lang[button_acp_edit_page]);
 	
@@ -125,10 +121,9 @@ if($_SESSION[user_nick] != "") {
 		$smarty->assign('status_msg', $status_msg);
 		$smarty->assign("p","$p");
 		
-		
-		if($fc_mod_rewrite == "auto") {
-			$show_register_link = FC_INC_DIR . "/system/register/";
-			$show_forgotten_psw_link = FC_INC_DIR . "/system/password/";
+		if($fc_mod_rewrite == "permalink") {
+			$show_register_link = FC_INC_DIR . "/register/";
+			$show_forgotten_psw_link = FC_INC_DIR . "/password/";
 		} else {
 			$show_register_link = "$_SERVER[PHP_SELF]?p=register";
 			$show_forgotten_psw_link = "$_SERVER[PHP_SELF]?p=password";
