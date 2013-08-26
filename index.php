@@ -164,6 +164,8 @@ foreach($lang as $key => $val) {
 	$smarty->assign("lang_$key", $val);
 }
 
+$smarty->assign('languagePack', $languagePack);
+
 require("core/user_management.php");
 require("core/switch.php");
 
