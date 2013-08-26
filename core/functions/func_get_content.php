@@ -24,20 +24,20 @@ function get_content($page, $mode = 'p') {
 	if($mode == 'preview') {
 		$page_contents_sql = "SELECT * FROM fc_pages_cache WHERE page_id_original = '$page' ORDER BY page_id DESC" ;
 	}
-	
-	$nav_sql = "SELECT page_id, page_language, page_linkname, page_permalink, page_title, page_sort, page_status
-				  FROM fc_pages
-				  WHERE page_status != 'draft' AND page_language = '$languagePack'
-				  ORDER BY page_sort";
-				  
+					  
 	$prefs_sql = "SELECT * FROM fc_preferences WHERE prefs_status = 'active' ";
 	
-	
-		
 	$dbh = new PDO("sqlite:$fc_db_content");
 	$page_contents = $dbh->query($page_contents_sql)->fetch(PDO::FETCH_ASSOC);
-	$fc_nav = $dbh->query($nav_sql)->fetchAll();
 	$prefs = $dbh->query($prefs_sql)->fetch(PDO::FETCH_ASSOC);
+	
+	$nav_sql = "SELECT page_id, page_language, page_linkname, page_permalink, page_title, page_sort, page_status
+			  FROM fc_pages
+			  WHERE page_status != 'draft' AND page_language = '$page_contents[page_language]'
+			  ORDER BY page_sort";
+	
+	$fc_nav = $dbh->query($nav_sql)->fetchAll();
+	
 	$dbh = null;
 	
 	$contents = array($page_contents,$fc_nav,$prefs);
