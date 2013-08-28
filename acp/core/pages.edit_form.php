@@ -33,9 +33,9 @@ echo '<div class="tab-content">';
 echo'<div class="tab-pane fade in active" id="info">';
 
 $dbh = new PDO("sqlite:".CONTENT_DB);
-$sql = "SELECT page_linkname, page_sort, page_title FROM fc_pages
+$sql = "SELECT page_linkname, page_sort, page_title, page_language FROM fc_pages
 		    WHERE page_sort != 'portal'
-		    ORDER BY page_sort ASC	";
+		    ORDER BY page_language ASC, page_sort ASC	";
 $all_pages = $dbh->query($sql)->fetchAll();
 
 $dbh = null;
@@ -77,9 +77,9 @@ for($i=0;$i<count($all_pages);$i++) {
 		 	$selected = "selected";
 		 }
 		 
- 
+	$short_title = first_words($all_pages[$i][page_title], 6);
 	$indent = str_repeat("-",substr_count($parent_string,'.'));
-	$select_page_position .= "<option value='$parent_string' $selected> $indent " . $all_pages[$i][page_linkname] . ' - ' . $all_pages[$i][page_title] ."</option>";
+	$select_page_position .= "<option value='$parent_string' $selected> $indent " . $all_pages[$i][page_sort] . ' - ' .$all_pages[$i][page_linkname] . ' - ' . $short_title ."</option>";
 	
 }
 $select_page_position .= '</optgroup>';

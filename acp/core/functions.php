@@ -735,6 +735,24 @@ function show_editor_switch($tn,$sub) {
 
 
 
+/**
+ * show the first xx words of a string
+ * return string
+ */
+
+function first_words($string,$nbr=5) {
+	$short_string = implode(' ', array_slice(explode(' ', $string), 0, $nbr));
+	
+	if(strlen($short_string) < strlen($string)) {
+		$short_string .= ' (...)';
+	}
+	
+	return $short_string;
+}
+
+
+
+
 
 
 ?>
