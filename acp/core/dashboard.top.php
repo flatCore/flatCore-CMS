@@ -94,7 +94,7 @@ for($i=0;$i<$cnt_result;$i++) {
 	if($i < 5) {
 		$last_edit = @date("d.m.Y",$result[$i][page_lastedit]);
 		$page_linkname = $result[$i][page_linkname];
-		$page_title = $result[$i][page_title];
+		$page_title = first_words($result[$i][page_title],4);
 	
 		$top5pages .=  "$last_edit » <a href='acp.php?tn=pages&sub=edit&editpage=$page_id' title='$lang[page_edit]'>$page_linkname</a> $page_title<br />"; 
 	}

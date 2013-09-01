@@ -29,7 +29,7 @@ if($_REQUEST[upload_type] == 'images') {
 		$target = resize_image($tmp_name,$target, $max_w,$max_h,90);
 		
 		if(@move_uploaded_file($tmp_name, $target)) {
-			print ('HOOOO');
+			print ('Upload complete');
 		}
 		
 	}

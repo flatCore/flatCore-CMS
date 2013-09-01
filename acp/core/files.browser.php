@@ -223,66 +223,51 @@ for($x=0;$x<$cnt_pages;$x++) {
 } //eol for $x
 
 
+echo"<div id='filesbox' class='clearfix'>";
 
-
-echo"<div id='filesbox'>";
-
+if($disk == "2") {
+	$tpl_file = file_get_contents('templates/list-files-grid.tpl');
+} else {
+	$tpl_file = file_get_contents('templates/list-files-thumbs.tpl');
+}
 //list all files 
 for($i=$start;$i<$end;$i++) {
+
+	unset($filename);
 
 	$filename = $fileinfo[$i][filename];
 	$filetime = $fileinfo[$i][time];
 	$filesize = round($fileinfo[$i][size] / 1024) . ' KB';
 	$filesize = readable_filesize($fileinfo[$i][size]);
-
-	
 	$show_filetime = date('d.m.Y H:i',$filetime);
-
 
 	if($fileinfo[$i][filetype] == "image") {
 		$set_style = '';
-		$preview_button = "<a href='$path/$filename' title='$path/$filename' class='btn btn-mini fancybox'>Vorschau</a>";
+		$preview_button = "<a href='$path/$filename' title='$path/$filename' class='btn btn-mini fancybox'>$lang[preview]</a>";
 		$preview_img = "<img src='$path/$filename' style='max-width:80px;max-height:80px;'>";
 	} else {
 		$set_style = "background-image: url(images/no-preview.gif); background-position: center; background-repeat: no-repeat;";
 		$preview_button = "<a href='#' class='btn btn-mini disabled'>Vorschau</a>";
 		$preview_img = '';
 	}
+	
+	$delete_button = "<a href='acp.php?tn=filebrowser&sub=browse&delete=$filename&d=$disk&start=$start' onclick=\"return confirm('$lang[confirm_delete_file]')\" class='btn btn-danger btn-small btn-mini'>$lang[delete]</a></span>";
 
-
-echo"<div class='floating-box'>";
-
-echo"<h4>$filename</h4>";
-
-echo"<div id='previewbox' style=\"$set_style\";>$preview_img</div>";
-
-echo"<div id='fileslist_text'>";
-
-echo"<span class='text'><small>$show_filetime</small></span><br>";
-echo"<span class='text'><small>$filesize</small></span><br>";
-
-echo"<span class='text'>";
-
-echo'<div class="btn-group">';
-echo"$preview_button ";
-echo"<a href='$_SERVER[PHP_SELF]?tn=filebrowser&sub=browse&delete=$filename&d=$disk' onclick=\"return confirm('$lang[confirm_delete_file]')\" class='btn btn-danger btn-small btn-mini'>L&ouml;schen</a></span>";
-echo'</div>';
-
-echo"<div id='clear'></div>";
-
-echo"</div>";
-echo"</div>";
-
-
-
+	$tpl_list = str_replace('{filename}', "$filename", $tpl_file);
+	$tpl_list = str_replace('{set_style}', "$set_style", $tpl_list);
+	$tpl_list = str_replace('{preview_img}', "$preview_img", $tpl_list);
+	$tpl_list = str_replace('{show_filetime}', "$show_filetime", $tpl_list);
+	$tpl_list = str_replace('{filesize}', "$filesize", $tpl_list);
+	$tpl_list = str_replace('{preview_button}', "$preview_button", $tpl_list);
+	$tpl_list = str_replace('{delete_button}', "$delete_button", $tpl_list);
+	
+	echo $tpl_list;
 
 } // eol $i - list all files 
 
 
 
 echo"</div>"; // eol div filesbox
-
-echo"<div style='clear:both;'></div>";
 
 
 echo"<div id='pagina'><p>";
