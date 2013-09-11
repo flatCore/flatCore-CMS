@@ -101,7 +101,7 @@ div#footer {
 	padding: 8px;
 	text-align: center;
 	color: #555;
-	background: #333 url(../images/gradiant.png) repeat-x top left;
+	background: rgba(0,0,0,0.65);
 	border: 1px solid #222;
 	border-radius: 9px;
 	-moz-border-radius: 9px;
@@ -152,8 +152,6 @@ h5 {
 h6 {
   font-size: 11px;
 }
-
-
 
 .silent {
 	font-size: 11px;
@@ -344,18 +342,15 @@ a.submenu:hover {
 }
 
 
-a.submenu_selected {
+a.submenu_selected,
+a.submenu_selected:hover {
 	display: block;
 	padding: 3px 2px 3px 6px;
 	color: #fff;
-	background: #333 url(../images/shiny_buttons.png) repeat-x 0px -5px;
+	background: rgba(0,0,0,0.65);
 	border-top: 1px solid #333;
 }
 
-a.submenu_selected:hover {
-	background: #333 url(../images/shiny_buttons.png) repeat-x 0px -5px;
-	color: #fff;
-}
 
 .submenu_disabled {
 	display: block;
@@ -415,7 +410,7 @@ a.submenu_mods_selected {
 
 div#pagina {
 	margin: 4px 0;
-	background: #555 url(../images/gradiant.png) repeat-x left top;
+	background: rgba(0,0,0,0.75);
 	border: 1px solid #444;
 	-webkit-border-radius: 5px;
 }
@@ -504,7 +499,7 @@ span#w200 { width: 200px; }
 .table-list td.head {
 	padding: 6px 6px 6px 4px;
 	color: #eee;
-	background: #777 url(../images/shiny_buttons.png) repeat-x 0px -5px;
+	background: rgba(0,0,0,0.5);
 	border-bottom: 1px solid #666;
 	border-top: 1px solid #777;
 	font-weight: bold;
@@ -544,7 +539,6 @@ div#previewbox {
 	background-color: #eee;
 }
 
-
 .bg-bright {
 	background-color: #eee;
 }
@@ -552,8 +546,6 @@ div#previewbox {
 .bg-dark {
 	background-color: #ccc;
 }
-
-
 
 div[class*='log_priority']  {
 	border-bottom: 1px solid #bbb;
@@ -572,15 +564,11 @@ div[class*='log_priority']  {
 .log_priority10 { background-color: #111; color: #eee; }
 .log_priority11 { background-color: #900; color: #eee; } /* for errors only */
 
-
-
 /* AJAX TABS */
 
 ul.nav-tabs > li > a {
 		background-color: #e5e5e5;
 }
-
-
 
 ul.nav-tabs > li.active > a,
 ul.nav-tabs > li.active > a:hover {
@@ -757,88 +745,6 @@ fieldset > [class*="form-line"]:last-child {
 }
 
 
-/* upload */
-
-
-.formRow {
-	overflow: auto;
-	border-bottom: 1px #bcbcbc solid;
-	padding: 5px 0;
-	max-width: 100%;
-}
-
-.formRow label {
-	padding: 4px;
-	margin: 0 3px 0 0;
-	border-right: 1px #bcbcbc solid;
-}
-
-
-/* Drag & Drop file uploading */
-
-.droppable {
-	border: 1px solid #111;
-	border-radius: 5px;
-	background: #666;
-	color: #000;
-	padding: 20px;
-	margin: 10px;
-	clear: both;
-	text-align: center;
-}
-
-.droppable.hover {
-	background: #555;
-}
-
-.uploadList {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-.uploadItem {
-	overflow: hidden;
-	border-bottom: #BCBCBC 1px solid;
-	margin: 0 20px;
-	padding: 3px;
-}
-
-.uploadItem span {
-	overflow: hidden;
-	width: 250px;
-	float: left;
-	display: block;
-}
-
-a.addInputRow,
-a.delInputRow,
-.uploadItem a {
-	display: inline-block;
-	height: 16px;
-	width: 16px;
-	text-indent: -999px;
-}
-
-.uploadItem a {
-	float: left;
-	display: block;
-	padding-left: 20px;
-	background: transparent url(../images/cross.png) no-repeat;
-}
-
-a.delInputRow {
-	background: transparent url(../images/cross.png) no-repeat;
-}
-
-.progress {
-	margin: 5px 0;
-	height: 15px;
-	border-radius: 3px;
-	background: #545A74;
-}
-
-
 
 /* List items - News, Guestbook ... */
 
@@ -857,5 +763,7 @@ a.delInputRow {
 }
 
 
-
+.well {
+	background: rgba(255,255,255,0.5);
+}
 
