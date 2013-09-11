@@ -19,30 +19,49 @@ tinymce.init({
     {title: 'row-fluid [3|3|3|3]', description: 'Vier Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_4cols.html'}
   ],
 	style_formats : [
-		{title : 'Absatz', block : 'p'},
-		{title : 'Headline H1', block : 'h1'},
-		{title : 'Headline H2', block : 'h2'},
-		{title : 'Headline H3', block : 'h3'},
-		{title : 'Headline H4', block : 'h4'},
-		{title : 'Headline H5', block : 'h5'},
-		{title : 'Headline H6', block : 'h6'},
+		{title: 'Headlines', items: [
+			{title : 'Headline H1', block : 'h1'},
+			{title : 'Headline H2', block : 'h2'},
+			{title : 'Headline H3', block : 'h3'},
+			{title : 'Headline H4', block : 'h4'},
+			{title : 'Headline H5', block : 'h5'},
+			{title : 'Headline H6', block : 'h6'}
+		]},
+		{title: 'Typo', items: [
+			{title : 'Absatz', block : 'p'},
+			{title : 'Lead paragraph', block : 'p', classes : 'lead'}
+		]},
+		{title: 'Links', items: [
+			{title : 'btn', inline : 'a', classes : 'btn'},
+			{title : 'btn-primary', inline : 'a', classes : 'btn btn-primary'},
+			{title : 'btn-info', inline : 'a', classes : 'btn btn-info'},
+			{title : 'btn-success', inline : 'a', classes : 'btn btn-success'},
+			{title : 'btn-warning', inline : 'a', classes : 'btn btn-warning'},
+			{title : 'btn-danger', inline : 'a', classes : 'btn btn-danger'},
+			{title : 'btn-inverse', inline : 'a', classes : 'btn btn-inverse'},
+		]},
+		{title: 'Label/Div', items: [
 		{title : 'Label', inline : 'span', classes : 'label'},
 		{title : 'Label Success', inline : 'span', classes : 'label label-success'},
 		{title : 'Label Warning', inline : 'span', classes : 'label label-warning'},
 		{title : 'Label Important', inline : 'span', classes : 'label label-important'},
 		{title : 'Label Info', inline : 'span', classes : 'label label-info'},
 		{title : 'Label Inverse', inline : 'span', classes : 'label label-inverse'},
-		{title : 'Lead paragraph', block : 'p', classes : 'lead'},
 		{title : 'Div alert-error', block : 'div', classes : 'alert alert-error'},
 		{title : 'Div alert-success', block : 'div', classes : 'alert alert-success'},
 		{title : 'Div alert-info', block : 'div', classes : 'alert alert-info'},
 		{title : 'Div brightBox', block : 'div', classes : 'brightBox'},
-		{title : 'Div darkBox', block : 'div', classes : 'darkBox'},
-		{title : 'Code PrettyPrint', block : 'pre', classes : 'prettyprint'},
-		{title : 'Code PrettyPrint Linenums', block : 'pre', classes : 'prettyprint linenums'},
-		{title : 'img-rounded', selector : 'img', classes : 'img-rounded'},
-		{title : 'img-polaroid', selector : 'img', classes : 'img-polaroid'},
-		{title : 'img-circle', selector : 'img', classes : 'img-circle'}
+		{title : 'Div darkBox', block : 'div', classes : 'darkBox'}
+		]},
+		{title: 'IMG', items: [
+			{title : 'img-rounded', selector : 'img', classes : 'img-rounded'},
+			{title : 'img-polaroid', selector : 'img', classes : 'img-polaroid'},
+			{title : 'img-circle', selector : 'img', classes : 'img-circle'}
+		]},
+		{title: 'Code', items: [
+			{title : 'Code PrettyPrint', block : 'pre', classes : 'prettyprint'},
+			{title : 'Code PrettyPrint Linenums', block : 'pre', classes : 'prettyprint linenums'}
+		]},
 	],
   fontsize_formats : "10px 12px 13px 14px 16px 18px 20px",
 	width : "100%",
@@ -78,24 +97,49 @@ tinymce.init({
     {title: 'row-fluid [3|3|3|3]', description: 'Vier Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_4cols.html'}
   ],
 	style_formats : [
-		{title : 'Absatz', block : 'p'},
+		{title: 'Headlines', items: [
+			{title : 'Headline H1', block : 'h1'},
+			{title : 'Headline H2', block : 'h2'},
+			{title : 'Headline H3', block : 'h3'},
+			{title : 'Headline H4', block : 'h4'},
+			{title : 'Headline H5', block : 'h5'},
+			{title : 'Headline H6', block : 'h6'}
+		]},
+		{title: 'Typo', items: [
+			{title : 'Absatz', block : 'p'},
+			{title : 'Lead paragraph', block : 'p', classes : 'lead'}
+		]},
+		{title: 'Links', items: [
+			{title : 'btn', inline : 'a', classes : 'btn'},
+			{title : 'btn-primary', inline : 'a', classes : 'btn btn-primary'},
+			{title : 'btn-info', inline : 'a', classes : 'btn btn-info'},
+			{title : 'btn-success', inline : 'a', classes : 'btn btn-success'},
+			{title : 'btn-warning', inline : 'a', classes : 'btn btn-warning'},
+			{title : 'btn-danger', inline : 'a', classes : 'btn btn-danger'},
+			{title : 'btn-inverse', inline : 'a', classes : 'btn btn-inverse'},
+		]},
+		{title: 'Label/Div', items: [
 		{title : 'Label', inline : 'span', classes : 'label'},
 		{title : 'Label Success', inline : 'span', classes : 'label label-success'},
 		{title : 'Label Warning', inline : 'span', classes : 'label label-warning'},
 		{title : 'Label Important', inline : 'span', classes : 'label label-important'},
 		{title : 'Label Info', inline : 'span', classes : 'label label-info'},
 		{title : 'Label Inverse', inline : 'span', classes : 'label label-inverse'},
-		{title : 'Lead paragraph', block : 'p', classes : 'lead'},
 		{title : 'Div alert-error', block : 'div', classes : 'alert alert-error'},
 		{title : 'Div alert-success', block : 'div', classes : 'alert alert-success'},
 		{title : 'Div alert-info', block : 'div', classes : 'alert alert-info'},
 		{title : 'Div brightBox', block : 'div', classes : 'brightBox'},
-		{title : 'Div darkBox', block : 'div', classes : 'darkBox'},
-		{title : 'Code PrettyPrint', block : 'pre', classes : 'prettyprint'},
-		{title : 'Code PrettyPrint Linenums', block : 'pre', classes : 'prettyprint linenums'},
-		{title : 'img-rounded', selector : 'img', classes : 'img-rounded'},
-		{title : 'img-polaroid', selector : 'img', classes : 'img-polaroid'},
-		{title : 'img-circle', selector : 'img', classes : 'img-circle'}
+		{title : 'Div darkBox', block : 'div', classes : 'darkBox'}
+		]},
+		{title: 'IMG', items: [
+			{title : 'img-rounded', selector : 'img', classes : 'img-rounded'},
+			{title : 'img-polaroid', selector : 'img', classes : 'img-polaroid'},
+			{title : 'img-circle', selector : 'img', classes : 'img-circle'}
+		]},
+		{title: 'Code', items: [
+			{title : 'Code PrettyPrint', block : 'pre', classes : 'prettyprint'},
+			{title : 'Code PrettyPrint Linenums', block : 'pre', classes : 'prettyprint linenums'}
+		]},
 	],
   fontsize_formats : "10px 12px 13px 14px 16px 18px 20px",
 	width : "100%",
