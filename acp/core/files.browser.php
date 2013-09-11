@@ -56,33 +56,75 @@ function show_sort_arrow($direction) {
 
 
 if($disk == "2") {
-	//show content of files
 	$path = "../content/files";
-	$disk2_class = "btn btn-primary";
-	$disk1_class = "btn btn-inverse";
+	$disk2_class = "btn btn-primary btn-small";
+	$disk1_class = "btn btn-small";
 } else {
-	//show content of images
 	$path = "../content/images";
-	$disk1_class = "btn btn-primary";
-	$disk2_class = "btn btn-inverse";
+	$disk1_class = "btn btn-primary btn-small";
+	$disk2_class = "btn btn-small";
 }
 
+/* expand filter */
+if($_POST[img_filter] != "") {
+	$_SESSION[img_filter] = $_SESSION[img_filter] . ' ' . $_POST[img_filter];
+}
+
+/* remove keyword from filter list */
+if($_REQUEST[rm_keyword] != "") {
+	$all_filter = explode(" ", $_SESSION[img_filter]);
+	unset($_SESSION[img_filter],$f);
+	foreach($all_filter as $f) {
+		if($_REQUEST[rm_keyword] == "$f") { continue; }
+		if($f == "") { continue; }
+		$_SESSION[img_filter] .= "$f ";
+	}
+	unset($all_filter);
+}
+
+if($_SESSION[img_filter] != "") {
+	unset($all_filter);
+	$all_filter = explode(" ", $_SESSION[img_filter]);
+	foreach($all_filter as $f) {
+		if($_REQUEST[rm_keyword] == "$f") { continue; }
+		if($f == "") { continue; }
+		$btn_remove_keyword .= "<a class='btn btn-small' href='acp.php?tn=filebrowser&sub=browse&rm_keyword=$f'><i class='icon-remove'></i> $f</a> ";
+	}
+	
+}
+
+$kw_form  = "<form action='acp.php?tn=filebrowser&sub=browse&d=$disk' method='POST' class='form-inline' style='margin-bottom:3px;'>";
+$kw_form .= '<input class="input-block-level" type="text" name="img_filter" value="" placeholder="Filter">';
+$kw_form .= '</form>';
+
+echo '<div class="well well-small" style="margin-bottom:10px;">';
 echo '<div class="row-fluid">';
-echo '<div class="span6">';
+echo '<div class="span12">';
+
+echo '<div class="btn-toolbar">';
 echo '<div class="btn-group">';
 echo "<a class='$disk1_class' href='$_SERVER[PHP_SELF]?tn=filebrowser&sub=browse&d=1'>Grafiken</a> ";
 echo "<a class='$disk2_class' href='$_SERVER[PHP_SELF]?tn=filebrowser&sub=browse&d=2'>Dateien</a>";
 echo '</div>';
-echo '</div>';
-echo '<div class="span6">';
-echo '<p class="text-right">';
-echo "<a class='btn btn-mini' href='$_SERVER[PHP_SELF]?tn=filebrowser&sub=browse&d=$disk&sort_by_name=1'>". show_sort_arrow($_SESSION[sort_by_name]) ." $lang[filename]</a>";
-echo "<a class='btn btn-mini' href='$_SERVER[PHP_SELF]?tn=filebrowser&sub=browse&d=$disk&sort_by_time=1'>". show_sort_arrow($_SESSION[sort_by_time]) ." $lang[date_of_change]</a>";
-echo "<a class='btn btn-mini' href='$_SERVER[PHP_SELF]?tn=filebrowser&sub=browse&d=$disk&sort_by_size=1'>". show_sort_arrow($_SESSION[sort_by_size]) ." $lang[filesize]</a>";
-echo '</p>';
+echo '<div class="btn-group">';
+echo "<a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=filebrowser&sub=browse&d=$disk&sort_by_name=1'>". show_sort_arrow($_SESSION[sort_by_name]) ." $lang[filename]</a>";
+echo "<a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=filebrowser&sub=browse&d=$disk&sort_by_time=1'>". show_sort_arrow($_SESSION[sort_by_time]) ." $lang[date_of_change]</a>";
+echo "<a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=filebrowser&sub=browse&d=$disk&sort_by_size=1'>". show_sort_arrow($_SESSION[sort_by_size]) ." $lang[filesize]</a>";
 echo '</div>';
 echo '</div>';
 
+echo '</div>';
+echo '</div>';
+
+echo '<div class="row-fluid">';
+echo '<div class="span2">';
+echo "$kw_form";
+echo '</div>';
+echo '<div class="span10">';
+echo "$btn_remove_keyword";
+echo '</div>';
+echo '</div>';
+echo '</div>';
 
 
 
@@ -121,6 +163,18 @@ foreach($a_files as $file) {
 	if($file == 'index.html') {
 		continue;
 	}
+	
+	
+	if(is_array($all_filter)) {
+	foreach($all_filter as $search_needle) {
+		if($search_needle != '') {
+	 if(stristr($file, $search_needle) == FALSE) { 
+        continue 2;
+   }
+   }
+	}
+	}
+
 	
 	$f_suffix = substr (strrchr ($file, "."), 1 );
 	$f_time = filemtime("$path/$file");
@@ -250,6 +304,7 @@ for($i=$start;$i<$end;$i++) {
 		$preview_button = "<a href='#' class='btn btn-mini disabled'>Vorschau</a>";
 		$preview_img = '';
 	}
+
 	
 	$delete_button = "<a href='acp.php?tn=filebrowser&sub=browse&delete=$filename&d=$disk&start=$start' onclick=\"return confirm('$lang[confirm_delete_file]')\" class='btn btn-danger btn-small btn-mini'>$lang[delete]</a></span>";
 

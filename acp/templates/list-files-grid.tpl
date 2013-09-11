@@ -1,6 +1,6 @@
 <div class="row-fluid" style="border-top:1px solid #bbb;padding: 2px 0;">
 	<div class="span6">
-		<a href="/content/files/{filename}" target="_blank">{filename}</a>
+		<a href="/content/files/{filename}" target="_blank">/content/files/{filename}</a>
 	</div>
 	<div class="span2">
 		{filesize}
