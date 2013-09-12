@@ -7,7 +7,6 @@ require("core/access.php");
 $template_file = file_get_contents("templates/modlist.tpl");
 
 
-echo'<ul id="sortable-list">';
 
 for($i=0;$i<$nbrModuls;$i++) {
 
@@ -17,12 +16,14 @@ for($i=0;$i<$nbrModuls;$i++) {
 	
 	include("../modules/$modFolder/info.inc.php");
 	
-	
+	$listlinks = '<div class="btn-group">';
 	for($x=0;$x<count($modnav);$x++) {
 		$showlink = $modnav[$x][link];
 		$incpage = $modnav[$x][file];
 		$listlinks .= "<a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=moduls&sub=$modFolder&a=$incpage'>$showlink</a> ";
 	}
+	
+	$listlinks .= '</div>';
 	
 	
 	if(!is_file("../modules/$modFolder/icon.png")) {
@@ -49,12 +50,9 @@ for($i=0;$i<$nbrModuls;$i++) {
 	
 	$tpl = str_replace("{\$MOD_NAV}", "$listlinks","$tpl");
 	
-	echo'<li class="order-' . $i . '">' . $tpl . '</li>';
+	echo $tpl;
 
 }
-
-
-echo'</ul>';
 
 
 ?>

@@ -92,6 +92,31 @@ div#container {
 	padding: 8px;
 }
 
+hr.shadow {
+  padding: 0;
+  border: 0;
+  outline: 0;
+  overflow: hidden;
+  height: 20px;
+  margin-top: 25px;
+  margin-right: 0;
+  margin-bottom: 15px;
+  margin-left: 0;
+}
+hr.shadow:after {
+  content: "";
+  margin: 0 auto;
+  position: relative;
+  top: -35px;
+  display: block;
+  width: 90%;
+  height: 20px;
+  box-shadow: 0px 20px 10px #aaa;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+}
+
 
 /* Footer */
 
@@ -203,13 +228,6 @@ div#topNavBox {
 	margin-top: 45px;
 }
 
-
-a.topnav img,
-a.topnav_selected img {
-	float: left;
-	margin: 0 2px 0 0;
-}
-
 a.topnav,
 a.topnav:visited {
 
@@ -218,7 +236,7 @@ a.topnav:visited {
 	font-size: 13px;
 	line-height: 32px;
 	font-weight: bold;
-	background: #444 url(../images/shiny_buttons.png) repeat-x 0 -100px;
+	background-color: #444;
 	color: #aaa;
 	padding: 2px 8px 6px 2px;
 	margin: 0 1px;
@@ -235,7 +253,7 @@ a.topnav:visited {
 }
 
 a.topnav:hover {
-	background: #222 url(../images/shiny_buttons.png) repeat-x 0 -100px;
+	background-color: #222;
 	color: #ccc;
 	border: 1px solid #000;
 }
@@ -243,15 +261,15 @@ a.topnav:hover {
 a.topnav:active,
 a.topnav:focus {
 	outline: none;
-	color: #3376d9;
+	color: #eee;
 }
 
 
 a.topnav_selected {
 	display: block;
 	float: left;
-	background: #666 url(../images/shiny_buttons.png) repeat-x top left;
-	color: #000;
+	background-color: #666;
+	color: #ccc;
 	font-size: 13px;
 	line-height: 32px;
 	font-weight: bold;
@@ -275,6 +293,7 @@ span.mm-system {
 	float: left;
 	width: 32px;
 	height: 32px;
+	margin-right: 3px;
 	background: transparent url('../images/sprite.png') no-repeat -1000px -1000px;
 }
 
@@ -748,6 +767,22 @@ fieldset > [class*="form-line"]:last-child {
 
 /* List items - News, Guestbook ... */
 
+.modlist-label span {
+	font-weight: 300;
+	font-size: 15px;
+	line-height: 15px;
+	color: #888;
+	background-color: #eee;
+	padding: 3px 15px;
+	border-radius: 10px;
+	box-shadow: 0 4px 10px -6px #888;
+}
+
+.modlist-icon {
+	max-width: 100px;
+	max-height: 100px;
+	box-shadow: 0 5px 10px -6px #666;
+}
 
 .modul_list_items {
 	padding: 4px;
