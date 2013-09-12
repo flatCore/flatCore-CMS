@@ -27,7 +27,7 @@ for($i=0;$i<$nbrModuls;$i++) {
 	
 	
 	if(!is_file("../modules/$modFolder/icon.png")) {
-		$tpl_icon = "images/modul_icon.gif";
+		$tpl_icon = "images/modul-icon.png";
 	} else {
 		$tpl_icon = "../modules/$modFolder/icon.png";
 	}
