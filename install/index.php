@@ -10,6 +10,7 @@
  */
 
 session_start();
+error_reporting(0);
 
 require("../config.php");
 require("php/functions.php");

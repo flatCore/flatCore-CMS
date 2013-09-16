@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+error_reporting(0);
 require("../config.php");
 
 define("CONTENT_DB", "../$fc_db_content");
