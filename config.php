@@ -5,13 +5,16 @@
  */
 
 
-/* Systemmessages, E-Mail & Name */
+/**
+ * Systemmessages, E-Mail & Name
+ * @todo e-mail should be able to change via acp
+ */
 $fc_mailer_adr	= "you@example.com";
 $fc_mailer_name	= "flatCore Administrator";
 
 /* Default Language -> de|en */
 $languagePack = "de";
-
+$lang = array();
 
 /* mod_rewrite -> off|permalink */
 $fc_mod_rewrite = "permalink";

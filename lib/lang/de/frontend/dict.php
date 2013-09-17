@@ -7,7 +7,7 @@
  * Text Encoding Unicode (UTF-8)
  */
 
-$lang = array();
+
 
 /* Headlines */
 $lang['legend_login'] = "Anmelden";

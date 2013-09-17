@@ -1,7 +1,5 @@
 <?php
 
-$lang = array();
-
 /* tn_ = topNav */
 
 $lang['tn_dashboard'] = "Dashboard";

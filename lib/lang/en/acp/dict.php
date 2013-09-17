@@ -4,9 +4,6 @@
  * acp - english language file
  */
 
-
-$lang = array();
-
 /* tn_ = topNav */
 
 $lang['tn_dashboard'] = "Dashboard";

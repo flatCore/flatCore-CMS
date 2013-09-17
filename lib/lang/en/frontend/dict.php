@@ -9,8 +9,6 @@
 # Text Encoding Unicode (UTF8)
 */
 
-$lang = array();
-
 /* Headlines */
 $lang['legend_login']				= "Login";
 $lang['legend_register']			= "Register";
