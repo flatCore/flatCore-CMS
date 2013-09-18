@@ -43,7 +43,7 @@ echo '</div>';
  */
 
 echo '<fieldset>';
-echo '<legend>' . $lang[legend_structured_pages] . '</legend>';
+echo '<legend>' . $lang['legend_structured_pages'] . '</legend>';
 
 echo '<table class="table-list table" border="0" cellpadding="0" cellspacing="0">';
 echo"<tr>
@@ -92,7 +92,7 @@ for($i=0;$i<$cnt_result;$i++) {
 	
 	/* check for display edit button */
 	
-	if($_SESSION[acp_editpages] == "allowed"){
+	if($_SESSION['acp_editpages'] == "allowed"){
 		$edit_button = "<a class='btn btn-mini' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id'>$lang[edit]</a>";
 	} else {
 		$edit_button = "<br>";
@@ -104,7 +104,8 @@ for($i=0;$i<$cnt_result;$i++) {
 	}
 	
 	/* mark main and subpages | or not */
-	unset($subpage_marker,$td_class);
+	$subpage_marker = '';
+	$td_class = '';
 	if(strpos($page_sort, '.') !== false) {
 		$subpage_marker = '&raquo;';
 		$td_class = "subpage";
@@ -142,7 +143,7 @@ echo"</fieldset>";
  */
 
 echo '<fieldset>';
-echo '<legend>' . $lang[legend_unstructured_pages] . '</legend>';
+echo '<legend>' . $lang['legend_unstructured_pages'] . '</legend>';
 
 echo '<table class="table-list table" border="0" cellpadding="0" cellspacing="0">';
 echo"<tr>
@@ -154,7 +155,7 @@ echo"<tr>
 
 for($i=0;$i<$cnt_result;$i++) {
 
-	if($result[$i][page_sort] != "" && $result[$i][page_sort] != 'portal') {
+	if($result[$i]['page_sort'] != "" && $result[$i]['page_sort'] != 'portal') {
 		continue;
 	}
 
@@ -199,7 +200,7 @@ for($i=0;$i<$cnt_result;$i++) {
 	
 	/* check for display edit button */
 	
-	if($_SESSION[acp_editpages] == "allowed"){
+	if($_SESSION['acp_editpages'] == "allowed"){
 		$edit_button = "<a class='btn btn-mini' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id'>$lang[edit]</a>";
 	} else {
 		$edit_button = "<br />";

@@ -11,7 +11,6 @@ $sql = "SELECT user_id, user_nick, user_class, user_firstname, user_lastname, us
 					FROM fc_user
 					ORDER BY user_id DESC ";
 
-
 foreach ($dbh->query($sql) as $row) {
 	$user_result[] = $row;
 }
@@ -23,34 +22,37 @@ $dbh = null;
 $cnt_verified = 0;
 $cnt_paused = 0;
 $cnt_admin = 0;
-
+$cnt_public = 0;
+$cnt_draft = 0;
+$user_latest5 = '';
+$top5pages = '';
 
 for($i=0;$i<$cnt_user;$i++) {
 
-	if($user_result[$i][user_verified] == "verified"){
+	if($user_result[$i]['user_verified'] == "verified"){
 		$cnt_verified++;
 	}
 	
-	if($user_result[$i][user_verified] == "paused"){
+	if($user_result[$i]['user_verified'] == "paused"){
 		$cnt_paused++;
 	}
 	
-	if($user_result[$i][user_class] == "administrator"){
+	if($user_result[$i]['user_class'] == "administrator"){
 		$cnt_admin++;
 	}
 	
 	
 	if($i < 5) {
-		$user_registerdate = @date("d.m.Y",$user_result[$i][user_registerdate]);
-		$user_id = $user_result[$i][user_id];
-		$user_nick = $user_result[$i][user_nick];
-		$user_name = $user_result[$i][user_firstname] . " " . $result[$i][user_lastname];
+		$user_registerdate = @date("d.m.Y",$user_result[$i]['user_registerdate']);
+		$user_id = $user_result[$i]['user_id'];
+		$user_nick = $user_result[$i]['user_nick'];
+		$user_name = $user_result[$i]['user_firstname'] . " " . $result[$i]['user_lastname'];
 	
-	if($user_result[$i][user_class] == "deleted"){
-		$user_nick = "<strike>$user_nick</strike>";
-	}
+		if($user_result[$i]['user_class'] == "deleted"){
+			$user_nick = "<strike>$user_nick</strike>";
+		}
 	
-	$user_latest5 .=  "$user_registerdate » <a href='acp.php?tn=user&sub=edit&edituser=$user_id' title='$lang[edit_user]'>$user_nick</a> $user_name<br />"; 
+		$user_latest5 .=  "$user_registerdate » <a href='acp.php?tn=user&sub=edit&edituser=$user_id' title='$lang[edit_user]'>$user_nick</a> $user_name<br />"; 
 	}
 
 
@@ -80,21 +82,21 @@ $dbh = null;
 
 for($i=0;$i<$cnt_result;$i++) {
 
-	$page_id = $result[$i][page_id];
+	$page_id = $result[$i]['page_id'];
 	
-	if($result[$i][page_status] == "public"){
+	if($result[$i]['page_status'] == "public"){
 		$cnt_public++;
 	}
 	
-	if($result[$i][page_status] == "draft"){
+	if($result[$i]['page_status'] == "draft"){
 		$cnt_draft++;
 	}
 
 	
 	if($i < 5) {
-		$last_edit = @date("d.m.Y",$result[$i][page_lastedit]);
-		$page_linkname = $result[$i][page_linkname];
-		$page_title = first_words($result[$i][page_title],4);
+		$last_edit = @date("d.m.Y",$result[$i]['page_lastedit']);
+		$page_linkname = $result[$i]['page_linkname'];
+		$page_title = first_words($result[$i]['page_title'],4);
 	
 		$top5pages .=  "$last_edit » <a href='acp.php?tn=pages&sub=edit&editpage=$page_id' title='$lang[page_edit]'>$page_linkname</a> $page_title<br />"; 
 	}

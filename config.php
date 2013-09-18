@@ -51,7 +51,7 @@ $files_path = FC_CONTENT_DIR . "/files";
 
 define('FC_CORE_DIR', dirname(__FILE__) . DIRECTORY_SEPARATOR);
 
-$fc_inc_dir = dirname($_SERVER[SCRIPT_NAME]);
+$fc_inc_dir = dirname($_SERVER['SCRIPT_NAME']);
 
 if($fc_inc_dir == "/") {
 	$fc_inc_dir = "";

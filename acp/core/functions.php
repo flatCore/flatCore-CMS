@@ -13,27 +13,18 @@ function get_all_languages() {
 
 	$mdir = "../lib/lang";
 	$cntLangs = 0;
+	$scanned_directory = array_diff(scandir($mdir), array('..', '.','.DS_Store'));
 	
-	$handle = opendir($mdir);
-	while ($file = readdir($handle)) {
-	
-	if(eregi("^\.{1,2}$",$file)) {
-		continue;
-	}
-	
-		if(is_dir("$mdir/$file")) {
-			if(is_file("$mdir/$file/index.php")) {
-				include("$mdir/$file/index.php");
-				$arr_lang[$cntLangs][lang_sign] = "$lang_sign";
-				$arr_lang[$cntLangs][lang_desc] = "$lang_desc";
-				$arr_lang[$cntLangs][lang_folder] = "$file";
-				$cntLangs++;
-			}
+	foreach($scanned_directory as $lang_folder) {
+		if(is_file("$mdir/$lang_folder/index.php")) {
+			include("$mdir/$lang_folder/index.php");
+			$arr_lang[$cntLangs]['lang_sign'] = "$lang_sign";
+			$arr_lang[$cntLangs]['lang_desc'] = "$lang_desc";
+			$arr_lang[$cntLangs]['lang_folder'] = "$lang_folder";
+			$cntLangs++;
 		}
-	
 	}
 	
-	@closedir($handle);
 	return($arr_lang);
 }
 
@@ -64,25 +55,17 @@ function get_all_moduls() {
 
 	$mdir = "../modules";
 	$cntMods = 0;
-	
-	$handle = opendir($mdir);
-	while ($file = readdir($handle)) {
-	
-		if(eregi("^\.{1,2}$",$file)) {
-			continue;
-		}
-	
-		if(is_dir("$mdir/$file"))	{
-			if(is_file("$mdir/$file/info.inc.php")) {
-				include("$mdir/$file/info.inc.php");
-				$arr_iMods[$cntMods][name] = "$mod[name]";
-				$arr_iMods[$cntMods][folder] = "$file";
-				$cntMods++;
-			}
+	$scanned_directory = array_diff(scandir($mdir), array('..', '.','.DS_Store'));
+		
+	foreach($scanned_directory as $mod_folder) {
+		if(is_file("$mdir/$mod_folder/info.inc.php")) {
+			include("$mdir/$mod_folder/info.inc.php");
+			$arr_iMods[$cntMods][name] = "$mod[name]";
+			$arr_iMods[$cntMods][folder] = "$mod_folder";
+			$cntMods++;		
 		}
 	}
-	
-	@closedir($handle);
+
 	return($arr_iMods);
 }
 
@@ -139,20 +122,14 @@ function get_all_templates() {
 	//templates folder
 	$sdir = "../styles";
 	$cntStyles = 0;
+	$scanned_directory = array_diff(scandir($sdir), array('..', '.','.DS_Store'));
 	
-	$handle = opendir($sdir);
-		while ($file = readdir($handle)) {
-			if(eregi("^\.{1,2}$",$file)) {
-				continue;
-			}
-	
-			//fill array
-			if(is_dir("$sdir/$file")) {
-				$arr_Styles[] = "$file";
-			}
+	foreach($scanned_directory as $tpl_folder) {
+		if(is_dir("$sdir/$tpl_folder")) {
+			$arr_Styles[] = "$tpl_folder";
+		}	
 	}
-	
-	@closedir($handle);
+
 	return($arr_Styles);
 }
 
@@ -268,7 +245,7 @@ function get_page_impression($pid) {
 		$result = $sql->fetch(PDO::FETCH_ASSOC);
 		$dbh = null;
 
-		$counter = $result[counter];
+		$counter = $result['counter'];
 		return($counter);
 }
 
@@ -317,9 +294,9 @@ function show_log($nbr) {
 
 	for($i=0;$i<$cnt_result;$i++) {
 
-		$time = date("H:i:s",$result[$i][log_time]);
-		$date = date("d.m.Y",$result[$i][log_time]);
-		$log_priority = $result[$i][log_priority];
+		$time = date("H:i:s",$result[$i]['log_time']);
+		$date = date("d.m.Y",$result[$i]['log_time']);
+		$log_priority = $result[$i]['log_priority'];
 
 		echo"<div class='log_priority$log_priority'>";
 		echo'<div class="row-fluid">';
@@ -327,7 +304,7 @@ function show_log($nbr) {
 		echo "$date $time";
 		echo'</div>';
 		echo'<div class="span9">';
-		echo $result[$i][log_trigger] . " - " . $result[$i][log_entry];
+		echo $result[$i]['log_trigger'] . " - " . $result[$i]['log_entry'];
 		echo'</div>';
 		echo'</div>';
 		echo"</div>\n";

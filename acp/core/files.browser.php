@@ -6,35 +6,35 @@ require("core/access.php");
 $deleteFile = strip_tags(basename($_GET['delete']));
 
 if(isset($_GET[d])) {
-	$_SESSION[disk] = (int) $_GET[d];
+	$_SESSION['disk'] = (int) $_GET['d'];
 }
 
-if(isset($_SESSION[disk])) {
-	$disk = "$_SESSION[disk]";
+if(isset($_SESSION['disk'])) {
+	$disk = $_SESSION['disk'];
 }
 
-if($_SESSION[sort_by_name] == '' AND $_SESSION[sort_by_size] == '' AND $_SESSION[sort_by_time] == '') {
-	$_SESSION[sort_by_name] = 'ASC';
+if($_SESSION['sort_by_name'] == '' AND $_SESSION['sort_by_size'] == '' AND $_SESSION['sort_by_time'] == '') {
+	$_SESSION['sort_by_name'] = 'ASC';
 }
 
 
-if(isset($_GET[sort_by_name])) {
+if(isset($_GET['sort_by_name'])) {
 	switch_sort('sort_by_name');
-	unset($_SESSION[sort_by_size],$_SESSION[sort_by_time]);
+	unset($_SESSION['sort_by_size'],$_SESSION['sort_by_time']);
 }
 
-if(isset($_GET[sort_by_size])) {
+if(isset($_GET['sort_by_size'])) {
 	switch_sort('sort_by_size');
-	unset($_SESSION[sort_by_name],$_SESSION[sort_by_time]);
+	unset($_SESSION['sort_by_name'],$_SESSION['sort_by_time']);
 }
 
-if(isset($_GET[sort_by_time])) {
+if(isset($_GET['sort_by_time'])) {
 	switch_sort('sort_by_time');
-	unset($_SESSION[sort_by_size],$_SESSION[sort_by_name]);
+	unset($_SESSION['sort_by_size'],$_SESSION['sort_by_name']);
 }
 
 
-$sort_direction = constant(trim('SORT_'.$_SESSION[sort_by_name].$_SESSION[sort_by_time].$_SESSION[sort_by_size]));
+$sort_direction = constant(trim('SORT_'.$_SESSION['sort_by_name'].$_SESSION['sort_by_time'].$_SESSION['sort_by_size']));
 
 function switch_sort($session_name) {
 	if($_SESSION[$session_name] == 'ASC') {
@@ -66,27 +66,27 @@ if($disk == "2") {
 }
 
 /* expand filter */
-if($_POST[img_filter] != "") {
-	$_SESSION[img_filter] = $_SESSION[img_filter] . ' ' . $_POST[img_filter];
+if(isset($_POST[img_filter])) {
+	$_SESSION['img_filter'] = $_SESSION['img_filter'] . ' ' . $_POST['img_filter'];
 }
 
 /* remove keyword from filter list */
-if($_REQUEST[rm_keyword] != "") {
-	$all_filter = explode(" ", $_SESSION[img_filter]);
-	unset($_SESSION[img_filter],$f);
+if($_REQUEST['rm_keyword'] != "") {
+	$all_filter = explode(" ", $_SESSION['img_filter']);
+	unset($_SESSION['img_filter'],$f);
 	foreach($all_filter as $f) {
-		if($_REQUEST[rm_keyword] == "$f") { continue; }
+		if($_REQUEST['rm_keyword'] == "$f") { continue; }
 		if($f == "") { continue; }
-		$_SESSION[img_filter] .= "$f ";
+		$_SESSION['img_filter'] .= "$f ";
 	}
 	unset($all_filter);
 }
 
-if($_SESSION[img_filter] != "") {
+if($_SESSION['img_filter'] != "") {
 	unset($all_filter);
-	$all_filter = explode(" ", $_SESSION[img_filter]);
+	$all_filter = explode(" ", $_SESSION['img_filter']);
 	foreach($all_filter as $f) {
-		if($_REQUEST[rm_keyword] == "$f") { continue; }
+		if($_REQUEST['rm_keyword'] == "$f") { continue; }
 		if($f == "") { continue; }
 		$btn_remove_keyword .= "<a class='btn btn-small' href='acp.php?tn=filebrowser&sub=browse&rm_keyword=$f'><i class='icon-remove'></i> $f</a> ";
 	}
@@ -182,15 +182,15 @@ foreach($a_files as $file) {
 	$imgsize = getimagesize("$path/$file");
 	
 	if($imgsize[0] > 0) {
-		$fileinfo[$x][filetype] = "image";
+		$fileinfo[$x]['filetype'] = "image";
 	} else {
-		$fileinfo[$x][filetype] = "other";
+		$fileinfo[$x]['filetype'] = "other";
 	}
 	
-	$fileinfo[$x][filename] = "$file";
-	$fileinfo[$x][size] = "$f_size";
-	$fileinfo[$x][suffix] = "$f_suffix";
-	$fileinfo[$x][time] = "$f_time";
+	$fileinfo[$x]['filename'] = "$file";
+	$fileinfo[$x]['size'] = "$f_size";
+	$fileinfo[$x]['suffix'] = "$f_suffix";
+	$fileinfo[$x]['time'] = "$f_time";
 	
 	$x++;
 } // eol foreach 
@@ -208,11 +208,11 @@ foreach ($fileinfo as $key => $row) {
 }
 
 
-if($_SESSION[sort_by_name] != "") {
+if($_SESSION['sort_by_name'] != "") {
 	@array_multisort($fi_filename, $sort_direction, $fileinfo);
-} elseif($_SESSION[sort_by_size] != "") {
+} elseif($_SESSION['sort_by_size'] != "") {
 	@array_multisort($fi_size, $sort_direction, $fileinfo);
-} elseif($_SESSION[sort_by_time] != "") {
+} elseif($_SESSION['sort_by_time'] != "") {
 	@array_multisort($fi_time, $sort_direction, $fileinfo);
 }
 
@@ -223,8 +223,8 @@ $start = 0;
 $cnt_pages = ceil($nbr_of_files/$files_per_page);
 
 
-if(isset($_GET[start])) {
-	$start = (int) $_GET[start];
+if(isset($_GET['start'])) {
+	$start = (int) $_GET['start'];
 }
 
 if($start<0) {
@@ -289,10 +289,10 @@ for($i=$start;$i<$end;$i++) {
 
 	unset($filename);
 
-	$filename = $fileinfo[$i][filename];
-	$filetime = $fileinfo[$i][time];
-	$filesize = round($fileinfo[$i][size] / 1024) . ' KB';
-	$filesize = readable_filesize($fileinfo[$i][size]);
+	$filename = $fileinfo[$i]['filename'];
+	$filetime = $fileinfo[$i]['time'];
+	$filesize = round($fileinfo[$i]['size'] / 1024) . ' KB';
+	$filesize = readable_filesize($fileinfo[$i]['size']);
 	$show_filetime = date('d.m.Y H:i',$filetime);
 
 	if($fileinfo[$i][filetype] == "image") {

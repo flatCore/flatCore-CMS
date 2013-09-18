@@ -51,11 +51,11 @@ default:
 }
 
 
-if($_SESSION[acp_pages] != "allowed" AND $subinc == "pages.edit" AND $sub == "new"){
+if($_SESSION['acp_pages'] != "allowed" AND $subinc == "pages.edit" AND $sub == "new"){
 	$subinc = "no_access";
 }
 
-if($_SESSION[acp_system] != "allowed" AND $subinc == "pages.customize"){
+if($_SESSION['acp_system'] != "allowed" AND $subinc == "pages.customize"){
 	$subinc = "no_access";
 }
 
@@ -69,29 +69,29 @@ if($_SESSION[acp_system] != "allowed" AND $subinc == "pages.customize"){
 $arr_lang = get_all_languages();
 
 /* default: check all languages */
-if(!isset($_SESSION[checked_lang_string])) {	
+if(!isset($_SESSION['checked_lang_string'])) {	
 	foreach($arr_lang as $langstring) {
 		$checked_lang_string .= "$langstring[lang_folder]-";
 	}
-	$_SESSION[checked_lang_string] = "$checked_lang_string";
+	$_SESSION['checked_lang_string'] = "$checked_lang_string";
 }
 
 
 
 /* change status of $_GET[switchLang] */
-if($_GET['switchLang']) {
+if(isset($_GET['switchLang'])) {
 		if(strpos("$_SESSION[checked_lang_string]", "$_GET[switchLang]") !== false) {
 			$checked_lang_string = str_replace("$_GET[switchLang]-", '', $_SESSION[checked_lang_string]);
 		} else {
-			$checked_lang_string = $_SESSION[checked_lang_string] . "$_GET[switchLang]-";
+			$checked_lang_string = $_SESSION['checked_lang_string'] . "$_GET[switchLang]-";
 		}
-		$_SESSION[checked_lang_string] = "$checked_lang_string";
+		$_SESSION['checked_lang_string'] = "$checked_lang_string";
 }
 
 /* build SQL query */
 $set_lang_filter = "page_language = 'foobar' OR "; // reset -> result = 0
 for($i=0;$i<count($arr_lang);$i++) {
-	$lang_folder = $arr_lang[$i][lang_folder];
+	$lang_folder = $arr_lang[$i]['lang_folder'];
 	if(strpos("$_SESSION[checked_lang_string]", "$lang_folder") !== false) {
 		$set_lang_filter .= "page_language = '$lang_folder' OR ";
 	}
@@ -102,47 +102,47 @@ $set_lang_filter = substr("$set_lang_filter", 0, -3); // cut the last ' OR'
 
 /* switch page status */
 
-if($_GET['switch']) {
-	$_SESSION[set_status] = true;
+if(isset($_GET['switch'])) {
+	$_SESSION['set_status'] = true;
 }
 
-if($_SESSION[checked_draft] == '' AND $_SESSION[checked_private] == '' AND $_SESSION[checked_public] == '' AND $_SESSION[set_status] == false) {
-	$_SESSION[checked_public] = 'checked';
+if($_SESSION['checked_draft'] == '' AND $_SESSION['checked_private'] == '' AND $_SESSION['checked_public'] == '' AND $_SESSION['set_status'] == false) {
+	$_SESSION['checked_public'] = 'checked';
 }
 
 
-if($_GET['switch'] == 'statusDraft' AND $_SESSION[checked_draft] == '') {
-	$_SESSION[checked_draft] = "checked";
-} elseif($_GET['switch'] == 'statusDraft' AND $_SESSION[checked_draft] == 'checked') {
-	$_SESSION[checked_draft] = "";
+if($_GET['switch'] == 'statusDraft' AND $_SESSION['checked_draft'] == '') {
+	$_SESSION['checked_draft'] = "checked";
+} elseif($_GET['switch'] == 'statusDraft' AND $_SESSION['checked_draft'] == 'checked') {
+	$_SESSION['checked_draft'] = "";
 }
 
-if($_GET['switch'] == 'statusPrivate' && $_SESSION[checked_private] == 'checked') {
-	$_SESSION[checked_private] = "";
-} elseif($_GET['switch'] == 'statusPrivate' && $_SESSION[checked_private] == '') {
-	$_SESSION[checked_private] = "checked";
+if($_GET['switch'] == 'statusPrivate' && $_SESSION['checked_private'] == 'checked') {
+	$_SESSION['checked_private'] = "";
+} elseif($_GET['switch'] == 'statusPrivate' && $_SESSION['checked_private'] == '') {
+	$_SESSION['checked_private'] = "checked";
 }
 
-if($_GET['switch'] == 'statusPuplic' && $_SESSION[checked_public] == 'checked') {
-	$_SESSION[checked_public] = "";
-} elseif($_GET['switch'] == 'statusPuplic' && $_SESSION[checked_public] == '') {
-	$_SESSION[checked_public] = "checked";
+if($_GET['switch'] == 'statusPuplic' && $_SESSION['checked_public'] == 'checked') {
+	$_SESSION['checked_public'] = "";
+} elseif($_GET['switch'] == 'statusPuplic' && $_SESSION['checked_public'] == '') {
+	$_SESSION['checked_public'] = "checked";
 }
 
 $set_status_filter = "page_status = 'foobar' "; // reset -> result = 0
 
 
-if($_SESSION[checked_draft] == "checked") {
+if($_SESSION['checked_draft'] == "checked") {
 	$set_status_filter .= "OR page_status = 'draft' ";
 	$btn_status_draft = 'btn-primary';
 }
 
-if($_SESSION[checked_private] == "checked") {
+if($_SESSION['checked_private'] == "checked") {
 	$set_status_filter .= "OR page_status = 'private' ";
 	$btn_status_private = 'btn-primary';
 }
 
-if($_SESSION[checked_public] == "checked") {
+if($_SESSION['checked_public'] == "checked") {
 	$set_status_filter .= "OR page_status = 'public' ";
 	$btn_status_public = 'btn-primary';
 }
@@ -152,30 +152,30 @@ if($_SESSION[checked_public] == "checked") {
 /* filter pages by keywords $kw_filter */
 
 /* expand filter */
-if($_POST[kw_filter] != "") {
-	$_SESSION[kw_filter] = $_SESSION[kw_filter] . ' ' . $_POST[kw_filter];
+if(isset($_POST['kw_filter'])) {
+	$_SESSION['kw_filter'] = $_SESSION['kw_filter'] . ' ' . $_POST['kw_filter'];
 }
 
 $set_keyword_filter = "page_language = 'foobar' OR "; // reset -> result = 0
 $set_keyword_filter = '';
 
 /* remove keyword from filter list */
-if($_REQUEST[rm_keyword] != "") {
-	$all_filter = explode(" ", $_SESSION[kw_filter]);
-	unset($_SESSION[kw_filter],$f);
+if(isset($_REQUEST['rm_keyword'])) {
+	$all_filter = explode(" ", $_SESSION['kw_filter']);
+	unset($_SESSION['kw_filter'],$f);
 	foreach($all_filter as $f) {
-		if($_REQUEST[rm_keyword] == "$f") { continue; }
+		if($_REQUEST['rm_keyword'] == "$f") { continue; }
 		if($f == "") { continue; }
-		$_SESSION[kw_filter] .= "$f ";
+		$_SESSION['kw_filter'] .= "$f ";
 	}
 }
 
-if($_SESSION[kw_filter] != "") {
+if($_SESSION['kw_filter'] != "") {
 	unset($all_filter);
-	$all_filter = explode(" ", $_SESSION[kw_filter]);
+	$all_filter = explode(" ", $_SESSION['kw_filter']);
 	
 	foreach($all_filter as $f) {
-		if($_REQUEST[rm_keyword] == "$f") { continue; }
+		if($_REQUEST['rm_keyword'] == "$f") { continue; }
 		if($f == "") { continue; }
 		$set_keyword_filter .= "(page_meta_keywords like '%$f%' OR page_title like '%$f%' OR page_linkname like '%$f%') AND";
 		$btn_remove_keyword .= "<a class='btn btn-mini btn-primary' href='acp.php?tn=pages&sub=list&rm_keyword=$f'><i class='icon-remove icon-white'></i> $f</a> ";
@@ -212,8 +212,8 @@ if($subinc == "pages.list") {
 	/* Filter Languages */
 	$lang_btn_group = '<div class="btn-group">';
 	for($i=0;$i<count($arr_lang);$i++) {
-		$lang_desc = $arr_lang[$i][lang_desc];
-		$lang_folder = $arr_lang[$i][lang_folder];
+		$lang_desc = $arr_lang[$i]['lang_desc'];
+		$lang_folder = $arr_lang[$i]['lang_folder'];
 		
 		$this_btn_status = '';
 		if(strpos("$_SESSION[checked_lang_string]", "$lang_folder") !== false) {
@@ -227,9 +227,9 @@ if($subinc == "pages.list") {
 	$lang_btn_group .= '</div>';
 	
 	$status_btn_group  = '<div class="btn-group">';
-	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPuplic" class="btn btn-small '.$btn_status_public.'">'.$lang[f_page_status_puplic].'</a>';
-	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPrivate" class="btn btn-small '.$btn_status_private.'">'.$lang[f_page_status_private].'</a>';
-	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusDraft" class="btn btn-small '.$btn_status_draft.'">'.$lang[f_page_status_draft].'</a>';
+	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPuplic" class="btn btn-small '.$btn_status_public.'">'.$lang['f_page_status_puplic'].'</a>';
+	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPrivate" class="btn btn-small '.$btn_status_private.'">'.$lang['f_page_status_private'].'</a>';
+	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusDraft" class="btn btn-small '.$btn_status_draft.'">'.$lang['f_page_status_draft'].'</a>';
 	$status_btn_group .= '</div>';
 
 

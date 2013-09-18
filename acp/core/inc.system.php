@@ -44,7 +44,7 @@ default:
 }
 
 
-if($_SESSION[acp_system] != "allowed"){
+if($_SESSION['acp_system'] != "allowed"){
 	$subinc = "no_access";
 }
 

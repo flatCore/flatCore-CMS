@@ -12,14 +12,14 @@ for($i=0;$i<$nbrModuls;$i++) {
 
 	unset($listlinks, $modnav);
 	
-	$modFolder = $arr_iMods[$i][folder];
+	$modFolder = $arr_iMods[$i]['folder'];
 	
 	include("../modules/$modFolder/info.inc.php");
 	
 	$listlinks = '<div class="btn-group">';
 	for($x=0;$x<count($modnav);$x++) {
-		$showlink = $modnav[$x][link];
-		$incpage = $modnav[$x][file];
+		$showlink = $modnav[$x]['link'];
+		$incpage = $modnav[$x]['file'];
 		$listlinks .= "<a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=moduls&sub=$modFolder&a=$incpage'>$showlink</a> ";
 	}
 	

@@ -1,6 +1,10 @@
 <?php
 
-$editor_tpl_folder = $page_template;
+if(isset($page_template)) {
+	$editor_tpl_folder = $page_template;
+} else {
+	$page_template = '';
+}
 
 if($page_template == "use_standard" OR $page_template == "") {
 

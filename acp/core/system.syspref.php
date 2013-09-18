@@ -7,7 +7,7 @@ require("core/access.php");
  * save the preferences
  */
 
-if($_POST[saveprefs]) {
+if($_POST['saveprefs']) {
 
 	// all incoming data -> strip_tags
 	foreach($_POST as $key => $val) {
@@ -15,7 +15,7 @@ if($_POST[saveprefs]) {
 		}
 	
 	// template
-	$select_template = explode("<|-|>", $_POST[select_template]);
+	$select_template = explode("<|-|>", $_POST['select_template']);
 	$prefs_template = $select_template[0];
 	$prefs_template_layout = $select_template[1];
 	

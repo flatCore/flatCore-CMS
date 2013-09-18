@@ -12,20 +12,20 @@ define("FILES_FOLDER", "$files_path");
 
 require("core/access.php");
 
-if(!isset($_SESSION[editor_class])) {
-	$_SESSION[editor_class] = "wysiwyg";
+if(!isset($_SESSION['editor_class'])) {
+	$_SESSION['editor_class'] = "wysiwyg";
 }
 
 /* switch editor - plain text or wysiwyg */
-if($_GET[editor] == "toggle") {
-	if($_SESSION[editor_class] == "plain") {
-		$_SESSION[editor_class] = "wysiwyg";
-	} elseif ($_SESSION[editor_class] == "wysiwyg") {
-		$_SESSION[editor_class] = "plain";
+if(isset($_GET['editor'])) {
+	if($_SESSION['editor_class'] == "plain") {
+		$_SESSION['editor_class'] = "wysiwyg";
+	} elseif ($_SESSION['editor_class'] == "wysiwyg") {
+		$_SESSION['editor_class'] = "plain";
 	}
 }
 
-if($_SESSION[editor_class] == "wysiwyg") {
+if($_SESSION['editor_class'] == "wysiwyg") {
 	$editor_class = "mceEditor";
 	$editor_small_class = "mceEditor_small";
 	$editor_btn = "Plain Text";
@@ -38,12 +38,12 @@ if($_SESSION[editor_class] == "wysiwyg") {
 
 
 /* set language */
-if($_SESSION[lang] == "") {
+if($_SESSION['lang'] == "") {
 	$_SESSION['lang'] = "$languagePack";
 }
 
-if($_GET[set_lang]) {
-	$set_lang = strip_tags($_GET[set_lang]);
+if(isset($_GET['set_lang'])) {
+	$set_lang = strip_tags($_GET['set_lang']);
 	if(is_file("../lib/lang/$set_lang/acp/dict.php")) {
 		$_SESSION['lang'] = "$set_lang";
 	}

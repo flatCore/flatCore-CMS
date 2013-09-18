@@ -3,8 +3,10 @@
 //prohibit unauthorized access
 require("core/access.php");
 
-$a = strip_tags($_GET[a]);
-
+$a = '';
+if(isset($_GET['a'])) {
+	$a = strip_tags($_GET['a']);
+}
 
 
 $arr_iMods = get_all_moduls();
@@ -15,7 +17,7 @@ $mod_subnav = "<a class='submenu_selected' href='$_SERVER[PHP_SELF]?tn=moduls&su
 
 for($i=0;$i<$nbrModuls;$i++) {
 
-	$modFolder = $arr_iMods[$i][folder];
+	$modFolder = $arr_iMods[$i]['folder'];
 	
 	unset($modnav);
 	
@@ -28,8 +30,8 @@ for($i=0;$i<$nbrModuls;$i++) {
 	if($sub == "$modFolder") {
 	
 		for($x=0;$x<count($modnav);$x++) {
-			$showlink = $modnav[$x][link];
-			$incpage = $modnav[$x][file];
+			$showlink = $modnav[$x]['link'];
+			$incpage = $modnav[$x]['file'];
 		
 			if($a == $incpage) {
 				$sub_link_class = "submenu_mods_selected";

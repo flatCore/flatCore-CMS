@@ -12,7 +12,7 @@ $text = strip_tags($_REQUEST[text]);
 /*
 SAVE TEXT
 */
-if($_POST[save_text]) {
+if(isset($_POST['save_text'])) {
 
 
 	// connect to database
@@ -54,32 +54,32 @@ switch ($text) {
 
 	case 'agreement_text':
 		$selected2 = "selected";
-		$desc = $lang[txtlib_agreement_desc];
+		$desc = $lang['txtlib_agreement_desc'];
 		break;
 
 	case 'extra_content_text':
 		$selected3 = "selected";
-		$desc = $lang[txtlib_extra_content_desc];
+		$desc = $lang['txtlib_extra_content_desc'];
 		break;
 
 	case 'footer_text':
 		$selected4 = "selected";
-		$desc = $lang[txtlib_page_footer_desc];
+		$desc = $lang['txtlib_page_footer_desc'];
 		break;
 
 	case 'account_confirm':
 		$selected5 = "selected";
-		$desc = $lang[txtlib_account_confirm_mail_desc];
+		$desc = $lang['txtlib_account_confirm_mail_desc'];
 		break;
 		
 	case 'account_confirm_mail':
 		$selected6 = "selected";
-		$desc = $lang[txtlib_account_confirm_mail_desc];
+		$desc = $lang['txtlib_account_confirm_mail_desc'];
 		break;
 		
 	case 'no_access':
 		$selected7 = "selected";
-		$desc = $lang[txtlib_no_access_desc];
+		$desc = $lang['txtlib_no_access_desc'];
 		break;
 
 } // eo switch $text

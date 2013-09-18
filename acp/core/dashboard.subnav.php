@@ -7,7 +7,7 @@ echo '<div class="accordion" id="dashboard-collapse">';
 
 echo '<div class="accordion-group">';
 echo '<div class="accordion-heading">';
-echo '<a class="accordion-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#pages">'.$lang[tn_pages].'</a>';
+echo '<a class="accordion-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#pages">'.$lang['tn_pages'].'</a>';
 echo '</div>';
 
 echo '<div id="pages" class="accordion-body collapse in">';
@@ -21,7 +21,7 @@ echo '</div>';
 
 echo '<div class="accordion-group">';
 echo '<div class="accordion-heading">';
-echo '<a class="accordion-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#files">'.$lang[tn_filebrowser].'</a>';
+echo '<a class="accordion-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#files">'.$lang['tn_filebrowser'].'</a>';
 echo '</div>';
 
 echo '<div id="files" class="accordion-body collapse">';
@@ -33,7 +33,7 @@ echo '</div>';
 
 echo '<div class="accordion-group">';
 echo '<div class="accordion-heading">';
-echo '<a class="accordion-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#user">'.$lang[tn_usermanagement].'</a>';
+echo '<a class="accordion-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#user">'.$lang['tn_usermanagement'].'</a>';
 echo '</div>';
 
 echo '<div id="user" class="accordion-body collapse">';
@@ -46,7 +46,7 @@ echo '</div>';
 
 echo '<div class="accordion-group">';
 echo '<div class="accordion-heading">';
-echo '<a class="accordion-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#system">'.$lang[tn_system].'</a>';
+echo '<a class="accordion-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#system">'.$lang['tn_system'].'</a>';
 echo '</div>';
 
 echo '<div id="system" class="accordion-body collapse">';
@@ -60,7 +60,7 @@ echo '</div>';
 
 echo '<div class="accordion-group">';
 echo '<div class="accordion-heading">';
-echo '<a class="accordion-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#moduls">'.$lang[tn_moduls].'</a>';
+echo '<a class="accordion-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#moduls">'.$lang['tn_moduls'].'</a>';
 echo '</div>';
 
 echo '<div id="moduls" class="accordion-body collapse">';
@@ -86,7 +86,7 @@ echo '</div>';
 
 echo '<div class="accordion-group">';
 echo '<div class="accordion-heading">';
-echo '<a class="accordion-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#lang">'.$lang[f_page_language].'</a>';
+echo '<a class="accordion-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#lang">'.$lang['f_page_language'].'</a>';
 echo '</div>';
 
 echo '<div id="lang" class="accordion-body collapse">';
@@ -94,9 +94,9 @@ $arr_lang = get_all_languages();
 
 for($i=0;$i<count($arr_lang);$i++) {
 
-	$lang_sign = $arr_lang[$i][lang_sign];
-	$lang_desc = $arr_lang[$i][lang_desc];
-	$lang_folder = $arr_lang[$i][lang_folder];
+	$lang_sign = $arr_lang[$i]['lang_sign'];
+	$lang_desc = $arr_lang[$i]['lang_desc'];
+	$lang_folder = $arr_lang[$i]['lang_folder'];
 
 	echo "<a class='submenu'href='$_SERVER[PHP_SELF]?set_lang=$lang_folder'>$lang_desc</a>";
 

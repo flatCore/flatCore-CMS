@@ -46,11 +46,11 @@ default:
 
 
 
-if($_SESSION[acp_user] != "allowed" AND $subinc == "user.edit"){
+if($_SESSION['acp_user'] != "allowed" AND $subinc == "user.edit"){
 	$subinc = "no_access";
 }
 
-if($_SESSION[acp_user] != "allowed" AND $subinc == "user.groups"){
+if($_SESSION['acp_user'] != "allowed" AND $subinc == "user.groups"){
 	$subinc = "no_access";
 }
 
