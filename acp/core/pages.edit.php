@@ -482,7 +482,6 @@ if(!empty($_REQUEST['preview_the_page'])) {
 
 /* show older versions of the current page */
 
-
 if($show_form == "true" AND $sub != "new") {
 
 	$dbh = new PDO("sqlite:".CONTENT_DB);
@@ -493,9 +492,9 @@ if($show_form == "true" AND $sub != "new") {
 	$delete_nbr = $cnt_all[nbr]-$max;
 	
 	$sql = "SELECT page_id, page_linkname, page_title, page_lastedit, page_lastedit_from, page_version
-			FROM fc_pages_cache
-			WHERE page_id_original = $editpage AND page_cache_type = 'history'
-			ORDER BY page_id DESC";
+					FROM fc_pages_cache
+					WHERE page_id_original = $editpage AND page_cache_type = 'history'
+					ORDER BY page_id DESC";
 	
 	 foreach ($dbh->query($sql) as $row) {
 	   $cache_result[] = $row;
@@ -514,15 +513,20 @@ if($show_form == "true" AND $sub != "new") {
 	
 	echo '<div id="showVersions" class="accordion-body collapse in">';
 	echo '<div class="accordion-inner">';
+
 	echo '<table class="table table-condensed table-hover">';
 	
 	for($i=0;$i<$cnt_result;$i++) {
 	
 		$nbr = $i+1;
 		$page_id = $cache_result[$i][page_id];
-		
+
+
 		if($i >= $max) {
-			$del_sql = "DELETE FROM fc_pages_cache WHERE page_id = $page_id";
+			
+			$del_sql = "DELETE FROM fc_pages_cache WHERE page_id IN (
+    SELECT page_id FROM fc_pages_cache WHERE page_id_original = $editpage ORDER BY page_lastedit ASC LIMIT 1)";
+			
 			$cnt_changes = $dbh->exec($del_sql);
 			continue;
 		}
