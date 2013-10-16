@@ -393,7 +393,6 @@ cache_url_paths();
 
 
 
-
 /* get the data to fill the form (again) */
 if(is_numeric($editpage)) {
 
@@ -446,9 +445,6 @@ if(is_numeric($editpage)) {
 
 
 
-
-
-
 if($_SESSION[acp_editpages] != "allowed") {
 	$arr_checked_admins = explode(",",$page_authorized_users);
 	if(!in_array("$_SESSION[user_nick]", $arr_checked_admins)) {
@@ -456,9 +452,6 @@ if($_SESSION[acp_editpages] != "allowed") {
 		echo"<p>$lang[drm_no_access]</p>";
 	}
 }
-
-
-
 
 
 if($show_form == "true") {
@@ -500,11 +493,9 @@ if($show_form == "true" AND $sub != "new") {
 	   $cache_result[] = $row;
 	 }
 	
-	$dbh = null;
 	$cnt_result = count($cache_result);
 	
-	echo '<hr>';
-	
+	echo '<hr>';	
 	echo '<div class="accordion" id="versionsToggle">';
 	echo '<div class="accordion-group">';
 	echo '<div class="accordion-heading">';
@@ -515,21 +506,28 @@ if($show_form == "true" AND $sub != "new") {
 	echo '<div class="accordion-inner">';
 
 	echo '<table class="table table-condensed table-hover">';
-	
+
 	for($i=0;$i<$cnt_result;$i++) {
 	
 		$nbr = $i+1;
 		$page_id = $cache_result[$i][page_id];
 
-
+		
 		if($i >= $max) {
 			
-			$del_sql = "DELETE FROM fc_pages_cache WHERE page_id IN (
-    SELECT page_id FROM fc_pages_cache WHERE page_id_original = $editpage ORDER BY page_lastedit ASC LIMIT 1)";
+			$del_sql = "DELETE FROM fc_pages_cache
+									WHERE page_id IN (
+										SELECT page_id
+										FROM fc_pages_cache
+										WHERE page_id_original = '$editpage'
+										ORDER BY page_lastedit ASC
+										LIMIT 1)";
 			
 			$cnt_changes = $dbh->exec($del_sql);
 			continue;
 		}
+		
+		
 		
 			$date = date("d.m.Y",$cache_result[$i][page_lastedit]);
 			$time = date("H:i:s",$cache_result[$i][page_lastedit]);
@@ -553,6 +551,8 @@ if($show_form == "true" AND $sub != "new") {
 					<td width='100' align='right'><a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&restore_id=$page_id&editpage=$editpage'>$lang[edit]</a></td>
 				</tr>";
 	}
+	
+	$dbh = null;
 	
 	echo '</table>';
 	echo '</div>';
