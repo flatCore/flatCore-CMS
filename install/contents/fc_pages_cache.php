@@ -1,8 +1,8 @@
 <?php
 
-/*
-must be a duplicate of fc_pages.php
-except $table_name and column 'page_id_original'
+/**
+ * must be a duplicate of fc_pages.php
+ * except $table_name and columns 'page_id_original', 'page_cache_type'
  */
 
 $database = "content";
@@ -28,6 +28,7 @@ $cols = array(
 	"page_meta_description" => 'VARCHAR',
 	"page_meta_robots" => 'VARCHAR',
 	"page_meta_enhanced" => 'VARCHAR',
+	"page_thumbnail" => 'VARCHAR',
 	"page_head_styles" => 'VARCHAR',
 	"page_head_enhanced" => 'VARCHAR',
 	"page_template" => 'VARCHAR',

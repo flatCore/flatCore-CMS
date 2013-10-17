@@ -8,6 +8,7 @@ $cols = array(
   "prefs_status"  => 'VARCHAR',
   "prefs_pagetitle"  => 'VARCHAR',
   "prefs_pagesubtitle" => 'VARCHAR',
+  "prefs_pagethumbnail" => 'VARCHAR',
   "prefs_pagesglobalhead" => 'VARCHAR',
   "prefs_template" => 'VARCHAR',
   "prefs_usertemplate" => 'VARCHAR',
@@ -21,10 +22,12 @@ $cols = array(
   "prefs_showloginform" => 'VARCHAR',
   "prefs_logfile" => 'VARCHAR',
   "prefs_template_layout" => 'VARCHAR',
-  "prefs_xml_sitemap" => 'VARCHAR'
+  "prefs_xml_sitemap" => 'VARCHAR',
+  "prefs_mailer_adr" => 'VARCHAR',
+  "prefs_mailer_name" => 'VARCHAR',
+  "prefs_rss_time_offset" => 'VARCHAR'
   
   );
-  
   
 
 
