@@ -62,6 +62,7 @@ $lang['system_modul_preferences'] = "Einstellungen für Module";
 $lang['system_backup'] = "Datensicherung";
 $lang['system_update'] = "Update";
 $lang['system_statistics'] = "Statistik";
+$lang['system_misc'] = "Sonstiges";
 $lang['activate_logfile'] = "Logfile aktivieren";
 $lang['activate_xml_sitemap'] = "XML Sitemap aktivieren";
 $lang['select_logfile'] = "Logfile auswählen";
@@ -257,6 +258,11 @@ $lang['f_prefs_global_header'] = "Globale Headerangaben (HTML)";
 $lang['select_filesize_yes'] = "Dateigrößen anzeigen";
 $lang['select_filesize_no'] = "Dateigrößen nicht anzeigen";
 
+$lang['page_thumbnail'] = "Thumbnail";
+$lang['rss_offset'] = "RSS Zeitpuffer (Sekunden)";
+
+$lang['prefs_mailer_name'] = "Absender Name";
+$lang['prefs_mailer_adr'] = "E-Mail Adresse";
 
 $lang['yes'] = "Ja";
 $lang['no'] = "Nein";

@@ -134,6 +134,32 @@ function get_all_templates() {
 }
 
 
+
+/**
+ * show all images
+ * return array
+ */
+
+function get_all_images() {
+
+	global $img_path;
+	$images = array();
+
+	$dir = "../$img_path";
+	
+	if(is_dir($dir)) {
+	
+		$img = glob("$dir/{*.jpg,*.gif,*.png}", GLOB_BRACE);		
+		foreach($img as $v) {
+				$images[] = basename($v);
+		}
+	
+	 }
+	 
+	 return $images;
+}
+
+
 /**
  * CLEAN VARS // URL PARAMETERS
  */

@@ -14,6 +14,11 @@
 <link rel="alternate" type="application/rss+xml" title="{$prefs_pagetitle} | RSS" href="/rss.php" />
 
 {$page_meta_enhanced}
+
+<!-- OpenGraph Meta Tags -->
+<meta property="og:title" content="{$page_title}">
+<meta property="og:image" content="/content/images/{$page_thumbnail}">
+<meta property="og:site_name" content="{$prefs_pagetitle}">
 		
 <link rel="stylesheet" href="{$fc_inc_dir}/styles/blucent/css/print.css" type="text/css" media="print" />
 
@@ -43,15 +48,4 @@
 {$modul_head_enhanced}
 {$prefs_pagesglobalhead}
 
-<!-- 
-	 
-           / _| | __ _| |_  / __\___  _ __ ___ 
-          | |_| |/ _` | __|/ /  / _ \| '__/ _ \
-          |  _| | (_| | |_/ /__| (_) | | |  __/
-          |_| |_|\__,_|\__\____/\___/|_|  \___|
-               
-	This website is powered by flatCore
-	flatCore is a free open source Content Management Framework.
-	flatCore is copyright 2010 of Patrick Konstandin. Extensions are copyright of their respective owners.
-	Information and contribution at http://flatfiler.de/
--->
+<meta name="generator" content="flatCore" />

@@ -19,7 +19,9 @@ $current_page_sort = "$page_sort";
 if($page_title == "") {
 	$page_title = "$prefs_pagetitle";
 }
-
+if($page_thumbnail == "") {
+	$page_thumbnail = "$prefs_pagethumbnail";
+}
 
 
 /**
@@ -108,7 +110,7 @@ $smarty->assign('page_meta_author', $page_meta_author);
 $smarty->assign('page_meta_date', date('Y-m-d', $page_lastedit));
 $smarty->assign('page_meta_keywords', $page_meta_keywords);
 $smarty->assign('page_meta_description', $page_meta_description);
-
+$smarty->assign('page_thumbnail', $page_thumbnail);
 
 if($page_meta_robots == "") {
 	$page_meta_robots = "all";

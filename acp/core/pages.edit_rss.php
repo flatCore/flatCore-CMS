@@ -12,11 +12,15 @@ if($_REQUEST[delete] != "") {
 }
 
 $sql = "SELECT * FROM fc_feeds ORDER BY feed_time DESC";
+$sql_prefs = "SELECT * FROM fc_preferences WHERE prefs_id = 1";
 
 if($dbh) {
    foreach($dbh->query($sql) as $row) {
      $rssItems[] = $row;
    }
+   
+   	$prefs = $dbh->query($sql_prefs);
+	 	$prefs = $prefs->fetch(PDO::FETCH_ASSOC);
 }
 
 
@@ -33,7 +37,7 @@ for($i=0;$i<$cnt_rssItems;$i++) {
 	$feed_text = stripslashes($rssItems[$i]['feed_text']);
 	$feed_url = $rssItems[$i]['feed_url'];
 	
-	$ts_release = $feed_time + $fc_rss_time_offset;
+	$ts_release = $feed_time + $prefs['prefs_rss_time_offset'];
 	$ts_diff = $ts_release-$ts_now;
 	
 	$days = floor($ts_diff / 86400);

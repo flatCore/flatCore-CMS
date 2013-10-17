@@ -64,6 +64,7 @@ $lang['system_textlib'] = "Text snippets";
 $lang['system_modul_preferences'] = "Module preferences";
 $lang['system_backup'] = "Backup";
 $lang['system_update'] = "Update";
+$lang['system_misc'] = "Misc";
 $lang['search_for_update'] = "Search for Update";
 $lang['system_statistics'] = "Statistics";
 $lang['activate_logfile'] = "Activate Logfile";
@@ -260,6 +261,11 @@ $lang['select_filesize_no'] = "Don't show filesize";
 
 $lang['f_prefs_global_header'] = "Global Headers (HTML)";
 
+$lang['page_thumbnail'] = "Thumbnail";
+$lang['rss_offset'] = "RSS Offset (Seconds)";
+
+$lang['prefs_mailer_name'] = "Sender Name";
+$lang['prefs_mailer_adr'] = "Sender E-Mail";
 
 $lang['yes'] = "Ja";
 $lang['no'] = "Nein";

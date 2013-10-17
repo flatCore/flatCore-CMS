@@ -35,7 +35,11 @@ if($_POST['saveprefs']) {
 		'prefs_userregistration' => 'STR',
 		'prefs_showloginform' => 'STR',
 		'prefs_logfile' => 'STR',
-		'prefs_xml_sitemap' => 'STR'
+		'prefs_xml_sitemap' => 'STR',
+		'prefs_pagethumbnail' => 'STR',
+		'prefs_mailer_name' => 'STR',
+		'prefs_mailer_adr' => 'STR',
+		'prefs_rss_time_offset' => 'STR'
 	);
 	
 	$dbh = new PDO("sqlite:".CONTENT_DB);
@@ -98,6 +102,13 @@ echo tpl_form_control_group('',$lang[f_prefs_pagesubtitle],$prefs_pagesubtitle_i
 
 echo"</fieldset>";
 
+echo"<fieldset>";
+echo"<legend>E-Mail</legend>";
+$prefs_mail_name_input = "<input class='span10' type='text' name='prefs_mailer_name' value='$prefs_mailer_name'>";
+$prefs_mail_adr_input = "<input class='span10' type='text' name='prefs_mailer_adr' value='$prefs_mailer_adr'>";
+echo tpl_form_control_group('',$lang[prefs_mailer_name],$prefs_mail_name_input);
+echo tpl_form_control_group('',$lang[prefs_mailer_adr],$prefs_mail_adr_input);
+echo"</fieldset>";
 
 /* User Preferences */
 
@@ -184,7 +195,25 @@ echo"</select>";
 
 echo"</div>
 	 </div>";
-
+	 
+echo"<div class='control-group'>
+		<label class='control-label'>$lang[page_thumbnail]</label>
+		<div class='controls'>";
+		
+		
+echo"<select name='prefs_pagethumbnail'>";
+echo "<option value=''>$lang[page_thumbnail]</option>";
+$arr_Images = get_all_images();
+	foreach($arr_Images as $page_thumbnail) {
+		$selected = "";
+		if($prefs_pagethumbnail == "$page_thumbnail") {
+			$selected = "selected";
+		}
+		echo "<option $selected value='$page_thumbnail'>$page_thumbnail</option>";
+}
+echo"</select>";
+echo"</div>
+	 </div>";
 
 echo"</fieldset>";
 
@@ -201,10 +230,8 @@ echo tpl_form_control_group('','&lt;head&gt;<br>...<br>&lt;/head&gt;',"<textarea
 echo"</fieldset>";
 
 
-/* prefs_logfile and prefs_xml_sitemap */
-
 echo"<fieldset>";
-echo"<legend>$lang[system_statistics]</legend>";
+echo"<legend>$lang[system_misc]</legend>";
 
 $select_prefs_logfile  = '<select name="prefs_logfile" class="span3">';
 $select_prefs_logfile .= '<option value="on" '.($prefs_logfile == "on" ? 'selected="selected"' :'').'>'.$lang[yes].'</option>';	
@@ -219,7 +246,7 @@ $select_prefs_xml_sitemap .= '<option value="off" '.($prefs_xml_sitemap == "off"
 $select_prefs_xml_sitemap .= '</select>';
 echo tpl_form_control_group('',$lang[activate_xml_sitemap],$select_prefs_xml_sitemap);
 
-
+echo tpl_form_control_group('',$lang[rss_offset],"<input class='span6' type='text' name='prefs_rss_time_offset' value='$prefs_rss_time_offset'>");
 	 
 echo"</fieldset>";
 

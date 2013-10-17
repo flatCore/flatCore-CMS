@@ -15,6 +15,7 @@ require("core/access.php");
 /**
  * Delete Custom Fields
  * NO SQLITE SUPPORT FOR THE MOMENT
+ * @todo: find a workaround
  */
  
 if($_POST[delete_field]) {

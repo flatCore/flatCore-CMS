@@ -17,16 +17,23 @@ $ts_now = time();
 $dbh = new PDO("sqlite:$fc_db_content");
 $sql = "SELECT * FROM fc_feeds ORDER BY feed_time DESC";
 
-   foreach ($dbh->query($sql) as $row) {
-     $rssItems[] = $row;
-   }
+
+foreach ($dbh->query($sql) as $row) {
+ $rssItems[] = $row;
+}
+
+$sql_prefs = "SELECT * FROM fc_preferences WHERE prefs_id = 1";
+$prefs = $dbh->query($sql_prefs);
+$prefs = $prefs->fetch(PDO::FETCH_ASSOC);
+
+$dbh = null;
 
 $cnt_rssItems = count($rssItems);
 
 for($i=0;$i<$cnt_rssItems;$i++) {
 
 	$feed_time = $rssItems[$i]['feed_time'];
-	$time_diff = $feed_time + $fc_rss_time_offset;
+	$time_diff = $feed_time + $prefs['prefs_rss_time_offset'];
 	
 	if($time_diff < $ts_now) {
 	

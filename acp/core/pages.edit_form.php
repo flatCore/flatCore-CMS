@@ -141,6 +141,29 @@ echo tpl_form_control_group('',$lang[f_meta_author],"<input class='span5' type='
 echo tpl_form_control_group('',$lang[f_meta_keywords],"<input class='span5' type='text' name='page_meta_keywords' value='$page_meta_keywords'>");
 echo tpl_form_control_group('',$lang[f_meta_description],"<textarea name='page_meta_description' class='span5 cntValues' rows='5'>$page_meta_description</textarea>");
 
+
+echo"<div class='control-group'>
+		<label class='control-label'>$lang[page_thumbnail]</label>
+		<div class='controls'>";
+		
+		
+echo"<select name='page_thumbnail'>";
+echo "<option value=''>$lang[page_thumbnail]</option>";
+$arr_Images = get_all_images();
+	foreach($arr_Images as $page_thumbnails) {
+		$selected = "";
+		if($page_thumbnail == "$page_thumbnails") {
+			$selected = "selected";
+		}
+		echo "<option $selected value='$page_thumbnails'>$page_thumbnails</option>";
+}
+echo"</select>";
+echo"</div>
+	 </div>";
+
+echo"</fieldset>";
+
+
 		
 $select_page_meta_robots  = '<select name="page_meta_robots" class="span3">';
 $select_page_meta_robots .= '<option value="all" '.($page_meta_robots == "all" ? 'selected="selected"' :'').'>all</option>';
