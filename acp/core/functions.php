@@ -715,7 +715,7 @@ function get_custom_user_fields() {
 
 function show_editor_switch($tn,$sub) {
 
-	if($_SESSION[editor_class] == "plain") {
+	if($_SESSION['editor_class'] == "plain") {
 		$btn_primary_wysiwyg = '';
 		$btn_wysiwyg_link = "$_SERVER[PHP_SELF]?tn=$tn&sub=$sub&editor=toggle";
 		$btn_text_link = "#";
