@@ -12,12 +12,12 @@ function checkwritable($path) {
 	global $goto_install;
 	global $lang;
 	
-	echo '<div class="row-fluid">';
-	echo '<div class="span4">'.$path.'</div>';
-	echo '<div class="span8">';
+	echo '<div class="row">';
+	echo '<div class="col-md-4">'.$path.'</div>';
+	echo '<div class="col-md-8">';
 	if(!is_writable("$path")){
 	
-		echo '<div class="alert alert-error">' . $lang[permission_false] . '</div>';
+		echo '<div class="alert alert-danger">' . $lang[permission_false] . '</div>';
 		$goto_install[] = "false";
 	
 	} else {
@@ -39,10 +39,10 @@ function checkexistingdir($path) {
 	global $goto_install;
 	
 	if(!is_dir("$path")){
-		echo '<div class="row-fluid">';
-		echo '<div class="span4">'.$path.'</div>';
-		echo '<div class="span8">';
-		echo '<div class="alert alert-error">' . $lang[missing_folder] . '</div>';
+		echo '<div class="row">';
+		echo '<div class="col-md-4">'.$path.'</div>';
+		echo '<div class="col-md-8">';
+		echo '<div class="alert alert-danger">' . $lang[missing_folder] . '</div>';
 		$goto_install[] = "false";
 		echo '</div>';
 		echo '</div>';
@@ -91,12 +91,12 @@ echo"<h3>$lang[system_requirements]</h3>";
 
 $version = phpversion();
 
-echo '<div class="row-fluid">';
-echo '<div class="span4">PHP Version</div>';
-echo '<div class="span8">';
+echo '<div class="row">';
+echo '<div class="col-md-4">PHP Version</div>';
+echo '<div class="col-md-8">';
 	
 if($version < $needed_phpversion) {
-	echo '<div class="alert alert-error">' . $lang[php_false] . '</div>';
+	echo '<div class="alert alert-danger">' . $lang[php_false] . '</div>';
 	$goto_install[] = "false";
 } else {
 	echo '<div class="alert alert-success">' . $lang[php_true] . '</div>';
@@ -107,15 +107,15 @@ echo '</div>';
 echo '</div>';
 
 
-echo '<div class="row-fluid">';
-echo '<div class="span4">PDO/SQLite</div>';
-echo '<div class="span8">';
+echo '<div class="row">';
+echo '<div class="col-md-4">PDO/SQLite</div>';
+echo '<div class="col-md-8">';
 
 if (in_array("pdo_sqlite", get_loaded_extensions())) {
 	echo '<div class="alert alert-success">' . $lang[pdo_true] . '</div>';
 	$goto_install[] = "true";
 } else {
-	echo '<div class="alert alert-success">' . $lang[pdo_false] . '</div>';
+	echo '<div class="alert alert-danger">' . $lang[pdo_false] . '</div>';
 	$goto_install[] = "false";
 }
 
@@ -127,9 +127,9 @@ echo '</div>';
 if(!in_array("false",$goto_install)) {
 
 	echo"<hr><form class='' action='index.php' method='POST'>";
-	echo '<div class="row-fluid">';
-	echo '<div class="span4"></div>';
-	echo '<div class="span8">';
+	echo '<div class="row">';
+	echo '<div class="col-md-4"></div>';
+	echo '<div class="col-md-8">';
 
 	
 	echo"<input type='submit' class='btn btn-success btn-block' name='step2' value='$lang[step] 2'>";
