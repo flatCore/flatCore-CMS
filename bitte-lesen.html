@@ -30,7 +30,7 @@
 		}
 		
 		.box {
-			background: rgba(255,255,255,0.6);
+			background: rgba(255,255,255,0.7);
 			border-radius: 9px;			
 		}
 		
@@ -75,7 +75,7 @@
 			margin: 5px 0;
 			background-color: #fff;
 			border-radius: 5px;
-			color: #693;
+			color: #516c83;
 		}
 		
 		ul, ol {
@@ -112,6 +112,15 @@ $fc_mod_rewrite = 'off';
 </pre>
 
 <p>Damit mod_rewrite funktioniert, muss die Datei _htaccess in <b>.htaccess</b> umbenannt werden. Dateinamen die mit einem Punkt beginnen sind bei den meißten Systemen für das System selbst vorbehalten. Darum ist es am einfachsten Du benennst die Datei erst um, wenn Du sie auf den Server kopiert hast.</p>
+
+<h4>Inhalt der .htaccess Datei</h4>
+<pre>
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?query=$1 [L,QSA]
+</pre>
+
 
 <h3>2. E-Mail Absender</h3>
 
@@ -167,7 +176,7 @@ Beispiel: <span class="label">http://www.example.com/acp/</span></p>
 <a href="http://swiftmailer.org/">http://swiftmailer.org/</a></p>
 
 <p>Twitter Bootstrap<br>
-<a href="http://twitter.github.com/bootstrap/">http://twitter.github.com/bootstrap/</a></p>
+<a href="http://getbootstrap.com">http://getbootstrap.com</a></p>
 
 <p>DropzoneJS<br>
 <a href="http://www.dropzonejs.com">http://www.dropzonejs.com</a></p>
