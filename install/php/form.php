@@ -1,39 +1,37 @@
-
-<p style="padding:15px 0;">
+<div class="alert alert-info">
 <?php echo"$lang[msg_form]"; ?>
-</p>
-
+</div>
 
 <form action="index.php" method="POST" class="form-horizontal">
 
-<div class="control-group">
-	<label class="control-label"><?php echo"$lang[username]"; ?></label>
-	<div class="controls">
-		<input type="text" name="username" value="" class="input-block-level">
+	<div class="form-group">
+		<label class="col-sm-2 control-label"><?php echo"$lang[username]"; ?></label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" name="username" value="">
+		</div>
 	</div>
-</div>
 
-<div class="control-group">
-	<label class="control-label"><?php echo"$lang[email]"; ?></label>
-	<div class="controls">
-		<input type="text" name="mail" value="" class="input-block-level">
+	<div class="form-group">
+		<label class="col-sm-2 control-label"><?php echo"$lang[email]"; ?></label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" name="mail" value="">
+		</div>
 	</div>
-</div>
-
-<div class="control-group">
-	<label class="control-label"><?php echo"$lang[password]"; ?></label>
-	<div class="controls">
-		<input type="password" name="psw" value="" class="input-block-level">
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label"><?php echo"$lang[password]"; ?></label>
+		<div class="col-sm-10">
+			<input type="password" class="form-control" name="psw" value="">
+		</div>
 	</div>
-</div>
 
 <hr>
 
-<div class="row-fluid">
-	<div class="span4">
+<div class="row">
+	<div class="col-md-4">
 		<input type="submit" class="btn btn-block" name="step1" value="<?php echo"$lang[step]"; ?> 1">
 	</div>
-	<div class="span8">
+	<div class="col-md-8">
 		<input type="submit" class="btn btn-success btn-block" name="step3" value="<?php echo"$lang[start_install]"; ?>">
 	</div>
 </div>

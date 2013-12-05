@@ -39,7 +39,7 @@ if($modus == "update") {
 <head>
 	<meta charset="utf-8">
 	<title><?php echo"$modus"; ?> flatCore | Content Management System</title>
-	<link media="screen" rel="stylesheet" type="text/css" href="../lib/css/bootstrap.css" />
+	<link media="screen" rel="stylesheet" type="text/css" href="../lib/css/bootstrap.min.css" />
 	<link media="screen" rel="stylesheet" type="text/css" href="css/styles.css" />
 </head>
 <body>

@@ -74,7 +74,7 @@ if($_POST[check] == "Login") {
 <html>
 <head>
 <title>flatCore UPDATE:Login <?php echo"@ $_SERVER[SERVER_NAME]"; ?></title>
-<link media="screen" rel="stylesheet" type="text/css" href="../lib/css/bootstrap.css" />
+<link media="screen" rel="stylesheet" type="text/css" href="../lib/css/bootstrap.min.css" />
 <style type="text/css">
 	#center {
 		position: absolute;
@@ -96,30 +96,26 @@ if($_POST[check] == "Login") {
 </style>
 </head>
 
-
-
-
-
 <body>
 
 	<div id="center">
 		<form action="login.php" method="post" class="form-horizontal">
 			<fieldset>
 				<legend>Login:</legend>	
-				<div class="control-group">
-					<label class="control-label"><?php echo"$lang[f_user_nick]"; ?></label>
-					<div class="controls">
-						<input type="text" class="input-block-level" name="login_name">
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><?php echo"$lang[f_user_nick]"; ?></label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="login_name">
 					</div>
 				</div>
-				<div class="control-group">
-					<label class="control-label"><?php echo"$lang[f_user_psw]"; ?></label>
-					<div class="controls">
-						<input type="password" class="input-block-level" name="login_psw">
+				<div class="form-group">
+					<label class="col-sm-2 control-label"><?php echo"$lang[f_user_psw]"; ?></label>
+					<div class="col-sm-10">
+						<input type="password" class="form-control" name="login_psw">
 					</div>
 				</div>
-				<div class="control-group">
-					<div class="controls">
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
 						<input type="submit" class="btn btn-success" name="check" value="Login">
 					</div>
 				</div>
