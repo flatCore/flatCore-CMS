@@ -12,9 +12,9 @@ if($_GET[sub] == "new"){
 }
 
 
-echo '<div class="row-fluid"><div class="span12">';
+echo '<div class="row"><div class="col-md-12">';
 
-echo"<form action='$_SEVER[PHP_SELF]?tn=user&sub=$sub&edituser=$edituser' class='form-horizontal' method='POST'>";
+echo "<form action='$_SEVER[PHP_SELF]?tn=user&sub=$sub&edituser=$edituser' class='form-horizontal' method='POST'>";
 
 $custom_fields = get_custom_user_fields();
 sort($custom_fields);
@@ -31,100 +31,75 @@ echo '</ul>';
 
 
 echo '<div class="tab-content">';
+echo '<div class="tab-pane fade in active" id="info">';
 
-
-echo'<div class="tab-pane fade in active" id="info">';
-
-
-
-echo"	<div class='control-group'>
-		<label class='control-label'>$lang[f_user_nick]</label>
-		<div class='controls'><input class='span6' type='text' name='user_nick' value='$user_nick'></div>
-		</div>";
+echo tpl_form_control_group('',$lang[f_user_nick],"<input class='form-control' type='text' name='user_nick' value='$user_nick'>");
 
 if($user_registerdate != "") {
-$show_registerdate = @date("d.m.Y H:i:s",$user_registerdate);
+	$show_registerdate = @date("d.m.Y H:i:s",$user_registerdate);
 }
 
-echo"	<div class='control-group'>
-		<label class='control-label'>$lang[f_user_registerdate]</label>
-		<div class='controls'>$show_registerdate</div>
-		</div>";
+echo tpl_form_control_group('',$lang[f_user_registerdate],"<p class='form-control-static'>$show_registerdate</p>");
+
 echo"<input type='hidden' name='user_registerdate' value='$user_registerdate'>";
-		
-		
 
 
-// $user_verified
-
-if($user_verified == "waiting"){
-	$checked_w = "checked";
-} elseif($user_verified == "verified"){
-	$checked_v = "checked";
-} elseif($user_verified == "paused"){
-	$checked_p = "checked";
-} else {
-	$checked_w = "checked";
+if($user_verified == ""){
+	$user_verified = "waiting";
 }
 
-echo"<div class='control-group'>
-		<label class='control-label'>$lang[f_user_status]</label>
-		<div class='controls'>
-		<label class='radio'>
-			<input type='radio' value='verified' name='user_verified' $checked_v>
-			<span class='label label-success'><i class='icon-ok-sign icon-white'></i></span> $lang[f_user_select_verified]
-		</label>
-		<label class='radio'>
-			<input type='radio' value='waiting' name='user_verified' $checked_w>
-			<span class='label label-info'><i class='icon-ok-circle icon-white'></i></span> $lang[f_user_select_waiting]
-		</label>
-		<label class='radio'>
-			<input type='radio' value='paused' name='user_verified' $checked_p>
-			<span class='label label-important'><i class='icon-ban-circle icon-white'></i></span> $lang[f_user_select_paused]
-		</label>
-		</div>
-	</div>";
+$select_user_status  = '<label class="radio">';
+$select_user_status .= "<input type='radio' name='user_verified' value='verified'".($user_verified == "verified" ? 'checked' :'').">";
+$select_user_status .= "<span class='label label-success'>$lang[f_user_select_verified]</span>";
+$select_user_status .= '</label>';
 
+$select_user_status .= '<label class="radio">';
+$select_user_status .= "<input type='radio' name='user_verified' value='waiting'".($user_verified == "waiting" ? 'checked' :'').">";
+$select_user_status .= "<span class='label label-default'>$lang[f_user_select_waiting]</span>";
+$select_user_status .= '</label>';
 
-echo"<div class='control-group'>
-		<label class='control-label'>$lang[f_user_groups]</label>
-		<div class='controls'>";
+$select_user_status .= '<label class="radio">';
+$select_user_status .= "<input type='radio' name='user_verified' value='paused'".($user_verified == "paused" ? 'checked' :'').">";
+$select_user_status .= "<span class='label label-danger'>$lang[f_user_select_paused]</span>";
+$select_user_status .= '</label>';
+
+echo tpl_form_control_group('',$lang[f_user_status],"$select_user_status");
+
 
 $result = get_all_groups();
 
 $nbr_of_groups = count($result);
+
 echo"<input type='hidden' name='nbr_of_groups' value='$nbr_of_groups'>";
 
 for($i=0;$i<$nbr_of_groups;$i++) {
-$get_group_id = $result[$i][group_id];
-$get_group_name = $result[$i][group_name];
-$get_group_user = $result[$i][group_user];
+	$get_group_id = $result[$i][group_id];
+	$get_group_name = $result[$i][group_name];
+	$get_group_user = $result[$i][group_user];
+	
+	$array_group_user = explode(" ", $get_group_user);
+	
+	$checked = "";
+	if(in_array("$edituser", $array_group_user)) {
+		$checked = "checked";
+	}
+	
+	if($sub == "new") {
+		$checked = "";
+	}
 
-$array_group_user = explode(" ", $get_group_user);
-
-$checked = "";
-if(in_array("$edituser", $array_group_user)) {
-    $checked = "checked";
+	$cb_usergroup .= '<label class="checkbox">';
+	$cb_usergroup .= "<input type='checkbox' name='user_groups[$i]' value='$get_group_id' $checked>";
+	$cb_usergroup .= "$get_group_name";
+	$cb_usergroup .= '</label>';
+	$cb_usergroup .= "<input type='hidden' name='this_group[$i]' value='$get_group_id'>";
 }
 
-
-if($sub == "new") {
-$checked = "";
-}
-
-
-
-echo"<input type='hidden' name='this_group[$i]' value='$get_group_id'>";
-echo"<label class='checkbox'><input type='checkbox' name='user_groups[$i]' value='$get_group_id' $checked>";
-echo" $get_group_name (ID: $get_group_id) </label>";
-
-} //eol $i
-
-echo"</div></div>";
+echo tpl_form_control_group('',$lang[f_user_groups],"$cb_usergroup");
 
 
 if($user_newsletter == "none" OR $user_newsletter == ""){
-	$checked1 = "checked";
+	$user_newsletter = "none";
 }
 
 if($user_newsletter == "html"){
@@ -135,96 +110,51 @@ if($user_newsletter == "text"){
 	$checked3 = "checked";
 }
 
+$select_nwsl .= '<label class="radio">';
+$select_nwsl .= "<input type='radio' name='user_newsletter' value='none'".($user_newsletter == "none" ? 'checked' :'').">";
+$select_nwsl .= "$lang[f_user_newsletter_none]";
+$select_nwsl .= '</label>';
 
-echo"<div class='control-group'>
-		<label class='control-label'>$lang[f_user_newsletter]</label>
-		<div class='controls'>
-			<label class='radio'>
-				<input type='radio' name='user_newsletter' value='none' $checked1> $lang[f_user_newsletter_none]
-			</label>
-			<label class='radio'>
-				<input type='radio' name='user_newsletter' value='html' $checked2> $lang[f_user_newsletter_html]
-			</label>
-			<label class='radio'>
-				<input type='radio' name='user_newsletter' value='text' $checked3> $lang[f_user_newsletter_text]
-			</label>
-		</div>
-	</div>";
+$select_nwsl .= '<label class="radio">';
+$select_nwsl .= "<input type='radio' name='user_newsletter' value='html'".($user_newsletter == "html" ? 'checked' :'').">";
+$select_nwsl .= "$lang[f_user_newsletter_html]";
+$select_nwsl .= '</label>';
 
+$select_nwsl .= '<label class="radio">';
+$select_nwsl .= "<input type='radio' name='user_newsletter' value='text'".($user_newsletter == "text" ? 'checked' :'').">";
+$select_nwsl .= "$lang[f_user_newsletter_text]";
+$select_nwsl .= '</label>';
 
-echo"</div>";
+echo tpl_form_control_group('',$lang[f_user_newsletter],"$select_nwsl");
 
 
-/* EOL tab_info ### ### ### */
-
-
+echo '</div>';
 
 /* tab_contact */
-echo'<div class="tab-pane fade" id="contact">';
+
+echo '<div class="tab-pane fade" id="contact">';
 
 
-echo"<div class='control-group'>
-			<label class='control-label'>$lang[f_user_firstname]</label>
-			<div class='controls'>
-				<input class='span8' type='text' name='user_firstname' value='$user_firstname'>
-			</div>
-		</div>";
+echo tpl_form_control_group('',$lang[f_user_firstname],"<input type='text' class='form-control' name='user_firstname' value='$user_firstname'>");
+echo tpl_form_control_group('',$lang[f_user_lastname],"<input type='text' class='form-control' name='user_lastname' value='$user_lastname'>");
+echo tpl_form_control_group('',$lang[f_user_mail],"<input type='text' class='form-control' name='user_mail' value='$user_mail'>");
+echo tpl_form_control_group('',$lang[f_user_company],"<input type='text' class='form-control' name='user_company' value='$user_company'>");
+echo tpl_form_control_group('',"$lang[f_user_street]/$lang[f_user_street_nbr]","<div class='row'><div class='col-md-9'><input type='text' class='form-control' name='user_street' value='$user_street'></div><div class='col-md-3'><input class='form-control' type='text' name='user_street_nbr' value='$user_street_nbr'></div></div>");
+echo tpl_form_control_group('',"$lang[f_user_zipcode]/$lang[f_user_city]","<div class='row'><div class='col-md-3'><input type='text' class='form-control' name='user_zipcode' value='$user_zipcode'></div><div class='col-md-9'><input class='form-control' type='text' name='user_city' value='$user_city'></div></div>");
 
-echo"<div class='control-group'>
-	<label class='control-label'>$lang[f_user_lastname]</label>
-	<div class='controls'>
-	<input class='span8' type='text' name='user_lastname' value='$user_lastname'>
-	</div>
-	</div>";
 
-echo"<div class='control-group'>
-		<label class='control-label'>$lang[f_user_mail]</label>
-		<div class='controls'>
-		<input class='span8' type='text' name='user_mail' value='$user_mail'>
-		</div>
-	</div>";
 
-echo"<div class='control-group'>
-		<label class='control-label'>$lang[f_user_company]</label>
-		<div class='controls'>
-		<input class='span8' type='text' name='user_company' value='$user_company'>
-		</div>
-	</div>";
-
-echo"<div class='control-group'>
-		<label class='control-label'>$lang[f_user_street]/$lang[f_user_street_nbr]</label>
-		<div class='controls controls-row'>
-		<input class='span6' type='text' name='user_street' value='$user_street'> 
-		<input class='span2' type='text' name='user_street_nbr' value='$user_street_nbr'>
-		</div>
-	</div>";
-
-echo"<div class='control-group'>
-		<label class='control-label controls-row'>$lang[f_user_zipcode]/$lang[f_user_city]</label>
-		<div class='controls controls-row'>
-		<input class='span2' type='text' name='user_zipcode' value='$user_zipcode'> 
-		<input class='span6' type='text' name='user_city' value='$user_city'>
-		</div>
-	</div>";
-
-echo"</div>";
+echo '</div>';
 
 /* EOL tab_contact ### ### ### */
 
 
 echo'<div class="tab-pane fade" id="psw">';
 
-echo"<div class='control-group'>
-		<label class='control-label'>$lang[f_user_psw]</label>
-		<div class='controls'>
-		<div class='alert'>$lang[f_user_psw_description]</div>
-		$lang[f_user_psw_new]<br />
-		<input class='span6' type='password' name='user_psw_new' value=''><br />
-		$lang[f_user_psw_reconfirmation]<br />
-		<input class='span6' type='password' name='user_psw_reconfirmation' value=''>
-		</div>
-	</div>";
+echo tpl_form_control_group('',$lang[f_user_psw],"<div class='alert alert-danger'>$lang[f_user_psw_description]</div>");
 
+echo tpl_form_control_group('',$lang[f_user_psw_new],"<input class='form-control' type='password' name='user_psw_new' value=''>");
+echo tpl_form_control_group('',$lang[f_user_psw_reconfirmation],"<input class='form-control' type='password' name='user_psw_reconfirmation' value=''>");
 echo"\n<input type='hidden' name='user_psw' value='$user_psw'>\n";
 
 
@@ -246,23 +176,20 @@ if($arr_drm[5] == "drm_acp_editownpages")	{  $checked_editownpages = "checked"; 
 if($arr_drm[6] == "drm_moderator")	{  $checked_moderator = "checked";  }
 if($arr_drm[7] == "drm_can_publish")	{  $checked_can_publish = "checked";  }
 
-echo"<div class='control-group'>
-		<label class='control-label'>$lang[f_user_drm]</label>
-		<div class='controls'>
-		<label class='checkbox'><input type='checkbox' value='administrator' name='drm_acp_class' $checked_class> <b>$lang[drm_administrator]</b></label>
-		<label class='checkbox'><input type='checkbox' value='drm_acp_pages' name='drm_acp_pages' $checked_pages> $lang[drm_pages]</label>
-		<label class='checkbox'><input type='checkbox' value='drm_acp_editpages' name='drm_acp_editpages' $checked_editpages> $lang[drm_editpages]</label>
-		<label class='checkbox'><input type='checkbox' value='drm_acp_editownpages' name='drm_acp_editownpages' $checked_editownpages> $lang[drm_editownpages]</label>
-		<label class='checkbox'><input type='checkbox' value='drm_acp_files' name='drm_acp_files' $checked_files> $lang[drm_files]</label>
-		<label class='checkbox'><input type='checkbox' value='drm_acp_user' name='drm_acp_user' $checked_user> $lang[drm_user]</label>
-		<label class='checkbox'><input type='checkbox' value='drm_acp_system' name='drm_acp_system' $checked_system> $lang[drm_system]</label>
-		<label class='checkbox'><input type='checkbox' value='drm_moderator' name='drm_moderator' $checked_moderator> $lang[drm_moderator]</label>
-		<label class='checkbox'><input type='checkbox' value='drm_can_publish' name='drm_can_publish' $checked_can_publish> $lang[drm_user_can_publish]</label>
-		</div>
-	</div>
-		";
 
-echo"</div>";
+$cb_user_drm .= "<label class='checkbox'><input type='checkbox' value='administrator' name='drm_acp_class' $checked_class> <b>$lang[drm_administrator]</b></label>";
+$cb_user_drm .= "<label class='checkbox'><input type='checkbox' value='drm_acp_pages' name='drm_acp_pages' $checked_pages> $lang[drm_pages]</label>";
+$cb_user_drm .= "<label class='checkbox'><input type='checkbox' value='drm_acp_editpages' name='drm_acp_editpages' $checked_editpages> $lang[drm_editpages]</label>";
+$cb_user_drm .= "<label class='checkbox'><input type='checkbox' value='drm_acp_editownpages' name='drm_acp_editownpages' $checked_editownpages> $lang[drm_editownpages]</label>";
+$cb_user_drm .= "<label class='checkbox'><input type='checkbox' value='drm_acp_files' name='drm_acp_files' $checked_files> $lang[drm_files]</label>";
+$cb_user_drm .= "<label class='checkbox'><input type='checkbox' value='drm_acp_user' name='drm_acp_user' $checked_user> $lang[drm_user]</label>";
+$cb_user_drm .= "<label class='checkbox'><input type='checkbox' value='drm_acp_system' name='drm_acp_system' $checked_system> $lang[drm_system]</label>";
+$cb_user_drm .= "<label class='checkbox'><input type='checkbox' value='drm_moderator' name='drm_moderator' $checked_moderator> $lang[drm_moderator]</label>";
+$cb_user_drm .= "<label class='checkbox'><input type='checkbox' value='drm_can_publish' name='drm_can_publish' $checked_can_publish> $lang[drm_user_can_publish]</label>";
+
+echo tpl_form_control_group('',$lang[f_user_drm],"$cb_user_drm");
+
+echo '</div>';
 
 
 if($cnt_custom_fields > 0) {
@@ -273,31 +200,31 @@ echo'<div class="tab-pane fade" id="custom">';
 	for($i=0;$i<$cnt_custom_fields;$i++) {	
 		if(substr($custom_fields[$i],0,10) == "custom_one") {
 			$label = substr($custom_fields[$i],11);
-			echo tpl_form_control_group('',$label,"<input type='text' class='input-block-level' name='$custom_fields[$i]' value='" . $$custom_fields[$i] . "'>");
+			echo tpl_form_control_group('',$label,"<input type='text' class='form-control' name='$custom_fields[$i]' value='" . $$custom_fields[$i] . "'>");
 		}	elseif(substr($custom_fields[$i],0,11) == "custom_text") {
 			$label = substr($custom_fields[$i],12);
-			echo tpl_form_control_group('',$label,"<textarea class='input-block-level' rows='6' name='$custom_fields[$i]'>" . $$custom_fields[$i] . "</textarea>");
+			echo tpl_form_control_group('',$label,"<textarea class='form-control' rows='6' name='$custom_fields[$i]'>" . $$custom_fields[$i] . "</textarea>");
 		}	elseif(substr($custom_fields[$i],0,14) == "custom_wysiwyg") {
 			$label = substr($custom_fields[$i],15);
 			echo tpl_form_control_group('',$label,"<textarea class='mceEditor_small' name='$custom_fields[$i]'>" . $$custom_fields[$i] . "</textarea>");
 		}		
 	}
 
-echo'</div>'; /* EOL tab custom fields */
+echo '</div>'; /* EOL tab custom fields */
 
 }
 
 
 
 
-echo"</div>";
+echo '</div>';
 
 //submit form to save data
-echo"<div class='formfooter'>";
-echo"$delete_button $submit_button";
-echo"</div>";
+echo '<div class="formfooter">';
+echo "$delete_button $submit_button";
+echo '</div>';
 
-echo"</form>";
+echo '</form>';
 
 echo '</div></div>';
 

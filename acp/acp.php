@@ -52,24 +52,9 @@ if(isset($_GET['set_lang'])) {
 require("../lib/lang/$_SESSION[lang]/acp/dict.php");
 require("core/functions.php");
 require("core/database.php");
+require("core/switch.php");
 
-/**
- * including vars
- * tn -> mainscripts
- * sub -> subscripts
- */
 
-if(!isset($_GET['tn'])){
-	$tn = "dasboard";
-} else {
-	$tn = clean_vars("$_GET[tn]");
-}
-
-if(!isset($_GET['sub'])){
-	$sub = "";
-} else {
-	$sub = clean_vars("$_GET[sub]");
-}
 
 
 ?>
@@ -77,14 +62,14 @@ if(!isset($_GET['sub'])){
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>flatCore:ACP @  <?php echo"$_SERVER[SERVER_NAME] /// $tn"; ?></title>
+		<title>ACP | <?php echo $_SERVER['SERVER_NAME'] . ' | ' . $tn; ?></title>
 		
 		<link rel="icon" type="image/x-icon" href="images/favicon.ico" />
 		
 		<script language="javascript" type="text/javascript" src="../lib/js/tinymce/tinymce.min.js"></script>
 		
 		<script src="../lib/js/jquery/jquery.min.js"></script>
-    <script src="../lib/js/jquery/bootstrap.min.js"></script>
+    <script src="../lib/js/bootstrap.min.js"></script>
 
 		<!-- Add fancyBox -->
 		<link rel="stylesheet" href="../lib/js/jquery/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
@@ -92,9 +77,16 @@ if(!isset($_GET['sub'])){
 		
 		<script type="text/javascript" src="../lib/js/jquery/jquery.textareaCounter.plugin.js"></script>
 				
-		<link rel="stylesheet" href="../lib/css/bootstrap.css" type="text/css" media="screen, projection">
-		<link rel="stylesheet" href="../lib/css/bootstrap-responsive.css" type="text/css" media="screen, projection">
+		<link rel="stylesheet" href="../lib/css/bootstrap.min.css" type="text/css" media="screen, projection">
 		<link rel="stylesheet" href="css/styles.css" type="text/css" media="screen, projection">
+		
+		<!-- masonry -->
+		<script type="text/javascript" src="../lib/js/masonry.pkgd.min.js"></script>
+		<script type="text/javascript" src="../lib/js/imagesloaded.pkgd.min.js"></script>
+		
+		<!-- bootstrap switch -->
+		<link rel="stylesheet" href="../lib/css/bootstrap-switch.css" type="text/css" media="screen, projection">
+		<script type="text/javascript" src="../lib/js/bootstrap-switch.min.js"></script>
 		
 		<!-- uploader -->
 		<script src="../lib/js/dropzone.js"></script>
@@ -128,7 +120,14 @@ if(!isset($_GET['sub'])){
 	}
 	
 	?>
-	
+
+	<div id="page-sidebar">
+		<?php include("core/$navinc.php"); ?>
+		<?php include('core/livebox.php'); ?>
+	</div>
+		
+	<div id="page-content">
+		
 	<div id="bigHeader">
 	<?php require("core/topNav.php"); ?>
 	</div>
@@ -142,6 +141,7 @@ if(!isset($_GET['sub'])){
 	copyright © 2010 - <?php echo date(Y); ?>, <a href="http://www.flatcore.de/" target="_blank">flatCore.de</a>
 	</div>
 	
+	</div>
 	
 	<script type="text/javascript">
     jQuery(document).ready(function ($) {
@@ -155,7 +155,8 @@ if(!isset($_GET['sub'])){
 		$('#showVersions').collapse('hide');
 		
 		$('.tooltip_bottom').tooltip({
-			placement: 'bottom'
+			placement: 'bottom',
+			delay: { show: 1000, hide: 100 }
 		})
 		
 		$('.tooltip').tooltip()
@@ -166,21 +167,43 @@ if(!isset($_GET['sub'])){
 			autoHeight: true
 		});
 		
-	Dropzone.options.myDropzone = {
-  	init: function() {
-    	this.on("success", function(file, responseText) {
-      	// Handle the responseText here. For example, add the text to the preview element:
-				file.previewTemplate.appendChild(document.createTextNode(responseText));
-			});
-		}
-	};
+   $('.collapse').on('show.bs.collapse', function() {
+        var id = $(this).attr('id');
+        $('a[href="#' + id + '"]').addClass('active');
+    });
+    $('.collapse').on('hide.bs.collapse', function() {
+        var id = $(this).attr('id');
+        $('a[href="#' + id + '"]').removeClass('active');
+    });
+		
+		Dropzone.options.myDropzone = {
+	  	init: function() {
+	    	this.on("success", function(file, responseText) {
+	      	// Handle the responseText here. For example, add the text to the preview element:
+					file.previewTemplate.appendChild(document.createTextNode(responseText));
+				});
+			}
+		};
 
-    var options = {   
-        'originalStyle': 'text-right',
-        'displayFormat': '<span class="label">#input</span> <span class="label">#words</span>'  
-    };  
-    $('.cntValues').textareaCount(options);  
-  
+	  var options = {   
+	      'originalStyle': 'text-right',
+	      'displayFormat': '<span class="label">#input</span> <span class="label">#words</span>'  
+	  };  
+	  $('.cntValues').textareaCount(options);  
+	  
+
+		var $container = $('#masonry-container');
+		
+		$('#masonry-container').imagesLoaded( function(){
+		  $('#masonry-container').masonry({
+		   itemSelector: '.masonry-item',
+		   isAnimated: true,
+		   isFitWidth: true,
+		 
+		   gutter: 10
+		  });
+		});
+	
 		
 	});
 	</script>

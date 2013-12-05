@@ -1,14 +1,14 @@
-<footer>
+<footer id="pageFooter">
 
 	<div class="container clearfix">
 		<div class="row">
-			<div class="span3 first"> {include file='lastedit.tpl'} </div>
-			<div class="span3"> {include file='mostclicked.tpl'} </div>
-			<div class="span6 tags"> {include file='tags.tpl'} </div>
+			<div class="col-md-3 first"> {include file='lastedit.tpl'} </div>
+			<div class="col-md-3"> {include file='mostclicked.tpl'} </div>
+			<div class="col-md-6 tags"> {include file='tags.tpl'} </div>
 		</div>
 	</div>
 	
-	<div class="container clearfix" style="margin-top:25px;">
+	<div class="container" style="margin-top:25px;">
 	{$textlib_footer}
 	</div>
 	

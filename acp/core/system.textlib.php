@@ -92,23 +92,25 @@ echo"<legend>$lang[system_textlib]</legend>";
 echo"<form action='$_SERVER[PHP_SELF]?tn=system&sub=sys_textlib' method='POST' name='sel_snippet' class='form-inline'>";
 
 
-echo '<div class="row-fluid">';
-echo '<div class="span4">';
-echo '<select name="text">';
+echo '<div class="row">';
+echo '<div class="col-md-4">';
+echo '<div class="form-group">';
+echo '<select name="text" class="form-control">';
 
-echo"<option value='agreement_text' $selected2>$lang[txtlib_agreement]</option>";
-echo"<option value='extra_content_text' $selected3>$lang[txtlib_extra_content]</option>";
-echo"<option value='footer_text' $selected4>$lang[txtlib_page_footer]</option>";
-echo"<option value='account_confirm' $selected5>$lang[txtlib_account_confirm]</option>";
-echo"<option value='account_confirm_mail' $selected6>$lang[txtlib_account_confirm_mail]</option>";
-echo"<option value='no_access' $selected7>$lang[txtlib_no_access]</option>";
+echo "<option value='agreement_text' $selected2>$lang[txtlib_agreement]</option>";
+echo "<option value='extra_content_text' $selected3>$lang[txtlib_extra_content]</option>";
+echo "<option value='footer_text' $selected4>$lang[txtlib_page_footer]</option>";
+echo "<option value='account_confirm' $selected5>$lang[txtlib_account_confirm]</option>";
+echo "<option value='account_confirm_mail' $selected6>$lang[txtlib_account_confirm_mail]</option>";
+echo "<option value='no_access' $selected7>$lang[txtlib_no_access]</option>";
 
-echo'</select> ';
+echo '</select> ';
+echo '</div>';
 
-echo"<input type='submit' class='btn' name='sel_snippet' value='$lang[edit]'>";
+echo ' <input type="submit" class="btn btn-default" name="sel_snippet" value="'.$lang['edit'].'">';
 
 echo '</div>';
-echo '<div class="span8">';
+echo '<div class="col-md-8">';
 
 echo"<p><i class='icon-info-sign'></i> $desc</p>";
 echo '</div>';

@@ -8,52 +8,52 @@
 <fieldset>
 	<legend>{$lang_legend_adress_fields}</legend>
 
-	<div class="control-group">
-	<label class="control-label">{$lang_label_firstname}</label>
-		<div class="controls">
-			<input type="text" class="span5" value="{$get_firstname}" name="s_firstname">
+	<div class="form-group">
+	<label class="col-sm-2 control-label">{$lang_label_firstname}</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" value="{$get_firstname}" name="s_firstname">
 		</div>
 	</div>
 
-	<div class="control-group">	
-	<label class="control-label">{$lang_label_lastname}</label>
-		<div class="controls">
-			<input type="text" class="span5" value="{$get_lastname}" name="s_lastname">
+	<div class="form-group">
+	<label class="col-sm-2 control-label">{$lang_label_lastname}</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" value="{$get_lastname}" name="s_lastname">
 		</div>
 	</div>
 	
-	<div class="control-group">
-	<label class="control-label">{$lang_label_street}</label>
-		<div class="controls">
-			<input type="text" class="span5" value="{$get_street}" name="s_street">
+	<div class="form-group">
+	<label class="col-sm-2 control-label">{$lang_label_street}</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" value="{$get_street}" name="s_street">
 		</div>
 	</div>
 	
-	<div class="control-group">
-	<label class="control-label">{$lang_label_nr}</label>
-		<div class="controls">
-			<input type="text" class="span5" value="{$get_nr}" name="s_nr">
+	<div class="form-group">
+	<label class="col-sm-2 control-label">{$lang_label_nr}</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" value="{$get_nr}" name="s_nr">
 		</div>
 	</div>
 	
-	<div class="control-group">
-	<label class="control-label">{$lang_label_zip}</label>
-		<div class="controls">
-			<input type="text" class="span5" value="{$get_zip}" name="s_zip">
+	<div class="form-group">
+	<label class="col-sm-2 control-label">{$lang_label_zip}</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" value="{$get_zip}" name="s_zip">
 		</div>
 	</div>
 	
-	<div class="control-group">
-	<label class="control-label">{$lang_label_town}</label>
-		<div class="controls">
-			<input type="text" class="span5" value="{$get_city}" name="s_city">
+	<div class="form-group">
+	<label class="col-sm-2 control-label">{$lang_label_town}</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" value="{$get_city}" name="s_city">
 		</div>
 	</div>
 	
-	<div class="control-group">	
-	<label class="control-label">{$lang_label_about_you}</label>
-		<div class="controls">
-			<textarea class="span5" name="about_you">{$send_about}</textarea>
+	<div class="form-group">
+	<label class="col-sm-2 control-label">{$lang_label_about_you}</label>
+		<div class="col-sm-10">
+			<textarea class="form-control" rows="4" name="about_you">{$send_about}</textarea>
 		</div>
 	</div>
 		
@@ -63,41 +63,41 @@
 <fieldset>
 	<legend>{$lang_legend_access_data}</legend>
 
-	<div class="control-group">	
-		<label class="control-label">{$lang_label_psw}</label>
-			<div class="controls">
-			<input type="password" class="span5" value="" name="s_psw">
+	<div class="form-group">
+		<label class="col-sm-2 control-label">{$lang_label_psw}</label>
+			<div class="col-sm-10">
+			<input type="password" class="form-control" value="" name="s_psw">
 		</div>
 	</div>
 
-	<div class="control-group">		
-	<label class="control-label">{$lang_label_psw_repeat}</label>
-		<div class="controls">
-			<input type="password" class="span5" value="" name="s_psw_repeat">
+	<div class="form-group">
+	<label class="col-sm-2 control-label">{$lang_label_psw_repeat}</label>
+		<div class="col-sm-10">
+			<input type="password" class="form-control" value="" name="s_psw_repeat">
 			<p class="help-block">{$msg_edit_psw}</p>
 		</div>
 	</div>
 		
 	<hr>
 
-	<div class="control-group">		
-	<label class="control-label">{$lang_label_mail}</label>
-		<div class="controls">
-			<input type="text" class="span5" value="" name="s_mail">
+	<div class="form-group">
+	<label class="col-sm-2 control-label">{$lang_label_mail}</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" value="" name="s_mail">
 		</div>
 	</div>
 
-	<div class="control-group">
-		<label class="control-label">{$lang_label_mailrepeat}</label>
-		<div class="controls">	
-			<input type="text" class="span5" value="" name="s_mailrepeat">
+	<div class="form-group">
+		<label class="col-sm-2 control-label">{$lang_label_mailrepeat}</label>
+		<div class="col-sm-10">	
+			<input type="text" class="form-control" value="" name="s_mailrepeat">
 			<p class="help-block">{$msg_edit_mail}</p>
 		</div>
 	</div>
 	
-	<div class="control-group well">
-		<label class="control-label"> </label>
-			<div class="controls">	
+	<div class="form-group">
+		<label class="col-sm-2 control-label"> </label>
+			<div class="col-sm-10">	
 				<input class="btn btn-success" type="submit" name="update_profile" value="{$lang_button_save}">
 			</div>
 	</div>
@@ -149,7 +149,7 @@
 
 <!-- Delete Account -->
 
-<div class="alert alert-error">
+<div class="alert alert-danger">
 
 <form id="profileform" action="{$form_url}" method="POST">
 <fieldset>

@@ -49,39 +49,7 @@ if($_SESSION['acp_system'] != "allowed"){
 }
 
 
-echo"<div id='wrapper'> ";
-
-// content block
-echo"<div id='contentbox'>";
-
-
 
 include("./core/$subinc.php");
-
-echo"</div>"; // eol div contentbox
-
-echo"</div>"; // eol div wrapper
-
-
-// sub navigation
-echo"<div id='subnav'>";
-echo"<div id='subnav-inner'>";
-
-echo"<a class='$sub_active[0]' href='$_SERVER[PHP_SELF]?tn=system&sub=sys_pref'>$lang[system_preferences]</a>";
-echo"<a class='$sub_active[1]' href='$_SERVER[PHP_SELF]?tn=system&sub=sys_textlib'>$lang[system_textlib]</a>";
-echo"<a class='$sub_active[2]' href='$_SERVER[PHP_SELF]?tn=system&sub=stats'>$lang[system_statistics]</a>";
-echo"<a class='$sub_active[3]' href='$_SERVER[PHP_SELF]?tn=system&sub=backup'>$lang[system_backup]</a>";
-echo"<a class='$sub_active[4]' href='$_SERVER[PHP_SELF]?tn=system&sub=update'>$lang[system_update]</a>";
-
-echo"</div>"; // sub navigation EOL
-
-
-
-// liveBox
-include("livebox.php");
-
-echo"</div>";
-
-
 
 ?>

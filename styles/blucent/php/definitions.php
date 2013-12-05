@@ -6,7 +6,7 @@
  */
  
 $fc_defs[main_nav_class] = 'mainmenu';
-$fc_defs[main_nav_class_active] = 'mainmenu_current';
+$fc_defs[main_nav_class_active] = 'active';
 
 
 

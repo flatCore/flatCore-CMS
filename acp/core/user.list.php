@@ -144,52 +144,49 @@ for($i=$start;$i<$end;$i++) {
 	$user_lastname = $result[$i][user_lastname];
 	$user_verified = $result[$i][user_verified];
 	$user_groups = $result[$i][user_groups];
+	$show_registerdate = @date("d.m.Y",$user_registerdate);
+
+	//show me in bold
+	unset($td_class);
+	if($user_nick == "$_SESSION[user_nick]"){
+		$td_class = "bold";
+	}
+
+	//marking admins
+	if($user_class == "administrator"){
+		$admin_img = '<span style="color:#369;"><span class="glyphicon glyphicon-user"></span></span>';
+	} else {
+		$admin_img = '<span class="glyphicon glyphicon-user"></span>';
+	}
+
+	//deleted user
+	if($user_class == "deleted"){
+		$user_nick = "<strike>$user_nick</strike>";
+	}
+
+
+	//status image
+	switch ($user_verified) {
+		case "waiting":
+			$statusLabel = "label label-info center";
+			break;
+		case "paused":
+			$statusLabel = "label label-important center";
+			break;
+		case "verified":
+			$statusLabel = "label label-success center";
+			break;
+	}
 	
-	
-$show_registerdate = @date("d.m.Y",$user_registerdate);
-
-//show me in bold
-unset($td_class);
-if($user_nick == "$_SESSION[user_nick]"){
-	$td_class = "bold";
-}
-
-//marking admins
-if($user_class == "administrator"){
-	$admin_img = "<img src='images/user_blue_16.png' border='0'>";
-} else {
-	$admin_img = "<img src='images/user_16.png' border='0'>";
-}
-
-//deleted user
-if($user_class == "deleted"){
-	$user_nick = "<strike>$user_nick</strike>";
-}
-
-
-//status image
-switch ($user_verified) {
-
-case "waiting":
-	$statusLabel = "label label-info center";
-	break;
-case "paused":
-	$statusLabel = "label label-important center";
-	break;
-case "verified":
-	$statusLabel = "label label-success center";
-	break;
-}
-
-echo"
-<tr>
-	<td class='$td_class'><p class='$statusLabel'>$user_id</p></td>
-	<td class='$td_class'>$admin_img $user_nick</td>
-	<td class='$td_class'>$show_registerdate</td>
-	<td class='$td_class'>$user_firstname $user_lastname</td>
-	<td class='$td_class'>$user_mail</td>
-	<td class='$td_class'><a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=user&sub=edit&edituser=$user_id'>$lang[edit]</a></td>
-</tr>";
+	echo"
+	<tr>
+		<td class='$td_class'><p class='$statusLabel'>$user_id</p></td>
+		<td class='$td_class'>$admin_img $user_nick</td>
+		<td class='$td_class'>$show_registerdate</td>
+		<td class='$td_class'>$user_firstname $user_lastname</td>
+		<td class='$td_class'>$user_mail</td>
+		<td class='$td_class'><a class='btn btn-default btn-sm' href='$_SERVER[PHP_SELF]?tn=user&sub=edit&edituser=$user_id'>$lang[edit]</a></td>
+	</tr>";
 
 
 

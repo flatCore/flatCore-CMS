@@ -47,26 +47,26 @@ function switch_sort($session_name) {
 function show_sort_arrow($direction) {
 	$icon = '';
 	if($direction == 'ASC') {
-		$icon = "<i class='icon-chevron-up'></i>";
+		$icon = '<span class="glyphicon glyphicon-chevron-up"></span>';
 	} elseif($direction == 'DESC') {
-		$icon = "<i class='icon-chevron-down'></i>";
+		$icon = '<span class="glyphicon glyphicon-chevron-down"></span>';
 	}
 	return $icon;
 }
 
 
 if($disk == "2") {
-	$path = "../content/files";
-	$disk2_class = "btn btn-primary btn-small";
-	$disk1_class = "btn btn-small";
+	$path = '../content/files';
+	$disk2_class = 'btn btn-primary btn-sm';
+	$disk1_class = 'btn btn-default btn-sm';
 } else {
-	$path = "../content/images";
-	$disk1_class = "btn btn-primary btn-small";
-	$disk2_class = "btn btn-small";
+	$path = '../content/images';
+	$disk1_class = 'btn btn-primary btn-sm';
+	$disk2_class = 'btn btn-default btn-sm';
 }
 
 /* expand filter */
-if(isset($_POST[img_filter])) {
+if(isset($_POST['img_filter'])) {
 	$_SESSION['img_filter'] = $_SESSION['img_filter'] . ' ' . $_POST['img_filter'];
 }
 
@@ -88,39 +88,44 @@ if($_SESSION['img_filter'] != "") {
 	foreach($all_filter as $f) {
 		if($_REQUEST['rm_keyword'] == "$f") { continue; }
 		if($f == "") { continue; }
-		$btn_remove_keyword .= "<a class='btn btn-small' href='acp.php?tn=filebrowser&sub=browse&rm_keyword=$f'><i class='icon-remove'></i> $f</a> ";
+		$btn_remove_keyword .= "<a class='btn btn-default' href='acp.php?tn=filebrowser&sub=browse&rm_keyword=$f'><span class='glyphicon glyphicon-remove'></span> $f</a> ";
 	}
 	
 }
 
-$kw_form  = "<form action='acp.php?tn=filebrowser&sub=browse&d=$disk' method='POST' class='form-inline' style='margin-bottom:3px;'>";
-$kw_form .= '<input class="input-block-level" type="text" name="img_filter" value="" placeholder="Filter">';
+
+$kw_form  = "<form action='acp.php?tn=filebrowser&sub=browse&d=$disk' method='POST' class='form-inline'>";
+$kw_form .= '<div class="input-group">';
+$kw_form .= '<span class="input-group-addon"><span class="glyphicon glyphicon-filter"></span></span>';
+$kw_form .= '<input class="form-control" type="text" name="img_filter" value="" placeholder="Filter">';
+$kw_form .= '</div>';
 $kw_form .= '</form>';
 
-echo '<div class="well well-small" style="margin-bottom:10px;">';
-echo '<div class="row-fluid">';
-echo '<div class="span12">';
+
+echo '<div class="well well-sm" style="margin-bottom:10px;">';
+echo '<div class="row">';
+echo '<div class="col-md-12">';
 
 echo '<div class="btn-toolbar">';
 echo '<div class="btn-group">';
-echo "<a class='$disk1_class' href='$_SERVER[PHP_SELF]?tn=filebrowser&sub=browse&d=1'>Grafiken</a> ";
-echo "<a class='$disk2_class' href='$_SERVER[PHP_SELF]?tn=filebrowser&sub=browse&d=2'>Dateien</a>";
+echo "<a class='$disk1_class' href='$_SERVER[PHP_SELF]?tn=$tn&sub=browse&d=1'>Grafiken</a> ";
+echo "<a class='$disk2_class' href='$_SERVER[PHP_SELF]?tn=$tn&sub=browse&d=2'>Dateien</a>";
 echo '</div>';
 echo '<div class="btn-group">';
-echo "<a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=filebrowser&sub=browse&d=$disk&sort_by_name=1'>". show_sort_arrow($_SESSION[sort_by_name]) ." $lang[filename]</a>";
-echo "<a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=filebrowser&sub=browse&d=$disk&sort_by_time=1'>". show_sort_arrow($_SESSION[sort_by_time]) ." $lang[date_of_change]</a>";
-echo "<a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=filebrowser&sub=browse&d=$disk&sort_by_size=1'>". show_sort_arrow($_SESSION[sort_by_size]) ." $lang[filesize]</a>";
+echo "<a class='btn btn-sm btn-default' href='$_SERVER[PHP_SELF]?tn=$tn&sub=browse&d=$disk&sort_by_name=1'>". show_sort_arrow($_SESSION[sort_by_name]) ." $lang[filename]</a>";
+echo "<a class='btn btn-sm btn-default' href='$_SERVER[PHP_SELF]?tn=$tn&sub=browse&d=$disk&sort_by_time=1'>". show_sort_arrow($_SESSION[sort_by_time]) ." $lang[date_of_change]</a>";
+echo "<a class='btn btn-sm btn-default' href='$_SERVER[PHP_SELF]?tn=$tn&sub=browse&d=$disk&sort_by_size=1'>". show_sort_arrow($_SESSION[sort_by_size]) ." $lang[filesize]</a>";
 echo '</div>';
 echo '</div>';
 
 echo '</div>';
 echo '</div>';
 
-echo '<div class="row-fluid">';
-echo '<div class="span2">';
+echo '<div class="row" style="margin-top:10px;">';
+echo '<div class="col-md-2">';
 echo "$kw_form";
 echo '</div>';
-echo '<div class="span10">';
+echo '<div class="col-md-10">';
 echo "$btn_remove_keyword";
 echo '</div>';
 echo '</div>';
@@ -134,24 +139,21 @@ if($deleteFile !== "") {
 	if(is_file("$path/$deleteFile")) {
 	
 		if(unlink("$path/$deleteFile")) {
-			echo"<div class='alert alert-success'>$lang[msg_file_delete]</div>";
+			echo '<div class="alert alert-success">'.$lang['msg_file_delete'].'</div>';
 		} else {
-			echo"<div class='alert alert-error'>$lang[msg_file_delete_error]</div>";
+			echo '<div class="alert alert-error">'.$lang['msg_file_delete_error'].'</div>';
 		}
 		
 	} else {
-		echo"<div class='alert alert-error'>File not found</div>";
+		echo '<div class="alert alert-error">File not found</div>';
 	}
 
 }
-
-
 
 $a_files = scandir("$path");
 
 $fileinfo = array();
 $x=0;
-
 
 foreach($a_files as $file) {
 
@@ -166,13 +168,13 @@ foreach($a_files as $file) {
 	
 	
 	if(is_array($all_filter)) {
-	foreach($all_filter as $search_needle) {
-		if($search_needle != '') {
-	 if(stristr($file, $search_needle) == FALSE) { 
-        continue 2;
-   }
-   }
-	}
+		foreach($all_filter as $search_needle) {
+			if($search_needle != '') {
+				if(stristr($file, $search_needle) == FALSE) { 
+	        continue 2;
+			}
+	   }
+		}
 	}
 
 	
@@ -276,8 +278,8 @@ for($x=0;$x<$cnt_pages;$x++) {
 
 } //eol for $x
 
-
-echo"<div id='filesbox' class='clearfix'>";
+echo"<div id='container'>";
+echo"<div id='masonry-container'>";
 
 if($disk == "2") {
 	$tpl_file = file_get_contents('templates/list-files-grid.tpl');
@@ -297,16 +299,16 @@ for($i=$start;$i<$end;$i++) {
 
 	if($fileinfo[$i][filetype] == "image") {
 		$set_style = '';
-		$preview_button = "<a href='$path/$filename' title='$path/$filename' class='btn btn-mini fancybox'>$lang[preview]</a>";
-		$preview_img = "<img src='$path/$filename' style='max-width:80px;max-height:80px;'>";
+		$preview_button = "<a href='$path/$filename' title='$path/$filename' class='btn btn-xs btn-default fancybox'>$lang[preview]</a>";
+		$preview_img = "<img src='$path/$filename'>";
 	} else {
 		$set_style = "background-image: url(images/no-preview.gif); background-position: center; background-repeat: no-repeat;";
-		$preview_button = "<a href='#' class='btn btn-mini disabled'>Vorschau</a>";
+		$preview_button = "<a href='#' class='btn btn-xs btn-default disabled'>Vorschau</a>";
 		$preview_img = '';
 	}
 
 	
-	$delete_button = "<a href='acp.php?tn=filebrowser&sub=browse&delete=$filename&d=$disk&start=$start' onclick=\"return confirm('$lang[confirm_delete_file]')\" class='btn btn-danger btn-small btn-mini'>$lang[delete]</a></span>";
+	$delete_button = "<a href='acp.php?tn=$tn&sub=browse&delete=$filename&d=$disk&start=$start' onclick=\"return confirm('$lang[confirm_delete_file]')\" class='btn btn-danger btn-xs'>$lang[delete]</a></span>";
 
 	$tpl_list = str_replace('{filename}', "$filename", $tpl_file);
 	$tpl_list = str_replace('{set_style}', "$set_style", $tpl_list);
@@ -317,12 +319,15 @@ for($i=$start;$i<$end;$i++) {
 	$tpl_list = str_replace('{delete_button}', "$delete_button", $tpl_list);
 	
 	echo $tpl_list;
+	
 
 } // eol $i - list all files 
 
 
 
-echo"</div>"; // eol div filesbox
+echo '</div>'; // masonry-container
+echo '</div>';
+echo '<div class="clearfix"></div>';
 
 
 echo"<div id='pagina'><p>";

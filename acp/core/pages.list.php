@@ -3,9 +3,9 @@
 //prohibit unauthorized access
 require("core/access.php");
 
-$btn_status_puplic ="<button class='btn btn-success btn-mini disabled' title='$lang[f_page_status_puplic]'><i class='icon-globe icon-white'></i></button>";
-$btn_status_private ="<button class='btn btn-danger btn-mini disabled' title='$lang[f_page_status_private]'><i class='icon-lock icon-white'></i></button>";
-$btn_status_draft ="<button class='btn btn-mini disabled' title='$lang[f_page_status_draft]'><i class='icon-pencil'></i></button>";
+$btn_status_puplic ="<button class='btn btn-success btn-sm disabled' title='$lang[f_page_status_puplic]'><span class='glyphicon glyphicon-globe'></span></button>";
+$btn_status_private ="<button class='btn btn-danger btn-sm disabled' title='$lang[f_page_status_private]'><span class='glyphicon glyphicon-lock'></span></button>";
+$btn_status_draft ="<button class='btn btn-sm disabled' title='$lang[f_page_status_draft]'><span class='glyphicon glyphicon-pencil'></span></button>";
 
 $dbh = new PDO("sqlite:".CONTENT_DB);
 
@@ -25,12 +25,12 @@ $dbh = null;
 $cnt_result = count($result);
 
 
-echo '<div class="row-fluid">';
-echo '<div class="span5">';
+echo '<div class="row">';
+echo '<div class="col-md-5">';
 echo $kw_form;
 echo '<p style="padding:0;">' . $btn_remove_keyword . '</p>';
 echo '</div>';
-echo '<div class="span7">';
+echo '<div class="col-md-7">';
 echo '<div style="float:right;">';
 echo $status_btn_group . ' ' . $lang_btn_group;
 echo '</div>';
@@ -51,7 +51,7 @@ echo"<tr>
 <td class='head'>$lang[h_page_linkname]</td>
 <td class='head'>$lang[h_page_title]</td>
 <td class='head'>Hits</td>
-<td class='head' width='100'>$lang[h_action]</td>
+<td class='head' width='135'>$lang[h_action]</td>
 </tr>";
 
 for($i=0;$i<$cnt_result;$i++) {
@@ -93,14 +93,14 @@ for($i=0;$i<$cnt_result;$i++) {
 	/* check for display edit button */
 	
 	if($_SESSION['acp_editpages'] == "allowed"){
-		$edit_button = "<a class='btn btn-mini' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id'>$lang[edit]</a>";
+		$edit_button = "<a class='btn btn-sm btn-default' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id'>$lang[edit]</a>";
 	} else {
 		$edit_button = "<br>";
 	}
 	
 	$arr_checked_admins = explode(",",$page_authorized_users);
 	if(in_array("$_SESSION[user_nick]", $arr_checked_admins)) {
-		$edit_button = "<a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id'>$lang[edit]</a>";
+		$edit_button = "<a class='btn btn-sm btn-default' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id'>$lang[edit]</a>";
 	}
 	
 	/* mark main and subpages | or not */
@@ -150,7 +150,7 @@ echo"<tr>
 <td class='head'>$lang[h_page_linkname]</td>
 <td class='head'>$lang[h_page_title]</td>
 <td class='head'>Hits</td>
-<td class='head' width='100'>$lang[h_action]</td>
+<td class='head' width='135'>$lang[h_action]</td>
 </tr>";
 
 for($i=0;$i<$cnt_result;$i++) {
@@ -201,14 +201,14 @@ for($i=0;$i<$cnt_result;$i++) {
 	/* check for display edit button */
 	
 	if($_SESSION['acp_editpages'] == "allowed"){
-		$edit_button = "<a class='btn btn-mini' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id'>$lang[edit]</a>";
+		$edit_button = "<a class='btn btn-sm btn-default' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id'>$lang[edit]</a>";
 	} else {
 		$edit_button = "<br />";
 	}
 	
 	$arr_checked_admins = explode(",",$page_authorized_users);
 	if(in_array("$_SESSION[user_nick]", $arr_checked_admins)) {
-		$edit_button = "<a class='btn btn-mini' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id'>$lang[edit]</a>";
+		$edit_button = "<a class='btn btn-sm btn-default' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id'>$lang[edit]</a>";
 	}
 	
 	if($fc_mod_rewrite == "permalink") {

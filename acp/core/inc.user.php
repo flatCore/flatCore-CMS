@@ -56,59 +56,8 @@ if($_SESSION['acp_user'] != "allowed" AND $subinc == "user.groups"){
 
 
 
-/*
-Output
-*/
-
-
-
-
-echo"<div id='wrapper'> ";
-
-echo"<div id='contentbox'>";
 
 include("./core/$subinc.php");
 
-echo"</div>"; // eol div contenbox
-
-echo"</div>"; // eol div wrapper
-
-
-
-
-
-
-// sub navigation
-echo"<div id='subnav'>";
-echo"<div id='subnav-inner'>";
-
-echo"<a class='$sub_active[0]' href='$_SERVER[PHP_SELF]?tn=user&sub=list'>$lang[list_user]</a>";
-echo"<a class='$sub_active[2]' href='$_SERVER[PHP_SELF]?tn=user&sub=new'>$lang[new_user]</a>";
-
-if($sub == "edit") {
-	echo"<a class='$sub_active[1]' href='$_SERVER[PHP_SELF]?tn=user&sub=list'>$lang[edit_user]</a>";
-} else {
-	echo"<span class='submenu_disabled'>$lang[edit_user]</span>";
-}
-
-echo"<a class='$sub_active[3]' href='$_SERVER[PHP_SELF]?tn=user&sub=customize'>$lang[customize_user]</a>";
-echo"<a class='$sub_active[4]' href='$_SERVER[PHP_SELF]?tn=user&sub=groups'>$lang[edit_groups]</a>";
-
-
-echo"<h5>$lang[h_search_user]</h5>";
-echo"<div style='padding: 0 4px;'>
-<form action='$_SERVER[PHP_SELF]?tn=user' class='form-inline' method='POST'>";
-echo"<input type='text' name='findUser' class='input-block-level'> ";
-echo"</form></div>";
-
-
-
-echo"</div>"; // sub navigation EOL
-
-
-
-// liveBox
-include("livebox.php");
-echo"</div>";
 
 ?>

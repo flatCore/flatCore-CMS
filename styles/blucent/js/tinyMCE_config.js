@@ -14,9 +14,9 @@ tinymce.init({
   image_advtab: true,
   convert_urls: false,
   templates: [ 
-    {title: 'row-fluid [6|6]', description: 'Zwei Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_2cols.html'},
-    {title: 'row-fluid [4|4|4]', description: 'Drei Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_3cols.html'},
-    {title: 'row-fluid [3|3|3|3]', description: 'Vier Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_4cols.html'}
+    {title: 'row [6|6]', description: 'Zwei Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_2cols.html'},
+    {title: 'row [4|4|4]', description: 'Drei Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_3cols.html'},
+    {title: 'row [3|3|3|3]', description: 'Vier Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_4cols.html'}
   ],
 	style_formats : [
 		{title: 'Headlines', items: [
@@ -92,9 +92,9 @@ tinymce.init({
   image_advtab: true,
   convert_urls: false,
   templates: [ 
-  	{title: 'row-fluid [6|6]', description: 'Zwei Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_2cols.html'},
-    {title: 'row-fluid [4|4|4]', description: 'Drei Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_3cols.html'},
-    {title: 'row-fluid [3|3|3|3]', description: 'Vier Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_4cols.html'}
+  	{title: 'row [6|6]', description: 'Zwei Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_2cols.html'},
+    {title: 'row [4|4|4]', description: 'Drei Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_3cols.html'},
+    {title: 'row [3|3|3|3]', description: 'Vier Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_4cols.html'}
   ],
 	style_formats : [
 		{title: 'Headlines', items: [

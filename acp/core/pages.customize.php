@@ -88,7 +88,7 @@ if($_POST[add_field]) {
 }
 
 
-echo '<div class="row-fluid"><div class="span12">';
+echo '<div class="row"><div class="col-md-12">';
 
 
 echo '<fieldset>';
@@ -96,7 +96,7 @@ echo '<legend>' . $lang[add_custom_field] . '</legend>';
 
 echo '<form action="acp.php?tn=pages&sub=customize" method="POST" class="form-horizontal">';
 
-echo tpl_form_control_group('',$lang[custom_field_name],"<input type='text' class='span8' name='field_name' value='$field_name'>");
+echo tpl_form_control_group('',$lang[custom_field_name],"<input type='text' class='form-control' name='field_name' value='$field_name'>");
 
 $radio_field_type = "
 			<label class='radio inline'><input type='radio' $sel1 name='field_type' value='one'> &lt;input type=&quot;text&quot; ... </label>
@@ -132,7 +132,7 @@ if($cnt_result < 1) {
 } else {
 	echo '<div class="alert">' . $lang[delete_custom_field_desc] . '</div>';
 
-	$select_del_field = '<select name="del_field">';
+	$select_del_field = '<select name="del_field" class="form-control">';
 	for($i=0;$i<$cnt_result;$i++) {
 		if(substr($result[$i],0,7) == "custom_") {
 			$select_del_field .=  "<option value='$result[$i]'>" . $result[$i] . "</option>";

@@ -150,7 +150,7 @@ if($_POST['delete_the_page']) {
 
 		if($cnt_changes > 0) {
 			$success_message = "{OKAY} $lang[msg_page_deleted]";
-			record_log("$_SESSION[user_nick]","deleted page id: $editpage","0");
+			record_log("$_SESSION[user_nick]","deleted page id: $editpage","10");
 			generate_xml_sitemap();
 			delete_cache_file();
 			unset($editpage);
@@ -248,7 +248,7 @@ if($modus == "update") {
 	
 		if($cnt_changes == TRUE) {
 			$sys_message = "{OKAY} $lang[msg_page_updated]";
-			record_log("$_SESSION[user_nick]","page update <b>$page_linkname</b> &raquo;$page_title&laquo;","0");
+			record_log("$_SESSION[user_nick]","page update <b>$page_linkname</b> &raquo;$page_title&laquo;","5");
 			generate_xml_sitemap();
 			delete_cache_file();
 		} else {
@@ -307,7 +307,7 @@ if($modus == "new") {
 	
 	if($cnt_changes == TRUE) {
 		$sys_message = "{OKAY} $lang[msg_page_saved]";
-		record_log("$_SESSION[user_nick]","new Page <i>$page_title</i>","0");
+		record_log("$_SESSION[user_nick]","new Page <i>$page_title</i>","5");
 		generate_xml_sitemap();
 		delete_cache_file();
 	} else {
@@ -432,7 +432,7 @@ if(is_numeric($editpage)) {
 		//set submit button
 		$submit_button = "<input type='submit' class='btn btn-success' name='save_the_page' value='$lang[update_page]'>";
 		$delete_button = "<input type='submit' class='btn btn-danger' name='delete_the_page' value='$lang[delete_page]' onclick=\"return confirm('$lang[confirm_delete_data]')\">";
-		$previev_button = "<input type='submit' class='btn' id='preview_the_page' name='preview_the_page' value='$lang[preview]'>";
+		$previev_button = "<input type='submit' class='btn btn-default' id='preview_the_page' name='preview_the_page' value='$lang[preview]'>";
 	
 } else {
 	// modus newpage
@@ -443,7 +443,7 @@ if(is_numeric($editpage)) {
 		//set submit button
 		$submit_button = "<input type='submit' class='btn btn-success' name='save_the_page' value='$lang[save_new_page]'>";
 		$delete_button = "";
-		$previev_button = "<input type='submit' class='btn' id='preview_the_page' name='preview_the_page' value='$lang[preview]'>";
+		$previev_button = "<input type='submit' class='btn btn-default' id='preview_the_page' name='preview_the_page' value='$lang[preview]'>";
 }
 
 
@@ -551,7 +551,7 @@ if($show_form == "true" AND $sub != "new") {
 					<td width='100'>$time</td>
 					<td>" . $cache_result[$i][page_title] . "</td>
 					<td> " . $cache_result[$i][page_lastedit_from] . "</td>
-					<td width='100' align='right'><a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&restore_id=$page_id&editpage=$editpage'>$lang[edit]</a></td>
+					<td width='100' align='right'><a class='btn btn-default btn-sm' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&restore_id=$page_id&editpage=$editpage'>$lang[edit]</a></td>
 				</tr>";
 	}
 	

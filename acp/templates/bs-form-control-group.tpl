@@ -1,7 +1,7 @@
 <!-- bootstrap form control-group  -->
-<div class="control-group">
-  <label class="control-label" for="{labelFor}">{labelText}</label>
-  <div class="controls">
+<div class="form-group">
+  <label class="control-label control-label-normal col-md-2" for="{labelFor}">{labelText}</label>
+  <div class="col-md-10">
     {formControls}
   </div>
 </div>

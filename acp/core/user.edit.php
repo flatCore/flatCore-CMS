@@ -160,7 +160,7 @@ if($_POST[save_the_user]) {
 									
 		if($cnt_changes == TRUE) {
 			$success_message .= "$lang[msg_user_updated]<br />";
-			record_log("$_SESSION[user_nick]","update user id: $edituser via acp","0");
+			record_log("$_SESSION[user_nick]","update user id: $edituser via acp","5");
 		}
 	}
 	
@@ -203,7 +203,7 @@ if($_POST[save_the_user]) {
 			
 			if($cnt_changes == TRUE) {
 				$success_message .= "$lang[msg_new_user_saved]<br>";
-				record_log("$_SESSION[user_nick]","new user <i>$user_nick</i>","0");
+				record_log("$_SESSION[user_nick]","new user <i>$user_nick</i>","5");
 			} else {
 				print_r($dbh->errorInfo());
 			}

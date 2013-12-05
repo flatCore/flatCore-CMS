@@ -322,18 +322,12 @@ function show_log($nbr) {
 
 		$time = date("H:i:s",$result[$i]['log_time']);
 		$date = date("d.m.Y",$result[$i]['log_time']);
-		$log_priority = $result[$i]['log_priority'];
-
-		echo"<div class='log_priority$log_priority'>";
-		echo'<div class="row-fluid">';
-		echo'<div class="span3">';
-		echo "$date $time";
-		echo'</div>';
-		echo'<div class="span9">';
-		echo $result[$i]['log_trigger'] . " - " . $result[$i]['log_entry'];
-		echo'</div>';
-		echo'</div>';
-		echo"</div>\n";
+		$log_priority = 'log_priority'.$result[$i]['log_priority'];
+		
+		echo '<dl class="dl-horizontal dl-logfile '.$log_priority.'">';
+		echo '<dt>'.$date.$time.'</dt>';
+		echo '<dd>'.$result[$i]['log_trigger'].' - '. $result[$i]['log_entry'] .'</dd>';
+		echo '</dl>';
 
 	} // eol $i
 
@@ -716,21 +710,21 @@ function get_custom_user_fields() {
 function show_editor_switch($tn,$sub) {
 
 	if($_SESSION['editor_class'] == "plain") {
-		$btn_primary_wysiwyg = '';
+		$btn_primary_wysiwyg = 'btn-default';
 		$btn_wysiwyg_link = "$_SERVER[PHP_SELF]?tn=$tn&sub=$sub&editor=toggle";
 		$btn_text_link = "#";
-		$btn_primary_text = 'btn-inverse disabled';
+		$btn_primary_text = 'btn-primary disabled';
 	} else {
-		$btn_primary_wysiwyg = 'btn-inverse disabled';
+		$btn_primary_wysiwyg = 'btn-primary disabled';
 		$btn_text_link = "$_SERVER[PHP_SELF]?tn=$tn&sub=$sub&editor=toggle";
 		$btn_wysiwyg_link = "#";
-		$btn_primary_text = '';
+		$btn_primary_text = 'btn-default';
 	}
 	
 	
 	echo '<div class="btn-group" style="float:right;">';
-	echo "<a href='$btn_wysiwyg_link' class='btn btn-small $btn_primary_wysiwyg'>WYSIWYG</a>";
-	echo "<a href='$btn_text_link' class='btn btn-small $btn_primary_text'>Text</a>";
+	echo "<a href='$btn_wysiwyg_link' class='btn btn-sm $btn_primary_wysiwyg'>WYSIWYG</a>";
+	echo "<a href='$btn_text_link' class='btn btn-sm $btn_primary_text'>Text</a>";
 	echo '</div>';
 	echo '<div class="clearfix"></div>';
 	

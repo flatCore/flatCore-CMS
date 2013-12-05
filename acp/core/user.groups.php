@@ -156,7 +156,8 @@ $editgroup = (int) $_POST[editgroup];
 echo"<fieldset>";
 echo"<legend>$lang[choose_usergroup]</legend>";
 echo"<form action='$_SERVER[PHP_SELF]?tn=user&sub=groups' class='form-inline' method='POST'>";
-echo"<select name='editgroup'>";
+echo '<div class="form-group">';
+echo"<select name='editgroup' class='form-control'>";
 
 for($i=0;$i<count($result);$i++) {
 
@@ -170,7 +171,8 @@ for($i=0;$i<count($result);$i++) {
 }
 
 echo"</select> ";
-echo"<input type='submit' class='btn' name='select_group' value='$lang[edit]'>";
+echo '</div>';
+echo" <input type='submit' class='btn' name='select_group' value='$lang[edit]'>";
 echo"</form>";
 echo"</fieldset>";
 
@@ -216,23 +218,25 @@ FORM // EDIT GROUPS
 echo"<fieldset>";
 echo"<legend>Benutzergruppe bearbeiten</legend>";
 
-echo"<form action='$_SERVER[PHP_SELF]?tn=user&sub=groups' method='POST'>";
+echo"<form action='$_SERVER[PHP_SELF]?tn=user&sub=groups' method='POST' class=''>";
 
 
-echo'<div class="row-fluid">';
+echo'<div class="row">';
 
-echo"<div class='span8'>";
+echo"<div class='col-md-8'>";
 
-echo"<p>Gruppenname<br />";
-echo"<input type='text' class='input-block-level' name='group_name' value='$group_name'></p>";
 
-echo"<p>Beschreibung<br />";
+echo '<label class="">Gruppenname</label>';
+echo "<input type='text' class='form-control' name='group_name' value='$group_name'></p>";
+
+
+echo"<label>Beschreibung</label>";
 echo"<textarea class='mceEditor_small' rows='4' name='group_description'>$group_description</textarea></p>";
 
 echo"</div>";
-echo"<div class='span4'>";
+echo"<div class='col-md-4'>";
 
-echo"<p>Benutzer hinzufügen/entfernen</p>";
+echo"<label>Benutzer hinzufügen/entfernen</label>";
 
 echo"<div id='userlist'>";
 

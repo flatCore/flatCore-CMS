@@ -7,7 +7,7 @@
 <meta name="keywords" content="{$page_meta_keywords}" />
 <meta name="date" content="{$page_meta_date}" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <link rel="icon" type="image/x-icon" href="{$fc_inc_dir}/styles/blucent/images/fav.ico" />
 
@@ -19,17 +19,14 @@
 <meta property="og:title" content="{$page_title}">
 <meta property="og:image" content="/content/images/{$page_thumbnail}">
 <meta property="og:site_name" content="{$prefs_pagetitle}">
-		
-<link rel="stylesheet" href="{$fc_inc_dir}/styles/blucent/css/print.css" type="text/css" media="print" />
 
 <!-- CSS -->
-<link rel="stylesheet" media="all" href="{$fc_inc_dir}/lib/css/bootstrap.css" type="text/css" />
-<link rel="stylesheet" media="all" href="{$fc_inc_dir}/lib/css/bootstrap-responsive.css" type="text/css" />
+<link rel="stylesheet" media="all" href="{$fc_inc_dir}/lib/css/bootstrap.min.css" type="text/css" />
 <link rel="stylesheet" media="screen" href="{$fc_inc_dir}/styles/blucent/css/styles.css" />
 
 <!-- jQuery -->
 <script type="text/javascript" src="{$fc_inc_dir}/lib/js/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="{$fc_inc_dir}/lib/js/jquery/bootstrap.min.js"></script>
+<script type="text/javascript" src="{$fc_inc_dir}/lib/js/bootstrap.min.js"></script>
 
 <script type="text/javascript" src="{$fc_inc_dir}/lib/js/jquery/fancybox/jquery.fancybox.js"></script>
 <link rel="stylesheet" href="{$fc_inc_dir}/lib/js/jquery/fancybox/jquery.fancybox.css" type="text/css" media="screen, projection" />

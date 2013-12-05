@@ -110,32 +110,32 @@ for($i=0;$i<$cnt_result;$i++) {
 
 
 
-echo'<div class="row-fluid">';
+echo'<div class="row">';
 
-echo"<div class='span4'>";
-echo '<fieldset style="min-height:140px;">';
+echo '<div class="col-md-4">';
+echo '<fieldset style="min-height:120px;">';
 echo"<legend>$lang[db_user]</legend>";
 
 echo"<p class='loud'><b>$cnt_user</b> Benutzer gesamt</p>
-			<ul class='unstyled'>
+			<ul class='list-unstyled'>
 				<li><span class='label label-success'>$cnt_verified</span> $lang[f_user_select_verified]</li>
-				<li><span class='label label-important'>$cnt_paused</span> $lang[f_user_select_paused]</li>
-				<li><span class='label'>$cnt_admin</span> $lang[f_administrators]</li>
+				<li><span class='label label-danger'>$cnt_paused</span> $lang[f_user_select_paused]</li>
+				<li><span class='label label-info'>$cnt_admin</span> $lang[f_administrators]</li>
 			</ul>";
 echo '</fieldset>';
 echo"</div>";
 
 
-echo"<div class='span4'>";
-echo '<fieldset style="min-height:140px;">';
+echo '<div class="col-md-4">';
+echo '<fieldset style="min-height:120px;">';
 echo"<legend>zuletzt registriert</legend>";
 echo"$user_latest5";
 echo '</fieldset>';
 echo"</div>";
 
 
-echo"<div class='span4'>";
-echo '<fieldset style="min-height:140px;">';
+echo '<div class="col-md-4">';
+echo '<fieldset style="min-height:120px;">';
 echo"<legend>zuletzt aktualisiert</legend>";
 echo"$top5pages";
 echo '</fieldset>';

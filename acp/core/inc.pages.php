@@ -3,49 +3,50 @@
 //prohibit unauthorized access
 require("core/access.php");
 
-
+/*
 $sub_active[0] = "submenu";
 $sub_active[1] = "submenu";
 $sub_active[2] = "submenu";
 $sub_active[3] = "submenu";
 $sub_active[4] = "submenu";
 $sub_active[5] = "submenu";
+*/
 
 switch ($sub) {
 
 case "list":
 	$subinc = "pages.list";
-	$sub_active[0] = "submenu_selected";
+	//$sub_active[0] = "submenu_selected";
 	break;
 	
 case "edit":
 	$subinc = "pages.edit";
-	$sub_active[1] = "submenu_selected";
+	//$sub_active[1] = "submenu_selected";
 	break;
 	
 case "new":
 	$subinc = "pages.edit";
-	$sub_active[2] = "submenu_selected";
+	//$sub_active[2] = "submenu_selected";
 	break;
 	
 case "customize":
 	$subinc = "pages.customize";
-	$sub_active[3] = "submenu_selected";
+	//$sub_active[3] = "submenu_selected";
 	break;
 
 case "snippets":
 	$subinc = "pages.snippets";
-	$sub_active[4] = "submenu_selected";
+	//$sub_active[4] = "submenu_selected";
 	break;
 		
 case "rss":
 	$subinc = "pages.edit_rss";
-	$sub_active[5] = "submenu_selected";
+	//$sub_active[5] = "submenu_selected";
 	break;
 	
 default:
 	$subinc = "pages.list";
-	$sub_active[0] = "submenu_selected";
+	//$sub_active[0] = "submenu_selected";
 	break;
 
 }
@@ -178,7 +179,7 @@ if($_SESSION['kw_filter'] != "") {
 		if($_REQUEST['rm_keyword'] == "$f") { continue; }
 		if($f == "") { continue; }
 		$set_keyword_filter .= "(page_meta_keywords like '%$f%' OR page_title like '%$f%' OR page_linkname like '%$f%') AND";
-		$btn_remove_keyword .= "<a class='btn btn-mini btn-primary' href='acp.php?tn=pages&sub=list&rm_keyword=$f'><i class='icon-remove icon-white'></i> $f</a> ";
+		$btn_remove_keyword .= "<a class='btn btn-xs btn-primary' href='acp.php?tn=pages&sub=list&rm_keyword=$f'><span class='glyphicon glyphicon-remove'></span> $f</a> ";
 	}
 	
 }
@@ -220,23 +221,23 @@ if($subinc == "pages.list") {
 			$this_btn_status = 'btn-primary';
 		}
 		
-		$lang_btn_group .= '<a href="acp.php?tn=pages&sub=list&switchLang='.$lang_folder.'" class="btn btn-small '.$this_btn_status.'">'.$lang_folder.'</a>';
+		$lang_btn_group .= '<a href="acp.php?tn=pages&sub=list&switchLang='.$lang_folder.'" class="btn btn-default btn-sm '.$this_btn_status.'">'.$lang_folder.'</a>';
 	
 	} // eo $i
 	
 	$lang_btn_group .= '</div>';
 	
 	$status_btn_group  = '<div class="btn-group">';
-	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPuplic" class="btn btn-small '.$btn_status_public.'">'.$lang['f_page_status_puplic'].'</a>';
-	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPrivate" class="btn btn-small '.$btn_status_private.'">'.$lang['f_page_status_private'].'</a>';
-	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusDraft" class="btn btn-small '.$btn_status_draft.'">'.$lang['f_page_status_draft'].'</a>';
+	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPuplic" class="btn btn-default btn-sm '.$btn_status_public.'">'.$lang['f_page_status_puplic'].'</a>';
+	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPrivate" class="btn btn-default btn-sm '.$btn_status_private.'">'.$lang['f_page_status_private'].'</a>';
+	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusDraft" class="btn btn-default btn-sm '.$btn_status_draft.'">'.$lang['f_page_status_draft'].'</a>';
 	$status_btn_group .= '</div>';
 
 
 	$kw_form  = "<form action='acp.php?tn=pages&sub=list' method='POST' class='form-inline' style='margin-bottom:3px;'>";
-	$kw_form .= '<div class="input-prepend">';
-	$kw_form .= '<span class="add-on"><i class="icon-filter"></i></span>';
-	$kw_form .= '<input class="input-medium" type="text" name="kw_filter" value="" placeholder="Filter">';
+	$kw_form .= '<div class="input-group">';
+	$kw_form .= '<span class="input-group-addon"><span class="glyphicon glyphicon-filter"></span></span>';
+	$kw_form .= '<input class="form-control" type="text" name="kw_filter" value="" placeholder="Filter">';
 	$kw_form .= '</div>';
 	$kw_form .= '</form>';
 
@@ -245,45 +246,6 @@ if($subinc == "pages.list") {
 
 
 
-
-
-
-echo '<div id="wrapper">';
-
-// content block
-echo '<div id="contentbox">';
 include("$subinc.php");
-echo '</div>'; // eol div contenbox
 
-echo '</div>'; // eol div wrapper
-
-
-
-echo '<div id="subnav">';
-
-// sub navigation
-echo '<div id="subnav-inner">';
-
-echo "<a class='$sub_active[0]' href='$_SERVER[PHP_SELF]?tn=pages&sub=list'>$lang[page_list]</a>";
-echo "<a class='$sub_active[2]' href='$_SERVER[PHP_SELF]?tn=pages&sub=new'>$lang[new_page]</a>";
-
-if($sub == "edit") {
-	echo "<a class='$sub_active[1]' href='$_SERVER[PHP_SELF]?tn=pages&sub=list'>$lang[page_edit]</a>";
-} else {
-	echo "<span class='submenu_disabled'>$lang[page_edit]</span>";
-}
-
-echo "<a class='$sub_active[3]' href='$_SERVER[PHP_SELF]?tn=pages&sub=customize'>$lang[page_customize]</a>";
-echo "<a class='$sub_active[4]' href='$_SERVER[PHP_SELF]?tn=pages&sub=snippets'>$lang[snippets]</a>";
-echo "<a class='$sub_active[5]' href='$_SERVER[PHP_SELF]?tn=pages&sub=rss'>RSS</a>";
-
-
-
-echo '</div>'; // sub navigation EOL
-
-
-// liveBox
-include("livebox.php");
-
-echo '</div>';
 ?>

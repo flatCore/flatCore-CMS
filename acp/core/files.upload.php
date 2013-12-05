@@ -11,8 +11,8 @@ $form_files_action = "core/files.upload-script.php?d=$files_d";
 
 ?>
 
-<div class="row-fluid">
-<div class="span6">
+<div class="row">
+<div class="col-md-6">
 <fieldset>
 	<legend><?php echo $lang['upload_img_legend']; ?></legend>
 	<form action="core/files.upload-script.php" id="myDropzone" class="dropzone">
@@ -29,7 +29,7 @@ $form_files_action = "core/files.upload-script.php?d=$files_d";
 	<?php echo $prefs[prefs_imagesuffix] ?>
 </fieldset>
 </div>
-<div class="span6">
+<div class="col-md-6">
 <fieldset>
 	<legend><?php echo $lang['upload_files_legend']; ?></legend>
 		<form action="core/files.upload-script.php" id="my-dropzone2" class="dropzone">

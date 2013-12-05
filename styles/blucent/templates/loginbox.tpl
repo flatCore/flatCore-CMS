@@ -1,19 +1,22 @@
-<div class="brightBox">
+<div class="well well-sm">
 	<form action="{$smarty.server.SCRIPT_NAME}?p={$p}" method="POST">
 
-		<b>{$legend_login}</b>
+		<h4>{$legend_login}</h4>
 
-		<label>{$label_username}</label>
-		<input class="login_name" type="text" name="login_name" value=""><br />
-		<label>{$label_psw}</label>
-		<input class="login_psw" type="password" name="login_psw" value=""><br />
-
-		<input class="btn" type="submit" name="login" value="{$button_login}">
+		<div class="form-group">
+			<label for="username">{$label_username}</label>
+			<input class="login_name form-control input-sm" type="text" id="username" name="login_name" value="">
+		</div>
+		<div class="form-group">
+			<label for="psw">{$label_psw}</label>
+			<input class="login_psw form-control input-sm" type="password" name="login_psw" value="">
+		</div>
+		<div class="form-group">
+			<input class="btn btn-sm btn-default" type="submit" name="login" id="psw" value="{$button_login}">
+		</div>
 		<p>{$show_forgotten_psw_link}</p>
 	</form>
 
-	<hr>
 	<p>{$msg_register}<br>{$show_register_link}</p>
-
 
 </div>

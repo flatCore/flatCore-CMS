@@ -46,7 +46,8 @@ $logfiles = glob("$log_dir/logfile*");
 echo"<fieldset>";
 echo"<legend>$lang[select_logfile]</legend>";
 echo"<form action='$_SERVER[PHP_SELF]?tn=system&sub=stats' method='POST' class='form-inline'>";
-echo"<select name='select_logfile'>";
+echo '<div class="form-group">';
+echo"<select name='select_logfile' class='form-control'>";
 
 foreach($logfiles as $fn) {
 	
@@ -61,6 +62,7 @@ foreach($logfiles as $fn) {
 }
 
 echo"</select> ";
+echo '</div> ';
 echo"<input type='submit' class='btn' name='select_log' value='$lang[choose]'>";
 echo"</form>";
 echo"</fieldset>";
@@ -153,7 +155,7 @@ echo"</div>"; // eo float
 
 echo"<div style='margin-left:220px;padding:8px;'>";
 
-echo"<div style='height:350px;overflow:auto;margin:0;padding:10px;background-color:#C5C5C5;'>";
+echo"<div style='height:350px;overflow:auto;margin:0;padding:10px;background-color:#ddd;'>";
 
 
 for($i=0;$i<$cnt_result;$i++) {
@@ -173,7 +175,7 @@ for($i=0;$i<$cnt_result;$i++) {
 	}
 
 
-	echo"<dl class='dl-horizontal' style='background-color:$bg_color;'>";
+	echo"<dl class='dl-horizontal' style='background-color:$bg_color;margin:0;'>";
 
 	echo"<dt>Zeit:</dt> <dd>$log_time</dd>";
 	echo"<dt>IP:</dt> <dd>$log_ip</dd>";

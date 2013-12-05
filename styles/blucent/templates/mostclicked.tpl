@@ -2,12 +2,9 @@
 
 <h6>{$lang_legend_mostclicked}</h6>
 
-<ul class="arrow_list">
+<ul class="list-unstyled">
 {foreach item=nav from=$arr_mostclicked}
-	<li>
-	<a href="{$nav.link}" title="{$nav.pagetitle}">{$nav.linkname}</a>
-	</li>
+	<li><span class="glyphicon glyphicon-chevron-right"></span> <a href="{$nav.link}" title="{$nav.pagetitle}">{$nav.linkname}</a></li>
 {/foreach}
-
 </ul>
 

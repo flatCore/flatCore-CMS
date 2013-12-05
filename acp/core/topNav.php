@@ -4,54 +4,6 @@
 require("core/access.php");
 
 
-$active[0] = "topnav";
-$active[1] = "topnav";
-$active[2] = "topnav";
-$active[3] = "topnav";
-$active[4] = "topnav";
-$active[5] = "topnav";
-
-switch ($tn) {
-
-case "dashboard":
-	$active[0] = "topnav_selected";
-	$maininc = "inc.dashboard";
-	break;
-	
-case "pages":
-	$active[1] = "topnav_selected";
-	$maininc = "inc.pages";
-	break;
-	
-case "moduls":
-	$active[2] = "topnav_selected";
-	$maininc = "inc.moduls";
-	break;
-
-case "filebrowser":
-	$active[3] = "topnav_selected";
-	$maininc = "inc.filebrowser";
-	$headinc = "head.filebrowser.dat";
-	break;
-	
-case "user":
-	$active[4] = "topnav_selected";
-	$maininc = "inc.user";
-	break;
-	
-case "system":
-	$active[5] = "topnav_selected";
-	$maininc = "inc.system";
-	break;
-
-	
-default:
-	$active[0] = "topnav_selected";
-	$maininc = "inc.dashboard";
-	break;
-	
-}
-
 echo'<div id="topNavBox">';
 
 echo"<a class='$active[0] tooltip_bottom' href='acp.php?tn=dashboard' title='$lang[tn_dashboard_desc]'><span class='mm mm-dashboard'></span> $lang[tn_dashboard]</a>";

@@ -21,7 +21,7 @@ if(isset($_POST['delete_snippet'])) {
 
 	if($cnt_changes > 0){
 		$sys_message = '{OKAY} '. $lang['db_changed'];
-		record_log($_SESSION['user_nick'],"deleted snippet id: $delete_snip_id","0");
+		record_log($_SESSION['user_nick'],"deleted snippet id: $delete_snip_id","10");
 		$modus = 'new';
 	} else {
 		$sys_message = '{ERROR} ' . $lang['db_not_changed'];
@@ -60,7 +60,7 @@ if(isset($_POST['save_snippet'])) {
 
 	if($cnt_changes == TRUE) {
 		$sys_message = '{OKAY} ' . $lang['db_changed'];
-		record_log($_SESSION['user_nick'],"new snippet <i>$snippet_title</i>","0");
+		record_log($_SESSION['user_nick'],"new snippet <i>$snippet_title</i>","2");
 		$modus = 'update';
 	} else {
 		$sys_message = '{ERROR} ' . $lang['db_not_changed'];
@@ -99,7 +99,7 @@ if(isset($_POST['update_snippet'])) {
 
 	if($cnt_changes == TRUE){
 		$sys_message = '{OKAY} ' . $lang['db_changed'];
-		record_log($_SESSION['user_nick'],"edit snippets <i>$snippet_title</i>","0");
+		record_log($_SESSION['user_nick'],"edit snippets <i>$snippet_title</i>","2");
 		$modus = 'update';
 	} else {
 		$sys_message = '{ERROR} ' . $lang['db_not_changed'] . " (ID: $snip_id)";
@@ -166,13 +166,12 @@ if(((isset($_POST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_snip
 
 show_editor_switch($tn,$sub);
 
-echo '<div class="row-fluid"><div class="span12">';
-
 echo '<fieldset>';
 echo '<legend>' . $lang['snippets'] . '</legend>';
-echo "<form action='$_SERVER[PHP_SELF]?tn=pages&sub=snippets' method='POST' name='sel_snippet' class='form-horizontal'>";
+echo "<form action='$_SERVER[PHP_SELF]?tn=pages&sub=snippets' method='POST' name='sel_snippet' class='form-inline'>";
 
-echo '<select name="snip_id">';
+echo '<div class="form-group">';
+echo '<select name="snip_id" class="form-control">';
 
 for($i=0;$i<$cnt_snippets;$i++) {
 	$get_snip_id = $snippets_list[$i]['textlib_id'];
@@ -187,8 +186,9 @@ for($i=0;$i<$cnt_snippets;$i++) {
 }
 
 echo '</select> ';
+echo '</div>';
 
-echo '<input type="submit" class="btn" name="sel_snippet" value="'.$lang['edit'].'">';
+echo ' <input type="submit" class="btn" name="sel_snippet" value="'.$lang['edit'].'">';
 
 echo '</form>';
 echo '</fieldset>';
@@ -196,19 +196,17 @@ echo '</fieldset>';
 
 echo '<fieldset>';
 echo '<legend>'.$lang['tab_content'].'</legend>';
-echo "<form action='$_SERVER[PHP_SELF]?tn=pages&sub=snippets' class='form-horizontal' method='POST'>";
+echo "<form action='$_SERVER[PHP_SELF]?tn=pages&sub=snippets' method='POST'>";
 
-echo '<div class="control-group">';
-echo '<label class="control-label">'.$lang['filename'].'</label>';
-echo '<div class="controls"><input class="span5" type="text" name="snippet_title" value="'.$textlib_name.'"></div>';
+echo '<div class="form-group">';
+echo '<label>'.$lang['filename'].'</label>';
+echo '<input class="form-control" type="text" name="snippet_title" value="'.$textlib_name.'">';
 echo '</div>';
 
-echo '<div class="control-group">';
-echo '<label class="control-label">'.$lang['tab_content'].'</label>';
-echo '<div class="controls">';
-echo '<textarea class="'.$editor_class.' span12" id="textEditor" name="textlib_content">'.$textlib_content.'</textarea>';
+echo '<div class="form-group">';
+echo '<label>'.$lang['tab_content'].'</label>';
+echo '<textarea class="'.$editor_class.' form-control" id="textEditor" name="textlib_content">'.$textlib_content.'</textarea>';
 echo '<input type="hidden" name="text" value="'.$text.'">';
-echo '</div>';
 echo '</div>';
 
 echo '<div class="formfooter">';
@@ -224,8 +222,6 @@ echo '</div>';
 
 echo '</form>';
 echo '</fieldset>';
-
-echo '</div></div>';
 
 
 ?>
