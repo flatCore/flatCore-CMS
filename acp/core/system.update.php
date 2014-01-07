@@ -6,6 +6,11 @@ require_once('core/pclzip.lib.php');
 include('updatelist.php');
 
 $remote_versions_file = file_get_contents("http://updates.flatCore.de/versions.txt");
+
+if(isset($_GET['beta']) && $_GET['beta'] > 0) {
+	$remote_versions_file = file_get_contents("http://updates.flatCore.de/versions-beta.txt");
+}
+
 $remote_versions = explode("<|>",$remote_versions_file);
 
 
@@ -14,7 +19,7 @@ echo '<legend>'.$lang['system_update'].'</legend>';
 
 compare_versions();
 
-if($_GET['a'] == 'start') {
+if(isset($_GET['a']) && $_GET['a'] == 'start') {
 	start_update();
 }
 
@@ -157,7 +162,7 @@ function compare_versions() {
 	
 	echo '<table class="table table-condensed table-bordered">';
 	echo '<thead>';
-	echo '<tr><th><span class="glyphicon glyphicon-hdd"></span>  '. $_SERVER[SERVER_NAME] .'</th><th><span class="glyphicon glyphicon-globe"></span> updates.flatCore.de</th></tr>';
+	echo '<tr><th><span class="glyphicon glyphicon-hdd"></span>  '. $_SERVER['SERVER_NAME'] .'</th><th><span class="glyphicon glyphicon-globe"></span> updates.flatCore.de</th></tr>';
 	echo '</thead>';
 	
 	echo '<tr>';
@@ -168,11 +173,11 @@ function compare_versions() {
 	
 	/* compare build numbers */
 	if($remote_versions[2] > $fc_version_build) {
-		echo '<div class="alert alert-info"><p>' . $lang[msg_update_available] . '</p><hr>';
+		echo '<div class="alert alert-info"><p>' . $lang['msg_update_available'] . '</p><hr>';
 		echo "<p><a href='$_SERVER[PHP_SELF]?tn=system&sub=update&a=start' class='btn btn-default btn-success'><span class='glyphicon glyphicon-cloud-download'></span> Update</a></p>";
 		echo '</div>';
 	} else {
-		echo '<div class="alert alert-success"><p>' . $lang[msg_no_update_available] . '</p></div>';
+		echo '<div class="alert alert-success"><p>' . $lang['msg_no_update_available'] . '</p></div>';
 	}
 	
 	
