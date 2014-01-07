@@ -31,6 +31,14 @@ div#page-sidebar {
 	background: transparent url(../images/fc-logo.png) no-repeat top left;
 }
 
+a#dashboard {
+	display: block;
+	position: absolute;
+	top: 0;
+	height: 85px;
+	width: 210px;
+}
+
 div#page-content {
 	margin-left: 210px;
 	background: #eee;
@@ -88,7 +96,7 @@ div#wrapper{
 .sidebar-nav, .sidebar-nav-active, .sidebar-nav-disabled {
 	display: block;
 	background: #191919;
-	padding: 10px 5px;
+	padding: 8px 5px;
 	border-bottom: 1px solid #111;
 	color: #aaa;
 }
@@ -340,7 +348,7 @@ a.sidebar-sub,
 a.sidebar-sub-active {
 	display: block;
 	padding: 3px 2px 3px 12px;
-	color: #111;
+	color: #222;
 	background: #777;
 	border-bottom: 1px solid #333;
 }
@@ -351,7 +359,8 @@ a.sidebar-sub:hover {
 
 
 a.sidebar-sub-active {
-	background: #888;
+	color: #111;
+	background: #858585;
 }
 
 

@@ -122,6 +122,7 @@ require("core/switch.php");
 	?>
 
 	<div id="page-sidebar">
+		<a href="acp.php?tn=dashboard" id="dashboard" title="Dashboard"></a>
 		<?php include("core/$navinc.php"); ?>
 		<?php include('core/livebox.php'); ?>
 	</div>
