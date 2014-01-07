@@ -20,7 +20,7 @@ for($i=0;$i<$nbrModuls;$i++) {
 	for($x=0;$x<count($modnav);$x++) {
 		$showlink = $modnav[$x]['link'];
 		$incpage = $modnav[$x]['file'];
-		$listlinks .= "<a class='btn btn-small' href='$_SERVER[PHP_SELF]?tn=moduls&sub=$modFolder&a=$incpage'>$showlink</a> ";
+		$listlinks .= "<a class='btn btn-xs btn-primary' href='$_SERVER[PHP_SELF]?tn=moduls&sub=$modFolder&a=$incpage'>$showlink</a> ";
 	}
 	
 	$listlinks .= '</div>';
