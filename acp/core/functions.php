@@ -330,6 +330,10 @@ function show_log($nbr) {
 		echo '</dl>';
 
 	} // eol $i
+	
+	if($cnt_result < 1) {
+		echo"<div class='alert alert-info'>No entries.</div>";
+	}
 
 } // eo func
 
