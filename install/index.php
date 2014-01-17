@@ -47,7 +47,7 @@ if($modus == "update") {
 	<div id="inst-background">
 		<div id="inst-header">
 			<h1>flatCore <small>Installation & Setup</small></h1>
-			<p>Modus: <span class="label label-inverse"><?php echo"$modus"; ?></span></p>
+			<p>Modus: <span class="label label-info"><?php echo"$modus"; ?></span></p>
 		</div>
 		<div id="inst-body">
 			<?php
