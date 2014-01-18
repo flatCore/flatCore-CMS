@@ -6,11 +6,11 @@
 
 unset($status_msg);
 
-if($goto == "logout") {
+if($goto == 'logout') {
 	session_destroy();
-	unset($_SESSION[user_nick]);
+	unset($_SESSION['user_nick']);
 	$smarty->assign("msg_status","success");
-	$smarty->assign('msg_text', "$lang[msg_signed_out]");
+	$smarty->assign('msg_text', "$lang[msg_logout]");
 	$output = $smarty->fetch("status_message.tpl");
 	$smarty->assign('msg_content', $output);
 }
