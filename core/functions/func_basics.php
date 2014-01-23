@@ -63,13 +63,24 @@ function buffer_script($script,$parameters=NULL) {
  */
 	 
 function text_parser($text) {
-
-	preg_match('#\<pre\>(.+)\</pre\>#i', $text, $matches);
-
+	/*
+	preg_match_all('#\<pre.*?\>(.*?)\</pre\>#', $text, $matches);
+	
 	$noparse = $matches[1];
+	
 	$noparse = preg_replace('/\[/i', '&#91;', $noparse);
 	$noparse = preg_replace('/\]/i', '&#93;', $noparse);
-	$text = preg_replace('#\<pre\>(.+)\</pre\>#i', "<pre>$noparse</pre>", $text);
+	$text = preg_replace('#\<pre(.*?)\>(.*?)\</pre\>#Usi', "<pre\\1>$noparse</pre>", $text);
+	*/
+	
+	if(preg_match_all('#\<pre.*?\>(.*?)\</pre\>#', $text, $matches)) {
+		$match = $matches[0];
+		foreach($match as $k => $v) {
+			$o = $match[$k];
+			$v = str_replace(array('[',']'),array('&#91','&#93'),$v);
+			$text = str_replace($o, $v, $text);
+		}
+	}
  
 	$text = preg_replace("/\[include\](.*?)\[\/include\]/se","file_get_contents('./content/plugins/\\1')",$text);
 	$text = preg_replace("/\[script\](.*?)\[\/script\]/se","buffer_script('\\1')",$text);
