@@ -129,6 +129,8 @@ div#container {
 }
 
 div#container h3:first-of-type {
+ line-height: 22px;
+ font-size: 18px;
  color: #666;
  margin-top: 0;
 }
@@ -200,7 +202,7 @@ h1, h2, h3, h4, h5, h6 {
 	color: #369;
 }
 
-
+/*
 h1 {
   font-size: 30px;
   line-height: 25px;
@@ -231,6 +233,7 @@ h5 {
 h6 {
   font-size: 11px;
 }
+*/
 
 .silent {
 	font-size: 11px;
@@ -331,7 +334,8 @@ a.topnav_selected:visited {
 	border: none;
 	margin: 0;
 }
-.panel-heading {
+
+.panel-sidemenu .panel-heading {
 	margin: 0;
 	padding: 0;
 	border-radius: 0;
@@ -802,6 +806,11 @@ fieldset > [class*="form-line"]:last-child {
 
 .formfooter input, .formfooter button {
 	margin-bottom: 0;
+}
+
+.plain-editor {
+	background: rgba(255,255,255,0.5);
+	font-family: 'Lucida Console','Bitstream Vera Sans Mono','Courier New', monospace;
 }
 
 

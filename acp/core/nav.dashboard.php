@@ -2,7 +2,7 @@
 
 require("core/access.php");
 
-echo '<div class="panel-group" id="dashboard-collapse">';
+echo '<div class="panel-group panel-sidemenu" id="dashboard-collapse">';
 
 echo '<div class="panel">';
 echo '<div class="panel-heading">';

@@ -87,7 +87,7 @@ switch ($text) {
 
 show_editor_switch($tn,$sub);
 
-echo"<fieldset>";
+echo '<fieldset style="margin-bottom:0;">';
 echo"<legend>$lang[system_textlib]</legend>";
 echo"<form action='$_SERVER[PHP_SELF]?tn=system&sub=sys_textlib' method='POST' name='sel_snippet' class='form-inline'>";
 
@@ -112,7 +112,7 @@ echo ' <input type="submit" class="btn btn-default" name="sel_snippet" value="'.
 echo '</div>';
 echo '<div class="col-md-8">';
 
-echo"<p><i class='icon-info-sign'></i> $desc</p>";
+echo '<div class="alert alert-info">'. $desc .'</div>';
 echo '</div>';
 
 echo '</div>'; // gridcontainer

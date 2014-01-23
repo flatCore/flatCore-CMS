@@ -3,14 +3,17 @@
 //prohibit unauthorized access
 require("core/access.php");
 
+echo '<h3>RSS <small>Feed</small></h3>';
+
 $dbh = new PDO("sqlite:".CONTENT_DB);
 
+/*
 if($_REQUEST[delete] != "") {
 	$delete = (int) $_REQUEST[delete];
 	$sql = "DELETE FROM fc_feeds WHERE feed_id = $delete";
 	$cnt_changes = $dbh->exec($sql);
 }
-
+*/
 $sql = "SELECT * FROM fc_feeds ORDER BY feed_time DESC";
 $sql_prefs = "SELECT * FROM fc_preferences WHERE prefs_id = 1";
 
@@ -58,15 +61,20 @@ for($i=0;$i<$cnt_rssItems;$i++) {
 		$style_string = '';
 	}
 
-	echo"<div class='modul_list_items' $style_string>";
-	echo"<h4>$feed_date $ts_diff_string</h4>";
-	echo"<h3>$feed_title</h3>";
-	echo"$feed_text";
-	echo"<p><a href='$feed_url' target='_blank'>$feed_url</a></p>";
-	echo"<div class='formfooter'>";
-	echo"<a class='btn btn-danger' href='$_SERVER[PHP_SELF]?tn=pages&sub=rss&delete=$feed_id' onclick=\"return confirm('$lang[confirm_delete_data]')\">$lang[delete]</a>";
-	echo"</div>";
-	echo"</div>";
+	
+	echo '<div class="panel panel-default">';
+	echo '<div class="panel-heading">';
+	echo '<h3 class="panel-title">' .$feed_date. ' ' .$ts_diff_string. '</h3>';
+	echo '</div>';
+	echo '<div class="panel-body">';
+	echo '<h3>'.$feed_title.'</h3>';
+	echo $feed_text;
+	echo '<p><a href="'.$feed_url.'" target="_blank">'.$feed_url.'</a></p>';
+	echo '<div class="formfooter">';
+	echo "<a class='btn btn-danger' href='$_SERVER[PHP_SELF]?tn=pages&sub=rss&delete=$feed_id' onclick=\"return confirm('$lang[confirm_delete_data]')\">$lang[delete]</a>";
+	echo '</div>';
+	echo '</div>';
+	echo '</div>';
 	
 
 

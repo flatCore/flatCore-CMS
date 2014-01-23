@@ -143,7 +143,7 @@ echo tpl_form_control_group('',$lang[f_meta_description],"<textarea name='page_m
 
 
 echo"<div class='form-group'>
-		<label class='control-label col-sm-2'>$lang[page_thumbnail]</label>
+		<label class='control-label control-label-normal col-sm-2'>$lang[page_thumbnail]</label>
 		<div class='col-sm-10'>";
 		
 		
@@ -185,13 +185,13 @@ echo'<div class="tab-pane fade" id="head">';
 
 echo "$lang[f_head_styles]";
 echo '<span class="silent"> &lt;style type=&quot;text/css&quot;&gt;</span> ... <span class="silent">&lt;/styles&gt;</span>';
-echo "<textarea name='page_head_styles' class='form-control' rows='12'>$page_head_styles</textarea>";
+echo "<textarea name='page_head_styles' class='form-control plain-editor' rows='12'>$page_head_styles</textarea>";
 
 echo '<hr>';
 
 echo "$lang[f_head_enhanced]";
 echo '<span class="silent"> &lt;head&gt;</span> ... <span class="silent">&lt;/head&gt;</span>';
-echo "<textarea name='page_head_enhanced' class='form-control' rows='12'>$page_head_enhanced</textarea>";
+echo "<textarea name='page_head_enhanced' class='form-control plain-editor' rows='12'>$page_head_enhanced</textarea>";
 
 echo'</div>'; /* EOL tab_head */
 
