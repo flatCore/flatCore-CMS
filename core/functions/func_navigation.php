@@ -19,33 +19,33 @@ function show_mainmenu() {
 	
 	for($i=0;$i<$count_result;$i++) {
 	
-		if($fc_nav[$i][page_sort] == "" || $fc_nav[$i][page_sort] == 'portal') {
+		if($fc_nav[$i]['page_sort'] == "" || $fc_nav[$i]['page_sort'] == 'portal') {
 			continue; //no page_sort or portal -> no menu item
 		}
 		
-		$sort = $fc_nav[$i][page_sort];
+		$sort = $fc_nav[$i]['page_sort'];
 		$points_of_item = substr_count($sort, '.');
 		
 		if($points_of_item < 1) {
-			$menu[$i][page_id] = $fc_nav[$i][page_id];
-			$menu[$i][page_sort] = $fc_nav[$i][page_sort];
-			$menu[$i][page_linkname] = stripslashes($fc_nav[$i][page_linkname]);
-			$menu[$i][page_title] = stripslashes($fc_nav[$i][page_title]);
-			$menu[$i][page_permalink] = $fc_nav[$i][page_permalink];
+			$menu[$i]['page_id'] = $fc_nav[$i]['page_id'];
+			$menu[$i]['page_sort'] = $fc_nav[$i]['page_sort'];
+			$menu[$i]['page_linkname'] = stripslashes($fc_nav[$i]['page_linkname']);
+			$menu[$i]['page_title'] = stripslashes($fc_nav[$i]['page_title']);
+			$menu[$i]['page_permalink'] = $fc_nav[$i]['page_permalink'];
 			
-			$menu[$i][link_status] = "$fc_defs[main_nav_class]";
+			$menu[$i]['link_status'] = $fc_defs['main_nav_class'];
 		
 			if(left_string($current_page_sort) == left_string($menu[$i][page_sort]) ) {
-				$menu[$i][link_status] = "$fc_defs[main_nav_class_active]";
-				define('FC_MAIN_CAT', clean_filename($fc_nav[$i][page_linkname]));
-				define('FC_TOC_HEADER', $menu[$i][page_linkname]);
+				$menu[$i]['link_status'] = $fc_defs['main_nav_class_active'];
+				define('FC_MAIN_CAT', clean_filename($fc_nav[$i]['page_linkname']));
+				define('FC_TOC_HEADER', $menu[$i]['page_linkname']);
 			}
 		
 			/* generate the main menu */
 			if($fc_mod_rewrite == "off") {
-				$menu[$i][link] = "$_SERVER[PHP_SELF]?p=" . $fc_nav[$i][page_id];
+				$menu[$i]['link'] = "$_SERVER[PHP_SELF]?p=" . $fc_nav[$i]['page_id'];
 			} elseif ($fc_mod_rewrite == "permalink") {
-				$menu[$i][link] = FC_INC_DIR . "/" . $fc_nav[$i][page_permalink];
+				$menu[$i]['link'] = FC_INC_DIR . "/" . $fc_nav[$i]['page_permalink'];
 			}
 		}
 	}
@@ -83,7 +83,7 @@ function show_menu($num){
 	
 		for($i=0;$i<$count_result;$i++) {
 	
-			$sort = $fc_nav[$i][page_sort];
+			$sort = $fc_nav[$i]['page_sort'];
 			$sort_length = strlen($sort);
 			$trim_actual_page = substr($num, 0, $sort_length);
 	
@@ -129,26 +129,26 @@ function get_sm($num){
 	
 	for($i=0;$i<$count_result;$i++) {
 	
-		$sort = $fc_nav[$i][page_sort];
+		$sort = $fc_nav[$i]['page_sort'];
 		$points_of_sort = substr_count($sort, '.');
 		
-		$trim_sort = substr($fc_nav[$i][page_sort], 0, $str_length);
+		$trim_sort = substr($fc_nav[$i]['page_sort'], 0, $str_length);
 		
 		if($num == "$trim_sort") {
 				
 			if($points_of_sort == ($points_of_num+1)) {
-				$submenu[$i][page_id] = $fc_nav[$i][page_id];
-				$submenu[$i][page_sort] = $fc_nav[$i][page_sort];
-				$submenu[$i][page_permalink] = $fc_nav[$i][page_permalink];
-				$submenu[$i][page_linkname] = stripslashes($fc_nav[$i][page_linkname]);
-				$submenu[$i][page_title] = stripslashes($fc_nav[$i][page_title]);
-				$submenu[$i][link_status] = "sub_link$points_of_sort";
+				$submenu[$i]['page_id'] = $fc_nav[$i]['page_id'];
+				$submenu[$i]['page_sort'] = $fc_nav[$i]['page_sort'];
+				$submenu[$i]['page_permalink'] = $fc_nav[$i]['page_permalink'];
+				$submenu[$i]['page_linkname'] = stripslashes($fc_nav[$i]['page_linkname']);
+				$submenu[$i]['page_title'] = stripslashes($fc_nav[$i]['page_title']);
+				$submenu[$i]['link_status'] = "sub_link$points_of_sort";
 			
 				/* genertate the submenu */
 				if($fc_mod_rewrite == "off") {
-					$submenu[$i][sublink] = "$_SERVER[PHP_SELF]?p=" . $fc_nav[$i][page_id];
+					$submenu[$i]['sublink'] = "$_SERVER[PHP_SELF]?p=" . $fc_nav[$i]['page_id'];
 				} elseif ($fc_mod_rewrite == "permalink") {
-					$submenu[$i][sublink] = FC_INC_DIR . "/" . $fc_nav[$i][page_permalink];
+					$submenu[$i]['sublink'] = FC_INC_DIR . "/" . $fc_nav[$i]['page_permalink'];
 				}
 			}	
 		}
@@ -182,7 +182,7 @@ function show_this_level($num) {
 		
 		for($i=0;$i<$count_result;$i++) {
 		
-			$sort = $fc_nav[$i][page_sort];
+			$sort = $fc_nav[$i]['page_sort'];
 			$sort_length = strlen($sort);
 			$points_of_sort = substr_count($sort, '.');
 			$trim_sort = substr($sort, 0, $pre_num_length);
@@ -196,21 +196,21 @@ function show_this_level($num) {
 			}
 		
 			if($str_length == $sort_length) {
-				$menu[$i][page_id] = $fc_nav[$i][page_id];
-				$menu[$i][page_sort] = $fc_nav[$i][page_sort];
-				$menu[$i][page_permalink] = $fc_nav[$i][page_permalink];
-				$menu[$i][page_linkname] = stripslashes($fc_nav[$i][page_linkname]);
-				$menu[$i][page_title] = stripslashes($fc_nav[$i][page_title]);
-				$menu[$i][link_status] = "$fc_defs[sub_nav_prefix_class]".$points_of_sort;
+				$menu[$i]['page_id'] = $fc_nav[$i]['page_id'];
+				$menu[$i]['page_sort'] = $fc_nav[$i]['page_sort'];
+				$menu[$i]['page_permalink'] = $fc_nav[$i]['page_permalink'];
+				$menu[$i]['page_linkname'] = stripslashes($fc_nav[$i]['page_linkname']);
+				$menu[$i]['page_title'] = stripslashes($fc_nav[$i]['page_title']);
+				$menu[$i]['link_status'] = "$fc_defs[sub_nav_prefix_class]".$points_of_sort;
 		
 				if($sort == $current_page_sort) {
-					$menu[$i][link_status] = "$fc_defs[sub_nav_prefix_class_active]".$points_of_sort;
+					$menu[$i]['link_status'] = "$fc_defs[sub_nav_prefix_class_active]".$points_of_sort;
 				}
 		
 				if($fc_mod_rewrite == "off") {
-					$menu[$i][sublink] = "$_SERVER[PHP_SELF]?p=" . $fc_nav[$i][page_id];
+					$menu[$i]['sublink'] = "$_SERVER[PHP_SELF]?p=" . $fc_nav[$i]['page_id'];
 				} elseif ($fc_mod_rewrite == "permalink") {
-					$menu[$i][sublink] = FC_INC_DIR . "/" . $fc_nav[$i][page_permalink];
+					$menu[$i]['sublink'] = FC_INC_DIR . "/" . $fc_nav[$i]['page_permalink'];
 				}
 			}
 		}
@@ -233,10 +233,11 @@ function show_sitemap() {
 	global $fc_nav;
 	global $current_page_sort;
 	global $fc_mod_rewrite;
+	global $fc_defs;
 	
 	$cnt_results = count($fc_nav);
 	
-	$sm_string .= '<ul class="fc-sitemap">';
+	$sm_string .= '<ul class="'.$fc_defs['sm_ul_class'].'">'."\r\n";
 	
 	for($i=0;$i<$cnt_results;$i++) {
 	
@@ -252,12 +253,25 @@ function show_sitemap() {
 		}
 		
 		$points_of_item[$i] = substr_count($page_sort, '.');
+
+		// set class for current page
+		$li_class = '';
+		if($current_page_sort == $page_sort) {
+			$li_class .= $fc_defs['sm_li_class_active'] . ' ';
+		}
 		
+		if(strpos($current_page_sort, $page_sort) !== false) {
+			$li_class .= $fc_defs['sm_li_class_active_tree'] . ' ';
+		}
+		
+		// new level, increase class name sm_ul_class
 		unset($next_level);
 		if($points_of_item[$i] > $points_of_item[$i-1]) {
-			$next_level = "<ul class='fc-sitemap-$points_of_item[$i]'>";
-		}
-			
+			$stage_ul_class = $fc_defs['sm_ul_class'] . '-' . $points_of_item[$i];
+			$next_level = '<ul class='.$stage_ul_class.'>'."\r\n";
+		}	
+		
+		// end this level </ul>
 		unset($end_level);
 		if($points_of_item[$i] < $points_of_item[$i-1]) {
 			$div_level = $points_of_item[$i] - $points_of_item[$i-1];
@@ -270,13 +284,14 @@ function show_sitemap() {
 			$target = "$_SERVER[PHP_SELF]?p=$page_id";
 		}
 		
-		$sm_string .= "
-		$next_level
-		$end_level
-		<li><a href='$target' title='$page_title'>$page_linkname</a><span>$page_title ($current_page_sort)</span></li>";
+		$sm_string .= "$next_level";
+		$sm_string .= "$end_level";
+		$sm_string .= '<li class="'.$li_class.'">';
+		$sm_string .= '<a href="'.$target.'" title="'.$page_title.'">'.$page_linkname.'<span>'.$page_title.'</span></a>';
+		$sm_string .= '</li>'."\r\n";
 	}
 
-	$sm_string .= "</ul>";	
+	$sm_string .= '</ul>'."\r\n";	
 		
 	return $sm_string;
 }
