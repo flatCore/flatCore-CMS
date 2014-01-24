@@ -1,4 +1,3 @@
-
 {include file='header.tpl'}
 
 <section id="fc-body">

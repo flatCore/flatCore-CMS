@@ -1,6 +1,4 @@
-
 {include file='header.tpl'}
-
 
 <section id="fc-body">
 
@@ -16,7 +14,7 @@
 			{$extra_content}	
 			{$extra_global_content}	
 			{$login_box}
-			{$status_box}			
+			{$status_box}
 		</aside>
 		
 	</div>

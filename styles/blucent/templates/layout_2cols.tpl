@@ -1,6 +1,4 @@
-
 {include file='header.tpl'}
-
 
 <section id="fc-body">
 
@@ -10,7 +8,6 @@
 			{include file='content.tpl'}
 		</section> <!-- eo leftBox -->
 		
-		
 		<aside id="fc-sub-content">
 			{$toc_submenu}
 			{include file='searchbox.tpl'}
@@ -19,17 +16,14 @@
 			{$login_box}
 			{$status_box}				
 		</aside>
-		
-	
-	<div id="breadcrumbs">
-		{foreach item=bc from=$arr_bcmenue}
-			<i class="icon-chevron-right icon-white"></i> <a href="{$bc.link}" title="{$bc.page_title}">{$bc.page_linkname}</a>
-		{/foreach}
-	</div>
-	
-	
-	</div>
+			
+		<div id="breadcrumbs">
+			{foreach item=bc from=$arr_bcmenue}
+				<i class="icon-chevron-right icon-white"></i> <a href="{$bc.link}" title="{$bc.page_title}">{$bc.page_linkname}</a>
+			{/foreach}
+		</div>
 
+	</div>
 
 </section>
 

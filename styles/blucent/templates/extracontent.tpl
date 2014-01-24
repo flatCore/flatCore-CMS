@@ -1,6 +1,3 @@
-
 <div id="extraContentBox">
-
-{$page_extracontent}
-
+	{$page_extracontent}
 </div>

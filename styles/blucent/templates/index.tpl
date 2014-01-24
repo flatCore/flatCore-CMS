@@ -10,7 +10,5 @@
 	
 	{include file="$body_template"}
 	
-
 	</body>
-	
 </html>
