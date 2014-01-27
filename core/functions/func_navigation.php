@@ -247,9 +247,16 @@ function show_sitemap() {
 		$page_title = $fc_nav[$i]['page_title'];
 		$page_status = $fc_nav[$i]['page_status'];
 		$page_permalink = $fc_nav[$i]['page_permalink'];
+		
 			
 		if($fc_nav[$i]['page_sort'] == "" || $fc_nav[$i]['page_sort'] == 'portal') {
 			continue;
+		}
+		
+		if($fc_mod_rewrite == "permalink") {
+			$target = FC_INC_DIR . "/" . $page_permalink;
+		} else {
+			$target = "$_SERVER[PHP_SELF]?p=$page_id";
 		}
 		
 		$points_of_item[$i] = substr_count($page_sort, '.');
@@ -265,30 +272,31 @@ function show_sitemap() {
 		}
 		
 		// new level, increase class name sm_ul_class
-		unset($next_level);
+		unset($start_ul);
 		if($points_of_item[$i] > $points_of_item[$i-1]) {
 			$stage_ul_class = $fc_defs['sm_ul_class'] . '-' . $points_of_item[$i];
-			$next_level = '<ul class='.$stage_ul_class.'>'."\r\n";
+			$start_ul = "\r\n".'<ul class='.$stage_ul_class.'>'."\r\n";
+			// remove the last </li>
+			$sm_string = substr(trim($sm_string), 0, -5);
 		}	
 		
 		// end this level </ul>
-		unset($end_level);
+		unset($end_ul);
 		if($points_of_item[$i] < $points_of_item[$i-1]) {
 			$div_level = $points_of_item[$i] - $points_of_item[$i-1];
-			$end_level = str_repeat("</ul>", abs($div_level));
+			$end_ul = str_repeat("</ul>", abs($div_level));
+			$end_ul .= '</li>';
 		}
 		
-		if($fc_mod_rewrite == "permalink") {
-			$target = FC_INC_DIR . "/" . $page_permalink;
-		} else {
-			$target = "$_SERVER[PHP_SELF]?p=$page_id";
-		}
+		$start_li = "\r\n".'<li class="'.$li_class.'">';
 		
-		$sm_string .= "$next_level";
-		$sm_string .= "$end_level";
-		$sm_string .= '<li class="'.$li_class.'">';
-		$sm_string .= '<a href="'.$target.'" title="'.$page_title.'">'.$page_linkname.'<span>'.$page_title.'</span></a>';
-		$sm_string .= '</li>'."\r\n";
+		$end_li = '</li>';
+		
+		$sm_string .= "$start_ul";
+		$sm_string .= "$end_ul";
+		$sm_string .= $start_li;
+		$sm_string .= '<a href="'.$target.'" title="'.$page_title.'">'.$page_linkname.'</a>';
+		$sm_string .= $end_li;
 	}
 
 	$sm_string .= '</ul>'."\r\n";	
