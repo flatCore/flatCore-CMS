@@ -1,6 +1,8 @@
 tinymce.init({
   selector: 'textarea.mceEditor',
   language : 'de',
+  element_format : "html",
+  menubar: "edit insert table tools view",
   toolbar_items_size: 'small',
   content_css : "../styles/blucent/css/editor.css?v=12",
   plugins: [
@@ -9,10 +11,11 @@ tinymce.init({
     "media table contextmenu paste textcolor"
   ],
   toolbar1: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link unlink anchor image media",
-  toolbar2: "forecolor backcolor fontsizeselect | table | hr removeformat | subscript superscript | fullscreen visualchars visualchars visualblocks | template",
+  toolbar2: "forecolor backcolor fontsizeselect | table | hr removeformat | subscript superscript | fullscreen visualchars visualchars visualblocks | template | code",
   image_list : "core/imagelist.php",
   image_advtab: true,
   convert_urls: false,
+  entity_encoding : "raw",
   templates: [ 
     {title: 'row [6|6]', description: 'Zwei Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_2cols.html'},
     {title: 'row [4|4|4]', description: 'Drei Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_3cols.html'},
@@ -86,6 +89,7 @@ tinymce.init({
     "searchreplace visualblocks code fullscreen wordcount template",
     "media table contextmenu paste textcolor"
   ],
+  menubar: "edit insert table tools view",
   toolbar1: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link unlink anchor image media",
   toolbar2: "forecolor backcolor fontsizeselect | table | hr removeformat | subscript superscript | fullscreen visualchars visualchars visualblocks | template",
   image_list : "core/imagelist.php",
