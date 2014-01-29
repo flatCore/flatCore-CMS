@@ -119,9 +119,21 @@ div#wrapper{
 .dashboard-toggle.active:hover {
 	background: #000;
 	color: #428bca;
-	border-right: 3px solid #428bca;
 }
 
+.sidebar-nav-active span.tri-left,
+.sidebar-nav-active:hover span.tri-left,
+.dashboard-toggle.active span.tri-left,
+.dashboard-toggle.active:hover span.tri-left {
+	display: block;
+	float: right;
+	width: 0;
+	height: 0;
+	margin-right: -6px;
+	border-top: 10px solid transparent;
+	border-right: 7px solid #eee;
+	border-bottom: 10px solid transparent;
+}
 
 div#container {
 	margin: 0;
@@ -201,39 +213,6 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
 	color: #369;
 }
-
-/*
-h1 {
-  font-size: 30px;
-  line-height: 25px;
-}
-
-h2 {
-  font-size: 25px;
-  line-height: 20px;
-}
-
-h3 {
-  line-height: 22px;
-  font-size: 18px;
-}
-
-h4, h5, h6 {
-  line-height: 18px;
-}
-
-h4 {
-  font-size: 13px;
-}
-
-h5 {
-  font-size: 12px;
-}
-
-h6 {
-  font-size: 11px;
-}
-*/
 
 .silent {
 	font-size: 11px;

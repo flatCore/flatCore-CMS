@@ -6,7 +6,7 @@ echo '<div class="panel-group panel-sidemenu" id="dashboard-collapse">';
 
 echo '<div class="panel">';
 echo '<div class="panel-heading">';
-echo '<a class="sidebar-nav dashboard-toggle active" data-toggle="collapse" data-parent="#dashboard-collapse" href="#pages">'.$lang['tn_pages'].'</a>';
+echo '<a class="sidebar-nav dashboard-toggle active" data-toggle="collapse" data-parent="#dashboard-collapse" href="#pages">'.$lang['tn_pages'].'<span class="tri-left"></span></a>';
 echo '</div>';
 
 echo '<div id="pages" class="panel-collapse collapse in">';
@@ -20,7 +20,7 @@ echo '</div>';
 
 echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">';
-echo '<a class="sidebar-nav dashboard-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#files">'.$lang['tn_filebrowser'].'</a>';
+echo '<a class="sidebar-nav dashboard-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#files">'.$lang['tn_filebrowser'].'<span class="tri-left"></span></a>';
 echo '</div>';
 
 echo '<div id="files" class="panel-collapse collapse">';
@@ -32,7 +32,7 @@ echo '</div>';
 
 echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">';
-echo '<a class="sidebar-nav dashboard-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#user">'.$lang['tn_usermanagement'].'</a>';
+echo '<a class="sidebar-nav dashboard-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#user">'.$lang['tn_usermanagement'].'<span class="tri-left"></span></a>';
 echo '</div>';
 
 echo '<div id="user" class="panel-collapse collapse">';
@@ -45,7 +45,7 @@ echo '</div>';
 
 echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">';
-echo '<a class="sidebar-nav dashboard-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#system">'.$lang['tn_system'].'</a>';
+echo '<a class="sidebar-nav dashboard-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#system">'.$lang['tn_system'].'<span class="tri-left"></span></a>';
 echo '</div>';
 
 echo '<div id="system" class="panel-collapse collapse">';
@@ -59,7 +59,7 @@ echo '</div>';
 
 echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">';
-echo '<a class="sidebar-nav dashboard-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#moduls">'.$lang['tn_moduls'].'</a>';
+echo '<a class="sidebar-nav dashboard-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#moduls">'.$lang['tn_moduls'].'<span class="tri-left"></span></a>';
 echo '</div>';
 
 echo '<div id="moduls" class="panel-collapse collapse">';
@@ -85,7 +85,7 @@ echo '</div>';
 
 echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">';
-echo '<a class="sidebar-nav dashboard-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#lang">'.$lang['f_page_language'].'</a>';
+echo '<a class="sidebar-nav dashboard-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#lang">'.$lang['f_page_language'].'<span class="tri-left"></span></a>';
 echo '</div>';
 
 echo '<div id="lang" class="panel-collapse collapse">';
