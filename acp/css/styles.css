@@ -15,9 +15,10 @@ html, body {
 	text-align: left;
 	color: #252525;
 	font-weight: 400;
-	background: #252525;
+	background: #222;
 	height: 100%;
 	min-height: 100%;
+
 }
 
 
@@ -29,6 +30,7 @@ div#page-sidebar {
 	float: left;
 	color: #eee;
 	background: transparent url(../images/fc-logo.png) no-repeat top left;
+	height: 100%;
 }
 
 a#dashboard {
@@ -95,10 +97,10 @@ div#wrapper{
 
 .sidebar-nav, .sidebar-nav-active, .sidebar-nav-disabled {
 	display: block;
-	background: #191919;
 	padding: 8px 5px;
 	border-bottom: 1px solid #111;
 	color: #aaa;
+	background: #191919;
 }
 
 .sidebar-nav:hover {
@@ -330,20 +332,21 @@ a.topnav_selected:visited {
 a.sidebar-sub,
 a.sidebar-sub-active {
 	display: block;
-	padding: 3px 2px 3px 12px;
-	color: #222;
-	background: #777;
-	border-bottom: 1px solid #333;
+	padding: 3px 2px 3px 15px;
+	color: #aaa;
+	background: #252525;
+	border-bottom: 1px solid #111;
 }
 
 a.sidebar-sub:hover {
-	background: #888;
+	background: rgba(54,116,171,0.8);
+	color: #111;
 }
 
 
 a.sidebar-sub-active {
 	color: #111;
-	background: #858585;
+	background: #428bca;
 }
 
 
