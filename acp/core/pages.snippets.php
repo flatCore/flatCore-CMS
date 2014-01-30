@@ -156,12 +156,11 @@ if(((isset($_POST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_snip
 
 	if(is_array($result)) {
 		foreach($result as $k => $v) {
- 				$$k = stripslashes($v);
+ 				$$k = htmlspecialchars(stripslashes($v));
 		}
 	}
 	$modus = 'update';
 }
-
 
 
 show_editor_switch($tn,$sub);
@@ -222,6 +221,5 @@ echo '</div>';
 
 echo '</form>';
 echo '</fieldset>';
-
 
 ?>
