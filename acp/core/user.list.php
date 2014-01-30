@@ -5,7 +5,7 @@ require("core/access.php");
 
 
 // sort by reference
-switch ($_GET[sort]) {
+switch ($_GET['sort']) {
 case "1":
     $order_by = "user_nick";
     break;
@@ -27,7 +27,7 @@ default:
 
 /* sort up or down */
 
-if($_GET[way] == "up"){
+if($_GET['way'] == "up"){
 	$way = "ASC";
 	$set_way = "down";
 } else {
@@ -35,14 +35,88 @@ if($_GET[way] == "up"){
 	$set_way = "up";
 }
 
+/* switch user status */
 
-/* FILTER BY SEARCH FORM */
+if(isset($_GET['switch'])) {
+	$_SESSION['set_status'] = true;
+}
+
+if($_SESSION['checked_verified'] == '' AND $_SESSION['checked_waiting'] == '' AND $_SESSION['checked_paused'] == '' AND $_SESSION['set_status'] == false) {
+	$_SESSION['checked_verified'] = 'checked';
+}
+
+
+if($_GET['switch'] == 'statusWaiting' AND $_SESSION['checked_waiting'] == '') {
+	$_SESSION['checked_waiting'] = "checked";
+} elseif($_GET['switch'] == 'statusWaiting' AND $_SESSION['checked_waiting'] == 'checked') {
+	$_SESSION['checked_waiting'] = "";
+}
+
+if($_GET['switch'] == 'statusPaused' && $_SESSION['checked_paused'] == 'checked') {
+	$_SESSION['checked_paused'] = "";
+} elseif($_GET['switch'] == 'statusPaused' && $_SESSION['checked_paused'] == '') {
+	$_SESSION['checked_paused'] = "checked";
+}
+
+if($_GET['switch'] == 'statusVerified' && $_SESSION['checked_verified'] == 'checked') {
+	$_SESSION['checked_verified'] = "";
+} elseif($_GET['switch'] == 'statusVerified' && $_SESSION['checked_verified'] == '') {
+	$_SESSION['checked_verified'] = "checked";
+}
+
+if($_GET['switch'] == 'statusDeleted' && $_SESSION['checked_deleted'] == 'checked') {
+	$_SESSION['checked_deleted'] = "";
+} elseif($_GET['switch'] == 'statusDeleted' && $_SESSION['checked_deleted'] == '') {
+	$_SESSION['checked_deleted'] = "checked";
+}
+
+$set_status_filter = "user_verified = 'foobar' ";
+
+if($_SESSION['checked_waiting'] == "checked") {
+	$set_status_filter .= "OR user_verified = 'waiting' ";
+	$btn_status_waiting = 'btn-primary';
+}
+
+if($_SESSION['checked_paused'] == "checked") {
+	$set_status_filter .= "OR user_verified = 'paused' ";
+	$btn_status_paused = 'btn-primary';
+}
+
+if($_SESSION['checked_verified'] == "checked") {
+	$set_status_filter .= "OR user_verified = 'verified' ";
+	$btn_status_verified = 'btn-primary';
+}
+
+if($_SESSION['checked_deleted'] == "checked") {
+	$set_status_filter .= "OR user_verified = '' ";
+	$btn_status_deleted = 'btn-primary';
+}
+
+
+
+$status_btn_group  = '<div class="btn-group">';
+$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusVerified" class="btn btn-default btn-sm '.$btn_status_verified.'"><span class="glyphicon glyphicon-ok"></span></a>';
+$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusWaiting" class="btn btn-default btn-sm '.$btn_status_waiting.'"><span class="glyphicon glyphicon-time"></span></a>';
+$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusPaused" class="btn btn-default btn-sm '.$btn_status_paused.'"><span class="glyphicon glyphicon-warning-sign"></span></a>';
+$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusDeleted" class="btn btn-default btn-sm '.$btn_status_deleted.'"><span class="glyphicon glyphicon-ban-circle"></span></a>';
+$status_btn_group .= '</div>';
+
+
+$whereString = "WHERE user_nick != '' ";
 
 if(!empty($_POST['findUser'])) {
 	$findUser = strip_tags($_POST['findUser']);
-	$whereString = "WHERE user_nick LIKE '%$findUser%' ";
-} else {
-	$whereString = "";
+	$search_user = "user_nick LIKE '%$findUser%' ";
+}
+
+
+
+if($set_status_filter != "") {
+	$whereString .= " AND ($set_status_filter) ";
+}
+
+if($search_user != "") {
+	$whereString .= " AND ($search_user) ";
 }
 
 unset($result);
@@ -120,6 +194,27 @@ for($x=0;$x<$cnt_pages;$x++) {
 $pag_forwardlink = "<a class='buttonLink' href='$_SERVER[PHP_SELF]?tn=user&sub=list&start=$next_start&sort=$_GET[sort]'>$lang[pagination_forward]</a>";
 
 
+echo '<div class="row">';
+echo '<div class="col-md-5">';
+echo "<form action='$_SERVER[PHP_SELF]?tn=user' class='form-inline' method='POST'>";
+
+echo '<div class="input-group">';
+echo '<span class="input-group-addon"><span class="glyphicon glyphicon-filter"></span></span>';
+echo '<input type="text" name="findUser" class="form-control" placeholder="Filter">';
+echo '</div>';
+echo "</form>";
+
+echo '</div>';
+echo '<div class="col-md-7">';
+echo '<div style="float:right;">';
+echo $status_btn_group;
+echo '</div>';
+echo '<div class="clearfix"></div>';
+echo '</div>';
+echo '</div><br>';
+
+
+
 //print the list
 
 echo"<table class='table-list' border='0' cellpadding='0' cellspacing='0'>";
@@ -171,10 +266,13 @@ for($i=$start;$i<$end;$i++) {
 			$statusLabel = "label label-info center";
 			break;
 		case "paused":
-			$statusLabel = "label label-important center";
+			$statusLabel = "label label-danger center";
 			break;
 		case "verified":
 			$statusLabel = "label label-success center";
+			break;
+		case "":
+			$statusLabel = "label label-default center";
 			break;
 	}
 	
