@@ -187,8 +187,8 @@ require("core/switch.php");
 		};
 
 	  var options = {   
-	      'originalStyle': 'text-right',
-	      'displayFormat': '<span class="label">#input</span> <span class="label">#words</span>'  
+	      'originalStyle': 'text-left',
+	      'displayFormat': '<span class="label label-default">#input</span> <span class="label label-default">#words</span>'  
 	  };  
 	  $('.cntValues').textareaCount(options);  
 	  
