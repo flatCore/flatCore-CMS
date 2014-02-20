@@ -168,6 +168,12 @@ require("core/switch.php");
 			autoHeight: true
 		});
 		
+		$(".fancybox-docs").fancybox({
+			type: 'iframe',
+			width: '77%',
+			height: '90%'
+		});
+		
    $('.collapse').on('show.bs.collapse', function() {
         var id = $(this).attr('id');
         $('a[href="#' + id + '"]').addClass('active');
