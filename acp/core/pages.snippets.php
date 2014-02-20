@@ -187,7 +187,7 @@ for($i=0;$i<$cnt_snippets;$i++) {
 echo '</select> ';
 echo '</div>';
 
-echo ' <input type="submit" class="btn" name="sel_snippet" value="'.$lang['edit'].'">';
+echo ' <input type="submit" class="btn btn-default" name="sel_snippet" value="'.$lang['edit'].'">';
 
 echo '</form>';
 echo '</fieldset>';

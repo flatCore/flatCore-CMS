@@ -91,6 +91,7 @@ $lang['h_page_sort'] = "Sortierung";
 $lang['h_page_linkname'] = "Linkname";
 $lang['h_page_title'] = "Titel";
 $lang['h_page_status'] = "Status";
+$lang['h_page_hits'] = "Klicks";
 
 $lang['h_modus_editpage'] = "Seite bearbeiten";
 $lang['h_modus_newpage'] = "Neue Seite anlegen";
