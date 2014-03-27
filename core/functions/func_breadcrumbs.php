@@ -1,69 +1,61 @@
 <?php
 
+/**
+ * create breadcrumb menu
+ * example: Homepage >> Products >> Product XY
+ * @return	array
+ */
+
 function breadcrumbs_menu($num){
 
-global $result;
-global $current_page_sort;
-global $fc_mod_rewrite;
-
-unset($sort);
-
-$points_of_num = substr_count($num, '.');
-
-$count_result = count($result);
-
-
-
-if($points_of_num > 0) {
-
-$str_length = strlen($num);
-
-for($i=0;$i<$count_result;$i++) {
-
-if($result[$i][page_sort] == "") {
-	continue; //no page_sort no menu item
-}
-
-$id = $result[$i][page_id];
-$sort = $result[$i][page_sort];
-$sort_length = strlen($sort);
-$linkname = stripslashes($result[$i][page_linkname]);
-$permalink = $result[$i][page_permalink];
-$trim_actual_page = substr($num, 0, $sort_length);
-
-
-
-if($sort == "$trim_actual_page") {
-
-$bc[$i][page_id] = $result[$i][page_id];
-$bc[$i][page_sort] = $result[$i][page_sort];
-$bc[$i][page_linkname] = stripslashes($result[$i][page_linkname]);
-$bc[$i][page_permalink] = $result[$i][page_permalink];
-
-
-if($fc_mod_rewrite == "on") {
-	$set_title = str_replace(" ","_",$result[$i][page_title]);
-	$set_linkname = str_replace(" ","_",$result[$i][page_linkname]);
-	$bc[$i][link] = FC_INC_DIR . "/" . $set_linkname ."/". $result[$i][page_id] ."/". $set_title;
-} elseif ($fc_mod_rewrite == "off") {
-	$bc[$i][link] = "$_SERVER[PHP_SELF]?p=" . $result[$i][page_id];
-} elseif ($fc_mod_rewrite == "permalink") {
-	$bc[$i][link] = FC_INC_DIR . "/" . $result[$i][page_permalink];
-}
-
-
-
+	global $page_contents;
+	global $fc_mod_rewrite;
+	global $fc_nav;
+	
+	$points_of_num = substr_count($num, '.');
+	$count_result = count($fc_nav);
+	
+	if($points_of_num > 0) {
+	
+		$str_length = strlen($num);
+		
+		for($i=0;$i<$count_result;$i++) {
+		
+			if($fc_nav[$i]['page_sort'] == "") {
+				continue; //no page_sort no menu item
+			}
+			
+			$id = $fc_nav[$i]['page_id'];
+			$sort = $fc_nav[$i]['page_sort'];
+			$sort_length = strlen($sort);
+			$linkname = stripslashes($fc_nav[$i]['page_linkname']);
+			$permalink = $fc_nav[$i]['page_permalink'];
+			$trim_actual_page = substr($num, 0, $sort_length);
+			
+			if($sort == "$trim_actual_page") {
+			
+				$bc[$i]['page_id'] = $fc_nav[$i]['page_id'];
+				$bc[$i]['page_sort'] = $fc_nav[$i]['page_sort'];
+				$bc[$i]['page_linkname'] = stripslashes($fc_nav[$i]['page_linkname']);
+				$bc[$i]['page_permalink'] = $fc_nav[$i]['page_permalink'];
+				$bc[$i]['page_title'] = $fc_nav[$i]['page_title'];
+				
+				if($fc_mod_rewrite == 'permalink') {
+					$bc[$i]['link'] = FC_INC_DIR . "/" . $fc_nav[$i]['page_permalink'];
+				} else {
+					$bc[$i]['link'] = "$_SERVER[PHP_SELF]?p=" . $fc_nav[$i]['page_id'];
+				}
+			
+			}
+		
+		
+		}
+	
+	}
+	
+	return($bc);
 
 }
-
-
-} // eol $i
-
-}
-
-return($bc);
-
-} // eol func breadcrumbs_menu
 
 
 ?>
