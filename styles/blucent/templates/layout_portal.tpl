@@ -11,8 +11,8 @@
 		<aside id="fc-sub-content">
 			{$toc_submenu}		
 			{include file='searchbox.tpl'}	
-			{$extra_content}	
-			{$extra_global_content}	
+			{include file='extracontent.tpl'}
+			{include file='extracontent_global.tpl'}
 			{$login_box}
 			{$status_box}
 		</aside>

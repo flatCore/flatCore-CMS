@@ -9,22 +9,16 @@
 		</section> <!-- eo leftBox -->
 		
 		<aside id="fc-sub-content">
-			{$toc_submenu}
+			{include file='toc.tpl'}
 			{include file='searchbox.tpl'}
-			{$extra_content}
-			{$extra_global_content}
+			{include file='extracontent.tpl'}
+			{include file='extracontent_global.tpl'}
 			{$login_box}
 			{$status_box}				
 		</aside>
-			
-		<div id="breadcrumbs">
-			{foreach item=bc from=$arr_bcmenue}
-				<i class="icon-chevron-right icon-white"></i> <a href="{$bc.link}" title="{$bc.page_title}">{$bc.page_linkname}</a>
-			{/foreach}
-		</div>
 
 	</div>
-
+		
 </section>
 
 {include file='footer.tpl'}
