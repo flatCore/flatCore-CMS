@@ -12,6 +12,8 @@ ini_set("url_rewriter.tags", '');
 session_start();
 error_reporting(0);
 
+$fc_start_time = microtime(true);
+
 
 /* all requests -> strip_tags */
 foreach($_REQUEST as $key => $val) {
@@ -59,7 +61,7 @@ if($query != "") {
 		
 		for($i=0;$i<$cnt_active_mods;$i++) {
 			
-			$mod_permalink = $active_mods[$i][page_permalink];
+			$mod_permalink = $active_mods[$i]['page_permalink'];
 			$permalink_length = strlen($mod_permalink);
 			
 			if(strpos("$query", "$mod_permalink") !== false) {
@@ -114,8 +116,8 @@ if($p == "" OR $p == "portal") {
 }
 
 
-if(is_dir("lib/lang/$page_contents[page_language]") AND ($page_contents[page_language] != '')) {
-	$languagePack = $page_contents[page_language];
+if(is_dir("lib/lang/$page_contents[page_language]") AND ($page_contents['page_language'] != '')) {
+	$languagePack = $page_contents['page_language'];
 }
 
 /* preferences (data from get_content() ) */
@@ -136,17 +138,17 @@ $smarty->compile_check = true;
 $fc_template = $prefs_template;
 $fc_template_layout = $prefs_template_layout;
 
-if($page_contents[page_template] == "use_standard") {
+if($page_contents['page_template'] == "use_standard") {
 	$fc_template = $prefs_template;
 }
 
-if($page_contents[page_template_layout] == "use_standard") {
+if($page_contents['page_template_layout'] == "use_standard") {
 	$fc_template_layout = $prefs_template_layout;
 }
 
-if(is_dir('styles/'.$page_contents[page_template].'/templates/')) {
-	$fc_template = $page_contents[page_template];
-	$fc_template_layout = $page_contents[page_template_layout];
+if(is_dir('styles/'.$page_contents['page_template'].'/templates/')) {
+	$fc_template = $page_contents['page_template'];
+	$fc_template_layout = $page_contents['page_template_layout'];
 }
 
 
@@ -176,6 +178,11 @@ $smarty->assign('prefs_pagesubtitle', $prefs_pagesubtitle);
 $smarty->assign("p","$p");
 $smarty->assign("fc_inc_dir", FC_INC_DIR);
 
+$fc_end_time = microtime(true);
+$fc_pageload_time = round($fc_end_time-$fc_start_time,4);
+$smarty->assign('fc_start_time', $fc_start_time);
+$smarty->assign('fc_end_time', $fc_end_time);
+$smarty->assign('fc_pageload_time', $fc_pageload_time);
 
 // display the template
 $smarty->display('index.tpl');
