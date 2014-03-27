@@ -110,13 +110,8 @@ footer hr {
 	border-bottom: 1px solid #222;
 }
 
-div#breadcrumbs {
-	clear: both;
-	padding: 30px 0 0 0;
-}
-
-div#breadcrumbs > a {
-	color: #666;
+#pageFooter ol.breadcrumb {
+	background: rgba(0,0,0,0.3);
 }
 
 .scrollBox {
