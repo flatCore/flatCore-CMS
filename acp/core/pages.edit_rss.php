@@ -14,6 +14,7 @@ if($_REQUEST[delete] != "") {
 	$cnt_changes = $dbh->exec($sql);
 }
 */
+
 $sql = "SELECT * FROM fc_feeds ORDER BY feed_time DESC";
 $sql_prefs = "SELECT * FROM fc_preferences WHERE prefs_id = 1";
 
@@ -52,7 +53,7 @@ for($i=0;$i<$cnt_rssItems;$i++) {
 	if($mins < 10) { $mins = '0'.$mins; }
 	if($secs < 10) { $secs = '0'.$secs; }
 	
-	$ts_diff_string = " | Release in $days Days | $hrs:$mins:$secs";
+	$ts_diff_string = " <small>| Release in $days Days | $hrs:$mins:$secs</small>";
 	$style_string = 'style="opacity:0.7";';
 
 	if($ts_diff <= 0) {
