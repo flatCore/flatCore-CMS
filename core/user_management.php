@@ -9,21 +9,17 @@ unset($status_msg);
 if($goto == 'logout') {
 	session_destroy();
 	unset($_SESSION['user_nick']);
-	$smarty->assign("msg_status","success");
+	$smarty->assign("msg_status","alert alert-success");
 	$smarty->assign('msg_text', "$lang[msg_logout]");
 	$output = $smarty->fetch("status_message.tpl");
 	$smarty->assign('msg_content', $output);
 }
 
 
-if(isset($_POST[login])) {
-
+if(isset($_POST['login'])) {
 	$login_name = strip_tags($_POST['login_name']);
 	$login_psw  = strip_tags($_POST['login_psw']);
-	
 	fc_user_login($login_name,$login_psw);
-
-
 }
 
 
@@ -32,7 +28,7 @@ if(isset($_POST[login])) {
  * show the login form or the user navigation
  */
 
-if($_SESSION[user_nick] != "") {
+if($_SESSION['user_nick'] != "") {
 
 	$status_msg = "$lang[msg_login_true]";
 	$link_logout = "$_SERVER[PHP_SELF]?goto=logout";
@@ -44,9 +40,8 @@ if($_SESSION[user_nick] != "") {
 	}
 
 
-
 	/* user == administrator */
-	if($_SESSION[user_class] == "administrator"){
+	if($_SESSION['user_class'] == "administrator"){
 			$link_acp = FC_INC_DIR . "/" . FC_ACP_DIR . "/acp.php";
 			if($p != "") {
 				$link_edit_page = FC_INC_DIR . "/" . FC_ACP_DIR . "/acp.php?tn=pages&sub=edit&editpage=$p";

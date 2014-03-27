@@ -9,7 +9,7 @@ if($p != "") {
 	$hits_page_id = $p;
 }
 
-if($page_contents[page_sort] == "portal") {
+if($page_contents['page_sort'] == "portal") {
 	$hits_page_id = "portal_$languagePack";
 }
 

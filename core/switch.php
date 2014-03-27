@@ -56,8 +56,6 @@ $smarty->assign('fc_sitemap', $fc_sitemap);
 if(count($submenu) >= 1) {
 	$smarty->assign('arr_submenue', $arr_subnmenu);
 	$smarty->assign('legend_toc', FC_TOC_HEADER);
-	$output = $smarty->fetch("toc.tpl");
-	$smarty->assign('toc_submenu', $output);
 }
 
 
@@ -78,8 +76,8 @@ $textlibs = get_all_textlibs();
 $cnt_textlibs = count($textlibs);
 
 for($i=0;$i<$cnt_textlibs;$i++) {
-	$textlib_key = "fc_snippet_" . str_replace("-","_",$textlibs[$i][textlib_name]);
-	$smarty->assign("$textlib_key", text_parser(stripslashes($textlibs[$i][textlib_content])));
+	$textlib_key = "fc_snippet_" . str_replace("-","_",$textlibs[$i]['textlib_name']);
+	$smarty->assign("$textlib_key", text_parser(stripslashes($textlibs[$i]['textlib_content'])));
 }
 
 
@@ -132,16 +130,12 @@ $smarty->assign("textlib_footer","$textlib_footer");
 if($page_extracontent != "") {
 	$page_extracontent = text_parser($page_extracontent);
 	$smarty->assign('page_extracontent', stripslashes($page_extracontent));
-	$output = $smarty->fetch("extracontent.tpl");
-	$smarty->assign('extra_content', $output);
 }
 
 /* show global extra content if != empty */
 if($textlib_global_extracontent != "") {
 	$textlib_global_extracontent = text_parser($textlib_global_extracontent);
 	$smarty->assign('page_global_extracontent', $textlib_global_extracontent);
-	$output = $smarty->fetch("extracontent_global.tpl");
-	$smarty->assign('extra_global_content', $output);
 }
 
 
@@ -185,7 +179,7 @@ $smarty->assign('page_keywords', $page_keywords);
 
 
 /* private pages, for admins only */
-if(($page_status == "private") AND ($_SESSION[user_class] != "administrator")) {
+if(($page_status == "private") AND ($_SESSION['user_class'] != "administrator")) {
 	$text = get_textlib("no_access");
 	$smarty->assign('page_content', $text);
 	$smarty->assign('extra_content', "");
@@ -205,7 +199,7 @@ if($page_usergroup != "") {
 		$is_user_in_group[] = is_user_in_group("$_SESSION[user_id]","$arr_checked_groups[$i]");
 	}
 
-	if((!in_array("true",$is_user_in_group)) AND ($_SESSION[user_class] != "administrator")) {
+	if((!in_array("true",$is_user_in_group)) AND ($_SESSION['user_class'] != "administrator")) {
 		$text = get_textlib("no_access");
 		$smarty->assign('page_content', $text);
 		$smarty->assign('extra_content', "");
@@ -215,7 +209,7 @@ if($page_usergroup != "") {
 
 
 /* draft pages for administrators only */
-if(($page_status == "draft") AND ($_SESSION[user_class] != "administrator")){
+if(($page_status == "draft") AND ($_SESSION['user_class'] != "administrator")){
 	$text = get_textlib("no_access");
 	$smarty->assign('page_content', $text);
 	$smarty->assign('extra_content', "");
@@ -241,7 +235,7 @@ if($p == "register") {
 		$agreement_txt = get_textlib("agreement_text");
 		$smarty->assign("agreement_text","$agreement_txt");
 	
-		if($_POST[send_registerform]) {
+		if($_POST['send_registerform']) {
 			include("user_register.php");
 		}
 	

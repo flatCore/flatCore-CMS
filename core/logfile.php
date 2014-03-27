@@ -53,7 +53,7 @@ $log_query = $_SERVER['QUERY_STRING'];
 
 $parse_ref = parse_url($log_ref);
 
-if($parse_ref[host] == $_SERVER['HTTP_HOST']) {
+if($parse_ref['host'] == $_SERVER['HTTP_HOST']) {
 	$log_ref = "";
 }
 
