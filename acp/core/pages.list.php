@@ -12,9 +12,9 @@ $sql = "SELECT page_id,	page_language, page_linkname, page_title, page_sort, pag
 		$_SESSION[filter_string]
 		ORDER BY page_language ASC, page_sort ASC";
 
-	foreach ($dbh->query($sql) as $row) {
-		$result[] = $row;
-	}
+foreach ($dbh->query($sql) as $row) {
+	$result[] = $row;
+}
 	
 $dbh = null;
    
@@ -186,7 +186,7 @@ for($i=0;$i<$cnt_result;$i++) {
 	}
 	
 	if($page_sort == 'portal') {
-		$page_linkname = '<i class="icon-home"></i> ' . $page_linkname;
+		$page_linkname = '<span class="glyphicon glyphicon-home"></span> ' . $page_linkname;
 	}
 	
 	$hits_id = $page_id;	
