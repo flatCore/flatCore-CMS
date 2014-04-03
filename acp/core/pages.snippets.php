@@ -175,11 +175,14 @@ echo '<select name="snip_id" class="form-control">';
 for($i=0;$i<$cnt_snippets;$i++) {
 	$get_snip_id = $snippets_list[$i]['textlib_id'];
 	$get_snip_name = $snippets_list[$i]['textlib_name'];
-	
-		unset($sel);
-		if($snip_id == "$get_snip_id") {
-			$sel = "selected";
-		}
+		
+	unset($sel);
+	if($snip_id == $get_snip_id) {
+		$sel = "selected";
+		$get_snip_name_editor = '[snippet]'.$get_snip_name.'[/snippet]';
+		$get_snip_name_smarty = '{$fc_snippet_'.$get_snip_name.'}';
+		$get_snip_name_smarty = str_replace('-', '_', $get_snip_name_smarty);
+	}
 	
 	echo "<option value='$get_snip_id' $sel>$get_snip_name</option>";
 }
@@ -197,9 +200,25 @@ echo '<fieldset>';
 echo '<legend>'.$lang['tab_content'].'</legend>';
 echo "<form action='$_SERVER[PHP_SELF]?tn=pages&sub=snippets' method='POST'>";
 
+echo '<div class="row">';
+echo '<div class="col-md-6">';
+
 echo '<div class="form-group">';
 echo '<label>'.$lang['filename'].'</label>';
 echo '<input class="form-control" type="text" name="snippet_title" value="'.$textlib_name.'">';
+echo '</div>';
+
+echo '</div>';
+
+if(isset($_POST['snip_id'])) {
+	echo '<div class="col-md-6">';
+	echo '<ul class="list-group">';
+	echo '<li class="list-group-item"><span class="badge">Editor</span>'.$get_snip_name_editor.'</li>';
+	echo '<li class="list-group-item"><span class="badge">Smarty</span>'.$get_snip_name_smarty.'</li>';
+	echo '</ul>';
+	echo '</div>';
+}
+
 echo '</div>';
 
 echo '<div class="form-group">';
@@ -213,7 +232,7 @@ if($modus == 'new') {
 	echo '<input type="submit" name="save_snippet" class="btn btn-success" value="'.$lang['save'].'">';
 } else {
 	echo '<input type="hidden" name="snip_id" value="'.$snip_id.'">';
-	echo '<input type="submit" name="delete_snippet" class="btn btn-danger" value="'.$lang['delete'].'"> ';
+	echo '<input type="submit" name="delete_snippet" class="btn btn-danger" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_data'].'\')"> ';
 	echo '<input type="submit" name="update_snippet" class="btn btn-success" value="'.$lang['update'].'">';
 }
 
