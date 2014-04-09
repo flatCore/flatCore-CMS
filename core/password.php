@@ -48,7 +48,7 @@ if($_POST['ask_for_psw']) {
 		$mailer = Swift_Mailer::newInstance($transport);
 		$message = Swift_Message::newInstance()
 			->setSubject("$lang[forgotten_psw_mail_subject] | $prefs_pagetitle")
-	  		->setFrom(array("$fc_mailer_adr" => "$fc_mailer_name"))
+	  		->setFrom(array("$prefs_mailer_adr" => "$prefs_mailer_name"))
 	  		->setTo(array("$mail" => "$user_nick"))
 	  		->setBody("$email_msg", 'text/html');
 	  $result = $mailer->send($message);
