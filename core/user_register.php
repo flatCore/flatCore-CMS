@@ -49,7 +49,7 @@ if(!preg_match("/^[a-zA-Z0-9-_]{2,20}$/",$username)) {
 $all_usernames_array = get_all_usernames("$fc_db_user");
 
 foreach ($all_usernames_array as $entry) {
-    if($username == $entry[user_nick]) {
+    if($username == $entry['user_nick']) {
     	$send_data = "false";
 			$register_message .= $lang['msg_register_existinguser'].'<br>';
 			break;
@@ -61,7 +61,7 @@ foreach ($all_usernames_array as $entry) {
 $all_usermail_array = get_all_usermail("$fc_db_user");
 
 foreach ($all_usermail_array as $entry) {    
-    if($mail == $entry[user_mail]) {
+    if($mail == $entry['user_mail']) {
     	$send_data = "false";
 			$register_message .= $lang['msg_register_existingusermail'].'<br>';
 			break;
@@ -134,13 +134,13 @@ if($send_data == "true") {
 		$mailer = Swift_Mailer::newInstance($transport);
 		$message = Swift_Message::newInstance()
 				->setSubject("Registrierungsdaten | $prefs_pagetitle")
-	  		->setFrom(array("$fc_mailer_adr" => "$fc_mailer_name"))
+	  		->setFrom(array("$prefs_mailer_adr" => "$prefs_mailer_name"))
 	  		->setTo(array("$mail" => "$username"))
 	  		->setBody("$email_msg", 'text/html');
 	  	$result = $mailer->send($message);
 	
-	$smarty->assign("msg_status","success");
-	$smarty->assign("register_message","$lang[msg_register_success]");
+	$smarty->assign("msg_status","alert alert-success");
+	$smarty->assign("register_message",$lang['msg_register_success']);
 	
 	record_log("user_register","new user $username","6");
 	mailto_admin("$lang[msg_register_admin_notification_subject]","$lang[msg_register_admin_notification_text]<br /><b>$username</b><br />$mail");
@@ -148,8 +148,8 @@ if($send_data == "true") {
 } else {
 	//oh no, don't create an new account
 	
-	$smarty->assign("msg_status","error");
-	$smarty->assign("register_message","$lang[msg_register_error]<br />$register_message");
+	$smarty->assign("msg_status","alert alert-danger");
+	$smarty->assign("register_message",'<p><strong>'.$lang['msg_register_error'].'</strong></p><p>'.$register_message.'</p>');
 	
 	//show the entries again
 	$smarty->assign("send_username","$username");
