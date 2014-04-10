@@ -58,6 +58,7 @@ $lang['delete_user'] = "Benutzer löschen";
 
 $lang['system_preferences'] = "Einstellungen";
 $lang['system_textlib'] = "Textbausteine";
+$lang['system_design'] = "Layout & Design";
 $lang['system_modul_preferences'] = "Einstellungen für Module";
 $lang['system_backup'] = "Datensicherung";
 $lang['system_update'] = "Update";

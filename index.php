@@ -14,6 +14,7 @@ error_reporting(0);
 
 $fc_start_time = microtime(true);
 
+define("FC_SOURCE", "frontend");
 
 /* all requests -> strip_tags */
 foreach($_REQUEST as $key => $val) {
@@ -171,6 +172,9 @@ $smarty->assign('languagePack', $languagePack);
 require("core/user_management.php");
 require("core/switch.php");
 
+if(is_file('styles/'.$fc_template.'/php/options.php')) {
+	include('styles/'.$fc_template.'/php/options.php');
+}
 
 // parse template vars
 $smarty->assign('prefs_pagetitle', $prefs_pagetitle);

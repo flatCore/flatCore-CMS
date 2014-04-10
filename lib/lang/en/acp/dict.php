@@ -61,6 +61,7 @@ $lang['delete_user'] = "Delete User";
 
 $lang['system_preferences'] = "Preferences";
 $lang['system_textlib'] = "Text snippets";
+$lang['system_design'] = "Layout & Design";
 $lang['system_modul_preferences'] = "Module preferences";
 $lang['system_backup'] = "Backup";
 $lang['system_update'] = "Update";
