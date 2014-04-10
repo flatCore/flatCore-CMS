@@ -3,101 +3,28 @@
 <head>
 	<meta charset="utf-8">
 	<title>flatCore - Bitte lesen ...</title>
-	<style type="text/css">
-
-		*{margin:0;padding:0;}
-		
-		body {
-			background: rgb(238,238,238);
-			background: -moz-radial-gradient(center, ellipse cover,  rgba(238,238,238,1) 0%, rgba(153,153,153,1) 100%);
-			background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(238,238,238,1)), color-stop(100%,rgba(153,153,153,1)));
-			background: -webkit-radial-gradient(center, ellipse cover,  rgba(238,238,238,1) 0%,rgba(153,153,153,1) 100%);
-			background: -o-radial-gradient(center, ellipse cover,  rgba(238,238,238,1) 0%,rgba(153,153,153,1) 100%);
-			background: -ms-radial-gradient(center, ellipse cover,  rgba(238,238,238,1) 0%,rgba(153,153,153,1) 100%);
-			background: radial-gradient(ellipse at center,  rgba(238,238,238,1) 0%,rgba(153,153,153,1) 100%);
-			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#999999',GradientType=1 );
-			color: #555;
-			font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-			font-size: 15px;
-			line-height: 1.45em;
-		}
-		
-		.container {
-			width: 75%;
-			max-width: 1000px;
-			margin: 15px auto;
-			padding: 15px;
-		}
-		
-		.box {
-			background: rgba(255,255,255,0.7);
-			border-radius: 9px;			
-		}
-		
-		h1, h2, h3, h4 { color: #369; clear: both; font-weight: normal;}
-		
-		h1 { font-size: 35px; line-height: 25px; text-align: center;}
-		h1 small { color: #888; font-size: 20px; }
-		h2 { font-size: 28px; line-height: 31px; }
-		h3 { font-size: 20px; margin: 15px 0 5px 0;}
-		h4 { font-size: 16px; margin: 15px 0 5px 0;}
-		
-		p {
-			padding: 5px 0;
-		}
-		
-		hr {
-			border : 0;
-		  height : 1px;
-		  background-color: #ccc;
-		  margin : 18px 0;
-		}
-		
-		a {
-			color: #36c;
-			text-decoration: none;
-		}
-		
-		a:hover {
-			text-decoration: underline;
-		}
-		
-		.label {
-			background-color: #fff;
-			color: #999;
-			padding: 1px 2px;
-			border-radius: 3px;
-			border: 1px solid #e5e5e5;
-		}
-		
-		pre {
-			padding: 5px;
-			margin: 5px 0;
-			background-color: #fff;
-			border-radius: 5px;
-			color: #516c83;
-		}
-		
-		ul, ol {
-			margin-left: 25px;
-		}
-
-</style>
-
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 </head>
 <body>
 
-<div class="container">
-<h1>flatCore<br><small>Content Management System</small></h1>
+
+
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+  <div class="container">
+    <h1>flatCore <small>Content Management System</small></h1>
+    <p>Die Installation dauert nur wenige Minuten. Bevor Du mit dem Upload der Daten auf den Webserver beginnen kannst, musst Du in der Datei config.php ein paar Werte anpassen.</p>
+  </div>
 </div>
 
-<div class="container box">
+<div class="container">
+
+<div class="row">
+<div class="col-md-8">
 
 <h2>Installation</h2>
 
-<p>Die Installation dauert nur wenige Minuten. Bevor Du mit dem Upload der Daten auf den Webserver beginnen kannst, musst Du in der Datei <span class="label">config.php</span> ein paar Werte anpassen.</p>
-
-<h3>1. mod_rewrite</h3>
+<h3>mod_rewrite</h3>
 <p>flatCore kann sowohl mit als auch ohne mod_rewrite betrieben werden. Wird mod_rewrite aktiviert, erzeugt flatCore <i>schönere</i> URLs für Dein Projekt.</p>
 <p>Beispiel mit mod_rewrite: <span class="label">http://example.com/news/</span></p>
 <pre>
@@ -122,19 +49,9 @@ RewriteRule ^(.*)$ index.php?query=$1 [L,QSA]
 </pre>
 
 
-<h3>2. E-Mail Absender</h3>
-
-<p>Für Benachrichtigungen, Aktivierungslinks etc. versendet flatCore E-Mails. Damit die Empfänger sofort erkennen, woher die E-Mail kommt, solltest Du aussagekräftige Angaben wählen.</p>
-
-<pre>
-$fc_mailer_adr = 'info@example.com';
-$fc_mailer_name = 'Example Administrator';
-</pre>
-
-
 <p>Jetzt kannst Du die Dateien und Verzeichnisse auf Deinen Server kopieren und das Installationsscript starten.</p>
 
-<h3>3. Installieren</h3>
+<h3>Installieren</h3>
 
 <ol>
 	<li>Alle Dateien auf den Server kopieren (kann auch in ein Unterverzeichnis sein).</li>
@@ -155,54 +72,37 @@ $fc_mailer_name = 'Example Administrator';
 Im Browser das Verzeinis /acp/ aufrufen und mit den Zugangsdaten des Administrators anmelden.<br>
 Beispiel: <span class="label">http://www.example.com/acp/</span></p>
 
+</div>
+<div class="col-md-3 col-md-offset-1">
+<h3>Credits</h3>
+
+<ul>
+	<li>jQuery - JavaScript library<br><a href="http://jquery.com">http://jquery.com</a><br>MIT License</li>
+	<li>TinyMCE - Javascript WYSIWYG Editor<br><a href="http://www.tinymce.com">http://www.tinymce.com</a><br>LGPL</li>
+	<li>Smarty - Template System<br><a href="http://www.smarty.net">http://www.smarty.net</a><br>LGPL</li>
+	<li>SWIFT - PHP Mailer<br><a href="http://swiftmailer.org/">http://swiftmailer.org/</a><br>MIT License</li>
+	<li>Twitter Bootstrap<br><a href="http://getbootstrap.com">http://getbootstrap.com</a><br>MIT License</li>
+	<li>DropzoneJS<br><a href="http://www.dropzonejs.com">http://www.dropzonejs.com</a><br>MIT License</li>
+	<li>fancyBox<br><a href="http://fancyapps.com/fancybox/">http://fancyapps.com/fancybox/</a><br><a href="http://fancyapps.com/fancybox/#license">Creative Commons Attribution-NonCommercial 3.0</a></li>
+</ul>
 
 </div>
-
-<div class="container box">
-
-
-<h3>Credits & THX</h3>
-
-<p>jQuery - JavaScript library<br>
-<a href="http://jquery.com">http://jquery.com</a></p>
-
-<p>TinyMCE - Javascript WYSIWYG Editor<br>
-<a href="http://www.tinymce.com">http://www.tinymce.com</a></p>
-
-<p>Smarty - Template System<br>
-<a href="http://www.smarty.net">http://www.smarty.net</a></p>
-
-<p>SWIFT - PHP Mailer<br>
-<a href="http://swiftmailer.org/">http://swiftmailer.org/</a></p>
-
-<p>Twitter Bootstrap<br>
-<a href="http://getbootstrap.com">http://getbootstrap.com</a></p>
-
-<p>DropzoneJS<br>
-<a href="http://www.dropzonejs.com">http://www.dropzonejs.com</a></p>
-
-<p>fancyBox<br>
-<a href="http://fancyapps.com/fancybox/">http://fancyapps.com/fancybox/</a></p>
-
-
 </div>
 
-<div class="container">
+<hr>
 
-<h4>Copyright (C) 2010-2013, Patrick Konstandin | flatCore.de</h4>
+<footer>
+  <h4>Copyright (C) 2010-2014, flatCore.de</h4>
 
-<p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License.</p>
-
-<p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</p>
-
-<p>You should have received a copy of the GNU General Public License along with this program.  If not, see <a href="http://www.gnu.org/licenses/gpl.html">http://www.gnu.org/licenses/gpl.html</a></p>
-
-
-
-
+	<p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License.</p>
+	
+	<p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</p>
+	
+	<p>You should have received a copy of the GNU General Public License along with this program.  If not, see <a href="http://www.gnu.org/licenses/gpl.html">http://www.gnu.org/licenses/gpl.html</a></p>
+</footer>
+</div> <!-- /container -->
 
 
-</div>
 
 
 </body>
