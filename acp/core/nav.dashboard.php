@@ -51,6 +51,7 @@ echo '</div>';
 echo '<div id="system" class="panel-collapse collapse">';
 echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=system&sub=sys_pref'>$lang[system_preferences]</a>";
 echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=system&sub=sys_textlib'>$lang[system_textlib]</a>";
+echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=system&sub=design'>$lang[system_design]</a>";
 echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=system&sub=stats'>$lang[system_statistics]</a>";
 echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=system&sub=backup'>$lang[system_backup]</a>";
 echo '</div>';
