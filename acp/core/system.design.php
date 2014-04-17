@@ -125,9 +125,27 @@ echo '<legend>'.$prefs_template.'</legend>';
 
 define("FC_SOURCE", "acp");
 
+echo '<div class="row">';
+echo '<div class="col-md-9">';
+
 if(is_file("../styles/$prefs_template/php/options.php")) {
 	include("../styles/$prefs_template/php/options.php");
 }
+
+echo '</div>';
+echo '<div class="col-md-3">';
+
+if(is_file("../styles/$prefs_template/images/preview.png")) {
+	echo '<img src="../styles/'.$prefs_template.'/images/preview.png" class="img-responsive img-rounded">';
+}
+
+if(is_file("../styles/$prefs_template/readme.html")) {
+	include("../styles/$prefs_template/readme.html");
+}
+
+echo '</div>';
+echo '</div>';
+
 
 echo '</fieldset>';
 
