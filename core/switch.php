@@ -68,8 +68,8 @@ if($p == "") {
 $smarty->assign('body_template', $fc_template_layout);
 
 
-$textlib_footer = get_textlib("footer_text");
-$textlib_global_extracontent = get_textlib("extra_content_text");
+$textlib_footer = get_textlib('footer_text',"$languagePack");
+$textlib_global_extracontent = get_textlib('extra_content_text',"$languagePack");
 
 $textlibs = get_all_textlibs();
 
