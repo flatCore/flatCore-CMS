@@ -4,7 +4,7 @@ tinymce.init({
   element_format : "html",
   menubar: "edit insert table tools view",
   toolbar_items_size: 'small',
-  content_css : "../styles/blucent/css/editor.css?v=12",
+  content_css : "../styles/blucent/css/editor.css?v=13",
   plugins: [
     "advlist autolink lists link image charmap preview anchor",
     "searchreplace visualblocks code fullscreen wordcount template",
@@ -71,6 +71,7 @@ tinymce.init({
 	height : "480",
 	remove_script_host : true,
 	rel_list: [
+		{title: 'Keine', value: ''},
     {title: 'Lightbox', value: 'lightbox'}
   ],
 	extended_valid_elements : "textarea[cols|rows|disabled|name|readonly|class]",
