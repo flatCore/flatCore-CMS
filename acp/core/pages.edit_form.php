@@ -13,14 +13,14 @@ $cnt_custom_fields = count($custom_fields);
 
 
 echo '<ul class="nav nav-tabs" id="bsTabs">';
-echo '<li class="active"><a href="#info" data-toggle="tab">'.$lang[tab_info].'</a></li>';
-echo '<li><a href="#content" data-toggle="tab">'.$lang[tab_content].'</a></li>';
-echo '<li><a href="#extracontent" data-toggle="tab">'.$lang[tab_extracontent].'</a></li>';
-echo '<li><a href="#meta" data-toggle="tab">'.$lang[tab_meta].'</a></li>';
-echo '<li><a href="#head" data-toggle="tab">'.$lang[tab_head].'</a></li>';
-echo '<li><a href="#preferences" data-toggle="tab">'.$lang[tab_page_preferences].'</a></li>';
+echo '<li class="active"><a href="#info" data-toggle="tab">'.$lang['tab_info'].'</a></li>';
+echo '<li><a href="#content" data-toggle="tab">'.$lang['tab_content'].'</a></li>';
+echo '<li><a href="#extracontent" data-toggle="tab">'.$lang['tab_extracontent'].'</a></li>';
+echo '<li><a href="#meta" data-toggle="tab">'.$lang['tab_meta'].'</a></li>';
+echo '<li><a href="#head" data-toggle="tab">'.$lang['tab_head'].'</a></li>';
+echo '<li><a href="#preferences" data-toggle="tab">'.$lang['tab_page_preferences'].'</a></li>';
 if($cnt_custom_fields > 0) {
-	echo '<li><a href="#custom" data-toggle="tab">'.$lang[legend_custom_fields].'</a></li>';
+	echo '<li><a href="#custom" data-toggle="tab">'.$lang['legend_custom_fields'].'</a></li>';
 }
 echo '</ul>';
 
@@ -42,27 +42,29 @@ $dbh = null;
 
 
 $select_page_position  = '<select name="page_position" class="form-control">';
-$select_page_position .= '<option value="null">' . $lang[legend_unstructured_pages] . '</option>';
-$select_page_position .= '<option value="portal">' . $lang[f_homepage] . '</option>';
+$select_page_position .= '<option value="null">' . $lang['legend_unstructured_pages'] . '</option>';
+
 
 if($page_sort == "portal") {
-	$select_page_position .= '<option value="portal" selected>' . $lang[f_homepage] . '</option>';
+	$select_page_position .= '<option value="portal" selected>' . $lang['f_homepage'] . '</option>';
+} else {
+	$select_page_position .= '<option value="portal">' . $lang['f_homepage'] . '</option>';
 }
 
 if(ctype_digit($page_sort)) {
-	$select_page_position .= '<option value="mainpage" selected>'.$lang[f_mainpage].'</option>';
+	$select_page_position .= '<option value="mainpage" selected>'.$lang['f_mainpage'].'</option>';
 } else {
-	$select_page_position .= '<option value="mainpage">'.$lang[f_mainpage].'</option>';
+	$select_page_position .= '<option value="mainpage">'.$lang['f_mainpage'].'</option>';
 }
 
-$select_page_position .= '<optgroup label="'.$lang[f_subpage].'">';
+$select_page_position .= '<optgroup label="'.$lang['f_subpage'].'">';
 for($i=0;$i<count($all_pages);$i++) {
 
-	if($all_pages[$i][page_sort] == $page_sort) {
+	if($all_pages[$i]['page_sort'] == $page_sort) {
 		continue;
 	}
 	
-	if($all_pages[$i][page_sort] == "") {
+	if($all_pages[$i]['page_sort'] == "") {
 		continue;
 	}
 	
@@ -70,22 +72,22 @@ for($i=0;$i<count($all_pages);$i++) {
 		$string = substr($page_sort,0,$pos);
 	}
 		 
-		 $parent_string = $all_pages[$i][page_sort];
+		 $parent_string = $all_pages[$i]['page_sort'];
 		 
 		 unset($selected);
 		 if($parent_string != "" && $parent_string == "$string") {
 		 	$selected = "selected";
 		 }
 		 
-	$short_title = first_words($all_pages[$i][page_title], 6);
+	$short_title = first_words($all_pages[$i]['page_title'], 6);
 	$indent = str_repeat("-",substr_count($parent_string,'.'));
-	$select_page_position .= "<option value='$parent_string' $selected> $indent " . $all_pages[$i][page_sort] . ' - ' .$all_pages[$i][page_linkname] . ' - ' . $short_title ."</option>";
+	$select_page_position .= "<option value='$parent_string' $selected> $indent " . $all_pages[$i]['page_sort'] . ' - ' .$all_pages[$i]['page_linkname'] . ' - ' . $short_title ."</option>";
 	
 }
 $select_page_position .= '</optgroup>';
 $select_page_position .= '</select>';
 
-echo tpl_form_control_group('',$lang[f_page_position],$select_page_position);
+echo tpl_form_control_group('',$lang['f_page_position'],$select_page_position);
 
 if($page_sort != "portal") {
 
@@ -94,13 +96,13 @@ if($page_sort != "portal") {
 		$page_order = $page_sort;
 	}
 	
-	echo tpl_form_control_group('',$lang[f_page_order],"<input class='form-control' type='text' name='page_order' value='$page_order'>");
+	echo tpl_form_control_group('',$lang['f_page_order'],"<input class='form-control' type='text' name='page_order' value='$page_order'>");
 	
 
 }
 	
-echo tpl_form_control_group('',$lang[f_page_linkname],"<input class='form-control' type='text' name='page_linkname' value='$page_linkname'>");
-echo tpl_form_control_group('',$lang[f_page_permalink],"<input class='form-control' type='text' name='page_permalink' value='$page_permalink'>");
+echo tpl_form_control_group('',$lang['f_page_linkname'],"<input class='form-control' type='text' name='page_linkname' value='$page_linkname'>");
+echo tpl_form_control_group('',$lang['f_page_permalink'],"<input class='form-control' type='text' name='page_permalink' value='$page_permalink'>");
 
 echo'</div>'; /* EOL tab_info */
 
@@ -131,15 +133,15 @@ echo"</div>"; /* EOL tab_extracontent */
 /* tab_meta */
 echo'<div class="tab-pane fade" id="meta">';
 
-echo tpl_form_control_group('',$lang[f_page_title],"<input class='form-control' type='text' name='page_title' value='$page_title'>");
+echo tpl_form_control_group('',$lang['f_page_title'],"<input class='form-control' type='text' name='page_title' value='$page_title'>");
 
 if($page_meta_author == "") {
-	$page_meta_author = "$_SESSION[user_firstname] $_SESSION[user_lastname]";
+	$page_meta_author = $_SESSION['user_firstname'] .' '. $_SESSION['user_lastname'];
 }
 
-echo tpl_form_control_group('',$lang[f_meta_author],"<input class='form-control' type='text' name='page_meta_author' value='$page_meta_author'>");
-echo tpl_form_control_group('',$lang[f_meta_keywords],"<input class='form-control' type='text' name='page_meta_keywords' value='$page_meta_keywords'>");
-echo tpl_form_control_group('',$lang[f_meta_description],"<textarea name='page_meta_description' class='form-control cntValues' rows='5'>$page_meta_description</textarea>");
+echo tpl_form_control_group('',$lang['f_meta_author'],"<input class='form-control' type='text' name='page_meta_author' value='$page_meta_author'>");
+echo tpl_form_control_group('',$lang['f_meta_keywords'],"<input class='form-control' type='text' name='page_meta_keywords' value='$page_meta_keywords'>");
+echo tpl_form_control_group('',$lang['f_meta_description'],"<textarea name='page_meta_description' class='form-control cntValues' rows='5'>$page_meta_description</textarea>");
 
 
 echo"<div class='form-group'>
@@ -183,13 +185,13 @@ echo'</div>'; /* EOL tab_meta */
 /* tab_head */
 echo'<div class="tab-pane fade" id="head">';
 
-echo "$lang[f_head_styles]";
+echo $lang['f_head_styles'];
 echo '<span class="silent"> &lt;style type=&quot;text/css&quot;&gt;</span> ... <span class="silent">&lt;/styles&gt;</span>';
 echo "<textarea name='page_head_styles' class='form-control plain-editor' rows='12'>$page_head_styles</textarea>";
 
 echo '<hr>';
 
-echo "$lang[f_head_enhanced]";
+echo $lang['f_head_enhanced'];
 echo '<span class="silent"> &lt;head&gt;</span> ... <span class="silent">&lt;/head&gt;</span>';
 echo "<textarea name='page_head_enhanced' class='form-control plain-editor' rows='12'>$page_head_enhanced</textarea>";
 
@@ -205,16 +207,16 @@ $arr_lang = get_all_languages();
 $select_page_language  = '<select name="page_language" class="form-control">';
 for($i=0;$i<count($arr_lang);$i++) {
 
-	$lang_sign = $arr_lang[$i][lang_sign];
-	$lang_desc = $arr_lang[$i][lang_desc];
-	$lang_folder = $arr_lang[$i][lang_folder];
+	$lang_sign = $arr_lang[$i]['lang_sign'];
+	$lang_desc = $arr_lang[$i]['lang_desc'];
+	$lang_folder = $arr_lang[$i]['lang_folder'];
 	$select_page_language .= "<option value='$lang_folder'".($page_language == "$lang_folder" ? 'selected="selected"' :'').">$lang_sign ($lang_desc)</option>";	
 
 } // eo $i
 
 $select_page_language .= '</select>';
 
-echo tpl_form_control_group('',$lang[f_page_language],$select_page_language);
+echo tpl_form_control_group('',$lang['f_page_language'],$select_page_language);
 
 $arr_Styles = get_all_templates();
 
@@ -254,7 +256,7 @@ $select_select_template .= '</optgroup>';
 
 $select_select_template .= '</select>';
 
-echo tpl_form_control_group('',$lang[f_page_template],$select_select_template);
+echo tpl_form_control_group('',$lang['f_page_template'],$select_select_template);
 
 
 $arr_iMods = get_all_moduls();
@@ -266,9 +268,8 @@ $select_page_modul .= '<option value="">Kein Modul</option>';
 for($i=0;$i<count($arr_iMods);$i++) {
 
 	$selected = "";
-
-	$mod_name = $arr_iMods[$i][name];
-	$mod_folder = $arr_iMods[$i][folder];
+	$mod_name = $arr_iMods[$i]['name'];
+	$mod_folder = $arr_iMods[$i]['folder'];
 
 	if($mod_folder == "$page_modul") {
 		$selected = "selected";
@@ -276,15 +277,15 @@ for($i=0;$i<count($arr_iMods);$i++) {
 
 	$select_page_modul .= "<option value='$mod_folder' $selected>$mod_name</option>";
 
-} // eo $i
+}
 
 
 $select_page_modul .= '</select>';
 
 
-echo tpl_form_control_group('',$lang[f_page_modul],$select_page_modul);
+echo tpl_form_control_group('',$lang['f_page_modul'],$select_page_modul);
 		
-echo tpl_form_control_group('',$lang[f_page_modul_query],"<input class='form-control' type='text' name='page_modul_query' value='$page_modul_query'>");
+echo tpl_form_control_group('',$lang['f_page_modul_query'],"<input class='form-control' type='text' name='page_modul_query' value='$page_modul_query'>");
 
 
 unset($checked_status);
@@ -305,7 +306,7 @@ $select_page_status .= '<label class="radio">';
 $select_page_status .= "<input type='radio' name='page_status' value='draft'".($page_status == "draft" ? 'checked' :'')."> <span class='label label-default'>$lang[f_page_status_draft]</span>";	
 $select_page_status .= '</label>';
 
-echo tpl_form_control_group('',$lang[f_page_status],$select_page_status);
+echo tpl_form_control_group('',$lang['f_page_status'],$select_page_status);
 
 
 
@@ -315,8 +316,8 @@ $arr_checked_groups = explode(",",$page_usergroup);
 
 for($i=0;$i<count($arr_groups);$i++) {
 
-	$group_id = $arr_groups[$i][group_id];
-	$group_name = $arr_groups[$i][group_name];
+	$group_id = $arr_groups[$i]['group_id'];
+	$group_name = $arr_groups[$i]['group_name'];
 
 	if(in_array("$group_name", $arr_checked_groups)) {
 		$checked = "checked";
@@ -330,7 +331,7 @@ for($i=0;$i<count($arr_groups);$i++) {
 }
 
 
-echo tpl_form_control_group('',$lang[choose_usergroup],$checkbox_usergroup);
+echo tpl_form_control_group('',$lang['choose_usergroup'],$checkbox_usergroup);
 
 
 
@@ -343,7 +344,7 @@ $cnt_admins = count($arr_admins);
 
 for($i=0;$i<$cnt_admins;$i++) {
 
-	$user_nick = $arr_admins[$i][user_nick];
+	$user_nick = $arr_admins[$i]['user_nick'];
 
   if(in_array("$user_nick", $arr_checked_admins)) {
 		$checked_user = "checked";
@@ -356,7 +357,7 @@ for($i=0;$i<$cnt_admins;$i++) {
  	$checkbox_set_authorized_admins .= '</label>';
 }
 
-echo tpl_form_control_group('',$lang[f_page_authorized_admins],$checkbox_set_authorized_admins);
+echo tpl_form_control_group('',$lang['f_page_authorized_admins'],$checkbox_set_authorized_admins);
 
 
 
