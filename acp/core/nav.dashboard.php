@@ -54,6 +54,7 @@ echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=system&sub=sys_textlib'
 echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=system&sub=design'>$lang[system_design]</a>";
 echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=system&sub=stats'>$lang[system_statistics]</a>";
 echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=system&sub=backup'>$lang[system_backup]</a>";
+echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=system&sub=update'>$lang[system_update]</a>";
 echo '</div>';
 echo '</div>';
 
