@@ -26,17 +26,11 @@
 
 <h3>mod_rewrite</h3>
 <p>flatCore kann sowohl mit als auch ohne mod_rewrite betrieben werden. Wird mod_rewrite aktiviert, erzeugt flatCore <i>schönere</i> URLs für Dein Projekt.</p>
-<p>Beispiel mit mod_rewrite: <span class="label">http://example.com/news/</span></p>
-<pre>
-$fc_mod_rewrite = "permalink";
-</pre>
+<p>Beispiel mit mod_rewrite: <span class="label label-default">http://example.com/news/</span></p>
+<p><code>$fc_mod_rewrite = "permalink";</code></p>
 
-<p>oder</p>
-
-<p>Beispiel ohne mod_rewrite: <span class="label">http://example.com/index.php?p=2</span></p>
-<pre>
-$fc_mod_rewrite = 'off';
-</pre>
+<p>Beispiel ohne mod_rewrite: <span class="label label-default">http://example.com/index.php?p=2</span></p>
+<p><code>$fc_mod_rewrite = 'off';</code></p>
 
 <p>Damit mod_rewrite funktioniert, muss die Datei _htaccess in <b>.htaccess</b> umbenannt werden. Dateinamen die mit einem Punkt beginnen sind bei den meißten Systemen für das System selbst vorbehalten. Darum ist es am einfachsten Du benennst die Datei erst um, wenn Du sie auf den Server kopiert hast.</p>
 
@@ -48,42 +42,42 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?query=$1 [L,QSA]
 </pre>
 
-
+<div class="alert alert-info" role="alert"><strong>Info:</strong> Je nach Provider/Serverkonfiguration können die Angaben in der .htaccess Datei abweichen.</div>
 <p>Jetzt kannst Du die Dateien und Verzeichnisse auf Deinen Server kopieren und das Installationsscript starten.</p>
 
 <h3>Installieren</h3>
 
 <ol>
 	<li>Alle Dateien auf den Server kopieren (kann auch in ein Unterverzeichnis sein).</li>
-	<li>Im Webbrowser das Verzeichnis /install/ aufrufen und den Anweisungen folgen.
+	<li>Im Webbrowser das Verzeichnis <code>/install/</code> aufrufen und den Anweisungen folgen.
 	   <ul>
 	   		<li>Die gewünschten Daten für einen Administrator eingeben.</li>
 	   		<li>Auf "Installation starten" klicken.</li>
 	   </ul>
 	</li>
-	<li>Das Verzeichnis /install/ löschen oder umbenennen.
+	<li>Das Verzeichnis <code>/install/</code> löschen oder umbenennen.
 		<ul>
-	   <li>Solange das Verzeichnis /install/ existiert, kann das Frontend nicht aufgerufen werden.</li>
+	   <li>Solange das Verzeichnis <code>/install/</code> existiert, kann das Frontend nicht aufgerufen werden.</li>
 		</ul>
 	</li>
 </ol>
 
 <p>War die Installation erfolgreich, führt der nächste Weg in das ACP.<br>
-Im Browser das Verzeinis /acp/ aufrufen und mit den Zugangsdaten des Administrators anmelden.<br>
-Beispiel: <span class="label">http://www.example.com/acp/</span></p>
+Im Browser das Verzeinis <code>/acp/</code> aufrufen und mit den Zugangsdaten des Administrators anmelden.<br>
+Beispiel: <code>http://www.example.com/acp/</code></p>
 
 </div>
 <div class="col-md-3 col-md-offset-1">
 <h3>Credits</h3>
 
 <ul>
-	<li>jQuery - JavaScript library<br><a href="http://jquery.com">http://jquery.com</a><br>MIT License</li>
-	<li>TinyMCE - Javascript WYSIWYG Editor<br><a href="http://www.tinymce.com">http://www.tinymce.com</a><br>LGPL</li>
-	<li>Smarty - Template System<br><a href="http://www.smarty.net">http://www.smarty.net</a><br>LGPL</li>
-	<li>SWIFT - PHP Mailer<br><a href="http://swiftmailer.org/">http://swiftmailer.org/</a><br>MIT License</li>
-	<li>Twitter Bootstrap<br><a href="http://getbootstrap.com">http://getbootstrap.com</a><br>MIT License</li>
-	<li>DropzoneJS<br><a href="http://www.dropzonejs.com">http://www.dropzonejs.com</a><br>MIT License</li>
-	<li>fancyBox<br><a href="http://fancyapps.com/fancybox/">http://fancyapps.com/fancybox/</a><br><a href="http://fancyapps.com/fancybox/#license">Creative Commons Attribution-NonCommercial 3.0</a></li>
+	<li><strong>jQuery</strong> - JavaScript library<br><a href="http://jquery.com">http://jquery.com</a><br>MIT License</li>
+	<li><strong>TinyMCE</strong> - Javascript WYSIWYG Editor<br><a href="http://www.tinymce.com">http://www.tinymce.com</a><br>LGPL</li>
+	<li><strong>Smarty</strong> - Template System<br><a href="http://www.smarty.net">http://www.smarty.net</a><br>LGPL</li>
+	<li><strong>SWIFT</strong> - PHP Mailer<br><a href="http://swiftmailer.org/">http://swiftmailer.org/</a><br>MIT License</li>
+	<li><strong>Twitter Bootstrap</strong><br><a href="http://getbootstrap.com">http://getbootstrap.com</a><br>MIT License</li>
+	<li><strong>DropzoneJS</strong><br><a href="http://www.dropzonejs.com">http://www.dropzonejs.com</a><br>MIT License</li>
+	<li><strong>fancyBox</strong><br><a href="http://fancyapps.com/fancybox/">http://fancyapps.com/fancybox/</a><br><a href="http://fancyapps.com/fancybox/#license">Creative Commons Attribution-NonCommercial 3.0</a></li>
 </ul>
 
 </div>
