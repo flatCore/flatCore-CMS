@@ -1,7 +1,7 @@
 <?php
 
-$fc_version_date = '2013-07-23';
-$fc_version_name = 'Release Candidate 3';
-$fc_version_build = '40';
+$fc_version_date = '2014-06-28';
+$fc_version_name = 'Release Candidate 4';
+$fc_version_build = '41';
 
 ?>

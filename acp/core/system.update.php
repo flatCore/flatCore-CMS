@@ -1,5 +1,7 @@
 <?php
 
+ob_start();
+
 //prohibit unauthorized access
 require("core/access.php");
 require_once('core/pclzip.lib.php');
@@ -11,8 +13,16 @@ if(isset($_GET['beta']) && $_GET['beta'] > 0) {
 	$remote_versions_file = file_get_contents("http://updates.flatCore.de/versions-beta.txt");
 }
 
+// example string: 2013-06-29<|>Release Candidate 3<|>39<|>fc_b39.zip
 $remote_versions = explode("<|>",$remote_versions_file);
 
+
+if(isset($_GET['github']) && $_GET['github'] > 0) {
+	$remote_versions[0] = '';
+	$remote_versions[1] = 'GitHub';
+	$remote_versions[2] = 'master';
+	$remote_versions[3] = 'flatCore-CMS-master.zip';
+}
 
 echo '<fieldset>';
 echo '<legend>'.$lang['system_update'].'</legend>';
@@ -48,13 +58,19 @@ function start_update() {
 	
 	$get_file = $remote_versions[3];
 	
+	if($remote_versions[3] == 'flatCore-CMS-master.zip') {
+		$source_file = 'https://github.com/flatCore/flatCore-CMS/archive/master.zip';
+	} else {
+		$source_file = 'http://updates.flatcore.de/zip/'.$get_file;
+	}
+	
 	mkdir("update", 0777);
 	mkdir("update/extract", 0777);
 
 	if(is_dir("update")) {
-		copy("http://updates.flatcore.de/zip/$get_file","./update/$get_file");
+		copy("$source_file","./update/$get_file");
 	}
-	
+		
 	$archive = new PclZip("update/$get_file");
 	
 	$list = $archive->extract(
@@ -66,6 +82,7 @@ function start_update() {
 	if($list == 0) {
 		echo "ERROR : ".$archive->errorInfo(true);
 	}
+	
 	
 	move_new_files();
 	update_database();
@@ -88,14 +105,25 @@ function start_update() {
  */
 
 function move_new_files() {
+
 	global $remote_versions;
+
 	$get_file = basename("$remote_versions[3]",".zip");
+
+	if(is_dir("update/extract/$get_file"))	{
+		$new_files = scandir_recursive("update/extract/$get_file");
+	} else {
+		echo '<div class="alert alert-danger">No Source found: '. $get_file .'</div>';
+	}
 	
-	$new_files = scandir_recursive("update/extract/$get_file");
 	
 	/* at first, the install folder */
 	copy_recursive("update/extract/$get_file/install","../install");
-	
+
+	echo "<h3>" . count($new_files) . " updated Files:</h3>";
+	echo '<div style="height:350px;overflow:auto;margin:0;" class="well well-sm">';
+	echo '<table class="table table-condensed table-bordered">';
+		
 	/* now copy the other files and directories */
 	foreach($new_files as $value) {
 	
@@ -105,21 +133,31 @@ function move_new_files() {
 			continue;
 		}
 		
+		if(preg_match("#\/content\/#i", "$value")) {
+			continue;
+		}
+		
+		
+		if(preg_match("#\/modules\/#i", "$value")) {
+			continue;
+		}
+		
 		if(substr($value, 0,1) == ".") { continue;}
 		if($value === '.' || $value === '..') {continue;}
 			
-			/**
-			 * copy files from 'update/extract/*'
-			 */
-			$target = "../" . substr($value, strlen("update/extract/$get_file/"));
-			$copy_string .= "<tr><td>$i</td><td>$target</td>";
-			copy_recursive("$value","$target");
+		/**
+		 * copy files from 'update/extract/*'
+		 */
+		$target = "../" . substr($value, strlen("update/extract/$get_file/"));
+		$copy_string .= "<tr><td>$i</td><td>$target</td>";
+		copy_recursive("$value","$target");
+		echo "<tr><td>$i</td><td>$target</td>";
+		ob_flush();
+		flush();
 	}
 	
-	echo "<h3>" . count($new_files) . " updated Files:</h3>";
-	echo '<div style="height:350px;overflow:auto;margin:0;">';
-	echo '<table class="table table-condensed table-bordered">';
-	echo "$copy_string";
+
+	
 	echo '</table>';
 	echo '</div>';
 	
@@ -172,9 +210,17 @@ function compare_versions() {
 	echo '</table>';
 	
 	/* compare build numbers */
-	if($remote_versions[2] > $fc_version_build) {
+	if(($remote_versions[2] > $fc_version_build) && ($remote_versions[2] != 'master')) {
 		echo '<div class="alert alert-info"><p>' . $lang['msg_update_available'] . '</p><hr>';
-		echo "<p><a href='$_SERVER[PHP_SELF]?tn=system&sub=update&a=start' class='btn btn-default btn-success'><span class='glyphicon glyphicon-cloud-download'></span> Update</a></p>";
+		echo "<p><a href='$_SERVER[PHP_SELF]?tn=system&sub=update&a=start' class='btn btn-success'><span class='glyphicon glyphicon-cloud-download'></span> Update</a></p>";
+		echo '</div>';
+	} elseif ($remote_versions[2] == 'master') {
+		echo '<div class="alert alert-info"><p>' . $lang['msg_update_available'] . '</p><hr class="shadow">';
+		echo '<div class="row"><div class="col-md-2">';
+		echo "<a href='$_SERVER[PHP_SELF]?tn=system&sub=update&a=start&github=1' class='btn btn-success btn-block'><span class='glyphicon glyphicon-cloud-download'></span> Update</a>";
+		echo '</div><div class="col-md-10">';
+		echo ' <pre>file: https://github.com/flatCore/flatCore-CMS/archive/master.zip</pre>';
+		echo '</div></div>';
 		echo '</div>';
 	} else {
 		echo '<div class="alert alert-success"><p>' . $lang['msg_no_update_available'] . '</p></div>';
