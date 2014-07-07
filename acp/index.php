@@ -52,7 +52,7 @@ if($_POST['check'] == "Login") {
 				<div class="form-group">
 					<label class="col-sm-2 control-label"><?php echo"$lang[f_user_nick]"; ?></label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="login_name">
+						<input type="text" class="form-control" name="login_name" autofocus="autofocus">
 					</div>
 				</div>
 				<div class="form-group">
