@@ -60,7 +60,7 @@ if(isset($_POST['save_snippet'])) {
 
 	if($cnt_changes == TRUE) {
 		$sys_message = '{OKAY} ' . $lang['db_changed'];
-		record_log($_SESSION['user_nick'],"new snippet <i>$snippet_title</i>","2");
+		record_log($_SESSION['user_nick'],"new snippet <b>$snippet_title</b>","2");
 		$modus = 'update';
 	} else {
 		$sys_message = '{ERROR} ' . $lang['db_not_changed'];
@@ -99,7 +99,7 @@ if(isset($_POST['update_snippet'])) {
 
 	if($cnt_changes == TRUE){
 		$sys_message = '{OKAY} ' . $lang['db_changed'];
-		record_log($_SESSION['user_nick'],"edit snippets <i>$snippet_title</i>","2");
+		record_log($_SESSION['user_nick'],"edit snippets <b>$snippet_title</b>","2");
 		$modus = 'update';
 	} else {
 		$sys_message = '{ERROR} ' . $lang['db_not_changed'] . " (ID: $snip_id)";

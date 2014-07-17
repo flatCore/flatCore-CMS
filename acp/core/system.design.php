@@ -37,10 +37,10 @@ if(isset($_POST['saveDesign'])) {
 	
 	if($cnt_changes == TRUE) {
 		$sys_message = "{OKAY} $lang[db_changed]";
-		//record_log($_SESSION['user_nick'],"edit system design","6");
+		record_log($_SESSION['user_nick'],"edit system design <b>$prefs_template</b>","6");
 	} else {
 		$sys_message = "{ERROR} $lang[db_not_changed]";
-		//record_log($_SESSION['user_nick'],"error on saving system design","11");
+		record_log($_SESSION['user_nick'],"error on saving system design","11");
 	}
 
 }

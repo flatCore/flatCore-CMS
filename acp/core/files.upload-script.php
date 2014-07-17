@@ -7,23 +7,22 @@ if($_SESSION['user_class'] != "administrator"){
 	die("PERMISSION DENIED!");
 }
 
+$max_w = (int) $_REQUEST['w']; // max image width
+$max_h = (int) $_REQUEST['h']; // max image height
+$max_fz = (int) $_REQUEST['fz']; // max filesize
 
-$max_w = (int) $_REQUEST[w]; // max image width
-$max_h = (int) $_REQUEST[h]; // max image height
-$max_fz = (int) $_REQUEST[fz]; // max filesize
 
-
-if(is_dir("../../$_REQUEST[d]")) {
-	$destination = "../../$_REQUEST[d]";
+if(is_dir('../../'.$_REQUEST['d'])) {
+	$destination = '../../'.$_REQUEST['d'];
 }
 
-if($_REQUEST[upload_type] == 'images') {
+if($_REQUEST['upload_type'] == 'images') {
 	if(array_key_exists('file',$_FILES) && $_FILES['file']['error'] == 0 ){
 		
 		$tmp_name = $_FILES['file']['tmp_name'];
 		$org_name = $_FILES['file']['name'];
-		$suffix 		= strtolower(substr(strrchr($org_name,'.'),1));
-		$prefix			= basename($org_name,".$suffix");
+		$suffix = strtolower(substr(strrchr($org_name,'.'),1));
+		$prefix = basename($org_name,".$suffix");
 		$img_name = clean_filename($prefix,$suffix);
 		$target = "$destination/$img_name";
 		$target = resize_image($tmp_name,$target, $max_w,$max_h,90);
@@ -37,17 +36,19 @@ if($_REQUEST[upload_type] == 'images') {
 
 
 
-if($_REQUEST[upload_type] == 'files') {
+if($_REQUEST['upload_type'] == 'files') {
 	if(array_key_exists('file',$_FILES) && $_FILES['file']['error'] == 0 ){
-		 	$tmp_name = $_FILES["file"]["tmp_name"];   
-	    $org_name = $_FILES["file"]["name"];
-	    $suffix 		= strtolower(substr(strrchr($org_name,'.'),1));
-	    $prefix			= basename($org_name,".$suffix");
-	    $files_name = clean_filename($prefix,$suffix);
+		$tmp_name = $_FILES["file"]["tmp_name"];   
+	  $org_name = $_FILES["file"]["name"];
+	  $suffix = strtolower(substr(strrchr($org_name,'.'),1));
+	  $prefix = basename($org_name,".$suffix");
+	  $files_name = clean_filename($prefix,$suffix);
 
-	    $target = "$destination/$files_name";
+	  $target = "$destination/$files_name";
 
-	    move_uploaded_file($tmp_name, $target);
+		if(@move_uploaded_file($tmp_name, $target)) {
+			print ('Upload complete');
+		}
 	}
 
 }
@@ -112,9 +113,9 @@ function increment_prefix($cnt,$target) {
 
 	$nbr = $cnt+1;
 	$path = pathinfo($target);
-	$filepath = $path[dirname];
-	$filename = $path[filename];
-	$extension = $path[extension];
+	$filepath = $path['dirname'];
+	$filename = $path['filename'];
+	$extension = $path['extension'];
 
 	if(substr("$filename", -2,1) == '_' AND is_numeric(substr("$filename", -1))) {
 		$filename_without_nbr = substr("$filename", 0,-2);
@@ -158,4 +159,5 @@ function clean_filename($prefix,$suffix) {
 
 	return $filename; 
 }
+
 ?>

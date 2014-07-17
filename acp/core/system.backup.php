@@ -28,7 +28,7 @@ foreach($dbfiles as $filename) {
 	echo '<div class="masonry-item-inner">';
 	echo '<h4>'.$db_file.'</h4>';
 	echo "<p>$lang[filesize]: ~ $db_bytes<br />$lang[lastedit]:<br />$db_time</p>";
-	echo '<p><a class="btn btn-success btn-sm btn-block" href="core/download.php?dl='.$db_file.'"><span class="glyphicon glyphicon-cloud-download"></span> '.$lang['download'].'</a></p>';
+	echo '<p><a class="btn btn-success btn-sm btn-block" href="/acp/core/download.php?dl='.$db_file.'"><span class="glyphicon glyphicon-cloud-download"></span> '.$lang['download'].'</a></p>';
   echo '</div>';
   echo '</div>'; 
 

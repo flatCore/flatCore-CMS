@@ -46,7 +46,7 @@ if(isset($_POST['save_text'])) {
 	
 	if($cnt_changes == TRUE) {
 		$sys_message = "{OKAY} $lang[db_changed] ($sel_text | $sel_language)";
-		record_log("$_SESSION[user_nick]","edit textlib $text","0");
+		record_log("$_SESSION[user_nick]","edit textlib <b>$sel_text</b>","0");
 	} else {
 		$sys_message = "{ERROR} $lang[db_not_changed] ($text)";
 	}

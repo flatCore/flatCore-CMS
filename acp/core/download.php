@@ -14,31 +14,27 @@ require("access.php");
 if($_GET["dl"]) {
 
 
-$get_file = strip_tags($_GET[dl]);
-$download = "../../" . FC_CONTENT_DIR . "/SQLite/$get_file";
-$filename = basename($download);
-
-
-
-if(is_file("$download")) {
-
-
-if(preg_match("/MSIE/i", $_SERVER["HTTP_USER_AGENT"]) ) { 
-	header("Content-type: application/x-msdownload"); 
-} else { 
-	header("Content-type: application/octet-stream"); 
-}
-header("Content-Length: ".filesize($download)); 
-header("Content-Discription: Backup"); 
-header("Pragma: no-cache"); 
-header("Expires: 0"); 
-header("Content-Disposition: attachment; filename=$filename");  
-readfile($download);
-exit;
-
-} else {
-	die("<b>File not found!</b>");
-}
+	$filename = basename($_GET['dl']);
+	$download = '../../' . FC_CONTENT_DIR . '/SQLite/'.$filename;
+		
+	if(is_file("$download")) {
+	
+		if(preg_match("/MSIE/i", $_SERVER["HTTP_USER_AGENT"]) ) { 
+			header("Content-type: application/x-msdownload"); 
+		} else { 
+			header("Content-type: application/octet-stream"); 
+		}
+		header("Content-Length: ".filesize($download)); 
+		header("Content-Discription: Backup"); 
+		header("Pragma: no-cache"); 
+		header("Expires: 0"); 
+		header("Content-Disposition: attachment; filename=$filename");  
+		readfile($download);
+		exit;
+	
+	} else {
+		die("<b>File not found!</b>");
+	}
 
 } else {
 	die("*** No file ***");
