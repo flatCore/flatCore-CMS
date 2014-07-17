@@ -1,13 +1,5 @@
-<h2>Willkommen auf Deiner neuen flatCore Testseite.</h2>
+<h2>Willkommen auf Deiner neuen flatCore Seite.</h2>
 
-<p>
-Dieses Content Management System basiert auf PHP und nutzt als Datenbank SQLite3. Die Standardinstallation ist so minimalistisch wie m&ouml;glich, kann jedoch durch den modularen Aufbau einfach erweitert werden.
-</p>
+<p class="lead">Dieses Content Management System basiert auf PHP und nutzt als Datenbank SQLite3. Die Standardinstallation ist so minimalistisch wie m&ouml;glich, kann jedoch durch den modularen Aufbau einfach erweitert werden.</p>
 
-<p>
-Du kannst diese Seite im ACP - Seiten - bearbeiten. Hier kannst Du auch weitere Seiten hinzufügen.
-</p>
-
-<p>
-Solltest Du es noch nicht getan haben, <b>lösche jetzt das Verzeichnis install</b>.
-</p>
+<p>Du kannst diese Seite im ACP bearbeiten. Hier kannst Du auch weitere Seiten hinzuf&uuml;gen.</p>
