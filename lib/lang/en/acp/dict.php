@@ -173,6 +173,8 @@ $lang['f_subpage'] = "Subpage...";
 $lang['f_page_sort'] = "Sorting-ID";
 $lang['f_page_linkname'] = "Linkname";
 $lang['f_page_permalink'] = "Permalink";
+$lang['f_page_redirect'] = "Redirect";
+$lang['btn_redirect'] = "Redirects";
 $lang['f_page_title'] = "Page Title";
 $lang['f_page_status'] = "Status";
 

@@ -117,6 +117,16 @@ if($p == "" OR $p == "portal") {
 }
 
 
+/* if is set page_redirect, we can stop here and go straight to the desired location */
+if($page_contents['page_redirect'] != '') {
+	include_once('core/tracker.php');
+	$redirect = $page_contents['page_redirect'];
+	$redirect_code = (int) $page_contents['page_redirect_code'];
+	header("location: $redirect",TRUE,$redirect_code);
+	exit;
+}
+
+
 if(is_dir("lib/lang/$page_contents[page_language]") AND ($page_contents['page_language'] != '')) {
 	$languagePack = $page_contents['page_language'];
 }
@@ -201,6 +211,7 @@ if(!isset($preview)) {
 if($prefs_logfile == "on") {
 	include_once('core/logfile.php');
 }
+
 
 ?>
 

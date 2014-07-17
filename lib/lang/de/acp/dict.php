@@ -168,6 +168,8 @@ $lang['f_subpage'] = "Unterseite von...";
 $lang['f_page_sort'] = "Sortierungs-ID";
 $lang['f_page_linkname'] = "Linkname";
 $lang['f_page_permalink'] = "Permalink";
+$lang['f_page_redirect'] = "Weiterleitung";
+$lang['btn_redirect'] = "Weiterleitungen";
 $lang['f_page_title'] = "Titel";
 $lang['f_page_status'] = "Status";
 

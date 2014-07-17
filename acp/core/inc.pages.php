@@ -3,50 +3,35 @@
 //prohibit unauthorized access
 require("core/access.php");
 
-/*
-$sub_active[0] = "submenu";
-$sub_active[1] = "submenu";
-$sub_active[2] = "submenu";
-$sub_active[3] = "submenu";
-$sub_active[4] = "submenu";
-$sub_active[5] = "submenu";
-*/
 
 switch ($sub) {
 
 case "list":
 	$subinc = "pages.list";
-	//$sub_active[0] = "submenu_selected";
 	break;
 	
 case "edit":
 	$subinc = "pages.edit";
-	//$sub_active[1] = "submenu_selected";
 	break;
 	
 case "new":
 	$subinc = "pages.edit";
-	//$sub_active[2] = "submenu_selected";
 	break;
 	
 case "customize":
 	$subinc = "pages.customize";
-	//$sub_active[3] = "submenu_selected";
 	break;
 
 case "snippets":
 	$subinc = "pages.snippets";
-	//$sub_active[4] = "submenu_selected";
 	break;
 		
 case "rss":
 	$subinc = "pages.edit_rss";
-	//$sub_active[5] = "submenu_selected";
 	break;
 	
 default:
 	$subinc = "pages.list";
-	//$sub_active[0] = "submenu_selected";
 	break;
 
 }
@@ -130,6 +115,12 @@ if($_GET['switch'] == 'statusPuplic' && $_SESSION['checked_public'] == 'checked'
 	$_SESSION['checked_public'] = "checked";
 }
 
+if($_GET['switch'] == 'statusRedirect' && $_SESSION['checked_redirect'] == 'checked') {
+	$_SESSION['checked_redirect'] = "";
+} elseif($_GET['switch'] == 'statusRedirect' && $_SESSION['checked_redirect'] == '') {
+	$_SESSION['checked_redirect'] = "checked";
+}
+
 $set_status_filter = "page_status = 'foobar' "; // reset -> result = 0
 
 
@@ -148,6 +139,9 @@ if($_SESSION['checked_public'] == "checked") {
 	$btn_status_public = 'btn-primary';
 }
 
+if($_SESSION['checked_redirect'] == "checked") {
+	$btn_status_redirect = 'btn-primary';
+}
 
 
 /* filter pages by keywords $kw_filter */
@@ -231,8 +225,11 @@ if($subinc == "pages.list") {
 	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPuplic" class="btn btn-default btn-sm '.$btn_status_public.'">'.$lang['f_page_status_puplic'].'</a>';
 	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPrivate" class="btn btn-default btn-sm '.$btn_status_private.'">'.$lang['f_page_status_private'].'</a>';
 	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusDraft" class="btn btn-default btn-sm '.$btn_status_draft.'">'.$lang['f_page_status_draft'].'</a>';
+	$status_btn_group .= '</div> ';
+	
+	$status_btn_group .= '<div class="btn-group">';
+	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusRedirect" class="btn btn-default btn-sm '.$btn_status_redirect.'">'.$lang['btn_redirect'].'</a>';
 	$status_btn_group .= '</div>';
-
 
 	$kw_form  = "<form action='acp.php?tn=pages&sub=list' method='POST' class='form-inline' style='margin-bottom:3px;'>";
 	$kw_form .= '<div class="input-group">';

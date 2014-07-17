@@ -7,7 +7,7 @@ $dbh = new PDO("sqlite:".CONTENT_DB);
 
 unset($result);
 /* $_SESSION[filter_string] was defined in inc.pages.php */
-$sql = "SELECT page_id,	page_language, page_linkname, page_title, page_sort, page_lastedit,	page_lastedit_from, page_status, page_template,	page_modul, page_authorized_users, page_permalink
+$sql = "SELECT page_id,	page_language, page_linkname, page_title, page_sort, page_lastedit,	page_lastedit_from, page_status, page_template,	page_modul, page_authorized_users, page_permalink, page_redirect, page_redirect_code
 		FROM fc_pages
 		$_SESSION[filter_string]
 		ORDER BY page_language ASC, page_sort ASC";
@@ -58,6 +58,8 @@ for($i=0;$i<$cnt_result;$i++) {
 	if($result[$i]['page_sort'] == "" || $result[$i]['page_sort'] == 'portal') {
 		continue;
 	}
+	
+	unset($show_redirect);
 
 	$page_id = $result[$i]['page_id'];
 	$page_sort = $result[$i]['page_sort'];
@@ -70,6 +72,8 @@ for($i=0;$i<$cnt_result;$i++) {
 	$page_authorized_users = $result[$i]['page_authorized_users'];
 	$page_language = $result[$i]['page_language'];
 	$page_permalink = $result[$i]['page_permalink'];
+	$page_redirect = $result[$i]['page_redirect'];
+	$page_redirect_code = $result[$i]['page_redirect_code'];
 	$page_modul = $result[$i]['page_modul'];
 	
 	if($page_template == "use_standard") {
@@ -123,10 +127,17 @@ for($i=0;$i<$cnt_result;$i++) {
 		$show_mod = ' <small><span class="glyphicon glyphicon-cog" title="'.$page_modul_title.'"></span></small>';
 	}
 	
+	if($page_redirect != '') {
+		$show_redirect = '<small class="text-primary"><span class="glyphicon glyphicon-arrow-right"></span> '.$page_redirect.'</small>';
+		if($_SESSION['checked_redirect'] != "checked") {
+			continue;
+		}
+	}
+	
 	echo"<tr class='$tr_status_class $tr_page_class'>
 			<td><div class='extrainfo condensed'>$status_marker $page_sort</div></td>
 			<td><a class='darklink tooltip_bottom' data-toggle='tooltip' title='$frontend_link' href='$frontend_link'>$page_linkname</a>$show_mod</td>
-			<td>$page_title<p class='extrainfo condensed'>$last_edit | Style: $show_template_name | $page_language</p></td>
+			<td>$page_title<p class='extrainfo condensed'>$last_edit | Style: $show_template_name | $page_language <br>$show_redirect</p></td>
 			<td style='text-align:right;'>$pi</td>
 			<td><div class='btn-group'>$edit_button</div></td>
 		</tr>";
@@ -166,6 +177,8 @@ for($i=0;$i<$cnt_result;$i++) {
 	if($result[$i]['page_sort'] != "" && $result[$i]['page_sort'] != 'portal') {
 		continue;
 	}
+	
+	unset($show_redirect);
 
 	$page_id = $result[$i]['page_id'];
 	$page_sort = $result[$i]['page_sort'];
@@ -178,6 +191,7 @@ for($i=0;$i<$cnt_result;$i++) {
 	$page_authorized_users = $result[$i]['page_authorized_users'];
 	$page_language = $result[$i]['page_language'];
 	$page_permalink = $result[$i]['page_permalink'];
+	$page_redirect = $result[$i]['page_redirect'];
 	
 	if($page_template == "use_standard") {
 		$show_template_name =  "$lang[use_standard]";
@@ -225,9 +239,17 @@ for($i=0;$i<$cnt_result;$i++) {
 		$frontend_link = "../index.php?p=$page_id";
 	}
 	
+	if($page_redirect != '') {
+		$show_redirect = '<small class="text-primary"><span class="glyphicon glyphicon-arrow-right"></span> '.$page_redirect.'</small>';
+		if($_SESSION['checked_redirect'] != "checked") {
+			continue;
+		}
+	}
+
+	
 	echo"<tr class='$tr_status_class'>
 			<td><a class='darklink tooltip_bottom' data-toggle='tooltip' title='$frontend_link' href='$frontend_link'>$page_linkname</a></td>
-			<td><span class='bold'>$page_title</span><p class='extrainfo condensed'>$last_edit | Style: $show_template_name | $lang[f_page_language]: $page_language</p></td>
+			<td><span class='bold'>$page_title</span><p class='extrainfo condensed'>$last_edit | Style: $show_template_name | $lang[f_page_language]: $page_language<br>$show_redirect</p></td>
 			<td style='text-align:right;'>$pi</td>
 			<td><div class='btn-group'>$edit_button</div></td>
 		</tr>";

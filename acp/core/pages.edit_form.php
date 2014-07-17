@@ -104,6 +104,20 @@ if($page_sort != "portal") {
 echo tpl_form_control_group('',$lang['f_page_linkname'],"<input class='form-control' type='text' name='page_linkname' value='$page_linkname'>");
 echo tpl_form_control_group('',$lang['f_page_permalink'],"<input class='form-control' type='text' name='page_permalink' value='$page_permalink'>");
 
+
+$select_page_redirect_code  = '<select name="page_redirect_code" class="form-control">';
+for($i=0;$i<10;$i++) {
+	$redirect_code = 300+$i;
+	unset($sel_page_redirect_code);
+	if($page_redirect_code == $redirect_code) {
+		$sel_page_redirect_code = 'selected';
+	}
+	$select_page_redirect_code .= '<option value="'.$redirect_code.'" '.$sel_page_redirect_code.'>'.$redirect_code.'</option>';
+}
+$select_page_redirect_code .= '</select>';
+
+echo tpl_form_control_group('',$lang['f_page_redirect'],'<div class="row"><div class="col-md-3">'.$select_page_redirect_code.'</div><div class="col-md-9"><input class="form-control" type="text" name="page_redirect" value="'.$page_redirect.'"></div></div>');
+
 echo'</div>'; /* EOL tab_info */
 
 

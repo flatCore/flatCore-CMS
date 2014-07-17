@@ -30,6 +30,8 @@ $pdo_fields = array(
 	'page_language' => 'STR',
 	'page_linkname' => 'STR',
 	'page_permalink' => 'STR',
+	'page_redirect' => 'STR',
+	'page_redirect_code' => 'STR',
 	'page_title' => 'STR',
 	'page_status' => 'STR',
 	'page_usergroup' => 'STR',
@@ -58,6 +60,8 @@ $pdo_fields_new = array(
 	'page_language' => 'STR',
 	'page_linkname' => 'STR',
 	'page_permalink' => 'STR',
+	'page_redirect' => 'STR',
+	'page_redirect_code' => 'STR',
 	'page_title' => 'STR',
 	'page_status' => 'STR',
 	'page_usergroup' => 'STR',
@@ -87,6 +91,8 @@ $pdo_fields_cache = array(
 	'page_language' => 'STR',
 	'page_linkname' => 'STR',
 	'page_permalink' => 'STR',
+	'page_redirect' => 'STR',
+	'page_redirect_code' => 'STR',
 	'page_title' => 'STR',
 	'page_status' => 'STR',
 	'page_usergroup' => 'STR',
@@ -173,14 +179,14 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 $page_lastedit = time();
 $page_lastedit_from = "$_SESSION[user_nick]";
 
-$page_position = $_POST[page_position];
-$page_order = $_POST[page_order];
+$page_position = $_POST['page_position'];
+$page_order = $_POST['page_order'];
 
 $page_sort = "$page_position.$page_order";
 
-$page_version = $_POST[page_version];
-$page_title = strip_tags($_POST[page_title]);
-$page_linkname = strip_tags($_POST[page_linkname]);
+$page_version = $_POST['page_version'];
+$page_title = strip_tags($_POST['page_title']);
+$page_linkname = strip_tags($_POST['page_linkname']);
 
 if($page_position == "portal") {
 	$page_sort = "portal";
@@ -193,7 +199,7 @@ if($page_position == "portal") {
 
 
 //usergroups
-$arr_set_usergroup = $_POST[set_usergroup];
+$arr_set_usergroup = $_POST['set_usergroup'];
 
 if(is_array($arr_set_usergroup)) {
 	sort($arr_set_usergroup);
@@ -203,7 +209,7 @@ if(is_array($arr_set_usergroup)) {
 }
 
 //set_authorized_admins
-$arr_set_authorized_admins = $_POST[set_authorized_admins];
+$arr_set_authorized_admins = $_POST['set_authorized_admins'];
 
 if(is_array($arr_set_authorized_admins)) {
 	sort($arr_set_authorized_admins);
@@ -213,7 +219,7 @@ if(is_array($arr_set_authorized_admins)) {
 }
 
 // template
-$select_template = explode("<|-|>", $_POST[select_template]);
+$select_template = explode("<|-|>", $_POST['select_template']);
 $page_template 			= $select_template[0];
 $page_template_layout 	= $select_template[1];
 
@@ -438,7 +444,7 @@ if(is_numeric($editpage)) {
 	// modus newpage
 	
 	
-	echo"<h3>$lang[h_modus_newpage]</h3>";
+	echo'<h3>'.$lang['h_modus_newpage'].'</h3>';
 	
 		//set submit button
 		$submit_button = "<input type='submit' class='btn btn-success' name='save_the_page' value='$lang[save_new_page]'>";
@@ -448,7 +454,7 @@ if(is_numeric($editpage)) {
 
 
 
-if($_SESSION[acp_editpages] != "allowed") {
+if($_SESSION['acp_editpages'] != "allowed") {
 	$arr_checked_admins = explode(",",$page_authorized_users);
 	if(!in_array("$_SESSION[user_nick]", $arr_checked_admins)) {
 		$show_form = "false";
