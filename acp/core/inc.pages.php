@@ -92,7 +92,7 @@ if(isset($_GET['switch'])) {
 	$_SESSION['set_status'] = true;
 }
 
-if($_SESSION['checked_draft'] == '' AND $_SESSION['checked_private'] == '' AND $_SESSION['checked_public'] == '' AND $_SESSION['set_status'] == false) {
+if($_SESSION['checked_draft'] == '' AND $_SESSION['checked_private'] == '' AND $_SESSION['checked_public'] == '' AND $_SESSION['checked_ghost'] == '' AND $_SESSION['set_status'] == false) {
 	$_SESSION['checked_public'] = 'checked';
 }
 
@@ -121,6 +121,12 @@ if($_GET['switch'] == 'statusRedirect' && $_SESSION['checked_redirect'] == 'chec
 	$_SESSION['checked_redirect'] = "checked";
 }
 
+if($_GET['switch'] == 'statusGhost' && $_SESSION['checked_ghost'] == 'checked') {
+	$_SESSION['checked_ghost'] = "";
+} elseif($_GET['switch'] == 'statusGhost' && $_SESSION['checked_ghost'] == '') {
+	$_SESSION['checked_ghost'] = "checked";
+}
+
 $set_status_filter = "page_status = 'foobar' "; // reset -> result = 0
 
 
@@ -137,6 +143,11 @@ if($_SESSION['checked_private'] == "checked") {
 if($_SESSION['checked_public'] == "checked") {
 	$set_status_filter .= "OR page_status = 'public' ";
 	$btn_status_public = 'btn-primary';
+}
+
+if($_SESSION['checked_ghost'] == "checked") {
+	$set_status_filter .= "OR page_status = 'ghost' ";
+	$btn_status_ghost = 'btn-primary';
 }
 
 if($_SESSION['checked_redirect'] == "checked") {
@@ -223,6 +234,7 @@ if($subinc == "pages.list") {
 	
 	$status_btn_group  = '<div class="btn-group">';
 	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPuplic" class="btn btn-default btn-sm '.$btn_status_public.'">'.$lang['f_page_status_puplic'].'</a>';
+	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusGhost" class="btn btn-default btn-sm '.$btn_status_ghost.'">'.$lang['f_page_status_ghost'].'</a>';
 	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPrivate" class="btn btn-default btn-sm '.$btn_status_private.'">'.$lang['f_page_status_private'].'</a>';
 	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusDraft" class="btn btn-default btn-sm '.$btn_status_draft.'">'.$lang['f_page_status_draft'].'</a>';
 	$status_btn_group .= '</div> ';

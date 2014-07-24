@@ -18,7 +18,8 @@ if($start_search == "true") {
 			FROM fc_pages
 			WHERE (page_title like :searchstring OR page_content like :searchstring OR page_meta_keywords like :searchstring)
 			AND (page_language = :languagePack)
-			AND (page_status != 'draft')";
+			AND (page_status != 'draft')
+			AND (page_status != 'ghost')";
 	
 	
 	try {

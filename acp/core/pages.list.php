@@ -86,6 +86,8 @@ for($i=0;$i<$cnt_result;$i++) {
 	
 	if($page_status == "public") {
 		$tr_status_class = 'page-list-public';
+	} elseif($page_status == "ghost") {
+		$tr_status_class = 'page-list-ghost';
 	} elseif($page_status == "private") {
 		$tr_status_class = 'page-list-private';
 	} elseif($page_status == "draft") {
@@ -212,6 +214,8 @@ for($i=0;$i<$cnt_result;$i++) {
 	
 	if($page_status == "public") {
 		$tr_status_class = 'page-list-public';
+	} elseif($page_status == "ghost") {
+		$tr_status_class = 'page-list-ghost';
 	} elseif($page_status == "private") {
 		$tr_status_class = 'page-list-private';
 	} elseif($page_status == "draft") {

@@ -180,6 +180,7 @@ $lang['legend_unstructured_pages'] = "ungeordnete Seiten";
 $lang['f_page_status_puplic'] = "Öffentlich";
 $lang['f_page_status_private'] = "Privat";
 $lang['f_page_status_draft'] = "Entwurf";
+$lang['f_page_status_ghost'] = "Unsichtbar";
 
 $lang['f_meta_author'] = "Autor";
 $lang['f_meta_date'] = "Datum";

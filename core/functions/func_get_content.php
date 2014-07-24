@@ -32,7 +32,7 @@ function get_content($page, $mode = 'p') {
 	$prefs = $dbh->query($prefs_sql)->fetch(PDO::FETCH_ASSOC);
 	
 	if($_SESSION['user_class'] != 'administrator') {
-		$nav_sql_filter = "WHERE page_status != 'draft' AND page_language = '$page_contents[page_language]'";
+		$nav_sql_filter = "WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = '$page_contents[page_language]'";
 	} else  {
 		$nav_sql_filter = "WHERE page_language = '$page_contents[page_language]'";
 	}

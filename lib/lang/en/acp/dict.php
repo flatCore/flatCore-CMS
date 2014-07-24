@@ -184,6 +184,7 @@ $lang['legend_unstructured_pages'] = "Single Pages";
 $lang['f_page_status_puplic'] = "Public";
 $lang['f_page_status_private'] = "Privat";
 $lang['f_page_status_draft'] = "Draft";
+$lang['f_page_status_ghost'] = "Invisible";
 
 $lang['f_meta_author'] = "Author";
 $lang['f_meta_date'] = "Date";

@@ -491,6 +491,16 @@ table.table-pages tr td {
 	color: #060;
 }
 
+.table-list tr.page-list-ghost td:first-child {
+	background: rgba(255, 230, 180, 0.6);
+	border-right: 1px solid #f90;
+}
+
+.table-list tr.page-list-ghost td:first-child .extrainfo,
+.table-list tr.page-list-ghost td:first-child a {
+	color: #c63;
+}
+
 .table-list tr.page-list-private td:first-child {
 	background: rgba(242, 222, 222, 0.6);
 	border-right: 1px solid #c33;

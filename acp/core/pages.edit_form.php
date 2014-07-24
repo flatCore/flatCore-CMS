@@ -320,6 +320,10 @@ $select_page_status .= "<input type='radio' name='page_status' value='public'".(
 $select_page_status .= '</label>';
 
 $select_page_status .= '<label class="radio-inline">';
+$select_page_status .= "<input type='radio' name='page_status' value='ghost'".($page_status == "ghost" ? 'checked' :'')."> <span class='label label-warning'>$lang[f_page_status_ghost]</span>";
+$select_page_status .= '</label>';
+
+$select_page_status .= '<label class="radio-inline">';
 $select_page_status .= "<input type='radio' name='page_status' value='private'".($page_status == "private" ? 'checked' :'')."> <span class='label label-danger'>$lang[f_page_status_private]</span>";
 $select_page_status .= '</label>';
 
