@@ -241,7 +241,7 @@ hr {
 	border : 0;
   height : 1px;
   margin : 1em 0;
-  border-bottom: 1px solid #b4b4b4;
+  border-bottom: 1px solid #ddd;
 }
 
 hr.spacer {
@@ -483,14 +483,33 @@ table.table-pages tr td {
 
 .table-list tr.page-list-public td:first-child {
 	background: rgba(223, 240, 216, 0.6);
+	border-right: 1px solid #090;
+}
+
+.table-list tr.page-list-public td:first-child .extrainfo,
+.table-list tr.page-list-public td:first-child a {
+	color: #060;
 }
 
 .table-list tr.page-list-private td:first-child {
 	background: rgba(242, 222, 222, 0.6);
+	border-right: 1px solid #c33;
+	color: #900;
+}
+
+.table-list tr.page-list-private td:first-child .extrainfo,
+.table-list tr.page-list-private td:first-child a {
+	color: #900;
 }
 
 .table-list tr.page-list-draft td:first-child {
 	background: rgba(245, 245, 245, 0.8);
+	border-right: 1px solid #aaa;
+}
+
+.table-list tr.page-list-draft td:first-child .extrainfo,
+.table-list tr.page-list-draft td:first-child a {
+	color: #999;
 }
 
 .bg-bright {

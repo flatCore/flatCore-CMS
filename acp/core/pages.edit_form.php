@@ -100,12 +100,19 @@ if($page_sort != "portal") {
 	
 
 }
+
+
+
+echo '<hr>';
 	
 echo tpl_form_control_group('',$lang['f_page_linkname'],"<input class='form-control' type='text' name='page_linkname' value='$page_linkname'>");
 echo tpl_form_control_group('',$lang['f_page_permalink'],"<input class='form-control' type='text' name='page_permalink' value='$page_permalink'>");
 
 
 $select_page_redirect_code  = '<select name="page_redirect_code" class="form-control">';
+if($page_redirect_code == '') {
+	$page_redirect_code = 301;
+}
 for($i=0;$i<10;$i++) {
 	$redirect_code = 300+$i;
 	unset($sel_page_redirect_code);
@@ -308,15 +315,15 @@ if($page_status == "") {
 	$page_status = "public";
 }
 
-$select_page_status = '<label class="radio">';
+$select_page_status = '<label class="radio-inline">';
 $select_page_status .= "<input type='radio' name='page_status' value='public'".($page_status == "public" ? 'checked' :'')."> <span class='label label-success'>$lang[f_page_status_puplic]</span>";
 $select_page_status .= '</label>';
 
-$select_page_status .= '<label class="radio">';
+$select_page_status .= '<label class="radio-inline">';
 $select_page_status .= "<input type='radio' name='page_status' value='private'".($page_status == "private" ? 'checked' :'')."> <span class='label label-danger'>$lang[f_page_status_private]</span>";
 $select_page_status .= '</label>';
 
-$select_page_status .= '<label class="radio">';
+$select_page_status .= '<label class="radio-inline">';
 $select_page_status .= "<input type='radio' name='page_status' value='draft'".($page_status == "draft" ? 'checked' :'')."> <span class='label label-default'>$lang[f_page_status_draft]</span>";	
 $select_page_status .= '</label>';
 
@@ -343,7 +350,6 @@ for($i=0;$i<count($arr_groups);$i++) {
 	$checkbox_usergroup .= "<input type='checkbox' $checked name='set_usergroup[]' value='$group_name'> $group_name";
 	$checkbox_usergroup .= '</label>';
 }
-
 
 echo tpl_form_control_group('',$lang['choose_usergroup'],$checkbox_usergroup);
 

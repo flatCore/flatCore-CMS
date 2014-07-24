@@ -10,7 +10,7 @@ unset($result);
 $sql = "SELECT page_id,	page_language, page_linkname, page_title, page_sort, page_lastedit,	page_lastedit_from, page_status, page_template,	page_modul, page_authorized_users, page_permalink, page_redirect, page_redirect_code
 		FROM fc_pages
 		$_SESSION[filter_string]
-		ORDER BY page_language ASC, page_sort ASC";
+		ORDER BY page_language ASC, page_sort ASC, page_linkname ASC";
 
 foreach ($dbh->query($sql) as $row) {
 	$result[] = $row;
