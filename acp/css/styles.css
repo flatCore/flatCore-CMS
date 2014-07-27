@@ -713,6 +713,22 @@ a.buttonLink:active {
 }
 
 
+.btn-public, .btn-public.active {
+	border-bottom: 1px solid #47a447;
+}
+
+.btn-private, .btn-private.active {
+	border-bottom: 1px solid #c9302c;
+}
+
+.btn-draft, .btn-draft.active {
+	border-bottom: 1px solid #666;
+}
+
+.btn-ghost, .btn-ghost.active {
+	border-bottom: 1px solid #ec971f;
+}
+
 textarea#textEditor {
 	width: 100%;
 	height: 350px;

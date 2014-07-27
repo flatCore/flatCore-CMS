@@ -10,7 +10,8 @@ $custom_fields = get_custom_fields();
 sort($custom_fields);
 $cnt_custom_fields = count($custom_fields);
 
-
+echo '<div class="row" style="margin-right:0;">';
+echo '<div class="col-lg-9 col-md-8 col-sm-12">';
 
 echo '<ul class="nav nav-tabs" id="bsTabs">';
 echo '<li class="active"><a href="#info" data-toggle="tab">'.$lang['tab_info'].'</a></li>';
@@ -18,7 +19,6 @@ echo '<li><a href="#content" data-toggle="tab">'.$lang['tab_content'].'</a></li>
 echo '<li><a href="#extracontent" data-toggle="tab">'.$lang['tab_extracontent'].'</a></li>';
 echo '<li><a href="#meta" data-toggle="tab">'.$lang['tab_meta'].'</a></li>';
 echo '<li><a href="#head" data-toggle="tab">'.$lang['tab_head'].'</a></li>';
-echo '<li><a href="#preferences" data-toggle="tab">'.$lang['tab_page_preferences'].'</a></li>';
 if($cnt_custom_fields > 0) {
 	echo '<li><a href="#custom" data-toggle="tab">'.$lang['legend_custom_fields'].'</a></li>';
 }
@@ -220,9 +220,41 @@ echo'</div>'; /* EOL tab_head */
 
 
 
-/* tab_preferences */
-echo'<div class="tab-pane fade" id="preferences">';
+if($cnt_custom_fields > 0) {
 
+/* tab custom fields */
+echo'<div class="tab-pane fade" id="custom">';
+
+	for($i=0;$i<$cnt_custom_fields;$i++) {	
+		if(substr($custom_fields[$i],0,10) == "custom_one") {
+			$label = substr($custom_fields[$i],11);
+			echo tpl_form_control_group('',$label,"<input type='text' class='form-control' name='$custom_fields[$i]' value='" . $$custom_fields[$i] . "'>");
+		}	elseif(substr($custom_fields[$i],0,11) == "custom_text") {
+			$label = substr($custom_fields[$i],12);
+			echo tpl_form_control_group('',$label,"<textarea class='form-control' rows='6' name='$custom_fields[$i]'>" . $$custom_fields[$i] . "</textarea>");
+		}	elseif(substr($custom_fields[$i],0,14) == "custom_wysiwyg") {
+			$label = substr($custom_fields[$i],15);
+			echo tpl_form_control_group('',$label,"<textarea class='mceEditor_small' name='$custom_fields[$i]'>" . $$custom_fields[$i] . "</textarea>");
+		}		
+	}
+
+echo'</div>'; /* EOL tab custom fields */
+
+}
+
+echo"</div>"; // EOL fancytabs
+
+echo '</div>';
+echo '<div class="col-lg-3 col-md-4 col-sm-12">';
+
+
+echo '<div class="panel panel-default">';
+echo '<div class="panel-heading">'.$lang['tab_page_preferences'].'</div>';
+echo '<div class="panel-body" style="padding-left:30px;padding-right:30px;">';
+
+
+
+/* Select Language */
 $arr_lang = get_all_languages();
 
 $select_page_language  = '<select name="page_language" class="form-control">';
@@ -237,7 +269,13 @@ for($i=0;$i<count($arr_lang);$i++) {
 
 $select_page_language .= '</select>';
 
-echo tpl_form_control_group('',$lang['f_page_language'],$select_page_language);
+echo '<div class="form-group">';
+echo '<label>'.$lang['f_page_language'].'</label>';
+echo $select_page_language;
+echo '</div>';
+
+
+/* Select Template */
 
 $arr_Styles = get_all_templates();
 
@@ -252,33 +290,33 @@ $select_select_template .= "<option value='use_standard<|-|>use_standard' $selec
 /* templates list */
 foreach($arr_Styles as $template) {
 
-
-$arr_layout_tpl = glob("../styles/$template/templates/layout*.tpl");
-
-$select_select_template .= "<optgroup label='$template'>";
-
-foreach($arr_layout_tpl as $layout_tpl) {
-	$layout_tpl = basename($layout_tpl);
-
-	$selected = '';
-	if($template == "$page_template" && $layout_tpl == "$page_template_layout") {
-		$selected = 'selected';
+	$arr_layout_tpl = glob("../styles/$template/templates/layout*.tpl");
+	
+	$select_select_template .= "<optgroup label='$template'>";
+	
+	foreach($arr_layout_tpl as $layout_tpl) {
+		$layout_tpl = basename($layout_tpl);
+	
+		$selected = '';
+		if($template == "$page_template" && $layout_tpl == "$page_template_layout") {
+			$selected = 'selected';
+		}
+		
+		$select_select_template .=  "<option $selected value='$template<|-|>$layout_tpl'>$template » $layout_tpl</option>";
 	}
 	
-	$select_select_template .=  "<option $selected value='$template<|-|>$layout_tpl'>$template » $layout_tpl</option>";
+	$select_select_template .= '</optgroup>';
+
 }
-
-$select_select_template .= '</optgroup>';
-    
-
-
-
-} // eo foreach template list
 
 $select_select_template .= '</select>';
 
-echo tpl_form_control_group('',$lang['f_page_template'],$select_select_template);
+echo '<div class="form-group">';
+echo '<label>'.$lang['f_page_template'].'</label>';
+echo $select_select_template;
+echo '</div>';
 
+/* Select Modul */
 
 $arr_iMods = get_all_moduls();
 
@@ -304,10 +342,18 @@ for($i=0;$i<count($arr_iMods);$i++) {
 $select_page_modul .= '</select>';
 
 
-echo tpl_form_control_group('',$lang['f_page_modul'],$select_page_modul);
-		
-echo tpl_form_control_group('',$lang['f_page_modul_query'],"<input class='form-control' type='text' name='page_modul_query' value='$page_modul_query'>");
+echo '<div class="form-group">';
+echo '<label>'.$lang['f_page_modul'].'</label>';
+echo $select_page_modul;
+echo '</div>';
 
+echo '<div class="form-group">';
+echo '<label>'.$lang['f_page_modul_query'].'</label>';
+echo "<input class='form-control' type='text' name='page_modul_query' value='$page_modul_query'>";
+echo '</div>';
+
+
+/* Select  Status */
 
 unset($checked_status);
 
@@ -315,26 +361,38 @@ if($page_status == "") {
 	$page_status = "public";
 }
 
-$select_page_status = '<label class="radio-inline">';
-$select_page_status .= "<input type='radio' name='page_status' value='public'".($page_status == "public" ? 'checked' :'')."> <span class='label label-success'>$lang[f_page_status_puplic]</span>";
+
+$select_page_status = '<div class="text-center">';
+$select_page_status .= '<div class="btn-group" data-toggle="buttons">';
+
+$select_page_status .= '<label class="btn btn-sm btn-default btn-public '.($page_status == "public" ? 'active' :'').' ">';
+$select_page_status .= "<input type='radio' name='page_status' value='public'".($page_status == "public" ? 'checked' :'')."> $lang[f_page_status_puplic]";
 $select_page_status .= '</label>';
 
-$select_page_status .= '<label class="radio-inline">';
-$select_page_status .= "<input type='radio' name='page_status' value='ghost'".($page_status == "ghost" ? 'checked' :'')."> <span class='label label-warning'>$lang[f_page_status_ghost]</span>";
+$select_page_status .= '<label class="btn btn-sm btn-default btn-ghost '.($page_status == "ghost" ? 'active' :'').'">';
+$select_page_status .= "<input type='radio' name='page_status' value='ghost'".($page_status == "ghost" ? 'checked' :'')."> $lang[f_page_status_ghost]";
 $select_page_status .= '</label>';
 
-$select_page_status .= '<label class="radio-inline">';
-$select_page_status .= "<input type='radio' name='page_status' value='private'".($page_status == "private" ? 'checked' :'')."> <span class='label label-danger'>$lang[f_page_status_private]</span>";
+$select_page_status .= '<label class="btn btn-sm btn-default btn-private '.($page_status == "private" ? 'active' :'').'">';
+$select_page_status .= "<input type='radio' name='page_status' value='private'".($page_status == "private" ? 'checked' :'')."> $lang[f_page_status_private]";
 $select_page_status .= '</label>';
 
-$select_page_status .= '<label class="radio-inline">';
-$select_page_status .= "<input type='radio' name='page_status' value='draft'".($page_status == "draft" ? 'checked' :'')."> <span class='label label-default'>$lang[f_page_status_draft]</span>";	
+$select_page_status .= '<label class="btn btn-sm btn-default btn-draft '.($page_status == "draft" ? 'active' :'').'">';
+$select_page_status .= "<input type='radio' name='page_status' value='draft'".($page_status == "draft" ? 'checked' :'')."> $lang[f_page_status_draft]";	
 $select_page_status .= '</label>';
 
-echo tpl_form_control_group('',$lang['f_page_status'],$select_page_status);
+$select_page_status .= '</div>';
+$select_page_status .= '</div>';
+
+echo '<div class="form-group">';
+echo '<label>'.$lang['f_page_status'].'</label>';
+echo '<div>';
+echo $select_page_status;
+echo '</div>';
+echo '</div>';
 
 
-
+/* Select Usergroups */
 
 $arr_groups = get_all_groups();
 $arr_checked_groups = explode(",",$page_usergroup);
@@ -355,16 +413,19 @@ for($i=0;$i<count($arr_groups);$i++) {
 	$checkbox_usergroup .= '</label>';
 }
 
-echo tpl_form_control_group('',$lang['choose_usergroup'],$checkbox_usergroup);
+echo '<div class="well well-sm">';
+echo '<a href="#" data-toggle="collapse" data-target="#usergroups">'.$lang['choose_usergroup'].'</a>';
+echo '<div id="usergroups" class="collapse">';
+echo $checkbox_usergroup;
+echo '</div>';
+echo '</div>';
 
 
+/* Select Rights Management */
 
 $arr_admins = get_all_admins();
-
 $arr_checked_admins = explode(",", $page_authorized_users);
-
 $cnt_admins = count($arr_admins);
-
 
 for($i=0;$i<$cnt_admins;$i++) {
 
@@ -381,47 +442,33 @@ for($i=0;$i<$cnt_admins;$i++) {
  	$checkbox_set_authorized_admins .= '</label>';
 }
 
-echo tpl_form_control_group('',$lang['f_page_authorized_admins'],$checkbox_set_authorized_admins);
+echo '<div class="well well-sm">';
+echo '<a href="#" data-toggle="collapse" data-target="#admins">'.$lang['f_page_authorized_admins'].'</a>';
+echo '<div id="admins" class="collapse">';
+echo $checkbox_set_authorized_admins;
+echo '</div>';
+echo '</div>';
 
 
+echo '<hr>';
+echo '<input type="hidden" name="page_version" value="'.$page_version.'">';
 
-echo'</div>'; /* EOL tab_preferences */
+echo '<div class="btn-group btn-group-justified">';
+echo '<div class="btn-group">'.$submit_button.'</div><div class="btn-group">'.$previev_button.'</div>';
+echo '</div>';
+echo '<hr>' . $delete_button;
 
 
+echo '</div>'; // panel-body
+echo '</div>'; // panel
 
-if($cnt_custom_fields > 0) {
-
-/* tab custom fields */
-echo'<div class="tab-pane fade" id="custom">';
-
-	for($i=0;$i<$cnt_custom_fields;$i++) {	
-		if(substr($custom_fields[$i],0,10) == "custom_one") {
-			$label = substr($custom_fields[$i],11);
-			echo tpl_form_control_group('',$label,"<input type='text' class='form-control' name='$custom_fields[$i]' value='" . $$custom_fields[$i] . "'>");
-		}	elseif(substr($custom_fields[$i],0,11) == "custom_text") {
-			$label = substr($custom_fields[$i],12);
-			echo tpl_form_control_group('',$label,"<textarea class='form-control' rows='6' name='$custom_fields[$i]'>" . $$custom_fields[$i] . "</textarea>");
-		}	elseif(substr($custom_fields[$i],0,14) == "custom_wysiwyg") {
-			$label = substr($custom_fields[$i],15);
-			echo tpl_form_control_group('',$label,"<textarea class='mceEditor_small' name='$custom_fields[$i]'>" . $$custom_fields[$i] . "</textarea>");
-		}		
-	}
-
-echo'</div>'; /* EOL tab custom fields */
-
-}
-
-echo"</div>"; // EOL fancytabs
-
+echo '</div>'; // col
+echo '</div>'; // row
 
 
 //submit form to save data
 
-echo '<div class="formfooter">';
-echo '<input type="hidden" name="page_version" value="'.$page_version.'">';
-echo '<div style="float:right;">'.$submit_button.' '.$previev_button.'</div>'. $delete_button;
-echo '<div style="clear:both;"></div>';
-echo '</div>';
+
 
 echo '</form>';
 

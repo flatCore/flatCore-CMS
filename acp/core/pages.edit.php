@@ -436,8 +436,8 @@ if(is_numeric($editpage)) {
 	
 	echo"<h3>$lang[h_modus_editpage] - $page_title (Version: $page_version)</h3>";
 		//set submit button
-		$submit_button = "<input type='submit' class='btn btn-success' name='save_the_page' value='$lang[update_page]'>";
-		$delete_button = "<input type='submit' class='btn btn-danger' name='delete_the_page' value='$lang[delete_page]' onclick=\"return confirm('$lang[confirm_delete_data]')\">";
+		$submit_button = "<input type='submit' class='btn btn-success name='save_the_page' value='$lang[update_page]'>";
+		$delete_button = "<input type='submit' class='btn btn-danger btn-sm btn-block' name='delete_the_page' value='$lang[delete_page]' onclick=\"return confirm('$lang[confirm_delete_data]')\">";
 		$previev_button = "<input type='submit' class='btn btn-default' id='preview_the_page' name='preview_the_page' value='$lang[preview]'>";
 	
 } else {
@@ -449,7 +449,7 @@ if(is_numeric($editpage)) {
 		//set submit button
 		$submit_button = "<input type='submit' class='btn btn-success' name='save_the_page' value='$lang[save_new_page]'>";
 		$delete_button = "";
-		$previev_button = "<input type='submit' class='btn btn-default' id='preview_the_page' name='preview_the_page' value='$lang[preview]'>";
+		$previev_button = "<input type='submit' class='btn btn-default btn-block' id='preview_the_page' name='preview_the_page' value='$lang[preview]'>";
 }
 
 
