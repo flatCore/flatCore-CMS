@@ -24,7 +24,6 @@ if(!empty($_REQUEST['preview_the_page'])) {
 	$modus = "preview";
 }
 
-
 $pdo_fields = array(
 	'page_sort' => 'STR',
 	'page_language' => 'STR',
@@ -177,7 +176,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 
 
 $page_lastedit = time();
-$page_lastedit_from = "$_SESSION[user_nick]";
+$page_lastedit_from = $_SESSION['user_nick'];
 
 $page_position = $_POST['page_position'];
 $page_order = $_POST['page_order'];
@@ -235,7 +234,9 @@ $dbh = new PDO("sqlite:".CONTENT_DB);
 
 if($modus == "update") {
 
-	$page_version = $_POST[page_version]+1;
+	
+
+	$page_version = $_POST['page_version']+1;
 	
 	$sql_u = generate_sql_update_str($pdo_fields,"fc_pages","WHERE page_id = $editpage");							
 	$sth = $dbh->prepare($sql_u);
@@ -436,7 +437,7 @@ if(is_numeric($editpage)) {
 	
 	echo"<h3>$lang[h_modus_editpage] - $page_title (Version: $page_version)</h3>";
 		//set submit button
-		$submit_button = "<input type='submit' class='btn btn-success name='save_the_page' value='$lang[update_page]'>";
+		$submit_button = "<input type='submit' class='btn btn-success' name='save_the_page' value='$lang[update_page]'>";
 		$delete_button = "<input type='submit' class='btn btn-danger btn-sm btn-block' name='delete_the_page' value='$lang[delete_page]' onclick=\"return confirm('$lang[confirm_delete_data]')\">";
 		$previev_button = "<input type='submit' class='btn btn-default' id='preview_the_page' name='preview_the_page' value='$lang[preview]'>";
 	
