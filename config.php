@@ -1,16 +1,14 @@
 <?php
 
 /**
- * Configuration file
+ * flatCore default Configuration file
+ * this file will be replaced with every update
+ *
+ * you can expand/overwrite this config file
+ * by adding your own config.php to FC_CONTENT_DIR (/content/config.php)
+ * but make sure you do not destroy the folder structure
  */
 
-
-/**
- * Systemmessages, E-Mail & Name
- * @todo e-mail should be able to change via acp
- */
-$fc_mailer_adr	= "you@example.com";
-$fc_mailer_name	= "flatCore Administrator";
 
 /* Default Language -> de|en */
 $languagePack = "de";
@@ -23,13 +21,6 @@ $fc_mod_rewrite = "permalink";
 /* time offset for rss feeds in seconds */
 $fc_rss_time_offset = '1800';
 
-
-
-
-/**
- * from here make no more changes
- * except you know what you do
- */
  
 /* define Folder structure */
 define('FC_CONTENT_DIR',  "content");
@@ -63,5 +54,10 @@ if($fc_inc_dir != "") {
 }
 
 define('FC_INC_DIR',  $fc_inc_dir);
+
+
+if(is_file(FC_CONTENT_DIR . '/config.php')){
+	include(FC_CONTENT_DIR . '/config.php');
+}
 
 ?>
