@@ -1,7 +1,5 @@
 <?php
 
-ob_start();
-
 //prohibit unauthorized access
 require("core/access.php");
 require_once('core/pclzip.lib.php');
@@ -142,7 +140,7 @@ function move_new_files() {
 			continue;
 		}
 		
-		if(substr($value, 0,1) == ".") { continue;}
+		if(substr(basename($value), 0,1) == ".") { continue;}
 		if($value === '.' || $value === '..') {continue;}
 			
 		/**
@@ -150,10 +148,8 @@ function move_new_files() {
 		 */
 		$target = "../" . substr($value, strlen("update/extract/$get_file/"));
 		$copy_string .= "<tr><td>$i</td><td>$target</td>";
-		copy_recursive("$value","$target");
-		echo "<tr><td>$i</td><td>$target</td>";
-		ob_flush();
-		flush();
+		$status = copy_recursive("$value","$target");
+		echo "<tr><td>$i</td><td>$value | $target | $status</td>";
 	}
 	
 
@@ -264,8 +260,10 @@ function copy_recursive($source, $target) {
 			
 			if($entry == '.' || $entry == '..') { continue; }
 			
-			$sub = $source . '/' . $entry; 
+			$sub = $source . '/' . $entry;
+			
 			if(is_dir($sub)) {
+				@chmod("$sub", 0777);
 				copy_recursive($sub, $target . '/' . $entry);
 				continue;
 			}
@@ -274,7 +272,13 @@ function copy_recursive($source, $target) {
  
 		$dir->close();
 	} else {
-		copy($source, $target);
+		@chmod("$target", 0777);
+		if(copy($source, $target)) {
+			return '<span class="label label-success">ok</span>';
+		} else {
+			$errors = error_get_last();
+			return '<span class="label label-danger">'.$errors['message'].'</span>';
+		}
 	}
 }
 
