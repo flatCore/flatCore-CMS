@@ -11,8 +11,8 @@ echo '<div class="col-md-4">';
 echo '<h5>Config</h5>';
 echo '<dl class="dl-horizontal">';
 echo '<dt>Server:</dt><dd>' . $_SERVER['SERVER_NAME'] . '</dd>';
-echo '<dt>System E-Mails:</dt><dd>' . $fc_mailer_adr . '</dd>';
-echo '<dt>E-Mail Name:</dt><dd>' . $fc_mailer_name . '</dd>';
+echo '<dt>System E-Mails:</dt><dd>' . $prefs_mailer_adr . '</dd>';
+echo '<dt>E-Mail Name:</dt><dd>' . $prefs_mailer_name . '</dd>';
 echo '</dl>';
 
 
