@@ -4,7 +4,6 @@
 require("core/access.php");
 
 
-$prefs = get_preferences();
 $form_img_action = "core/files.upload-script.php";
 $files_d = FILES_FOLDER;
 $form_files_action = "core/files.upload-script.php?d=$files_d";
@@ -26,7 +25,7 @@ $form_files_action = "core/files.upload-script.php?d=$files_d";
 		</div>
 	</form>
 	<hr>
-	<?php echo '<small>' . $prefs['prefs_imagesuffix'] . '</small>'; ?>
+	<?php echo '<small>' . $fc_preferences['prefs_imagesuffix'] . '</small>'; ?>
 </fieldset>
 </div>
 <div class="col-md-6">
@@ -40,7 +39,7 @@ $form_files_action = "core/files.upload-script.php?d=$files_d";
 			</div>
 		</form>
 		<hr>
-		<?php echo '<small>' . $prefs['prefs_filesuffix'] . '</small>'; ?>
+		<?php echo '<small>' . $fc_preferences['prefs_filesuffix'] . '</small>'; ?>
 </fieldset>
 	</div>
 </div>

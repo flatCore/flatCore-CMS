@@ -55,6 +55,12 @@ require("core/database.php");
 require("core/switch.php");
 
 
+/* READ THE PREFS */
+$fc_preferences = get_preferences();
+
+foreach($fc_preferences as $k => $v) {
+   $$k = stripslashes($v);
+}
 
 
 ?>

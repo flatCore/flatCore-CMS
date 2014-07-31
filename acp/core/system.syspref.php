@@ -103,14 +103,6 @@ if($sys_message != ""){
 
 
 
-/* READ THE PREFS */
-$result = get_preferences();
-
-foreach($result as $k => $v) {
-   $$k = stripslashes($v);
-}
-
-
 /* print the form */
 
 echo '<div class="row"><div class="col-md-12">';

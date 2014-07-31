@@ -52,14 +52,6 @@ if($sys_message != ""){
 
 
 
-/* READ THE PREFS */
-$getprefs = get_preferences();
-
-foreach($getprefs as $k => $v) {
-   $$k = stripslashes($v);
-}
-
-
 echo '<form action="'.$_SERVER['PHP_SELF'].'?tn=system&sub=design" method="POST" class="form-horizontal">';
 echo '<fieldset>';
 echo '<legend>'.$lang['f_prefs_layout'].'</legend>';
