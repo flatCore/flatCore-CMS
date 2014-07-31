@@ -1,7 +1,17 @@
 <?php
 session_start();
 error_reporting(0);
+require("core/access.php");
 require("../config.php");
+
+if(is_file('../'.FC_CONTENT_DIR.'/config.php')) {
+	include('../'.FC_CONTENT_DIR.'/config.php');
+}
+
+if(is_array($fc_content_files)) {
+	/* switch database file $fc_db_content */
+	include('core/contentSwitch.php');
+}
 
 define("CONTENT_DB", "../$fc_db_content");
 define("USER_DB", "../$fc_db_user");
@@ -9,8 +19,6 @@ define("STATS_DB", "../$fc_db_stats");
 define("FC_ROOT", str_replace("/acp","",FC_INC_DIR));
 define("IMAGES_FOLDER", "$img_path");
 define("FILES_FOLDER", "$files_path");
-
-require("core/access.php");
 
 if(!isset($_SESSION['editor_class'])) {
 	$_SESSION['editor_class'] = "wysiwyg";
@@ -134,10 +142,19 @@ foreach($fc_preferences as $k => $v) {
 	</div>
 		
 	<div id="page-content">
-		
+
+	<?php
+	if(is_array($fc_content_files)) {
+		echo '<div id="contentSwitch" class="clearfix">';
+		echo $fc_content_switch;
+		echo '</div>';
+	}
+	?>
+			
 	<div id="bigHeader">
 	<?php require("core/topNav.php"); ?>
 	</div>
+
 
 	<div id="container">
 		<?php include("core/$maininc.php"); ?>

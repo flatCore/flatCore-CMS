@@ -305,6 +305,20 @@ a.topnav_selected:visited {
 	color: #fff;
 }
 
+div#contentSwitch {
+	background: #ccc;
+	padding: 2px 60px 2px 10px;
+	font-size: 12px;
+	color: #777;
+	text-align: right;
+}
+
+div#contentSwitchContainer > div {
+	float: right;
+	padding: 5px;
+	min-width: 250px;
+}
+
 
 /* Navigation Submenu */
 
