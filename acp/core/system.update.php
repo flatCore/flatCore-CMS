@@ -142,6 +142,8 @@ function move_new_files() {
 		
 		if(substr(basename($value), 0,1) == ".") { continue;}
 		if($value === '.' || $value === '..') {continue;}
+		if(basename($value) == "README.md") { continue;}
+		if(basename($value) == "robots.txt") { continue;}
 			
 		/**
 		 * copy files from 'update/extract/*'
@@ -273,6 +275,7 @@ function copy_recursive($source, $target) {
 		$dir->close();
 	} else {
 		@chmod("$target", 0777);
+		@unlink("$target");
 		if(copy($source, $target)) {
 			return '<span class="label label-success">ok</span>';
 		} else {
