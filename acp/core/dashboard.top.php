@@ -46,7 +46,7 @@ for($i=0;$i<$cnt_user;$i++) {
 		$user_registerdate = @date("d.m.Y",$user_result[$i]['user_registerdate']);
 		$user_id = $user_result[$i]['user_id'];
 		$user_nick = $user_result[$i]['user_nick'];
-		$user_name = $user_result[$i]['user_firstname'] . " " . $result[$i]['user_lastname'];
+		$user_name = $user_result[$i]['user_firstname'] . " " . $user_result[$i]['user_lastname'];
 	
 		if($user_result[$i]['user_class'] == "deleted"){
 			$user_nick = "<strike>$user_nick</strike>";
