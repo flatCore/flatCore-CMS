@@ -5,7 +5,7 @@ require("core/access.php");
 
 
 
-if($_GET[sub] == "new"){
+if($_GET['sub'] == "new"){
 	$sub = "new";
 } else {
 	$sub = "edit";
@@ -21,11 +21,11 @@ sort($custom_fields);
 $cnt_custom_fields = count($custom_fields);
 
 echo '<ul class="nav nav-tabs" id="bsTabs">';
-echo '<li class="active"><a href="#info" data-toggle="tab">'.$lang[tab_user_info].'</a></li>';
-echo '<li><a href="#contact" data-toggle="tab">'.$lang[tab_contact].'</a></li>';
-echo '<li><a href="#psw" data-toggle="tab">'.$lang[tab_psw].'</a></li>';
+echo '<li class="active"><a href="#info" data-toggle="tab">'.$lang['tab_user_info'].'</a></li>';
+echo '<li><a href="#contact" data-toggle="tab">'.$lang['tab_contact'].'</a></li>';
+echo '<li><a href="#psw" data-toggle="tab">'.$lang['tab_psw'].'</a></li>';
 if($cnt_custom_fields > 0) {
-	echo '<li><a href="#custom" data-toggle="tab">'.$lang[legend_custom_fields].'</a></li>';
+	echo '<li><a href="#custom" data-toggle="tab">'.$lang['legend_custom_fields'].'</a></li>';
 }
 echo '</ul>';
 
@@ -33,13 +33,16 @@ echo '</ul>';
 echo '<div class="tab-content">';
 echo '<div class="tab-pane fade in active" id="info">';
 
-echo tpl_form_control_group('',$lang[f_user_nick],"<input class='form-control' type='text' name='user_nick' value='$user_nick'>");
+echo '<div class="row">';
+echo '<div class="col-md-9">';
+
+echo tpl_form_control_group('',$lang['f_user_nick'],"<input class='form-control' type='text' name='user_nick' value='$user_nick'>");
 
 if($user_registerdate != "") {
 	$show_registerdate = @date("d.m.Y H:i:s",$user_registerdate);
 }
 
-echo tpl_form_control_group('',$lang[f_user_registerdate],"<p class='form-control-static'>$show_registerdate</p>");
+echo tpl_form_control_group('',$lang['f_user_registerdate'],"<p class='form-control-static'>$show_registerdate</p>");
 
 echo"<input type='hidden' name='user_registerdate' value='$user_registerdate'>";
 
@@ -63,7 +66,7 @@ $select_user_status .= "<input type='radio' name='user_verified' value='paused'"
 $select_user_status .= "<span class='label label-danger'>$lang[f_user_select_paused]</span>";
 $select_user_status .= '</label>';
 
-echo tpl_form_control_group('',$lang[f_user_status],"$select_user_status");
+echo tpl_form_control_group('',$lang['f_user_status'],"$select_user_status");
 
 
 $result = get_all_groups();
@@ -73,9 +76,9 @@ $nbr_of_groups = count($result);
 echo"<input type='hidden' name='nbr_of_groups' value='$nbr_of_groups'>";
 
 for($i=0;$i<$nbr_of_groups;$i++) {
-	$get_group_id = $result[$i][group_id];
-	$get_group_name = $result[$i][group_name];
-	$get_group_user = $result[$i][group_user];
+	$get_group_id = $result[$i]['group_id'];
+	$get_group_name = $result[$i]['group_name'];
+	$get_group_user = $result[$i]['group_user'];
 	
 	$array_group_user = explode(" ", $get_group_user);
 	
@@ -95,7 +98,7 @@ for($i=0;$i<$nbr_of_groups;$i++) {
 	$cb_usergroup .= "<input type='hidden' name='this_group[$i]' value='$get_group_id'>";
 }
 
-echo tpl_form_control_group('',$lang[f_user_groups],"$cb_usergroup");
+echo tpl_form_control_group('',$lang['f_user_groups'],"$cb_usergroup");
 
 
 if($user_newsletter == "none" OR $user_newsletter == ""){
@@ -125,7 +128,25 @@ $select_nwsl .= "<input type='radio' name='user_newsletter' value='text'".($user
 $select_nwsl .= "$lang[f_user_newsletter_text]";
 $select_nwsl .= '</label>';
 
-echo tpl_form_control_group('',$lang[f_user_newsletter],"$select_nwsl");
+echo tpl_form_control_group('',$lang['f_user_newsletter'],"$select_nwsl");
+
+echo '</div>';
+echo '<div class="col-md-3">';
+
+echo '<fieldset>';
+echo '<legend>Avatar</legend>';
+if(is_file("$user_avatar_path")) {
+	echo '<p class="text-center"><img src="'.$user_avatar_path.'" class="img-circle avatar"></p>';
+	echo '<label class="checkbox">';
+	echo '<input type="checkbox" name="deleteAvatar"> ' . $lang['delete'];
+	echo '</label>';
+} else {
+	echo '<p class="text-center"><img src="images/avatar.png" class="img-circle avatar"></p>';
+}
+echo '</fieldset>';
+
+echo '</div>';
+echo '</div>';
 
 
 echo '</div>';
@@ -135,10 +156,10 @@ echo '</div>';
 echo '<div class="tab-pane fade" id="contact">';
 
 
-echo tpl_form_control_group('',$lang[f_user_firstname],"<input type='text' class='form-control' name='user_firstname' value='$user_firstname'>");
-echo tpl_form_control_group('',$lang[f_user_lastname],"<input type='text' class='form-control' name='user_lastname' value='$user_lastname'>");
-echo tpl_form_control_group('',$lang[f_user_mail],"<input type='text' class='form-control' name='user_mail' value='$user_mail'>");
-echo tpl_form_control_group('',$lang[f_user_company],"<input type='text' class='form-control' name='user_company' value='$user_company'>");
+echo tpl_form_control_group('',$lang['f_user_firstname'],"<input type='text' class='form-control' name='user_firstname' value='$user_firstname'>");
+echo tpl_form_control_group('',$lang['f_user_lastname'],"<input type='text' class='form-control' name='user_lastname' value='$user_lastname'>");
+echo tpl_form_control_group('',$lang['f_user_mail'],"<input type='text' class='form-control' name='user_mail' value='$user_mail'>");
+echo tpl_form_control_group('',$lang['f_user_company'],"<input type='text' class='form-control' name='user_company' value='$user_company'>");
 echo tpl_form_control_group('',"$lang[f_user_street]/$lang[f_user_street_nbr]","<div class='row'><div class='col-md-9'><input type='text' class='form-control' name='user_street' value='$user_street'></div><div class='col-md-3'><input class='form-control' type='text' name='user_street_nbr' value='$user_street_nbr'></div></div>");
 echo tpl_form_control_group('',"$lang[f_user_zipcode]/$lang[f_user_city]","<div class='row'><div class='col-md-3'><input type='text' class='form-control' name='user_zipcode' value='$user_zipcode'></div><div class='col-md-9'><input class='form-control' type='text' name='user_city' value='$user_city'></div></div>");
 
@@ -151,10 +172,10 @@ echo '</div>';
 
 echo'<div class="tab-pane fade" id="psw">';
 
-echo tpl_form_control_group('',$lang[f_user_psw],"<div class='alert alert-danger'>$lang[f_user_psw_description]</div>");
+echo tpl_form_control_group('',$lang['f_user_psw'],"<div class='alert alert-danger'>$lang[f_user_psw_description]</div>");
 
-echo tpl_form_control_group('',$lang[f_user_psw_new],"<input class='form-control' type='password' name='user_psw_new' value=''>");
-echo tpl_form_control_group('',$lang[f_user_psw_reconfirmation],"<input class='form-control' type='password' name='user_psw_reconfirmation' value=''>");
+echo tpl_form_control_group('',$lang['f_user_psw_new'],"<input class='form-control' type='password' name='user_psw_new' value=''>");
+echo tpl_form_control_group('',$lang['f_user_psw_reconfirmation'],"<input class='form-control' type='password' name='user_psw_reconfirmation' value=''>");
 echo"\n<input type='hidden' name='user_psw' value='$user_psw'>\n";
 
 
@@ -187,7 +208,7 @@ $cb_user_drm .= "<label class='checkbox'><input type='checkbox' value='drm_acp_s
 $cb_user_drm .= "<label class='checkbox'><input type='checkbox' value='drm_moderator' name='drm_moderator' $checked_moderator> $lang[drm_moderator]</label>";
 $cb_user_drm .= "<label class='checkbox'><input type='checkbox' value='drm_can_publish' name='drm_can_publish' $checked_can_publish> $lang[drm_user_can_publish]</label>";
 
-echo tpl_form_control_group('',$lang[f_user_drm],"$cb_user_drm");
+echo tpl_form_control_group('',$lang['f_user_drm'],"$cb_user_drm");
 
 echo '</div>';
 

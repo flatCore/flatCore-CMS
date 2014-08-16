@@ -157,6 +157,13 @@ if($_POST[save_the_user]) {
 		$sth->bindParam(':user_drm', $drm_string, PDO::PARAM_STR);
 		$sth->bindParam(':user_class', $drm_acp_class, PDO::PARAM_STR);
 		$cnt_changes = $sth->execute();
+		
+		if($_POST['deleteAvatar'] == 'on') {
+			$user_avatar_path = '../'. FC_CONTENT_DIR . '/avatars/' . md5($user_nick) . '.png';
+			if(is_file($user_avatar_path)) {
+				unlink($user_avatar_path);
+			}
+		}
 									
 		if($cnt_changes == TRUE) {
 			$success_message .= "$lang[msg_user_updated]<br />";
@@ -293,6 +300,8 @@ if(is_numeric($edituser)){
 	foreach($result as $k => $v) {
 	   $$k = stripslashes($v);
 	}
+	
+	$user_avatar_path = '../'. FC_CONTENT_DIR . '/avatars/' . md5($user_nick) . '.png';
 	
 	echo"<h3>$lang[h_modus_edituser] - $user_nick [$user_id]</h3>";
 	$submit_button = "<input class='btn btn-success' type='submit' name='save_the_user' value='$lang[update_user]'>";

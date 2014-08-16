@@ -896,3 +896,7 @@ fieldset > [class*="form-line"]:last-child {
 	background: rgba(255,255,255,0.5);
 }
 
+img.avatar {
+	border: 1px solid #ccc;
+	box-shadow: 0px 1px 5px #999;
+}

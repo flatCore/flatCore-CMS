@@ -141,8 +141,8 @@ $loop = 20;
 
 
 $start = 0;
-if(isset($_GET[start])) {
-	$start = (int) $_GET[start];
+if(isset($_GET['start'])) {
+	$start = (int) $_GET['start'];
 }
 
 $cnt_pages = ceil($cnt_result/$loop);
@@ -217,39 +217,46 @@ echo '</div><br>';
 
 //print the list
 
-echo"<table class='table-list' border='0' cellpadding='0' cellspacing='0'>";
+echo"<table class='table table-condensed table-hover table-list' border='0' cellpadding='0' cellspacing='0'>";
 
-echo"<tr>
-<td class='head' style='text-align:right;'><a class='darklink' href='$_SERVER[PHP_SELF]?tn=user&sub=list&sort=0&way=$set_way'>ID</a></td>
-<td class='head'><a class='darklink' href='$_SERVER[PHP_SELF]?tn=user&sub=list&sort=1&way=$set_way'>$lang[h_username]</a></td>
-<td class='head'><a class='darklink' href='$_SERVER[PHP_SELF]?tn=user&sub=list&sort=2&way=$set_way'>$lang[h_registerdate]</a></td>
-<td class='head'><a class='darklink' href='$_SERVER[PHP_SELF]?tn=user&sub=list&sort=3&way=$set_way'>$lang[h_realname]</a></td>
-<td class='head'><a class='darklink' href='$_SERVER[PHP_SELF]?tn=user&sub=list&sort=4&way=$set_way'>$lang[h_email]</a></td>
-<td class='head'>$lang[h_action]</td>
-</tr>";
+echo"<thead><tr>
+<th class='head' style='text-align:right;'><a class='darklink' href='$_SERVER[PHP_SELF]?tn=user&sub=list&sort=0&way=$set_way'>ID</a></th>
+<th class='head'></th>
+<th class='head'><a class='darklink' href='$_SERVER[PHP_SELF]?tn=user&sub=list&sort=1&way=$set_way'>$lang[h_username]</a></th>
+<th class='head'><a class='darklink' href='$_SERVER[PHP_SELF]?tn=user&sub=list&sort=2&way=$set_way'>$lang[h_registerdate]</a></th>
+<th class='head'><a class='darklink' href='$_SERVER[PHP_SELF]?tn=user&sub=list&sort=3&way=$set_way'>$lang[h_realname]</a></th>
+<th class='head'><a class='darklink' href='$_SERVER[PHP_SELF]?tn=user&sub=list&sort=4&way=$set_way'>$lang[h_email]</a></th>
+<th class='head'>$lang[h_action]</th>
+</tr></thead>";
 
 for($i=$start;$i<$end;$i++) {
 
-	$user_id = $result[$i][user_id];
-	$user_nick = $result[$i][user_nick];
-	$user_class = $result[$i][user_class];
-	$user_mail = $result[$i][user_mail];
-	$user_registerdate = $result[$i][user_registerdate];
-	$user_firstname = $result[$i][user_firstname];
-	$user_lastname = $result[$i][user_lastname];
-	$user_verified = $result[$i][user_verified];
-	$user_groups = $result[$i][user_groups];
+	$user_id = $result[$i]['user_id'];
+	$user_nick = $result[$i]['user_nick'];
+	$user_avatar_path = '../'. FC_CONTENT_DIR . '/avatars/' . md5($user_nick) . '.png';
+	$user_class = $result[$i]['user_class'];
+	$user_mail = $result[$i]['user_mail'];
+	$user_registerdate = $result[$i]['user_registerdate'];
+	$user_firstname = $result[$i]['user_firstname'];
+	$user_lastname = $result[$i]['user_lastname'];
+	$user_verified = $result[$i]['user_verified'];
+	$user_groups = $result[$i]['user_groups'];
 	$show_registerdate = @date("d.m.Y",$user_registerdate);
+	
+	$user_avatar = '<img src="images/avatar.png" class="img-circle avatar" width="50" height="50">';
+	if(is_file("$user_avatar_path")) {
+		$user_avatar = '<img src="'.$user_avatar_path.'" class="img-circle avatar" width="50" height="50">';
+	}
 
 	//show me in bold
 	unset($td_class);
-	if($user_nick == "$_SESSION[user_nick]"){
+	if($user_nick == $_SESSION['user_nick']){
 		$td_class = "bold";
 	}
 
 	//marking admins
 	if($user_class == "administrator"){
-		$admin_img = '<span style="color:#369;"><span class="glyphicon glyphicon-user"></span></span>';
+		$admin_img = '<span style="color:#36a;"><span class="glyphicon glyphicon-user"></span></span>';
 	} else {
 		$admin_img = '<span class="glyphicon glyphicon-user"></span>';
 	}
@@ -264,21 +271,26 @@ for($i=$start;$i<$end;$i++) {
 	switch ($user_verified) {
 		case "waiting":
 			$statusLabel = "label label-info center";
+			$tr_class = 'info';
 			break;
 		case "paused":
-			$statusLabel = "label label-danger center";
+			$statusLabel = "label label-warning center";
+			$tr_class = 'warning';
 			break;
 		case "verified":
-			$statusLabel = "label label-success center";
+			$statusLabel = "alert alert-success center";
+			$tr_class = 'success';
 			break;
 		case "":
+			$tr_class = 'danger';
 			$statusLabel = "label label-default center";
 			break;
 	}
 	
 	echo"
-	<tr>
-		<td class='$td_class'><p class='$statusLabel'>$user_id</p></td>
+	<tr class='$tr_class'>
+		<td class='$td_class' style='text-align:right;'>$user_id</td>
+		<td>$user_avatar</td>
 		<td class='$td_class'>$admin_img $user_nick</td>
 		<td class='$td_class'>$show_registerdate</td>
 		<td class='$td_class'>$user_firstname $user_lastname</td>
