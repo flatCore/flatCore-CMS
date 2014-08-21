@@ -5,7 +5,7 @@ require('../config.php');
 require('../core/functions/func_userdata.php');
 
 $_SESSION['lang'] = "de";
-require("../lib/lang/$_SESSION[lang]/acp/dict.php");
+require("../lib/lang/$_SESSION[lang]/dict-backend.php");
 
 if($_POST['check'] == "Login") {
 

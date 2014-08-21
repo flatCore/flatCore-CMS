@@ -52,12 +52,12 @@ if($_SESSION['lang'] == "") {
 
 if(isset($_GET['set_lang'])) {
 	$set_lang = strip_tags($_GET['set_lang']);
-	if(is_file("../lib/lang/$set_lang/acp/dict.php")) {
+	if(is_file("../lib/lang/$set_lang/dict-backend.php")) {
 		$_SESSION['lang'] = "$set_lang";
 	}
 }
 
-require("../lib/lang/$_SESSION[lang]/acp/dict.php");
+require("../lib/lang/$_SESSION[lang]/dict-backend.php");
 require("core/functions.php");
 require("core/database.php");
 require("core/switch.php");

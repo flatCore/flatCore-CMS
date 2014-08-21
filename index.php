@@ -31,7 +31,7 @@ if(is_dir(FC_CORE_DIR . "/install/")) {
 }
 
 
-require(FC_CORE_DIR . "/lib/lang/$languagePack/frontend/dict.php");
+require(FC_CORE_DIR . "/lib/lang/$languagePack/dict-frontend.php");
 require(FC_CORE_DIR . '/core/functions.php');
 
 
