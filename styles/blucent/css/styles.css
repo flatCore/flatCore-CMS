@@ -167,7 +167,7 @@ ul#sitemap li {
 
 .blockImage {
 	padding: 4px;
-	background: transparent url(../images/white80.png) left top;
+	background: rgba(255,255,255,0.8);
 	background-repeat: repeat;
 	border: 1px solid #fff;
 	text-align: center;
