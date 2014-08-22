@@ -10,8 +10,5 @@ $cols = array(
   "group_user" => 'VARCHAR'
   
   );
-  
-  
-  
 
 ?>

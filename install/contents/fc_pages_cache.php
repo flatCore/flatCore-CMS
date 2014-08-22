@@ -42,7 +42,5 @@ $cols = array(
 	"page_version_date" => 'VARCHAR',
 	"page_cache_type" => 'VARCHAR'
   );
-  
-  
- 
+
 ?>

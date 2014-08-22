@@ -4,7 +4,7 @@
 UPDATE EXISTING TABLES
 ------------------------------------------------------- */
 
-echo"<h2>UPDATE</h2>";
+echo '<h2>UPDATE</h2>';
 
 /* build an array from all php files in folder contents */
 $all_tables = glob("contents/*.php");

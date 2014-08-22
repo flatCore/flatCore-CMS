@@ -17,12 +17,12 @@ function checkwritable($path) {
 	echo '<div class="col-md-8">';
 	if(!is_writable("$path")){
 	
-		echo '<div class="alert alert-danger">' . $lang[permission_false] . '</div>';
+		echo '<div class="alert alert-danger">' . $lang['permission_false'] . '</div>';
 		$goto_install[] = "false";
 	
 	} else {
 	
-		echo '<div class="alert alert-success">' . $lang[permission_true] . '</div>';
+		echo '<div class="alert alert-success">' . $lang['permission_true'] . '</div>';
 		$goto_install[] = "true";
 	
 	}
@@ -42,7 +42,7 @@ function checkexistingdir($path) {
 		echo '<div class="row">';
 		echo '<div class="col-md-4">'.$path.'</div>';
 		echo '<div class="col-md-8">';
-		echo '<div class="alert alert-danger">' . $lang[missing_folder] . '</div>';
+		echo '<div class="alert alert-danger">' . $lang['missing_folder'] . '</div>';
 		$goto_install[] = "false";
 		echo '</div>';
 		echo '</div>';
@@ -96,10 +96,10 @@ echo '<div class="col-md-4">PHP Version</div>';
 echo '<div class="col-md-8">';
 	
 if($version < $needed_phpversion) {
-	echo '<div class="alert alert-danger">' . $lang[php_false] . '</div>';
+	echo '<div class="alert alert-danger">' . $lang['php_false'] . '</div>';
 	$goto_install[] = "false";
 } else {
-	echo '<div class="alert alert-success">' . $lang[php_true] . '</div>';
+	echo '<div class="alert alert-success">' . $lang['php_true'] . '</div>';
 	$goto_install[] = "true";
 }
 
@@ -112,10 +112,10 @@ echo '<div class="col-md-4">PDO/SQLite</div>';
 echo '<div class="col-md-8">';
 
 if (in_array("pdo_sqlite", get_loaded_extensions())) {
-	echo '<div class="alert alert-success">' . $lang[pdo_true] . '</div>';
+	echo '<div class="alert alert-success">' . $lang['pdo_true'] . '</div>';
 	$goto_install[] = "true";
 } else {
-	echo '<div class="alert alert-danger">' . $lang[pdo_false] . '</div>';
+	echo '<div class="alert alert-danger">' . $lang['pdo_false'] . '</div>';
 	$goto_install[] = "false";
 }
 

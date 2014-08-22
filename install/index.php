@@ -12,14 +12,28 @@
 session_start();
 error_reporting(0);
 
+$modus = '';
+
+if(isset($_GET['l']) && is_dir('../lib/lang/'.basename($_GET['l']).'/')) {
+	$_SESSION['lang'] = basename($_GET['l']);
+}
+
+if(!isset($_SESSION['lang']) || $_SESSION['lang'] == '') {
+	$l = 'de';
+	$modus = 'choose_lang';
+} else {
+	$l = $_SESSION['lang'];
+}
+
 require("../config.php");
 require("php/functions.php");
-include("lang/$languagePack.php");
+include('../lib/lang/'.$l.'/dict-install.php');
 
 
-if(is_file("../$fc_db_content")) {
+
+if(is_file("../$fc_db_content") && $modus != 'choose_lang'){
 	$modus = "update";
-} else {
+} elseif($modus != 'choose_lang') {
 	$modus = "install";
 }
 
@@ -31,6 +45,11 @@ if($modus == "update") {
 		die("PERMISSION DENIED!");
 	}
 }
+
+
+
+
+
 
 ?>
 
@@ -46,15 +65,25 @@ if($modus == "update") {
 <div id="inst-frame">
 	<div id="inst-background">
 		<div id="inst-header">
+			<div style="float:right;margin-top:-28px;"><span class="label label-info"><?php echo"$modus" ?></span></div>
 			<h1>flatCore <small>Installation & Setup</small></h1>
-			<p>Modus: <span class="label label-info"><?php echo"$modus"; ?></span></p>
 		</div>
 		<div id="inst-body">
 			<?php
 			if($modus == "install") {
 				include("inc.install.php");
-			} else {
+			} elseif($modus == "update") {
 				include("inc.update.php");
+			} else {
+				echo '<h3 class="text-center">Choose your Language ...</h3><hr>';
+				echo '<div class="row">';
+				echo '<div class="col-md-6">';
+				echo '<p class="text-center"><a href="'.$_SERVER['PHP_SELF'].'?l=de"><img src="../lib/lang/de/flag.png" class="img-rounded"><br>DE</a></p>';
+				echo '</div>';
+				echo '<div class="col-md-6">';
+				echo '<p class="text-center"><a href="'.$_SERVER['PHP_SELF'].'?l=en"><img src="../lib/lang/en/flag.png" class="img-rounded"><br>EN</a></p>';
+				echo '</div>';
+				echo '</div>';
 			}
 			
 			?>

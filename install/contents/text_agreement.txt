@@ -1,10 +1,10 @@
 <p class="alert alert-info">Dieser Text kann unter System &gt; Textbausteine ge&auml;ndert werden</p>
 
-<h4>Nutzungsbedingungen</h4>
+<h3>Nutzungsbedingungen</h3>
 <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
 
 <h4>Datenschutzbestimmungen</h4>
 <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
 
-<h4>Verwendung Ihrer persönlichen Daten</h4>
+<h5>Verwendung Ihrer persönlichen Daten</h5>
 <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>

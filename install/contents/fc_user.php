@@ -45,10 +45,5 @@ $cols = array(
   "user_public_profile" => 'VARCHAR'
   
   );
-  
-  
-  
-
-
 
 ?>

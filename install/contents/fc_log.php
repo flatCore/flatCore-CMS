@@ -11,8 +11,5 @@ $cols = array(
   "log_priority"  => 'INTEGER'
   
   );
-  
-  
-  
 
 ?>

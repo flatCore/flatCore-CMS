@@ -36,7 +36,5 @@ $cols = array(
 	"page_version_date" => 'VARCHAR'
   
   );
-  
-  
- 
+
 ?>

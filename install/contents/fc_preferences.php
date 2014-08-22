@@ -28,7 +28,5 @@ $cols = array(
   "prefs_rss_time_offset" => 'VARCHAR'
   
   );
-  
-
 
 ?>

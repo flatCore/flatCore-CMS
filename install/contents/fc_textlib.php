@@ -10,9 +10,5 @@ $cols = array(
   "textlib_lang" => 'VARCHAR'
   
   );
-  
-  
-  
-
 
 ?>

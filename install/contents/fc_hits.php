@@ -9,7 +9,5 @@ $cols = array(
   "counter"  => 'INTEGER'
   
   );
-  
-  
 
 ?>

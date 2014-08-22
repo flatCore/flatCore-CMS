@@ -5,9 +5,9 @@
  * create the sqlite database files
  */
 
-$username = $_POST[username];
-$mail = $_POST[mail];
-$psw = $_POST[psw];
+$username = $_POST['username'];
+$mail = $_POST['mail'];
+$psw = $_POST['psw'];
 
 $psw_string = md5("$psw$username");
 $drm_string = "drm_acp_pages|drm_acp_files|drm_acp_user|drm_acp_system|drm_acp_editpages|drm_acp_editownpages|drm_moderator|drm_can_publish";
@@ -142,7 +142,7 @@ $sql_pages_table = generate_sql_query("fc_pages.php");
 $sql_pages_cache_table = generate_sql_query("fc_pages_cache.php");
 $sql_preferences_table = generate_sql_query("fc_preferences.php");
 $sql_textlib_table = generate_sql_query("fc_textlib.php");
-
+$sql_comments_table = generate_sql_query("fc_comments.php");
 
 
 $dbh = new PDO("sqlite:../$fc_db_content");
@@ -151,6 +151,7 @@ $dbh = new PDO("sqlite:../$fc_db_content");
 	$dbh->query($sql_pages_cache_table);
 	$dbh->query($sql_preferences_table);
 	$dbh->query($sql_textlib_table);
+	$dbh->query($sql_comments_table);
 	$dbh->query($sql_feeds_table);
 	$dbh->query($sql_portal_site);
 	$dbh->query($sql_first_site);
