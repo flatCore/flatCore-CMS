@@ -15,9 +15,9 @@ $form_files_action = "core/files.upload-script.php?d=$files_d";
 <fieldset>
 	<legend><?php echo $lang['upload_img_legend']; ?></legend>
 	<form action="core/files.upload-script.php" id="myDropzone" class="dropzone">
-		<input type="hidden" name="w" value="<?php echo $prefs['prefs_maximagewidth']; ?>" />
-		<input type="hidden" name="h" value="<?php echo $prefs['prefs_maximageheight']; ?>" />
-		<input type="hidden" name="fz" value="<?php echo $prefs['prefs_maxfilesize']; ?>" />
+		<input type="hidden" name="w" value="<?php echo $fc_preferences['prefs_maximagewidth']; ?>" />
+		<input type="hidden" name="h" value="<?php echo $fc_preferences['prefs_maximageheight']; ?>" />
+		<input type="hidden" name="fz" value="<?php echo $fc_preferences['prefs_maxfilesize']; ?>" />
 		<input type="hidden" name="d" value="<?php echo $img_path; ?>" />
 		<input type="hidden" name="upload_type" value="images" />
 		<div class="fallback">
