@@ -29,7 +29,7 @@ if(isset($_SESSION['fc_db_content'])) {
 
 $fc_content_switch = '<a href="#" class="tooltip_bottom" data-toggle="collapse" data-target="#contentSwitchContainer"><span class="glyphicon glyphicon-collapse-down"></span> '.$fc_db_content.'</a>';
 
-$fc_content_switch .= '<div id="contentSwitchContainer" class="collapse">';
+$fc_content_switch .= '<div id="contentSwitchContainer" class="collapse" style="height:auto;">';
 $fc_content_switch .= '<div>';
 
 $i=0;

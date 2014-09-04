@@ -197,6 +197,12 @@ foreach($fc_preferences as $k => $v) {
 			height: '90%'
 		});
 		
+		$(".fancybox-ajax").fancybox({
+			type: 'ajax',
+			minWidth: '50%',
+			height: '90%'
+		});
+		
    $('.collapse').on('show.bs.collapse', function() {
         var id = $(this).attr('id');
         $('a[href="#' + id + '"]').addClass('active');

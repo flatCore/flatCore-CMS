@@ -145,6 +145,8 @@ $lang['filesize'] = "Filesize";
 $lang['date_of_change'] = "Date of Change";
 $lang['filename'] = "Name";
 
+$lang['label_comment'] = "Comment ...";
+
 
 $lang['browse_files'] = "Browse Files";
 $lang['browse_images'] = "Browse images only";

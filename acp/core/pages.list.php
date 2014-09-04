@@ -13,8 +13,13 @@ $sql = "SELECT page_id,	page_language, page_linkname, page_title, page_sort, pag
 		ORDER BY page_language ASC, page_sort ASC, page_linkname ASC";
 
 foreach ($dbh->query($sql) as $row) {
+	/* count comments and expand $row */
+	$this_page_id = 'p'.$row['page_id'];
+	$count_comments = $dbh->query("Select Count(*) FROM fc_comments WHERE comment_parent LIKE '$this_page_id' ")->fetch();
+	$row['cnt_comments'] = $count_comments[0];
 	$result[] = $row;
 }
+
 	
 $dbh = null;
    
@@ -49,7 +54,7 @@ echo '<th>'.$lang['h_page_sort'].'</th>';
 echo '<th>'.$lang['h_page_linkname'].'</th>';
 echo '<th>'.$lang['h_page_title'].'</th>';
 echo '<th class="text-right">'.$lang['h_page_hits'].'</th>';
-echo '<th style="width:120px;">'.$lang['h_action'].'</th>';
+echo '<th style="width:180px;">'.$lang['h_action'].'</th>';
 echo '</tr>';
 echo '</thead>';
 
@@ -75,6 +80,7 @@ for($i=0;$i<$cnt_result;$i++) {
 	$page_redirect = $result[$i]['page_redirect'];
 	$page_redirect_code = $result[$i]['page_redirect_code'];
 	$page_modul = $result[$i]['page_modul'];
+	$page_cnt_comments = $result[$i]['cnt_comments'];
 	
 	if($page_template == "use_standard") {
 		$show_template_name =  "$lang[use_standard]";
@@ -136,20 +142,22 @@ for($i=0;$i<$cnt_result;$i++) {
 		}
 	}
 	
+	$page_comments_link = '<a class="fancybox-ajax btn btn-default btn-sm" href="/acp/core/ajax.comments.php?pid='.$page_id.'"><span class="glyphicon glyphicon-comment"></span> '.$page_cnt_comments.'</a>';
+	
+	
+	
 	echo"<tr class='$tr_status_class $tr_page_class'>
 			<td><div class='extrainfo condensed'>$status_marker $page_sort</div></td>
 			<td><a class='darklink tooltip_bottom' data-toggle='tooltip' title='$frontend_link' href='$frontend_link'>$page_linkname</a>$show_mod</td>
 			<td>$page_title<p class='extrainfo condensed'>$last_edit | Style: $show_template_name | $page_language <br>$show_redirect</p></td>
 			<td style='text-align:right;'>$pi</td>
-			<td><div class='btn-group'>$edit_button</div></td>
+			<td><div class='btn-group'>$edit_button $page_comments_link</div></td>
 		</tr>";
 
 } // eol for $i
 
-echo"</table>";
-echo"</fieldset>";
-
-
+echo '</table>';
+echo '</fieldset>';
 
 
 
@@ -169,7 +177,7 @@ echo '<tr>';
 echo '<th>'.$lang['h_page_linkname'].'</th>';
 echo '<th>'.$lang['h_page_title'].'</th>';
 echo '<th class="text-right">'.$lang['h_page_hits'].'</th>';
-echo '<th style="width:120px;">'.$lang['h_action'].'</th>';
+echo '<th style="width:180px;">'.$lang['h_action'].'</th>';
 echo '</tr>';
 echo '</thead>';
 
@@ -194,7 +202,8 @@ for($i=0;$i<$cnt_result;$i++) {
 	$page_language = $result[$i]['page_language'];
 	$page_permalink = $result[$i]['page_permalink'];
 	$page_redirect = $result[$i]['page_redirect'];
-	
+	$page_cnt_comments = $result[$i]['cnt_comments'];
+		
 	if($page_template == "use_standard") {
 		$show_template_name =  "$lang[use_standard]";
 	} else {
@@ -250,12 +259,14 @@ for($i=0;$i<$cnt_result;$i++) {
 		}
 	}
 
+	$page_comments_link = '<a class="fancybox-ajax btn btn-default btn-sm" href="/acp/core/ajax.comments.php?pid='.$page_id.'"><span class="glyphicon glyphicon-comment"></span> '.$page_cnt_comments.'</a>';
+
 	
 	echo"<tr class='$tr_status_class'>
 			<td><a class='darklink tooltip_bottom' data-toggle='tooltip' title='$frontend_link' href='$frontend_link'>$page_linkname</a></td>
 			<td><span class='bold'>$page_title</span><p class='extrainfo condensed'>$last_edit | Style: $show_template_name | $lang[f_page_language]: $page_language<br>$show_redirect</p></td>
 			<td style='text-align:right;'>$pi</td>
-			<td><div class='btn-group'>$edit_button</div></td>
+			<td><div class='btn-group'>$edit_button $page_comments_link</div></td>
 		</tr>";
 
 } // eol for $i

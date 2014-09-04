@@ -140,6 +140,8 @@ $lang['filesize'] = "Dateigröße";
 $lang['date_of_change'] = "Änderungsdatum";
 $lang['filename'] = "Name";
 
+$lang['label_comment'] = "Kommentar schreiben";
+
 
 $lang['browse_files'] = "Festplpatte nach Dateien durchsuchen";
 $lang['browse_images'] = "Festplatte nur nach Bildern durchsuchen";

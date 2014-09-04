@@ -545,11 +545,11 @@ table.table-pages tr td {
 }
 
 
-#logfile-container {
-	height:300px;
+.scroll-conatiner {
+	height:350px;
 	overflow:auto;
 	padding:5px;
-	background-color:#ddd;
+	background-color:#e5e5e5;
 	border-radius:5px;
 }
 
