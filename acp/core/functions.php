@@ -1,7 +1,11 @@
 <?php
 
-//prohibit unauthorized access
-require("core/access.php");
+/**
+ * prohibit unauthorized access
+ */
+if(basename(__FILE__) == basename($_SERVER['PHP_SELF'])){ 
+	die ('<h2>Direct File Access Prohibited</h2>');
+}
 
 
 /**
@@ -46,6 +50,7 @@ function get_preferences() {
 	return $result;
 }
 
+
 /**
  * get all installed Moduls
  * return as array -> $arr_iMods
@@ -60,15 +65,14 @@ function get_all_moduls() {
 	foreach($scanned_directory as $mod_folder) {
 		if(is_file("$mdir/$mod_folder/info.inc.php")) {
 			include("$mdir/$mod_folder/info.inc.php");
-			$arr_iMods[$cntMods][name] = "$mod[name]";
-			$arr_iMods[$cntMods][folder] = "$mod_folder";
+			$arr_iMods[$cntMods]['name'] = $mod['name'];
+			$arr_iMods[$cntMods]['folder'] = "$mod_folder";
 			$cntMods++;		
 		}
 	}
 
 	return($arr_iMods);
 }
-
 
 
 /**
@@ -87,9 +91,6 @@ function get_all_groups() {
 	
 	return($result);
 }
-
-
-
 
 
 /**
@@ -134,7 +135,6 @@ function get_all_templates() {
 }
 
 
-
 /**
  * show all images
  * return array
@@ -148,14 +148,11 @@ function get_all_images() {
 	$dir = "../$img_path";
 	
 	if(is_dir($dir)) {
-	
 		$img = glob("$dir/{*.jpg,*.gif,*.png}", GLOB_BRACE);		
 		foreach($img as $v) {
 				$images[] = basename($v);
 		}
-	
-	 }
-	 
+	}
 	 return $images;
 }
 
@@ -181,7 +178,6 @@ function clean_filename($str) {
 	$str = trim($str); 
 	return $str; 
 }  
-
 
 
 /**
@@ -298,6 +294,7 @@ function record_log($log_trigger = 'system', $log_entry, $log_priority = '0') {
 
 /**
  * show log entries
+ * delete records that are older than 30 days
  */
 
 function show_log($nbr) {
@@ -461,7 +458,7 @@ function cache_lastedit($num = 5) {
 	
 	$sql = "SELECT page_id, page_linkname, page_permalink, page_title, page_status, page_lastedit
 			FROM fc_pages
-			WHERE page_status != 'draft' AND page_language = '$languagePack'
+			WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = '$languagePack'
 			ORDER BY page_lastedit DESC 
 			LIMIT 0 , $num
 			";
@@ -478,20 +475,20 @@ function cache_lastedit($num = 5) {
 	
 	for($i=0;$i<$count_result;$i++) {
 	
-		$set_title = str_replace(" ","_",$result[$i][page_title]);
+		$set_title = str_replace(" ","_",$result[$i]['page_title']);
 		
 		if($fc_mod_rewrite == "on") {
-			$result[$i][link] = FC_ROOT . "/" . $result[$i][page_linkname] ."/". $result[$i][page_id] ."/". $set_title;
+			$result[$i]['link'] = FC_ROOT . "/" . $result[$i]['page_linkname'] ."/". $result[$i]['page_id'] ."/". $set_title;
 		} elseif ($fc_mod_rewrite == "off") {
-			$result[$i][link] = "index.php?p=" . $result[$i][page_id];
+			$result[$i]['link'] = "index.php?p=" . $result[$i]['page_id'];
 		} elseif ($fc_mod_rewrite == "permalink") {
-			$result[$i][link] = FC_ROOT . "/" . $result[$i][page_permalink];
+			$result[$i]['link'] = FC_ROOT . "/" . $result[$i]['page_permalink'];
 		}
 	
-		$string .= "\$arr_lastedit[$i][page_id] = \"" . $result[$i][page_id] . "\";\n";
-		$string .= "\$arr_lastedit[$i][link] = \"" . $result[$i][link] . "\";\n";
-		$string .= "\$arr_lastedit[$i][page_title] = \"" . $result[$i][page_title] . "\";\n";
-		$string .= "\$arr_lastedit[$i][page_linkname] = \"" . $result[$i][page_linkname] . "\";\n";
+		$string .= "\$arr_lastedit[$i][page_id] = \"" . $result[$i]['page_id'] . "\";\n";
+		$string .= "\$arr_lastedit[$i][link] = \"" . $result[$i]['link'] . "\";\n";
+		$string .= "\$arr_lastedit[$i][page_title] = \"" . $result[$i]['page_title'] . "\";\n";
+		$string .= "\$arr_lastedit[$i][page_linkname] = \"" . $result[$i]['page_linkname'] . "\";\n";
 	
 	} // eol $i
 	
@@ -516,7 +513,7 @@ function cache_keywords() {
 	
 	$sql = "SELECT page_meta_keywords
 			FROM fc_pages
-			WHERE page_status != 'draft' AND page_language = '$languagePack' ";
+			WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = '$languagePack' ";
 	
 	foreach ($dbh->query($sql) as $row) {
 		$clean_key = $row['page_meta_keywords'];
@@ -596,9 +593,9 @@ function mods_check_in() {
 	$x = 0;
 	for($i=0;$i<$count_result;$i++) {
 	
-		if($result[$i][page_modul] != "") {
-			$string .= "\$active_mods[$x][page_modul] = \"" . $result[$i][page_modul] . "\";\n";
-			$string .= "\$active_mods[$x][page_permalink] = \"" . $result[$i][page_permalink] . "\";\n";
+		if($result[$i]['page_modul'] != "") {
+			$string .= "\$active_mods[$x][page_modul] = \"" . $result[$i]['page_modul'] . "\";\n";
+			$string .= "\$active_mods[$x][page_permalink] = \"" . $result[$i]['page_permalink'] . "\";\n";
 			$x++;
 		}
 	
@@ -635,8 +632,8 @@ function cache_url_paths() {
 	$string = "\$existing_url = array();\n";
 	for($i=0;$i<$count_result;$i++) {
 		
-		if($result[$i][page_permalink] != "") {
-			$string .= "\$existing_url[$x] = \"" . $result[$i][page_permalink] . "\";\n";
+		if($result[$i]['page_permalink'] != "") {
+			$string .= "\$existing_url[$x] = \"" . $result[$i]['page_permalink'] . "\";\n";
 			$x++;
 		}
 	}
@@ -752,8 +749,104 @@ function first_words($string,$nbr=5) {
 }
 
 
+/**
+ * get comments from fc_comments
+ * delete records from chat that are older than 30 days
+ *
+ */
+ 
+function fc_get_comments($parent) {
+
+	$dbh = new PDO("sqlite:".CONTENT_DB);
+	
+	$interval = time() - (30 * 86400); // 30 days
+	$count = $dbh->exec("DELETE FROM fc_comments WHERE comment_time < '$interval' AND comment_parent LIKE 'c' ");
+
+	$sql = "SELECT * FROM fc_comments WHERE comment_parent LIKE '$parent' ORDER BY comment_time DESC";
+	
+	foreach ($dbh->query($sql) as $row) {
+  	$result[] = $row;
+	}
+	
+	$dbh = null;
+	
+	return($result);
+}
 
 
+/**
+ * get comment from fc_comments
+ * by comment_id
+ *
+ */
 
+function fc_get_comment($id) {
+
+	$id = (int) $id;
+
+	$dbh = new PDO("sqlite:".CONTENT_DB);
+	$sql = "SELECT * FROM fc_comments WHERE comment_id = '$id' ";
+	
+	$result = $dbh->query($sql);
+	$result = $result->fetch(PDO::FETCH_ASSOC);
+	
+	$dbh = null;
+	
+	return($result);
+}
+
+
+/**
+ * write a comment
+ * $parent - 'c' for chat
+ * $parent - 'p + page_id' for comments on page overview
+ * 
+ */
+
+
+function fc_write_comment($author, $message, $parent, $id = NULL) {
+	
+	$comment_time = time();
+	$comment_hash = md5($comment_time);
+	$author = strip_tags($author);
+	$message = strip_tags($message);
+	$parent = strip_tags($parent);
+	
+	$pdo_fields_update = array(
+		'comment_text' => 'STR'
+	);
+	
+	$pdo_fields_new = array(
+		'comment_id' => 'INT',
+		'comment_hash' => 'STR',
+		'comment_parent' => 'STR',
+		'comment_time' => 'STR',
+		'comment_author' => 'STR',
+		'comment_text' => 'STR'
+	);
+	
+	$dbh = new PDO("sqlite:".CONTENT_DB);
+	
+	if(!is_null($id)) {
+		$sql = generate_sql_update_str($pdo_fields_update,"fc_comments","WHERE comment_id = '$id' ");
+		$sth = $dbh->prepare($sql);
+		generate_bindParam_str($pdo_fields,$sth);
+		$sth->bindParam(':comment_text', $message, PDO::PARAM_STR);
+	} else {
+		$sql = generate_sql_insert_str($pdo_fields_new,"fc_comments");
+		$sth = $dbh->prepare($sql);
+		generate_bindParam_str($pdo_fields,$sth);
+		$sth->bindParam(':comment_hash', $comment_hash, PDO::PARAM_STR);
+		$sth->bindParam(':comment_parent', $parent, PDO::PARAM_STR);
+		$sth->bindParam(':comment_time', $comment_time, PDO::PARAM_STR);
+		$sth->bindParam(':comment_author', $author, PDO::PARAM_STR);
+		$sth->bindParam(':comment_text', $message, PDO::PARAM_STR);
+	}
+
+	$cnt_changes = $sth->execute();
+
+	$dbh = null;
+
+}
 
 ?>
