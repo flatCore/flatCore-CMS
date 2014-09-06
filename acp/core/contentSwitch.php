@@ -2,7 +2,7 @@
 require("core/access.php");
 
 /**
- * we can chose between different content files
+ * we can choose between different content files
  * store your files as array in your own config.php
  * example: $fc_content_files array (	array (	'file'	=> 'content.sqlite3',	'desc'	=> 'Standard SQLite Database' ), array ( ... ) );
  */
