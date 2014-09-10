@@ -63,15 +63,6 @@ function buffer_script($script,$parameters=NULL) {
  */
 	 
 function text_parser($text) {
-	/*
-	preg_match_all('#\<pre.*?\>(.*?)\</pre\>#', $text, $matches);
-	
-	$noparse = $matches[1];
-	
-	$noparse = preg_replace('/\[/i', '&#91;', $noparse);
-	$noparse = preg_replace('/\]/i', '&#93;', $noparse);
-	$text = preg_replace('#\<pre(.*?)\>(.*?)\</pre\>#Usi', "<pre\\1>$noparse</pre>", $text);
-	*/
 	
 	if(preg_match_all('#\<pre.*?\>(.*?)\</pre\>#', $text, $matches)) {
 		$match = $matches[0];
@@ -202,13 +193,12 @@ function get_avatar_by_username($user_name) {
 
 /**
  * send a notification to admin
- * $fc_mailer_adr is defined in config.php
  */
 
 function mailto_admin($subject,$message) {
 
-	global $fc_mailer_adr;
-	global $fc_mailer_name;
+	global $prefs_mailer_adr;
+	global $prefs_mailer_name;
 	
 	$subject = preg_replace( "/(content-type:|bcc:|cc:|to:|from:)/im", "", $subject );
 	$message = preg_replace( "/(content-type:|bcc:|cc:|to:|from:)/im", "", $message );
@@ -218,8 +208,8 @@ function mailto_admin($subject,$message) {
 	$mailer = Swift_Mailer::newInstance($transport);
 	$msg = Swift_Message::newInstance()
 		->setSubject("flatCore Notification - $subject")
-  		->setFrom(array("$fc_mailer_adr" => "flatCore Notification"))
-  		->setTo(array("$fc_mailer_adr" => "$fc_mailer_name"))
+  		->setFrom(array("$prefs_mailer_adr" => "flatCore Notification"))
+  		->setTo(array("$prefs_mailer_adr" => "$prefs_mailer_name"))
   		->setBody("$message", 'text/html')
   	;
   	$result = $mailer->send($msg);
