@@ -1,12 +1,17 @@
 <?php
 
-
+/**
+ * prohibit unauthorized access
+ */
+if(basename(__FILE__) == basename($_SERVER['PHP_SELF'])){ 
+	die ('<h2>Direct File Access Prohibited</h2>');
+}
 
 if($prefs_userregistration != 'yes') {
 	die("unauthorized access");
 }
 
-$send_data = "true";
+$send_data = 'true';
 
 // all incoming data -> strip_tags
 // limit/trim string to 200 characters
@@ -14,8 +19,8 @@ foreach($_POST as $key => $val) {
 	$$key = strip_tags(substr($val, 0, 200)); 
 }
 
-if($accept_terms == "") {
-	$send_data = "false";
+if($accept_terms == '') {
+	$send_data = 'false';
 	$register_message = $lang['msg_register_accept'].'<br>';
 }
 
@@ -27,13 +32,13 @@ if( ($username == "") || ($psw == "") || ($mail == "")  ){
 
 //mail and mailrepeat
 if($mail != $mailrepeat) {
-	$send_data = "false";
+	$send_data = 'false';
 	$register_message .= $lang['msg_register_mailrepeat_error'].'<br>';
 }
 
 //psw and psw_repeat
 if($psw != $psw_repeat) {
-	$send_data = "false";
+	$send_data = 'false';
 	$register_message .= $lang['msg_register_pswrepeat_error'].'<br>';
 }
 
@@ -71,12 +76,12 @@ foreach ($all_usermail_array as $entry) {
 
 
 //yeah, create the new account
-if($send_data == "true") {
+if($send_data == 'true') {
 
 	$user_groups = "1";
 	$user_registerdate = time();
-	$user_verified = "waiting";
-	$drm_string = "";
+	$user_verified = 'waiting';
+	$drm_string = '';
 	$psw_string = md5("$psw$username");
 	
 	$user_activationkey = md5("$username$user_registerdate");
@@ -118,9 +123,7 @@ if($send_data == "true") {
 	$sth->bindParam(':user_activationkey', $user_activationkey, PDO::PARAM_STR);
 	
 	$count = $sth->execute();
-	
 	$dbh = null;
-	
 	
 	/* generate the message */
 	$email_msg = get_textlib("account_confirm_mail");
@@ -129,21 +132,26 @@ if($send_data == "true") {
 	$email_msg = str_replace("{ACTIVATIONLINK}","$user_activationlink",$email_msg);
 	
 	/* send register mail to the new user */
-		require_once("lib/Swift/lib/swift_required.php");
-		$transport = Swift_MailTransport::newInstance();
-		$mailer = Swift_Mailer::newInstance($transport);
-		$message = Swift_Message::newInstance()
-				->setSubject("Registrierungsdaten | $prefs_pagetitle")
-	  		->setFrom(array("$prefs_mailer_adr" => "$prefs_mailer_name"))
-	  		->setTo(array("$mail" => "$username"))
-	  		->setBody("$email_msg", 'text/html');
-	  	$result = $mailer->send($message);
+	require_once("lib/Swift/lib/swift_required.php");
+	$transport = Swift_MailTransport::newInstance();
+	$mailer = Swift_Mailer::newInstance($transport);
+	$message = Swift_Message::newInstance()
+			->setSubject("Registrierungsdaten | $prefs_pagetitle")
+  		->setFrom(array("$prefs_mailer_adr" => "$prefs_mailer_name"))
+  		->setTo(array("$mail" => "$username"))
+  		->setBody("$email_msg", 'text/html');
+  $result = $mailer->send($message);
 	
 	$smarty->assign("msg_status","alert alert-success");
 	$smarty->assign("register_message",$lang['msg_register_success']);
 	
 	record_log("user_register","new user $username","6");
-	mailto_admin("$lang[msg_register_admin_notification_subject]","$lang[msg_register_admin_notification_text]<br /><b>$username</b><br />$mail");
+	
+	$admin_notification_text  = $lang['msg_register_admin_notification_text'].'<hr>';
+	$admin_notification_text .= 'Username: <b>'.$username.'</b><br>';
+	$admin_notification_text .= 'E-Mail: '.$mail.'<br>';
+	$admin_notification_text .= 'Server: '.$_SERVER['SERVER_NAME'].'<br>';
+	mailto_admin("$lang[msg_register_admin_notification_subject]","$admin_notification_text");
 
 } else {
 	//oh no, don't create an new account
