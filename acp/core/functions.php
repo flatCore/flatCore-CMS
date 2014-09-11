@@ -394,7 +394,7 @@ function generate_xml_sitemap() {
 	if($prefs_xml_sitemap == "on") {
 	
 		$sql = "SELECT page_id, page_language, page_permalink, page_lastedit, page_status	FROM fc_pages
-				WHERE page_status = 'public' AND page_language = '$languagePack' ORDER BY page_lastedit DESC ";
+				WHERE page_status = 'public' ORDER BY page_lastedit DESC ";
 		    
 		$results = $dbh->query($sql)->fetchAll();
 		$dbh = null;
@@ -409,7 +409,7 @@ function generate_xml_sitemap() {
 		
 			$page_id = $results[$i]['page_id'];
 			$page_permalink = $results[$i]['page_permalink'];
-			$page_lastedit = date("Y-m-d",$results[$i][page_lastedit]);
+			$page_lastedit = date("Y-m-d",$results[$i]['page_lastedit']);
 			
 			if($fc_mod_rewrite == "permalink") {
 				$link = "http://$_SERVER[HTTP_HOST]" . FC_INC_DIR . "/$page_permalink";
