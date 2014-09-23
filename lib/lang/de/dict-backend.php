@@ -28,6 +28,7 @@ $lang['submit'] = "Los";
 $lang['choose'] = "Auswählen";
 $lang['display'] = "Anzeigen";
 $lang['save'] = "Speichern";
+$lang['discard_changes'] = "Verwerfen";
 $lang['download'] = "Download";
 $lang['new_user'] = "Neuer Benutzer";
 $lang['edit_user'] = "Benutzer bearbeiten";

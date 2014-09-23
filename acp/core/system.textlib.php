@@ -92,7 +92,12 @@ switch ($sel_text) {
 }
 
 $arr_lang = get_all_languages();
+
+echo '<div class="clearfix">';
+echo '<div class="pull-right" style="width:200px;">';
 show_editor_switch($tn,$sub);
+echo '</div>';
+echo '</div>';
 
 echo '<fieldset style="margin-bottom:0;">';
 echo '<legend>'.$lang['system_textlib'].'</legend>';

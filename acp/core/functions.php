@@ -711,23 +711,22 @@ function get_custom_user_fields() {
 function show_editor_switch($tn,$sub) {
 
 	if($_SESSION['editor_class'] == "plain") {
-		$btn_primary_wysiwyg = 'btn-default';
+		$btn_primary_wysiwyg = 'btn btn-default btn-sm';
 		$btn_wysiwyg_link = "$_SERVER[PHP_SELF]?tn=$tn&sub=$sub&editor=toggle";
 		$btn_text_link = "#";
-		$btn_primary_text = 'btn-primary disabled';
+		$btn_primary_text = 'btn btn-primary btn-sm disabled';
 	} else {
-		$btn_primary_wysiwyg = 'btn-primary disabled';
+		$btn_primary_wysiwyg = 'btn btn-primary btn-sm disabled';
 		$btn_text_link = "$_SERVER[PHP_SELF]?tn=$tn&sub=$sub&editor=toggle";
 		$btn_wysiwyg_link = "#";
-		$btn_primary_text = 'btn-default';
+		$btn_primary_text = 'btn btn-default btn-sm';
 	}
 	
 	
-	echo '<div class="btn-group" style="float:right;">';
-	echo "<a href='$btn_wysiwyg_link' class='btn btn-sm $btn_primary_wysiwyg'>WYSIWYG</a>";
-	echo "<a href='$btn_text_link' class='btn btn-sm $btn_primary_text'>Text</a>";
+	echo '<div class="btn-group btn-group-justified">';
+	echo '<a href="'.$btn_wysiwyg_link.'" class="'.$btn_primary_wysiwyg.'">WYSIWYG</a>';
+	echo '<a href="'.$btn_text_link.'" class="'.$btn_primary_text.'">Text</a>';
 	echo '</div>';
-	echo '<div class="clearfix"></div>';
 	
 }
 

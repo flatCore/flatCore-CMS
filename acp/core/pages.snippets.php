@@ -140,10 +140,10 @@ $cnt_snippets = count($snippets_list);
  * open snippet
  */
 
-if(((isset($_POST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_snip_id)))  {
+if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_snip_id)))  {
 
 	if(!isset($snip_id)) {
-		$snip_id = (int) $_POST['snip_id'];
+		$snip_id = (int) $_REQUEST['snip_id'];
   }
     
 	$dbh = new PDO("sqlite:".CONTENT_DB);
@@ -163,16 +163,20 @@ if(((isset($_POST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_snip
 }
 
 
-show_editor_switch($tn,$sub);
+
+
+echo '<div class="row">';
+echo '<div class="col-md-3">';
 
 echo '<fieldset>';
 echo '<legend>' . $lang['snippets'] . '</legend>';
-echo "<form action='$_SERVER[PHP_SELF]?tn=pages&sub=snippets' method='POST' name='sel_snippet' class='form-inline'>";
 
-echo '<div class="form-group">';
-echo '<select name="snip_id" class="form-control">';
+show_editor_switch($tn,$sub);
+
+echo '<hr><div class="list-group">';
 
 for($i=0;$i<$cnt_snippets;$i++) {
+	$active_class = '';
 	$get_snip_id = $snippets_list[$i]['textlib_id'];
 	$get_snip_name = $snippets_list[$i]['textlib_name'];
 		
@@ -184,16 +188,20 @@ for($i=0;$i<$cnt_snippets;$i++) {
 		$get_snip_name_smarty = str_replace('-', '_', $get_snip_name_smarty);
 	}
 	
-	echo "<option value='$get_snip_id' $sel>$get_snip_name</option>";
+	if($_REQUEST['snip_id'] == $get_snip_id) {
+		$active_class = 'active';
+	}
+	
+	echo '<a class="list-group-item '.$active_class.'" href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'">'.$get_snip_name.'</a>';
 }
 
-echo '</select> ';
 echo '</div>';
 
-echo ' <input type="submit" class="btn btn-default" name="sel_snippet" value="'.$lang['edit'].'">';
 
-echo '</form>';
 echo '</fieldset>';
+
+echo '</div>';
+echo '<div class="col-md-9">';
 
 
 echo '<fieldset>';
@@ -210,7 +218,7 @@ echo '</div>';
 
 echo '</div>';
 
-if(isset($_POST['snip_id'])) {
+if(isset($get_snip_name_editor)) {
 	echo '<div class="col-md-6">';
 	echo '<ul class="list-group">';
 	echo '<li class="list-group-item"><span class="badge">Editor</span>'.$get_snip_name_editor.'</li>';
@@ -232,13 +240,17 @@ if($modus == 'new') {
 	echo '<input type="submit" name="save_snippet" class="btn btn-success" value="'.$lang['save'].'">';
 } else {
 	echo '<input type="hidden" name="snip_id" value="'.$snip_id.'">';
-	echo '<input type="submit" name="delete_snippet" class="btn btn-danger" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_data'].'\')"> ';
-	echo '<input type="submit" name="update_snippet" class="btn btn-success" value="'.$lang['update'].'">';
+	echo '<div class="pull-right"><input type="submit" name="delete_snippet" class="btn btn-danger" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_data'].'\')"></div> ';
+	echo '<input type="submit" name="update_snippet" class="btn btn-success" value="'.$lang['update'].'"> ';
+	echo '<a class="btn btn-default" href="acp.php?tn=pages&sub=snippets">'.$lang['discard_changes'].'</a>';
 }
 
 echo '</div>';
 
 echo '</form>';
 echo '</fieldset>';
+
+echo '</div>';
+echo '</div>';
 
 ?>

@@ -31,6 +31,7 @@ $lang['submit'] = "Go";
 $lang['choose'] = "Auswählen";
 $lang['display'] = "Choose";
 $lang['save'] = "Save";
+$lang['discard_changes'] = "Discard changes";
 $lang['download'] = "Download";
 $lang['new_user'] = "New User";
 $lang['edit_user'] = "Edit User";
