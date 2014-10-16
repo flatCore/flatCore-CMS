@@ -88,6 +88,14 @@ if($_POST['saveprefs']) {
 	if($cnt_changes == TRUE) {
 		$sys_message = "{OKAY} $lang[db_changed]";
 		record_log("$_SESSION[user_nick]","edit system preferences","6");
+		
+		/* read the preferences again */
+		$fc_preferences = get_preferences();
+		
+		foreach($fc_preferences as $k => $v) {
+		   $$k = stripslashes($v);
+		}
+		
 	} else {
 		$sys_message = "{ERROR} $lang[db_not_changed]";
 		record_log("$_SESSION[user_nick]","error on saving system preferences","11");
@@ -100,7 +108,6 @@ if($_POST['saveprefs']) {
 if($sys_message != ""){
 	print_sysmsg("$sys_message");
 }
-
 
 
 /* print the form */
@@ -199,8 +206,10 @@ echo"</fieldset>";
 echo"<fieldset>";
 echo"<legend>$lang[f_prefs_global_header]</legend>";
 
+$ta_pagesglobalhead = '<textarea name="prefs_pagesglobalhead" id="html_editor" class="form-control">'.$prefs_pagesglobalhead.'</textarea>';
+$ta_pagesglobalhead .= '<div id="HTMLeditor"></div>';
 
-echo tpl_form_control_group('','&lt;head&gt;<br>...<br>&lt;/head&gt;',"<textarea name='prefs_pagesglobalhead' class='form-control' rows='10'>$prefs_pagesglobalhead</textarea>");
+echo tpl_form_control_group('','&lt;head&gt;<br>...<br>&lt;/head&gt;',"$ta_pagesglobalhead");
 
 
 echo"</fieldset>";

@@ -244,7 +244,36 @@ foreach($fc_preferences as $k => $v) {
 	});
 	</script>
 
-
+		<script src="../lib/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+		
+			if ($('#CSSeditor').length != 0) {
+				var CSSeditor = ace.edit("CSSeditor");
+				var CSStextarea = $('textarea[id="css_editor"]').hide();
+			  
+			  
+			  CSSeditor.getSession().setValue(CSStextarea.val());
+			  CSSeditor.setTheme("ace/theme/chrome");
+			  CSSeditor.getSession().setMode("ace/mode/css");
+			  CSSeditor.setShowPrintMargin(false);
+				CSSeditor.getSession().on('change', function(){
+					CSStextarea.val(CSSeditor.getSession().getValue());
+				});
+			}
+		  
+		  if ($('#HTMLeditor').length != 0) {
+				var HTMLeditor = ace.edit("HTMLeditor");
+				var HTMLtextarea = $('textarea[id="html_editor"]').hide();
+			  
+			  HTMLeditor.getSession().setValue(HTMLtextarea.val());
+			  HTMLeditor.setTheme("ace/theme/chrome");
+			  HTMLeditor.getSession().setMode("ace/mode/html");
+			  HTMLeditor.setShowPrintMargin(false);
+				HTMLeditor.getSession().on('change', function(){
+					HTMLtextarea.val(HTMLeditor.getSession().getValue());
+				});
+			}  
+		</script>
 	</body>
 </html>
 

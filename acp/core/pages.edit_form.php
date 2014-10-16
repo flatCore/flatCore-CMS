@@ -195,7 +195,7 @@ $select_page_meta_robots .= '<option value="nofollow" '.($page_meta_robots == "n
 $select_page_meta_robots .= '<option value="noodp" '.($page_meta_robots == "noodp" ? 'selected="selected"' :'').'>noodp</option>';
 $select_page_meta_robots .= '<option value="noydir" '.($page_meta_robots == "noydir" ? 'selected="selected"' :'').'>noydir</option>';
 $select_page_meta_robots .= '</select>';
-echo tpl_form_control_group('',$lang[f_meta_robots],$select_page_meta_robots);
+echo tpl_form_control_group('',$lang['f_meta_robots'],$select_page_meta_robots);
 
 
 
@@ -208,13 +208,15 @@ echo'<div class="tab-pane fade" id="head">';
 
 echo $lang['f_head_styles'];
 echo '<span class="silent"> &lt;style type=&quot;text/css&quot;&gt;</span> ... <span class="silent">&lt;/styles&gt;</span>';
-echo "<textarea name='page_head_styles' class='form-control plain-editor' rows='12'>$page_head_styles</textarea>";
+echo "<textarea name='page_head_styles' id='css_editor' class='form-control plain-editor' rows='12'>$page_head_styles</textarea>";
+echo '<div id="CSSeditor"></div>';
 
 echo '<hr>';
 
 echo $lang['f_head_enhanced'];
 echo '<span class="silent"> &lt;head&gt;</span> ... <span class="silent">&lt;/head&gt;</span>';
-echo "<textarea name='page_head_enhanced' class='form-control plain-editor' rows='12'>$page_head_enhanced</textarea>";
+echo "<textarea name='page_head_enhanced' id='html_editor' class='form-control plain-editor' rows='12'>$page_head_enhanced</textarea>";
+echo '<div id="HTMLeditor"></div>';
 
 echo'</div>'; /* EOL tab_head */
 
