@@ -49,8 +49,8 @@ $lang['textlib'] = "Textbausteine";
 $lang['snippets'] = "Textvorlagen";
 $lang['filename'] = "Dateiname";
 
-$lang['save_new_page'] = "Seite speichern";
-$lang['update_page'] = "Seite aktualisieren";
+$lang['save_new_page'] = "Speichern";
+$lang['update_page'] = "Aktualisieren";
 $lang['delete_page'] = "Seite löschen";
 
 $lang['save_new_user'] = "Benutzer speichern";

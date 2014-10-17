@@ -365,21 +365,21 @@ if($page_status == "") {
 
 
 $select_page_status = '<div class="text-center">';
-$select_page_status .= '<div class="btn-group" data-toggle="buttons">';
+$select_page_status .= '<div class="btn-group btn-group-justified" data-toggle="buttons">';
 
-$select_page_status .= '<label class="btn btn-sm btn-default btn-public '.($page_status == "public" ? 'active' :'').' ">';
+$select_page_status .= '<label class="btn btn-xs btn-default btn-public '.($page_status == "public" ? 'active' :'').' ">';
 $select_page_status .= "<input type='radio' name='page_status' value='public'".($page_status == "public" ? 'checked' :'')."> $lang[f_page_status_puplic]";
 $select_page_status .= '</label>';
 
-$select_page_status .= '<label class="btn btn-sm btn-default btn-ghost '.($page_status == "ghost" ? 'active' :'').'">';
+$select_page_status .= '<label class="btn btn-xs btn-default btn-ghost '.($page_status == "ghost" ? 'active' :'').'">';
 $select_page_status .= "<input type='radio' name='page_status' value='ghost'".($page_status == "ghost" ? 'checked' :'')."> $lang[f_page_status_ghost]";
 $select_page_status .= '</label>';
 
-$select_page_status .= '<label class="btn btn-sm btn-default btn-private '.($page_status == "private" ? 'active' :'').'">';
+$select_page_status .= '<label class="btn btn-xs btn-default btn-private '.($page_status == "private" ? 'active' :'').'">';
 $select_page_status .= "<input type='radio' name='page_status' value='private'".($page_status == "private" ? 'checked' :'')."> $lang[f_page_status_private]";
 $select_page_status .= '</label>';
 
-$select_page_status .= '<label class="btn btn-sm btn-default btn-draft '.($page_status == "draft" ? 'active' :'').'">';
+$select_page_status .= '<label class="btn btn-xs btn-default btn-draft '.($page_status == "draft" ? 'active' :'').'">';
 $select_page_status .= "<input type='radio' name='page_status' value='draft'".($page_status == "draft" ? 'checked' :'')."> $lang[f_page_status_draft]";	
 $select_page_status .= '</label>';
 
