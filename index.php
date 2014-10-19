@@ -81,6 +81,7 @@ if($query != "") {
 		list($page_contents,$fc_nav,$fc_prefs) = get_content($fct_slug,'permalink');
 		$p = $page_contents['page_id'];
 		
+		
 		if($p == "") {		
 			$p = "404";					
 			foreach($a_allowed_p as $param) {
@@ -88,6 +89,9 @@ if($query != "") {
 					$p = "$param";
 				}
 			}
+			
+			fc_check_shortlinks($fct_slug);
+			
 		}
 			
 	}

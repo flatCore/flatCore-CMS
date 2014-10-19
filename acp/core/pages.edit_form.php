@@ -101,13 +101,24 @@ if($page_sort != "portal") {
 
 }
 
-
-
 echo '<hr>';
 	
 echo tpl_form_control_group('',$lang['f_page_linkname'],"<input class='form-control' type='text' name='page_linkname' value='$page_linkname'>");
 echo tpl_form_control_group('',$lang['f_page_permalink'],"<input class='form-control' type='text' name='page_permalink' value='$page_permalink'>");
 
+if(empty($page_permalink_short_cnt)) {
+	$page_permalink_short_cnt = 0;
+}
+
+echo '<div class="form-group">';
+echo '<label class="control-label control-label-normal col-md-2">'.$lang['f_page_permalink_short'].'</label>';
+echo '<div class="col-sm-10">';
+echo '<div class="input-group">';
+echo '<input class="form-control" type="text" name="page_permalink_short" value="'.$page_permalink_short.'">';
+echo '<span class="input-group-addon">'.$page_permalink_short_cnt.'</span>';
+echo '</div>';
+echo '</div>';
+echo '</div>';
 
 $select_page_redirect_code  = '<select name="page_redirect_code" class="form-control">';
 if($page_redirect_code == '') {
