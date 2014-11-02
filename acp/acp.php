@@ -98,6 +98,12 @@ foreach($fc_preferences as $k => $v) {
 		<script type="text/javascript" src="../lib/js/masonry.pkgd.min.js"></script>
 		<script type="text/javascript" src="../lib/js/imagesloaded.pkgd.min.js"></script>
 		
+		<!-- Chart.js -->
+		<script type="text/javascript" src="../lib/js/Chart.min.js"></script>
+		
+		<!-- jquery.matchHeight-min.js-->
+		<script type="text/javascript" src="../lib/js/jquery/jquery.matchHeight-min.js"></script>
+		
 		<!-- bootstrap switch -->
 		<link rel="stylesheet" href="../lib/css/bootstrap-switch.css" type="text/css" media="screen, projection">
 		<script type="text/javascript" src="../lib/js/bootstrap-switch.min.js"></script>

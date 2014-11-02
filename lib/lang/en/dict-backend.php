@@ -92,6 +92,7 @@ $lang['h_email'] = "E-Mail";
 $lang['h_status'] = "Status";
 $lang['h_action'] = "Action";
 $lang['h_search_user'] = "Search User";
+$lang['h_latest_user'] = "Latest User";
 
 $lang['h_page_sort'] = "Sorting";
 $lang['h_page_linkname'] = "Linkname";
@@ -101,6 +102,7 @@ $lang['h_page_hits'] = "Klicks";
 
 $lang['h_modus_editpage'] = "Edit Page";
 $lang['h_modus_newpage'] = "New Page";
+$lang['h_last_edit'] = "last edit";
 
 $lang['h_modus_edituser'] = "Edit User";
 $lang['h_modus_newuser'] = "New User";
@@ -239,6 +241,7 @@ $lang['f_user_psw_description'] = "Complete only<br />when the password is to be
 $lang['f_user_select_waiting'] = "Wait for verification";
 $lang['f_user_select_verified'] = "Verified";
 $lang['f_user_select_paused'] = "Temporarily closed";
+$lang['f_user_select_deleted'] = "Deleted";
 $lang['f_administrators'] = "Administrators";
 
 /* Preferences */
