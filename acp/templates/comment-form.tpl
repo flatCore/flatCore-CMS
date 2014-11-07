@@ -8,9 +8,9 @@
 <script>
 
 $(document).ready(function() {
-	$('#comment').keydown(function() {
+	$('#comment').keypress(function() {
 		var message = $("textarea").val();
-		if(event.keyCode == 13) {
+		if(event.keyCode == 13 && !event.shiftKey) {
 			if(message != "") {
 				$('#comment_form').submit();
 			}
