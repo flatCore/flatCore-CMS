@@ -1,6 +1,6 @@
 <?php
 session_start();
-error_reporting(0);
+error_reporting(E_WARNING);
 require("core/access.php");
 require("../config.php");
 
@@ -8,7 +8,7 @@ if(is_file('../'.FC_CONTENT_DIR.'/config.php')) {
 	include('../'.FC_CONTENT_DIR.'/config.php');
 }
 
-if(is_array($fc_content_files)) {
+if(isset($fc_content_files) && is_array($fc_content_files)) {
 	/* switch database file $fc_db_content */
 	include('core/contentSwitch.php');
 }
@@ -150,7 +150,7 @@ foreach($fc_preferences as $k => $v) {
 	<div id="page-content">
 
 	<?php
-	if(is_array($fc_content_files)) {
+	if(isset($fc_content_files) && is_array($fc_content_files)) {
 		echo '<div id="contentSwitch" class="clearfix">';
 		echo $fc_content_switch;
 		echo '</div>';
@@ -168,7 +168,7 @@ foreach($fc_preferences as $k => $v) {
 	
 	<div id="footer">
 	<b>flatCore</b> Content Management System<br />
-	copyright © 2010 - <?php echo date(Y); ?>, <a href="http://www.flatcore.de/" target="_blank">flatCore.de</a>
+	copyright © 2010 - <?php echo date('Y'); ?>, <a href="http://www.flatcore.de/" target="_blank">flatCore.de</a>
 	</div>
 	
 	</div>

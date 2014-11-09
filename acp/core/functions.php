@@ -829,12 +829,12 @@ function fc_write_comment($author, $message, $parent, $id = NULL) {
 	if(!is_null($id)) {
 		$sql = generate_sql_update_str($pdo_fields_update,"fc_comments","WHERE comment_id = '$id' ");
 		$sth = $dbh->prepare($sql);
-		generate_bindParam_str($pdo_fields,$sth);
+		generate_bindParam_str($pdo_fields_update,$sth);
 		$sth->bindParam(':comment_text', $message, PDO::PARAM_STR);
 	} else {
 		$sql = generate_sql_insert_str($pdo_fields_new,"fc_comments");
 		$sth = $dbh->prepare($sql);
-		generate_bindParam_str($pdo_fields,$sth);
+		generate_bindParam_str($pdo_fields_new,$sth);
 		$sth->bindParam(':comment_hash', $comment_hash, PDO::PARAM_STR);
 		$sth->bindParam(':comment_parent', $parent, PDO::PARAM_STR);
 		$sth->bindParam(':comment_time', $comment_time, PDO::PARAM_STR);

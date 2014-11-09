@@ -89,6 +89,9 @@ echo'<div class="tab-pane fade in active" id="chat">';
 
 $chat_form = file_get_contents('templates/comment-form.tpl');
 
+$e_comment_text = '';
+$e_comment_id = '';
+
 if(isset($_GET['cid'])) {
 	$get_comment = fc_get_comment($_GET['cid']);
 	$e_comment_text = $get_comment['comment_text'];

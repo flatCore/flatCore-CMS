@@ -86,6 +86,11 @@ $cnt_pages = count($allPages);
 
 $dbh = null;
 
+$cnt_public = 0;
+$cnt_draft = 0;
+$cnt_ghost = 0;
+$cnt_private = 0;
+
 for($i=0;$i<$cnt_pages;$i++) {
 
 	$page_id = $allPages[$i]['page_id'];
