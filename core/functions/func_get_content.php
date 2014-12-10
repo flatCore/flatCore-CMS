@@ -30,7 +30,11 @@ function get_content($page, $mode = 'p') {
 	$dbh = new PDO("sqlite:$fc_db_content");
 	$page_contents = $dbh->query($page_contents_sql)->fetch(PDO::FETCH_ASSOC);
 	$prefs = $dbh->query($prefs_sql)->fetch(PDO::FETCH_ASSOC);
-	
+
+	if($page_contents['page_language'] == '') {
+		$page_contents['page_language'] = $languagePack;
+	}
+
 	if($_SESSION['user_class'] != 'administrator') {
 		$nav_sql_filter = "WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = '$page_contents[page_language]'";
 	} else  {
