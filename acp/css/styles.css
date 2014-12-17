@@ -715,43 +715,6 @@ fieldset legend {
 }
 
 
-a.buttonLink {
-	padding: 5px 8px;
-	background: #222 url(../images/shiny_buttons.png) repeat-x 0px -100px;
-	color: #ccc;
-	font-weight: normal;
-	font-size: 13px;
-	line-height: 28px;
-	border: 1px solid #333;
-	border-radius: 5px;
-	-moz-border-radius: 5px;
-}
-
-
-a.buttonLink:hover {
-	color: #69f;
-	background: #333 url(../images/shiny_buttons.png) repeat-x 0px -105px;
-	border: 1px solid #222;
-}
-
-a.buttonLink_sel, a.buttonLink_sel:hover {
-	padding: 5px 8px;
-	background: #69f url(../images/shiny_buttons.png) repeat-x 0px -105px;
-	color: #222;
-	font-weight: normal;
-	font-size: 13px;
-	line-height: 28px;
-	border: 1px solid #69f;
-	border-radius: 5px;
-}
-
-a.buttonLink:active {
-	color: #69f;
-	background: #222 url(../images/shiny_buttons.png) repeat-x 0px -105px;
-	border: 1px solid #000;
-}
-
-
 .btn-public, .btn-public.active {
 	border-bottom: 1px solid #47a447;
 }
@@ -945,6 +908,7 @@ img.avatar {
   top: 0;
   padding-left: 0;
 }
+
 .doughnut-legend li {
   display: block;
   position: relative;
@@ -956,9 +920,11 @@ img.avatar {
   color: #777;
   cursor: default;
 }
+
 .doughnut-legend li:hover {
   background-color: #eee;
 }
+
 .doughnut-legend li span {
   display: block;
   position: absolute;
