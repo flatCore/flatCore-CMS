@@ -1,8 +1,9 @@
 @import url("../../../lib/css/bootstrap.min.css");
+@import url("styles.css");
 
 body {
-	background-color:#d2e1f3;
-	color:#444;
+	background-color: #d2e1f3;
+	color: #444;
 	font: normal 13px/18px 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
@@ -12,16 +13,7 @@ body.mce-content-body  {
 
 body.mceForceColors {background:#d2e1f3;}
 
-h1 {font-size:28px;line-height:28px;margin-bottom:18px;}
-h2 {font-size:24px;line-height:24px;margin-bottom:18px;}
-h3 {font-size:20px;line-height:20px;margin-bottom:10px;}
-h4 {font-size:18px;line-height:18px;margin-bottom:10px;}
-h5 {font-size:16px;line-height:16px;margin-bottom:10px;}
-h6 {font-size:14px;line-height:14px;margin-bottom:10px;}
 
-h1, h2, h3, h4, h5, h6 {
-	color: #4b89d0;
-}
 
 .mceItemTable, .mceItemTable td, .mceItemTable th, .mceItemTable caption, .mceItemVisualAid {
 	border: 1px dashed #ccc;

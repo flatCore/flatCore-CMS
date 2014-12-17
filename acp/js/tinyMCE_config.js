@@ -4,7 +4,6 @@ tinymce.init({
   element_format : "html",
   menubar: "edit insert table tools view",
   toolbar_items_size: 'small',
-  content_css : "../styles/blucent/css/editor.css?v=14",
   plugins: [
     "advlist autolink lists link image charmap preview anchor",
     "searchreplace visualblocks code fullscreen wordcount template",
@@ -16,11 +15,6 @@ tinymce.init({
   image_advtab: true,
   convert_urls: false,
   entity_encoding : "raw",
-  templates: [ 
-    {title: 'row [6|6]', description: 'Zwei Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_2cols.html'},
-    {title: 'row [4|4|4]', description: 'Drei Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_3cols.html'},
-    {title: 'row [3|3|3|3]', description: 'Vier Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_4cols.html'}
-  ],
 	style_formats : [
 		{title: 'Headlines', items: [
 			{title : 'Headline H1', block : 'h1'},
@@ -78,7 +72,6 @@ tinymce.init({
   selector: 'textarea.mceEditor_small',
   language : 'de',
   toolbar_items_size: 'small',
-  content_css : "../styles/blucent/css/editor.css",
   plugins: [
     "advlist autolink lists link image charmap preview anchor",
     "searchreplace visualblocks code fullscreen wordcount template",
@@ -90,11 +83,6 @@ tinymce.init({
   image_list : "core/imagelist.php",
   image_advtab: true,
   convert_urls: false,
-  templates: [ 
-  	{title: 'row [6|6]', description: 'Zwei Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_2cols.html'},
-    {title: 'row [4|4|4]', description: 'Drei Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_3cols.html'},
-    {title: 'row [3|3|3|3]', description: 'Vier Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_4cols.html'}
-  ],
 	style_formats : [
 		{title: 'Headlines', items: [
 			{title : 'Headline H1', block : 'h1'},
@@ -114,7 +102,8 @@ tinymce.init({
 			{title : 'btn-info', inline : 'a', classes : 'btn btn-info'},
 			{title : 'btn-success', inline : 'a', classes : 'btn btn-success'},
 			{title : 'btn-warning', inline : 'a', classes : 'btn btn-warning'},
-			{title : 'btn-danger', inline : 'a', classes : 'btn btn-danger'}
+			{title : 'btn-danger', inline : 'a', classes : 'btn btn-danger'},
+			{title : 'btn-inverse', inline : 'a', classes : 'btn btn-inverse'},
 		]},
 		{title: 'Label/Div', items: [
 		{title : 'Label', inline : 'span', classes : 'label label-default'},
@@ -127,6 +116,7 @@ tinymce.init({
 		]},
 		{title: 'IMG', items: [
 			{title : 'img-rounded', selector : 'img', classes : 'img-rounded'},
+			{title : 'img-polaroid', selector : 'img', classes : 'img-polaroid'},
 			{title : 'img-circle', selector : 'img', classes : 'img-circle'}
 		]},
 		{title: 'Code', items: [
