@@ -50,7 +50,6 @@ echo '</div>';
 
 echo '<div id="system" class="panel-collapse collapse">';
 echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=system&sub=sys_pref'>$lang[system_preferences]</a>";
-echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=system&sub=sys_textlib'>$lang[system_textlib]</a>";
 echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=system&sub=design'>$lang[system_design]</a>";
 echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=system&sub=stats'>$lang[system_statistics]</a>";
 echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=system&sub=backup'>$lang[system_backup]</a>";
@@ -71,8 +70,7 @@ $nbrModuls = count($arr_iMods);
 
 
 for($i=0;$i<$nbrModuls;$i++) {
-
-	$modFolder = $arr_iMods[$i][folder];
+	$modFolder = $arr_iMods[$i]['folder'];
 	unset($modnav);
 	$mod_info_file = "../modules/$modFolder/info.inc.php";
 		if(is_file("$mod_info_file")) {
@@ -94,13 +92,7 @@ echo '<div id="lang" class="panel-collapse collapse">';
 $arr_lang = get_all_languages();
 
 for($i=0;$i<count($arr_lang);$i++) {
-
-	$lang_sign = $arr_lang[$i]['lang_sign'];
-	$lang_desc = $arr_lang[$i]['lang_desc'];
-	$lang_folder = $arr_lang[$i]['lang_folder'];
-
-	echo "<a class='sidebar-sub'href='$_SERVER[PHP_SELF]?set_lang=$lang_folder'>$lang_desc</a>";
-
+	echo '<a class="sidebar-sub" href="acp.php?set_lang='.$arr_lang[$i]['lang_folder'].'">'.$arr_lang[$i]['lang_desc'].'</a>';
 }
 
 echo '</div>';

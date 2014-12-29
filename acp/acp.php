@@ -132,124 +132,124 @@ foreach($fc_preferences as $k => $v) {
 	</head>
 	<body>
 	
-	<?php
-	if(is_dir('../install')) {
-		echo '<div style="padding:3px 15px;background-color:#b00;color:#000;border-bottom:1px solid #d00;">';
-		echo "$lang[msg_update_modus_activated]";
-		echo '</div>';
-	}
-	
-	?>
-
-	<div id="page-sidebar">
-		<a href="acp.php?tn=dashboard" id="dashboard" title="Dashboard"></a>
-		<?php include("core/$navinc.php"); ?>
-		<?php include('core/livebox.php'); ?>
-	</div>
+		<?php
+		if(is_dir('../install')) {
+			echo '<div style="padding:3px 15px;background-color:#b00;color:#000;border-bottom:1px solid #d00;">';
+			echo "$lang[msg_update_modus_activated]";
+			echo '</div>';
+		}
 		
-	<div id="page-content">
-
-	<?php
-	if(isset($fc_content_files) && is_array($fc_content_files)) {
-		echo '<div id="contentSwitch" class="clearfix">';
-		echo $fc_content_switch;
-		echo '</div>';
-	}
-	?>
+		?>
+	
+		<div id="page-sidebar">
+			<a href="acp.php?tn=dashboard" id="dashboard" title="Dashboard"></a>
+			<?php include("core/$navinc.php"); ?>
+			<?php include('core/livebox.php'); ?>
+		</div>
 			
-	<div id="bigHeader">
-	<?php require("core/topNav.php"); ?>
-	</div>
-
-
-	<div id="container">
-		<?php include("core/$maininc.php"); ?>
-	</div>
+		<div id="page-content">
 	
-	<div id="footer">
-	<b>flatCore</b> Content Management System<br />
-	copyright © 2010 - <?php echo date('Y'); ?>, <a href="http://www.flatcore.de/" target="_blank">flatCore.de</a>
-	</div>
+		<?php
+		if(isset($fc_content_files) && is_array($fc_content_files)) {
+			echo '<div id="contentSwitch" class="clearfix">';
+			echo $fc_content_switch;
+			echo '</div>';
+		}
+		?>
+				
+		<div id="bigHeader">
+		<?php require("core/topNav.php"); ?>
+		</div>
 	
-	</div>
 	
-	<script type="text/javascript">
-    jQuery(document).ready(function ($) {
-        $('#bsTabs').tab();
-    });
-	</script>
-	<script type="text/javascript">
-	$(document).ready(function() {
-		$(".fancybox").fancybox();
-		
-		$('#showVersions').collapse('hide');
-		
-		$('.tooltip_bottom').tooltip({
-			placement: 'bottom',
-			delay: { show: 1000, hide: 100 }
-		})
-		
-		$('.tooltip').tooltip()
-		
-		$(".fancybox-iframe").fancybox({
-			type: 'iframe',
-			autoWidth: true,
-			autoHeight: true
-		});
-		
-		$(".fancybox-docs").fancybox({
-			type: 'iframe',
-			width: '77%',
-			height: '90%'
-		});
-		
-		$(".fancybox-ajax").fancybox({
-			type: 'ajax',
-			minWidth: '50%',
-			height: '90%'
-		});
-		
-   $('.collapse').on('show.bs.collapse', function() {
-        var id = $(this).attr('id');
-        $('a[href="#' + id + '"]').addClass('active');
-    });
-    $('.collapse').on('hide.bs.collapse', function() {
-        var id = $(this).attr('id');
-        $('a[href="#' + id + '"]').removeClass('active');
-    });
-		
-		Dropzone.options.myDropzone = {
-	  	init: function() {
-	    	this.on("success", function(file, responseText) {
-	      	// Handle the responseText here. For example, add the text to the preview element:
-					file.previewTemplate.appendChild(document.createTextNode(responseText));
-				});
-			}
-		};
-
-	  var options = {   
-	      'originalStyle': 'text-left',
-	      'displayFormat': '<span class="label label-default">#input</span> <span class="label label-default">#words</span>'  
-	  };  
-	  $('.cntValues').textareaCount(options);  
-	  
-
-		var $container = $('#masonry-container');
-		
-		$('#masonry-container').imagesLoaded( function(){
-		  $('#masonry-container').masonry({
-		   itemSelector: '.masonry-item',
-		   isAnimated: true,
-		   isFitWidth: true,
-		 
-		   gutter: 10
-		  });
-		});
+		<div id="container">
+			<?php include("core/$maininc.php"); ?>
+		</div>
 	
+		<div id="footer">
+		<b>flatCore</b> Content Management System<br />
+		copyright © 2010 - <?php echo date('Y'); ?>, <a href="http://www.flatcore.de/" target="_blank">flatCore.de</a>
+		</div>
 		
-	});
-	</script>
-
+		</div>
+		
+		<script type="text/javascript">
+	    jQuery(document).ready(function ($) {
+	        $('#bsTabs').tab();
+	    });
+		</script>
+		<script type="text/javascript">
+		$(document).ready(function() {
+			$(".fancybox").fancybox();
+			
+			$('#showVersions').collapse('hide');
+			
+			$('.tooltip_bottom').tooltip({
+				placement: 'bottom',
+				delay: { show: 1000, hide: 100 }
+			})
+			
+			$('.tooltip').tooltip()
+			
+			$(".fancybox-iframe").fancybox({
+				type: 'iframe',
+				autoWidth: true,
+				autoHeight: true
+			});
+			
+			$(".fancybox-docs").fancybox({
+				type: 'iframe',
+				width: '77%',
+				height: '90%'
+			});
+			
+			$(".fancybox-ajax").fancybox({
+				type: 'ajax',
+				minWidth: '50%',
+				height: '90%'
+			});
+			
+	   $('.collapse').on('show.bs.collapse', function() {
+	        var id = $(this).attr('id');
+	        $('a[href="#' + id + '"]').addClass('active');
+	    });
+	    $('.collapse').on('hide.bs.collapse', function() {
+	        var id = $(this).attr('id');
+	        $('a[href="#' + id + '"]').removeClass('active');
+	    });
+			
+			Dropzone.options.myDropzone = {
+		  	init: function() {
+		    	this.on("success", function(file, responseText) {
+		      	// Handle the responseText here. For example, add the text to the preview element:
+						file.previewTemplate.appendChild(document.createTextNode(responseText));
+					});
+				}
+			};
+	
+		  var options = {   
+		      'originalStyle': 'text-left',
+		      'displayFormat': '<span class="label label-default">#input</span> <span class="label label-default">#words</span>'  
+		  };  
+		  $('.cntValues').textareaCount(options);  
+		  
+	
+			var $container = $('#masonry-container');
+			
+			$('#masonry-container').imagesLoaded( function(){
+			  $('#masonry-container').masonry({
+			   itemSelector: '.masonry-item',
+			   isAnimated: true,
+			   isFitWidth: true,
+			 
+			   gutter: 10
+			  });
+			});
+		
+			
+		});
+		</script>
+	
 		<script src="../lib/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
 		<script>
 		
@@ -282,5 +282,3 @@ foreach($fc_preferences as $k => $v) {
 		</script>
 	</body>
 </html>
-
-

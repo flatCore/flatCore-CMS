@@ -855,6 +855,11 @@ fieldset > [class*="form-line"]:last-child {
   border-radius: 5px;
 }
 
+code {
+	color: #428bca;
+	background: rgba(78, 134, 245, 0.1);
+}
+
 /* List items - News, Guestbook ... */
 
 .modlist-label span {

@@ -6,7 +6,6 @@ if($sub == '') {
 }
 
 echo '<a class="sidebar-nav '.($sub == "sys_pref" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=system&sub=sys_pref">'.$lang['system_preferences'].'<span class="tri-left"></span></a>';
-echo '<a class="sidebar-nav '.($sub == "sys_textlib" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=system&sub=sys_textlib">'.$lang['system_textlib'].'<span class="tri-left"></span></a>';
 echo '<a class="sidebar-nav '.($sub == "design" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=system&sub=design">'.$lang['system_design'].'<span class="tri-left"></span></a>';
 echo '<a class="sidebar-nav '.($sub == "stats" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=system&sub=stats">'.$lang['system_statistics'].'<span class="tri-left"></span></a>';
 echo '<a class="sidebar-nav '.($sub == "backup" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=system&sub=backup">'.$lang['system_backup'].'<span class="tri-left"></span></a>';

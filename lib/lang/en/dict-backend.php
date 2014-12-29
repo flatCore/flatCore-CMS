@@ -18,6 +18,8 @@ $lang['tn_usermanagement'] = "User";
 $lang['tn_usermanagement_desc'] = "Manage visitors and administrators";
 $lang['tn_system'] = "System";
 $lang['tn_system_desc'] = "Preferences, Snippets and Backup";
+$lang['tn_contents'] = "Contents";
+$lang['tn_contents_desc'] = "Pages, Snippets, RSS Feeds create/edit/delete ...";
 
 /* Links and Buttons */
 $lang['back_to_page'] = "back to Homepage";

@@ -14,6 +14,8 @@ $lang['tn_usermanagement'] = "Benutzer";
 $lang['tn_usermanagement_desc'] = "Besucher, Moderatoren und Administratoren verwalten";
 $lang['tn_system'] = "System";
 $lang['tn_system_desc'] = "Einstellungen, Textbausteine und Datensicherung";
+$lang['tn_contents'] = "Inhalte";
+$lang['tn_contents_desc'] = "Seiten, Textvorlagen, RSS Feeds erstellen/bearbeiten/löschen ...";
 
 /* Links and Buttons */
 

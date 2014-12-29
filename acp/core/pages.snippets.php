@@ -32,83 +32,50 @@ if(isset($_POST['delete_snippet'])) {
 }
 
 
-
-/**
- * save new snippet
- */
- 
+/* Save Textsnippet */
 if(isset($_POST['save_snippet'])) {
 
-	$pdo_fields = array(
-		'textlib_id' => 'NULL',
-		'textlib_name' => 'STR',
-		'textlib_content' => 'STR'
-	);
-
-	$snippet_title = clean_filename($_POST['snippet_title']);
-
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = generate_sql_insert_str($pdo_fields,"fc_textlib");
-	$sth = $dbh->prepare($sql);
+	// connect to database
+	$db = new PDO("sqlite:".CONTENT_DB);
 	
-	generate_bindParam_str($pdo_fields,$sth);
+	$snippet_title = clean_filename($_POST['snippet_title']);
+	
+	if($_POST['snip_id'] != '') {
+		
+		$snip_id = (int) $_POST['snip_id'];
+	
+		$sql = "UPDATE fc_textlib
+						SET textlib_content = :textlib_content, textlib_name = :textlib_name, textlib_lang = :textlib_lang
+						WHERE textlib_id = $snip_id";
+	
+	} else {
+		
+		$sql = "INSERT INTO fc_textlib
+						(textlib_content, textlib_name, textlib_lang)
+						VALUES
+						(:textlib_content, :textlib_name, :textlib_lang )";		
+	}
+	
+	$sth = $db->prepare($sql);
+	$sth->bindParam(':textlib_content', $_POST['textlib_content'], PDO::PARAM_STR);
 	$sth->bindParam(':textlib_name', $snippet_title, PDO::PARAM_STR);
+	$sth->bindParam(':textlib_lang', $_POST['sel_language'], PDO::PARAM_STR);
 	
 	$cnt_changes = $sth->execute();
-
-	$dbh = null;
-
+	
+	$db = null;
+	
+	
 	if($cnt_changes == TRUE) {
-		$sys_message = '{OKAY} ' . $lang['db_changed'];
-		record_log($_SESSION['user_nick'],"new snippet <b>$snippet_title</b>","2");
-		$modus = 'update';
+		$sys_message = "{OKAY} $lang[db_changed]";
+		record_log("$_SESSION[user_nick]","edit textlib <b>$snippet_title</b>","2");
 	} else {
-		$sys_message = '{ERROR} ' . $lang['db_not_changed'];
+		$sys_message = "{ERROR} $lang[db_not_changed]";
 	}
 	
 	print_sysmsg("$sys_message");
 
-}
-
-
-/**
- * update snippet
- */
-
-if(isset($_POST['update_snippet'])) {
-
-	$pdo_fields = array(
-		'textlib_name' => 'STR',
-		'textlib_content' => 'STR'
-	);
-	
-	$snip_id = (int) $_POST['snip_id'];
-	$snippet_title = clean_filename($_POST['snippet_title']);
-
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = generate_sql_update_str($pdo_fields,"fc_textlib","WHERE textlib_id = $snip_id");
-	$sth = $dbh->prepare($sql);
-
-	$sth->bindParam(':textlib_name', $snippet_title, PDO::PARAM_STR);
-	$sth->bindParam(':textlib_content', $_POST[textlib_content], PDO::PARAM_STR);
-	
-	$cnt_changes = $sth->execute();
-
-	$dbh = null;
-	
-
-	if($cnt_changes == TRUE){
-		$sys_message = '{OKAY} ' . $lang['db_changed'];
-		record_log($_SESSION['user_nick'],"edit snippets <b>$snippet_title</b>","2");
-		$modus = 'update';
-	} else {
-		$sys_message = '{ERROR} ' . $lang['db_not_changed'] . " (ID: $snip_id)";
-	}
-	
-	print_sysmsg("$sys_message");
-
-
-} // eo update snippet
+} // eol save text
 
 
 
@@ -118,13 +85,13 @@ if(isset($_POST['update_snippet'])) {
 
 $dbh = new PDO("sqlite:".CONTENT_DB);
 
-$sql = "SELECT * FROM fc_textlib";
+$sql = "SELECT * FROM fc_textlib ORDER BY textlib_name ASC";
 
 foreach($system_snippets as $snippet) {
 	$snippet_exception[] = " textlib_name != '$snippet' ";
 }
 
-$sql .= ' WHERE ' . implode(' AND ', $snippet_exception);
+//$sql .= ' WHERE ' . implode(' AND ', $snippet_exception);
 
 
 foreach ($dbh->query($sql) as $row) {
@@ -179,6 +146,13 @@ for($i=0;$i<$cnt_snippets;$i++) {
 	$active_class = '';
 	$get_snip_id = $snippets_list[$i]['textlib_id'];
 	$get_snip_name = $snippets_list[$i]['textlib_name'];
+	$get_snip_lang = $snippets_list[$i]['textlib_lang'];
+	
+	if(in_array($get_snip_name, $system_snippets)) {
+		$show_snip_name = '<span class="glyphicon glyphicon-cog"></span> ' . $get_snip_name;
+	} else {
+		$show_snip_name = $get_snip_name;
+	}
 		
 	unset($sel);
 	if($snip_id == $get_snip_id) {
@@ -192,7 +166,7 @@ for($i=0;$i<$cnt_snippets;$i++) {
 		$active_class = 'active';
 	}
 	
-	echo '<a class="list-group-item '.$active_class.'" href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'">'.$get_snip_name.'</a>';
+	echo '<a class="list-group-item '.$active_class.'" href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'">'.$show_snip_name.' <span class="badge">'.$get_snip_lang.'</span></a>';
 }
 
 echo '</div>';
@@ -209,7 +183,7 @@ echo '<legend>'.$lang['tab_content'].'</legend>';
 echo "<form action='$_SERVER[PHP_SELF]?tn=pages&sub=snippets' method='POST'>";
 
 echo '<div class="row">';
-echo '<div class="col-md-6">';
+echo '<div class="col-md-9">';
 
 echo '<div class="form-group">';
 echo '<label>'.$lang['filename'].'</label>';
@@ -217,16 +191,22 @@ echo '<input class="form-control" type="text" name="snippet_title" value="'.$tex
 echo '</div>';
 
 echo '</div>';
+echo '<div class="col-md-3">';
 
-if(isset($get_snip_name_editor)) {
-	echo '<div class="col-md-6">';
-	echo '<ul class="list-group">';
-	echo '<li class="list-group-item"><span class="badge">Editor</span>'.$get_snip_name_editor.'</li>';
-	echo '<li class="list-group-item"><span class="badge">Smarty</span>'.$get_snip_name_smarty.'</li>';
-	echo '</ul>';
-	echo '</div>';
+
+$select_textlib_language  = '<select name="sel_language" class="form-control">';
+for($i=0;$i<count($arr_lang);$i++) {
+	$lang_sign = $arr_lang[$i]['lang_sign'];
+	$lang_desc = $arr_lang[$i]['lang_desc'];
+	$lang_folder = $arr_lang[$i]['lang_folder'];
+	$select_textlib_language .= "<option value='$lang_folder'".($textlib_lang == "$lang_folder" ? 'selected="selected"' :'').">$lang_sign</option>";	
 }
+$select_textlib_language .= '</select>';
 
+
+echo '<label>'.$lang['f_page_language'].'</label>';
+echo $select_textlib_language;
+echo '</div>';
 echo '</div>';
 
 echo '<div class="form-group">';
@@ -235,20 +215,35 @@ echo '<textarea class="'.$editor_class.' form-control" id="textEditor" name="tex
 echo '<input type="hidden" name="text" value="'.$text.'">';
 echo '</div>';
 
+
 echo '<div class="formfooter">';
 if($modus == 'new') {
 	echo '<input type="submit" name="save_snippet" class="btn btn-success" value="'.$lang['save'].'">';
 } else {
 	echo '<input type="hidden" name="snip_id" value="'.$snip_id.'">';
-	echo '<div class="pull-right"><input type="submit" name="delete_snippet" class="btn btn-danger" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_data'].'\')"></div> ';
-	echo '<input type="submit" name="update_snippet" class="btn btn-success" value="'.$lang['update'].'"> ';
+	echo '<input type="submit" name="save_snippet" class="btn btn-success" value="'.$lang['update'].'"> ';
 	echo '<a class="btn btn-default" href="acp.php?tn=pages&sub=snippets">'.$lang['discard_changes'].'</a>';
+	echo '<div class="pull-right"><input type="submit" name="delete_snippet" class="btn btn-danger" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_data'].'\')"></div> ';
 }
-
 echo '</div>';
 
 echo '</form>';
+
+if(isset($get_snip_name_editor)) {
+	echo '<hr><div class="row">';
+	echo '<div class="col-md-6">';
+	echo '<pre>Editor: '.$get_snip_name_editor.'</pre>';
+	echo '</ul>';
+	echo '</div>';
+	echo '<div class="col-md-6">';
+	echo '<pre>Smarty: '.$get_snip_name_smarty.'</pre>';
+	echo '</div>';
+	echo '</div>';
+}
+
 echo '</fieldset>';
+
+
 
 echo '</div>';
 echo '</div>';
