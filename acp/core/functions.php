@@ -245,11 +245,14 @@ function print_sysmsg($msg) {
 	if($pos !== false) {
 		$style = "alert alert-success";
 	} else {
-		$style = "alert alert-error";
+		$style = "alert alert-danger";
 	}
 
 	$msg = substr(strstr($msg, '}'), 2);
-	echo"<div class=\"$style\"><p>$msg</p></div>";
+	echo '<div class="'.$style.' alert-dismissible fade in" role="alert">';
+	echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>';
+	echo $msg;
+	echo '</div>';
 }
 
 
