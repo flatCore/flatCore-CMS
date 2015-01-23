@@ -81,6 +81,7 @@ function start_update() {
 		echo "ERROR : ".$archive->errorInfo(true);
 	}
 	
+	copy('../install/maintance.hml', '../maintance.hml');
 	
 	move_new_files();
 	update_database();

@@ -1,6 +1,6 @@
 <?php
 session_start();
-error_reporting(E_WARNING);
+error_reporting(0);
 require("core/access.php");
 require("../config.php");
 
