@@ -3,9 +3,9 @@
  * flatCore - Free, Open Source, Content Management System
  * GNU General Public License (license.txt)
  *
- * copyright 2010-2013, Patrick Konstandin
+ * copyright 2010-2015, Patrick Konstandin
  * Information and contribution at http://www.flatcore.de
- * E-Mail: support@flatfiler.de
+ * E-Mail: support@flatcore.de
  */
  
 ini_set("url_rewriter.tags", '');
@@ -25,7 +25,7 @@ foreach($_REQUEST as $key => $val) {
 require('config.php');
 
 
-if(is_dir(FC_CORE_DIR . "/install/")) {
+if(is_file(FC_CORE_DIR . "/maintance.html")) {
 		header("location:" . FC_INC_DIR . "/maintance.html");
 		die("We'll be back soon.");
 }

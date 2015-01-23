@@ -1,8 +1,12 @@
 <?php
 
-/* ------------------------------------------------------
-UPDATE EXISTING TABLES
-------------------------------------------------------- */
+/**
+ * copy maintance.hml to root folder
+ * update existing tables
+ */
+
+
+copy('maintance.hml', '../maintance.hml');
 
 echo '<h2>UPDATE</h2>';
 

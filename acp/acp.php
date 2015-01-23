@@ -133,9 +133,9 @@ foreach($fc_preferences as $k => $v) {
 	<body>
 	
 		<?php
-		if(is_dir('../install')) {
+		if(is_file('../maintance.html')) {
 			echo '<div style="padding:3px 15px;background-color:#b00;color:#000;border-bottom:1px solid #d00;">';
-			echo "$lang[msg_update_modus_activated]";
+			echo $lang['msg_update_modus_activated'];
 			echo '</div>';
 		}
 		

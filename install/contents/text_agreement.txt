@@ -1,4 +1,4 @@
-<p class="alert alert-info">Dieser Text kann unter System &gt; Textbausteine ge&auml;ndert werden</p>
+<p class="alert alert-info">Dieser Text kann unter Inhalt &gt; Textbausteine ge&auml;ndert werden</p>
 
 <h3>Nutzungsbedingungen</h3>
 <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>

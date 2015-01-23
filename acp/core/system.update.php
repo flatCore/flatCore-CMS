@@ -44,7 +44,7 @@ echo '</fieldset>';
  * 3. copy the install folder to the root (starts the update modus in frontend)
  * 4. copy the files to their destination
  * 5. run the updatescript and check up the database
- * 6. delete the install folder from root - (ends the update modus in frontend)
+ * 6. delete maintance.html from root - (ends the update modus in frontend)
  *
  *
  */
@@ -91,7 +91,7 @@ function start_update() {
 	 */
 	
 	rmdir_recursive("update");
-	rmdir_recursive("../install");
+	unlink("../maintance.html");
 	
 }
 
