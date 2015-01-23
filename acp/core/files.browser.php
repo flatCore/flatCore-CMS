@@ -5,7 +5,7 @@ require("core/access.php");
 
 $deleteFile = strip_tags(basename($_GET['delete']));
 
-if(isset($_GET[d])) {
+if(isset($_GET['d'])) {
 	$_SESSION['disk'] = (int) $_GET['d'];
 }
 
@@ -248,19 +248,19 @@ if($end>$nbr_of_files) {
 
 
 
-$pag_backlink = "<a class='buttonLink' href='$_SERVER[PHP_SELF]?tn=filebrowser&start=$prev_start'>$lang[pagination_backward]</a>";
-$pag_forwardlink = "<a class='buttonLink' href='$_SERVER[PHP_SELF]?tn=filebrowser&start=$next_start'>$lang[pagination_forward]</a>";
+$pag_backlink = "<a class='btn btn-primary' href='$_SERVER[PHP_SELF]?tn=filebrowser&start=$prev_start'>$lang[pagination_backward]</a>";
+$pag_forwardlink = "<a class='btn btn-primary' href='$_SERVER[PHP_SELF]?tn=filebrowser&start=$next_start'>$lang[pagination_forward]</a>";
 
 
 unset($pag_string);
 for($x=0;$x<$cnt_pages;$x++) {
 
-	$aclass = "buttonLink";
+	$aclass = "btn btn-primary";
 	$page_start = $x*$files_per_page;
 	$page_nbr = $x+1;
 	
 	if($page_start == $start) {
-		$aclass = "buttonLink_sel";
+		$aclass = "btn btn-primary active";
 		
 		$pag_start = 	$x-($show_numbers/2);
 		
@@ -297,7 +297,7 @@ for($i=$start;$i<$end;$i++) {
 	$filesize = readable_filesize($fileinfo[$i]['size']);
 	$show_filetime = date('d.m.Y H:i',$filetime);
 
-	if($fileinfo[$i][filetype] == "image") {
+	if($fileinfo[$i]['filetype'] == "image") {
 		$set_style = '';
 		$preview_button = "<a href='$path/$filename' title='$path/$filename' class='btn btn-xs btn-default fancybox'>$lang[preview]</a>";
 		$preview_img = "<img src='$path/$filename'>";
@@ -330,13 +330,13 @@ echo '</div>';
 echo '<div class="clearfix"></div>';
 
 
-echo"<div id='pagina'><p>";
+echo '<div id="well well-sm"><p class="text-center">';
 echo"$pag_backlink ";
 foreach(range($pag_start, $pag_end) as $number) {
     echo "$a_pag_string[$number]";
 }
-echo" $pag_forwardlink";
-echo"</p></div>\n"; //EOL PAGINATION
+echo " $pag_forwardlink";
+echo '</p></div>'; //EOL PAGINATION
 
 
 ?>

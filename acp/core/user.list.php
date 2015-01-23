@@ -173,7 +173,7 @@ if($prev_start <= 0){
 }
 
 
-$pag_backlink = "<a class='buttonLink' href='$_SERVER[PHP_SELF]?tn=user&sub=list&start=$prev_start&sort=$_GET[sort]'>$lang[pagination_backward]</a>";
+$pag_backlink = "<a class='btn btn-primary' href='$_SERVER[PHP_SELF]?tn=user&sub=list&start=$prev_start&sort=$_GET[sort]'>$lang[pagination_backward]</a>";
 
 
 for($x=0;$x<$cnt_pages;$x++) {
@@ -182,16 +182,16 @@ for($x=0;$x<$cnt_pages;$x++) {
 	$page_nbr = $x+1;
 
 	if($page_start == $start) {
-		$aclass = "buttonLink_sel";
+		$aclass = "btn btn-primary active";
 	} else {
-		$aclass = "buttonLink";
+		$aclass = "btn btn-primary";
 	}
 
 	$pag_string .= "<a class='$aclass' href='$_SERVER[PHP_SELF]?tn=user&sub=list&start=$page_start'>$page_nbr</a> ";
 } //eol for $x
 
 
-$pag_forwardlink = "<a class='buttonLink' href='$_SERVER[PHP_SELF]?tn=user&sub=list&start=$next_start&sort=$_GET[sort]'>$lang[pagination_forward]</a>";
+$pag_forwardlink = "<a class='btn btn-primary' href='$_SERVER[PHP_SELF]?tn=user&sub=list&start=$next_start&sort=$_GET[sort]'>$lang[pagination_forward]</a>";
 
 
 echo '<div class="row">';
@@ -305,9 +305,9 @@ for($i=$start;$i<$end;$i++) {
 echo"</table>";
 
 
-echo"<div id='pagina'><p>";
-echo"$pag_backlink $pag_string $pag_forwardlink";
-echo"</p></div>";
+echo '<div id="well well-sm"><p class="text-center">';
+echo "$pag_backlink $pag_string $pag_forwardlink";
+echo '</p></div>';
 
 
 ?>
