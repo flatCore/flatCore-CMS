@@ -46,7 +46,6 @@ echo '</fieldset>';
  * 5. run the updatescript and check up the database
  * 6. delete maintance.html from root - (ends the update modus in frontend)
  *
- *
  */
 
 
@@ -106,6 +105,7 @@ function start_update() {
 function move_new_files() {
 
 	global $remote_versions;
+	$cnt_errors = 0;
 
 	$get_file = basename("$remote_versions[3]",".zip");
 
@@ -152,10 +152,18 @@ function move_new_files() {
 		$target = "../" . substr($value, strlen("update/extract/$get_file/"));
 		$copy_string .= "<tr><td>$i</td><td>$target</td>";
 		$status = copy_recursive("$value","$target");
-		echo "<tr><td>$i</td><td>$value | $target | $status</td>";
+		
+		if($status == 'success') {
+			$show_status = "<span class='label label-success'>ok</span>";
+		} else {
+			$show_status = '<span class="label label-danger">'.$status.'</span>';
+			$cnt_errors++;
+		}
+		
+		echo "<tr><td>$i</td><td>$value | $target | $show_status</td>";
 	}
 	
-
+	echo "<tr><td>Errors:</td><td>$cnt_errors</td>";
 	
 	echo '</table>';
 	echo '</div>';
@@ -278,10 +286,10 @@ function copy_recursive($source, $target) {
 		@chmod("$target", 0777);
 		@unlink("$target");
 		if(copy($source, $target)) {
-			return '<span class="label label-success">ok</span>';
+			return 'success';
 		} else {
 			$errors = error_get_last();
-			return '<span class="label label-danger">'.$errors['message'].'</span>';
+			return $errors['message'];
 		}
 	}
 }
