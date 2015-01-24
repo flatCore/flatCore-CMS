@@ -25,7 +25,7 @@ foreach($_REQUEST as $key => $val) {
 require('config.php');
 
 if(is_file(FC_CORE_DIR . "/maintance.html") OR (is_file($fc_db_content) == false)) {
-		header("location:" . FC_INC_DIR . "/install/");
+		header("location:" . FC_INC_DIR . "/maintance.html");
 		die("We'll be back soon.");
 }
 
