@@ -67,7 +67,7 @@ if(!isset($_SESSION['checked_lang_string'])) {
 /* change status of $_GET[switchLang] */
 if(isset($_GET['switchLang'])) {
 		if(strpos("$_SESSION[checked_lang_string]", "$_GET[switchLang]") !== false) {
-			$checked_lang_string = str_replace("$_GET[switchLang]-", '', $_SESSION[checked_lang_string]);
+			$checked_lang_string = str_replace("$_GET[switchLang]-", '', $_SESSION['checked_lang_string']);
 		} else {
 			$checked_lang_string = $_SESSION['checked_lang_string'] . "$_GET[switchLang]-";
 		}
@@ -217,20 +217,27 @@ if($subinc == "pages.list") {
 
 	/* Filter Languages */
 	$lang_btn_group = '<div class="btn-group">';
+	$lang_btn_group .= '<button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">';
+	$lang_btn_group .= $lang['f_page_language'] .' <span class="caret"></span>';
+	$lang_btn_group .= '</button>';
+	$lang_btn_group .= '<ul class="dropdown-menu" role="menu">';
 	for($i=0;$i<count($arr_lang);$i++) {
 		$lang_desc = $arr_lang[$i]['lang_desc'];
 		$lang_folder = $arr_lang[$i]['lang_folder'];
 		
 		$this_btn_status = '';
 		if(strpos("$_SESSION[checked_lang_string]", "$lang_folder") !== false) {
-			$this_btn_status = 'btn-primary';
+			$this_btn_status = '<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>';
 		}
 		
-		$lang_btn_group .= '<a href="acp.php?tn=pages&sub=list&switchLang='.$lang_folder.'" class="btn btn-default btn-sm '.$this_btn_status.'">'.$lang_folder.'</a>';
-	
+		$lang_btn_group .= '<li><a href="acp.php?tn=pages&sub=list&switchLang='.$lang_folder.'">'.$this_btn_status.' '.$lang_folder.'</a></li>';
 	} // eo $i
 	
+	$lang_btn_group . '</ul>';
+	
 	$lang_btn_group .= '</div>';
+	
+	
 	
 	$status_btn_group  = '<div class="btn-group">';
 	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPuplic" class="btn btn-default btn-sm '.$btn_status_public.'">'.$lang['f_page_status_puplic'].'</a>';
