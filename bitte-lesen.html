@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>flatCore - Bitte lesen ...</title>
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body>
 
@@ -13,7 +13,7 @@
 <div class="jumbotron">
   <div class="container">
     <h1>flatCore <small>Content Management System</small></h1>
-    <p>Die Installation dauert nur wenige Minuten. Bevor Du mit dem Upload der Daten auf den Webserver beginnen kannst, musst Du in der Datei config.php ein paar Werte anpassen.</p>
+    <p>Die Installation dauert nur wenige Minuten. Bevor du mit dem Upload der Daten auf den Webserver beginnen kannst, musst du in der Datei config.php ein paar Werte anpassen.</p>
   </div>
 </div>
 
@@ -25,14 +25,7 @@
 <h2>Installation</h2>
 
 <h3>mod_rewrite</h3>
-<p>flatCore kann sowohl mit als auch ohne mod_rewrite betrieben werden. Wird mod_rewrite aktiviert, erzeugt flatCore <i>schönere</i> URLs für Dein Projekt.</p>
-<p>Beispiel mit mod_rewrite: <span class="label label-default">http://example.com/news/</span></p>
-<p><code>$fc_mod_rewrite = "permalink";</code></p>
-
-<p>Beispiel ohne mod_rewrite: <span class="label label-default">http://example.com/index.php?p=2</span></p>
-<p><code>$fc_mod_rewrite = 'off';</code></p>
-
-<p>Damit mod_rewrite funktioniert, muss die Datei _htaccess in <b>.htaccess</b> umbenannt werden. Dateinamen die mit einem Punkt beginnen sind bei den meißten Systemen für das System selbst vorbehalten. Darum ist es am einfachsten Du benennst die Datei erst um, wenn Du sie auf den Server kopiert hast.</p>
+<p>Das Apache Modul mod_rewrite sorgt dafür, dass flatCore richtig mit URLs umgehen kann. Damit mod_rewrite funktioniert, muss die Datei _htaccess in <b>.htaccess</b> umbenannt werden. Dateinamen die mit einem Punkt beginnen sind bei den meißten Systemen für das System selbst vorbehalten. Darum ist es am einfachsten Du benennst die Datei erst um, wenn du sie auf den Server kopiert hast - oder du erstellst sie direkt auf dem Server.</p>
 
 <h4>Inhalt der .htaccess Datei</h4>
 <pre>
@@ -43,28 +36,31 @@ RewriteRule ^(.*)$ index.php?query=$1 [L,QSA]
 </pre>
 
 <div class="alert alert-info" role="alert"><strong>Info:</strong> Je nach Provider/Serverkonfiguration können die Angaben in der .htaccess Datei abweichen.</div>
-<p>Jetzt kannst Du die Dateien und Verzeichnisse auf Deinen Server kopieren und das Installationsscript starten.</p>
+<p>Jetzt kannst du die Dateien und Verzeichnisse auf Deinen Server kopieren und das Installationsscript starten.</p>
 
-<h3>Installieren</h3>
+<h3>Installieren <small>kurz & knackig</small></h3>
 
 <ol>
 	<li>Alle Dateien auf den Server kopieren (kann auch in ein Unterverzeichnis sein).</li>
 	<li>Im Webbrowser das Verzeichnis <code>/install/</code> aufrufen und den Anweisungen folgen.
 	   <ul>
-	   		<li>Die gewünschten Daten für einen Administrator eingeben.</li>
+		   	<li>Sprache wählen</li>
+	   		<li>Die gewünschten Daten für einen Administrator eingeben</li>
 	   		<li>Auf "Installation starten" klicken.</li>
 	   </ul>
 	</li>
-	<li>Das Verzeichnis <code>/install/</code> löschen oder umbenennen.
-		<ul>
-	   <li>Solange das Verzeichnis <code>/install/</code> existiert, kann das Frontend nicht aufgerufen werden.</li>
-		</ul>
-	</li>
+	<li>Das Verzeichnis <code>/install/</code> löschen. Dieser Schritt ist zwar nicht nötig, schadet aber auch nicht.<br>
+	<span class="label label-info">Anmerkung:</span> Solange die Datei <em>maintance.html</em> im Root-Verzeichnis existiert, kann das Frontend nicht aufgerufen werden.</li>
 </ol>
 
 <p>War die Installation erfolgreich, führt der nächste Weg in das ACP.<br>
 Im Browser das Verzeinis <code>/acp/</code> aufrufen und mit den Zugangsdaten des Administrators anmelden.<br>
 Beispiel: <code>http://www.example.com/acp/</code></p>
+
+<hr>
+
+<h4>Dokumentation</h4>
+<p>Die Dokumentation und weitere Anleitungen findest du hier: <a href="http://www.flatcore.de/support/">flatcore.de/support/</a></p>
 
 </div>
 <div class="col-md-3 col-md-offset-1">
@@ -73,6 +69,7 @@ Beispiel: <code>http://www.example.com/acp/</code></p>
 <ul>
 	<li><strong>jQuery</strong> - JavaScript library<br><a href="http://jquery.com">http://jquery.com</a><br>MIT License</li>
 	<li><strong>TinyMCE</strong> - Javascript WYSIWYG Editor<br><a href="http://www.tinymce.com">http://www.tinymce.com</a><br>LGPL</li>
+	<li><strong>Ace</strong> - The High Performance Code Editor for the Web<br><a href="http://ace.c9.io">http://ace.c9.io</a><br>BSD License</li>
 	<li><strong>Smarty</strong> - Template System<br><a href="http://www.smarty.net">http://www.smarty.net</a><br>LGPL</li>
 	<li><strong>SWIFT</strong> - PHP Mailer<br><a href="http://swiftmailer.org/">http://swiftmailer.org/</a><br>MIT License</li>
 	<li><strong>Twitter Bootstrap</strong><br><a href="http://getbootstrap.com">http://getbootstrap.com</a><br>MIT License</li>
@@ -86,7 +83,7 @@ Beispiel: <code>http://www.example.com/acp/</code></p>
 <hr>
 
 <footer>
-  <h4>Copyright (C) 2010-2014, flatCore.de</h4>
+  <h4>Copyright &copy; 2015, flatCore.de</h4>
 
 	<p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License.</p>
 	
