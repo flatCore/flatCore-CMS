@@ -5,6 +5,16 @@
  * update existing tables
  */
 
+if(!defined('INSTALLER')) {
+	header("location:login.php");
+	die("PERMISSION DENIED!");
+}
+
+if($_SESSION['user_class'] != "administrator"){
+	//move to login or die
+	header("location:login.php");
+	die("PERMISSION DENIED!");
+}
 
 copy('maintance.hml', '../maintance.hml');
 

@@ -1,3 +1,10 @@
+<?php
+if(!defined('INSTALLER')) {
+	header("location:../login.php");
+	die("PERMISSION DENIED!");
+}
+?>
+
 <div class="alert alert-info">
 <?php echo $lang['msg_form']; ?>
 </div><hr>

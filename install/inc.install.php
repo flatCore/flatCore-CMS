@@ -1,4 +1,9 @@
 <?php
+	
+if(!defined('INSTALLER')) {
+	header("location:login.php");
+	die("PERMISSION DENIED!");
+}
 
 $step = '1';
 

@@ -11,8 +11,9 @@
 
 session_start();
 error_reporting(0);
-
 $modus = '';
+define('INSTALLER', TRUE);
+
 
 if(isset($_GET['l']) && is_dir('../lib/lang/'.basename($_GET['l']).'/')) {
 	$_SESSION['lang'] = basename($_GET['l']);

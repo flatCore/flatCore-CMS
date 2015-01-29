@@ -1,5 +1,9 @@
 <?php
 
+if(!defined('INSTALLER')) {
+	header("location:../login.php");
+	die("PERMISSION DENIED!");
+}
 
 /* returns all cols and types of a existung database/table */
 function get_collumns($db,$table_name) {

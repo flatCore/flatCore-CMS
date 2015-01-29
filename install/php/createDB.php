@@ -5,6 +5,11 @@
  * create the sqlite database files
  */
 
+if(!defined('INSTALLER')) {
+	header("location:../login.php");
+	die("PERMISSION DENIED!");
+}
+
 $username = $_POST['username'];
 $mail = $_POST['mail'];
 $psw = $_POST['psw'];

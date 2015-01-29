@@ -7,6 +7,11 @@
  * check folders and files
  */
 
+if(!defined('INSTALLER')) {
+	header("location:../login.php");
+	die("PERMISSION DENIED!");
+}
+
 function checkwritable($path) {
 
 	global $goto_install;
