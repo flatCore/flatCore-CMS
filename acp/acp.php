@@ -180,6 +180,11 @@ foreach($fc_preferences as $k => $v) {
 		</script>
 		<script type="text/javascript">
 		$(document).ready(function() {
+			
+	  	setTimeout(function() {
+	        $(".alert-auto-close").slideUp('slow');
+			}, 2000);
+			
 			$(".fancybox").fancybox();
 			
 			$('#showVersions').collapse('hide');
