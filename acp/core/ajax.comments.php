@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-error_reporting(e_all);
+error_reporting(0);
 
 require("../../config.php");
 
@@ -87,9 +87,6 @@ for($i=0;$i<$cnt_comment;$i++) {
 	
 	echo $show_entry;
 }
-echo '';
-
-
 
 
 ?>

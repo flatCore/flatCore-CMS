@@ -16,7 +16,7 @@ if($_SESSION['user_class'] != "administrator"){
 	die("PERMISSION DENIED!");
 }
 
-copy('maintance.hml', '../maintance.hml');
+copy('maintance.html', '../maintance.html');
 
 echo '<h2>UPDATE</h2>';
 
@@ -112,7 +112,9 @@ if(is_array($fails)) {
 }
 
 
-
+if(is_file('../maintance.html')) {
+	unlink('../maintance.html');
+}
 
 
 
