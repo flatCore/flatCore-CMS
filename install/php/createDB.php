@@ -148,7 +148,7 @@ $sql_pages_cache_table = generate_sql_query("fc_pages_cache.php");
 $sql_preferences_table = generate_sql_query("fc_preferences.php");
 $sql_textlib_table = generate_sql_query("fc_textlib.php");
 $sql_comments_table = generate_sql_query("fc_comments.php");
-
+$sql_media_table = generate_sql_query("fc_media.php");
 
 $dbh = new PDO("sqlite:../$fc_db_content");
 
@@ -157,6 +157,7 @@ $dbh = new PDO("sqlite:../$fc_db_content");
 	$dbh->query($sql_preferences_table);
 	$dbh->query($sql_textlib_table);
 	$dbh->query($sql_comments_table);
+	$dbh->query($sql_media_table);
 	$dbh->query($sql_feeds_table);
 	$dbh->query($sql_portal_site);
 	$dbh->query($sql_first_site);
@@ -187,8 +188,8 @@ $dbh->query($sql_log_table);
 $dbh = null;
 
 
-echo"<div class='alert alert-success'>$lang[installed] | Admin: $username</div>";
-echo"<hr><a class='btn' href='../acp/index.php'>$lang[link_admin]</a><hr>";
+echo '<div class="alert alert-success">'.$lang['installed'].' | Admin: '.$username.'</div>';
+echo '<hr><a class="btn" href="../acp/index.php">'.$lang['link_admin'].'</a><hr>';
 
 
 

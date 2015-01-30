@@ -851,4 +851,96 @@ function fc_write_comment($author, $message, $parent, $id = NULL) {
 
 }
 
+
+
+/**
+ * get data from fc_media
+ * by filename
+ *
+ */
+
+function fc_get_images_data($filename) {
+
+	$dbh = new PDO("sqlite:".CONTENT_DB);
+	$sql = "SELECT * FROM fc_media WHERE media_file = :filename ";
+	$sth = $dbh->prepare($sql);
+	$sth->bindParam(':filename', $filename, PDO::PARAM_STR);
+	
+	$sth->execute();
+	
+	$result = $sth->fetch(PDO::FETCH_ASSOC);
+	
+	$dbh = null;
+	
+	return($result);
+}
+
+
+/**
+ * write data into fc_media
+ * check by file name if data already exists
+ *
+ */
+
+function fc_write_images_data($filename,$title,$description,$keywords,$text) {
+
+	$pdo_fields_update = array(
+		'media_title' => 'STR',
+		'media_description' => 'STR',
+		'media_keywords' => 'STR',
+		'media_text' => 'STR'
+	);
+		
+	$pdo_fields_new = array(
+		'media_id' => 'INT',
+		'media_file' => 'STR',
+		'media_title' => 'STR',
+		'media_description' => 'STR',
+		'media_keywords' => 'STR',
+		'media_text' => 'STR'
+	);
+
+	$dbh = new PDO("sqlite:".CONTENT_DB);
+	
+	$sql_cnt = "SELECT count(*) FROM fc_media WHERE media_file = :filename";
+	$sth = $dbh->prepare($sql_cnt);
+	$sth->bindParam(':filename', $filename, PDO::PARAM_STR);
+	$sth->execute();
+	$cnt = $sth->fetch(PDO::FETCH_NUM);
+	
+	if($cnt[0] > 0) {
+		//return 'update';
+		$sql_update = generate_sql_update_str($pdo_fields_update,"fc_media","WHERE media_file = '$filename' ");
+		$sth = $dbh->prepare($sql_update);
+		generate_bindParam_str($pdo_fields_update,$sth);
+		$sth->bindParam(':media_title', $title, PDO::PARAM_STR);
+		$sth->bindParam(':media_description', $description, PDO::PARAM_STR);
+		$sth->bindParam(':media_keywords', $keywords, PDO::PARAM_STR);
+		$sth->bindParam(':media_text', $text, PDO::PARAM_STR);
+	} else {
+		//return 'new';
+		$sql_new = generate_sql_insert_str($pdo_fields_new,"fc_media");
+		$sth = $dbh->prepare($sql_new);
+		generate_bindParam_str($pdo_fields_new,$sth);
+		$sth->bindParam(':media_file', $filename, PDO::PARAM_STR);
+		$sth->bindParam(':media_title', $title, PDO::PARAM_STR);
+		$sth->bindParam(':media_description', $description, PDO::PARAM_STR);
+		$sth->bindParam(':media_keywords', $keywords, PDO::PARAM_STR);
+		$sth->bindParam(':media_text', $text, PDO::PARAM_STR);
+	}
+
+	$cnt_changes = $sth->execute();
+	$error = print_r($dbh->errorInfo(),true);
+	$dbh = null;
+	
+	if($cnt_changes == true) {
+		return 'success';
+	} else {
+		
+		return $error;
+	}
+	
+	
+}
+
 ?>

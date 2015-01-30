@@ -299,24 +299,26 @@ for($i=$start;$i<$end;$i++) {
 
 	if($fileinfo[$i]['filetype'] == "image") {
 		$set_style = '';
-		$preview_button = "<a href='$path/$filename' title='$path/$filename' class='btn btn-xs btn-default fancybox'>$lang[preview]</a>";
+		$preview_btn = "<a href='$path/$filename' title='$path/$filename' class='btn btn-xs btn-default fancybox'><span class='glyphicon glyphicon-zoom-in'></span></a>";
 		$preview_img = "<img src='$path/$filename'>";
 	} else {
 		$set_style = "background-image: url(images/no-preview.gif); background-position: center; background-repeat: no-repeat;";
-		$preview_button = "<a href='#' class='btn btn-xs btn-default disabled'>Vorschau</a>";
+		$preview_btn = "<a href='#' class='btn btn-xs btn-default disabled'><span class='glyphicon glyphicon-zoom-in'></span></a>";
 		$preview_img = '';
 	}
 
 	
-	$delete_button = "<a href='acp.php?tn=$tn&sub=browse&delete=$filename&d=$disk&start=$start' onclick=\"return confirm('$lang[confirm_delete_file]')\" class='btn btn-danger btn-xs'>$lang[delete]</a></span>";
+	$delete_btn = "<a href='acp.php?tn=$tn&sub=browse&delete=$filename&d=$disk&start=$start' onclick=\"return confirm('$lang[confirm_delete_file]')\" class='btn btn-danger btn-xs'><span class='glyphicon glyphicon-trash'></span></a></span>";
+	$edit_btn = '<a href="/acp/core/ajax.media.php?image='.$filename.'" class="fancybox-ajax btn btn-xs btn-default"><span class="glyphicon glyphicon-pencil"></span></a>';
 
 	$tpl_list = str_replace('{filename}', "$filename", $tpl_file);
 	$tpl_list = str_replace('{set_style}', "$set_style", $tpl_list);
 	$tpl_list = str_replace('{preview_img}', "$preview_img", $tpl_list);
 	$tpl_list = str_replace('{show_filetime}', "$show_filetime", $tpl_list);
 	$tpl_list = str_replace('{filesize}', "$filesize", $tpl_list);
-	$tpl_list = str_replace('{preview_button}', "$preview_button", $tpl_list);
-	$tpl_list = str_replace('{delete_button}', "$delete_button", $tpl_list);
+	$tpl_list = str_replace('{preview_button}', "$preview_btn", $tpl_list);
+	$tpl_list = str_replace('{edit_button}', "$edit_btn", $tpl_list);
+	$tpl_list = str_replace('{delete_button}', "$delete_btn", $tpl_list);
 	
 	echo $tpl_list;
 	
