@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(0);
+
 //prohibit unauthorized access
 require("core/access.php");
 
@@ -36,68 +38,117 @@ if(isset($_GET['sort_by_time'])) {
 
 $sort_direction = constant(trim('SORT_'.$_SESSION['sort_by_name'].$_SESSION['sort_by_time'].$_SESSION['sort_by_size']));
 
-function switch_sort($session_name) {
-	if($_SESSION[$session_name] == 'ASC') {
-		$_SESSION[$session_name] = 'DESC';
-	} else {
-		$_SESSION[$session_name] = 'ASC';
-	}
-}
-
-function show_sort_arrow($direction) {
-	$icon = '';
-	if($direction == 'ASC') {
-		$icon = '<span class="glyphicon glyphicon-chevron-up"></span>';
-	} elseif($direction == 'DESC') {
-		$icon = '<span class="glyphicon glyphicon-chevron-down"></span>';
-	}
-	return $icon;
-}
-
 
 if($disk == "2") {
 	$path = '../content/files';
 	$disk2_class = 'btn btn-primary btn-sm';
 	$disk1_class = 'btn btn-default btn-sm';
+	$tpl_file = file_get_contents('templates/list-files-grid.tpl');
 } else {
 	$path = '../content/images';
 	$disk1_class = 'btn btn-primary btn-sm';
 	$disk2_class = 'btn btn-default btn-sm';
+	$tpl_file = file_get_contents('templates/list-files-thumbs.tpl');
 }
 
+/* DELETE FILE OR IMAGE */
+if($deleteFile !== "") {
+	if(is_file("$path/$deleteFile")) {
+		if(unlink("$path/$deleteFile")) {
+			fc_delete_media_data("$path/$deleteFile");
+			echo '<div class="alert alert-success alert-auto-close">'.$lang['msg_file_delete'].'</div>';
+		} else {
+			echo '<div class="alert alert-error">'.$lang['msg_file_delete_error'].'</div>';
+		}	
+	} else {
+		echo '<div class="alert alert-error">File not found</div>';
+	}
+}
+
+$a_files = array_diff(scandir($path), array('..', '.','.DS_Store','index.html'));
+
+
+/**
+ * check if all files stored in media database
+ * if not, catch up
+ *
+ * check if entries stored in media database are still there
+ * if not, drop entry
+ */
+
+$dbh = new PDO("sqlite:".CONTENT_DB);
+foreach($a_files as $file) {
+	
+	unset($mediaData);
+	$filename = "$path/$file";
+	
+	if(is_dir($filename)) { continue; }
+	
+	$sql = "SELECT media_file FROM fc_media WHERE media_file = :filename ";
+	$sth = $dbh->prepare($sql);
+	$sth->bindParam(':filename', $filename, PDO::PARAM_STR);
+	$sth->execute();
+	
+	$mediaData = $sth->fetch(PDO::FETCH_ASSOC);
+	
+	if(!is_array($mediaData)) {
+		$sql = "INSERT INTO fc_media ( media_id, media_file ) VALUES ( NULL, :media_file ) ";
+		$sth = $dbh->prepare($sql);
+		$sth->bindParam(':media_file', $filename, PDO::PARAM_STR);
+		$sth->execute();
+	}
+	
+}
+
+$sql = "SELECT media_file FROM fc_media";
+$sth = $dbh->prepare($sql);
+$sth->execute();
+$storedFiles = $sth->fetchAll(PDO::FETCH_COLUMN);
+$dbh = null;
+
+foreach($storedFiles as $f) {
+	if(!is_file($f)) {
+		fc_delete_media_data($f);
+	}
+}
+	
+$dbh = null;
+
+
+
 /* expand filter */
-if(isset($_POST['img_filter'])) {
-	$_SESSION['img_filter'] = $_SESSION['img_filter'] . ' ' . $_POST['img_filter'];
+if(isset($_POST['media_filter'])) {
+	$_SESSION['media_filter'] = $_SESSION['media_filter'] . ' ' . $_POST['media_filter'];
 }
 
 /* remove keyword from filter list */
 if($_REQUEST['rm_keyword'] != "") {
-	$all_filter = explode(" ", $_SESSION['img_filter']);
-	unset($_SESSION['img_filter'],$f);
+	$all_filter = explode(" ", $_SESSION['media_filter']);
+	unset($_SESSION['media_filter'],$f);
 	foreach($all_filter as $f) {
 		if($_REQUEST['rm_keyword'] == "$f") { continue; }
 		if($f == "") { continue; }
-		$_SESSION['img_filter'] .= "$f ";
+		$_SESSION['media_filter'] .= "$f ";
 	}
 	unset($all_filter);
 }
 
-if($_SESSION['img_filter'] != "") {
+
+if($_SESSION['media_filter'] != "") {
 	unset($all_filter);
-	$all_filter = explode(" ", $_SESSION['img_filter']);
+	$all_filter = explode(" ", $_SESSION['media_filter']);
 	foreach($all_filter as $f) {
 		if($_REQUEST['rm_keyword'] == "$f") { continue; }
 		if($f == "") { continue; }
 		$btn_remove_keyword .= "<a class='btn btn-default' href='acp.php?tn=filebrowser&sub=browse&rm_keyword=$f'><span class='glyphicon glyphicon-remove'></span> $f</a> ";
 	}
-	
 }
 
 
 $kw_form  = "<form action='acp.php?tn=filebrowser&sub=browse&d=$disk' method='POST' class='form-inline'>";
 $kw_form .= '<div class="input-group">';
 $kw_form .= '<span class="input-group-addon"><span class="glyphicon glyphicon-filter"></span></span>';
-$kw_form .= '<input class="form-control" type="text" name="img_filter" value="" placeholder="Filter">';
+$kw_form .= '<input class="form-control" type="text" name="media_filter" value="" placeholder="Filter">';
 $kw_form .= '</div>';
 $kw_form .= '</form>';
 
@@ -112,9 +163,9 @@ echo "<a class='$disk1_class' href='$_SERVER[PHP_SELF]?tn=$tn&sub=browse&d=1'>Gr
 echo "<a class='$disk2_class' href='$_SERVER[PHP_SELF]?tn=$tn&sub=browse&d=2'>Dateien</a>";
 echo '</div>';
 echo '<div class="btn-group">';
-echo "<a class='btn btn-sm btn-default' href='$_SERVER[PHP_SELF]?tn=$tn&sub=browse&d=$disk&sort_by_name=1'>". show_sort_arrow($_SESSION[sort_by_name]) ." $lang[filename]</a>";
-echo "<a class='btn btn-sm btn-default' href='$_SERVER[PHP_SELF]?tn=$tn&sub=browse&d=$disk&sort_by_time=1'>". show_sort_arrow($_SESSION[sort_by_time]) ." $lang[date_of_change]</a>";
-echo "<a class='btn btn-sm btn-default' href='$_SERVER[PHP_SELF]?tn=$tn&sub=browse&d=$disk&sort_by_size=1'>". show_sort_arrow($_SESSION[sort_by_size]) ." $lang[filesize]</a>";
+echo "<a class='btn btn-sm btn-default' href='$_SERVER[PHP_SELF]?tn=$tn&sub=browse&d=$disk&sort_by_name=1'>". show_sort_arrow($_SESSION['sort_by_name']) ." $lang[filename]</a>";
+echo "<a class='btn btn-sm btn-default' href='$_SERVER[PHP_SELF]?tn=$tn&sub=browse&d=$disk&sort_by_time=1'>". show_sort_arrow($_SESSION['sort_by_time']) ." $lang[date_of_change]</a>";
+echo "<a class='btn btn-sm btn-default' href='$_SERVER[PHP_SELF]?tn=$tn&sub=browse&d=$disk&sort_by_size=1'>". show_sort_arrow($_SESSION['sort_by_size']) ." $lang[filesize]</a>";
 echo '</div>';
 echo '</div>';
 
@@ -132,52 +183,56 @@ echo '</div>';
 echo '</div>';
 
 
-
-/* DELETE FILE OR IMAGE */
-if($deleteFile !== "") {
-
-	if(is_file("$path/$deleteFile")) {
-	
-		if(unlink("$path/$deleteFile")) {
-			echo '<div class="alert alert-success">'.$lang['msg_file_delete'].'</div>';
-		} else {
-			echo '<div class="alert alert-error">'.$lang['msg_file_delete_error'].'</div>';
-		}
-		
-	} else {
-		echo '<div class="alert alert-error">File not found</div>';
-	}
-
-}
-
-$a_files = scandir("$path");
-
 $fileinfo = array();
 $x=0;
 
-foreach($a_files as $file) {
 
-	/* no files like . or .. or .filename */ 
-	if((substr($file, 0, 1) == ".")) {
-		continue;
+/**
+ * if there is a filter
+ * reset $a_files from scandir to entries from fc_media
+ */
+
+if(is_array($all_filter)) {
+	foreach($all_filter as $f) {
+		if($f == "") { continue; }
+		$set_keyword_filter .= "(	media_file like '%$f%' OR
+															media_title like '%$f%' OR
+															media_description like '%$f%' OR
+															media_keywords like '%$f%' OR
+															media_credit like '%$f%' OR
+															media_text like '%$f%'
+															) AND";
+	}
+	$set_keyword_filter = substr("$set_keyword_filter", 0, -4); // cut the last ' AND'
+
+	$filter_string = "WHERE media_id IS NOT NULL "; // -> result = match all entries
+	
+	if($set_keyword_filter != "") {
+		$filter_string .= " AND $set_keyword_filter";
 	}
 	
-	if($file == 'index.html') {
-		continue;
-	}
+	$_SESSION['media_filter_string'] = $filter_string;
 	
+	$dbh = new PDO("sqlite:".CONTENT_DB);
+	$sql = "SELECT media_file FROM fc_media $_SESSION[media_filter_string] ";
+	$sth = $dbh->prepare($sql);
+	$sth->execute();
+	$filterFiles = $sth->fetchAll(PDO::FETCH_COLUMN);
 	
-	if(is_array($all_filter)) {
-		foreach($all_filter as $search_needle) {
-			if($search_needle != '') {
-				if(stristr($file, $search_needle) == FALSE) { 
-	        continue 2;
-			}
-	   }
+	$dbh = null;
+	
+	unset($a_files);
+	foreach($filterFiles as $file) {
+		$file = basename($file);
+		if(is_file("$path/$file")) {
+			$a_files[] = $file;
 		}
 	}
-
 	
+}
+
+foreach($a_files as $file) {
+
 	$f_suffix = substr (strrchr ($file, "."), 1 );
 	$f_time = filemtime("$path/$file");
 	$f_size =  filesize("$path/$file");
@@ -195,7 +250,7 @@ foreach($a_files as $file) {
 	$fileinfo[$x]['time'] = "$f_time";
 	
 	$x++;
-} // eol foreach 
+}
 
 
 //count all files
@@ -204,7 +259,7 @@ $nbr_of_files = count($fileinfo);
 /* sorting */
 
 foreach ($fileinfo as $key => $row) {
-    $fi_filename[$key]    = $row['filename'];
+    $fi_filename[$key] = $row['filename'];
     $fi_size[$key] = $row['size'];
     $fi_time[$key] = $row['time'];
 }
@@ -281,11 +336,8 @@ for($x=0;$x<$cnt_pages;$x++) {
 echo"<div id='container'>";
 echo"<div id='masonry-container'>";
 
-if($disk == "2") {
-	$tpl_file = file_get_contents('templates/list-files-grid.tpl');
-} else {
-	$tpl_file = file_get_contents('templates/list-files-thumbs.tpl');
-}
+
+
 //list all files 
 for($i=$start;$i<$end;$i++) {
 
@@ -299,24 +351,21 @@ for($i=$start;$i<$end;$i++) {
 
 	if($fileinfo[$i]['filetype'] == "image") {
 		$set_style = '';
-		$preview_btn = "<a href='$path/$filename' title='$path/$filename' class='btn btn-xs btn-default fancybox'><span class='glyphicon glyphicon-zoom-in'></span></a>";
 		$preview_img = "<img src='$path/$filename'>";
 	} else {
 		$set_style = "background-image: url(images/no-preview.gif); background-position: center; background-repeat: no-repeat;";
-		$preview_btn = "<a href='#' class='btn btn-xs btn-default disabled'><span class='glyphicon glyphicon-zoom-in'></span></a>";
 		$preview_img = '';
 	}
 
 	
-	$delete_btn = "<a href='acp.php?tn=$tn&sub=browse&delete=$filename&d=$disk&start=$start' onclick=\"return confirm('$lang[confirm_delete_file]')\" class='btn btn-danger btn-xs'><span class='glyphicon glyphicon-trash'></span></a></span>";
-	$edit_btn = '<a href="/acp/core/ajax.media.php?image='.$filename.'" class="fancybox-ajax btn btn-xs btn-default"><span class="glyphicon glyphicon-pencil"></span></a>';
+	$delete_btn = "<a href='acp.php?tn=$tn&sub=browse&delete=$filename&d=$disk&start=$start' onclick=\"return confirm('$lang[confirm_delete_file]')\" class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-trash'></span></a></span>";
+	$edit_btn = '<a href="/acp/core/ajax.media.php?file='.$filename.'&folder='.$disk.'" class="fancybox-ajax btn btn-sm btn-default"><span class="glyphicon glyphicon-pencil"></span></a>';
 
 	$tpl_list = str_replace('{filename}', "$filename", $tpl_file);
 	$tpl_list = str_replace('{set_style}', "$set_style", $tpl_list);
 	$tpl_list = str_replace('{preview_img}', "$preview_img", $tpl_list);
 	$tpl_list = str_replace('{show_filetime}', "$show_filetime", $tpl_list);
 	$tpl_list = str_replace('{filesize}', "$filesize", $tpl_list);
-	$tpl_list = str_replace('{preview_button}', "$preview_btn", $tpl_list);
 	$tpl_list = str_replace('{edit_button}', "$edit_btn", $tpl_list);
 	$tpl_list = str_replace('{delete_button}', "$delete_btn", $tpl_list);
 	
@@ -339,6 +388,32 @@ foreach(range($pag_start, $pag_end) as $number) {
 }
 echo " $pag_forwardlink";
 echo '</p></div>'; //EOL PAGINATION
+
+
+
+
+
+
+
+
+
+function switch_sort($session_name) {
+	if($_SESSION[$session_name] == 'ASC') {
+		$_SESSION[$session_name] = 'DESC';
+	} else {
+		$_SESSION[$session_name] = 'ASC';
+	}
+}
+
+function show_sort_arrow($direction) {
+	$icon = '';
+	if($direction == 'ASC') {
+		$icon = '<span class="glyphicon glyphicon-chevron-up"></span>';
+	} elseif($direction == 'DESC') {
+		$icon = '<span class="glyphicon glyphicon-chevron-down"></span>';
+	}
+	return $icon;
+}
 
 
 ?>

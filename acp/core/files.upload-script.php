@@ -1,6 +1,9 @@
 <?php
-
 session_start();
+error_reporting(E_ALL);
+
+require("../../config.php");
+define("CONTENT_DB", "../../$fc_db_content");
 
 if($_SESSION['user_class'] != "administrator"){
 	header("location:../index.php");
@@ -25,12 +28,9 @@ if($_REQUEST['upload_type'] == 'images') {
 		$prefix = basename($org_name,".$suffix");
 		$img_name = clean_filename($prefix,$suffix);
 		$target = "$destination/$img_name";
+		fc_write_media_data_name("$destination/$img_name");
 		$target = resize_image($tmp_name,$target, $max_w,$max_h,90);
-		
-		if(@move_uploaded_file($tmp_name, $target)) {
-			print ('Upload complete');
-		}
-		
+
 	}
 }
 
@@ -43,9 +43,8 @@ if($_REQUEST['upload_type'] == 'files') {
 	  $suffix = strtolower(substr(strrchr($org_name,'.'),1));
 	  $prefix = basename($org_name,".$suffix");
 	  $files_name = clean_filename($prefix,$suffix);
-
 	  $target = "$destination/$files_name";
-
+		fc_write_media_data_name("$destination/$files_name");
 		if(@move_uploaded_file($tmp_name, $target)) {
 			print ('Upload complete');
 		}
@@ -158,6 +157,17 @@ function clean_filename($prefix,$suffix) {
 	$filename = $prefix . '.' . $suffix;
 
 	return $filename; 
+}
+
+
+
+function fc_write_media_data_name($filename) {
+	$dbh = new PDO("sqlite:".CONTENT_DB);
+	$sql = "INSERT INTO fc_media ( media_id, media_file ) VALUES ( NULL, :media_file ) ";
+	$sth = $dbh->prepare($sql);
+	$sth->bindParam(':media_file', $filename, PDO::PARAM_STR);
+	$cnt_changes = $sth->execute();
+	$dbh = null;
 }
 
 ?>

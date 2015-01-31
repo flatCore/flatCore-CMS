@@ -243,6 +243,10 @@ $lang['f_user_select_paused'] = "Vorübergehend gesperrt";
 $lang['f_user_select_deleted'] = "Gelöscht";
 $lang['f_administrators'] = "Administratoren";
 
+$lang['label_title'] = "Titel";
+$lang['label_description'] = "Beschreibung";
+$lang['label_keywords'] = "Schlüsselwörter";
+$lang['label_text'] = "Text";
 
 /* Preferences */
 

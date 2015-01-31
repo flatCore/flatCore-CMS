@@ -10,7 +10,7 @@
 	</div>
 	<div class="col-md-2 text-right">
 		<div class="btn-group">
-			{preview_button}
+			{edit_button}
 			{delete_button}
 		</div>		
 	</div>

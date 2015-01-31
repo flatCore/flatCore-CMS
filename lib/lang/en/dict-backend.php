@@ -246,6 +246,11 @@ $lang['f_user_select_paused'] = "Temporarily closed";
 $lang['f_user_select_deleted'] = "Deleted";
 $lang['f_administrators'] = "Administrators";
 
+$lang['label_title'] = "Title";
+$lang['label_description'] = "Description";
+$lang['label_keywords'] = "Keywords";
+$lang['label_text'] = "Text";
+
 /* Preferences */
 
 $lang['f_prefs_descriptions'] = "Descriptions";

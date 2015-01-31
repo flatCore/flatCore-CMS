@@ -859,7 +859,7 @@ function fc_write_comment($author, $message, $parent, $id = NULL) {
  *
  */
 
-function fc_get_images_data($filename) {
+function fc_get_media_data($filename) {
 
 	$dbh = new PDO("sqlite:".CONTENT_DB);
 	$sql = "SELECT * FROM fc_media WHERE media_file = :filename ";
@@ -875,6 +875,23 @@ function fc_get_images_data($filename) {
 	return($result);
 }
 
+/**
+ * delete data from fc_media
+ * by filename
+ *
+ */
+
+function fc_delete_media_data($filename) {
+
+	$dbh = new PDO("sqlite:".CONTENT_DB);
+	$query = "DELETE FROM fc_media WHERE media_file = :filename";
+	$sth = $dbh -> prepare($query);
+	$sth -> bindParam(':filename', $filename, PDO::PARAM_STR);
+	$sth->execute();
+	$dbh = null;
+
+}
+
 
 /**
  * write data into fc_media
@@ -882,7 +899,7 @@ function fc_get_images_data($filename) {
  *
  */
 
-function fc_write_images_data($filename,$title,$description,$keywords,$text) {
+function fc_write_media_data($filename,$title=NULL,$description=NULL,$keywords=NULL,$text=NULL) {
 
 	$pdo_fields_update = array(
 		'media_title' => 'STR',
@@ -909,7 +926,6 @@ function fc_write_images_data($filename,$title,$description,$keywords,$text) {
 	$cnt = $sth->fetch(PDO::FETCH_NUM);
 	
 	if($cnt[0] > 0) {
-		//return 'update';
 		$sql_update = generate_sql_update_str($pdo_fields_update,"fc_media","WHERE media_file = '$filename' ");
 		$sth = $dbh->prepare($sql_update);
 		generate_bindParam_str($pdo_fields_update,$sth);
@@ -918,7 +934,6 @@ function fc_write_images_data($filename,$title,$description,$keywords,$text) {
 		$sth->bindParam(':media_keywords', $keywords, PDO::PARAM_STR);
 		$sth->bindParam(':media_text', $text, PDO::PARAM_STR);
 	} else {
-		//return 'new';
 		$sql_new = generate_sql_insert_str($pdo_fields_new,"fc_media");
 		$sth = $dbh->prepare($sql_new);
 		generate_bindParam_str($pdo_fields_new,$sth);
