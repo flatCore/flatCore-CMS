@@ -247,6 +247,9 @@ $lang['label_title'] = "Titel";
 $lang['label_description'] = "Beschreibung";
 $lang['label_keywords'] = "Schlüsselwörter";
 $lang['label_text'] = "Text";
+$lang['label_alt'] = "Alt";
+$lang['label_url'] = "URL";
+$lang['label_notes'] = "Notizen";
 
 /* Preferences */
 

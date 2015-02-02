@@ -34,7 +34,7 @@ $filesize = readable_filesize(filesize("../$realpath"));
 $lastedit = date('d.m.Y H:i',filemtime("../$realpath"));
 
 if(isset($_POST['saveMedia'])) {
-	$savedMedia = fc_write_media_data($_POST['realpath'],$_POST['title'],$_POST['description'],$_POST['keywords'],$_POST['text']);
+	$savedMedia = fc_write_media_data($_POST['realpath'],$_POST['title'],$_POST['notes'],$_POST['keywords'],$_POST['text'],$_POST['url'],$_POST['alt']);
 	if($savedMedia == 'success') {
 		$message = '<div class="alert alert-success alert-auto-close">'.$lang['db_changed'].'</div>';
 	} else {
@@ -63,6 +63,12 @@ $form_tpl = str_replace('{text}', $media_data['media_text'], $form_tpl);
 $form_tpl = str_replace('{label_title}', $lang['label_title'], $form_tpl);
 $form_tpl = str_replace('{label_description}', $lang['label_description'], $form_tpl);
 $form_tpl = str_replace('{label_keywords}', $lang['label_keywords'], $form_tpl);
+$form_tpl = str_replace('{label_alt}', $lang['label_alt'], $form_tpl);
+$form_tpl = str_replace('{alt}', $media_data['media_alt'], $form_tpl);
+$form_tpl = str_replace('{label_url}', $lang['label_url'], $form_tpl);
+$form_tpl = str_replace('{url}', $media_data['media_url'], $form_tpl);
+$form_tpl = str_replace('{label_notes}', $lang['label_notes'], $form_tpl);
+$form_tpl = str_replace('{notes}', $media_data['media_notes'], $form_tpl);
 $form_tpl = str_replace('{label_text}', $lang['label_text'], $form_tpl);
 $form_tpl = str_replace('{preview}', $preview_src, $form_tpl);
 $form_tpl = str_replace('{save}', $lang['save'], $form_tpl);

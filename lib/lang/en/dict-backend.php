@@ -250,6 +250,9 @@ $lang['label_title'] = "Title";
 $lang['label_description'] = "Description";
 $lang['label_keywords'] = "Keywords";
 $lang['label_text'] = "Text";
+$lang['label_alt'] = "Alt";
+$lang['label_url'] = "URL";
+$lang['label_notes'] = "Notes";
 
 /* Preferences */
 

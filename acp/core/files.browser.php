@@ -197,7 +197,7 @@ if(is_array($all_filter)) {
 		if($f == "") { continue; }
 		$set_keyword_filter .= "(	media_file like '%$f%' OR
 															media_title like '%$f%' OR
-															media_description like '%$f%' OR
+															media_notes like '%$f%' OR
 															media_keywords like '%$f%' OR
 															media_credit like '%$f%' OR
 															media_text like '%$f%'

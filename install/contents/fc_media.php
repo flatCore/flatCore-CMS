@@ -10,9 +10,13 @@ $cols = array(
   "media_title"  => 'VARCHAR',
   "media_description"  => 'VARCHAR',
   "media_keywords" => 'VARCHAR',
+  "media_url" => 'VARCHAR',
+  "media_alt" => 'VARCHAR',
+  "media_classes" => 'VARCHAR',
   "media_text"  => 'VARCHAR',
   "media_credit"  => 'VARCHAR',
-  "media_meta"  => 'VARCHAR'
+  "media_meta"  => 'VARCHAR',
+  "media_notes"  => 'VARCHAR'
   );
 
 ?>

@@ -899,22 +899,26 @@ function fc_delete_media_data($filename) {
  *
  */
 
-function fc_write_media_data($filename,$title=NULL,$description=NULL,$keywords=NULL,$text=NULL) {
+function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$text=NULL,$url=NULL,$alt=NULL) {
 
 	$pdo_fields_update = array(
 		'media_title' => 'STR',
-		'media_description' => 'STR',
+		'media_notes' => 'STR',
 		'media_keywords' => 'STR',
-		'media_text' => 'STR'
+		'media_text' => 'STR',
+		'media_alt' => 'STR',
+		'media_url' => 'STR'
 	);
 		
 	$pdo_fields_new = array(
 		'media_id' => 'INT',
 		'media_file' => 'STR',
 		'media_title' => 'STR',
-		'media_description' => 'STR',
+		'media_notes' => 'STR',
 		'media_keywords' => 'STR',
-		'media_text' => 'STR'
+		'media_text' => 'STR',
+		'media_alt' => 'STR',
+		'media_url' => 'STR'
 	);
 
 	$dbh = new PDO("sqlite:".CONTENT_DB);
@@ -930,18 +934,22 @@ function fc_write_media_data($filename,$title=NULL,$description=NULL,$keywords=N
 		$sth = $dbh->prepare($sql_update);
 		generate_bindParam_str($pdo_fields_update,$sth);
 		$sth->bindParam(':media_title', $title, PDO::PARAM_STR);
-		$sth->bindParam(':media_description', $description, PDO::PARAM_STR);
+		$sth->bindParam(':media_notes', $notes, PDO::PARAM_STR);
 		$sth->bindParam(':media_keywords', $keywords, PDO::PARAM_STR);
 		$sth->bindParam(':media_text', $text, PDO::PARAM_STR);
+		$sth->bindParam(':media_alt', $alt, PDO::PARAM_STR);
+		$sth->bindParam(':media_url', $url, PDO::PARAM_STR);
 	} else {
 		$sql_new = generate_sql_insert_str($pdo_fields_new,"fc_media");
 		$sth = $dbh->prepare($sql_new);
 		generate_bindParam_str($pdo_fields_new,$sth);
 		$sth->bindParam(':media_file', $filename, PDO::PARAM_STR);
 		$sth->bindParam(':media_title', $title, PDO::PARAM_STR);
-		$sth->bindParam(':media_description', $description, PDO::PARAM_STR);
+		$sth->bindParam(':media_notes', $notes, PDO::PARAM_STR);
 		$sth->bindParam(':media_keywords', $keywords, PDO::PARAM_STR);
 		$sth->bindParam(':media_text', $text, PDO::PARAM_STR);
+		$sth->bindParam(':media_alt', $alt, PDO::PARAM_STR);
+		$sth->bindParam(':media_url', $url, PDO::PARAM_STR);
 	}
 
 	$cnt_changes = $sth->execute();
