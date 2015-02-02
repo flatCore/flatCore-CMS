@@ -7,6 +7,7 @@ if(is_array($page_contents)) {
    	
    	/* if we have custom fields, assign the values to smarty */
    	if(preg_match("/custom_/i", $k)) {
+	   	$v = text_parser($v);
    		$smarty->assign("$k", stripslashes($v));
    	}
 	}
