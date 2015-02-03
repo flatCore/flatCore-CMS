@@ -5,18 +5,18 @@ if(!defined('INSTALLER')) {
 	die("PERMISSION DENIED!");
 }
 
-$step = '1'; //default
-
 foreach($_POST as $key => $val) {
 	$$key = strip_tags($val); 
 }
 
-if($step == '1') {
-	include("php/checkup.php");
-} elseif($step == '2') {
-	include("php/form.php");
-} elseif($step == '3') {
+
+
+if(isset($_POST['step3'])) {
 	include("php/createDB.php");
+} elseif(isset($_POST['step2'])) {
+	include("php/form.php");
+} else {
+	include("php/checkup.php");
 }
 
 ?>
