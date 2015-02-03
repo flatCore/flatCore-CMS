@@ -46,6 +46,10 @@ $a_allowed_p = array('register', 'account', 'profile', 'search', 'sitemap', 'log
  */
 
 if($query != "") {
+	
+	if(is_file(FC_CONTENT_DIR.'/plugins/query.controller.php')) {
+		include(FC_CONTENT_DIR.'/plugins/query.controller.php');
+	}
 
 	$fct_slug = $query;
 
