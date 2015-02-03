@@ -250,7 +250,8 @@ foreach($fc_preferences as $k => $v) {
 			   gutter: 10
 			  });
 			});
-		
+			
+			$.fn.matchHeight._update('.equal');
 			
 		});
 		</script>

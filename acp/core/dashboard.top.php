@@ -127,12 +127,12 @@ $top5pages = '<dl class="dl-horizontal dl-dates">'.$top5pages.'</dl>';
 
 
 
-echo'<div class="row equal">';
+echo'<div class="row">';
 echo '<div class="col-md-3">';
 
 echo '<div class="panel panel-default">';
-echo '<div class="panel-heading">'.$lang['db_user'].' '. ($cnt_user).'</div>';
-echo '<div class="panel-body" data-mh="panel-body-group">';
+echo '<div class="panel-heading">'.$lang['db_user'].' <span class="badge pull-right">'.$cnt_user.'</span></div>';
+echo '<div class="panel-body equal" data-mh="panel-body-group">';
 echo '<div class="row">';
 echo '<div class="col-lg-6"><div class="canvas-holder"><canvas id="user-chart-area" width="30" height="30"/></canvas></div></div>';
 echo '<div class="col-lg-6"><div id="user-chart-legend" class="hidden-sm"></div></div>';
@@ -145,7 +145,7 @@ echo '<div class="col-md-3">';
 
 echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">'.$lang['h_latest_user'].'</div>';
-echo '<div class="panel-body" data-mh="panel-body-group">';
+echo '<div class="panel-body equal" data-mh="panel-body-group">';
 echo"$user_latest5";
 echo '</div>';
 echo '</div>';
@@ -154,8 +154,8 @@ echo"</div>";
 echo '<div class="col-md-3">';
 
 echo '<div class="panel panel-default">';
-echo '<div class="panel-heading">'.$lang['tn_pages'].' '. ($cnt_pages).'</div>';
-echo '<div class="panel-body" data-mh="panel-body-group">';
+echo '<div class="panel-heading">'.$lang['tn_pages'].' <span class="badge pull-right">'.$cnt_pages.'</span></div>';
+echo '<div class="panel-body equal" data-mh="panel-body-group">';
 echo '<div class="row">';
 echo '<div class="col-lg-6"><div class="canvas-holder"><canvas id="pages-chart-area" width="30" height="30"/></canvas></div></div>';
 echo '<div class="col-lg-6"><div id="pages-chart-legend" vlass="hidden-sm"></div></div>';
@@ -168,7 +168,7 @@ echo '<div class="col-md-3">';
 
 echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">'.$lang['h_last_edit'].'</div>';
-echo '<div class="panel-body" data-mh="panel-body-group">';
+echo '<div class="panel-body equal" data-mh="panel-body-group">';
 echo"$top5pages";
 echo '</div>';
 echo '</div>';
