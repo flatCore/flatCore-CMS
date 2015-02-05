@@ -30,7 +30,7 @@ if(is_file(FC_CORE_DIR . "/maintance.html") OR (is_file($fc_db_content) == false
 }
 
 
-require(FC_CORE_DIR . "/lib/lang/$languagePack/dict-frontend.php");
+require(FC_CORE_DIR . "/lib/lang/index.php");
 require(FC_CORE_DIR . '/core/functions.php');
 
 

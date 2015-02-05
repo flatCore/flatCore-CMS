@@ -19,6 +19,7 @@ define("STATS_DB", "../$fc_db_stats");
 define("FC_ROOT", str_replace("/acp","",FC_INC_DIR));
 define("IMAGES_FOLDER", "$img_path");
 define("FILES_FOLDER", "$files_path");
+define("FC_SOURCE", "backend");
 
 if(!isset($_SESSION['editor_class'])) {
 	$_SESSION['editor_class'] = "wysiwyg";
@@ -46,18 +47,24 @@ if($_SESSION['editor_class'] == "wysiwyg") {
 
 
 /* set language */
-if($_SESSION['lang'] == "") {
+/*
+if(!isset($_SESSION['lang'])) {
 	$_SESSION['lang'] = "$languagePack";
 }
+*/
 
 if(isset($_GET['set_lang'])) {
 	$set_lang = strip_tags($_GET['set_lang']);
-	if(is_file("../lib/lang/$set_lang/dict-backend.php")) {
+	if(is_dir("../lib/lang/$set_lang/")) {
 		$_SESSION['lang'] = "$set_lang";
 	}
 }
 
-require("../lib/lang/$_SESSION[lang]/dict-backend.php");
+if(isset($_SESSION['lang'])) {
+	$languagePack = basename($_SESSION['lang']);
+}
+
+require("../lib/lang/index.php");
 require("core/functions.php");
 require("core/database.php");
 require("core/switch.php");
