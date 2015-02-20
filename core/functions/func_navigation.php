@@ -67,156 +67,105 @@ function show_mainmenu() {
  */
 
 function show_menu($num){
-
+	
 	global $fc_nav;
+	global $current_page_sort;
+	
 	
 	if($num == "") { return; }
-	
 	$items = array();
-	unset($sort);
-	$points_of_num = substr_count($num, '.');
 	
-	if($points_of_num >= 0) {
+	$num_split = explode('.',$num);
+	$current_page_sort_split = explode('.',$current_page_sort);
+	$current_level = count($num_split);
+	$cnt_all_navs = count($fc_nav); // number of all nav entries
 	
-		$str_length = strlen($num);
-		$count_result = count($fc_nav);
-	
-		for($i=0;$i<$count_result;$i++) {
-	
-			$sort = $fc_nav[$i]['page_sort'];
-			$sort_length = strlen($sort);
-			$trim_actual_page = substr($num, 0, $sort_length);
-	
-			/* All Pages at this Level */
-			if($sort == "$trim_actual_page") {
-				$items = show_this_level($sort);
-				if(is_array($items)){
-					foreach($items as $value) {
-	    			$m[] = $value;
-					}
-				}
+	$current_match_elements = array_slice($num_split, 0, $current_level);
+		
+	for($i=0;$i<$cnt_all_navs;$i++) {
+		
+		$nav_sort = $fc_nav[$i]['page_sort'];
+		$nav_split = explode('.',$nav_sort);
+		$nav_level = count($nav_split); // level
+		$nav_match_elements = array_slice($nav_split, 0, $current_level);
+		
+		if($nav_level <= 1) {
+			continue;
+		}
+		
+		if($nav_level > ($current_level+1)) {
+			continue;
+		}
+		
+		if($nav_level > $current_level) {
+			
+			if($current_match_elements !== $nav_match_elements) {
+				continue;
 			}
-	
-			/* Submenu */
-			if($sort == $num) {
-				$items = get_sm($sort);
-				if(is_array($items)) {
-					foreach($items as $value) {
-	    			$m[] = $value;
-					}
-				}
+
+		}
+		
+		if($nav_level <= $current_level) {
+			
+			$l = array_slice($num_split, 0, ($nav_level-1));
+			$r = array_slice($nav_split, 0, ($nav_level-1));
+
+			if($l !== $r) {
+				continue;
 			}
 			
 		}
-	
+				
+		
+		if(count(array_intersect_assoc($num_split, $nav_split)) < 1) {
+			continue;
+		}
+		
+		$items = build_submenu($i,$nav_level);
+		
+		foreach($items as $value) {
+			$m[] = $value;
+		}
+
+
 	}
-	
+
 	return $m;
 }
 
 
-function get_sm($num){
 
+function build_submenu($index,$level=1) {
+	
+	global $fc_mod_rewrite;
 	global $fc_nav;
 	global $current_page_sort;
-	global $fc_mod_rewrite;
+	global $fc_defs;
 	
-	unset($sort);
+	$sort = $fc_nav[$index]['page_sort'];
 	
-	$points_of_num = substr_count($num, '.');
-	$str_length = strlen($num);
-	$count_result = count($fc_nav);
+	$submenu[$index]['page_id'] = $fc_nav[$index]['page_id'];
+	$submenu[$index]['page_sort'] = $fc_nav[$index]['page_sort'];
+	$submenu[$index]['page_permalink'] = $fc_nav[$index]['page_permalink'];
+	$submenu[$index]['page_linkname'] = stripslashes($fc_nav[$index]['page_linkname']);
+	$submenu[$index]['page_title'] = stripslashes($fc_nav[$index]['page_title']);
 	
-	for($i=0;$i<$count_result;$i++) {
+
+	if($sort === $current_page_sort) {
+		$submenu[$index]['link_status'] = $fc_defs['sub_nav_prefix_class_active'].$level;
+	} else {
+		$submenu[$index]['link_status'] = 'sub_link'.$level;
+	}
 	
-		$sort = $fc_nav[$i]['page_sort'];
-		$points_of_sort = substr_count($sort, '.');
-		
-		$trim_sort = substr($fc_nav[$i]['page_sort'], 0, $str_length);
-		
-		if($num == "$trim_sort") {
-				
-			if($points_of_sort == ($points_of_num+1)) {
-				$submenu[$i]['page_id'] = $fc_nav[$i]['page_id'];
-				$submenu[$i]['page_sort'] = $fc_nav[$i]['page_sort'];
-				$submenu[$i]['page_permalink'] = $fc_nav[$i]['page_permalink'];
-				$submenu[$i]['page_linkname'] = stripslashes($fc_nav[$i]['page_linkname']);
-				$submenu[$i]['page_title'] = stripslashes($fc_nav[$i]['page_title']);
-				$submenu[$i]['link_status'] = "sub_link$points_of_sort";
-			
-				/* genertate the submenu */
-				if($fc_mod_rewrite == "off") {
-					$submenu[$i]['sublink'] = "$_SERVER[PHP_SELF]?p=" . $fc_nav[$i]['page_id'];
-				} elseif ($fc_mod_rewrite == "permalink") {
-					$submenu[$i]['sublink'] = FC_INC_DIR . "/" . $fc_nav[$i]['page_permalink'];
-				}
-			}	
-		}
-	} // eol $i
+	if($fc_mod_rewrite == "off") {
+		$submenu[$index]['sublink'] = "$_SERVER[PHP_SELF]?p=" . $fc_nav[$index]['page_id'];
+	} elseif ($fc_mod_rewrite == "permalink") {
+		$submenu[$index]['sublink'] = FC_INC_DIR . "/" . $fc_nav[$index]['page_permalink'];
+	}
 	
 	return $submenu;
-
-} // eol func get_sm
-
-
-
-
-function show_this_level($num) {
-
-	global $fc_nav;
-	global $current_page_sort;
-	global $fc_mod_rewrite;
-	global $fc_defs;
-		
-	unset($sort);
-	
-	$points_of_num = substr_count($num, '.');
-	$str_length = strlen($num);
-	
-	if($points_of_num > 0) {
-		
-		$pre_num = substr($num, 0, (strlen ($num)) - (strlen (strrchr($num,'.'))));
-		$pre_num_length = strlen($pre_num);
-		
-		$count_result = count($fc_nav);
-		
-		for($i=0;$i<$count_result;$i++) {
-		
-			$sort = $fc_nav[$i]['page_sort'];
-			$sort_length = strlen($sort);
-			$points_of_sort = substr_count($sort, '.');
-			$trim_sort = substr($sort, 0, $pre_num_length);
-		
-			if($trim_sort != "$pre_num") {
-				continue;
-			}
-		
-			if(left_string($sort) != left_string($num)) {
-				continue;
-			}
-		
-			if($str_length == $sort_length) {
-				$menu[$i]['page_id'] = $fc_nav[$i]['page_id'];
-				$menu[$i]['page_sort'] = $fc_nav[$i]['page_sort'];
-				$menu[$i]['page_permalink'] = $fc_nav[$i]['page_permalink'];
-				$menu[$i]['page_linkname'] = stripslashes($fc_nav[$i]['page_linkname']);
-				$menu[$i]['page_title'] = stripslashes($fc_nav[$i]['page_title']);
-				$menu[$i]['link_status'] = "$fc_defs[sub_nav_prefix_class]".$points_of_sort;
-		
-				if($sort == $current_page_sort) {
-					$menu[$i]['link_status'] = "$fc_defs[sub_nav_prefix_class_active]".$points_of_sort;
-				}
-		
-				if($fc_mod_rewrite == "off") {
-					$menu[$i]['sublink'] = "$_SERVER[PHP_SELF]?p=" . $fc_nav[$i]['page_id'];
-				} elseif ($fc_mod_rewrite == "permalink") {
-					$menu[$i]['sublink'] = FC_INC_DIR . "/" . $fc_nav[$i]['page_permalink'];
-				}
-			}
-		}
-	}
-	return $menu;
 }
+
 
 
 
@@ -248,7 +197,8 @@ function show_sitemap() {
 		$page_status = $fc_nav[$i]['page_status'];
 		$page_permalink = $fc_nav[$i]['page_permalink'];
 		
-			
+		$li_class = '';
+		
 		if($fc_nav[$i]['page_sort'] == "" || $fc_nav[$i]['page_sort'] == 'portal') {
 			continue;
 		}
