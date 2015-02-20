@@ -242,34 +242,62 @@ div#toc h2 {
  * links for subnavigation
  * sub_current{depth}
  */
- 
-#toclist li a.sub_current1, #toclist li a.sub_current2,
-#toclist li a.sub_current3, #toclist li a.sub_current4 {
+
+#toclist li a[class^='sub_current'] {
 	color: #222;
 	background-color: #CADDEE;
 }
 
-#toclist li a.sub_link1,
-#toclist li a.sub_current1 {
+#toclist li a.sub_link1, #toclist li a.sub_current1 {
+	padding-left: 5px;
+}
+
+#toclist li a.sub_link2, #toclist li a.sub_current2 {
 	padding-left: 10px;
 }
 
-#toclist li a.sub_link2,
-#toclist li a.sub_current2 {
+#toclist li a.sub_link3, #toclist li a.sub_current3 {
+	padding-left: 15px;
+}
+
+#toclist li a.sub_link4, #toclist li a.sub_current4 {
 	padding-left: 20px;
 }
 
-#toclist li a.sub_link3,
-#toclist li a.sub_current3 {
+#toclist li a.sub_link5, #toclist li a.sub_current5 {
+	padding-left: 25px;
+}
+
+#toclist li a.sub_link6, #toclist li a.sub_current6 {
 	padding-left: 30px;
 }
 
+#toclist li a.sub_link7, #toclist li a.sub_current7 {
+	padding-left: 35px;
+}
 
-#toclist li a.sub_link4,
-#toclist li a.sub_current4 {
+#toclist li a.sub_link8, #toclist li a.sub_current8 {
 	padding-left: 40px;
 }
 
+
+ul.fc-sitemap,
+ul[class^='fc-sitemap-'] {
+	list-style-type: none;
+	padding-left: 15px;
+}
+
+li.fc-sitemap-li {
+	margin-left: 5px;
+}
+
+li.fc-sitemap-li-active {
+	font-style: italic;
+}
+
+li.fc-sitemap-li-active-tree {
+	font-weight: bold;
+}
 
 
 /**
