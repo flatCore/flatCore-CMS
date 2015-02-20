@@ -37,14 +37,6 @@ $submenu = show_menu($current_page_sort);
 $bcmenu = breadcrumbs_menu($current_page_sort);
 $fc_sitemap = show_sitemap();
 
-if(is_array($submenu)) {
-	foreach($submenu as $line) {
- 		$sort_array[] = $line['page_sort'];
-	}
-	array_multisort($sort_array , $submenu);
-}
-
-
 $arr_mainmenu = @array_values($mainmenu);
 $arr_subnmenu = @array_values($submenu);
 

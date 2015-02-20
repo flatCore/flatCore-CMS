@@ -7,17 +7,21 @@ $dbh = new PDO("sqlite:".CONTENT_DB);
 
 unset($result);
 /* $_SESSION[filter_string] was defined in inc.pages.php */
-$sql = "SELECT page_id,	page_language, page_linkname, page_title, page_sort, page_lastedit,	page_lastedit_from, page_status, page_template,	page_modul, page_authorized_users, page_permalink, page_redirect, page_redirect_code
+$sql = "SELECT page_id, page_language, page_linkname, page_title, page_sort, page_lastedit, page_lastedit_from, page_status, page_template, page_modul, page_authorized_users, page_permalink, page_redirect, page_redirect_code
 		FROM fc_pages
 		$_SESSION[filter_string]
 		ORDER BY page_language ASC, page_sort ASC, page_linkname ASC";
 
-foreach ($dbh->query($sql) as $row) {
-	/* count comments and expand $row */
-	$this_page_id = 'p'.$row['page_id'];
+$sth = $dbh->prepare($sql);
+$sth->execute();
+$result = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+$x=0;
+foreach($result as $p) {
+	$this_page_id = 'p'.$p['page_id'];
 	$count_comments = $dbh->query("Select Count(*) FROM fc_comments WHERE comment_parent LIKE '$this_page_id' ")->fetch();
-	$row['cnt_comments'] = $count_comments[0];
-	$result[] = $row;
+	$result[$x]['cnt_comments'] = $count_comments[0];
+	$x++;
 }
 
 	
@@ -25,6 +29,7 @@ $dbh = null;
    
 $cnt_result = count($result);
 
+$result = fc_array_multisort($result, 'page_language', SORT_ASC, 'page_sort', SORT_ASC, SORT_NATURAL);
 
 echo '<div class="row">';
 echo '<div class="col-md-5">';

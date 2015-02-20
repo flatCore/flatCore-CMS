@@ -40,6 +40,8 @@ $all_pages = $dbh->query($sql)->fetchAll();
 
 $dbh = null;
 
+$all_pages = fc_array_multisort($all_pages, 'page_language', SORT_ASC, 'page_sort', SORT_ASC, SORT_NATURAL);
+
 
 $select_page_position  = '<select name="page_position" class="form-control">';
 $select_page_position .= '<option value="null">' . $lang['legend_unstructured_pages'] . '</option>';

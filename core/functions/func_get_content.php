@@ -49,6 +49,8 @@ function get_content($page, $mode = 'p') {
 	
 	$dbh = null;
 	
+	$fc_nav = fc_array_multisort($fc_nav, 'lang', SORT_ASC, 'page_sort', SORT_ASC, SORT_NATURAL);
+	
 	$contents = array($page_contents,$fc_nav,$prefs);
 	
 	return $contents;

@@ -32,7 +32,7 @@ function breadcrumbs_menu($num){
 			$permalink = $fc_nav[$i]['page_permalink'];
 			$trim_actual_page = substr($num, 0, $sort_length);
 			
-			if($sort == "$trim_actual_page") {
+			if($sort === $trim_actual_page) {
 			
 				$bc[$i]['page_id'] = $fc_nav[$i]['page_id'];
 				$bc[$i]['page_sort'] = $fc_nav[$i]['page_sort'];
