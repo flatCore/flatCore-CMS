@@ -5,6 +5,8 @@ $table_name = "fc_pages";
 
 $cols = array(
 	"page_id"  => 'INTEGER NOT NULL PRIMARY KEY',
+	"page_parent_id" => 'INTEGER',
+	"page_priority" => 'INTEGER',
 	"page_language"  => 'VARCHAR',
 	"page_linkname"  => 'VARCHAR',
 	"page_permalink" => 'VARCHAR',
