@@ -47,11 +47,10 @@ if($_SESSION['editor_class'] == "wysiwyg") {
 
 
 /* set language */
-/*
+
 if(!isset($_SESSION['lang'])) {
 	$_SESSION['lang'] = "$languagePack";
 }
-*/
 
 if(isset($_GET['set_lang'])) {
 	$set_lang = strip_tags($_GET['set_lang']);
