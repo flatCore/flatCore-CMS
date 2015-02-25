@@ -510,55 +510,97 @@ span#w200 { width: 200px; }
 	font-size: 12px;
 	line-height: 14px;
 	color: #888;
+	margin-bottom: 3px;
 }
 
-table.table-pages tr td {
-	padding: 2px 5px 0 5px;
+
+.pages-list-container {
+	padding: 0 0 0 10px;
+	background-color:#fff;
+	background-image: linear-gradient(90deg, #e5e5e5 1px, transparent 1px);
+	background-size: 10px;
+	background-position: 0;
 }
 
-.table-list tr.mainpage td {
+
+.page-list-item {
+	position: relative;
+	margin-bottom: 3px;
+	padding: 0 3px;
+	background:rgba(255,255,255,1);
+	border: 1px solid rgba(0,0,0,0.1);
+	z-index: 555;
+}
+
+.page-list-item h5 {
+	color: #555;
+}
+
+.page-list-item:hover {
+	border: 1px solid #fff;
 	background: #fff;
+	-webkit-box-shadow: 0px 0px 18px -4px rgba(0,0,0,0.3);
+	-moz-box-shadow: 0px 0px 18px -4px rgba(0,0,0,0.3);
+	box-shadow: 0px 0px 18px -4px rgba(0,0,0,0.3);
+	z-index: 999;
 }
 
-.table-list tr.page-list-public td:first-child {
-	background: rgba(223, 240, 216, 0.6);
-	border-right: 1px solid #090;
+
+.page-list-item-public {
+	border: 1px solid #d4ecd4;
+	background: #ebf5eb;
 }
 
-.table-list tr.page-list-public td:first-child .extrainfo,
-.table-list tr.page-list-public td:first-child a {
-	color: #060;
+.page-list-item-private {
+	background: #f4e9e9;
+	border: 1px solid rgba(153,0,0,0.2);
 }
 
-.table-list tr.page-list-ghost td:first-child {
-	background: rgba(255, 230, 180, 0.6);
-	border-right: 1px solid #f90;
+.page-list-item-ghost {
+	background: rgba(208,237,208,0.3);
+	border: 1px solid rgba(0,0,0,0.1);
 }
 
-.table-list tr.page-list-ghost td:first-child .extrainfo,
-.table-list tr.page-list-ghost td:first-child a {
-	color: #c63;
+.page-list-item-draft {
+	background:rgba(255,255,255,0.5);
+	border: 1px solid rgba(0,0,0,0.1);
 }
 
-.table-list tr.page-list-private td:first-child {
-	background: rgba(242, 222, 222, 0.6);
-	border-right: 1px solid #c33;
-	color: #900;
-}
-
-.table-list tr.page-list-private td:first-child .extrainfo,
-.table-list tr.page-list-private td:first-child a {
-	color: #900;
-}
-
-.table-list tr.page-list-draft td:first-child {
-	background: rgba(245, 245, 245, 0.8);
-	border-right: 1px solid #aaa;
-}
-
-.table-list tr.page-list-draft td:first-child .extrainfo,
-.table-list tr.page-list-draft td:first-child a {
+.label-white {
+	background: #fff;
 	color: #999;
+}
+
+.page-list-item-draft h5 {
+	color: #888;
+}
+
+.label-page-status {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 1px 3px 1px 5px;
+	font-size: 11px;
+	background: #222;
+	color: #fff;
+	border-bottom-left-radius: 5px;
+}
+
+.page-list-item-public .label-page-status {
+	background: #5cb85c;
+}
+
+.page-list-item-private .label-page-status {
+	background: #d9534f;
+}
+
+.page-list-item-ghost .label-page-status {
+	background: rgba(92, 184, 92, 0.3);
+	color: #5cb85c;
+}
+
+.page-list-item-draft .label-page-status {
+	background: #999;
 }
 
 .bg-bright {
@@ -568,6 +610,69 @@ table.table-pages tr td {
 .bg-dark {
 	background-color: #ccc;
 }
+
+.page-list-item .ghost-btn {
+	font-size: 14px;
+}
+
+.hiddenControls .controls {
+	display: none;
+}
+
+.controls-container {
+	display: block;
+	position: absolute;
+	right: -1px;
+	bottom: -25px;
+	height: 35px;
+}
+
+.controls-container-inner {
+	width: 100%;
+	height: 100%;
+	background: #fff;
+	border: 1px solid #fff;
+	padding: 2px 5px;
+	border-bottom-left-radius: 5px;
+}
+
+
+
+.ghost-btn {
+	color: #333;
+	background: rgba(255,255,255,0.3);
+	border: 1px solid rgba(255,255,255,0.6);
+	border-radius: 3px;
+	padding: 2px 5px;
+	margin: auto 2px;
+}
+.ghost-btn:hover {
+	background: #fff;
+	border: 1px solid #eee;
+}
+
+.ghost-btn-public:hover {
+	color: #5cb85c;
+	border-color: #5cb85c;
+}
+
+
+.ghost-btn-private:hover {
+	color: #d9534f;
+	border-color: #d9534f;
+}
+
+.ghost-btn-draft:hover {
+	color: #999;
+	border-color: #999;
+}
+
+.ghost-btn-ghost:hover {
+	color: #999;
+	border-color: #999;
+}
+
+
 
 
 .scroll-conatiner {
@@ -728,7 +833,7 @@ fieldset legend {
 }
 
 .btn-ghost, .btn-ghost.active {
-	border-bottom: 1px solid #ec971f;
+	border-bottom: 1px solid #a1d2a1;
 }
 
 textarea#textEditor {

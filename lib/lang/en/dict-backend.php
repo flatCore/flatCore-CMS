@@ -30,6 +30,8 @@ $lang['update'] = "Update";
 $lang['delete'] = "Delete";
 $lang['preview'] = "Preview";
 $lang['submit'] = "Go";
+$lang['duplicate'] = "Duplicate";
+$lang['save_duplicate'] = "Save Copy";
 $lang['choose'] = "Auswählen";
 $lang['display'] = "Choose";
 $lang['save'] = "Save";
@@ -104,6 +106,7 @@ $lang['h_page_hits'] = "Klicks";
 
 $lang['h_modus_editpage'] = "Edit Page";
 $lang['h_modus_newpage'] = "New Page";
+$lang['h_modus_duplicate'] = "Duplicate Page";
 $lang['h_last_edit'] = "last edit";
 
 $lang['h_modus_edituser'] = "Edit User";

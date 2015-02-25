@@ -27,6 +27,8 @@ $lang['update'] = "Aktualisieren";
 $lang['delete'] = "Löschen";
 $lang['preview'] = "Vorschau";
 $lang['submit'] = "Los";
+$lang['duplicate'] = "Duplizieren";
+$lang['save_duplicate'] = "Kopie Speichern";
 $lang['choose'] = "Auswählen";
 $lang['display'] = "Anzeigen";
 $lang['save'] = "Speichern";
@@ -100,6 +102,7 @@ $lang['h_page_hits'] = "Klicks";
 
 $lang['h_modus_editpage'] = "Seite bearbeiten";
 $lang['h_modus_newpage'] = "Neue Seite anlegen";
+$lang['h_modus_duplicate'] = "Seite duplizieren";
 $lang['h_last_edit'] = "zuletzt aktualisiert";
 
 $lang['h_modus_edituser'] = "Benutzer bearbeiten";

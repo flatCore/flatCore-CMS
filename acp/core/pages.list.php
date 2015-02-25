@@ -7,7 +7,7 @@ $dbh = new PDO("sqlite:".CONTENT_DB);
 
 unset($result);
 /* $_SESSION[filter_string] was defined in inc.pages.php */
-$sql = "SELECT page_id, page_language, page_linkname, page_title, page_sort, page_lastedit, page_lastedit_from, page_status, page_template, page_modul, page_authorized_users, page_permalink, page_redirect, page_redirect_code
+$sql = "SELECT page_id, page_language, page_linkname, page_title, page_meta_description, page_sort, page_lastedit, page_lastedit_from, page_status, page_template, page_modul, page_authorized_users, page_permalink, page_redirect, page_redirect_code
 		FROM fc_pages
 		$_SESSION[filter_string]
 		ORDER BY page_language ASC, page_sort ASC, page_linkname ASC";
@@ -32,17 +32,24 @@ $cnt_result = count($result);
 $result = fc_array_multisort($result, 'page_language', SORT_ASC, 'page_sort', SORT_ASC, SORT_NATURAL);
 
 echo '<div class="row">';
-echo '<div class="col-md-5">';
+echo '<div class="col-md-3">';
+echo '<fieldset>';
+echo '<legend>Filter</legend>';
 echo $kw_form;
 echo '<p style="padding:0;">' . $btn_remove_keyword . '</p>';
+echo '</fieldset>';
 echo '</div>';
-echo '<div class="col-md-7">';
-echo '<div style="float:right;">';
+echo '<div class="col-md-9">';
+echo '<fieldset>';
+echo '<legend>'.$lang['f_page_status'].'/'.$lang['f_page_language'].'</legend>';
 echo $status_btn_group . ' ' . $lang_btn_group;
+echo '</fieldset>';
 echo '</div>';
-echo '<div class="clearfix"></div>';
 echo '</div>';
-echo '</div>';
+
+
+echo '<div class="row">';
+echo '<div class="col-lg-6">';
 
 /**
  * list all pages where page_sort != empty
@@ -50,18 +57,9 @@ echo '</div>';
 
 echo '<fieldset>';
 echo '<legend>' . $lang['legend_structured_pages'] . '</legend>';
+echo '<div class="pages-list-container">';
 
-echo '<table class="table-list table-pages table" border="0" cellpadding="0" cellspacing="0">';
 
-echo '<thead>';
-echo '<tr>';
-echo '<th>'.$lang['h_page_sort'].'</th>';
-echo '<th>'.$lang['h_page_linkname'].'</th>';
-echo '<th>'.$lang['h_page_title'].'</th>';
-echo '<th class="text-right">'.$lang['h_page_hits'].'</th>';
-echo '<th style="width:180px;">'.$lang['h_action'].'</th>';
-echo '</tr>';
-echo '</thead>';
 
 for($i=0;$i<$cnt_result;$i++) {
 
@@ -75,6 +73,7 @@ for($i=0;$i<$cnt_result;$i++) {
 	$page_sort = $result[$i]['page_sort'];
 	$page_linkname = stripslashes($result[$i]['page_linkname']);
 	$page_title = stripslashes($result[$i]['page_title']);
+	$page_description = stripslashes($result[$i]['page_meta_description']);
 	$page_status = $result[$i]['page_status'];
 	$page_lastedit = $result[$i]['page_lastedit'];
 	$page_lastedit_from = $result[$i]['page_lastedit_from'];
@@ -88,21 +87,32 @@ for($i=0;$i<$cnt_result;$i++) {
 	$page_cnt_comments = $result[$i]['cnt_comments'];
 	
 	if($page_template == "use_standard") {
-		$show_template_name =  "$lang[use_standard]";
+		$show_template_name =  $lang['use_standard'];
 	} else {
-		$show_template_name = "$page_template";
+		$show_template_name = $page_template;
 	}
+	
+	$points_of_page = substr_count($page_sort, '.');
+	$indent = ($points_of_page-1)*10 . 'px';
 
 	$pi = get_page_impression($page_id);
 	
 	if($page_status == "public") {
-		$tr_status_class = 'page-list-public';
+		$btn = 'ghost-btn-public';
+		$item_class = 'page-list-item-public';
+		$status_label = $lang['f_page_status_puplic'];
 	} elseif($page_status == "ghost") {
-		$tr_status_class = 'page-list-ghost';
+		$btn = 'ghost-btn-ghost';
+		$item_class = 'page-list-item-ghost';
+		$status_label = $lang['f_page_status_ghost'];
 	} elseif($page_status == "private") {
-		$tr_status_class = 'page-list-private';
+		$btn = 'ghost-btn-private';
+		$item_class = 'page-list-item-private';
+		$status_label = $lang['f_page_status_private'];
 	} elseif($page_status == "draft") {
-		$tr_status_class = 'page-list-draft';
+		$btn = 'ghost-btn-draft';
+		$item_class = 'page-list-item-draft';
+		$status_label = $lang['f_page_status_draft'];
 	}
 	
 	$last_edit = date("d.m.Y H:i:s",$page_lastedit) . " ($page_lastedit_from)";
@@ -111,8 +121,11 @@ for($i=0;$i<$cnt_result;$i++) {
 	
 	if($_SESSION['acp_editpages'] == "allowed"){
 		$edit_button = "<a class='btn btn-sm btn-default' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id'><span class='glyphicon glyphicon-edit'></span> $lang[edit]</a>";
+		$duplicate_button = "<a class='btn btn-sm btn-default' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id&duplicate=1'><span class='glyphicon glyphicon-duplicate'></span> $lang[duplicate]</a>";
+
 	} else {
-		$edit_button = "<br>";
+		$edit_button = '';
+		$duplicate_button = '';
 	}
 	
 	$arr_checked_admins = explode(",",$page_authorized_users);
@@ -120,13 +133,6 @@ for($i=0;$i<$cnt_result;$i++) {
 		$edit_button = "<a class='btn btn-sm btn-default' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id'><span class='glyphicon glyphicon-edit'></span> $lang[edit]</a>";
 	}
 	
-	/* mark main and subpages | or not */
-	$td_class = '';
-	if(strpos($page_sort, '.') !== false) {
-		$tr_page_class = 'subpage';
-	} else {
-		$tr_page_class = 'mainpage';
-	}
 	
 	if($fc_mod_rewrite == "permalink") {
 		$frontend_link = "../$page_permalink";
@@ -141,30 +147,52 @@ for($i=0;$i<$cnt_result;$i++) {
 	}
 	
 	if($page_redirect != '') {
-		$show_redirect = '<small class="text-primary"><span class="glyphicon glyphicon-arrow-right"></span> '.$page_redirect.'</small>';
 		if($_SESSION['checked_redirect'] != "checked") {
 			continue;
 		}
 	}
 	
-	$page_comments_link = '<a class="fancybox-ajax btn btn-default btn-sm" href="/acp/core/ajax.comments.php?pid='.$page_id.'"><span class="glyphicon glyphicon-comment"></span> '.$page_cnt_comments.'</a>';
+	$page_comments_link = '<a class="fancybox-ajax btn btn-default btn-sm" href="/acp/core/ajax.comments.php?pid='.$page_id.'"><span class="glyphicon glyphicon-comment"></span></a>';
 	
 	
 	
-	echo"<tr class='$tr_status_class $tr_page_class'>
-			<td><div class='extrainfo condensed'>$status_marker $page_sort</div></td>
-			<td><a class='darklink tooltip_bottom' data-toggle='tooltip' title='$frontend_link' href='$frontend_link'>$page_linkname</a>$show_mod</td>
-			<td>$page_title<p class='extrainfo condensed'>$last_edit | Style: $show_template_name | $page_language <br>$show_redirect</p></td>
-			<td style='text-align:right;'>$pi</td>
-			<td><div class='btn-group'>$edit_button $page_comments_link</div></td>
-		</tr>";
+	$extra_info  = '<span class="label label-white"><span class="glyphicon glyphicon-time"></span> '.$last_edit.'</span> ';
+	$extra_info .= '<span class="label label-white"><span class="glyphicon glyphicon-file"></span> '.$show_template_name.'</span> ';
+	$extra_info .= '<span class="label label-white"><span class="glyphicon glyphicon-globe"></span> '.$page_language.'</span> ';
+	$extra_info .= '<span class="label label-white"><span class="glyphicon glyphicon-comment"></span> '.$page_cnt_comments.'</span> ';	
+	$extra_info2 = '';
+	if($page_permalink != '') {
+		$extra_info2 = '<span class="label label-white"><span class="glyphicon glyphicon-link"></span> '.$page_permalink.'</span> ';
+	}
+	if($page_redirect != '') {
+		$extra_info2 .= '<span class="label label-white"><span class="text-primary glyphicon glyphicon-link"></span> '.$page_redirect.'</span> ';
+	}
+	$extra_info2 .= '<span class="label label-white"><span class="glyphicon glyphicon-stats"></span> ' . $pi.'</span> ';
+	$extra_info2 .= '<span class="label label-white"><span class="glyphicon glyphicon-sort-by-attributes"></span> '.$page_sort.'</span>';
+	
+	echo '<div class="hiddenControls page-list-item '.$item_class.'" style="margin-left:'.$indent.';">';
 
-} // eol for $i
+	echo '<div class="label-page-status">'.$status_label.'</div>';
+	echo '<h5><a class="ghost-btn '.$btn.'" href="'.$frontend_link.'" title="'.$frontend_link.'">'.$page_linkname.'</a> '.$page_title.' '.$show_mod.'</h5>';
+	echo '<p class="extrainfo condensed" style="padding-left:10px;">'.$extra_info.'</p>';
+	echo '<p class="extrainfo condensed" style="padding-left:10px;">'.$extra_info2.'</p>';
+	echo '<div class="controls-container controls">';
+	echo '<div class="controls-container-inner">';
+	echo '<div class="btn-group">'.$edit_button.' '.$duplicate_button.' '.$page_comments_link.'</div>';
+	echo '</div>';
 
-echo '</table>';
+	echo '</div>';
+
+	echo '</div>';
+
+}
+
+
+echo '</div>';
 echo '</fieldset>';
 
-
+echo '</div>';
+echo '<div class="col-lg-6">';
 
 /**
  * list all pages where
@@ -174,17 +202,7 @@ echo '</fieldset>';
 
 echo '<fieldset>';
 echo '<legend>' . $lang['legend_unstructured_pages'] . '</legend>';
-
-echo '<table class="table-list table-pages table" border="0" cellpadding="0" cellspacing="0">';
-
-echo '<thead>';
-echo '<tr>';
-echo '<th>'.$lang['h_page_linkname'].'</th>';
-echo '<th>'.$lang['h_page_title'].'</th>';
-echo '<th class="text-right">'.$lang['h_page_hits'].'</th>';
-echo '<th style="width:180px;">'.$lang['h_action'].'</th>';
-echo '</tr>';
-echo '</thead>';
+echo '<div class="pages-list-container">';
 
 
 for($i=0;$i<$cnt_result;$i++) {
@@ -227,23 +245,33 @@ for($i=0;$i<$cnt_result;$i++) {
 	$pi = get_page_impression($hits_id);
 	
 	if($page_status == "public") {
-		$tr_status_class = 'page-list-public';
+		$btn = 'ghost-btn-public';
+		$item_class = 'page-list-item-public';
+		$status_label = $lang['f_page_status_puplic'];
 	} elseif($page_status == "ghost") {
-		$tr_status_class = 'page-list-ghost';
+		$btn = 'ghost-btn-ghost';
+		$item_class = 'page-list-item-ghost';
+		$status_label = $lang['f_page_status_ghost'];
 	} elseif($page_status == "private") {
-		$tr_status_class = 'page-list-private';
+		$btn = 'ghost-btn-private';
+		$item_class = 'page-list-item-private';
+		$status_label = $lang['f_page_status_private'];
 	} elseif($page_status == "draft") {
-		$tr_status_class = 'page-list-draft';
+		$btn = 'ghost-btn-draft';
+		$item_class = 'page-list-item-draft';
+		$status_label = $lang['f_page_status_draft'];
 	}
 	
-	$last_edit = date("d.m.Y H:i:s",$page_lastedit) . "($page_lastedit_from)";
+	$last_edit = date("d.m.Y H:i:s",$page_lastedit) . " ($page_lastedit_from)";
 	
 	/* check for display edit button */
 	
 	if($_SESSION['acp_editpages'] == "allowed"){
 		$edit_button = "<a class='btn btn-sm btn-default' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id'><span class='glyphicon glyphicon-edit'></span> $lang[edit]</a>";
+		$duplicate_button = "<a class='btn btn-sm btn-default' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$page_id&duplicate=1'><span class='glyphicon glyphicon-duplicate'></span> $lang[duplicate]</a>";
 	} else {
-		$edit_button = "<br />";
+		$edit_button = '';
+		$duplicate_button = '';
 	}
 	
 	$arr_checked_admins = explode(",",$page_authorized_users);
@@ -258,25 +286,51 @@ for($i=0;$i<$cnt_result;$i++) {
 	}
 	
 	if($page_redirect != '') {
-		$show_redirect = '<small class="text-primary"><span class="glyphicon glyphicon-arrow-right"></span> '.$page_redirect.'</small>';
 		if($_SESSION['checked_redirect'] != "checked") {
 			continue;
 		}
 	}
 
-	$page_comments_link = '<a class="fancybox-ajax btn btn-default btn-sm" href="/acp/core/ajax.comments.php?pid='.$page_id.'"><span class="glyphicon glyphicon-comment"></span> '.$page_cnt_comments.'</a>';
+	$page_comments_link = '<a class="fancybox-ajax btn btn-default btn-sm" href="/acp/core/ajax.comments.php?pid='.$page_id.'"><span class="glyphicon glyphicon-comment"></span></a>';
 
+
+		
+	$extra_info  = '<span class="label label-white"><span class="glyphicon glyphicon-time"></span> '.$last_edit.'</span> ';
+	$extra_info .= '<span class="label label-white"><span class="glyphicon glyphicon-file"></span> '.$show_template_name.'</span> ';
+	$extra_info .= '<span class="label label-white"><span class="glyphicon glyphicon-globe"></span> '.$page_language.'</span> ';
+	$extra_info .= '<span class="label label-white"><span class="glyphicon glyphicon-comment"></span> '.$page_cnt_comments.'</span> ';	
+	$extra_info2 = '';
+	if($page_permalink != '') {
+		$extra_info2 = '<span class="label label-white"><span class="glyphicon glyphicon-link"></span> '.$page_permalink.'</span> ';
+	}
+	if($page_redirect != '') {
+		$extra_info2 .= '<span class="label label-white"><span class="text-primary glyphicon glyphicon-link"></span> '.$page_redirect.'</span> ';
+	}
+	$extra_info2 .= '<span class="label label-white"><span class="glyphicon glyphicon-stats"></span> '.$pi.'</span> ';
+	$extra_info2 .= '<span class="label label-white"><span class="glyphicon glyphicon-sort-by-attributes"></span> '.$page_sort.'</span>';
 	
-	echo"<tr class='$tr_status_class'>
-			<td><a class='darklink tooltip_bottom' data-toggle='tooltip' title='$frontend_link' href='$frontend_link'>$page_linkname</a></td>
-			<td><span class='bold'>$page_title</span><p class='extrainfo condensed'>$last_edit | Style: $show_template_name | $lang[f_page_language]: $page_language<br>$show_redirect</p></td>
-			<td style='text-align:right;'>$pi</td>
-			<td><div class='btn-group'>$edit_button $page_comments_link</div></td>
-		</tr>";
+	echo '<div class="hiddenControls page-list-item '.$item_class.'" style="margin-left:-10px;">';
+
+	echo '<div class="label-page-status">'.$status_label.'</div>';
+	echo '<h5><a class="ghost-btn '.$btn.'" href="'.$frontend_link.'" title="'.$frontend_link.'">'.$page_linkname.'</a> '.$page_title.'</h5>';
+	echo '<p class="extrainfo condensed" style="padding-left:10px;">'.$extra_info. '</p>';
+	echo '<p class="extrainfo condensed" style="padding-left:10px;">'.$extra_info2.'</p>';
+	echo '<div class="controls-container controls">';
+	echo '<div class="controls-container-inner">';
+	echo '<div class="btn-group">'.$edit_button.' '.$duplicate_button.' '.$page_comments_link.'</div>';
+	echo '</div>';
+
+	echo '</div>';
+
+	echo '</div>';
+		
 
 } // eol for $i
 
-echo"</table>";
+echo '</div>';
 echo"</fieldset>";
+
+echo '</div>';
+echo '</div>';
 
 ?>

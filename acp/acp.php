@@ -97,8 +97,8 @@ foreach($fc_preferences as $k => $v) {
 		
 		<script type="text/javascript" src="../lib/js/jquery/jquery.textareaCounter.plugin.js"></script>
 				
-		<link rel="stylesheet" href="../lib/css/bootstrap.min.css" type="text/css" media="screen, projection">
-		<link rel="stylesheet" href="css/styles.css" type="text/css" media="screen, projection">
+		<link rel="stylesheet" href="../lib/css/bootstrap.min.css?v=3.3.2" type="text/css" media="screen, projection">
+		<link rel="stylesheet" href="css/styles.css?v=20150225" type="text/css" media="screen, projection">
 		
 		<!-- masonry -->
 		<script type="text/javascript" src="../lib/js/masonry.pkgd.min.js"></script>
@@ -218,6 +218,12 @@ foreach($fc_preferences as $k => $v) {
 				type: 'ajax',
 				minWidth: '50%',
 				height: '90%'
+			});
+			
+      $(document).on('mouseenter', '.hiddenControls', function () {
+				$(this).find('.controls').fadeIn();
+      }).on('mouseleave', '.hiddenControls', function () {
+				$(this).find('.controls').hide();
 			});
 			
 	   $('.collapse').on('show.bs.collapse', function() {

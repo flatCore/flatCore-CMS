@@ -467,6 +467,7 @@ echo '</div>';
 
 echo '<hr>';
 echo '<input type="hidden" name="page_version" value="'.$page_version.'">';
+echo '<input type="hidden" name="modus" value="'.$modus.'">';
 
 echo '<div class="btn-group btn-group-justified">';
 echo '<div class="btn-group">'.$submit_button.'</div><div class="btn-group">'.$previev_button.'</div>';
