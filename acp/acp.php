@@ -27,21 +27,26 @@ if(!isset($_SESSION['editor_class'])) {
 
 /* switch editor - plain text or wysiwyg */
 if(isset($_GET['editor'])) {
-	if($_SESSION['editor_class'] == "plain") {
+	
+	if($_GET['editor'] == 'wysiwyg') {
 		$_SESSION['editor_class'] = "wysiwyg";
-	} elseif ($_SESSION['editor_class'] == "wysiwyg") {
+	} elseif($_GET['editor'] == 'plain') {
 		$_SESSION['editor_class'] = "plain";
+	} else {
+		$_SESSION['editor_class'] = "code";
 	}
+
 }
 
 if($_SESSION['editor_class'] == "wysiwyg") {
 	$editor_class = "mceEditor";
 	$editor_small_class = "mceEditor_small";
-	$editor_btn = "Plain Text";
-} else {
+} elseif($_SESSION['editor_class'] == "plain") {
 	$editor_class = "plain";
 	$editor_small_class = "plain";
-	$editor_btn = "WYSIWYG";
+} else {
+	$editor_class = "aceEditor_html";
+	$editor_small_class = "aceEditor_html";
 }
 
 
@@ -264,8 +269,9 @@ foreach($fc_preferences as $k => $v) {
 			});
 			
 			$.fn.matchHeight._update('.equal');
-			
+		
 		});
+		
 		</script>
 	
 		<script src="../lib/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
@@ -273,7 +279,7 @@ foreach($fc_preferences as $k => $v) {
 		
 			if ($('#CSSeditor').length != 0) {
 				var CSSeditor = ace.edit("CSSeditor");
-				var CSStextarea = $('textarea[id="css_editor"]').hide();
+				var CSStextarea = $('textarea[class*=aceEditor_css]').hide();
 			  
 			  
 			  CSSeditor.getSession().setValue(CSStextarea.val());
@@ -287,7 +293,7 @@ foreach($fc_preferences as $k => $v) {
 		  
 		  if ($('#HTMLeditor').length != 0) {
 				var HTMLeditor = ace.edit("HTMLeditor");
-				var HTMLtextarea = $('textarea[id="html_editor"]').hide();
+				var HTMLtextarea = $('textarea[class*=aceEditor_html]').hide();
 			  
 			  HTMLeditor.getSession().setValue(HTMLtextarea.val());
 			  HTMLeditor.setTheme("ace/theme/chrome");

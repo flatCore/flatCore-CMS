@@ -206,7 +206,7 @@ echo"</fieldset>";
 echo"<fieldset>";
 echo"<legend>$lang[f_prefs_global_header]</legend>";
 
-$ta_pagesglobalhead = '<textarea name="prefs_pagesglobalhead" id="html_editor" class="form-control">'.$prefs_pagesglobalhead.'</textarea>';
+$ta_pagesglobalhead = '<textarea name="prefs_pagesglobalhead" class="aceEditor_html form-control">'.$prefs_pagesglobalhead.'</textarea>';
 $ta_pagesglobalhead .= '<div id="HTMLeditor"></div>';
 
 echo tpl_form_control_group('','&lt;head&gt;<br>...<br>&lt;/head&gt;',"$ta_pagesglobalhead");

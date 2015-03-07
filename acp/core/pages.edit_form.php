@@ -221,14 +221,14 @@ echo'<div class="tab-pane fade" id="head">';
 
 echo $lang['f_head_styles'];
 echo '<span class="silent"> &lt;style type=&quot;text/css&quot;&gt;</span> ... <span class="silent">&lt;/styles&gt;</span>';
-echo "<textarea name='page_head_styles' id='css_editor' class='form-control plain-editor' rows='12'>$page_head_styles</textarea>";
+echo "<textarea name='page_head_styles' class='form-control aceEditor_css' rows='12'>$page_head_styles</textarea>";
 echo '<div id="CSSeditor"></div>';
 
 echo '<hr>';
 
 echo $lang['f_head_enhanced'];
 echo '<span class="silent"> &lt;head&gt;</span> ... <span class="silent">&lt;/head&gt;</span>';
-echo "<textarea name='page_head_enhanced' id='html_editor' class='form-control plain-editor' rows='12'>$page_head_enhanced</textarea>";
+echo "<textarea name='page_head_enhanced' class='form-control aceEditor_html' rows='12'>$page_head_enhanced</textarea>";
 echo '<div id="HTMLeditor"></div>';
 
 echo'</div>'; /* EOL tab_head */

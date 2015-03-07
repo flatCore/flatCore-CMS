@@ -40,27 +40,31 @@ if(isset($_POST['save_snippet'])) {
 	
 	$snippet_title = clean_filename($_POST['snippet_title']);
 	
+	if($snippet_title == '') {
+		$snippet_title = date("Y_m_d_h_i",time());
+	}
+	
 	if($_POST['snip_id'] != '') {
 		
 		$snip_id = (int) $_POST['snip_id'];
 	
 		$sql = "UPDATE fc_textlib
-						SET textlib_content = :textlib_content, textlib_name = :textlib_name, textlib_lang = :textlib_lang
+						SET textlib_content = :textlib_content, textlib_notes = :textlib_notes, textlib_name = :textlib_name, textlib_lang = :textlib_lang
 						WHERE textlib_id = $snip_id";
 	
 	} else {
 		
 		$sql = "INSERT INTO fc_textlib
-						(textlib_content, textlib_name, textlib_lang)
+						(textlib_content, textlib_notes, textlib_name, textlib_lang)
 						VALUES
-						(:textlib_content, :textlib_name, :textlib_lang )";		
+						(:textlib_content, :textlib_notes, :textlib_name, :textlib_lang )";		
 	}
 	
 	$sth = $db->prepare($sql);
 	$sth->bindParam(':textlib_content', $_POST['textlib_content'], PDO::PARAM_STR);
 	$sth->bindParam(':textlib_name', $snippet_title, PDO::PARAM_STR);
 	$sth->bindParam(':textlib_lang', $_POST['sel_language'], PDO::PARAM_STR);
-	
+	$sth->bindParam(':textlib_notes', $_POST['textlib_notes'], PDO::PARAM_STR);
 	$cnt_changes = $sth->execute();
 	
 	$db = null;
@@ -140,7 +144,8 @@ echo '<legend>' . $lang['snippets'] . '</legend>';
 
 show_editor_switch($tn,$sub);
 
-echo '<hr><div class="list-group">';
+echo '<hr><div class="scroll-conatiner">';
+echo '<div class="list-group">';
 
 for($i=0;$i<$cnt_snippets;$i++) {
 	$active_class = '';
@@ -170,7 +175,7 @@ for($i=0;$i<$cnt_snippets;$i++) {
 }
 
 echo '</div>';
-
+echo '</div>';
 
 echo '</fieldset>';
 
@@ -182,6 +187,10 @@ echo '<fieldset>';
 echo '<legend>'.$lang['tab_content'].'</legend>';
 echo "<form action='$_SERVER[PHP_SELF]?tn=pages&sub=snippets' method='POST'>";
 
+
+echo '<div class="row">';
+echo '<div class="col-md-6">';
+
 echo '<div class="row">';
 echo '<div class="col-md-9">';
 
@@ -192,7 +201,6 @@ echo '</div>';
 
 echo '</div>';
 echo '<div class="col-md-3">';
-
 
 $select_textlib_language  = '<select name="sel_language" class="form-control">';
 for($i=0;$i<count($arr_lang);$i++) {
@@ -209,9 +217,31 @@ echo $select_textlib_language;
 echo '</div>';
 echo '</div>';
 
+
+echo '<div class="input-group">';
+echo '<span class="input-group-addon">Editor:</span>';
+echo '<input type="text" class="form-control" placeholder="[snippet]...[/snippet]" value="'.$get_snip_name_editor.'" readonly>';
+echo '</div>';
+
+
+echo '</div>';
+echo '<div class="col-md-6">';
+
+echo '<div class="alert alert-info" style="padding:5px;">';
+echo '<strong>'.$lang['label_notes'].':</strong>';
+echo '<textarea class="masked-textarea" name="textlib_notes" rows="4">'.$textlib_notes.'</textarea>';
+echo '</div>';
+
+echo '</div>';
+echo '</div>';
+
 echo '<div class="form-group">';
 echo '<label>'.$lang['tab_content'].'</label>';
 echo '<textarea class="'.$editor_class.' form-control" id="textEditor" name="textlib_content">'.$textlib_content.'</textarea>';
+if($_SESSION['editor_class'] == 'code') {
+	echo '<div id="HTMLeditor"></div>';
+}
+
 echo '<input type="hidden" name="text" value="'.$text.'">';
 echo '</div>';
 
@@ -228,18 +258,6 @@ if($modus == 'new') {
 echo '</div>';
 
 echo '</form>';
-
-if(isset($get_snip_name_editor)) {
-	echo '<hr><div class="row">';
-	echo '<div class="col-md-6">';
-	echo '<pre>Editor: '.$get_snip_name_editor.'</pre>';
-	echo '</ul>';
-	echo '</div>';
-	echo '<div class="col-md-6">';
-	echo '<pre>Smarty: '.$get_snip_name_smarty.'</pre>';
-	echo '</div>';
-	echo '</div>';
-}
 
 echo '</fieldset>';
 

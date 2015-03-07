@@ -708,27 +708,34 @@ function get_custom_user_fields() {
 
 /**
  * show editor's switch buttons
- * for plain text or wysiwyg
+ * for plain text, code or wysiwyg
  */
 
 function show_editor_switch($tn,$sub) {
 
+	$btn_wysiwyg_link = "$_SERVER[PHP_SELF]?tn=$tn&sub=$sub&editor=wysiwyg";
+	$btn_code_link = "$_SERVER[PHP_SELF]?tn=$tn&sub=$sub&editor=code";
+	$btn_text_link = "$_SERVER[PHP_SELF]?tn=$tn&sub=$sub&editor=plain";
+	
 	if($_SESSION['editor_class'] == "plain") {
-		$btn_primary_wysiwyg = 'btn btn-default btn-sm';
-		$btn_wysiwyg_link = "$_SERVER[PHP_SELF]?tn=$tn&sub=$sub&editor=toggle";
-		$btn_text_link = "#";
-		$btn_primary_text = 'btn btn-primary btn-sm disabled';
+		$btn_wysiwyg = 'btn btn-default btn-sm';
+		$btn_text = 'btn btn-primary btn-sm disabled';
+		$btn_code = 'btn btn-default btn-sm';
+	} elseif($_SESSION['editor_class'] == "wysiwyg") {
+		$btn_wysiwyg = 'btn btn-primary btn-sm disabled';
+		$btn_text = 'btn btn-default btn-sm';
+		$btn_code = 'btn btn-default btn-sm';
 	} else {
-		$btn_primary_wysiwyg = 'btn btn-primary btn-sm disabled';
-		$btn_text_link = "$_SERVER[PHP_SELF]?tn=$tn&sub=$sub&editor=toggle";
-		$btn_wysiwyg_link = "#";
-		$btn_primary_text = 'btn btn-default btn-sm';
+		$btn_wysiwyg = 'btn btn-default btn-sm';
+		$btn_text = 'btn btn-default btn-sm';
+		$btn_code = 'btn btn-primary btn-sm disabled';
 	}
 	
 	
 	echo '<div class="btn-group btn-group-justified">';
-	echo '<a href="'.$btn_wysiwyg_link.'" class="'.$btn_primary_wysiwyg.'">WYSIWYG</a>';
-	echo '<a href="'.$btn_text_link.'" class="'.$btn_primary_text.'">Text</a>';
+	echo '<a href="'.$btn_wysiwyg_link.'" class="'.$btn_wysiwyg.'">WYSIWYG</a>';
+	echo '<a href="'.$btn_text_link.'" class="'.$btn_text.'">Text</a>';
+	echo '<a href="'.$btn_code_link.'" class="'.$btn_code.'">Code</a>';
 	echo '</div>';
 	
 }
