@@ -38,10 +38,10 @@ if(isset($_POST['save_snippet'])) {
 	// connect to database
 	$db = new PDO("sqlite:".CONTENT_DB);
 	
-	$snippet_title = clean_filename($_POST['snippet_title']);
+	$snippet_name = clean_filename($_POST['snippet_name']);
 	
-	if($snippet_title == '') {
-		$snippet_title = date("Y_m_d_h_i",time());
+	if($snippet_name == '') {
+		$snippet_name = date("Y_m_d_h_i",time());
 	}
 	
 	if($_POST['snip_id'] != '') {
@@ -49,26 +49,30 @@ if(isset($_POST['save_snippet'])) {
 		$snip_id = (int) $_POST['snip_id'];
 	
 		$sql = "UPDATE fc_textlib
-						SET textlib_content = :textlib_content, textlib_notes = :textlib_notes, textlib_name = :textlib_name, textlib_lang = :textlib_lang
+						SET textlib_content = :textlib_content, textlib_notes = :textlib_notes,
+								textlib_name = :textlib_name, textlib_title = :textlib_title, textlib_keywords = :textlib_keywords,
+								textlib_lang = :textlib_lang
 						WHERE textlib_id = $snip_id";
 	
 	} else {
 		
-		$sql = "INSERT INTO fc_textlib
-						(textlib_content, textlib_notes, textlib_name, textlib_lang)
-						VALUES
-						(:textlib_content, :textlib_notes, :textlib_name, :textlib_lang )";		
+		$sql = "INSERT INTO fc_textlib (
+							textlib_content, textlib_notes, textlib_name, textlib_title, textlib_keywords, textlib_lang
+						) VALUES (
+							:textlib_content, :textlib_notes, :textlib_name, :textlib_title, :textlib_keywords, :textlib_lang
+						)";		
 	}
 	
 	$sth = $db->prepare($sql);
 	$sth->bindParam(':textlib_content', $_POST['textlib_content'], PDO::PARAM_STR);
-	$sth->bindParam(':textlib_name', $snippet_title, PDO::PARAM_STR);
+	$sth->bindParam(':textlib_name', $snippet_name, PDO::PARAM_STR);
 	$sth->bindParam(':textlib_lang', $_POST['sel_language'], PDO::PARAM_STR);
 	$sth->bindParam(':textlib_notes', $_POST['textlib_notes'], PDO::PARAM_STR);
+	$sth->bindParam(':textlib_keywords', $_POST['snippet_keywords'], PDO::PARAM_STR);
+	$sth->bindParam(':textlib_title', $_POST['snippet_title'], PDO::PARAM_STR);
 	$cnt_changes = $sth->execute();
 	
 	$db = null;
-	
 	
 	if($cnt_changes == TRUE) {
 		$sys_message = "{OKAY} $lang[db_changed]";
@@ -84,7 +88,7 @@ if(isset($_POST['save_snippet'])) {
 
 
 /**
- * get all saved snippets except $system_snippets
+ * get all saved snippets
  */
 
 $dbh = new PDO("sqlite:".CONTENT_DB);
@@ -95,12 +99,9 @@ foreach($system_snippets as $snippet) {
 	$snippet_exception[] = " textlib_name != '$snippet' ";
 }
 
-//$sql .= ' WHERE ' . implode(' AND ', $snippet_exception);
-
-
 foreach ($dbh->query($sql) as $row) {
-     $snippets_list[] = $row;
-   }
+	$snippets_list[] = $row;
+}
 
 $dbh = null;
 
@@ -182,11 +183,16 @@ echo '</fieldset>';
 echo '</div>';
 echo '<div class="col-md-9">';
 
+echo '<ul class="nav nav-tabs" id="bsTabs">';
+echo '<li class="active"><a href="#info" data-toggle="tab">'.$lang['tab_info'].'</a></li>';
+echo '<li><a href="#content" data-toggle="tab">'.$lang['tab_content'].'</a></li>';
+echo '</ul>';
 
-echo '<fieldset>';
-echo '<legend>'.$lang['tab_content'].'</legend>';
 echo "<form action='$_SERVER[PHP_SELF]?tn=pages&sub=snippets' method='POST'>";
 
+echo '<div class="tab-content">';
+
+echo'<div class="tab-pane fade in active" id="info">';
 
 echo '<div class="row">';
 echo '<div class="col-md-6">';
@@ -195,8 +201,8 @@ echo '<div class="row">';
 echo '<div class="col-md-9">';
 
 echo '<div class="form-group">';
-echo '<label>'.$lang['filename'].'</label>';
-echo '<input class="form-control" type="text" name="snippet_title" value="'.$textlib_name.'">';
+echo '<label>'.$lang['filename'].' <small>(a-z,0-9)</small></label>';
+echo '<input class="form-control" type="text" name="snippet_name" value="'.$textlib_name.'">';
 echo '</div>';
 
 echo '</div>';
@@ -218,22 +224,53 @@ echo '</div>';
 echo '</div>';
 
 
-echo '<div class="input-group">';
-echo '<span class="input-group-addon">Editor:</span>';
-echo '<input type="text" class="form-control" placeholder="[snippet]...[/snippet]" value="'.$get_snip_name_editor.'" readonly>';
+echo '<div class="form-group">';
+echo '<label>'.$lang['label_title'].'</label>';
+echo '<input class="form-control" type="text" name="snippet_title" value="'.$textlib_title.'">';
 echo '</div>';
+
 
 
 echo '</div>';
 echo '<div class="col-md-6">';
 
-echo '<div class="alert alert-info" style="padding:5px;">';
+echo '<div class="alert alert-info" style="padding:2px 3px;">';
 echo '<strong>'.$lang['label_notes'].':</strong>';
-echo '<textarea class="masked-textarea" name="textlib_notes" rows="4">'.$textlib_notes.'</textarea>';
+echo '<textarea class="masked-textarea" name="textlib_notes" rows="5">'.$textlib_notes.'</textarea>';
 echo '</div>';
 
 echo '</div>';
 echo '</div>';
+
+
+echo '<div class="row">';
+echo '<div class="col-md-6">';
+
+echo '<div class="form-group">';
+echo '<label>'.$lang['label_keywords'].'</label>';
+echo '<input class="form-control" type="text" name="snippet_keywords" value="'.$textlib_keywords.'">';
+echo '</div>';
+
+echo '</div>';
+echo '<div class="col-md-6">';
+
+echo '<div class="form-group">';
+echo '<label>&nbsp;</label>';
+echo '<div class="input-group">';
+echo '<span class="input-group-addon">Editor:</span>';
+echo '<input type="text" class="form-control" placeholder="[snippet]...[/snippet]" value="'.$get_snip_name_editor.'" readonly>';
+echo '</div>';
+echo '</div>';
+
+echo '</div>';
+echo '</div>';
+
+
+
+echo '</div>'; // tab info
+
+
+echo'<div class="tab-pane fade" id="content">';
 
 echo '<div class="form-group">';
 echo '<label>'.$lang['tab_content'].'</label>';
@@ -244,6 +281,11 @@ if($_SESSION['editor_class'] == 'code') {
 
 echo '<input type="hidden" name="text" value="'.$text.'">';
 echo '</div>';
+
+echo '</div>'; // tab content
+
+
+
 
 
 echo '<div class="formfooter">';
@@ -257,10 +299,8 @@ if($modus == 'new') {
 }
 echo '</div>';
 
+echo '</div>'; // tab
 echo '</form>';
-
-echo '</fieldset>';
-
 
 
 echo '</div>';

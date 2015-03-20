@@ -34,8 +34,6 @@ if(isset($_GET['a']) && $_GET['a'] == 'start') {
 echo '</fieldset>';
 
 
-
-
 /**
  * start the update
  * 1. load the zip file from "http://updates.flatCore.de/zip/...
