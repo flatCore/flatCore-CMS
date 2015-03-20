@@ -21,7 +21,7 @@
 					<div class="col-md-6">
 				<div class="form-group">
 			    <label>{label_keywords}</label>
-			    <input type="text" class="form-control" name="keywords" rows="4" value="{keywords}">
+			    <input type="text" class="form-control" name="keywords" rows="4" value="{keywords}" data-role="tagsinput">
 			  </div>
 					</div>
 					<div class="col-md-6">

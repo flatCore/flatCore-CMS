@@ -174,7 +174,7 @@ if($page_meta_author == "") {
 }
 
 echo tpl_form_control_group('',$lang['f_meta_author'],"<input class='form-control' type='text' name='page_meta_author' value='$page_meta_author'>");
-echo tpl_form_control_group('',$lang['f_meta_keywords'],"<input class='form-control' type='text' name='page_meta_keywords' value='$page_meta_keywords'>");
+echo tpl_form_control_group('',$lang['f_meta_keywords'],"<input class='form-control' type='text' name='page_meta_keywords' value='$page_meta_keywords' data-role='tagsinput'>");
 echo tpl_form_control_group('',$lang['f_meta_description'],"<textarea name='page_meta_description' class='form-control cntValues' rows='5'>$page_meta_description</textarea>");
 
 

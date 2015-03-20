@@ -248,7 +248,7 @@ echo '<div class="col-md-6">';
 
 echo '<div class="form-group">';
 echo '<label>'.$lang['label_keywords'].'</label>';
-echo '<input class="form-control" type="text" name="snippet_keywords" value="'.$textlib_keywords.'">';
+echo '<input class="form-control" type="text" name="snippet_keywords" value="'.$textlib_keywords.'" data-role="tagsinput" />';
 echo '</div>';
 
 echo '</div>';

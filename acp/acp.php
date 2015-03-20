@@ -124,6 +124,9 @@ foreach($fc_preferences as $k => $v) {
 		<link rel="stylesheet" href="../lib/css/dropzone.css" type="text/css" media="screen, projection">
 		
 		
+		
+		<script type="text/javascript" src="../lib/js/bootstrap-tagsinput.min.js"></script>
+		
 		<?php
 
 		/*
