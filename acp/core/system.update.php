@@ -6,6 +6,10 @@ require_once('core/pclzip.lib.php');
 include('updatelist.php');
 
 define('INSTALLER', TRUE);
+include('../install/php/functions.php');
+
+/* build an array from all php files in folder ../install/contents */
+$all_tables = glob("../install/contents/*.php");
 
 $remote_versions_file = file_get_contents("http://updates.flatCore.de/versions.txt");
 
@@ -52,6 +56,7 @@ echo '</fieldset>';
 function start_update() {
 
 	global $remote_versions;
+	global $fc_content_files;
 	
 	$get_file = $remote_versions[3];
 	
@@ -310,33 +315,30 @@ function copy_recursive($source, $target) {
  * Update the database
  */
 
-function update_database($db) {
+function update_database($dbfile) {
 	
-	global $fc_db_content;
 	global $fc_db_user;
 	global $fc_db_stats;
-
-	include('../install/php/functions.php');
+	global $all_tables;
 
 	/* build an array from all php files in folder ../install/contents */
 	$all_tables = glob("../install/contents/*.php");
 
 	for($i=0;$i<count($all_tables);$i++) {
 	
-		unset($db_path,$table_name);
+		unset($db_path,$table_name,$database);
 		
 		include("$all_tables[$i]"); // returns $cols and $table_name
 		
 		if($database == "content") {
-			$db_path = "../$db";
-		}
-	
-		if($database == "user") {
+			$db_path = "../$dbfile";
+		} elseif($database == "user") {
 			$db_path = "../$fc_db_user";
-		}
-	
-		if($database == "tracker") {
+		} elseif($database == "tracker") {
 			$db_path = "../$fc_db_stats";
+		} else {
+			echo '<div class="alert alert-danger">DATABASE UNKNOWN: '.$database.'</div>';
+			continue;
 		}
 		
 		if(!is_file($db_path)) {
