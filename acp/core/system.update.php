@@ -5,6 +5,8 @@ require("core/access.php");
 require_once('core/pclzip.lib.php');
 include('updatelist.php');
 
+define('INSTALLER', TRUE);
+
 $remote_versions_file = file_get_contents("http://updates.flatCore.de/versions.txt");
 
 if(isset($_GET['beta']) && $_GET['beta'] > 0) {
