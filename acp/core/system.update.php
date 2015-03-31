@@ -81,7 +81,17 @@ function start_update() {
 	copy('../install/maintance.html', '../maintance.html');
 	
 	move_new_files();
-	update_database();
+
+	if(!is_array($fc_content_files)) {
+		/* update single file database */
+		update_database($fc_db_content);
+	} else {
+		/* update multisite database */
+		for($i=0;$i<count($fc_content_files);$i++) {
+			$db = 'content/SQLite/'.$fc_content_files[$i]['file'];
+			update_database($db);
+		}
+	}
 	remove_old_files();
 	
 	/**
@@ -298,7 +308,7 @@ function copy_recursive($source, $target) {
  * Update the database
  */
 
-function update_database() {
+function update_database($db) {
 	
 	global $fc_db_content;
 	global $fc_db_user;
@@ -316,7 +326,7 @@ function update_database() {
 		include("$all_tables[$i]"); // returns $cols and $table_name
 		
 		if($database == "content") {
-			$db_path = "../$fc_db_content";
+			$db_path = "../$db";
 		}
 	
 		if($database == "user") {
