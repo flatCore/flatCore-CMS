@@ -134,18 +134,14 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	$modus = 'update';
 }
 
+echo '<h3>' . $lang['snippets'] . '</h3>';
 
 
 
 echo '<div class="row">';
 echo '<div class="col-md-3">';
 
-echo '<fieldset>';
-echo '<legend>' . $lang['snippets'] . '</legend>';
-
-show_editor_switch($tn,$sub);
-
-echo '<hr><div class="scroll-conatiner">';
+echo '<div class="scroll-conatiner">';
 echo '<div class="list-group">';
 
 for($i=0;$i<$cnt_snippets;$i++) {
@@ -177,8 +173,6 @@ for($i=0;$i<$cnt_snippets;$i++) {
 
 echo '</div>';
 echo '</div>';
-
-echo '</fieldset>';
 
 echo '</div>';
 echo '<div class="col-md-9">';
@@ -273,19 +267,21 @@ echo '</div>'; // tab info
 echo'<div class="tab-pane fade" id="content">';
 
 echo '<div class="form-group">';
-echo '<label>'.$lang['tab_content'].'</label>';
-echo '<textarea class="'.$editor_class.' form-control" id="textEditor" name="textlib_content">'.$textlib_content.'</textarea>';
-if($_SESSION['editor_class'] == 'code') {
-	echo '<div id="HTMLeditor"></div>';
-}
+
+echo '<div class="clearfix" style="margin-top:-60px;padding-bottom:20px;">';
+echo '<div class="btn-group pull-right" data-toggle="buttons">';
+echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE1" checked> WYSIWYG</label>';
+echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE2"> Text</label>';
+echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE3"> Code</label>';
+echo '</div>';
+
+echo '</div>';
+echo '<textarea class="form-control" id="textEditor" name="textlib_content">'.$textlib_content.'</textarea>';
 
 echo '<input type="hidden" name="text" value="'.$text.'">';
 echo '</div>';
 
 echo '</div>'; // tab content
-
-
-
 
 
 echo '<div class="formfooter">';

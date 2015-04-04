@@ -969,7 +969,8 @@ fieldset > [class*="form-line"]:last-child {
 }
 
 #CSSeditor,
-#HTMLeditor {
+#HTMLeditor,
+#aceCodeEditor {
 	display: block;
   margin: 5px auto;
   width: 100%;

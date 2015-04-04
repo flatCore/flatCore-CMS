@@ -123,8 +123,10 @@ foreach($fc_preferences as $k => $v) {
 		<script src="../lib/js/dropzone.js"></script>
 		<link rel="stylesheet" href="../lib/css/dropzone.css" type="text/css" media="screen, projection">
 		
+		<!-- ACE Editor -->
+		<script src="../lib/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
 		
-		
+		<!-- Tags -->
 		<script type="text/javascript" src="../lib/js/bootstrap-tagsinput.min.js"></script>
 		
 		<?php
@@ -186,126 +188,199 @@ foreach($fc_preferences as $k => $v) {
 		</div>
 		
 		</div>
+
+
+		<script type="text/javascript">
+
+			$(document).ready(function() {			
+			
+				/* toggle editor class [mceEditor|plain|aceEditor_html] */
+				var editor_mode = localStorage.getItem('editor_mode');	
+				if(editor_mode == '') { editor_mode = 'optE1'; }
+				setAceEditor();
+				switchEditorMode(editor_mode);
+				
+		    $('input[name="optEditor"]').on("change", function () {
+			    var button = $("input[name='optEditor']:checked").val();
+	    		localStorage.setItem("editor_mode", button);
+	    		switchEditorMode(button);
+				});
+
+				$("input[value="+editor_mode+"]").parent().addClass('active');
+			
+				function switchEditorMode(mode) {
+					
+					var textEditor = $('textarea[id="textEditor"]');
+					textEditor.removeClass();
+					textEditor.removeAttr('style');
+					var divEditor = $('#aceCodeEditor');
+					
+		  		if(mode == 'optE1') {
+			  		//tinymce.remove();
+		    		textEditor.addClass('mceEditor form-control');
+		    		textEditor.css("display","block");
+		    		tinymce.execCommand('mceAddEditor', false, "textEditor");
+		    		divEditor.remove();
+		    		
+		  		}
+		  		if(mode == 'optE2') {
+			  		divEditor.remove();
+			  		if(tinymce.editors.length > 0) {
+			  			tinymce.execCommand('mceFocus', false, 'textEditor');
+							tinymce.execCommand('mceRemoveControl', true, "textEditor");
+							tinymce.remove();
+							$('div.mce-tinymce').remove();
+						}
+		    		textEditor.addClass('plain form-control');
+		    		textEditor.css("display","block");
+		    		textEditor.css("visibility","visible");
+		  		}
+		  		if(mode == 'optE3') {
+			  		if(tinymce.editors.length > 0) {
+			  			tinymce.execCommand('mceFocus', false, 'textEditor');
+							tinymce.execCommand('mceRemoveControl', true, "textEditor");
+							tinymce.remove();
+						}
+						textEditor.addClass('aceEditor_code form-control');
+						textEditor.after('<div id="aceCodeEditor"></div>');
+		    		setAceEditor();
+		    		divEditor.css("width","100%");
+		    		divEditor.css("height","350px");
+		  		}	
+					
+				}
+				
+				function setAceEditor() {
+					
+					if($('#aceCodeEditor').length != 0) {
+						var aceEditor = ace.edit("aceCodeEditor");
+						var HTMLtextarea = $('textarea[class*=aceEditor_code]').hide();
+					  
+					  aceEditor.getSession().setValue(HTMLtextarea.val());
+					  aceEditor.setTheme("ace/theme/chrome");
+					  aceEditor.getSession().setMode("ace/mode/html");
+					  aceEditor.setShowPrintMargin(false);
+						aceEditor.getSession().on('change', function(){
+							HTMLtextarea.val(HTMLeditor.getSession().getValue());
+						});
+				  }
+				}
+			
+
+				$('#bsTabs').tab();
+					
+		  	setTimeout(function() {
+		        $(".alert-auto-close").slideUp('slow');
+				}, 2000);
+			
+				$('#showVersions').collapse('hide');
+				
+				$('.tooltip_bottom').tooltip({
+					placement: 'bottom',
+					delay: { show: 1000, hide: 100 }
+				})
+			
+				$('.tooltip').tooltip();
+				
+				$(".fancybox").fancybox();
+				
+				$(".fancybox-iframe").fancybox({
+					type: 'iframe',
+					autoWidth: true,
+					autoHeight: true
+				});
+				
+				$(".fancybox-docs").fancybox({
+					type: 'iframe',
+					width: '77%',
+					height: '90%'
+				});
+				
+				$(".fancybox-ajax").fancybox({
+					type: 'ajax',
+					minWidth: '50%',
+					height: '90%'
+				});
+			
+	      $(document).on('mouseenter', '.hiddenControls', function () {
+					$(this).find('.controls').fadeIn();
+	      }).on('mouseleave', '.hiddenControls', function () {
+					$(this).find('.controls').hide();
+				});
+				
+		   $('.collapse').on('show.bs.collapse', function() {
+		        var id = $(this).attr('id');
+		        $('a[href="#' + id + '"]').addClass('active');
+		    });
+		    $('.collapse').on('hide.bs.collapse', function() {
+		        var id = $(this).attr('id');
+		        $('a[href="#' + id + '"]').removeClass('active');
+		    });
+				
+				Dropzone.options.myDropzone = {
+			  	init: function() {
+			    	this.on("success", function(file, responseText) {
+			      	// Handle the responseText here. For example, add the text to the preview element:
+							file.previewTemplate.appendChild(document.createTextNode(responseText));
+						});
+					}
+				};
+	
+			  var options = {   
+			      'originalStyle': 'text-left',
+			      'displayFormat': '<span class="label label-default">#input</span> <span class="label label-default">#words</span>'  
+			  };  
+			  $('.cntValues').textareaCount(options);  
+			  
 		
-		<script type="text/javascript">
-	    jQuery(document).ready(function ($) {
-	        $('#bsTabs').tab();
-	    });
-		</script>
-		<script type="text/javascript">
-		$(document).ready(function() {
+				var $container = $('#masonry-container');
+				
+				$('#masonry-container').imagesLoaded( function(){
+				  $('#masonry-container').masonry({
+				   itemSelector: '.masonry-item',
+				   isAnimated: true,
+				   isFitWidth: true,
+				 
+				   gutter: 10
+				  });
+				});
 			
-	  	setTimeout(function() {
-	        $(".alert-auto-close").slideUp('slow');
-			}, 2000);
-			
-			$(".fancybox").fancybox();
-			
-			$('#showVersions').collapse('hide');
-			
-			$('.tooltip_bottom').tooltip({
-				placement: 'bottom',
-				delay: { show: 1000, hide: 100 }
-			})
-			
-			$('.tooltip').tooltip()
-			
-			$(".fancybox-iframe").fancybox({
-				type: 'iframe',
-				autoWidth: true,
-				autoHeight: true
-			});
-			
-			$(".fancybox-docs").fancybox({
-				type: 'iframe',
-				width: '77%',
-				height: '90%'
-			});
-			
-			$(".fancybox-ajax").fancybox({
-				type: 'ajax',
-				minWidth: '50%',
-				height: '90%'
-			});
-			
-      $(document).on('mouseenter', '.hiddenControls', function () {
-				$(this).find('.controls').fadeIn();
-      }).on('mouseleave', '.hiddenControls', function () {
-				$(this).find('.controls').hide();
-			});
-			
-	   $('.collapse').on('show.bs.collapse', function() {
-	        var id = $(this).attr('id');
-	        $('a[href="#' + id + '"]').addClass('active');
-	    });
-	    $('.collapse').on('hide.bs.collapse', function() {
-	        var id = $(this).attr('id');
-	        $('a[href="#' + id + '"]').removeClass('active');
-	    });
-			
-			Dropzone.options.myDropzone = {
-		  	init: function() {
-		    	this.on("success", function(file, responseText) {
-		      	// Handle the responseText here. For example, add the text to the preview element:
-						file.previewTemplate.appendChild(document.createTextNode(responseText));
+				$.fn.matchHeight._update('.equal');
+
+
+				/* css and html editor for page header */
+				if($('#CSSeditor').length != 0) {
+					var CSSeditor = ace.edit("CSSeditor");
+					var CSStextarea = $('textarea[class*=aceEditor_css]').hide();
+				  
+				  CSSeditor.getSession().setValue(CSStextarea.val());
+				  CSSeditor.setTheme("ace/theme/chrome");
+				  CSSeditor.getSession().setMode("ace/mode/css");
+				  CSSeditor.setShowPrintMargin(false);
+					CSSeditor.getSession().on('change', function(){
+						CSStextarea.val(CSSeditor.getSession().getValue());
 					});
 				}
-			};
+				
+				if($('#HTMLeditor').length != 0) {
+					var HTMLeditor = ace.edit("HTMLeditor");
+					var HTMLtextarea = $('textarea[class*=aceEditor_html]').hide();
+				  
+				  HTMLeditor.getSession().setValue(HTMLtextarea.val());
+				  HTMLeditor.setTheme("ace/theme/chrome");
+				  HTMLeditor.getSession().setMode("ace/mode/html");
+				  HTMLeditor.setShowPrintMargin(false);
+					HTMLeditor.getSession().on('change', function(){
+						HTMLtextarea.val(HTMLeditor.getSession().getValue());
+					});
+			  }
 	
-		  var options = {   
-		      'originalStyle': 'text-left',
-		      'displayFormat': '<span class="label label-default">#input</span> <span class="label label-default">#words</span>'  
-		  };  
-		  $('.cntValues').textareaCount(options);  
-		  
-	
-			var $container = $('#masonry-container');
 			
-			$('#masonry-container').imagesLoaded( function(){
-			  $('#masonry-container').masonry({
-			   itemSelector: '.masonry-item',
-			   isAnimated: true,
-			   isFitWidth: true,
-			 
-			   gutter: 10
-			  });
 			});
 			
-			$.fn.matchHeight._update('.equal');
-		
-		});
-		
+			
+			
 		</script>
-	
-		<script src="../lib/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
-		<script>
-		
-			if ($('#CSSeditor').length != 0) {
-				var CSSeditor = ace.edit("CSSeditor");
-				var CSStextarea = $('textarea[class*=aceEditor_css]').hide();
-			  
-			  
-			  CSSeditor.getSession().setValue(CSStextarea.val());
-			  CSSeditor.setTheme("ace/theme/chrome");
-			  CSSeditor.getSession().setMode("ace/mode/css");
-			  CSSeditor.setShowPrintMargin(false);
-				CSSeditor.getSession().on('change', function(){
-					CSStextarea.val(CSSeditor.getSession().getValue());
-				});
-			}
-		  
-		  if ($('#HTMLeditor').length != 0) {
-				var HTMLeditor = ace.edit("HTMLeditor");
-				var HTMLtextarea = $('textarea[class*=aceEditor_html]').hide();
-			  
-			  HTMLeditor.getSession().setValue(HTMLtextarea.val());
-			  HTMLeditor.setTheme("ace/theme/chrome");
-			  HTMLeditor.getSession().setMode("ace/mode/html");
-			  HTMLeditor.setShowPrintMargin(false);
-				HTMLeditor.getSession().on('change', function(){
-					HTMLtextarea.val(HTMLeditor.getSession().getValue());
-				});
-			}  
-		</script>
+
 	</body>
 </html>
