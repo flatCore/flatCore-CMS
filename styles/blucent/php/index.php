@@ -4,7 +4,7 @@
  * custom theme functions
  *
  * @package		styles/blucent
- * @author		Patrick Konstandin <support@flatfiler.de>
+ * @author		Patrick Konstandin <support@flatcore.de>
  *
  */
 
@@ -48,4 +48,15 @@ function theme_replacer($string) {
 	return $string;
 	
 }
+
+
+/* theme_text_parser extends the basic text_parser */
+/*
+function theme_text_parser($str) {
+
+	return $str;
+}
+*/
+
+
 ?>

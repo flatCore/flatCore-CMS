@@ -171,8 +171,14 @@ if(is_dir('styles/'.$page_contents['page_template'].'/templates/')) {
 
 
 include('core/definitions.php');
+
+/* custom theme definitions and functions */
 if(is_file('styles/'.$fc_template.'/php/definitions.php')) {
 	include('styles/'.$fc_template.'/php/definitions.php');
+}
+
+if(is_file("styles/$fc_template/php/index.php")) {
+	include("styles/$fc_template/php/index.php");
 }
 
 $smarty->template_dir = 'styles/'.$fc_template.'/templates/';

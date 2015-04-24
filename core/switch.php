@@ -85,15 +85,6 @@ if($page_modul != "") {
 /* parse [include] [script] [plugin] etc. */
 $page_content = text_parser($page_content);
 
-
-/** 
- * custom theme functions
- */
-
-if(is_file("styles/$fc_template/php/index.php")) {
-	include("styles/$fc_template/php/index.php");
-}
-
 $smarty->assign('page_content', "$page_content");
 $smarty->assign('page_title', "$page_title");
 $smarty->assign('prefs_pagesglobalhead', "$prefs_pagesglobalhead");

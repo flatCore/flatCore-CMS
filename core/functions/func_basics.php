@@ -77,6 +77,10 @@ function text_parser($text) {
 	$text = preg_replace("/\[script\](.*?)\[\/script\]/se","buffer_script('\\1')",$text);
 	$text = preg_replace("/\[plugin=(.*?)\](.*?)\[\/plugin\]/esi","buffer_script('\\1','\\2')",$text);
 	$text = preg_replace("/\[snippet\](.*?)\[\/snippet\]/esi","get_textlib_by_fn('\\1')",$text);
+	
+	if(function_exists('theme_text_parser')) {
+		$text = theme_text_parser($text);
+	}
 
 	return $text;
 
