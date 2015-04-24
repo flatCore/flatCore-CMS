@@ -73,10 +73,38 @@ function text_parser($text) {
 		}
 	}
  
-	$text = preg_replace("/\[include\](.*?)\[\/include\]/se","file_get_contents('./content/plugins/\\1')",$text);
-	$text = preg_replace("/\[script\](.*?)\[\/script\]/se","buffer_script('\\1')",$text);
-	$text = preg_replace("/\[plugin=(.*?)\](.*?)\[\/plugin\]/esi","buffer_script('\\1','\\2')",$text);
-	$text = preg_replace("/\[snippet\](.*?)\[\/snippet\]/esi","get_textlib_by_fn('\\1')",$text);
+ 
+	$text = preg_replace_callback(
+	    '/\[include\](.*?)\[\/include\]/s',
+	    function ($m) {
+		   return file_get_contents("./content/plugins/$m[1]");
+	    },
+	    $text
+	);
+ 
+	$text = preg_replace_callback(
+	    '/\[script\](.*?)\[\/script\]/s',
+	    function ($m) {
+		   return buffer_script($m[1]);
+	    },
+	    $text
+	);
+	
+	$text = preg_replace_callback(
+	    '/\[plugin=(.*?)\](.*?)\[\/plugin\]/si',
+	    function ($m) {
+		   return buffer_script($m[1],$m[2]);
+	    },
+	    $text
+	);
+	
+	$text = preg_replace_callback(
+	    '/\[snippet\](.*?)\[\/snippet\]/si',
+	    function ($m) {
+		   return get_textlib_by_fn($m[1]);
+	    },
+	    $text
+	);
 	
 	if(function_exists('theme_text_parser')) {
 		$text = theme_text_parser($text);
