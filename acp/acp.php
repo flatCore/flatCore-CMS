@@ -1,8 +1,9 @@
 <?php
 session_start();
 error_reporting(0);
-require("core/access.php");
-require("../config.php");
+require('core/access.php');
+require('../config.php');
+include('versions.php');
 
 if(is_file('../'.FC_CONTENT_DIR.'/config.php')) {
 	include('../'.FC_CONTENT_DIR.'/config.php');
@@ -183,7 +184,7 @@ foreach($fc_preferences as $k => $v) {
 		</div>
 	
 		<div id="footer">
-		<b>flatCore</b> Content Management System<br />
+		<b>flatCore</b> Content Management System <small>(<?php echo $fc_version_name; ?>)</small><br />
 		copyright © 2010 - <?php echo date('Y'); ?>, <a href="http://www.flatcore.de/" target="_blank">flatCore.de</a>
 		</div>
 		

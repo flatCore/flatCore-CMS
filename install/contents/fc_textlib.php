@@ -9,6 +9,7 @@ $cols = array(
   "textlib_title"  => 'VARCHAR',
   "textlib_content"  => 'VARCHAR',
   "textlib_keywords"  => 'VARCHAR',
+  "textlib_labels"  => 'VARCHAR',
   "textlib_notes"  => 'VARCHAR',
   "textlib_lastedit"  => 'VARCHAR',
   "textlib_lastedit_from"  => 'VARCHAR',

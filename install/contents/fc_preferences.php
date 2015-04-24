@@ -25,7 +25,8 @@ $cols = array(
   "prefs_xml_sitemap" => 'VARCHAR',
   "prefs_mailer_adr" => 'VARCHAR',
   "prefs_mailer_name" => 'VARCHAR',
-  "prefs_rss_time_offset" => 'VARCHAR'
+  "prefs_rss_time_offset" => 'VARCHAR',
+  "prefs_labels" => 'VARCHAR'
   
   );
 

@@ -38,8 +38,8 @@ $cols = array(
 	"page_modul_query" => 'VARCHAR',
 	"page_authorized_users" => 'VARCHAR',
 	"page_version" => 'INTEGER',
-	"page_version_date" => 'VARCHAR'
-  
+	"page_version_date" => 'VARCHAR',
+  "page_labels" => 'VARCHAR'
   );
 
 ?>

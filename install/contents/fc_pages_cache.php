@@ -45,6 +45,7 @@ $cols = array(
 	"page_authorized_users" => 'VARCHAR',
 	"page_version" => 'INTEGER',
 	"page_version_date" => 'VARCHAR',
+	"page_labels" => 'VARCHAR',
 	"page_cache_type" => 'VARCHAR'
   );
 

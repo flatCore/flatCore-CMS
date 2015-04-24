@@ -17,7 +17,8 @@ $cols = array(
   "media_text"  => 'VARCHAR',
   "media_credit"  => 'VARCHAR',
   "media_meta"  => 'VARCHAR',
-  "media_notes"  => 'VARCHAR'
+  "media_notes"  => 'VARCHAR',
+  "media_labels"  => 'VARCHAR'
   );
 
 ?>
