@@ -8,10 +8,14 @@
  *
  */
 
+/* theme_text_parser extends the basic text_parser */
 
+function theme_text_parser($str) {
+	
+	$str = theme_replacer($str);
 
-$page_content = theme_replacer($page_content);
-$textlib_footer = theme_replacer($textlib_footer);
+	return $str;
+}
 
 
 function theme_replacer($string) {
@@ -48,15 +52,6 @@ function theme_replacer($string) {
 	return $string;
 	
 }
-
-
-/* theme_text_parser extends the basic text_parser */
-/*
-function theme_text_parser($str) {
-
-	return $str;
-}
-*/
 
 
 ?>
