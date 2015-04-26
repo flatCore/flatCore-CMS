@@ -14,6 +14,7 @@ tinymce.init({
   toolbar2: "forecolor backcolor fontsizeselect | table | hr removeformat | subscript superscript | fullscreen visualchars visualchars visualblocks | template | code",
   image_list : "core/imagelist.php",
   image_advtab: true,
+  image_title: true,
   convert_urls: false,
   entity_encoding : "raw",
   templates: [ 
@@ -89,6 +90,7 @@ tinymce.init({
   toolbar2: "forecolor backcolor fontsizeselect | table | hr removeformat | subscript superscript | fullscreen visualchars visualchars visualblocks | template",
   image_list : "core/imagelist.php",
   image_advtab: true,
+  image_title: true,
   convert_urls: false,
   templates: [ 
   	{title: 'row [6|6]', description: 'Zwei Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_2cols.html'},
