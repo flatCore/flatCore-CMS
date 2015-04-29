@@ -193,19 +193,30 @@ foreach($fc_preferences as $k => $v) {
 
 		<script type="text/javascript">
 
-			$(document).ready(function() {			
-			
-				/* toggle editor class [mceEditor|plain|aceEditor_html] */
-				var editor_mode = localStorage.getItem('editor_mode');	
-				if(editor_mode == '') { editor_mode = 'optE1'; }
-				setAceEditor();
-				switchEditorMode(editor_mode);
+			$(document).ready(function() {
 				
 		    $('input[name="optEditor"]').on("change", function () {
 			    var button = $("input[name='optEditor']:checked").val();
 	    		localStorage.setItem("editor_mode", button);
 	    		switchEditorMode(button);
+	    		
+	    		if(button == 'optE1') {
+		    		tinymce.execCommand('mceAddEditor', false, "textEditor");
+	    		}
+	    		
 				});
+							
+			
+				/* toggle editor class [mceEditor|plain|aceEditor_html] */
+				var editor_mode = localStorage.getItem('editor_mode');	
+				if(!editor_mode) {
+					editor_mode = 'optE1';
+					localStorage.setItem("editor_mode", editor_mode);
+				}
+				setAceEditor();
+				switchEditorMode(editor_mode);
+				
+
 
 				$("input[value="+editor_mode+"]").parent().addClass('active');
 			
@@ -217,12 +228,9 @@ foreach($fc_preferences as $k => $v) {
 					var divEditor = $('#aceCodeEditor');
 					
 		  		if(mode == 'optE1') {
-			  		//tinymce.remove();
 		    		textEditor.addClass('mceEditor form-control');
 		    		textEditor.css("display","block");
-		    		tinymce.execCommand('mceAddEditor', false, "textEditor");
 		    		divEditor.remove();
-		    		
 		  		}
 		  		if(mode == 'optE2') {
 			  		divEditor.remove();
