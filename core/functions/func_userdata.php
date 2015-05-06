@@ -175,15 +175,13 @@ function fc_user_login($user,$psw,$acp = NULL) {
 		$fc_db_user = '../'.$fc_db_user;
 	}
 	
-	$login_name = strip_tags($user);
-	$login_psw  = strip_tags($psw);
-	$login_hash  = md5($login_psw.$login_name);
+	$login_hash  = md5($psw.$user);
 
 	
 	$dbh = new PDO("sqlite:$fc_db_user");
 	$sql = "SELECT * FROM fc_user	WHERE user_nick = :login_name AND user_psw = :login_hash AND user_verified = 'verified'";
 	$sth = $dbh->prepare($sql);
-	$sth->bindValue(':login_name', "$login_name", PDO::PARAM_STR);
+	$sth->bindValue(':login_name', "$user", PDO::PARAM_STR);
 	$sth->bindValue(':login_hash', "$login_hash", PDO::PARAM_STR);
 	$sth->execute();
 	$result = $sth->fetch(PDO::FETCH_ASSOC);

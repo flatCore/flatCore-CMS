@@ -17,9 +17,7 @@ if($goto == 'logout') {
 
 
 if(isset($_POST['login'])) {
-	$login_name = strip_tags($_POST['login_name']);
-	$login_psw  = strip_tags($_POST['login_psw']);
-	fc_user_login($login_name,$login_psw);
+	fc_user_login($_POST['login_name'],$_POST['login_psw']);
 }
 
 

@@ -9,10 +9,8 @@ require("../lib/lang/$_SESSION[lang]/dict-backend.php");
 
 if($_POST['check'] == "Login") {
 
-	$login_name = strip_tags($_POST['login_name']);
-	$login_psw  = strip_tags($_POST['login_psw']);
 	
-	fc_user_login($login_name,$login_psw,$acp=TRUE);
+	fc_user_login($_POST['login_name'],$_POST['login_psw'],$acp=TRUE);
 	
 }
 
@@ -21,28 +19,27 @@ if($_POST['check'] == "Login") {
 <!DOCTYPE html>
 <html>
 <head>
-<title>Login <?php echo $_SERVER['SERVER_NAME']; ?></title>
-<link rel="stylesheet" href="../lib/css/bootstrap.min.css" type="text/css" media="screen, projection">
+	<meta charset="utf-8">
+	<title>Login <?php echo $_SERVER['SERVER_NAME']; ?></title>
+	<link rel="stylesheet" href="../lib/css/bootstrap.min.css" type="text/css" media="screen, projection">
 
-<style type="text/css">
-
-	#center {
-		position: absolute;
-		top:45%;
-		left: 50%;
-		width: 500px;
-		height: 250px;
-		margin-top: -125px;
-		margin-left: -250px;
-	}
-	
-	form {
-		padding: 25px;
-		background-color: #f5f5f5;
-		border-radius: 9px;
-	}
-
-</style>
+	<style type="text/css">
+		#center {
+			position: absolute;
+			top:45%;
+			left: 50%;
+			width: 500px;
+			height: 250px;
+			margin-top: -125px;
+			margin-left: -250px;
+		}
+		
+		form {
+			padding: 25px;
+			background-color: #f5f5f5;
+			border-radius: 9px;
+		}
+	</style>
 </head>
 <body>
 	<div id="center">
