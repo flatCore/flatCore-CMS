@@ -30,7 +30,7 @@ if(is_file(FC_CORE_DIR . "/maintance.html") OR (is_file($fc_db_content) == false
 }
 
 
-require(FC_CORE_DIR . "/lib/lang/index.php");
+
 require(FC_CORE_DIR . '/core/functions.php');
 
 
@@ -134,9 +134,13 @@ if($page_contents['page_redirect'] != '') {
 }
 
 
+/* default $languagePack is defined in config.php */
 if(is_dir("lib/lang/$page_contents[page_language]") AND ($page_contents['page_language'] != '')) {
 	$languagePack = $page_contents['page_language'];
 }
+
+/* include language */
+require(FC_CORE_DIR . "/lib/lang/index.php");
 
 /* preferences (data from get_content() ) */
 foreach($fc_prefs as $key => $val) {
