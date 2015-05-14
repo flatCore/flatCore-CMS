@@ -23,7 +23,7 @@ echo '<h4>' . $lang['f_user_drm'] . '</h4>';
 
 echo"<p><span class='glyphicon glyphicon-user'></span> $_SESSION[user_firstname] $_SESSION[user_lastname] ($_SESSION[user_nick])</p>";
 
-$list_str = "<ul class='list-unstyled'>";
+$list_str = '<ul class="list-unstyled" style="padding-left:16px;">';
 
 if($_SESSION['acp_pages'] == "allowed") {
 	$list_str .= "<li><span class='glyphicon glyphicon-ok-circle'></span> $lang[drm_pages]</li>";

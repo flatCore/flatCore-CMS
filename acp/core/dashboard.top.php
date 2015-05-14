@@ -128,20 +128,20 @@ $top5pages = '<dl class="dl-horizontal dl-dates">'.$top5pages.'</dl>';
 
 
 echo'<div class="row">';
-echo '<div class="col-md-3">';
+echo '<div class="hidden-xs col-sm-4 col-md-3">';
 
 echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">'.$lang['db_user'].' <span class="badge pull-right">'.$cnt_user.'</span></div>';
 echo '<div class="panel-body equal" data-mh="panel-body-group">';
 echo '<div class="row">';
 echo '<div class="col-lg-6"><div class="canvas-holder"><canvas id="user-chart-area" width="30" height="30"/></canvas></div></div>';
-echo '<div class="col-lg-6"><div id="user-chart-legend" class="hidden-sm"></div></div>';
+echo '<div class="col-lg-6 hidden-sm"><div id="user-chart-legend"></div></div>';
 echo '</div>'; // row
 echo '</div>';
 echo '</div>';
 
 echo"</div>";
-echo '<div class="col-md-3">';
+echo '<div class="col-xs-12 col-sm-8 col-md-3">';
 
 echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">'.$lang['h_latest_user'].'</div>';
@@ -151,20 +151,20 @@ echo '</div>';
 echo '</div>';
 
 echo"</div>";
-echo '<div class="col-md-3">';
+echo '<div class="hidden-xs col-sm-4 col-md-3">';
 
 echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">'.$lang['tn_pages'].' <span class="badge pull-right">'.$cnt_pages.'</span></div>';
 echo '<div class="panel-body equal" data-mh="panel-body-group">';
 echo '<div class="row">';
 echo '<div class="col-lg-6"><div class="canvas-holder"><canvas id="pages-chart-area" width="30" height="30"/></canvas></div></div>';
-echo '<div class="col-lg-6"><div id="pages-chart-legend" vlass="hidden-sm"></div></div>';
+echo '<div class="col-lg-6 hidden-sm"><div id="pages-chart-legend"></div></div>';
 echo '</div>'; // row
 echo '</div>';
 echo '</div>';
 
 echo"</div>";
-echo '<div class="col-md-3">';
+echo '<div class="col-xs-12 col-sm-8 col-md-3">';
 
 echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">'.$lang['h_last_edit'].'</div>';
