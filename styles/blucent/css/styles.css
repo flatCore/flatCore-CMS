@@ -139,6 +139,17 @@ footer hr {
 	background-repeat: no-repeat;
 }
 
+.image-container {
+	background: rgba(255,255,255,0.5);
+	padding: 10px;
+	border-radius: 5px;
+}
+
+.image-container > .image-caption {
+	padding: 5px 0;
+	color: #888;
+}
+
 
 input.searchbox {
 	background: #fff url(../images/icn16_search_soft.png) no-repeat 7px center;

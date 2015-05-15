@@ -1,4 +1,5 @@
 <?php
+	
 
 /**
  * check if username exists in usergroup
@@ -57,6 +58,40 @@ function buffer_script($script,$parameters=NULL) {
 
 
 
+function fc_get_images_data($image,$parameters=NULL) {
+
+	global $fc_db_content;
+	
+	if($parameters !== NULL) {
+		$parameter = parse_str(html_entity_decode($parameters));
+	}
+	
+	$dbh = new PDO("sqlite:$fc_db_content");
+	$sql = 'SELECT * FROM fc_media WHERE media_file LIKE :filename ';
+	$sth = $dbh->prepare($sql);
+	$sth->bindValue(':filename', "%$image%", PDO::PARAM_STR);
+	$sth->execute();
+	$imageData = $sth->fetch(PDO::FETCH_ASSOC);
+	$dbh = null;
+	
+	if($imageData['media_file'] != '') {
+		$href_s = '<a href="'.$imageData['media_file'].'" class="'.$aclass.'">';
+		$href_e = '</a>';
+	}
+	
+	$image_str  = '<div class="image-container">';
+	$image_str .= $href_s;
+	$image_str .= '<img src="/content/images/'.basename($imageData['media_file']).'" title="'.stripslashes($imageData['media_title']).'" alt="'.stripslashes($imageData['media_alt']).'" class="'.$iclass.'">';
+	$image_str .= $href_e;
+	$image_str .= '<div class="image-caption">'.stripslashes($imageData['media_text']).'</div>';
+	$image_str .= '</div>';
+	
+	return $image_str;
+	
+}
+
+
+
 /**
  * find [include] [script] [plugin] and [snippet]
  * except codes within <pre> … </pre>
@@ -94,6 +129,14 @@ function text_parser($text) {
 	    '/\[plugin=(.*?)\](.*?)\[\/plugin\]/si',
 	    function ($m) {
 		   return buffer_script($m[1],$m[2]);
+	    },
+	    $text
+	);
+	
+	$text = preg_replace_callback(
+	    '/\[image=(.*?)\](.*?)\[\/image\]/si',
+	    function ($m) {
+		   return fc_get_images_data($m[1],$m[2]);
 	    },
 	    $text
 	);
