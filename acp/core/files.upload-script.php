@@ -14,10 +14,12 @@ $max_w = (int) $_REQUEST['w']; // max image width
 $max_h = (int) $_REQUEST['h']; // max image height
 $max_fz = (int) $_REQUEST['fz']; // max filesize
 
-
-if(is_dir('../../'.$_REQUEST['d'])) {
-	$destination = '../../'.$_REQUEST['d'];
+if($_REQUEST['d'] == 'images') {
+	$destination = '../../'.$img_path;
+} else {
+	$destination = '../../'.$files_path;
 }
+
 
 if($_REQUEST['upload_type'] == 'images') {
 	if(array_key_exists('file',$_FILES) && $_FILES['file']['error'] == 0 ){

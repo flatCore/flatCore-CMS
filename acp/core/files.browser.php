@@ -140,15 +140,15 @@ if($_SESSION['media_filter'] != "") {
 	foreach($all_filter as $f) {
 		if($_REQUEST['rm_keyword'] == "$f") { continue; }
 		if($f == "") { continue; }
-		$btn_remove_keyword .= "<a class='btn btn-default' href='acp.php?tn=filebrowser&sub=browse&rm_keyword=$f'><span class='glyphicon glyphicon-remove'></span> $f</a> ";
+		$btn_remove_keyword .= '<a class="btn btn-default btn-sm" href="acp.php?tn=filebrowser&sub=browse&rm_keyword='.$f.'"><span class="glyphicon glyphicon-remove"></span> '.$f.'</a> ';
 	}
 }
 
 
-$kw_form  = "<form action='acp.php?tn=filebrowser&sub=browse&d=$disk' method='POST' class='form-inline'>";
+$kw_form  = '<form action="acp.php?tn=filebrowser&sub=browse&d='.$disk.'" method="POST" class="form-inline">';
 $kw_form .= '<div class="input-group">';
 $kw_form .= '<span class="input-group-addon"><span class="glyphicon glyphicon-filter"></span></span>';
-$kw_form .= '<input class="form-control" type="text" name="media_filter" value="" placeholder="Filter">';
+$kw_form .= '<input class="form-control input-sm" type="text" name="media_filter" value="" placeholder="Filter">';
 $kw_form .= '</div>';
 $kw_form .= '</form>';
 

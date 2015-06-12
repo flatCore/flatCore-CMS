@@ -189,6 +189,29 @@ foreach($fc_preferences as $k => $v) {
 		</div>
 		
 		</div>
+		
+		<div style="position:fixed;bottom:0;right:0;padding:10px;">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal"><span class="glyphicon glyphicon-upload"></span> Upload</button>
+		</div>
+		<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-hidden="true">
+		  <div class="modal-dialog modal-lg">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-upload"></span> Upload</h4>
+		      </div>
+		      <div class="modal-body">
+		        <?php include("core/files.upload.php"); ?>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+
+
 
 
 		<script type="text/javascript">
@@ -383,7 +406,6 @@ foreach($fc_preferences as $k => $v) {
 						HTMLtextarea.val(HTMLeditor.getSession().getValue());
 					});
 			  }
-	
 			
 			});
 			

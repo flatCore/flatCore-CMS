@@ -284,8 +284,7 @@ a.topnav_selected:visited {
 	position: relative;
 	display: block;
 	float: left;
-	min-width: 90px;
-	margin-right: 1px;
+	min-width: 100px;
 	text-align: center;
 	font-size: 14px;
 	line-height: 50px;
@@ -400,6 +399,12 @@ a.sidebar-sub-active {
 	clear:both;
 }
 
+.modal-open .modal,
+.btn:focus,
+a:focus {
+	outline:none;
+	text-decoration: none;
+}
 
 /* PAGINATION */
 
