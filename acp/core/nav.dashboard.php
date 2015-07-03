@@ -10,10 +10,10 @@ echo '<a class="sidebar-nav dashboard-toggle active" data-toggle="collapse" data
 echo '</div>';
 
 echo '<div id="pages" class="panel-collapse collapse in">';
-echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=pages&sub=list'>$lang[page_list]</a>";
-echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=pages&sub=new'>$lang[new_page]</a>";
-echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=pages&sub=snippets'>$lang[snippets]</a>";
-echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=pages&sub=rss'>RSS</a>";
+echo '<a class="sidebar-sub" href="acp.php?tn=pages&sub=list">'.$lang['page_list'].'</a>';
+echo "<a class='sidebar-sub' href='acp.php?tn=pages&sub=new'>$lang[new_page]</a>";
+echo "<a class='sidebar-sub' href='acp.php?tn=pages&sub=snippets'>$lang[snippets]</a>";
+echo "<a class='sidebar-sub' href='acp.php?tn=pages&sub=rss'>RSS</a>";
 echo '</div>';
 echo '</div>';
 
@@ -24,8 +24,8 @@ echo '<a class="sidebar-nav dashboard-toggle" data-toggle="collapse" data-parent
 echo '</div>';
 
 echo '<div id="files" class="panel-collapse collapse">';
-echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=filebrowser&sub=browse'>$lang[manage_files]</a>";
-echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=filebrowser&sub=upload'>$lang[go_to_upload]</a>";
+echo "<a class='sidebar-sub' href='acp.php?tn=filebrowser&sub=browse'>$lang[manage_files]</a>";
+echo '<a class="sidebar-sub" data-toggle="modal" data-target="#uploadModal" href="#">'.$lang['go_to_upload'].'</a>';
 echo '</div>';
 echo '</div>';
 
@@ -36,9 +36,9 @@ echo '<a class="sidebar-nav dashboard-toggle" data-toggle="collapse" data-parent
 echo '</div>';
 
 echo '<div id="user" class="panel-collapse collapse">';
-echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=user&sub=list'>$lang[list_user]</a>";
-echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=user&sub=new'>$lang[new_user]</a>";
-echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=user&sub=groups'>$lang[edit_groups]</a>";
+echo "<a class='sidebar-sub' href='acp.php?tn=user&sub=list'>$lang[list_user]</a>";
+echo "<a class='sidebar-sub' href='acp.php?tn=user&sub=new'>$lang[new_user]</a>";
+echo "<a class='sidebar-sub' href='acp.php?tn=user&sub=groups'>$lang[edit_groups]</a>";
 echo '</div>';
 echo '</div>';
 
@@ -49,11 +49,11 @@ echo '<a class="sidebar-nav dashboard-toggle" data-toggle="collapse" data-parent
 echo '</div>';
 
 echo '<div id="system" class="panel-collapse collapse">';
-echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=system&sub=sys_pref'>$lang[system_preferences]</a>";
-echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=system&sub=design'>$lang[system_design]</a>";
-echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=system&sub=stats'>$lang[system_statistics]</a>";
-echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=system&sub=backup'>$lang[system_backup]</a>";
-echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=system&sub=update'>$lang[system_update]</a>";
+echo "<a class='sidebar-sub' href='acp.php?tn=system&sub=sys_pref'>$lang[system_preferences]</a>";
+echo "<a class='sidebar-sub' href='acp.php?tn=system&sub=design'>$lang[system_design]</a>";
+echo "<a class='sidebar-sub' href='acp.php?tn=system&sub=stats'>$lang[system_statistics]</a>";
+echo "<a class='sidebar-sub' href='acp.php?tn=system&sub=backup'>$lang[system_backup]</a>";
+echo "<a class='sidebar-sub' href='acp.php?tn=system&sub=update'>$lang[system_update]</a>";
 echo '</div>';
 echo '</div>';
 
