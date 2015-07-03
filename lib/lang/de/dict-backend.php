@@ -253,6 +253,7 @@ $lang['label_text'] = "Text";
 $lang['label_alt'] = "Alt";
 $lang['label_url'] = "URL";
 $lang['label_notes'] = "Notizen";
+$lang['label_color'] = "Farbe";
 
 /* Preferences */
 

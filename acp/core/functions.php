@@ -999,6 +999,21 @@ function fc_array_multisort(){
 }
 
 
+/**
+ * get all labels
+ * return as array
+ */
 
+function fc_get_labels() {
+
+	$dbh = new PDO("sqlite:".CONTENT_DB);	
+	$sql = "SELECT * FROM fc_labels";
+	
+	foreach ($dbh->query($sql) as $row) {
+		$result[] = $row;
+	}
+	
+	return($result);
+}
 
 ?>
