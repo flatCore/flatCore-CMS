@@ -21,3 +21,4 @@ ___
 + fancybox - http://fancyapps.com/fancybox/
 + Chart.js - http://chartjs.org/
 + Masonry - http://masonry.desandro.com
++ DropzoneJS - http://www.dropzonejs.com
