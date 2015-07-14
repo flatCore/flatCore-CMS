@@ -54,15 +54,10 @@ if($_SESSION['acp_system'] != "allowed" AND $subinc == "pages.customize"){
 
 $arr_lang = get_all_languages();
 
-/* default: check all languages */
+/* default: check default language */
 if(!isset($_SESSION['checked_lang_string'])) {	
-	foreach($arr_lang as $langstring) {
-		$checked_lang_string .= "$langstring[lang_folder]-";
-	}
-	$_SESSION['checked_lang_string'] = "$checked_lang_string";
+	$_SESSION['checked_lang_string'] = $languagePack .'-';
 }
-
-
 
 /* change status of $_GET[switchLang] */
 if(isset($_GET['switchLang'])) {
