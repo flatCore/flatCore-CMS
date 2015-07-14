@@ -22,3 +22,4 @@ ___
 + Chart.js - http://chartjs.org/
 + Masonry - http://masonry.desandro.com
 + DropzoneJS - http://www.dropzonejs.com
++ jquery.dirtyforms - https://github.com/snikch/jquery.dirtyforms

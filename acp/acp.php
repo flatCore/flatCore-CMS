@@ -92,10 +92,11 @@ foreach($fc_preferences as $k => $v) {
 		
 		<link rel="icon" type="image/x-icon" href="images/favicon.ico" />
 		
-		<script language="javascript" type="text/javascript" src="../lib/js/tinymce/tinymce.min.js"></script>
-		
 		<script src="../lib/js/jquery/jquery.min.js"></script>
     <script src="../lib/js/bootstrap.min.js"></script>
+    
+    <script language="javascript" type="text/javascript" src="../lib/js/tinymce/tinymce.min.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/js/tinymce/jquery.tinymce.min.js"></script>
 
 		<!-- Add fancyBox -->
 		<link rel="stylesheet" href="../lib/js/jquery/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
@@ -126,6 +127,10 @@ foreach($fc_preferences as $k => $v) {
 		
 		<!-- ACE Editor -->
 		<script src="../lib/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+		
+		<!-- dirty forms -->
+		<script src="../lib/js/jquery/jquery.dirtyforms.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" src="../lib/js/jquery/jquery.dirtyforms.tinymce.js"></script>
 		
 		<!-- Tags -->
 		<script type="text/javascript" src="../lib/js/bootstrap-tagsinput.min.js"></script>
@@ -239,7 +244,9 @@ foreach($fc_preferences as $k => $v) {
 				setAceEditor();
 				switchEditorMode(editor_mode);
 				
-
+				/* dirty forms */
+				$('form').dirtyForms();
+				$.DirtyForms.dialog = false;
 
 				$("input[value="+editor_mode+"]").parent().addClass('active');
 			
