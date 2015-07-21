@@ -509,6 +509,21 @@ span#w200 {
 .page-list-item-draft .label-page-status {
   border-color: transparent #989898 transparent transparent;
 }
+.info-collapse.info-show,
+.info-collapse.info-show-this {
+  max-height: 100px;
+  transition: max-height 0.3s ease-in;
+  -webkit-transition: max-height 0.3s ease-in;
+}
+.info-collapse.info-show.info-hide,
+.info-collapse.info-show.info-hide-this {
+  max-height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  transition: max-height 0.1s ease-out;
+  -webkit-transition: max-height 0.1s ease-out;
+}
 .bg-bright {
   background-color: #eee;
 }

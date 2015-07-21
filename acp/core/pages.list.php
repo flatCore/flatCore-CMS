@@ -43,6 +43,7 @@ echo '<div class="col-md-9">';
 echo '<fieldset>';
 echo '<legend>'.$lang['f_page_status'].'/'.$lang['f_page_language'].'</legend>';
 echo $status_btn_group . ' ' . $lang_btn_group;
+echo '<div class="pull-right"><button id="toggleExpand" class="btn btn-link btn-sm"><span class="glyphicon glyphicon-collapse-down"></span></button></div>';
 echo '</fieldset>';
 echo '</div>';
 echo '</div>';

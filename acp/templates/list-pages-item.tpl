@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="col-lg-8">
 			<h4><a href="{frontend-link}" title="{frontend-link}">{item-linkname}</a> <small>{item-title} {item-mod}</small></h4>
-			<div class="small extra-collapse">{item-description}<p>
+			<div class="small info-collapse info-show">{item-description}<p>
 					<span class="glyphicon glyphicon-link"></span> {item-permalink} <span class="text-primary">{item-redirect}</span><br>
 					<span class="glyphicon glyphicon-time"></span> {item-lastedit}		
 				</p>
@@ -12,7 +12,7 @@
 		</div>
 		<div class="col-lg-4">
 	
-			<p class="text-muted small extra-collapse">
+			<p class="text-muted small info-collapse info-show">
 				<span class="glyphicon glyphicon-sort-by-attributes"></span> {item-pagesort} | {item-lang}<br>
 				<span class="glyphicon glyphicon-file"></span> {item-template}<br>
 			</p>
