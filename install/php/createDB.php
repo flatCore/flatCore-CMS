@@ -103,14 +103,14 @@ $sql_first_site = "INSERT INTO fc_pages (
 
 $sql_insert_prefs = "INSERT INTO fc_preferences (
 		prefs_id, prefs_status, prefs_pagetitle,
-		prefs_pagesubtitle, prefs_template, prefs_showloginform,
+		prefs_pagesubtitle, prefs_template, prefs_showloginform, prefs_xml_sitemap,
 		prefs_imagesuffix, prefs_maximagewidth, prefs_maximageheight, prefs_maxfilesize,
-		prefs_logfile, prefs_template_layout
+		prefs_logfile, prefs_template_layout, prefs_rss_time_offset
 		) VALUES (
 		NULL, 'active', 'Diese Homepage',
-		'rockt mit SQLite und PHP5', 'blucent', 'yes',
+		'rockt mit SQLite und PHP5', 'blucent', 'yes', 'off',
 		'jpg jpeg gif png', '600', '500', '2800',
-		'on', 'layout_2cols.tpl' )";
+		'on', 'layout_2cols.tpl', '216000' )";
 
 $sql_tl_footer_text = "INSERT INTO fc_textlib ( 
 						textlib_id , textlib_name , textlib_content , textlib_lang 
