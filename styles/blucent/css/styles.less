@@ -11,8 +11,8 @@
 @brandColor1: #4b89d0;
 @linkColor: #3366cc;
 
-@header_bg: desaturate(@brandColor1,20%);
-@header_color: lighten(@brandColor1,30%);
+@header_bg: desaturate(@brandColor1,35%);
+@header_color: lighten(@brandColor1,40%);
 
 @page_bg: rgb(240,249,255);
 
@@ -61,7 +61,7 @@ ul.nav-stacked li a:hover {
 	background: #d2e1f3;
 	padding: 0 0 25px 0;
 	background: @page_bg;
-	.background-image(linear-gradient(to bottom, @page_bg 0%,darken(@page_bg,10%) 100%));
+	.background-image(linear-gradient(to bottom, @page_bg 0%,darken(@page_bg,5%) 100%));
 }
 
 
@@ -105,7 +105,7 @@ footer#pageFooter {
 	color: @footer_color;
 }
 
-footer a {
+footer a, footer a:visited {
 	color: @footer_linkColor;
 	.transition(color 0.3s linear);
 }
@@ -131,8 +131,8 @@ footer div.tags a {
 }
 
 footer div.tags a:hover {
-	background-color: darken(@footer_bg,10%);
-	color: #fff;
+	background-color: lighten(@footer_bg,50%);
+	color: @footer_bg;
 	text-decoration: none;
 }
 
@@ -154,6 +154,29 @@ footer hr {
 }
 
 
+hr.shadow {
+    padding: 0;
+    border: 0;
+    outline: 0;
+    overflow: hidden;
+    height: 14px;
+    margin-top: 14px;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+}
+
+hr.shadow:after {
+    content: "";
+    margin: 0 auto;
+    position: relative;
+    top: -35px;
+    display: block;
+    width: 95%;
+    height: 14px;
+    .box-shadow(0px 20px 10px fade(@brandColor1,50%));
+    .border-radius(50%);
+}
 
 .styledSpace {
 	display: block;
@@ -162,13 +185,6 @@ footer hr {
 	margin: 8px 0 10px 0;
 }
 
-.boxShadow {
-	height: 22px;
-	padding: 0;
-	margin: 5px 0 0 0;
-	background: transparent url(../images/boxBottom.png) center top;
-	background-repeat: no-repeat;
-}
 
 .image-container {
 	background: rgba(255,255,255,0.5);
@@ -205,8 +221,6 @@ ul#sitemap li {
 	line-height: 14px;
 }
 
-
-
 .blockImage {
 	padding: 4px;
 	background: rgba(255,255,255,0.8);
@@ -228,62 +242,62 @@ ul#sitemap li {
 
 
 .navbar-fade {
-    background: darken(@header_bg,10%);
-    border-color: darken(@header_bg,20%)
+  background: darken(@header_bg,15%);
+  border-color: darken(@header_bg,20%)
 }
 
 
 .navbar-fade .navbar-brand {
-    color: lighten(@header_bg,50%);
+  color: lighten(@header_bg,50%);
 }
 
 .navbar-fade .navbar-brand:focus, .navbar-fade .navbar-brand:hover {
-    color: #fff;
-    background-color: transparent
+  color: lighten(@header_bg,50%);
+  background-color: transparent
 }
 
 .navbar-fade .navbar-text {
-    color: lighten(@header_bg,50%);
+  color: lighten(@header_bg,50%);
 }
 
 .navbar-fade .navbar-nav>li>a {
-    color: lighten(@header_bg,50%);
+  color: lighten(@header_bg,50%);
 }
 
 .navbar-fade .navbar-nav>li>a:focus, .navbar-fade .navbar-nav>li>a:hover {
-    color: #fff;
-    background-color: transparent
+  color: lighten(@header_bg,40%);
+  background-color: transparent
 }
 
 .navbar-fade .navbar-nav>.active>a, .navbar-fade .navbar-nav>.active>a:focus, .navbar-fade .navbar-nav>.active>a:hover {
-    color: #fff;
-    background-color: darken(@header_bg,15%);
+  color: lighten(@header_bg,40%);
+  background-color: darken(@header_bg,25%);
 }
 
 .navbar-fade .navbar-nav>.disabled>a, .navbar-fade .navbar-nav>.disabled>a:focus, .navbar-fade .navbar-nav>.disabled>a:hover {
-    color: #444;
-    background-color: transparent
+  color: lighten(@header_bg,50%);
+  background-color: transparent
 }
 
 .navbar-fade .navbar-toggle {
-    border-color: darken(@header_bg,15%);
+  border-color: darken(@header_bg,15%);
 }
 
 .navbar-fade .navbar-toggle:focus, .navbar-fade .navbar-toggle:hover {
-    background-color: darken(@header_bg,15%);
+  background-color: darken(@header_bg,15%);
 }
 
 .navbar-fade .navbar-toggle .icon-bar {
-    background-color: #fff
+  background-color: #fff
 }
 
 .navbar-fade .navbar-collapse, .navbar-fade .navbar-form {
-    border-color: darken(@header_bg,35%);
+  border-color: darken(@header_bg,35%);
 }
 
 .navbar-fade .navbar-nav>.open>a, .navbar-fade .navbar-nav>.open>a:focus, .navbar-fade .navbar-nav>.open>a:hover {
-    color: #fff;
-    background-color: darken(@header_bg,55%);
+  color: #fff;
+  background-color: darken(@header_bg,55%);
 }
 
 
@@ -301,8 +315,8 @@ div#toc h2 {
 	font: bold 13px "Helvetica Neue", Helvetica, Arial, sans-serif;
 	margin: 0;
 	padding: 2px 4px;
-	color: #222;
-	border-bottom: 1px solid #ddd;
+	color: @header_bg;
+	border-bottom: 1px solid @header_bg;
 }
 
 #toclist {
@@ -318,22 +332,19 @@ div#toc h2 {
 
 #toclist li a {
 	display: block;
-	color: #36c;
+	color: darken(@header_bg,15%);
 	text-decoration: none;
 	margin: 0;
 	margin-right: 1px;
 	padding: 4px 6px;
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid fade(@header_bg,45%);
 	background-color: transparent;
-	-webkit-transition: background 0.5s linear, color 0.5s linear;
-	-moz-transition: background 0.5s linear, color 0.5s linear;
-	-o-transition: background 0.5s linear, color 0.5s linear;
-	transition: background 0.5s linear, color 0.5s linear;
+	.transition(background 0.5s linear, color 0.5s linear);
 }
 
 #toclist li a:hover {
-	color: #222;
-	background-color: #DFE7EF;
+	color: darken(@header_bg,25%);
+	background: fade(@header_bg,15%);
 }
 
 
@@ -343,8 +354,8 @@ div#toc h2 {
  */
 
 #toclist li a[class^='sub_current'] {
-	color: #222;
-	background-color: #CADDEE;
+	color: darken(@header_bg,35%);
+	background: fade(@header_bg,20%);
 }
 
 #toclist li a.sub_link1, #toclist li a.sub_current1 {

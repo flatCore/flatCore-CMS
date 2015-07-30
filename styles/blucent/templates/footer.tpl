@@ -20,7 +20,7 @@
 		{$textlib_footer}
 	</div>
 	
-	<hr>
+	<hr class="shadow">
 	
 	<p class="text-center">
 		<a href="http://www.flatcore.de/" title="Open Source Content Management System">powered by flatCore</a><br>

@@ -48,6 +48,7 @@ function theme_replacer($string) {
 	$string = str_replace('[icon-arrow-left]', '<span class="glyphicon glyphicon-arrow-left"></span>', $string);
 	
 	$string = str_replace('[spacer]', '<hr class="spacer">', $string);
+	$string = str_replace('[shadow]', '<hr class="shadow">', $string);
 	
 	return $string;
 	

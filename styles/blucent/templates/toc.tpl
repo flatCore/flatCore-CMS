@@ -5,6 +5,6 @@
 		<li><a class="{$subnav.link_status}" href="{$subnav.sublink}" title="{$subnav.page_title}">{$subnav.page_linkname}</a></li>
 	{/foreach}
 	</ul>
-	<p class="boxShadow"></p>
+	<hr class="shadow">
 </div>
 
