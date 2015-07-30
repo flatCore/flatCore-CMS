@@ -6,7 +6,7 @@
 	
 	</head>
 	
-	<body onload="prettyPrint()">
+	<body>
 	
 	{include file="$body_template"}
 	

@@ -21,19 +21,11 @@
 <meta property="og:site_name" content="{$prefs_pagetitle}">
 
 <!-- CSS -->
-<link rel="stylesheet" media="all" href="{$fc_inc_dir}/lib/css/bootstrap.min.css" type="text/css" />
-<link rel="stylesheet" media="screen" href="{$fc_inc_dir}/styles/blucent/css/styles.css" />
+<link rel="stylesheet" media="screen" href="{$fc_inc_dir}/styles/blucent/css/styles.min.css" />
 
 <!-- jQuery -->
 <script type="text/javascript" src="{$fc_inc_dir}/lib/js/jquery/jquery.min.js"></script>
-<script type="text/javascript" src="{$fc_inc_dir}/lib/js/bootstrap.min.js"></script>
-
-<script type="text/javascript" src="{$fc_inc_dir}/lib/js/jquery/fancybox/jquery.fancybox.js"></script>
-<link rel="stylesheet" href="{$fc_inc_dir}/lib/js/jquery/fancybox/jquery.fancybox.css" type="text/css" media="screen, projection" />
-
-
-<link href="{$fc_inc_dir}/lib/css/sunburst.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="{$fc_inc_dir}/lib/js/prettify.js"></script>
+<script type="text/javascript" src="{$fc_inc_dir}/styles/blucent/js/bootstrap.min.js"></script>
 
 	
 <!--[if lt IE 9]>
