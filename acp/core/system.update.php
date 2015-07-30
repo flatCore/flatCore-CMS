@@ -20,7 +20,6 @@ if(isset($_GET['beta']) && $_GET['beta'] > 0) {
 // example string: 2013-06-29<|>Release Candidate 3<|>39<|>fc_b39.zip
 $remote_versions = explode("<|>",$remote_versions_file);
 
-
 if(isset($_GET['github']) && $_GET['github'] > 0) {
 	$remote_versions[0] = '';
 	$remote_versions[1] = 'GitHub';
@@ -222,7 +221,10 @@ function compare_versions() {
 	
 	echo '<table class="table table-condensed table-bordered">';
 	echo '<thead>';
-	echo '<tr><th><span class="glyphicon glyphicon-hdd"></span>  '. $_SERVER['SERVER_NAME'] .'</th><th><span class="glyphicon glyphicon-globe"></span> updates.flatCore.de</th></tr>';
+	echo '<tr>
+					<th><span class="glyphicon glyphicon-hdd"></span>  '. $_SERVER['SERVER_NAME'] .'</th>
+					<th><span class="glyphicon glyphicon-globe"></span> updates.flatCore.de</th>
+				</tr>';
 	echo '</thead>';
 	
 	echo '<tr>';
@@ -232,22 +234,28 @@ function compare_versions() {
 	echo '</table>';
 	
 	/* compare build numbers */
+		
+	$start_dl = '';
+	
 	if(($remote_versions[2] > $fc_version_build) && ($remote_versions[2] != 'master')) {
-		echo '<div class="alert alert-info"><p>' . $lang['msg_update_available'] . '</p><hr>';
-		echo "<p><a href='$_SERVER[PHP_SELF]?tn=system&sub=update&a=start' class='btn btn-success'><span class='glyphicon glyphicon-cloud-download'></span> Update</a></p>";
-		echo '</div>';
+		$start_dl  = 'acp.php?tn=system&sub=update&a=start';
+		if(isset($_GET['beta']) && $_GET['beta'] > 0) {
+			$start_dl .= '&beta=1';
+		}
 	} elseif ($remote_versions[2] == 'master') {
-		echo '<div class="alert alert-info"><p>' . $lang['msg_update_available'] . '</p><hr class="shadow">';
-		echo '<div class="row"><div class="col-md-2">';
-		echo "<a href='$_SERVER[PHP_SELF]?tn=system&sub=update&a=start&github=1' class='btn btn-success btn-block'><span class='glyphicon glyphicon-cloud-download'></span> Update</a>";
-		echo '</div><div class="col-md-10">';
-		echo ' <pre>file: https://github.com/flatCore/flatCore-CMS/archive/master.zip</pre>';
-		echo '</div></div>';
-		echo '</div>';
+		$start_dl  = 'acp.php?tn=system&sub=update&a=start&github=1';
+	}
+	
+	if($start_dl != '') {
+		echo '<div class="alert alert-info"><p>' . $lang['msg_update_available'] . '</p><hr>';
+		echo '<p>';
+		echo '<a href="'.$start_dl.'" class="btn btn-success"><span class="glyphicon glyphicon-cloud-download"></span> Update</a>';
+		echo '</p>';
+		echo '</div>';		
 	} else {
 		echo '<div class="alert alert-success"><p>' . $lang['msg_no_update_available'] . '</p></div>';
 	}
-	
+
 	
 }
 
