@@ -343,6 +343,9 @@ $lang['msg_update_available'] = "<b>There is a newer version available!</b><br>P
 $lang['msg_no_update_available'] = "The installed version is up to date.";
 $lang['msg_update_modus_activated'] = "<b>Update-Modus is activated</b><br>The Frontend is not available";
 
+$lang['alert_no_htaccess'] = 'There isn\'t a .htaccess file in your root.';
+$lang['alert_not_writable'] = 'The File/Directory is not writable:';
+
 
 /* System */
 

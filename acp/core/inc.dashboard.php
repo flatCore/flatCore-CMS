@@ -8,7 +8,7 @@ main page | dashboard
 require("core/access.php");
 
 
-
+include("dashboard.checks.php");
 include("dashboard.top.php");
 include("dashboard.system.php");
 

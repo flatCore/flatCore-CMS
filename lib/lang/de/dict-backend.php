@@ -341,6 +341,9 @@ $lang['msg_update_available'] = "<b>Es ist ein Update verfügbar!</b><br>Bitte d
 $lang['msg_no_update_available'] = "Die installierte Version ist auf dem neusten Stand.";
 $lang['msg_update_modus_activated'] = "<b>Der Update-Modus ist aktiv</b><br>Das Frontend kann im Moment nicht aufgerufen werden.";
 
+$lang['alert_no_htaccess'] = 'Es ist keine .htaccess Datei vorhanden.';
+$lang['alert_not_writable'] = 'Die Datei oder das Verzeichnis hat nicht die nötigen Schreibrechte:';
+
 /* System */
 
 $lang['txtlib_welcome'] = "Einleitung (Portal)";
