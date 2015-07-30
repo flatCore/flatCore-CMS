@@ -1,3 +1,4 @@
+{if is_array($arr_submenue) }
 <div id="toc">
 	<h2>{$legend_toc}</h2>
 	<ul id="toclist">
@@ -7,4 +8,4 @@
 	</ul>
 	<hr class="shadow">
 </div>
-
+{/if}
