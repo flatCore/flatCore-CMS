@@ -33,12 +33,15 @@ $writable_items = array(
 
 foreach($writable_items as $f) {
 	
+	if(($f == '../sitemap.xml') AND ($fc_preferences['prefs_xml_sitemap'] == 'off')) {
+		continue;
+	}
+	
 	if(!is_writable($f)) {
 		echo '<div class="alert alert-danger">'.$lang['alert_not_writable'].' <strong>'.$f.'</strong></div>';
 	}
 
 }
-
 
 
 ?>
