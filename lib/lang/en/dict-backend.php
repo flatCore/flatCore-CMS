@@ -256,6 +256,7 @@ $lang['label_text'] = "Text";
 $lang['label_alt'] = "Alt";
 $lang['label_url'] = "URL";
 $lang['label_notes'] = "Notes";
+$lang['missing_value'] = 'missing value';
 
 /* Preferences */
 

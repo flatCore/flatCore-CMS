@@ -11,8 +11,16 @@ echo '<div class="col-md-4">';
 echo '<h5>Config</h5>';
 echo '<dl class="dl-horizontal">';
 echo '<dt>Server:</dt><dd>' . $_SERVER['SERVER_NAME'] . '</dd>';
-echo '<dt>System E-Mails:</dt><dd>' . $prefs_mailer_adr . '</dd>';
-echo '<dt>E-Mail Name:</dt><dd>' . $prefs_mailer_name . '</dd>';
+if($prefs_mailer_adr != '') {
+	echo '<dt>System E-Mails:</dt><dd>' . $prefs_mailer_adr . '</dd>';
+} else {
+	echo '<dt>System E-Mails:</dt><dd><span class="text-danger">'.$lang['missing_value'].'</span></dd>';
+}
+if($prefs_mailer_name != '') {
+	echo '<dt>E-Mail Name:</dt><dd>' . $prefs_mailer_name . '</dd>';
+} else {
+	echo '<dt>E-Mail Name:</dt><dd><span class="text-danger">'.$lang['missing_value'].'</span></dd>';
+}
 echo '</dl>';
 
 
