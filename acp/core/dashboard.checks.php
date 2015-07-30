@@ -8,6 +8,14 @@ if(!is_file('../.htaccess')) {
 	echo '<div class="alert alert-danger">'.$lang['alert_no_htaccess'].'</div>';
 }
 
+if(!is_dir('../'.FC_CONTENT_DIR.'/cache/cache/')) {
+	mkdir('../'.FC_CONTENT_DIR.'/cache/cache/', 0777);
+}
+
+if(!is_dir('../'.FC_CONTENT_DIR.'/cache/templates_c/')) {
+	mkdir('../'.FC_CONTENT_DIR.'/cache/templates_c/', 0777);
+}
+
 $writable_items = array(
 	'../sitemap.xml',
 	'../'.FC_CONTENT_DIR.'/',
