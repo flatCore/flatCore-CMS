@@ -18,8 +18,8 @@ require("core/access.php");
  * @todo: find a workaround
  */
  
-if($_POST[delete_field]) {
-	$del_field = strip_tags($_POST[del_field]);
+if($_POST['delete_field']) {
+	$del_field = strip_tags($_POST['del_field']);
 	
 	if(substr($del_field,0,7) == "custom_") {
 				
@@ -44,15 +44,15 @@ if($_POST[delete_field]) {
  * Add new Custom Column
  */
 
-if($_POST[add_field]) {
+if($_POST['add_field']) {
 	
-	$col = clean_vars($_POST[field_name]);
+	$col = clean_vars($_POST['field_name']);
 	if($col == "") {
 		/* if there is no name given, we use the timestamp */
 		$col = time();
 	}
 	
-	switch($_POST[field_type]) {
+	switch($_POST['field_type']) {
 		case 'one':
 			$type = "one";
 			break;
@@ -92,11 +92,11 @@ echo '<div class="row"><div class="col-md-12">';
 
 
 echo '<fieldset>';
-echo '<legend>' . $lang[add_custom_field] . '</legend>';
+echo '<legend>' . $lang['add_custom_field'] . '</legend>';
 
 echo '<form action="acp.php?tn=pages&sub=customize" method="POST" class="form-horizontal">';
 
-echo tpl_form_control_group('',$lang[custom_field_name],"<input type='text' class='form-control' name='field_name' value='$field_name'>");
+echo tpl_form_control_group('',$lang['custom_field_name'],"<input type='text' class='form-control' name='field_name' value='$field_name'>");
 
 $radio_field_type = "
 			<label class='radio inline'><input type='radio' $sel1 name='field_type' value='one'> &lt;input type=&quot;text&quot; ... </label>
@@ -120,32 +120,42 @@ echo '</fieldset>';
 
 
 echo '<fieldset>';
-echo '<legend>' . $lang[delete_custom_field] . '</legend>';
+echo '<legend>' . $lang['delete_custom_field'] . '</legend>';
 
 echo '<form action="acp.php?tn=pages&sub=customize" class="form-horizontal" method="POST">';
 
 $result = get_custom_fields();
 $cnt_result = count($result);
 
-if($cnt_result < 1) {
-	echo '<div class="alert alert-info">' . $lang[no_custom_fields] . '</div>';
-} else {
-	echo '<div class="alert">' . $lang[delete_custom_field_desc] . '</div>';
 
-	$select_del_field = '<select name="del_field" class="form-control">';
+if($cnt_result < 1) {
+	echo '<div class="alert alert-info">' . $lang['no_custom_fields'] . '</div>';
+} else {
+	echo '<div class="alert alert-danger">' . $lang['delete_custom_field_desc'] . '</div>';
+
+	echo '<table class="table table-condensed">';
+	
 	for($i=0;$i<$cnt_result;$i++) {
 		if(substr($result[$i],0,7) == "custom_") {
-			$select_del_field .=  "<option value='$result[$i]'>" . $result[$i] . "</option>";
+			
+			$this_name = $result[$i];
+			$this_name_smarty = '{$'.$this_name.'}';
+			
+			echo '<tr>';
+			echo '<td>'.$this_name.'</td>';
+			echo '<td><code>'.$this_name_smarty.'</code></td>';
+			echo '<td>';
+			echo '<form action="acp.php?tn=pages&sub=customize" class="form-inline" method="POST">';
+			echo '<input type="hidden" name="del_field" value="'.$result[$i].'">';
+			echo '<button type="submit" class="btn btn-sm btn-danger btn-block" name="delete_field"><span class="glyphicon glyphicon-trash"></span></button>';
+			echo '</form>';
+			echo '</td>';
+			echo '</tr>';
 		}
 	}
-	$select_del_field .=  '</select>';
-
-echo tpl_form_control_group('',$lang[custom_field_name],$select_del_field);
-
-//submit form to save data
-echo"<div class='formfooter'>";
-echo"<input type='submit' class='btn btn-danger' name='delete_field' value='$lang[delete]'>";
-echo"</div>";
+	
+	echo '</table>';
+	
 }
 
 echo '</form>';
