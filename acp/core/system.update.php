@@ -1,4 +1,6 @@
 <?php
+ob_start();
+set_time_limit (0);
 
 //prohibit unauthorized access
 require("core/access.php");
@@ -38,7 +40,9 @@ if(isset($_GET['a']) && $_GET['a'] == 'start') {
 
 echo '</fieldset>';
 
-
+ob_flush();
+flush();
+	
 /**
  * start the update
  * 1. load the zip file from "http://updates.flatCore.de/zip/...
@@ -56,6 +60,7 @@ function start_update() {
 
 	global $remote_versions;
 	global $fc_content_files;
+	global $fc_db_content;
 	
 	$get_file = $remote_versions[3];
 	
@@ -135,8 +140,7 @@ function move_new_files() {
 
 	echo "<h3>" . count($new_files) . " updated Files:</h3>";
 	echo '<div style="height:350px;overflow:auto;margin:0;" class="well well-sm">';
-	echo '<table class="table table-condensed table-bordered">';
-		
+			
 	/* now copy the other files and directories */
 	foreach($new_files as $value) {
 	
@@ -174,14 +178,19 @@ function move_new_files() {
 			$cnt_errors++;
 		}
 		
-		echo "<tr><td>$i</td><td>$value | $target | $show_status</td>";
+		echo '<dl class="dl-horizontal">';
+		echo '<dt>'.$i.'</dt>';
+		echo '<dd>update/..'. basename($value) .' > '. $target .' '. $show_status .'</dd>';
+		echo '</dl>';
+		
+		ob_flush();
+		flush();
 	}
 	
-	echo "<tr><td>Errors:</td><td>$cnt_errors</td>";
+	echo '<p>Errors: '.$cnt_errors.'</p>';
 	
-	echo '</table>';
 	echo '</div>';
-	
+
 }
 
 
@@ -256,7 +265,8 @@ function compare_versions() {
 		echo '<div class="alert alert-success"><p>' . $lang['msg_no_update_available'] . '</p></div>';
 	}
 
-	
+	ob_flush();
+	flush();
 }
 
 
@@ -350,7 +360,7 @@ function update_database($dbfile) {
 		}
 		
 		if(!is_file($db_path)) {
-			echo"DATABASE NOT FOUND $db_path";
+			echo "DATABASE NOT FOUND | $db_path | $database | $all_tables[$i] <br>";
 			continue;
 		}
 	
