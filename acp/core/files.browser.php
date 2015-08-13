@@ -16,7 +16,7 @@ if(isset($_SESSION['disk'])) {
 }
 
 if($_SESSION['sort_by_name'] == '' AND $_SESSION['sort_by_size'] == '' AND $_SESSION['sort_by_time'] == '') {
-	$_SESSION['sort_by_name'] = 'ASC';
+	$_SESSION['sort_by_time'] = 'DESC';
 }
 
 
