@@ -9,7 +9,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<link rel="icon" type="image/x-icon" href="{$fc_inc_dir}/styles/blucent/images/fav.ico" />
+<link rel="icon" type="image/x-icon" href="{$fc_inc_dir}/styles/{$fc_template}/images/fav.ico" />
 
 <link rel="alternate" type="application/rss+xml" title="{$prefs_pagetitle} | RSS" href="/rss.php" />
 
@@ -21,7 +21,7 @@
 <meta property="og:site_name" content="{$prefs_pagetitle}">
 
 <!-- CSS -->
-<link rel="stylesheet" media="screen" href="{$fc_inc_dir}/styles/blucent/css/styles.min.css" />
+<link rel="stylesheet" media="screen" href="{$fc_inc_dir}/styles/{$fc_template}/css/styles.min.css" />
 
 <!-- jQuery -->
 <script type="text/javascript" src="{$fc_inc_dir}/lib/js/jquery/jquery.min.js"></script>

@@ -173,6 +173,8 @@ if(is_dir('styles/'.$page_contents['page_template'].'/templates/')) {
 	$fc_template_layout = $page_contents['page_template_layout'];
 }
 
+$smarty->assign('fc_template', $fc_template);
+$smarty->assign('fc_template_layout', $fc_template_layout);
 
 include('core/definitions.php');
 
