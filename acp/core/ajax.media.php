@@ -18,14 +18,14 @@ require('../../lib/lang/'.$_SESSION['lang'].'/dict-backend.php');
 $form_tpl = file_get_contents('../templates/media-edit-form.tpl');
 
 if(isset($_REQUEST['file'])) {
-	$media_filename = basename($_REQUEST['file']);
+	$media_filename = strip_tags($_REQUEST['file']);
 	
 	if($_REQUEST['folder'] == "2") {
 		$preview_src = '<p>Filetype: '.substr(strrchr($media_filename, "."), 1).'</p>';
-		$realpath = FILES_FOLDER . '/' . $media_filename;
+		$realpath = $media_filename;
 	} else {
-		$preview_src = '<img src="'.IMAGES_FOLDER . '/' . $media_filename.'" class="img-responsive">';
-		$realpath = IMAGES_FOLDER . '/' . $media_filename;
+		$preview_src = '<img src="'. $media_filename.'" class="img-responsive">';
+		$realpath = $media_filename;
 	}	
 }
 

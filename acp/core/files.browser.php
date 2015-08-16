@@ -5,7 +5,7 @@ error_reporting(0);
 //prohibit unauthorized access
 require("core/access.php");
 
-$deleteFile = strip_tags(basename($_GET['delete']));
+$deleteFile = strip_tags($_GET['delete']);
 
 if(isset($_GET['d'])) {
 	$_SESSION['disk'] = (int) $_GET['d'];
@@ -41,31 +41,45 @@ $sort_direction = constant(trim('SORT_'.$_SESSION['sort_by_name'].$_SESSION['sor
 
 if($disk == "2") {
 	$path = '../content/files';
-	$disk2_class = 'btn btn-primary btn-sm';
+	$disk2_class = 'btn btn-default btn-sm active';
 	$disk1_class = 'btn btn-default btn-sm';
 	$tpl_file = file_get_contents('templates/list-files-grid.tpl');
 } else {
 	$path = '../content/images';
-	$disk1_class = 'btn btn-primary btn-sm';
+	$disk1_class = 'btn btn-default btn-sm active';
 	$disk2_class = 'btn btn-default btn-sm';
 	$tpl_file = file_get_contents('templates/list-files-thumbs.tpl');
 }
 
 /* DELETE FILE OR IMAGE */
 if($deleteFile !== "") {
+	
+	$deleteFile = str_replace('../content/files/', '', $deleteFile);
+	$deleteFile = str_replace('../content/images/', '', $deleteFile);
+	
 	if(is_file("$path/$deleteFile")) {
 		if(unlink("$path/$deleteFile")) {
 			fc_delete_media_data("$path/$deleteFile");
 			echo '<div class="alert alert-success alert-auto-close">'.$lang['msg_file_delete'].'</div>';
 		} else {
-			echo '<div class="alert alert-error">'.$lang['msg_file_delete_error'].'</div>';
+			echo '<div class="alert alert-danger"><strong>'.$path.'/'.$deleteFile.'</strong><br>'.$lang['msg_file_delete_error'].'</div>';
 		}	
 	} else {
-		echo '<div class="alert alert-error">File not found</div>';
+		echo '<div class="alert alert-error">File ('.$path.'/'.$deleteFile.') not found</div>';
 	}
 }
 
-$a_files = array_diff(scandir($path), array('..', '.','.DS_Store','index.html'));
+$scan_images = fc_scandir_rec('../'.FC_CONTENT_DIR.'/images');
+$scan_files = fc_scandir_rec('../'.FC_CONTENT_DIR.'/files');
+
+$cnt_all_images = count($scan_images);
+$cnt_all_files = count($scan_files);
+
+if($disk == "1") {
+	$a_files = $scan_images;
+} else {
+	$a_files = $scan_files;
+}
 
 
 /**
@@ -80,7 +94,7 @@ $dbh = new PDO("sqlite:".CONTENT_DB);
 foreach($a_files as $file) {
 	
 	unset($mediaData);
-	$filename = "$path/$file";
+	$filename = "$file";
 	
 	if(is_dir($filename)) { continue; }
 	
@@ -145,6 +159,7 @@ if($_SESSION['media_filter'] != "") {
 }
 
 
+
 $kw_form  = '<form action="acp.php?tn=filebrowser&sub=browse&d='.$disk.'" method="POST" class="form-inline">';
 $kw_form .= '<div class="input-group">';
 $kw_form .= '<span class="input-group-addon"><span class="glyphicon glyphicon-filter"></span></span>';
@@ -159,13 +174,13 @@ echo '<div class="col-md-12">';
 
 echo '<div class="btn-toolbar">';
 echo '<div class="btn-group">';
-echo "<a class='$disk1_class' href='$_SERVER[PHP_SELF]?tn=$tn&sub=browse&d=1'>Grafiken</a> ";
-echo "<a class='$disk2_class' href='$_SERVER[PHP_SELF]?tn=$tn&sub=browse&d=2'>Dateien</a>";
+echo '<a class="'.$disk1_class.'" href="acp.php?tn='.$tn.'&sub=browse&d=1">'.$lang['btn_images'].' | <span class="">'.$cnt_all_images.'</small></a>';
+echo '<a class="'.$disk2_class.'" href="acp.php?tn='.$tn.'&sub=browse&d=2">'.$lang['btn_files'].' | <span class="">'.$cnt_all_files.'</span></a>';
 echo '</div>';
 echo '<div class="btn-group">';
-echo "<a class='btn btn-sm btn-default' href='$_SERVER[PHP_SELF]?tn=$tn&sub=browse&d=$disk&sort_by_name=1'>". show_sort_arrow($_SESSION['sort_by_name']) ." $lang[filename]</a>";
-echo "<a class='btn btn-sm btn-default' href='$_SERVER[PHP_SELF]?tn=$tn&sub=browse&d=$disk&sort_by_time=1'>". show_sort_arrow($_SESSION['sort_by_time']) ." $lang[date_of_change]</a>";
-echo "<a class='btn btn-sm btn-default' href='$_SERVER[PHP_SELF]?tn=$tn&sub=browse&d=$disk&sort_by_size=1'>". show_sort_arrow($_SESSION['sort_by_size']) ." $lang[filesize]</a>";
+echo "<a class='btn btn-sm btn-default' href='acp.php?tn=$tn&sub=browse&d=$disk&sort_by_name=1'>". show_sort_arrow($_SESSION['sort_by_name']) ." $lang[filename]</a>";
+echo "<a class='btn btn-sm btn-default' href='acp.php?tn=$tn&sub=browse&d=$disk&sort_by_time=1'>". show_sort_arrow($_SESSION['sort_by_time']) ." $lang[date_of_change]</a>";
+echo "<a class='btn btn-sm btn-default' href='acp.php?tn=$tn&sub=browse&d=$disk&sort_by_size=1'>". show_sort_arrow($_SESSION['sort_by_size']) ." $lang[filesize]</a>";
 echo '</div>';
 echo '</div>';
 
@@ -223,8 +238,8 @@ if(is_array($all_filter)) {
 	
 	unset($a_files);
 	foreach($filterFiles as $file) {
-		$file = basename($file);
-		if(is_file("$path/$file")) {
+		//$file = basename($file);
+		if(is_file("$file")) {
 			$a_files[] = $file;
 		}
 	}
@@ -234,9 +249,9 @@ if(is_array($all_filter)) {
 foreach($a_files as $file) {
 
 	$f_suffix = substr (strrchr ($file, "."), 1 );
-	$f_time = filemtime("$path/$file");
-	$f_size =  filesize("$path/$file");
-	$imgsize = getimagesize("$path/$file");
+	$f_time = filemtime("$file");
+	$f_size =  filesize("$file");
+	$imgsize = getimagesize("$file");
 	
 	if($imgsize[0] > 0) {
 		$fileinfo[$x]['filetype'] = "image";
@@ -351,17 +366,21 @@ for($i=$start;$i<$end;$i++) {
 
 	if($fileinfo[$i]['filetype'] == "image") {
 		$set_style = '';
-		$preview_img = "<img src='$path/$filename'>";
+		$preview_img = "<img src='$filename'>";
 	} else {
 		$set_style = "background-image: url(images/no-preview.gif); background-position: center; background-repeat: no-repeat;";
 		$preview_img = '';
 	}
-
+	
+	
+	$short_filename = str_replace('../content/files/', '', $filename);
+	$short_filename = str_replace('../content/images/', '', $filename);
 	
 	$delete_btn = "<a href='acp.php?tn=$tn&sub=browse&delete=$filename&d=$disk&start=$start' onclick=\"return confirm('$lang[confirm_delete_file]')\" class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-trash'></span></a></span>";
 	$edit_btn = '<a href="/acp/core/ajax.media.php?file='.$filename.'&folder='.$disk.'" class="fancybox-ajax btn btn-sm btn-default"><span class="glyphicon glyphicon-pencil"></span></a>';
 
-	$tpl_list = str_replace('{filename}', "$filename", $tpl_file);
+	$tpl_list = str_replace('{short_filename}', $short_filename, $tpl_file);
+	$tpl_list = str_replace('{filename}', $filename, $tpl_list);
 	$tpl_list = str_replace('{set_style}', "$set_style", $tpl_list);
 	$tpl_list = str_replace('{preview_img}', "$preview_img", $tpl_list);
 	$tpl_list = str_replace('{show_filetime}', "$show_filetime", $tpl_list);

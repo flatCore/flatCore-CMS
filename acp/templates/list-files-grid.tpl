@@ -1,6 +1,6 @@
 <div class="row files-list">
 	<div class="col-md-6">
-		<a href="/content/files/{filename}" target="_blank">/content/files/{filename}</a>
+		<a href="{filename}" target="_blank">{short_filename}</a>
 	</div>
 	<div class="col-md-2">
 		{filesize}

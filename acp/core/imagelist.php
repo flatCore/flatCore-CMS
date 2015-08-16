@@ -5,7 +5,8 @@
  * used in tinyMCE's filebrowser
  */
  
-include("../../config.php");
+include('../../config.php');
+include('functions.php');
 
 $path = "../../$img_path";
 $abspath = '/'.$img_path;
@@ -13,24 +14,17 @@ $abspath = '/'.$img_path;
 $testmode = "off";
 $images = Array();
 $counter = 0;
-if($handle = @opendir($path)) {
-  while (false !== ($file=readdir($handle))){
-  	if($file == "index.html") {continue;}
-    if(strpos($file, ".") != 0) {
-      $images[$counter]['title'] = $file;
-      $images[$counter]['value'] = $abspath."/".$file;
-      $counter++;
-    }
-  }
-  closedir($handle);
-} elseif ($testmode == "on") {
-	echo "Error: Can't find directory. Please write a valid path.";
-  exit;
-}
 
-if($counter == 0 && $testmode == "on") {
-	echo "Error: This directory seems to be empty.";
-	exit;
+
+$img = fc_scandir_rec($path);
+foreach($img as $image) {
+	
+	$image = str_replace('../../content/images/', '', $image);
+	
+	$images[$counter]['title'] = $image;
+  $images[$counter]['value'] = $abspath."/".$image;
+	$counter++;
+	
 }
 
 // Let PHP do the sorting an not the OS

@@ -61,6 +61,7 @@ function buffer_script($script,$parameters=NULL) {
 function fc_get_images_data($image,$parameters=NULL) {
 
 	global $fc_db_content;
+	global $fc_template;
 	
 	if($parameters !== NULL) {
 		$parameter = parse_str(html_entity_decode($parameters));
@@ -74,19 +75,15 @@ function fc_get_images_data($image,$parameters=NULL) {
 	$imageData = $sth->fetch(PDO::FETCH_ASSOC);
 	$dbh = null;
 	
-	if($imageData['media_file'] != '') {
-		$href_s = '<a href="'.$imageData['media_file'].'" class="'.$aclass.'">';
-		$href_e = '</a>';
-	}
+	$img_src = str_replace('../content/images/', '/content/images/', $imageData['media_file']);
+	$tpl = file_get_contents('./styles/'.$fc_template.'/templates/image.tpl');
+	$tpl = str_replace('{$image_src}', $img_src, $tpl);
+	$tpl = str_replace('{$image_title}', $imageData['media_title'], $tpl);
+	$tpl = str_replace('{$image_alt}', $imageData['media_alt'], $tpl);
+	$tpl = str_replace('{$image_caption}', $imageData['media_text'], $tpl);
+	$tpl = str_replace('{$image_link_class}', $aclass, $tpl);
 	
-	$image_str  = '<div class="image-container">';
-	$image_str .= $href_s;
-	$image_str .= '<img src="/content/images/'.basename($imageData['media_file']).'" title="'.stripslashes($imageData['media_title']).'" alt="'.stripslashes($imageData['media_alt']).'" class="'.$iclass.'">';
-	$image_str .= $href_e;
-	$image_str .= '<div class="image-caption">'.stripslashes($imageData['media_text']).'</div>';
-	$image_str .= '</div>';
-	
-	return $image_str;
+	return $tpl;
 	
 }
 

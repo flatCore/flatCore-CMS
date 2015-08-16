@@ -158,6 +158,38 @@ function get_all_images() {
 
 
 /**
+ * get all files from directory (recursive)
+ * return array
+ */
+
+function fc_scandir_rec($dir) { 
+   
+   $result = array(); 
+
+   $cdir = scandir($dir); 
+   foreach ($cdir as $key => $value) { 
+      if(in_array($value,array('..', '.','.DS_Store','index.html'))) {
+	      continue;
+	    }
+      if(is_dir($dir . '/' . $value)) {
+	      $result[] = fc_scandir_rec($dir . '/' . $value); 
+      } else { 
+        $result[] = $dir.'/'.$value; 
+      } 
+   } 
+   $result = fc_flatten_array($result);
+   return $result; 
+} 
+
+function fc_flatten_array(array $array) {
+    $flattened_array = array();
+    array_walk_recursive($array, function($a) use (&$flattened_array) { $flattened_array[] = $a; });
+    return $flattened_array;
+}
+
+
+
+/**
  * CLEAN VARS // URL PARAMETERS
  */
 
