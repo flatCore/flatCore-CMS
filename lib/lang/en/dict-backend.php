@@ -81,6 +81,9 @@ $lang['logfile_hits'] = "Entries";
 $lang['pagination_forward'] = "Next";
 $lang['pagination_backward'] = "Back";
 
+$lang['btn_files'] = "Files";
+$lang['btn_images'] = "Images";
+
 
 /* Headlines */
 

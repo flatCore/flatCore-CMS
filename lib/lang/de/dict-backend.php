@@ -77,6 +77,8 @@ $lang['logfile_hits'] = "Einträge";
 $lang['pagination_forward'] = "Weiter";
 $lang['pagination_backward'] = "Zurück";
 
+$lang['btn_files'] = "Dateien";
+$lang['btn_images'] = "Grafiken";
 
 /* Headlines */
 
