@@ -34,12 +34,12 @@ $(function() {
 				{title : 'Lead paragraph', block : 'p', classes : 'lead'}
 			]},
 			{title: 'Links', items: [
-				{title : 'btn', inline : 'a', classes : 'btn btn-default'},
-				{title : 'btn-primary', inline : 'a', classes : 'btn btn-primary'},
-				{title : 'btn-info', inline : 'a', classes : 'btn btn-info'},
-				{title : 'btn-success', inline : 'a', classes : 'btn btn-success'},
-				{title : 'btn-warning', inline : 'a', classes : 'btn btn-warning'},
-				{title : 'btn-danger', inline : 'a', classes : 'btn btn-danger'}
+				{title : 'btn', selector: 'a', classes : 'btn btn-default'},
+				{title : 'btn-primary', selector: 'a', classes : 'btn btn-primary'},
+				{title : 'btn-info', selector: 'a', classes : 'btn btn-info'},
+				{title : 'btn-success', selector: 'a', classes : 'btn btn-success'},
+				{title : 'btn-warning', selector: 'a', classes : 'btn btn-warning'},
+				{title : 'btn-danger', selector: 'a', classes : 'btn btn-danger'}
 			]},
 			{title: 'Label/Div', items: [
 			{title : 'Label', inline : 'span', classes : 'label label-default'},
@@ -67,7 +67,7 @@ $(function() {
 			{title: 'Keine', value: ''},
 	    {title: 'Lightbox', value: 'lightbox'}
 	  ],
-		extended_valid_elements : "textarea[cols|rows|disabled|name|readonly|class]",
+		extended_valid_elements : "*[*]",
 		visual : true,
 		paste_as_text: true
 
@@ -110,12 +110,12 @@ $(function() {
 				{title : 'Lead paragraph', block : 'p', classes : 'lead'}
 			]},
 			{title: 'Links', items: [
-				{title : 'btn', inline : 'a', classes : 'btn btn-default'},
-				{title : 'btn-primary', inline : 'a', classes : 'btn btn-primary'},
-				{title : 'btn-info', inline : 'a', classes : 'btn btn-info'},
-				{title : 'btn-success', inline : 'a', classes : 'btn btn-success'},
-				{title : 'btn-warning', inline : 'a', classes : 'btn btn-warning'},
-				{title : 'btn-danger', inline : 'a', classes : 'btn btn-danger'}
+				{title : 'btn', selector: 'a', classes : 'btn btn-default'},
+				{title : 'btn-primary', selector: 'a', classes : 'btn btn-primary'},
+				{title : 'btn-info', selector: 'a', classes : 'btn btn-info'},
+				{title : 'btn-success', selector: 'a', classes : 'btn btn-success'},
+				{title : 'btn-warning', selector: 'a', classes : 'btn btn-warning'},
+				{title : 'btn-danger', selector: 'a', classes : 'btn btn-danger'}
 			]},
 			{title: 'Label/Div', items: [
 			{title : 'Label', inline : 'span', classes : 'label label-default'},
