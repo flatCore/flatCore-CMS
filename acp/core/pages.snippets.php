@@ -276,7 +276,7 @@ echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor"
 echo '</div>';
 
 echo '</div>';
-echo '<textarea class="form-control" id="textEditor" name="textlib_content">'.$textlib_content.'</textarea>';
+echo '<textarea class="form-control mceEditor" id="textEditor" name="textlib_content">'.$textlib_content.'</textarea>';
 
 echo '<input type="hidden" name="text" value="'.$text.'">';
 echo '</div>';

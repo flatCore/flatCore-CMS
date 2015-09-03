@@ -227,11 +227,6 @@ foreach($fc_preferences as $k => $v) {
 			    var button = $("input[name='optEditor']:checked").val();
 	    		localStorage.setItem("editor_mode", button);
 	    		switchEditorMode(button);
-	    		
-	    		if(button == 'optE1') {
-		    		tinymce.execCommand('mceAddEditor', false, "textEditor");
-	    		}
-	    		
 				});
 							
 			
@@ -241,13 +236,10 @@ foreach($fc_preferences as $k => $v) {
 					editor_mode = 'optE1';
 					localStorage.setItem("editor_mode", editor_mode);
 				}
+				
 				setAceEditor();
 				switchEditorMode(editor_mode);
 				
-				/* dirty forms */
-				$('form').dirtyForms();
-				$.DirtyForms.dialog = false;
-
 				$("input[value="+editor_mode+"]").parent().addClass('active');
 			
 				function switchEditorMode(mode) {
@@ -261,14 +253,16 @@ foreach($fc_preferences as $k => $v) {
 		    		textEditor.addClass('mceEditor form-control');
 		    		textEditor.css("display","block");
 		    		divEditor.remove();
+		    		/* load configs again */
+		    		<?php echo $tinyMCE_config_contents; ?>
+		    		tinymce.EditorManager.execCommand('mceAddEditor',true, 'textEditor');
 		  		}
 		  		if(mode == 'optE2') {
 			  		divEditor.remove();
 			  		if(tinymce.editors.length > 0) {
-			  			tinymce.execCommand('mceFocus', false, 'textEditor');
-							tinymce.execCommand('mceRemoveControl', true, "textEditor");
-							tinymce.remove();
+							tinymce.EditorManager.execCommand('mceRemoveEditor',true, 'textEditor');
 							$('div.mce-tinymce').remove();
+							tinymce.remove();
 						}
 		    		textEditor.addClass('plain form-control');
 		    		textEditor.css("display","block");
@@ -276,8 +270,8 @@ foreach($fc_preferences as $k => $v) {
 		  		}
 		  		if(mode == 'optE3') {
 			  		if(tinymce.editors.length > 0) {
-			  			tinymce.execCommand('mceFocus', false, 'textEditor');
-							tinymce.execCommand('mceRemoveControl', true, "textEditor");
+			  			tinymce.execCommand('mceRemoveEditor',true, 'textEditor');
+			  			$('div.mce-tinymce').remove();
 							tinymce.remove();
 						}
 						textEditor.addClass('aceEditor_code form-control');
@@ -300,11 +294,17 @@ foreach($fc_preferences as $k => $v) {
 					  aceEditor.getSession().setMode("ace/mode/html");
 					  aceEditor.setShowPrintMargin(false);
 						aceEditor.getSession().on('change', function(){
-							HTMLtextarea.val(HTMLeditor.getSession().getValue());
+							HTMLtextarea.val(aceEditor.getSession().getValue());
 						});
 				  }
 				}
-			
+
+
+				/* dirty forms */
+				$('form').dirtyForms();
+				$.DirtyForms.dialog = false;
+				
+				
 				$("#toggleExpand").click(function() {
 				  $('.info-collapse').toggleClass('info-hide');
 				  $('.glyphicon-collapse-down').toggleClass('glyphicon-collapse-up');
@@ -426,8 +426,7 @@ foreach($fc_preferences as $k => $v) {
 			  }
 			
 			});
-			
-			
+		
 			
 		</script>
 
