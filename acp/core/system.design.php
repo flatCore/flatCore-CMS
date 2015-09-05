@@ -6,7 +6,6 @@ require("core/access.php");
 
 if(isset($_POST['saveDesign'])) {
 
-
 	// all incoming data -> strip_tags
 	foreach($_POST as $key => $val) {
 		$$key = @strip_tags($val); 
@@ -45,12 +44,9 @@ if(isset($_POST['saveDesign'])) {
 
 }
 
-
 if($sys_message != ""){
 	print_sysmsg("$sys_message");
 }
-
-
 
 echo '<form action="'.$_SERVER['PHP_SELF'].'?tn=system&sub=design" method="POST" class="form-horizontal">';
 echo '<fieldset>';
@@ -102,20 +98,19 @@ $select_prefs_thumbnail .= "</select>";
 echo tpl_form_control_group('',$lang['page_thumbnail'],$select_prefs_thumbnail);
 
 
-//submit form to save data
 echo"<div class='formfooter'>";
 echo"<input type='submit' class='btn btn-success' name='saveDesign' value='$lang[save]'>";
 echo"</div>";
 
 echo '</fieldset>';
-
 echo '</form>';
 
+/**
+ * theme options
+ */
 
 echo '<fieldset>';
 echo '<legend>'.$prefs_template.'</legend>';
-
-define("FC_SOURCE", "acp");
 
 echo '<div class="row">';
 echo '<div class="col-md-9">';
@@ -131,9 +126,54 @@ if(is_file("../styles/$prefs_template/images/preview.png")) {
 	echo '<img src="../styles/'.$prefs_template.'/images/preview.png" class="img-responsive img-rounded">';
 }
 
-if(is_file("../styles/$prefs_template/readme.html")) {
-	include("../styles/$prefs_template/readme.html");
+echo '<table class="table table-condensed">';
+if(is_file('../styles/'.$prefs_template.'/info.xml')) {
+	$theme_xml = simplexml_load_file('../styles/'.$prefs_template.'/info.xml');
+	//print_r($info_xml);
+	
+	echo '<tr>';
+	echo '<td>Theme:</td>';
+	echo '<td>' . $theme_xml->name . '</td>';
+	echo '</tr>';
+	echo '<tr>';
+	echo '<td>Version:</td>';
+	echo '<td>' . $theme_xml->version . '</td>';
+	echo '</tr>';
+	echo '<tr>';
+	echo '<td>License:</td>';
+	echo '<td>' . $theme_xml->license . '</td>';
+	echo '</tr>';
+	echo '<tr>';
+	echo '<td>Author:</td>';
+	echo '<td>' . $theme_xml->author . '</td>';
+	echo '</tr>';
+	if($theme_xml->author_url != '') {
+		echo '<tr>';
+		echo '<td>URL:</td>';
+		echo '<td><a href="'.$theme_xml->author_url.'">' . $theme_xml->author_url . '</a></td>';
+		echo '</tr>';		
+	}
+	echo '<tr>';
+	echo '<td>Requires:</td>';
+	echo '<td>' . $theme_xml->author . '</td>';
+	echo '</tr>';
+	echo '<tr>';
+	echo '<td>Requires</td>';
+	echo '<td>';
+	foreach ($theme_xml->requires -> core as $requires) {
+	    switch((string) $requires['type']) {
+	    case 'min':
+	        echo 'min: ' . $requires . '<br>';
+	        break;
+	    case 'max':
+	        echo 'max: ' . ($requires > 0 ? $requires : 'unknown');
+	        break;
+	    }
+	}
+	echo '</td>';
+	echo '<tr>';
 }
+echo '</table>';
 
 echo '</div>';
 echo '</div>';

@@ -1,0 +1,12 @@
+<?xml version='1.0' standalone='yes'?>
+<theme>
+	<name>blucent</name>
+	<version>1.1</version>
+	<license>GNU General Public License</license>
+	<author>flatCore Dev Team</author>
+	<author_url>http://www.flatcore.de</author_url>
+	<requires>
+		<core type="min">1.4</core>
+		<core type="max"></core>
+	</requires>
+</theme>

@@ -19,8 +19,6 @@ function theme_text_parser($str) {
 
 
 function theme_replacer($string) {
-	$string = str_replace('<p>[', '[', $string);
-	$string = str_replace(']</p>', ']', $string);
 
 	/* twitter bootstrap grid */	
 	

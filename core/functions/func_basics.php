@@ -96,6 +96,13 @@ function fc_get_images_data($image,$parameters=NULL) {
 	 
 function text_parser($text) {
 	
+	if(function_exists('theme_text_parser')) {
+		$text = theme_text_parser($text);
+	}
+	
+	$text = str_replace('<p>[', '[', $text);
+	$text = str_replace(']</p>', ']', $text);
+	
 	if(preg_match_all('#\<pre.*?\>(.*?)\</pre\>#', $text, $matches)) {
 		$match = $matches[0];
 		foreach($match as $k => $v) {
@@ -145,10 +152,6 @@ function text_parser($text) {
 	    },
 	    $text
 	);
-	
-	if(function_exists('theme_text_parser')) {
-		$text = theme_text_parser($text);
-	}
 
 	return $text;
 
