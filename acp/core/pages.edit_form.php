@@ -423,11 +423,12 @@ for($i=0;$i<count($arr_groups);$i++) {
 		$checked = "";
 	}
 	
-	$checkbox_usergroup .= '<label class="checkbox">';
+	$checkbox_usergroup .= '<div class="checkbox"><label>';
 	$checkbox_usergroup .= "<input type='checkbox' $checked name='set_usergroup[]' value='$group_name'> $group_name";
-	$checkbox_usergroup .= '</label>';
+	$checkbox_usergroup .= '</label></div>';
 }
 
+echo '<div class="form-group">';
 echo '<div class="well well-sm">';
 echo '<a href="#" data-toggle="collapse" data-target="#usergroups">'.$lang['choose_usergroup'].'</a>';
 echo '<div id="usergroups" class="collapse">';
@@ -452,10 +453,11 @@ for($i=0;$i<$cnt_admins;$i++) {
 		$checked_user = "";
 	}
 		
-	$checkbox_set_authorized_admins .= '<label class="checkbox">';
+	$checkbox_set_authorized_admins .= '<div class="checkbox"><label>';
  	$checkbox_set_authorized_admins .= "<input type='checkbox' $checked_user name='set_authorized_admins[]' value='$user_nick'> $user_nick";
- 	$checkbox_set_authorized_admins .= '</label>';
+ 	$checkbox_set_authorized_admins .= '</label></div>';
 }
+
 
 echo '<div class="well well-sm">';
 echo '<a href="#" data-toggle="collapse" data-target="#admins">'.$lang['f_page_authorized_admins'].'</a>';
@@ -463,17 +465,18 @@ echo '<div id="admins" class="collapse">';
 echo $checkbox_set_authorized_admins;
 echo '</div>';
 echo '</div>';
+echo '</div>'; // form-group
 
 
-echo '<hr>';
 echo '<input type="hidden" name="page_version" value="'.$page_version.'">';
 echo '<input type="hidden" name="modus" value="'.$modus.'">';
 
+echo '<div class="form-group">';
 echo '<div class="btn-group btn-group-justified">';
 echo '<div class="btn-group">'.$submit_button.'</div><div class="btn-group">'.$previev_button.'</div>';
 echo '</div>';
-echo '<hr>' . $delete_button;
-
+echo $delete_button;
+echo '</div>';
 
 echo '</div>'; // panel-body
 echo '</div>'; // panel
