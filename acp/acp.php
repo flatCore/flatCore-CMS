@@ -238,7 +238,6 @@ foreach($fc_preferences as $k => $v) {
 				}
 				
 				setAceEditor();
-				switchEditorMode(editor_mode);
 				
 				$("input[value="+editor_mode+"]").parent().addClass('active');
 			
