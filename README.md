@@ -1,3 +1,7 @@
+<p align="center">
+<img src="http://www.flatcore.de/content/images/flatcore-logo-flat.png">
+</p>
+
 flatcore CMS
 ============
 
