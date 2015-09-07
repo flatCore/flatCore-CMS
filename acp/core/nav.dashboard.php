@@ -68,6 +68,9 @@ echo '<div id="moduls" class="panel-collapse collapse">';
 $arr_iMods = get_all_moduls();
 $nbrModuls = count($arr_iMods);
 
+if($nbrModuls < 1) {
+	echo '<a class="sidebar-sub" href="acp.php?tn=moduls">'.$lang['alert_no_modules'].'</a>';
+}
 
 for($i=0;$i<$nbrModuls;$i++) {
 	$modFolder = $arr_iMods[$i]['folder'];
@@ -75,7 +78,7 @@ for($i=0;$i<$nbrModuls;$i++) {
 	$mod_info_file = "../modules/$modFolder/info.inc.php";
 		if(is_file("$mod_info_file")) {
 			include("$mod_info_file");
-			echo "<a class='sidebar-sub' href='$_SERVER[PHP_SELF]?tn=moduls&sub=$modFolder&a=start'>$mod[name]</a>";
+			echo '<a class="sidebar-sub" href="acp.php?tn=moduls&sub='.$modFolder.'&a=start">'.$mod['name'].'</a>';
 		}
 }
 echo '</div>';

@@ -3,10 +3,11 @@
 //prohibit unauthorized access
 require("core/access.php");
 
-
 $template_file = file_get_contents("templates/modlist.tpl");
 
-
+if($nbrModuls < 1) {
+	echo '<div class="alert alert-info">'.$lang['alert_no_modules'].'</div>';
+}
 
 for($i=0;$i<$nbrModuls;$i++) {
 

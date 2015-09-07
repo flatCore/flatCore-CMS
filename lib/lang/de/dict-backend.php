@@ -346,6 +346,7 @@ $lang['msg_update_modus_activated'] = "<b>Der Update-Modus ist aktiv</b><br>Das 
 
 $lang['alert_no_htaccess'] = 'Es ist keine .htaccess Datei vorhanden.';
 $lang['alert_not_writable'] = 'Die Datei oder das Verzeichnis hat nicht die nötigen Schreibrechte:';
+$lang['alert_no_modules'] = 'Es sind noch keine Module installiert.';
 
 /* System */
 
