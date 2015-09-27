@@ -222,20 +222,25 @@ foreach($fc_preferences as $k => $v) {
 		<script type="text/javascript">
 
 			$(document).ready(function() {
-				
-		    $('input[name="optEditor"]').on("change", function () {
-			    var button = $("input[name='optEditor']:checked").val();
-	    		localStorage.setItem("editor_mode", button);
-	    		switchEditorMode(button);
-				});
-							
-			
+
 				/* toggle editor class [mceEditor|plain|aceEditor_html] */
 				var editor_mode = localStorage.getItem('editor_mode');	
 				if(!editor_mode) {
 					editor_mode = 'optE1';
 					localStorage.setItem("editor_mode", editor_mode);
 				}
+								
+		    $('input[name="optEditor"]').on("change", function () {
+			    var button = $("input[name='optEditor']:checked").val();
+	    		localStorage.setItem("editor_mode", button);
+	    		switchEditorMode(button);
+				});
+							
+				$(window).on("load", function () {
+					if(editor_mode !== 'optE1') {
+						switchEditorMode(editor_mode);
+					}
+				});
 				
 				setAceEditor();
 				
@@ -260,6 +265,7 @@ foreach($fc_preferences as $k => $v) {
 			  		divEditor.remove();
 			  		if(tinymce.editors.length > 0) {
 							tinymce.EditorManager.execCommand('mceRemoveEditor',true, 'textEditor');
+							tinymce.execCommand('mceRemoveEditor',true, 'textEditor');
 							$('div.mce-tinymce').remove();
 							tinymce.remove();
 						}
