@@ -178,8 +178,8 @@ function cache_most_clicked($num = 5) {
 		
 		$string .= "\$arr_mostclicked[$i][page_id] = \"" . $mostclicked[$i]['page_id'] . "\";\n";
 		$string .= "\$arr_mostclicked[$i][link] = \"" . $mostclicked[$i]['link'] . "\";\n";
-		$string .= "\$arr_mostclicked[$i][linkname] = \"" . $mostclicked[$i]['linkname'] . "\";\n";
-		$string .= "\$arr_mostclicked[$i][pagetitle] = \"" . $mostclicked[$i]['pagetitle'] . "\";\n";
+		$string .= "\$arr_mostclicked[$i][linkname] = \"" . htmlentities($mostclicked[$i]['linkname'],ENT_QUOTES) . "\";\n";
+		$string .= "\$arr_mostclicked[$i][pagetitle] = \"" . htmlentities($mostclicked[$i]['pagetitle'],ENT_QUOTES) . "\";\n";
 	
 	} // eol $i
 	

@@ -522,8 +522,8 @@ function cache_lastedit($num = 5) {
 	
 		$string .= "\$arr_lastedit[$i][page_id] = \"" . $result[$i]['page_id'] . "\";\n";
 		$string .= "\$arr_lastedit[$i][link] = \"" . $result[$i]['link'] . "\";\n";
-		$string .= "\$arr_lastedit[$i][page_title] = \"" . $result[$i]['page_title'] . "\";\n";
-		$string .= "\$arr_lastedit[$i][page_linkname] = \"" . $result[$i]['page_linkname'] . "\";\n";
+		$string .= "\$arr_lastedit[$i][page_title] = \"" . htmlentities($result[$i]['page_title'],ENT_QUOTES) . "\";\n";
+		$string .= "\$arr_lastedit[$i][page_linkname] = \"" . htmlentities($result[$i]['page_linkname'],ENT_QUOTES) . "\";\n";
 	
 	} // eol $i
 	
