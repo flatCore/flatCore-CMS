@@ -93,6 +93,18 @@ for($i=0;$i<$cnt_result;$i++) {
 		$show_template_name = $page_template;
 	}
 	
+	if(strlen($page_description) > 100) {
+		$page_description = substr($page_description, 0, 100) .' <small>(&hellip;)</small>';
+	}
+	
+	if($page_description == '') {
+		$page_description = '<span class="text-danger">'.$lang['alert_no_page_description'].'</span>';
+	}
+	
+	if($page_title == '') {
+		$page_title = '<span class="text-danger">'.$lang['alert_no_page_title'].'</span>';
+	}
+	
 	$points_of_page = substr_count($page_sort, '.');
 	$indent = ($points_of_page-1)*10 . 'px';
 

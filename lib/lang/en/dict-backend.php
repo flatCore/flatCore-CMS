@@ -351,6 +351,9 @@ $lang['alert_no_htaccess'] = 'There isn\'t a .htaccess file in your root.';
 $lang['alert_not_writable'] = 'The File/Directory is not writable:';
 $lang['alert_no_modules'] = 'There are no modules are installed.';
 
+$lang['alert_no_page_title'] = 'No Pagetitle';
+$lang['alert_no_page_description'] = 'No Page Description';
+
 
 /* System */
 

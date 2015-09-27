@@ -348,6 +348,9 @@ $lang['alert_no_htaccess'] = 'Es ist keine .htaccess Datei vorhanden.';
 $lang['alert_not_writable'] = 'Die Datei oder das Verzeichnis hat nicht die nötigen Schreibrechte:';
 $lang['alert_no_modules'] = 'Es sind noch keine Module installiert.';
 
+$lang['alert_no_page_title'] = 'Kein Seitentitel';
+$lang['alert_no_page_description'] = 'Keine Seitenbeschreibung';
+
 /* System */
 
 $lang['txtlib_welcome'] = "Einleitung (Portal)";
