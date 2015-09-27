@@ -211,6 +211,7 @@ for($i=0;$i<$cnt_result;$i++) {
 	$page_sort = $result[$i]['page_sort'];
 	$page_linkname = stripslashes($result[$i]['page_linkname']);
 	$page_title = stripslashes($result[$i]['page_title']);
+	$page_description = stripslashes($result[$i]['page_meta_description']);
 	$page_status = $result[$i]['page_status'];
 	$page_lastedit = $result[$i]['page_lastedit'];
 	$page_lastedit_from = $result[$i]['page_lastedit_from'];
@@ -292,35 +293,6 @@ for($i=0;$i<$cnt_result;$i++) {
 
 	$page_comments_link = '<a class="fancybox-ajax btn btn-default btn-xs" href="/acp/core/ajax.comments.php?pid='.$page_id.'"><span class="glyphicon glyphicon-comment"></span></a>';
 
-
-	/*
-	$extra_info  = '<span class="label label-white"><span class="glyphicon glyphicon-time"></span> '.$last_edit.'</span> ';
-	$extra_info .= '<span class="label label-white"><span class="glyphicon glyphicon-file"></span> '.$show_template_name.'</span> ';
-	$extra_info .= '<span class="label label-white"><span class="glyphicon glyphicon-globe"></span> '.$page_language.'</span> ';
-	$extra_info .= '<span class="label label-white"><span class="glyphicon glyphicon-comment"></span> '.$page_cnt_comments.'</span> ';	
-	$extra_info2 = '';
-	if($page_permalink != '') {
-		$extra_info2 = '<span class="label label-white"><span class="glyphicon glyphicon-link"></span> '.$page_permalink.'</span> ';
-	}
-	if($page_redirect != '') {
-		$extra_info2 .= '<span class="label label-white"><span class="text-primary glyphicon glyphicon-link"></span> '.$page_redirect.'</span> ';
-	}
-	$extra_info2 .= '<span class="label label-white"><span class="glyphicon glyphicon-stats"></span> '.$pi.'</span> ';
-	$extra_info2 .= '<span class="label label-white"><span class="glyphicon glyphicon-sort-by-attributes"></span> '.$page_sort.'</span>';
-	
-	echo '<div class="page-list-controls page-list-item '.$item_class.'" style="margin-left:-10px;">';
-
-	echo '<div class="label-page-status">'.$status_label.'</div>';
-	echo '<h5><a class="ghost-btn '.$btn.'" href="'.$frontend_link.'" title="'.$frontend_link.'">'.$page_linkname.'</a> '.$page_title.'</h5>';
-	echo '<p class="extrainfo condensed" style="padding-left:10px;">'.$extra_info. '</p>';
-	echo '<p class="extrainfo condensed" style="padding-left:10px;">'.$extra_info2.'</p>';
-	echo '<div class="controls-container controls">';
-	echo '<div class="controls-container-inner">';
-	echo '<div class="btn-group">'.$edit_button.' '.$duplicate_button.' '.$page_comments_link.'</div>';
-	echo '</div>';
-	echo '</div>';
-	echo '</div>';
-	*/
 	
 	$str = array(
 		'{status-label}','{item-linkname}','{item-title}',
