@@ -428,7 +428,7 @@ if(is_numeric($editpage)) {
 	$result = $result->fetch(PDO::FETCH_ASSOC);
 	
 	foreach($result as $k => $v) {
-	   $$k = htmlspecialchars(stripslashes($v));
+	   $$k = htmlentities(stripslashes($v), ENT_QUOTES);
 	}
 	
 	if(is_array($restore_page_version)) {

@@ -104,8 +104,7 @@ if($page_sort != "portal") {
 }
 
 echo '<hr>';
-	
-echo tpl_form_control_group('',$lang['f_page_linkname'],"<input class='form-control' type='text' name='page_linkname' value='$page_linkname'>");
+echo tpl_form_control_group('',$lang['f_page_linkname'],'<input class="form-control" type="text" name="page_linkname" value="'.$page_linkname.'">');
 echo tpl_form_control_group('',$lang['f_page_permalink'],"<input class='form-control' type='text' name='page_permalink' value='$page_permalink'>");
 
 if(empty($page_permalink_short_cnt)) {
@@ -167,14 +166,14 @@ echo"</div>"; /* EOL tab_extracontent */
 /* tab_meta */
 echo'<div class="tab-pane fade" id="meta">';
 
-echo tpl_form_control_group('',$lang['f_page_title'],"<input class='form-control' type='text' name='page_title' value='$page_title'>");
+echo tpl_form_control_group('',$lang['f_page_title'],'<input class="form-control" type="text" name="page_title" value="'.$page_title.'">');
 
 if($page_meta_author == "") {
 	$page_meta_author = $_SESSION['user_firstname'] .' '. $_SESSION['user_lastname'];
 }
 
-echo tpl_form_control_group('',$lang['f_meta_author'],"<input class='form-control' type='text' name='page_meta_author' value='$page_meta_author'>");
-echo tpl_form_control_group('',$lang['f_meta_keywords'],"<input class='form-control' type='text' name='page_meta_keywords' value='$page_meta_keywords' data-role='tagsinput'>");
+echo tpl_form_control_group('',$lang['f_meta_author'],'<input class="form-control" type="text" name="page_meta_author" value="'.$page_meta_author.'">');
+echo tpl_form_control_group('',$lang['f_meta_keywords'],'<input class="form-control" type="text" name="page_meta_keywords" value="'.$page_meta_keywords.'" data-role="tagsinput">');
 echo tpl_form_control_group('',$lang['f_meta_description'],"<textarea name='page_meta_description' class='form-control cntValues' rows='5'>$page_meta_description</textarea>");
 
 
@@ -240,16 +239,20 @@ if($cnt_custom_fields > 0) {
 /* tab custom fields */
 echo'<div class="tab-pane fade" id="custom">';
 
-	for($i=0;$i<$cnt_custom_fields;$i++) {	
+	for($i=0;$i<$cnt_custom_fields;$i++) {
+		
+		$custom_field_value = '';
+		$custom_field_value = $$custom_fields[$i];
+				
 		if(substr($custom_fields[$i],0,10) == "custom_one") {
 			$label = substr($custom_fields[$i],11);
-			echo tpl_form_control_group('',$label,"<input type='text' class='form-control' name='$custom_fields[$i]' value='" . $$custom_fields[$i] . "'>");
+			echo tpl_form_control_group('',$label,'<input type="text" class="form-control" name="'.$custom_fields[$i].'" value="'.$custom_field_value.'">');
 		}	elseif(substr($custom_fields[$i],0,11) == "custom_text") {
 			$label = substr($custom_fields[$i],12);
-			echo tpl_form_control_group('',$label,"<textarea class='form-control' rows='6' name='$custom_fields[$i]'>" . $$custom_fields[$i] . "</textarea>");
+			echo tpl_form_control_group('',$label,"<textarea class='form-control' rows='6' name='$custom_fields[$i]'>" .$custom_field_value. "</textarea>");
 		}	elseif(substr($custom_fields[$i],0,14) == "custom_wysiwyg") {
 			$label = substr($custom_fields[$i],15);
-			echo tpl_form_control_group('',$label,"<textarea class='mceEditor_small' name='$custom_fields[$i]'>" . $$custom_fields[$i] . "</textarea>");
+			echo tpl_form_control_group('',$label,"<textarea class='mceEditor_small' name='$custom_fields[$i]'>" .$custom_field_value. "</textarea>");
 		}		
 	}
 
