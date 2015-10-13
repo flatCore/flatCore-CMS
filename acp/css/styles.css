@@ -757,7 +757,13 @@ textarea#textEditor {
   width: 200px;
   background: rgba(255, 255, 255, 0.8);
   margin-bottom: 10px;
-  border: 1px solid #bbb;
+  border: 1px solid #ddd;
+  overflow: hidden;
+}
+.masonry-item:hover {
+  -webkit-box-shadow: 0 0 10px rgba(20, 20, 20, 0.5);
+  -moz-box-shadow: 0 0 10px rgba(20, 20, 20, 0.5);
+  box-shadow: 0 0 10px rgba(20, 20, 20, 0.5);
 }
 .masonry-item-inner {
   padding: 5px;
@@ -773,6 +779,7 @@ textarea#textEditor {
   font-size: 13px;
   line-height: 1.35em;
   margin: 10px 0 0 0;
+  padding: 5px;
 }
 .files-list {
   border-top: 1px solid #ccc;
