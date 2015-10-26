@@ -78,10 +78,10 @@ if($_SESSION['drm_can_publish'] == "true") {
 
 $list_str .= "</ul>";
 
-echo"$list_str";
+echo $list_str;
 
 
-echo"</div>";
+echo '</div>';
 
 
 echo '<div class="col-md-8">';
@@ -100,6 +100,18 @@ $chat_form = file_get_contents('templates/comment-form.tpl');
 $e_comment_text = '';
 $e_comment_id = '';
 
+if(isset($_GET['dcid'])) {
+	$delete_comment_id = (int) $_GET['dcid'];
+
+	$dbh = new PDO("sqlite:".CONTENT_DB);
+	$query = "DELETE FROM fc_comments WHERE comment_id = :comment_id";
+	$sth = $dbh -> prepare($query);
+	$sth -> bindParam(':comment_id', $delete_comment_id, PDO::PARAM_STR);
+	$sth->execute();
+	$dbh = null;
+	
+}
+
 if(isset($_GET['cid'])) {
 	$get_comment = fc_get_comment($_GET['cid']);
 	$e_comment_text = $get_comment['comment_text'];
@@ -109,6 +121,8 @@ if(isset($_GET['cid'])) {
 		unset($e_comment_text,$e_comment_id);
 	}
 }
+
+
 
 $chat_form = str_replace('{form_action}', "acp.php?tn=dashboard", $chat_form);
 $chat_form = str_replace('{value_textarea}', "$e_comment_text", $chat_form);
@@ -150,8 +164,10 @@ for($i=0;$i<$cnt_comment;$i++) {
 	
 	if($_SESSION['user_nick'] == $comment_author) {
 		$show_entry = str_replace('{entry_edit_btn}', '<a class="btn btn-primary btn-xs" href="acp.php?tn=dashboard&cid='.$comment_id.'">'.$lang['edit'].'</a>', $comment_entry_tpl);
+		$show_entry = str_replace('{entry_delete_btn}', '<a class="btn btn-danger btn-xs" href="acp.php?tn=dashboard&dcid='.$comment_id.'"><span class="glyphicon glyphicon-trash"></span></a>', $show_entry);
 	} else {
 		$show_entry = str_replace('{entry_edit_btn}', '', $comment_entry_tpl);
+		$show_entry = str_replace('{entry_delete_btn}', '', $show_entry);
 	}
 	$show_entry = str_replace('{comment_avatar}', $author_avatar, $show_entry);
 	$show_entry = str_replace('{comment_author}', $comment_author, $show_entry);

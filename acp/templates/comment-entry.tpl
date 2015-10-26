@@ -7,7 +7,7 @@
 	<div class="col-md-10">
 		<p class="small text-muted">{comment_time}</p>
 		<p>{comment_text}</p>
-		<p class="pull-right">{entry_edit_btn}</p>
+		<p class="pull-right">{entry_edit_btn} {entry_delete_btn}</p>
 	</div>
 </div>
 </div>
