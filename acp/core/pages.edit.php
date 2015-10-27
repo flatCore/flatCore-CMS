@@ -428,7 +428,7 @@ if(is_numeric($editpage)) {
 	$result = $result->fetch(PDO::FETCH_ASSOC);
 	
 	foreach($result as $k => $v) {
-	   $$k = htmlentities(stripslashes($v), ENT_QUOTES);
+	   $$k = htmlentities(stripslashes($v), ENT_QUOTES, "UTF-8");
 	}
 	
 	if(is_array($restore_page_version)) {
