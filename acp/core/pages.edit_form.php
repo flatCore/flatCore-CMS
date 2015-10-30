@@ -143,9 +143,7 @@ echo'</div>'; /* EOL tab_info */
 /* tab_content */
 echo'<div class="tab-pane fade" id="content">';
 
-echo"<textarea name='page_content' class='mceEditor'>
-	 $page_content
-	 </textarea>";
+echo '<textarea name="page_content" class="form-control mceEditor textEditor switchEditor" id="textEditor">'.$page_content.'</textarea>';
 
 echo"</div>";
 /* EOL tab_content */
@@ -155,9 +153,7 @@ echo"</div>";
 
 echo'<div class="tab-pane fade" id="extracontent">';
 
-echo"<textarea name='page_extracontent' class='mceEditor_small'>
-	 $page_extracontent
-	 </textarea>";
+echo '<textarea name="page_extracontent" class="form-control mceEditor textEditor switchEditor" id="textEditor2">'.$page_extracontent.'</textarea>';
 
 echo"</div>"; /* EOL tab_extracontent */
 
@@ -270,6 +266,14 @@ echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">'.$lang['tab_page_preferences'].'</div>';
 echo '<div class="panel-body" style="padding-left:30px;padding-right:30px;">';
 
+
+echo '<div class="form-group">';
+echo '<div class="btn-group btn-group-justified" data-toggle="buttons">';
+echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE1" checked> WYSIWYG</label>';
+echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE2"> Text</label>';
+echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE3"> Code</label>';
+echo '</div>';
+echo '</div>';
 
 
 /* Select Language */

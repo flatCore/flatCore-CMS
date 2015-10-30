@@ -357,7 +357,7 @@ div.header-bc {
 div.header-bc span {
   padding: 2px 4px;
   margin: 0;
-  background: #ffffff url(../images/gradiant.png) repeat-x left center;
+  background: #fff url(../images/gradiant.png) repeat-x left center;
   border: 1px solid #999;
   border-right: 0;
   color: #888;
@@ -746,7 +746,9 @@ fieldset legend {
 .btn-ghost.active {
   border-bottom: 1px solid #a1d2a1;
 }
-textarea#textEditor {
+textarea#textEditor,
+textarea#textEditor2,
+.switchEditor {
   width: 100%;
   height: 350px;
 }
@@ -865,12 +867,12 @@ code {
   background-color: #eee;
   padding: 3px 15px;
   border-radius: 10px;
-  box-shadow: 0 4px 10px -6px #888888;
+  box-shadow: 0 4px 10px -6px #888;
 }
 .modlist-icon {
   max-width: 100px;
   max-height: 100px;
-  box-shadow: 0 5px 10px -6px #666666;
+  box-shadow: 0 5px 10px -6px #666;
 }
 .modul_list_items {
   padding: 4px;

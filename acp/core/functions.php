@@ -629,8 +629,8 @@ function mods_check_in() {
 	for($i=0;$i<$count_result;$i++) {
 	
 		if($result[$i]['page_modul'] != "") {
-			$string .= "\$active_mods[$x][page_modul] = \"" . $result[$i]['page_modul'] . "\";\n";
-			$string .= "\$active_mods[$x][page_permalink] = \"" . $result[$i]['page_permalink'] . "\";\n";
+			$string .= "\$active_mods[$x]['page_modul'] = \"" . $result[$i]['page_modul'] . "\";\n";
+			$string .= "\$active_mods[$x]['page_permalink'] = \"" . $result[$i]['page_permalink'] . "\";\n";
 			$x++;
 		}
 	

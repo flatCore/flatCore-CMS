@@ -248,13 +248,14 @@ foreach($fc_preferences as $k => $v) {
 			
 				function switchEditorMode(mode) {
 					
-					var textEditor = $('textarea[id="textEditor"]');
+					/* var textEditor = $('textarea[id="textEditor"]'); */
+					var textEditor = $('textarea[class*=switchEditor]');
 					textEditor.removeClass();
 					textEditor.removeAttr('style');
-					var divEditor = $('#aceCodeEditor');
+					var divEditor = $('.aceCodeEditor');
 					
 		  		if(mode == 'optE1') {
-		    		textEditor.addClass('mceEditor form-control');
+		    		textEditor.addClass('mceEditor form-control switchEditor');
 		    		textEditor.css("display","block");
 		    		divEditor.remove();
 		    		/* load configs again */
@@ -269,7 +270,7 @@ foreach($fc_preferences as $k => $v) {
 							$('div.mce-tinymce').remove();
 							tinymce.remove();
 						}
-		    		textEditor.addClass('plain form-control');
+		    		textEditor.addClass('plain form-control switchEditor');
 		    		textEditor.css("display","block");
 		    		textEditor.css("visibility","visible");
 		  		}
@@ -279,29 +280,35 @@ foreach($fc_preferences as $k => $v) {
 			  			$('div.mce-tinymce').remove();
 							tinymce.remove();
 						}
-						textEditor.addClass('aceEditor_code form-control');
-						textEditor.after('<div id="aceCodeEditor"></div>');
+						textEditor.addClass('aceEditor_code form-control switchEditor');
 		    		setAceEditor();
-		    		divEditor.css("width","100%");
-		    		divEditor.css("height","350px");
 		  		}	
 					
 				}
 				
 				function setAceEditor() {
-					
-					if($('#aceCodeEditor').length != 0) {
-						var aceEditor = ace.edit("aceCodeEditor");
-						var HTMLtextarea = $('textarea[class*=aceEditor_code]').hide();
-					  
-					  aceEditor.getSession().setValue(HTMLtextarea.val());
-					  aceEditor.setTheme("ace/theme/chrome");
-					  aceEditor.getSession().setMode("ace/mode/html");
-					  aceEditor.setShowPrintMargin(false);
-						aceEditor.getSession().on('change', function(){
-							HTMLtextarea.val(aceEditor.getSession().getValue());
+					if($('.aceEditor_code').length != 0) {
+						$('textarea[class*=switchEditor]').each(function () {
+							
+							var textarea = $(this);
+							var textarea_id = textarea.attr('id');
+							var editDiv = $('<div>', {
+                position: 'absolute',
+                'class': textarea.attr('class')+' aceCodeEditor'
+            	}).insertBefore(textarea);
+            	
+            	var HTMLtextarea = $('textarea[class*=aceEditor_code]').hide();
+							var aceEditor = ace.edit(editDiv[0]);
+							
+							aceEditor.getSession().setValue(textarea.val());
+							aceEditor.setTheme("ace/theme/chrome");
+							aceEditor.getSession().setMode("ace/mode/html");
+							aceEditor.setShowPrintMargin(false);
+							aceEditor.getSession().on('change', function(){
+								textarea.val(aceEditor.getSession().getValue());
+							});							
 						});
-				  }
+				  }  
 				}
 
 
