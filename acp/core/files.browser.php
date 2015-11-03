@@ -13,6 +13,8 @@ if(isset($_GET['d'])) {
 
 if(isset($_SESSION['disk'])) {
 	$disk = $_SESSION['disk'];
+} else {
+	$disk = 1;
 }
 
 if($_SESSION['sort_by_name'] == '' AND $_SESSION['sort_by_size'] == '' AND $_SESSION['sort_by_time'] == '') {
@@ -267,12 +269,10 @@ foreach($a_files as $file) {
 	$x++;
 }
 
-
 //count all files
 $nbr_of_files = count($fileinfo);
 
 /* sorting */
-
 foreach ($fileinfo as $key => $row) {
     $fi_filename[$key] = $row['filename'];
     $fi_size[$key] = $row['size'];
@@ -317,10 +317,8 @@ if($end>$nbr_of_files) {
 }
 
 
-
 $pag_backlink = "<a class='btn btn-primary' href='$_SERVER[PHP_SELF]?tn=filebrowser&start=$prev_start'>$lang[pagination_backward]</a>";
 $pag_forwardlink = "<a class='btn btn-primary' href='$_SERVER[PHP_SELF]?tn=filebrowser&start=$next_start'>$lang[pagination_forward]</a>";
-
 
 unset($pag_string);
 for($x=0;$x<$cnt_pages;$x++) {
@@ -350,7 +348,6 @@ for($x=0;$x<$cnt_pages;$x++) {
 
 echo"<div id='container'>";
 echo"<div id='masonry-container'>";
-
 
 
 //list all files 
@@ -389,7 +386,6 @@ for($i=$start;$i<$end;$i++) {
 	$tpl_list = str_replace('{delete_button}', "$delete_btn", $tpl_list);
 	
 	echo $tpl_list;
-	
 
 } // eol $i - list all files 
 
@@ -407,11 +403,6 @@ foreach(range($pag_start, $pag_end) as $number) {
 }
 echo " $pag_forwardlink";
 echo '</p></div>'; //EOL PAGINATION
-
-
-
-
-
 
 
 
