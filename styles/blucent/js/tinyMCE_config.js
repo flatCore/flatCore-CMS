@@ -9,7 +9,7 @@ $(function() {
 	    "advlist autolink lists link image charmap preview anchor", "searchreplace visualblocks code fullscreen wordcount template", "media table contextmenu paste textcolor"
 	  ],
 	  toolbar1: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link unlink anchor image media",
-	  toolbar2: "forecolor backcolor fontsizeselect | table | hr removeformat | subscript superscript | fullscreen visualchars visualchars visualblocks | template | code",
+	  toolbar2: "forecolor backcolor fontsizeselect | table | hr removeformat | subscript superscript | fullscreen visualchars visualchars visualblocks | template ",
 	  image_list : "core/imagelist.php",
 	  image_advtab: true,
 	  image_title: true,
