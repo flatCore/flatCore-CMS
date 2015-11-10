@@ -66,6 +66,7 @@ if($query != "") {
 		for($i=0;$i<$cnt_active_mods;$i++) {
 			
 			$mod_permalink = $active_mods[$i]['page_permalink'];
+			$mod_name = $active_mods[$i]['page_modul'];
 			$permalink_length = strlen($mod_permalink);
 			
 			if(strpos("$query", "$mod_permalink") !== false) {
@@ -78,6 +79,10 @@ if($query != "") {
     			}
     		}
     	}
+    	
+			if(is_file('modules/'.$mod_name.'/global/index.php')) {
+				include('modules/'.$mod_name.'/global/index.php');
+  		}
 			
 		}
 
