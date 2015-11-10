@@ -88,6 +88,20 @@ function fc_get_images_data($image,$parameters=NULL) {
 }
 
 
+function fc_global_mod_snippets($mod,$params=NULL) {
+
+	if($params !== NULL) {
+		$parameter = parse_str(html_entity_decode($params));
+	}
+	
+  if(is_file('modules/'.$mod.'.mod/global/snippets.php')) {
+		include('modules/'.$mod.'.mod/global/snippets.php');
+  }
+	
+	return $mod_str;
+	
+}
+
 
 /**
  * find [include] [script] [plugin] and [snippet]
@@ -149,6 +163,14 @@ function text_parser($text) {
 	    '/\[snippet\](.*?)\[\/snippet\]/si',
 	    function ($m) {
 		   return get_textlib_by_fn($m[1]);
+	    },
+	    $text
+	);
+	
+	$text = preg_replace_callback(
+	    '/\[mod=(.*?)\](.*?)\[\/mod\]/si',
+	    function ($m) {
+		   return fc_global_mod_snippets($m[1],$m[2]);
 	    },
 	    $text
 	);
