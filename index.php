@@ -36,7 +36,7 @@ require(FC_CORE_DIR . '/core/functions.php');
 
 /* reserved $_GET['p'] parameters */
 $a_allowed_p = array('register', 'account', 'profile', 'search', 'sitemap', 'logout', 'password');
-
+$p = '';
 
 /*
  * mod_rewrite
@@ -45,7 +45,7 @@ $a_allowed_p = array('register', 'account', 'profile', 'search', 'sitemap', 'log
  *
  */
 
-if($query != "") {
+if(isset($query)) {
 	
 	if(is_file(FC_CONTENT_DIR.'/plugins/query.controller.php')) {
 		include(FC_CONTENT_DIR.'/plugins/query.controller.php');
@@ -105,8 +105,7 @@ if($query != "") {
 	}
 } // eo $query
 
-
-if($preview != "") {
+if(isset($preview)) {
 	$p = (int) $preview;
 	list($page_contents,$fc_nav,$fc_prefs) = get_content($p,'preview');
 	unset($prefs_logfile);
