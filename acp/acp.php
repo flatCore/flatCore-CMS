@@ -190,12 +190,12 @@ foreach($fc_preferences as $k => $v) {
 	
 		<div id="footer">
 		<b>flatCore</b> Content Management System <small>(<?php echo $fc_version_name; ?>)</small><br />
-		copyright © 2010 - <?php echo date('Y'); ?>, <a href="http://www.flatcore.de/" target="_blank">flatCore.de</a>
+		copyright © <?php echo date('Y'); ?>, <a href="http://www.flatcore.org/" target="_blank">flatCore.org</a>
 		</div>
 		
 		</div>
 		
-		<div style="position:fixed;bottom:0;right:0;padding:10px;">
+		<div style="position:fixed;bottom:0;right:0;padding:10px;z-index:600;">
 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal"><span class="glyphicon glyphicon-upload"></span> Upload</button>
 		</div>
 		<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -214,8 +214,6 @@ foreach($fc_preferences as $k => $v) {
 		    </div>
 		  </div>
 		</div>
-
-
 
 
 
@@ -436,11 +434,46 @@ foreach($fc_preferences as $k => $v) {
 						HTMLtextarea.val(HTMLeditor.getSession().getValue());
 					});
 			  }
-			
 			});
-		
-			
-		</script>
+
+$(document).ready(function() {
+   	stretchAppContainer();
+   	
+	  $( "div.scroll-box" ).each(function() {
+	  	var divTop = $(this).offset().top;
+	   	var newHeight = $('div.app-container').innerHeight() - divTop +40;
+	   	$(this).height(newHeight);
+	  });
+  });
+
+  $(window).resize(function () {
+  	stretchAppContainer();
+		$( "div.scroll-box" ).each(function() {
+			var divTop = $(this).offset().top;
+		  var newHeight = $('div.app-container').innerHeight() - divTop +40;
+		  $(this).height(newHeight);
+		});
+  });
+
+
+  function stretchAppContainer() {
+  	var appContainer = $('div.app-container');
+  	if(appContainer.length) {
+	  	if(window.matchMedia('(max-width: 767px)').matches) {
+				appContainer.height('auto');
+			} else {
+    		var divTop = appContainer.offset().top;
+				var winHeight = $(window).height();
+				var divHeight = winHeight - divTop;
+				appContainer.height(divHeight);
+			}
+    }
+  }
+
+   
+
+   
+</script>
 
 	</body>
 </html>

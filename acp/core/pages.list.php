@@ -31,6 +31,8 @@ $cnt_result = count($result);
 
 $result = fc_array_multisort($result, 'page_language', SORT_ASC, 'page_sort', SORT_ASC, SORT_NATURAL);
 
+echo '<div class="app-container">';
+
 echo '<div class="row">';
 echo '<div class="col-md-3">';
 echo '<fieldset>';
@@ -48,16 +50,20 @@ echo '</fieldset>';
 echo '</div>';
 echo '</div>';
 
-
+echo '<div class="max-height-container">';
 echo '<div class="row">';
-echo '<div class="col-lg-6">';
+echo '<div class="col-sm-6">';
 
 /**
  * list all pages where page_sort != empty
  */
 
+
+
+
 echo '<fieldset>';
 echo '<legend>' . $lang['legend_structured_pages'] . '</legend>';
+echo '<div class="scroll-box">';
 echo '<div class="pages-list-container">';
 
 $item_template = file_get_contents('templates/list-pages-item.tpl');
@@ -107,7 +113,6 @@ for($i=0;$i<$cnt_result;$i++) {
 	
 	$points_of_page = substr_count($page_sort, '.');
 	$indent = ($points_of_page-1)*10 . 'px';
-
 	$pi = get_page_impression($page_id);
 	
 	if($page_status == "public") {
@@ -195,16 +200,21 @@ for($i=0;$i<$cnt_result;$i++) {
 
 
 echo '</div>';
+echo '</div>';
 echo '</fieldset>';
 
+
+
 echo '</div>';
-echo '<div class="col-lg-6">';
+echo '<div class="col-sm-6">';
 
 /**
  * list all pages where
  * page_sort == empty
  * or page_sort == portal
  */
+
+echo '<div class="scroll-box">';
 
 echo '<fieldset>';
 echo '<legend>' . $lang['legend_unstructured_pages'] . '</legend>';
@@ -242,6 +252,18 @@ for($i=0;$i<$cnt_result;$i++) {
 	
 	if($page_sort == 'portal') {
 		$page_linkname = '<span class="glyphicon glyphicon-home"></span> ' . $page_linkname;
+	}
+	
+	if(strlen($page_description) > 100) {
+		$page_description = substr($page_description, 0, 100) .' <small>(&hellip;)</small>';
+	}
+	
+	if($page_description == '') {
+		$page_description = '<span class="text-danger">'.$lang['alert_no_page_description'].'</span>';
+	}
+	
+	if($page_title == '') {
+		$page_title = '<span class="text-danger">'.$lang['alert_no_page_title'].'</span>';
 	}
 	
 	$hits_id = $page_id;	
@@ -328,8 +350,13 @@ for($i=0;$i<$cnt_result;$i++) {
 
 echo '</div>';
 echo"</fieldset>";
+echo '</div>';
 
 echo '</div>';
 echo '</div>';
+
+echo '</div>'; // .max-height-container
+
+echo '</div>'; // .app-container
 
 ?>

@@ -530,7 +530,7 @@ span#w200 { width: 200px; }
 
 
 .pages-list-container {
-	padding: 0 0 0 10px;
+	padding: 0 15px 0 10px;
 	background-color:#fff;
 	background-image: linear-gradient(90deg, #e5e5e5 1px, transparent 1px);
 	background-size: 10px;
@@ -724,12 +724,24 @@ span#w200 { width: 200px; }
 }
 
 
-.scroll-conatiner {
+.scroll-container {
 	height:350px;
 	overflow:auto;
 	padding:5px;
 	background-color:#e5e5e5;
 	border-radius:5px;
+}
+
+.scroll-box {
+	width: 100%;
+	min-height: 150px;
+	overflow: auto;
+}
+
+@media screen and (max-width:767px) {
+	.app-container {
+		height: auto !important;
+	}
 }
 
 .dl-logfile {

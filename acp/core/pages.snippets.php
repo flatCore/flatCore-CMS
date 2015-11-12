@@ -134,14 +134,13 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	$modus = 'update';
 }
 
+echo '<div class="app-container">';
 echo '<h3>' . $lang['snippets'] . '</h3>';
-
-
-
 echo '<div class="row">';
 echo '<div class="col-md-3">';
 
-echo '<div class="scroll-conatiner">';
+echo '<div class="max-height-container">';
+echo '<div class="scroll-box">';
 echo '<div class="list-group">';
 
 for($i=0;$i<$cnt_snippets;$i++) {
@@ -171,6 +170,7 @@ for($i=0;$i<$cnt_snippets;$i++) {
 	echo '<a class="list-group-item '.$active_class.'" href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'">'.$show_snip_name.' <span class="badge">'.$get_snip_lang.'</span></a>';
 }
 
+echo '</div>';
 echo '</div>';
 echo '</div>';
 
@@ -301,5 +301,6 @@ echo '</form>';
 
 echo '</div>';
 echo '</div>';
+echo '</div>'; // .app-container
 
 ?>
