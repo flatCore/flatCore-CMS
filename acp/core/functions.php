@@ -435,6 +435,7 @@ function generate_xml_sitemap() {
 		$dbh = null;
 		
 		$cnt_results = count($results);
+		$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 		
 		/* generate content for xml file */
 		
@@ -446,11 +447,7 @@ function generate_xml_sitemap() {
 			$page_permalink = $results[$i]['page_permalink'];
 			$page_lastedit = date("Y-m-d",$results[$i]['page_lastedit']);
 			
-			if($fc_mod_rewrite == "permalink") {
-				$link = "http://$_SERVER[HTTP_HOST]" . FC_INC_DIR . "/$page_permalink";
-			} else {
-				$link = "http://$_SERVER[HTTP_HOST]" . FC_INC_DIR . "/index.php?p=$page_id";
-			}
+			$link = $protocol.$_SERVER['HTTP_HOST'] . FC_INC_DIR . '/' . $page_permalink;
 			
 			$link = str_replace("/acp","",$link);
 				
