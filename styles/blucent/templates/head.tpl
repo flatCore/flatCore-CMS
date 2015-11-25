@@ -27,6 +27,7 @@
 <script type="text/javascript" src="{$fc_inc_dir}/lib/js/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="{$fc_inc_dir}/styles/blucent/js/bootstrap.min.js"></script>
 
+<script type="text/javascript" src="{$fc_inc_dir}/styles/blucent/js/js.cookie.js"></script>
 	
 <!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>

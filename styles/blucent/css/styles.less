@@ -98,6 +98,26 @@ header h2 {
 	text-shadow: 1px 1px 5px darken(@header_color,50%);
 }
 
+.fc-teaser {
+	position: relative;
+	min-height: 400px;
+	background: darken(@header_bg,10%) url(../images/teaser.png) no-repeat center center;
+	background-size: cover;
+}
+
+.fc-teaser-caption {
+	background: fade(@header_bg,40%);
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	padding: 5px 0;
+}
+
+.fc-teaser-caption h4,
+.fc-teaser-caption p {
+	color: #fff;
+}
 
 footer#pageFooter {
 	padding: 25px 15px 30px 15px;
@@ -235,6 +255,17 @@ ul#sitemap li {
 	display: block;
 }
 
+
+.privacy_policy {
+	position: fixed;
+	bottom: 0;
+	z-index: 9001;
+	width: 100%;
+	border-top: 1px solid darken(@footer_bg,10%);
+	background: fade(darken(@footer_bg,10%),95%);
+	color: lighten(@footer_bg,45%);
+	padding: 15px 0;
+}
 
 /**
  * main navigation
