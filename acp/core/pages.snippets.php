@@ -7,6 +7,10 @@ $system_snippets = array('footer_text', 'extra_content_text', 'agreement_text', 
 $modus = 'new';
 
 
+if(isset($_REQUEST['suggest_name'])) {
+	$textlib_name = clean_filename($_REQUEST['suggest_name']);
+}
+
 /**
  * delete snippet
  */
