@@ -14,6 +14,10 @@ if(defined('FC_SOURCE') && FC_SOURCE === 'frontend') {
 	  $smarty->assign('teaser_background_image', " style='background-image: url(../content/images/teaser_background_image.png)' ");
   }
  
+  if(is_file('./content/images/teaser_background_image_'.$page_id.'.png')) {
+	  $smarty->assign('teaser_background_image', " style='background-image: url(../content/images/teaser_background_image_$page_id.png)' ");
+  }
+ 
 } elseif(defined('FC_SOURCE') && FC_SOURCE == 'backend') {
 
 	/**

@@ -98,7 +98,8 @@ header h2 {
 	text-shadow: 1px 1px 5px darken(@header_color,50%);
 }
 
-.fc-teaser {
+.fc-teaser,
+.fc-teaser-small {
 	position: relative;
 	min-height: 400px;
 	background-color: darken(@header_bg,10%);
@@ -106,6 +107,10 @@ header h2 {
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-size: cover;
+}
+
+.fc-teaser-small {
+	min-height: 250px;
 }
 
 .fc-teaser-caption {
