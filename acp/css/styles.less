@@ -856,13 +856,7 @@ fieldset {
   background: rgba(255,255,255,0.3);
 	border-radius: 4px;
 	position: relative;
-	background: -moz-linear-gradient(top,  rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0.6)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  rgba(255,255,255,0.6) 0%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  rgba(255,255,255,0.6) 0%,rgba(255,255,255,0) 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  rgba(255,255,255,0.6) 0%,rgba(255,255,255,0) 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  rgba(255,255,255,0.6) 0%,rgba(255,255,255,0) 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+	.background-image(linear-gradient(to bottom, #fff 0%,rgba(255,255,255,0.05) 90%));
 }
 
 fieldset legend {
@@ -1035,6 +1029,33 @@ code {
 	color: #428bca;
 	background: rgba(78, 134, 245, 0.1);
 }
+
+.modules-list-item {
+	padding: 15px;
+	margin-bottom: 15px;
+	background: rgba(255,255,255,0.5);
+	border: 1px solid rgba(255,255,255,0.6);
+	.box-shadow(0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset);
+}
+
+.modules-list-item:hover {
+	background: rgba(255,255,255,0.2);
+}
+
+.modules-list-item:before,
+.modules-list-item:after {
+  content:"";
+    position:absolute; 
+    z-index:-1;
+    .box-shadow(0 0 30px rgba(0,0,0,0.8));
+    top:50%;
+    bottom:0;
+    left:20px;
+    right:20px;
+    border-radius:100px / 10px;
+}
+
+
 
 /* List items - News, Guestbook ... */
 

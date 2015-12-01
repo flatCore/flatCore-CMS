@@ -55,7 +55,8 @@ if(isset($query)) {
 
 	if($fc_mod_rewrite == "permalink") {
 	
-		include(FC_CONTENT_DIR . "/cache/active_mods.php");
+		//include(FC_CONTENT_DIR . "/cache/active_mods.php");
+		$active_mods = fc_get_active_mods();
 		$cnt_active_mods = count($active_mods);
 		
 		include(FC_CONTENT_DIR . "/cache/active_urls.php");

@@ -74,6 +74,34 @@ function get_all_moduls() {
 	return($arr_iMods);
 }
 
+/**
+ * get all addons stored in table fc_addons
+ * type = theme | module
+ */
+ 
+function fc_get_addons($t='module') {
+	
+	$result = array();
+	
+	if($t == 'module') {
+		$type = 'module';
+	} else {
+		$type = 'theme';
+	}
+	
+	$dbh = new PDO("sqlite:".CONTENT_DB);
+	$sql = "SELECT * FROM fc_addons WHERE addon_type = '$type' ";
+
+	foreach ($dbh->query($sql) as $row) {
+		$result[] = $row;
+	}
+	
+	$dbh = null;
+	
+	return($result);
+		
+}
+
 
 /**
  * get all user groups
@@ -607,27 +635,46 @@ function delete_cache_file($file='cache_mostclicked') {
 /**
  * check in active modules
  * generate array from pages containing a module
+ * and from addon_dir -> content.sqlite3
  * store in ... cache/active_mods.php
  */
 
 function mods_check_in() {
+	
+	$pages = array();
+	$mods = array();
+	$m = array();
 
 	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = "SELECT * FROM fc_pages";
+	
+	$sql_get_mods = "SELECT addon_dir FROM fc_addons WHERE addon_type = 'module'";
+	foreach ($dbh->query($sql_get_mods) as $row) {
+		$mods[] = $row;
+	}
+	
+	for($i=0;$i<count($mods);$i++) {
+		$m[]['page_modul'] = $mods[$i]['addon_dir'];
+		$m[]['page_permalink'] = 'NULL';
+	}
+	
+	
+	$sql = "SELECT page_modul, page_permalink FROM fc_pages";
 	
 	foreach ($dbh->query($sql) as $row) {
-		$result[] = $row;
-	}  
+		$pages[] = $row;
+	}
 	
 	$dbh = null;
 	
-	$count_result = count($result);
-	$x = 0;
-	for($i=0;$i<$count_result;$i++) {
+	$items = array_merge($pages, $m);
 	
-		if($result[$i]['page_modul'] != "") {
-			$string .= "\$active_mods[$x]['page_modul'] = \"" . $result[$i]['page_modul'] . "\";\n";
-			$string .= "\$active_mods[$x]['page_permalink'] = \"" . $result[$i]['page_permalink'] . "\";\n";
+	$cnt_items = count($items);
+	$x = 0;
+	for($i=0;$i<$cnt_items;$i++) {
+	
+		if($items[$i]['page_modul'] != "") {
+			$string .= "\$active_mods[$x]['page_modul'] = \"" . $items[$i]['page_modul'] . "\";\n";
+			$string .= "\$active_mods[$x]['page_permalink'] = \"" . $items[$i]['page_permalink'] . "\";\n";			
 			$x++;
 		}
 	
@@ -1044,5 +1091,10 @@ function fc_get_labels() {
 	
 	return($result);
 }
+
+
+
+
+
 
 ?>

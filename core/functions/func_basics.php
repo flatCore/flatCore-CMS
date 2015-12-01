@@ -385,5 +385,22 @@ function fc_array_multisort(){
 }
 
 
+/**
+ * get all active mods
+ * from cached file /cache/active_mods.php
+ */
+
+function fc_get_active_mods() {
+	
+	$active_mods = array();
+	$cached_mods = FC_CONTENT_DIR . "/cache/active_mods.php";
+	
+	if(is_file($cached_mods)) {
+		include($cached_mods);
+	}
+	
+	return $active_mods;	
+}
+
 
 ?>

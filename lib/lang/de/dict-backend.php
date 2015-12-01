@@ -80,6 +80,9 @@ $lang['pagination_backward'] = "Zurück";
 $lang['btn_files'] = "Dateien";
 $lang['btn_images'] = "Grafiken";
 
+$lang['btn_mod_enable'] = "Aktivieren";
+$lang['btn_mod_disable'] = "Deaktivieren";
+
 /* Headlines */
 
 $lang['h_usermanagement'] = "Benutzer verwalten";

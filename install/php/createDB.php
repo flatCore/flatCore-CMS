@@ -149,6 +149,8 @@ $sql_preferences_table = generate_sql_query("fc_preferences.php");
 $sql_textlib_table = generate_sql_query("fc_textlib.php");
 $sql_comments_table = generate_sql_query("fc_comments.php");
 $sql_media_table = generate_sql_query("fc_media.php");
+$sql_labels_table = generate_sql_query("fc_labels.php");
+$sql_addons_table = generate_sql_query("fc_addons.php");
 
 $dbh = new PDO("sqlite:../$fc_db_content");
 
@@ -167,6 +169,8 @@ $dbh = new PDO("sqlite:../$fc_db_content");
 	$dbh->query($sql_tl_account_confirm);
 	$dbh->query($sql_tl_account_confirm_mail);
 	$dbh->query($sql_tl_no_access);
+	$dbh->query($sql_labels_table);
+	$dbh->query($sql_addons_table);
 
 	$dbh->query($sql_insert_prefs);
 

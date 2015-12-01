@@ -84,6 +84,8 @@ $lang['pagination_backward'] = "Back";
 $lang['btn_files'] = "Files";
 $lang['btn_images'] = "Images";
 
+$lang['btn_mod_enable'] = "Enable";
+$lang['btn_mod_disable'] = "Disable";
 
 /* Headlines */
 
