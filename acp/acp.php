@@ -189,7 +189,7 @@ foreach($fc_preferences as $k => $v) {
 		</div>
 	
 		<div id="footer">
-		<b>flatCore</b> Content Management System <small>(<?php echo $fc_version_name; ?>)</small><br />
+		<b>flatCore</b> Content Management System (<?php echo $fc_version_name . ' <small>B: ' . $fc_version_build; ?>)</small><br />
 		copyright © <?php echo date('Y'); ?>, <a href="http://www.flatcore.org/" target="_blank">flatCore.org</a>
 		</div>
 		
