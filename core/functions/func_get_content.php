@@ -40,7 +40,7 @@ function get_content($page, $mode = 'p') {
 	} else  {
 		$nav_sql_filter = "WHERE page_language = '$page_contents[page_language]'";
 	}
-	$nav_sql = "SELECT page_id, page_language, page_linkname, page_permalink, page_title, page_sort, page_status
+	$nav_sql = "SELECT page_id, page_hash, page_language, page_linkname, page_permalink, page_title, page_sort, page_status
 			  FROM fc_pages
 			  $nav_sql_filter
 			  ORDER BY page_sort";

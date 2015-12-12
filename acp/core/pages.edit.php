@@ -33,6 +33,7 @@ $pdo_fields = array(
 	'page_linkname' => 'STR',
 	'page_permalink' => 'STR',
 	'page_permalink_short' => 'STR',
+	'page_hash' => 'STR',
 	'page_redirect' => 'STR',
 	'page_redirect_code' => 'STR',
 	'page_title' => 'STR',
@@ -64,6 +65,7 @@ $pdo_fields_new = array(
 	'page_linkname' => 'STR',
 	'page_permalink' => 'STR',
 	'page_permalink_short' => 'STR',
+	'page_hash' => 'STR',
 	'page_redirect' => 'STR',
 	'page_redirect_code' => 'STR',
 	'page_title' => 'STR',
@@ -96,6 +98,7 @@ $pdo_fields_cache = array(
 	'page_linkname' => 'STR',
 	'page_permalink' => 'STR',
 	'page_permalink_short' => 'STR',
+	'page_hash' => 'STR',
 	'page_redirect' => 'STR',
 	'page_redirect_code' => 'STR',
 	'page_title' => 'STR',
@@ -203,6 +206,8 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 	} elseif ($page_position == "null") {
 		$page_sort = "";
 	}
+	
+	$page_hash = clean_filename($_POST['page_hash']);
 
 
 	//usergroups
@@ -255,6 +260,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$sth->bindParam(':page_template_layout', $page_template_layout, PDO::PARAM_STR);
 		$sth->bindParam(':page_authorized_users', $string_authorized_admins, PDO::PARAM_STR);
 		$sth->bindParam(':page_version', $page_version, PDO::PARAM_INT);
+		$sth->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
 		
 		$cnt_changes = $sth->execute();
 	
@@ -289,6 +295,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$std->bindParam(':page_version', $page_version, PDO::PARAM_INT);
 		$std->bindParam(':page_id_original', $page_id_original, PDO::PARAM_STR);
 		$std->bindParam(':page_cache_type', $page_cache_type, PDO::PARAM_STR);
+		$sth->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
 		
 		$cnt_changes_c = $std->execute();
 	
@@ -314,6 +321,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$sth->bindParam(':page_template_layout', $page_template_layout, PDO::PARAM_STR);
 		$sth->bindParam(':page_sort', $page_sort, PDO::PARAM_STR);
 		$sth->bindParam(':page_authorized_users', $string_authorized_admins, PDO::PARAM_STR);
+		$sth->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
 		
 		$cnt_changes = $sth->execute();
 		$editpage = $dbh->lastInsertId();
@@ -350,6 +358,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$std->bindParam(':page_authorized_users', $string_authorized_admins, PDO::PARAM_STR);
 		$std->bindParam(':page_cache_type', $page_cache_type, PDO::PARAM_STR);
 		$std->bindParam(':page_version', $page_version, PDO::PARAM_INT);
+		$sth->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
 		
 		$cnt_changes_c = $std->execute();
 	
@@ -381,6 +390,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$std->bindParam(':page_authorized_users', $string_authorized_admins, PDO::PARAM_STR);
 		$std->bindParam(':page_version', $page_version, PDO::PARAM_INT);
 		$std->bindParam(':page_cache_type', $page_cache_type, PDO::PARAM_STR);
+		$sth->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
 		
 		$cnt_changes_c = $std->execute();
 		

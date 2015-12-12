@@ -6,7 +6,7 @@
 	
 	</head>
 	
-	<body>
+	<body class="{$page_hash}">
 	
 	{include file="$body_template"}
 	

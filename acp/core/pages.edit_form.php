@@ -121,6 +121,8 @@ echo '</div>';
 echo '</div>';
 echo '</div>';
 
+echo tpl_form_control_group('',$lang['f_page_hash'],"<input class='form-control' type='text' name='page_hash' value='$page_hash'>");
+
 $select_page_redirect_code  = '<select name="page_redirect_code" class="form-control">';
 if($page_redirect_code == '') {
 	$page_redirect_code = 301;

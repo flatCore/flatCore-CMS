@@ -189,6 +189,7 @@ $lang['f_page_sort'] = "Sorting-ID";
 $lang['f_page_linkname'] = "Linkname";
 $lang['f_page_permalink'] = "Permalink";
 $lang['f_page_permalink_short'] = "Short-Link";
+$lang['f_page_hash'] = "Hash";
 $lang['f_page_redirect'] = "Redirect";
 $lang['btn_redirect'] = "Redirects";
 $lang['f_page_title'] = "Page Title";
