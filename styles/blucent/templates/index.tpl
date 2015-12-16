@@ -12,20 +12,18 @@
 	
 	{if $fc_snippet_privacy_policy != ''}
 		<div class="privacy_policy">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-10">
-						{$fc_snippet_privacy_policy}
-					</div>
-					<div class="col-md-2">
-						<a href="#NULL" class="btn btn-default" id="permit_cookie">Okay</a>
-					</div>
-				</div>
+			<div style="float:right;padding-left:10px;">
+				<a href="#NULL" class="btn btn-default" id="permit_cookie">Okay</a>
 			</div>
+			<div class="privacy_policy_text"></div>
 		</div>
 	{/if}
 	
 	<script>
+		
+	var permit_cookies_str = '{$fc_snippet_privacy_policy}';
+	$( ".privacy_policy_text" ).html( permit_cookies_str );
+		
 	$( "#permit_cookie" ).click(function() {
   	Cookies.set('permit_cookies', 'true', { expires: 7 });
   	$( "div.privacy_policy" ).addClass( "hidden" );
