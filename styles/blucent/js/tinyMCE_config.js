@@ -1,7 +1,12 @@
 $(function() {
 	$('textarea.mceEditor').tinymce({
+		selector: 'textarea.mceEditor',
 	  language : 'de',
-	  element_format : "html",
+	  schema: 'html5',
+	  element_format: "html",
+	  allow_html_in_named_anchor: true,
+	  element_format : 'html',
+	  entity_encoding : "raw",
 	  menubar: "edit insert table tools view",
 	  toolbar_items_size: 'small',
 	  content_css : "../styles/blucent/css/editor.css?v=14",
@@ -14,7 +19,7 @@ $(function() {
 	  image_advtab: true,
 	  image_title: true,
 	  convert_urls: false,
-	  entity_encoding : "raw",
+	  
 	  templates: [ 
 	    {title: 'row [6|6]', description: 'Zwei Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_2cols.html'},
 	    {title: 'row [4|4|4]', description: 'Drei Spalten (Bootsrap)', url: '../styles/blucent/templates/editor_3cols.html'},
@@ -70,7 +75,6 @@ $(function() {
 		extended_valid_elements : "*[*]",
 		visual : true,
 		paste_as_text: true
-
 	});
 
 
@@ -139,7 +143,7 @@ $(function() {
 		width : "100%",
 		height : "350",
 		remove_script_host : true,
-		extended_valid_elements : "textarea[cols|rows|disabled|name|readonly|class]",
+		extended_valid_elements : "*[*]",
 		visual : true,
 		paste_as_text: true
 	});
