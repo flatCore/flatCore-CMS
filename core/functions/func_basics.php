@@ -62,15 +62,17 @@ function fc_get_images_data($image,$parameters=NULL) {
 
 	global $fc_db_content;
 	global $fc_template;
+	global $languagePack;
 	
 	if($parameters !== NULL) {
 		$parameter = parse_str(html_entity_decode($parameters));
 	}
 	
 	$dbh = new PDO("sqlite:$fc_db_content");
-	$sql = 'SELECT * FROM fc_media WHERE media_file LIKE :filename ';
+	$sql = "SELECT * FROM fc_media WHERE media_file LIKE :filename AND (media_lang = :lang OR media_lang = '' OR media_lang is null)";
 	$sth = $dbh->prepare($sql);
 	$sth->bindValue(':filename', "%$image%", PDO::PARAM_STR);
+	$sth->bindValue(':lang', "$languagePack", PDO::PARAM_STR);
 	$sth->execute();
 	$imageData = $sth->fetch(PDO::FETCH_ASSOC);
 	$dbh = null;

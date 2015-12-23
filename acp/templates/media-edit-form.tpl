@@ -42,6 +42,7 @@
 			  <input type="hidden" name="saveMedia" value="save">
 			  <input type="hidden" name="realpath" value="{realpath}">
 			  <input type="hidden" name="folder" value="{folder}">
+			  <input type="hidden" name="set_lang" value="{set_lang}">
 			  <input type="submit" name="save" class="btn btn-success" value="{save}">
 			</form>
 		</div>
@@ -63,6 +64,10 @@
 				<tr>
 					<td class="text-right"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></td>
 					<td>{filesize}</td>
+				</tr>
+				<tr>
+					<td class="text-right"></td>
+					<td>{lang_switch}</td>
 				</tr>
 			</table>
 			{message}

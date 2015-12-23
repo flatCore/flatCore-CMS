@@ -108,9 +108,10 @@ foreach($a_files as $file) {
 	$mediaData = $sth->fetch(PDO::FETCH_ASSOC);
 	
 	if(!is_array($mediaData)) {
-		$sql = "INSERT INTO fc_media ( media_id, media_file ) VALUES ( NULL, :media_file ) ";
+		$sql = "INSERT INTO fc_media ( media_id, media_file, media_lang ) VALUES ( NULL, :media_file, :media_lang) ";
 		$sth = $dbh->prepare($sql);
 		$sth->bindParam(':media_file', $filename, PDO::PARAM_STR);
+		$sth->bindParam(':media_lang', $languagePack, PDO::PARAM_STR);
 		$sth->execute();
 	}
 	

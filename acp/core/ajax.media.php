@@ -15,6 +15,11 @@ require_once('functions.php');
 require_once('database.php');
 require('../../lib/lang/'.$_SESSION['lang'].'/dict-backend.php');
 
+$set_lang = $_SESSION['lang'];
+if(isset($_REQUEST['set_lang'])) {
+	$set_lang = $_REQUEST['set_lang'];
+}
+
 $form_tpl = file_get_contents('../templates/media-edit-form.tpl');
 
 if(isset($_REQUEST['file'])) {
@@ -34,7 +39,7 @@ $filesize = readable_filesize(filesize("../$realpath"));
 $lastedit = date('d.m.Y H:i',filemtime("../$realpath"));
 
 if(isset($_POST['saveMedia'])) {
-	$savedMedia = fc_write_media_data($_POST['realpath'],$_POST['title'],$_POST['notes'],$_POST['keywords'],$_POST['text'],$_POST['url'],$_POST['alt']);
+	$savedMedia = fc_write_media_data($_POST['realpath'],$_POST['title'],$_POST['notes'],$_POST['keywords'],$_POST['text'],$_POST['url'],$_POST['alt'],$set_lang);
 	if($savedMedia == 'success') {
 		$message = '<div class="alert alert-success alert-auto-close">'.$lang['db_changed'].'</div>';
 	} else {
@@ -46,7 +51,18 @@ if(isset($_POST['saveMedia'])) {
 }
 
 
-$media_data = fc_get_media_data($realpath);
+
+$arr_lang = get_all_languages($d='../../lib/lang');
+$langSwitch = '<div class="btn-group" role="group">';
+foreach($arr_lang as $langs) {
+	$btn_status = '';
+	if($langs['lang_sign'] == "$set_lang") { $btn_status = 'active'; }
+	$langSwitch .= '<a class="btn btn-default btn-sm fancybox-ajax '.$btn_status.'" href="../acp/core/ajax.media.php?file='.$media_filename.'&folder='.$_REQUEST['folder'].'&set_lang='.$langs['lang_sign'].'">'.$langs['lang_sign'].'</a>';
+}
+$langSwitch .= '</div>';
+
+
+$media_data = fc_get_media_data($realpath,$set_lang);
 
 
 $form_tpl = str_replace('{form_action}', "#", $form_tpl);
@@ -72,7 +88,8 @@ $form_tpl = str_replace('{notes}', $media_data['media_notes'], $form_tpl);
 $form_tpl = str_replace('{label_text}', $lang['label_text'], $form_tpl);
 $form_tpl = str_replace('{preview}', $preview_src, $form_tpl);
 $form_tpl = str_replace('{save}', $lang['save'], $form_tpl);
-
+$form_tpl = str_replace('{set_lang}', $set_lang, $form_tpl);
+$form_tpl = str_replace('{lang_switch}', $langSwitch, $form_tpl);
 echo $form_tpl;
 
 
@@ -99,6 +116,8 @@ $(document).ready(function(){
 	setTimeout(function() {
       $(".alert-auto-close").slideUp('slow');
 	}, 2000);
+	
+	
 });
 
 </script>

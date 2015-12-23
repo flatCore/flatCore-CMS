@@ -13,15 +13,15 @@ if(basename(__FILE__) == basename($_SERVER['PHP_SELF'])){
  * return as array
  */
 
-function get_all_languages() {
+function get_all_languages($d='../lib/lang') {
 
-	$mdir = "../lib/lang";
+	//$mdir = "../lib/lang";
 	$cntLangs = 0;
-	$scanned_directory = array_diff(scandir($mdir), array('..', '.','.DS_Store'));
+	$scanned_directory = array_diff(scandir($d), array('..', '.','.DS_Store'));
 	
 	foreach($scanned_directory as $lang_folder) {
-		if(is_file("$mdir/$lang_folder/index.php")) {
-			include("$mdir/$lang_folder/index.php");
+		if(is_file("$d/$lang_folder/index.php")) {
+			include("$d/$lang_folder/index.php");
 			$arr_lang[$cntLangs]['lang_sign'] = "$lang_sign";
 			$arr_lang[$cntLangs]['lang_desc'] = "$lang_desc";
 			$arr_lang[$cntLangs]['lang_folder'] = "$lang_folder";
@@ -942,17 +942,15 @@ function fc_write_comment($author, $message, $parent, $id = NULL) {
  *
  */
 
-function fc_get_media_data($filename) {
+function fc_get_media_data($filename,$lang=NULL) {
 
 	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = "SELECT * FROM fc_media WHERE media_file = :filename ";
+	$sql = "SELECT * FROM fc_media WHERE media_file = :media_file AND (media_lang = :lang OR media_lang = '' OR media_lang is null)";
 	$sth = $dbh->prepare($sql);
-	$sth->bindParam(':filename', $filename, PDO::PARAM_STR);
-	
+	$sth->bindParam(':media_file', $filename, PDO::PARAM_STR);
+	$sth->bindParam(':lang', $lang, PDO::PARAM_STR);
 	$sth->execute();
-	
 	$result = $sth->fetch(PDO::FETCH_ASSOC);
-	
 	$dbh = null;
 	
 	return($result);
@@ -982,15 +980,22 @@ function fc_delete_media_data($filename) {
  *
  */
 
-function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$text=NULL,$url=NULL,$alt=NULL) {
+function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$text=NULL,$url=NULL,$alt=NULL,$lang=NULL) {
 
+	global $languagePack;
+	
+	if($lang === NULL) {
+		$lang = $languagePack;
+	}
+	
 	$pdo_fields_update = array(
 		'media_title' => 'STR',
 		'media_notes' => 'STR',
 		'media_keywords' => 'STR',
 		'media_text' => 'STR',
 		'media_alt' => 'STR',
-		'media_url' => 'STR'
+		'media_url' => 'STR',
+		'media_lang' => 'STR'
 	);
 		
 	$pdo_fields_new = array(
@@ -1001,42 +1006,46 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 		'media_keywords' => 'STR',
 		'media_text' => 'STR',
 		'media_alt' => 'STR',
-		'media_url' => 'STR'
+		'media_url' => 'STR',
+		'media_lang' => 'STR'
 	);
 
 	$dbh = new PDO("sqlite:".CONTENT_DB);
 	
-	$sql_cnt = "SELECT count(*) FROM fc_media WHERE media_file = :filename";
+	$sql_cnt = "SELECT count(*) FROM fc_media WHERE media_file = :media_file AND (media_lang = :media_lang OR media_lang = '' OR media_lang is null)";
 	$sth = $dbh->prepare($sql_cnt);
-	$sth->bindParam(':filename', $filename, PDO::PARAM_STR);
+	$sth->bindParam(':media_file', $filename, PDO::PARAM_STR);
+	$sth->bindParam(':media_lang', $lang, PDO::PARAM_STR);
 	$sth->execute();
 	$cnt = $sth->fetch(PDO::FETCH_NUM);
 	
 	if($cnt[0] > 0) {
-		$sql_update = generate_sql_update_str($pdo_fields_update,"fc_media","WHERE media_file = '$filename' ");
+		$modus = 'update';
+		$sql_update = generate_sql_update_str($pdo_fields_update,"fc_media","WHERE media_file = :media_file AND (media_lang = :media_lang OR media_lang = '' OR media_lang is null)");
 		$sth = $dbh->prepare($sql_update);
 		generate_bindParam_str($pdo_fields_update,$sth);
-		$sth->bindParam(':media_title', $title, PDO::PARAM_STR);
-		$sth->bindParam(':media_notes', $notes, PDO::PARAM_STR);
-		$sth->bindParam(':media_keywords', $keywords, PDO::PARAM_STR);
-		$sth->bindParam(':media_text', $text, PDO::PARAM_STR);
-		$sth->bindParam(':media_alt', $alt, PDO::PARAM_STR);
-		$sth->bindParam(':media_url', $url, PDO::PARAM_STR);
+		
 	} else {
+		$modus = 'new';
 		$sql_new = generate_sql_insert_str($pdo_fields_new,"fc_media");
 		$sth = $dbh->prepare($sql_new);
 		generate_bindParam_str($pdo_fields_new,$sth);
-		$sth->bindParam(':media_file', $filename, PDO::PARAM_STR);
-		$sth->bindParam(':media_title', $title, PDO::PARAM_STR);
-		$sth->bindParam(':media_notes', $notes, PDO::PARAM_STR);
-		$sth->bindParam(':media_keywords', $keywords, PDO::PARAM_STR);
-		$sth->bindParam(':media_text', $text, PDO::PARAM_STR);
-		$sth->bindParam(':media_alt', $alt, PDO::PARAM_STR);
-		$sth->bindParam(':media_url', $url, PDO::PARAM_STR);
 	}
+	
+	$sth->bindParam(':media_file', $filename, PDO::PARAM_STR);
+	$sth->bindParam(':media_title', $title, PDO::PARAM_STR);
+	$sth->bindParam(':media_notes', $notes, PDO::PARAM_STR);
+	$sth->bindParam(':media_keywords', $keywords, PDO::PARAM_STR);
+	$sth->bindParam(':media_text', $text, PDO::PARAM_STR);
+	$sth->bindParam(':media_url', $url, PDO::PARAM_STR);
+	$sth->bindParam(':media_alt', $alt, PDO::PARAM_STR);
+	$sth->bindParam(':media_lang', $lang, PDO::PARAM_STR);
 
 	$cnt_changes = $sth->execute();
+	
 	$error = print_r($dbh->errorInfo(),true);
+	$lastId = $dbh->lastInsertId();
+	debug_to_console($modus);
 	$dbh = null;
 	
 	if($cnt_changes == true) {
@@ -1094,7 +1103,14 @@ function fc_get_labels() {
 
 
 
-
+function debug_to_console($data) {
+    if(is_array($data) || is_object($data))
+	{
+		echo("<script>console.log('PHP: ".json_encode($data)."');</script>");
+	} else {
+		echo("<script>console.log('PHP: ".$data."');</script>");
+	}
+}
 
 
 ?>

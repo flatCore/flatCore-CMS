@@ -5,6 +5,7 @@ $table_name = "fc_media";
 
 $cols = array(
   "media_id"  => 'INTEGER NOT NULL PRIMARY KEY',
+  "media_lang"  => 'VARCHAR',
   "media_type"  => 'VARCHAR',
   "media_file"  => 'VARCHAR',
   "media_title"  => 'VARCHAR',
