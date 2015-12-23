@@ -154,10 +154,6 @@ if(is_file('../styles/'.$prefs_template.'/info.xml')) {
 		echo '</tr>';		
 	}
 	echo '<tr>';
-	echo '<td>Requires:</td>';
-	echo '<td>' . $theme_xml->author . '</td>';
-	echo '</tr>';
-	echo '<tr>';
 	echo '<td>Requires</td>';
 	echo '<td>';
 	foreach ($theme_xml->requires -> core as $requires) {
