@@ -32,8 +32,4 @@ if(!is_file($tinyMCE_config)) {
 
 $tinyMCE_config_contents = file_get_contents($tinyMCE_config);
 
-echo '<script language="javascript" type="text/javascript">';
-echo "$tinyMCE_config_contents";
-echo '</script>';
-
 ?>

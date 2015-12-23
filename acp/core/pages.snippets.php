@@ -274,7 +274,7 @@ echo '<div class="form-group">';
 
 echo '<div class="clearfix" style="margin-top:-60px;padding-bottom:20px;">';
 echo '<div class="btn-group pull-right" data-toggle="buttons">';
-echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE1" checked> WYSIWYG</label>';
+echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE1"> WYSIWYG</label>';
 echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE2"> Text</label>';
 echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE3"> Code</label>';
 echo '</div>';
