@@ -38,7 +38,9 @@ echo '<div class="col-md-3">';
 echo '<fieldset>';
 echo '<legend>Filter</legend>';
 echo $kw_form;
-echo '<p style="padding:0;">' . $btn_remove_keyword . '</p>';
+if($btn_remove_keyword != '') {
+	echo '<p style="padding-top:5px;">' . $btn_remove_keyword . '</p>';
+}
 echo '</fieldset>';
 echo '</div>';
 echo '<div class="col-md-9">';

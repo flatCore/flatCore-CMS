@@ -4,6 +4,8 @@
 
 @import (less) "lesshat.less";
 
+@page_bg: #eee;
+
 /* pages - status colors */
 @color_public: #5cb85c;
 @color_ghost: fade(@color_public,50%);
@@ -57,7 +59,7 @@ a#dashboard {
 
 div#page-content {
 	margin-left: 210px;
-	background: #eee;
+	background: @page_bg;
 	min-height: 100%;
   height: auto !important;
   height: 100%;
@@ -66,8 +68,8 @@ div#page-content {
 
 
 div#bigHeader {
-	height: 50px;
-	background: #ddd;
+	height: 40px;
+	background: #333;
 	overflow: hidden;
 }
 
@@ -97,8 +99,7 @@ div#wrapper{
   margin-bottom: 10px;
   padding: 8px;
   background: rgba(255,255,255,0.5);
-  border-radius: 9px;
-  -moz-border-radius: 9px;
+  .border-radius(9px);
   min-height: 500px;
 }
 
@@ -147,7 +148,7 @@ div#wrapper{
 	height: 0;
 	margin-right: -6px;
 	border-top: 10px solid transparent;
-	border-right: 7px solid #eee;
+	border-right: 7px solid @page_bg;
 	border-bottom: 10px solid transparent;
 }
 
@@ -174,6 +175,7 @@ hr.shadow {
   margin-bottom: 15px;
   margin-left: 0;
 }
+
 hr.shadow:after {
   content: "";
   margin: 0 auto;
@@ -272,23 +274,23 @@ ol {
 
 
 .dl-horizontal.dl-dates dt {
-    width: 70px;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 20px;
-    text-align: left;
-    color: #888;
+	width: 70px;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: left;
+  color: #888;
 }
 
 .dl-horizontal.dl-dates dd {
-    margin-left: 75px
+  margin-left: 75px
 }
 
 /* Navigation */
 
 div#topNavBox {
 	float: right;
-	padding-right: 60px;
+	padding-right: 20px;
 }
 
 a.topnav,
@@ -300,21 +302,19 @@ a.topnav_selected:visited {
 	float: left;
 	min-width: 100px;
 	text-align: center;
-	font-size: 14px;
-	line-height: 50px;
+	font-size: 12px;
+	line-height: 40px;
 	font-weight: normal;
-	background-color: #ddd;
+	background: #111;
 	color: #428bca;
-	height: 50px;
-	-webkit-transition: background 0.3s linear, color 0.5s linear;
-	-moz-transition: background 0.3s linear, color 0.5s linear;
-	-o-transition: background 0.3s linear, color 0.5s linear;
-	transition: background 0.3s linear, color 0.5s linear;
+	height: 40px;
+	.transition(background 0.3s linear, color 0.3s linear);
+	margin-right: 1px;
 }
 
 a.topnav:hover {
-	background-color: #ccc;
-	color: #333;
+	background: #222;
+	color: lighten(#428bca,15%);
 }
 
 a.topnav:active,
@@ -334,12 +334,13 @@ a.topnav_selected:visited {
 a.topnav_selected span.mm {
 	position: absolute;
 	bottom: 0;
-	left: 37px;
+	left: 50%;
 	width: 0; 
 	height: 0; 
-	border-left: 8px solid transparent;
-	border-right: 8px solid transparent;
-	border-bottom: 5px solid #eee;
+	border-left: 6px solid transparent;
+	border-right: 6px solid transparent;
+	border-bottom: 4px solid @page_bg;
+	margin-left: -6px;
 }
 
 
@@ -889,6 +890,10 @@ fieldset legend {
 
 .btn-ghost, .btn-ghost.active {
 	border-bottom: 1px solid #a1d2a1;
+}
+
+.btn {
+	.transition(all 0.2s linear);
 }
 
 

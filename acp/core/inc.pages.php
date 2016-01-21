@@ -242,7 +242,7 @@ if($subinc == "pages.list") {
 	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusRedirect" class="btn btn-default btn-sm '.$btn_status_redirect.'">'.$lang['btn_redirect'].'</a>';
 	$status_btn_group .= '</div>';
 
-	$kw_form  = "<form action='acp.php?tn=pages&sub=list' method='POST' class='form-inline' style='margin-bottom:3px;'>";
+	$kw_form  = '<form action="acp.php?tn=pages&sub=list" method="POST" class="form-horizontal">';
 	$kw_form .= '<div class="input-group">';
 	$kw_form .= '<span class="input-group-addon"><span class="glyphicon glyphicon-filter"></span></span>';
 	$kw_form .= '<input class="form-control" type="text" name="kw_filter" value="" placeholder="Filter">';

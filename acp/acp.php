@@ -105,7 +105,7 @@ foreach($fc_preferences as $k => $v) {
 		<script type="text/javascript" src="../lib/js/jquery/jquery.textareaCounter.plugin.js"></script>
 				
 		<link rel="stylesheet" href="../lib/css/bootstrap.min.css?v=3.3.6" type="text/css" media="screen, projection">
-		<link rel="stylesheet" href="css/styles.css?v=20151127" type="text/css" media="screen, projection">
+		<link rel="stylesheet" href="css/styles.css?v=20151231" type="text/css" media="screen, projection">
 		
 		<!-- masonry -->
 		<script type="text/javascript" src="../lib/js/masonry.pkgd.min.js"></script>
