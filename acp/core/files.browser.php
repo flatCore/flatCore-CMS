@@ -240,6 +240,7 @@ if(is_array($all_filter)) {
 	$dbh = null;
 	
 	unset($a_files);
+	$filterFiles = array_unique($filterFiles);
 	foreach($filterFiles as $file) {
 		//$file = basename($file);
 		if(is_file("$file")) {
