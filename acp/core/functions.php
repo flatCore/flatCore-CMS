@@ -571,8 +571,7 @@ function cache_keywords() {
 	
 	$dbh = new PDO("sqlite:".CONTENT_DB);
 	
-	$sql = "SELECT page_meta_keywords
-			FROM fc_pages
+	$sql = "SELECT page_meta_keywords FROM fc_pages
 			WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = '$languagePack' ";
 	
 	foreach ($dbh->query($sql) as $row) {
@@ -606,7 +605,7 @@ function cache_keywords() {
 		$skey = urlencode(trim($key));
 		$fz = $font_size+($val*10);
 		if($key == "") {continue;}
-		$page_keywords .= "<span style=\"font-size:$fz%;\"><a href='" . FC_ROOT . "/index.php?p=search&amp;s=$skey'>$key</a></span> ";
+		$page_keywords .= '<span style="font-size:'.$fz.'%;"><a href="/search/?s='.$skey.'">'.$key.'</a></span>';
 	
 	} // eol foreach
 	
