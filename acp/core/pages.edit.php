@@ -390,7 +390,6 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$std->bindParam(':page_authorized_users', $string_authorized_admins, PDO::PARAM_STR);
 		$std->bindParam(':page_version', $page_version, PDO::PARAM_INT);
 		$std->bindParam(':page_cache_type', $page_cache_type, PDO::PARAM_STR);
-		$sth->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
 		
 		$cnt_changes_c = $std->execute();
 		
