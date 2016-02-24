@@ -99,7 +99,7 @@ $lang['msg_upload_avatar_success'] = "Das Benutzerbild wurde aktualisiert";
 $lang['msg_upload_avatar_filesize']  = "Das Benutzerbild ist zu groß";
 $lang['msg_upload_avatar_filetype']  = "Das Bild muss vom Typ PNG sein";
 
-$lang['msg_search_undersized'] = "Das Suchwort muß mindestes 3 Buchstaben lang sein.";
+$lang['msg_search_undersized'] = "Das Suchwort muß mindestens 3 Buchstaben lang sein.";
 $lang['msg_search_results'] = "Die Suchanfrage ergab %d Treffer:";
 $lang['msg_search_no_results'] = "Ihre Suchanfrage ergab keine Treffer";
 $lang['forgotten_psw'] = "Passwort vergessen?";
