@@ -2,16 +2,19 @@
 <img src="http://www.flatcore.de/content/images/flatcore-logo-flat.png">
 </p>
 
-flatcore CMS
-============
+## flatcore CMS
 
 flatCore is a Content Management System based on PHP5 and SQLite3.
 
-* Official site: http://www.flatcore.de
+* Official Site: http://www.flatcore.org
+* German: http://www.flatcore.de
 * License: GNU GENERAL PUBLIC LICENSE Version 3
 
-3rd Party Frameworks and Plugins
------------------
+### Usermanual and Developer Documentation
+* http://docs.flatcore.org/en/
+* Source: https://github.com/flatCore/flatCore-docs/tree/master/src_en
+
+#### 3rd Party Frameworks and Plugins
 
 + TinyMCE (4.1.9) - http://www.tinymce.com/
 + Ace Editor - http://ace.c9.io/
