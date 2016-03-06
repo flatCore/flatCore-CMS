@@ -76,7 +76,7 @@ for($i=0;$i<$cnt_result;$i++) {
 		continue;
 	}
 	
-	unset($show_redirect);
+	unset($show_redirect,$page_modul);
 
 	$page_id = $result[$i]['page_id'];
 	$page_sort = $result[$i]['page_sort'];
@@ -229,7 +229,7 @@ for($i=0;$i<$cnt_result;$i++) {
 		continue;
 	}
 	
-	unset($show_redirect);
+	unset($show_redirect,$page_modul);
 
 	$page_id = $result[$i]['page_id'];
 	$page_sort = $result[$i]['page_sort'];
@@ -244,6 +244,7 @@ for($i=0;$i<$cnt_result;$i++) {
 	$page_language = $result[$i]['page_language'];
 	$page_permalink = $result[$i]['page_permalink'];
 	$page_redirect = $result[$i]['page_redirect'];
+	$page_modul = $result[$i]['page_modul'];
 	$page_cnt_comments = $result[$i]['cnt_comments'];
 		
 	if($page_template == "use_standard") {
@@ -319,6 +320,12 @@ for($i=0;$i<$cnt_result;$i++) {
 		$frontend_link = "../$page_permalink";
 	} else {
 		$frontend_link = "../index.php?p=$page_id";
+	}
+	
+	$show_mod = '';
+	if($page_modul != '') {
+		$page_modul_title = substr($page_modul, 0,-4);
+		$show_mod = ' <small><span class="glyphicon glyphicon-cog" title="'.$page_modul_title.'"></span></small>';
 	}
 	
 	if($page_redirect != '') {
