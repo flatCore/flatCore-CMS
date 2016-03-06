@@ -181,30 +181,41 @@ echo '</div>';
 echo '</div>';
 echo '<div class="col-md-9">';
 
-echo '<ul class="nav nav-tabs" id="bsTabs">';
-echo '<li class="active"><a href="#info" data-toggle="tab">'.$lang['tab_info'].'</a></li>';
-echo '<li><a href="#content" data-toggle="tab">'.$lang['tab_content'].'</a></li>';
-echo '</ul>';
-
 echo "<form action='$_SERVER[PHP_SELF]?tn=pages&sub=snippets' method='POST'>";
 
-echo '<div class="tab-content">';
 
-echo'<div class="tab-pane fade in active" id="info">';
 
-echo '<div class="row">';
-echo '<div class="col-md-6">';
 
 echo '<div class="row">';
 echo '<div class="col-md-9">';
+
+echo '<textarea class="form-control mceEditor switchEditor" id="textEditor" name="textlib_content">'.$textlib_content.'</textarea>';
+echo '<input type="hidden" name="text" value="'.$text.'">';
+
+if($get_snip_name_editor != '') {
+	echo '<hr><div class="form-group">';
+	echo '<label>Snippet</label>';
+	echo '<input type="text" class="form-control" placeholder="[snippet]...[/snippet]" value="'.$get_snip_name_editor.'" readonly>';
+	echo '</div>';
+}
+
+echo '</div>';
+echo '<div class="col-md-3">';
+/* info col */
+echo '<div class="well well-sm">';
+echo '<div class="form-group">';
+echo '<div class="btn-group btn-group-justified" data-toggle="buttons">';
+echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE1"> WYSIWYG</label>';
+echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE2"> Text</label>';
+echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE3"> Code</label>';
+echo '</div>';
+echo '</div>';
 
 echo '<div class="form-group">';
 echo '<label>'.$lang['filename'].' <small>(a-z,0-9)</small></label>';
 echo '<input class="form-control" type="text" name="snippet_name" value="'.$textlib_name.'">';
 echo '</div>';
 
-echo '</div>';
-echo '<div class="col-md-3">';
 
 $select_textlib_language  = '<select name="sel_language" class="form-control">';
 for($i=0;$i<count($arr_lang);$i++) {
@@ -215,91 +226,44 @@ for($i=0;$i<count($arr_lang);$i++) {
 }
 $select_textlib_language .= '</select>';
 
-
+echo '<div class="form-group">';
 echo '<label>'.$lang['f_page_language'].'</label>';
 echo $select_textlib_language;
 echo '</div>';
-echo '</div>';
-
 
 echo '<div class="form-group">';
 echo '<label>'.$lang['label_title'].'</label>';
 echo '<input class="form-control" type="text" name="snippet_title" value="'.$textlib_title.'">';
 echo '</div>';
 
-
-
+echo '<div class="form-group">';
+echo '<label>'.$lang['label_keywords'].'</label>';
+echo '<input class="form-control" type="text" name="snippet_keywords" value="'.$textlib_keywords.'" data-role="tagsinput" />';
 echo '</div>';
-echo '<div class="col-md-6">';
 
 echo '<div class="alert alert-info" style="padding:2px 3px;">';
 echo '<strong>'.$lang['label_notes'].':</strong>';
 echo '<textarea class="masked-textarea" name="textlib_notes" rows="5">'.$textlib_notes.'</textarea>';
 echo '</div>';
 
-echo '</div>';
-echo '</div>';
-
-
-echo '<div class="row">';
-echo '<div class="col-md-6">';
-
-echo '<div class="form-group">';
-echo '<label>'.$lang['label_keywords'].'</label>';
-echo '<input class="form-control" type="text" name="snippet_keywords" value="'.$textlib_keywords.'" data-role="tagsinput" />';
-echo '</div>';
-
-echo '</div>';
-echo '<div class="col-md-6">';
-
-echo '<div class="form-group">';
-echo '<label>&nbsp;</label>';
-echo '<div class="input-group">';
-echo '<span class="input-group-addon">Editor:</span>';
-echo '<input type="text" class="form-control" placeholder="[snippet]...[/snippet]" value="'.$get_snip_name_editor.'" readonly>';
-echo '</div>';
-echo '</div>';
-
-echo '</div>';
-echo '</div>';
-
-
-
-echo '</div>'; // tab info
-
-
-echo'<div class="tab-pane fade" id="content">';
-
-echo '<div class="form-group">';
-
-echo '<div class="clearfix" style="margin-top:-60px;padding-bottom:20px;">';
-echo '<div class="btn-group pull-right" data-toggle="buttons">';
-echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE1"> WYSIWYG</label>';
-echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE2"> Text</label>';
-echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE3"> Code</label>';
-echo '</div>';
-
-echo '</div>';
-echo '<textarea class="form-control mceEditor switchEditor" id="textEditor" name="textlib_content">'.$textlib_content.'</textarea>';
-
-echo '<input type="hidden" name="text" value="'.$text.'">';
-echo '</div>';
-
-echo '</div>'; // tab content
-
-
 echo '<div class="formfooter">';
 if($modus == 'new') {
-	echo '<input type="submit" name="save_snippet" class="btn btn-success" value="'.$lang['save'].'">';
+	echo '<input type="submit" name="save_snippet" class="btn btn-success btn-block" value="'.$lang['save'].'">';
 } else {
 	echo '<input type="hidden" name="snip_id" value="'.$snip_id.'">';
-	echo '<input type="submit" name="save_snippet" class="btn btn-success" value="'.$lang['update'].'"> ';
-	echo '<a class="btn btn-default" href="acp.php?tn=pages&sub=snippets">'.$lang['discard_changes'].'</a>';
-	echo '<div class="pull-right"><input type="submit" name="delete_snippet" class="btn btn-danger" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_data'].'\')"></div> ';
+	echo '<input type="submit" name="save_snippet" class="btn btn-success btn-block" value="'.$lang['update'].'"> ';
+	echo '<a class="btn btn-default btn-block" href="acp.php?tn=pages&sub=snippets">'.$lang['discard_changes'].'</a>';
+	echo '<input type="submit" name="delete_snippet" class="btn btn-danger btn-sm btn-block" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_data'].'\')">';
 }
 echo '</div>';
 
-echo '</div>'; // tab
+
+echo '</div>';
+/* end info col */
+echo '</div>';
+echo '</div>';
+
+
 echo '</form>';
 
 
