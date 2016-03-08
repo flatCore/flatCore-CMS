@@ -182,7 +182,7 @@ echo'</div>';
 echo'</div>'; // #chat
 echo'<div class="tab-pane fade" id="log">';
 
-echo '<div class="scroll-conatiner">';
+echo '<div class="scroll-container">';
 show_log(10);
 echo'</div>';
 echo'</div>'; // #log
