@@ -56,9 +56,15 @@ div#bigHeader {
 }
 #liveBox a {
   color: #666;
+  display: block;
+  padding: 3px;
 }
 #liveBox a:hover {
   color: #428bca;
+}
+#liveBox hr {
+  border-bottom: 1px solid #111;
+  margin: 3px;
 }
 div#wrapper {
   float: right;
