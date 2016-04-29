@@ -4,8 +4,8 @@
 
 $lang['tn_dashboard'] = "Dashboard";
 $lang['tn_dashboard_desc'] = "Alles auf einen Blick";
-$lang['tn_moduls'] = "Module";
-$lang['tn_moduls_desc'] = "Auf installierte Zusatzmodule zugreifen";
+$lang['tn_moduls'] = "Addons";
+$lang['tn_moduls_desc'] = "Auf installierte Module und Themes zugreifen";
 $lang['tn_pages'] = "Seiten";
 $lang['tn_pages_desc'] = "Inhalte bearbeiten, Seiten anlegen/löschen ...";
 $lang['tn_filebrowser'] = "Dateien";

@@ -36,7 +36,6 @@ require(FC_CORE_DIR . '/core/functions.php');
 
 /* reserved $_GET['p'] parameters */
 $a_allowed_p = array('register', 'account', 'profile', 'search', 'sitemap', 'logout', 'password');
-$p = '';
 
 /*
  * mod_rewrite
@@ -44,7 +43,6 @@ $p = '';
  * RewriteRule ^(.*)$ index.php?query=$1 [L,QSA]
  *
  */
-
 if(isset($query)) {
 	
 	if(is_file(FC_CONTENT_DIR.'/plugins/query.controller.php')) {

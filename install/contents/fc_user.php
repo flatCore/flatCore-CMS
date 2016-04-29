@@ -8,6 +8,7 @@ $cols = array(
   "user_class"  => 'VARCHAR',
   "user_nick"  => 'VARCHAR',
   "user_psw" => 'VARCHAR',
+  "user_psw_hash" => 'VARCHAR',
   "user_groups" => 'VARCHAR',
   "user_avatar" => 'VARCHAR',
   "user_mail" => 'VARCHAR',

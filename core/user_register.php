@@ -83,6 +83,7 @@ if($send_data == 'true') {
 	$user_verified = 'waiting';
 	$drm_string = '';
 	$psw_string = md5("$psw$username");
+	$user_psw_hash = password_hash($psw, PASSWORD_DEFAULT);
 	
 	$user_activationkey = md5("$username$user_registerdate");
 	$activation_url = "http://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]?p=account&user=$username&al=$user_activationkey";
@@ -94,13 +95,13 @@ if($send_data == 'true') {
 			user_id, user_nick, user_registerdate, user_verified, user_groups,
 			user_drm, user_firstname, user_lastname, user_company,
 			user_street, user_street_nbr, user_zipcode, user_city, user_public_profile,
-			user_mail, user_newsletter, user_psw, user_activationkey
+			user_mail, user_newsletter, user_psw_hash, user_activationkey
 			) VALUES (
 			NULL,
 			:username, :user_registerdate, :user_verified, :user_groups,
 			:drm_string, :firstname, :name, :user_company,
 			:street, :nr, :zip, :city, :about_you,
-			:mail, :user_newsletter, :psw_string, :user_activationkey )";
+			:mail, :user_newsletter, :user_psw_hash, :user_activationkey )";
 	
 	$sth = $dbh->prepare($sql);
 	
@@ -119,7 +120,7 @@ if($send_data == 'true') {
 	$sth->bindParam(':about_you', $about_you, PDO::PARAM_STR);
 	$sth->bindParam(':mail', $mail, PDO::PARAM_STR);
 	$sth->bindParam(':user_newsletter', $user_newsletter, PDO::PARAM_STR);
-	$sth->bindParam(':psw_string', $psw_string, PDO::PARAM_STR);
+	$sth->bindParam(':user_psw_hash', $user_psw_hash, PDO::PARAM_STR);
 	$sth->bindParam(':user_activationkey', $user_activationkey, PDO::PARAM_STR);
 	
 	$count = $sth->execute();

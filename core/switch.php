@@ -204,7 +204,7 @@ if(($page_status == "draft") AND ($_SESSION['user_class'] != "administrator")){
 
 if($p == "register") {
 
-	$form_url = "$_SERVER[PHP_SELF]?p=register";
+	$form_url = FC_INC_DIR . "/register/";
 	$smarty->assign("form_url","$form_url");
 
 	if($prefs_userregistration != "yes") {

@@ -7,8 +7,8 @@ require("core/access.php");
 $show_form = "true";
 $db_status = "unlocked";
 
-if($_REQUEST[edituser] != "") {
-	$edituser = (int) $_REQUEST[edituser];
+if($_REQUEST['edituser'] != "") {
+	$edituser = (int) $_REQUEST['edituser'];
 } else {
 	unset($edituser);
 }
@@ -17,7 +17,7 @@ if($_REQUEST[edituser] != "") {
 $pdo_fields = array(
 	'user_mail' => 'STR',
 	'user_verified' => 'STR',
-	'user_psw' => 'STR',
+	'user_psw_hash' => 'STR',
 	'user_drm' => 'STR',
 	'user_class' => 'STR',
 	'user_firstname' => 'STR',
@@ -36,7 +36,7 @@ $pdo_fields_new = array(
 	'user_mail' => 'STR',
 	'user_verified' => 'STR',
 	'user_registerdate' => 'STR',
-	'user_psw' => 'STR',
+	'user_psw_hash' => 'STR',
 	'user_drm' => 'STR',
 	'user_class' => 'STR',
 	'user_firstname' => 'STR',
@@ -74,7 +74,7 @@ if(preg_match("/custom_/i", implode(",", array_keys($_POST))) ){
  * remove data from the database
  */
 
-if($_POST[delete_the_user]) {
+if($_POST['delete_the_user']) {
 
 	// connect to database
 	$dbh = new PDO("sqlite:".USER_DB);
@@ -83,6 +83,7 @@ if($_POST[delete_the_user]) {
 			SET user_mail = '',
 				user_verified = '',
 				user_psw = '',
+				user_psw_hash = '',
 				user_drm = '',
 				user_class = 'deleted',
 				user_mail = '',
@@ -114,7 +115,7 @@ if($_POST[delete_the_user]) {
  * new user or update user
  */
 
-if($_POST[save_the_user]) {
+if($_POST['save_the_user']) {
 
 	foreach($_POST as $key => $val) {
 		$$key = @strip_tags($val); 
@@ -129,14 +130,14 @@ if($_POST[save_the_user]) {
 	// check psw entries
 	$set_psw = "false";
 	
-	if($user_psw_new != "") {
+	if($_POST['user_psw_new'] != "") {
 
-		if($user_psw_new != $user_psw_reconfirmation) {
+		if($_POST['user_psw_new'] != $_POST['user_psw_reconfirmation']) {
 			$db_status = "locked";
-			$error_message .= "$lang[msg_psw_error]<br>";
+			$error_message .= $lang['msg_psw_error'].'<br>';
 		} else {
 			//generate password hash
-			$user_psw = md5("$user_psw_new$user_nick");
+			$user_psw = password_hash($_POST['user_psw_new'], PASSWORD_DEFAULT);
 			$success_message .= "$lang[msg_psw_changed]<br>";
 		}
 
@@ -151,7 +152,7 @@ if($_POST[save_the_user]) {
 		generate_bindParam_str($pdo_fields,$sth);
 		
 		if($db_status == "unlocked") {
-			$sth->bindParam(':user_psw', $user_psw, PDO::PARAM_STR);
+			$sth->bindParam(':user_psw_hash', $user_psw, PDO::PARAM_STR);
 		}
 		
 		$sth->bindParam(':user_drm', $drm_string, PDO::PARAM_STR);
@@ -201,7 +202,7 @@ if($_POST[save_the_user]) {
 			$sth = $dbh->prepare($sql);
 			generate_bindParam_str($pdo_fields_new,$sth);
 			
-			$sth->bindParam(':user_psw', $user_psw, PDO::PARAM_STR);
+			$sth->bindParam(':user_psw_hash', $user_psw, PDO::PARAM_STR);
 			$sth->bindParam(':user_drm', $drm_string, PDO::PARAM_STR);
 			$sth->bindParam(':user_registerdate', $user_registerdate, PDO::PARAM_STR);
 			$sth->bindParam(':user_class', $drm_acp_class, PDO::PARAM_STR);

@@ -8,8 +8,8 @@
 
 $lang['tn_dashboard'] = "Dashboard";
 $lang['tn_dashboard_desc'] = "Overview";
-$lang['tn_moduls'] = "Module";
-$lang['tn_moduls_desc'] = "Access module";
+$lang['tn_moduls'] = "Addons";
+$lang['tn_moduls_desc'] = "Access and manage Module and Themes";
 $lang['tn_pages'] = "Pages";
 $lang['tn_pages_desc'] = "Edit content, Creating/Edit pages ...";
 $lang['tn_filebrowser'] = "Files";

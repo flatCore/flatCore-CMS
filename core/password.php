@@ -1,6 +1,5 @@
 <?php
 
-
 if($_POST['ask_for_psw']) {
 	// send password information
 	
@@ -88,13 +87,17 @@ if($_GET['token'] != "") {
 	$user_nick = $userdata_array['user_nick'];
 	$user_mail = $userdata_array['user_mail'];
 	
-	$update_user_psw = md5("$temp_psw$user_nick");
+	$update_user_psw = password_hash($temp_psw, PASSWORD_DEFAULT);
 	
 	/* update db - send information to user_mail */
 	
 	$dbh = new PDO("sqlite:$fc_db_user");
-	$sql = "UPDATE fc_user SET user_psw = '$update_user_psw', user_reset_psw = '' WHERE user_id = '$user_id' ";
-	$cnt = $dbh->exec($sql);
+	$sql = "UPDATE fc_user SET user_psw_hash = :update_user_psw, user_reset_psw = '' WHERE user_id = :user_id ";
+	$sth = $dbh->prepare($sql);
+	$sth->bindParam(':update_user_psw', $update_user_psw, PDO::PARAM_STR);
+	$sth->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+	
+	$cnt = $sth->execute();
 	$dbh = null;
 	
 	$email_msg = $lang['forgotten_psw_mail_update'];
@@ -107,9 +110,9 @@ if($_GET['token'] != "") {
 	$mailer = Swift_Mailer::newInstance($transport);
 	$message = Swift_Message::newInstance()
 		->setSubject("$lang[forgotten_psw_mail_subject] | $prefs_pagetitle")
-  		->setFrom(array("$fc_mailer_adr" => "$fc_mailer_name"))
-  		->setTo(array("$user_mail" => "$user_nick"))
-  		->setBody("$email_msg", 'text/html');
+  	->setFrom(array("$prefs_mailer_adr" => "$prefs_mailer_name"))
+  	->setTo(array("$user_mail" => "$user_nick"))
+  	->setBody("$email_msg", 'text/html');
   $result = $mailer->send($message);
 	
 	$psw_message = $lang['msg_forgotten_psw_step2'];

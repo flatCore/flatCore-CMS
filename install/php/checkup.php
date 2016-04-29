@@ -79,7 +79,7 @@ $check_is_dir[] = "../acp/";
 
 /* minimum php version */
 
-$needed_phpversion = "5.2";
+$needed_phpversion = "5.5";
 
 
 echo"<h3>$lang[files_and_folders]</h3>";
@@ -104,7 +104,7 @@ if($version < $needed_phpversion) {
 	echo '<div class="alert alert-danger">' . $lang['php_false'] . '</div>';
 	$goto_install[] = "false";
 } else {
-	echo '<div class="alert alert-success">' . $lang['php_true'] . '</div>';
+	echo '<div class="alert alert-success">' . $lang['php_true'] . ' ('.$version.')</div>';
 	$goto_install[] = "true";
 }
 

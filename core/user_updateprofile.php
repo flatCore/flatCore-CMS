@@ -20,14 +20,14 @@ if($_SESSION['user_nick'] == "") {
 		
 		
 		/* USER SEND NEW PSW */
-		$update_user_psw = $_SESSION['user_psw'];
+		$user_psw_hash = $_SESSION['user_psw'];
 		
 		// check psw entries
 		$set_psw = "false";
 		
 		if($_POST['s_psw'] != "") {
-			if($user_psw_new == $user_psw_reconfirmation) {
-				$update_user_psw = md5("$s_psw$_SESSION[user_nick]");
+			if($_POST['s_psw'] == $_POST['s_psw_repeat']) {
+				$user_psw_hash = password_hash($_POST['s_psw'], PASSWORD_DEFAULT);
 			}
 		}
 		
@@ -41,7 +41,7 @@ if($_SESSION['user_nick'] == "") {
 					user_zipcode = :s_zip,
 					user_city = :s_city,
 					user_public_profile = :about_you,
-					user_psw = :update_user_psw
+					user_psw_hash = :user_psw_hash
 					WHERE user_id = $_SESSION[user_id]";
 		
 		$sth = $dbh->prepare($sql);
@@ -53,7 +53,7 @@ if($_SESSION['user_nick'] == "") {
 		$sth->bindParam(':s_zip', $s_zip, PDO::PARAM_STR);
 		$sth->bindParam(':s_city', $s_city, PDO::PARAM_STR);
 		$sth->bindParam(':about_you', $about_you, PDO::PARAM_STR);
-		$sth->bindParam(':update_user_psw', $update_user_psw, PDO::PARAM_STR);
+		$sth->bindParam(':user_psw_hash', $user_psw_hash, PDO::PARAM_STR);
 		
 		$count = $sth->execute();
 		$dbh = null;

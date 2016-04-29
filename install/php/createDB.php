@@ -14,7 +14,7 @@ $username = $_POST['username'];
 $mail = $_POST['mail'];
 $psw = $_POST['psw'];
 
-$psw_string = md5("$psw$username");
+$user_psw_hash = password_hash($psw, PASSWORD_DEFAULT);
 $drm_string = "drm_acp_pages|drm_acp_files|drm_acp_user|drm_acp_system|drm_acp_editpages|drm_acp_editownpages|drm_moderator|drm_can_publish";
 $user_verified = "verified";
 $user_registerdate = time();
@@ -29,22 +29,22 @@ $sql_groups_table = generate_sql_query("fc_groups.php");
 
 $dbh = new PDO("sqlite:../$fc_db_user");
 
-$username = $dbh -> quote($username);
-$mail = $dbh -> quote($mail);
-$psw_string = $dbh -> quote($psw_string);
+$dbh->query($sql_user_table);
+$dbh->query($sql_groups_table);
 
 $sql_insert_admin = "INSERT INTO fc_user (
-		user_id, user_class, user_nick,
-		user_verified, user_registerdate, user_drm,
-		user_mail, user_psw
-		) VALUES (
-		NULL, 'administrator', $username,
-		'$user_verified', '$user_registerdate', '$drm_string',
-		$mail, $psw_string )";
+		user_id, user_class, user_nick, user_verified, user_registerdate, user_drm, user_mail, user_psw_hash
+	) VALUES (
+		NULL, 'administrator', :username, 'verified', :user_registerdate, :drm_string, :mail, :user_psw_hash
+	)";
 
-	$dbh->query($sql_user_table);
-	$dbh->query($sql_groups_table);
-	$dbh->query($sql_insert_admin);
+$sth = $dbh->prepare($sql_insert_admin);
+$sth->bindParam(':username', $username, PDO::PARAM_STR);
+$sth->bindParam(':user_registerdate', $user_registerdate, PDO::PARAM_STR);
+$sth->bindParam(':drm_string', $drm_string, PDO::PARAM_STR);
+$sth->bindParam(':mail', $mail, PDO::PARAM_STR);
+$sth->bindParam(':user_psw_hash', $user_psw_hash, PDO::PARAM_STR);
+$sth->execute();
 
 $dbh = null;
 
