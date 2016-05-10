@@ -36,8 +36,9 @@ h1, h2, h3, h4, h5, h6 {
 	color: @heading_color;
 }
 
-a, a:hover, a:focus, a:visited {
+a, a:hover, a:focus {
 	color: @linkColor;
+	.transition(color 0.2s linear);
 }
 
 a:hover {
@@ -183,27 +184,24 @@ footer hr {
 
 
 hr.shadow {
-    padding: 0;
-    border: 0;
-    outline: 0;
-    overflow: hidden;
-    height: 14px;
-    margin-top: 14px;
-    margin-right: 0;
-    margin-bottom: 0;
-    margin-left: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  overflow: hidden;
+  height: 14px;
+  margin: 14px 0 0 0;
 }
 
 hr.shadow:after {
-    content: "";
-    margin: 0 auto;
-    position: relative;
-    top: -35px;
-    display: block;
-    width: 95%;
-    height: 14px;
-    .box-shadow(0px 20px 10px fade(@brandColor1,50%));
-    .border-radius(50%);
+  content: "";
+  margin: 0 auto;
+  position: relative;
+  top: -35px;
+  display: block;
+  width: 95%;
+  height: 14px;
+  .box-shadow(0px 20px 10px fade(@brandColor1,50%));
+  .border-radius(50%);
 }
 
 .styledSpace {
@@ -382,7 +380,7 @@ div#toc h2 {
 	padding: 4px 6px;
 	border-bottom: 1px solid fade(@header_bg,45%);
 	background-color: transparent;
-	.transition(background 0.5s linear, color 0.5s linear);
+	.transition(background 0.2s linear, color 0.3s linear);
 }
 
 #toclist li a:hover {
