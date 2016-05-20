@@ -979,7 +979,7 @@ function fc_delete_media_data($filename) {
  *
  */
 
-function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$text=NULL,$url=NULL,$alt=NULL,$lang=NULL) {
+function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$text=NULL,$url=NULL,$alt=NULL,$lang=NULL,$credit=NULL,$priority=NULL,$license=NULL) {
 
 	global $languagePack;
 	
@@ -994,7 +994,10 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 		'media_text' => 'STR',
 		'media_alt' => 'STR',
 		'media_url' => 'STR',
-		'media_lang' => 'STR'
+		'media_lang' => 'STR',
+		'media_priority' => 'STR',
+		'media_credit' => 'STR',
+		'media_license' => 'STR'
 	);
 		
 	$pdo_fields_new = array(
@@ -1006,7 +1009,10 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 		'media_text' => 'STR',
 		'media_alt' => 'STR',
 		'media_url' => 'STR',
-		'media_lang' => 'STR'
+		'media_lang' => 'STR',
+		'media_priority' => 'STR',
+		'media_credit' => 'STR',
+		'media_license' => 'STR'
 	);
 
 	$dbh = new PDO("sqlite:".CONTENT_DB);
@@ -1039,6 +1045,9 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 	$sth->bindParam(':media_url', $url, PDO::PARAM_STR);
 	$sth->bindParam(':media_alt', $alt, PDO::PARAM_STR);
 	$sth->bindParam(':media_lang', $lang, PDO::PARAM_STR);
+	$sth->bindParam(':media_priority', $priority, PDO::PARAM_STR);
+	$sth->bindParam(':media_license', $license, PDO::PARAM_STR);
+	$sth->bindParam(':media_credit', $credit, PDO::PARAM_STR);
 
 	$cnt_changes = $sth->execute();
 	

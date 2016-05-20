@@ -4,16 +4,22 @@
 			<form role="form" action="{form_action}" id="media_form" method="POST">
 				<input type="hidden" name="file" value="{filename}">
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-md-5">
 						<div class="form-group">
 					    <label>{label_title}</label>
 					    <input type="text" class="form-control" name="title" value="{title}">
 					  </div>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-5">
 						<div class="form-group">
 					    <label>{label_alt}</label>
 					    <input type="text" class="form-control" name="alt" value="{alt}">
+					  </div>
+					</div>
+					<div class="col-md-2">
+						<div class="form-group">
+					    <label>{label_priority}</label>
+					    <input type="text" class="form-control" name="priority" value="{priority}">
 					  </div>
 					</div>
 				</div>
@@ -33,12 +39,29 @@
 				</div>
 				<div class="form-group">
 			    <label>{label_text}</label>
-			    <textarea class="form-control" name="text" rows="6">{text}</textarea>
+			    <textarea class="form-control" name="text" rows="5">{text}</textarea>
 			  </div>
-				<div class="form-group">
-			    <label>{label_notes}</label>
-			    <textarea class="form-control" name="notes" rows="3">{notes}</textarea>
+			  <div class="row">
+				  <div class="col-md-6">
+						<div class="form-group">
+					    <label>{label_notes}</label>
+					    <textarea class="form-control" name="notes" rows="5">{notes}</textarea>
+					  </div>
+				  </div>
+				  <div class="col-md-6">
+
+						<div class="form-group">
+					    <label>{label_license}</label>
+					    <input type="text" class="form-control" name="license" value="{license}">
+					  </div>
+						<div class="form-group">
+					    <label>{label_credits}</label>
+					    <input type="text" class="form-control" name="credit" value="{credit}">
+					  </div>
+					  
+				  </div>
 			  </div>
+			  
 			  <input type="hidden" name="saveMedia" value="save">
 			  <input type="hidden" name="realpath" value="{realpath}">
 			  <input type="hidden" name="folder" value="{folder}">
@@ -51,7 +74,7 @@
 			<div class="well well-sm">
 				{preview}	
 			</div>
-			<hr>
+			
 			<table class="table table-condensed">
 				<tr>
 					<td class="text-right"><span class="glyphicon glyphicon-time" aria-hidden="true"></span></td>

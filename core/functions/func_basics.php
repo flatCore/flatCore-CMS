@@ -83,6 +83,9 @@ function fc_get_images_data($image,$parameters=NULL) {
 	$tpl = str_replace('{$image_title}', $imageData['media_title'], $tpl);
 	$tpl = str_replace('{$image_alt}', $imageData['media_alt'], $tpl);
 	$tpl = str_replace('{$image_caption}', $imageData['media_text'], $tpl);
+	$tpl = str_replace('{$image_license}', $imageData['media_license'], $tpl);
+	$tpl = str_replace('{$image_credits}', $imageData['media_credits'], $tpl);
+	$tpl = str_replace('{$image_priority}', $imageData['media_priority'], $tpl);
 	$tpl = str_replace('{$image_link_class}', $aclass, $tpl);
 	
 	return $tpl;

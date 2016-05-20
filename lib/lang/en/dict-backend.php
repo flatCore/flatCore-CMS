@@ -261,6 +261,9 @@ $lang['label_keywords'] = "Keywords";
 $lang['label_text'] = "Text";
 $lang['label_alt'] = "Alt";
 $lang['label_url'] = "URL";
+$lang['label_priority'] = "Priority";
+$lang['label_license'] = "License";
+$lang['label_credits'] = "Credits";
 $lang['label_notes'] = "Notes";
 $lang['missing_value'] = 'missing value';
 
