@@ -31,17 +31,13 @@ if(!defined('INSTALLER')) {
 			<input type="password" class="form-control" name="psw" value="">
 		</div>
 	</div>
-
-<hr>
-
-<div class="row">
-	<div class="col-md-4">
-		<input type="submit" class="btn btn-block" name="step1" value="<?php echo $lang['step']; ?> 1">
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label"></label>
+		<div class="col-sm-10">
+			<input type="submit" class="btn btn-success btn-block" name="step3" value="<?php echo $lang['start_install']; ?>">
+		</div>
 	</div>
-	<div class="col-md-8">
-		<input type="submit" class="btn btn-success btn-block" name="step3" value="<?php echo $lang['start_install']; ?>">
-	</div>
-</div>
 
 
 </form>
