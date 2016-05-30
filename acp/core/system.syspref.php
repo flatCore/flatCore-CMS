@@ -46,6 +46,22 @@ if(isset($_POST['save_prefs_descriptions'])) {
 	$dbh = null;
 }
 
+/* save thumbnail */
+
+if(isset($_POST['save_prefs_thumbnail'])) {
+
+	$pdo_fields = array(
+		'prefs_pagethumbnail' => 'STR'
+	);
+	$dbh = new PDO("sqlite:".CONTENT_DB);
+	$sql = generate_sql_update_str($pdo_fields,"fc_preferences","WHERE prefs_id = 1");
+	$sth = $dbh->prepare($sql);
+	generate_bindParam_str($pdo_fields,$sth);
+	$cnt_changes = $sth->execute();
+	$dbh = null;
+}
+
+
 
 /* save user preferences */
 if(isset($_POST['save_prefs_user'])) {
@@ -241,6 +257,31 @@ echo tpl_form_control_group('',$lang['f_prefs_pagesubtitle'],$prefs_pagesubtitle
 echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_descriptions' value='$lang[save]'>");
 echo '</form>';
 echo '</fieldset>';
+
+
+/* default Thumbnail */
+echo '<fieldset>';
+echo '<legend>'.$lang['page_thumbnail_default'].'</legend>';
+echo '<form action="acp.php?tn=system&sub=sys_pref" method="POST" class="form-horizontal">';
+
+$select_prefs_thumbnail  = '<select name="prefs_pagethumbnail" class="form-control">';
+$select_prefs_thumbnail .= '<option value="">'.$lang['page_thumbnail'].'</option>';
+$arr_Images = get_all_images();
+	foreach($arr_Images as $page_thumbnail) {
+		$selected = "";
+		if($prefs_pagethumbnail == "$page_thumbnail") {
+			$selected = "selected";
+		}
+		$select_prefs_thumbnail .= "<option $selected value='$page_thumbnail'>$page_thumbnail</option>";
+}
+$select_prefs_thumbnail .= "</select>";
+
+echo tpl_form_control_group('',$lang['page_thumbnail'],$select_prefs_thumbnail);
+
+echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_thumbnail' value='$lang[save]'>");
+echo '</form>';
+echo '</fieldset>';
+
 
 /* contacts */
 

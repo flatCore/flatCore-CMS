@@ -264,6 +264,8 @@ $lang['label_credits'] = "Copyright";
 $lang['label_notes'] = "Notizen";
 $lang['label_color'] = "Farbe";
 $lang['missing_value'] = 'fehlender Wert';
+$lang['label_filename'] = 'Dateiname';
+$lang['label_content'] = 'Inhalt';
 
 /* Preferences */
 
@@ -295,6 +297,7 @@ $lang['select_filesize_yes'] = "Dateigrößen anzeigen";
 $lang['select_filesize_no'] = "Dateigrößen nicht anzeigen";
 
 $lang['page_thumbnail'] = "Thumbnail";
+$lang['page_thumbnail_default'] = "Standard Thumbnail";
 $lang['rss_offset'] = "RSS Zeitpuffer (Sekunden)";
 
 $lang['prefs_mailer_name'] = "Absender Name";
@@ -357,6 +360,9 @@ $lang['alert_no_modules'] = 'Es sind noch keine Module installiert.';
 
 $lang['alert_no_page_title'] = 'Kein Seitentitel';
 $lang['alert_no_page_description'] = 'Keine Seitenbeschreibung';
+
+$lang['alert_no_plugins'] = 'Es sind noch keine Plugins installiert.';
+
 
 /* System */
 

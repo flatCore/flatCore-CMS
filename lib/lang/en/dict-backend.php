@@ -266,6 +266,8 @@ $lang['label_license'] = "License";
 $lang['label_credits'] = "Credits";
 $lang['label_notes'] = "Notes";
 $lang['missing_value'] = 'missing value';
+$lang['label_filename'] = 'Filename';
+$lang['label_content'] = 'Content';
 
 /* Preferences */
 
@@ -297,6 +299,7 @@ $lang['select_filesize_no'] = "Don't show filesize";
 $lang['f_prefs_global_header'] = "Global Headers (HTML)";
 
 $lang['page_thumbnail'] = "Thumbnail";
+$lang['page_thumbnail_default'] = "Default Thumbnail";
 $lang['rss_offset'] = "RSS Offset (Seconds)";
 
 $lang['prefs_mailer_name'] = "Sender Name";
@@ -359,6 +362,8 @@ $lang['alert_no_modules'] = 'There are no modules are installed.';
 
 $lang['alert_no_page_title'] = 'No Pagetitle';
 $lang['alert_no_page_description'] = 'No Page Description';
+
+$lang['alert_no_plugins'] = 'There are no plugins available';
 
 
 /* System */

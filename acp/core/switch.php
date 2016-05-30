@@ -47,8 +47,8 @@ switch ($tn) {
 		
 	case "moduls":
 		$active[2] = "topnav_selected";
-		$maininc = "inc.moduls";
-		$navinc = "nav.moduls";
+		$maininc = "inc.addons";
+		$navinc = "nav.addons";
 		break;
 	
 	case "filebrowser":

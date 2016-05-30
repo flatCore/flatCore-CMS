@@ -110,7 +110,7 @@ $sql_insert_prefs = "INSERT INTO fc_preferences (
 		NULL, 'active', 'Diese Homepage',
 		'rockt mit SQLite und PHP5', 'blucent', 'yes', 'off',
 		'jpg jpeg gif png', '600', '500', '2800',
-		'on', 'layout_2cols.tpl', '216000' )";
+		'on', 'layout_default.tpl', '216000' )";
 
 $sql_tl_footer_text = "INSERT INTO fc_textlib ( 
 						textlib_id , textlib_name , textlib_content , textlib_lang 
