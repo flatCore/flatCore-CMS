@@ -73,6 +73,33 @@ div#bigHeader {
 	overflow: hidden;
 }
 
+#expireDiv {
+	text-align: center;
+	.transition(all 0.3s linear);
+}
+
+.expire-hidden {
+	height: 0;
+	overflow: hidden;
+}
+
+.expire-start {
+	padding: 3px;
+}
+
+.expire-soon {
+	background: rgba(255, 0, 0, 0.45)
+}
+
+.expire-danger {
+	background: rgba(255, 0, 0, 1);
+	color: #fff;
+}
+
+#currentSeconds {
+	font-weight: bold;
+}
+
 
 #liveBox {
 	width: 200px;

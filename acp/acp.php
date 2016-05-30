@@ -1,6 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
+
 require('core/access.php');
 require('../config.php');
 include('versions.php');
@@ -21,6 +22,7 @@ define("FC_ROOT", str_replace("/acp","",FC_INC_DIR));
 define("IMAGES_FOLDER", "$img_path");
 define("FILES_FOLDER", "$files_path");
 define("FC_SOURCE", "backend");
+
 
 if(!isset($_SESSION['editor_class'])) {
 	$_SESSION['editor_class'] = "wysiwyg";
@@ -170,6 +172,12 @@ foreach($fc_preferences as $k => $v) {
 		</div>
 			
 		<div id="page-content">
+
+
+    <div id="expireDiv" class="expire-hidden">
+        Your session is about to expire. You will be logged out in <span id="currentSeconds"></span> seconds.
+        If you want to continue, please save your work and refresh the page.
+    </div>
 	
 		<?php
 		if(isset($fc_content_files) && is_array($fc_content_files)) {
@@ -178,7 +186,7 @@ foreach($fc_preferences as $k => $v) {
 			echo '</div>';
 		}
 		?>
-				
+
 		<div id="bigHeader">
 		<?php require("core/topNav.php"); ?>
 		</div>
@@ -187,6 +195,8 @@ foreach($fc_preferences as $k => $v) {
 		<div id="container">
 			<?php include("core/$maininc.php"); ?>
 		</div>
+
+
 	
 		<div id="footer">
 		<b>flatCore</b> Content Management System (<?php echo $fc_version_name . ' <small>B: ' . $fc_version_build; ?>)</small><br />
@@ -439,7 +449,7 @@ foreach($fc_preferences as $k => $v) {
 			  }
 			});
 
-$(document).ready(function() {
+	$(document).ready(function() {
    	stretchAppContainer();
    	
 	  $( "div.scroll-box" ).each(function() {
@@ -474,7 +484,36 @@ $(document).ready(function() {
   }
 
    
-
+	<?php
+		$maxlifetime = ini_get("session.gc_maxlifetime");
+		echo "var maxlifetime = '{$maxlifetime}';";
+	?>
+	
+	
+ var countdown = {
+        startInterval : function() {
+            var currentId = setInterval(function(){
+                $('#currentSeconds').html(maxlifetime);
+                
+                if(maxlifetime == 60) {
+	                $('#expireDiv').removeClass('expire-hidden');
+	                $('#expireDiv').addClass('expire-start');
+                }
+                if(maxlifetime == 30) {
+	                $('#expireDiv').addClass('expire-soon');
+                }
+                if(maxlifetime == 15) {
+	                $('#expireDiv').addClass('expire-danger');
+                }
+                if(maxlifetime == 0) {
+	                window.location.href = "/index.php?goto=logout";
+                }
+                --maxlifetime;
+            }, 1000);
+            countdown.intervalId = currentId;
+        }
+    };
+    countdown.startInterval();
    
 </script>
 
