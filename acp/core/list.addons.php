@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL ^E_NOTICE);
+
 //prohibit unauthorized access
 require("core/access.php");
 
@@ -7,7 +7,7 @@ require("core/access.php");
 if(isset($_GET['enable'])) {
 	
 	$modFolder = basename($_GET['enable']);
-	include("../modules/$modFolder/info.inc.php");
+	include '../modules/'.$modFolder.'/info.inc.php';
 	
 	$dbh = new PDO("sqlite:".CONTENT_DB);
 	$sql = "INSERT INTO fc_addons	(
@@ -24,7 +24,6 @@ if(isset($_GET['enable'])) {
 	$dbh = null;
 	
 	mods_check_in();
-	
 }
 
 /* check out an existing module */
@@ -38,7 +37,6 @@ if(isset($_GET['disable'])) {
 	$dbh = null;
 	
 	mods_check_in();
-	
 }
 
 //$arr_iMods
@@ -64,7 +62,7 @@ for($i=0;$i<$nbrModuls;$i++) {
 	}
 	
 	
-	include("../modules/$modFolder/info.inc.php");
+	include '../modules/'.$modFolder.'/info.inc.php';
 	
 	$listlinks = '<div class="btn-group">';
 	for($x=0;$x<count($modnav);$x++) {
@@ -84,7 +82,7 @@ for($i=0;$i<$nbrModuls;$i++) {
 	
 	unset($mod_livecode);
 	if(is_file("../modules/$modFolder/backend/livecode.php")) {
-		include("../modules/$modFolder/backend/livecode.php");
+		include '../modules/'.$modFolder.'/backend/livecode.php';
 	}
 	
 	
