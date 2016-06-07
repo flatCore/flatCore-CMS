@@ -1,7 +1,7 @@
 <?php
 
 //prohibit unauthorized access
-require("core/access.php");
+require 'core/access.php';
 
 echo '<h3>System</h3>';
 
@@ -10,7 +10,7 @@ echo '<div class="row">';
 echo '<div class="col-md-4">';
 echo '<h5>Config</h5>';
 echo '<dl class="dl-horizontal">';
-echo '<dt>Server:</dt><dd>' . $_SERVER['SERVER_NAME'] . '</dd>';
+echo '<dt>Server:</dt><dd>' . $_SERVER['SERVER_NAME'] . ' (PHP '.phpversion().')</dd>';
 if($prefs_mailer_adr != '') {
 	echo '<dt>System E-Mails:</dt><dd>' . $prefs_mailer_adr . '</dd>';
 } else {
