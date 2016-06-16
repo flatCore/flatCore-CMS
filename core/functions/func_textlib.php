@@ -17,9 +17,14 @@ function print_msg($file,$l) {
  */
 
 
-function get_textlib($textlib_name,$textlib_lang='de') {
+function get_textlib($textlib_name,$textlib_lang) {
 
 	global $fc_db_content;
+	global $languagePack;
+	
+	if(empty($textlib_lang)) {
+		$textlib_lang = $languagePack;
+	}
 	
 	try {
 		$dbh = new PDO("sqlite:$fc_db_content");

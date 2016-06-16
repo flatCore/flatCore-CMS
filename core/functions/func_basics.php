@@ -167,7 +167,7 @@ function text_parser($text) {
 	$text = preg_replace_callback(
 	    '/\[snippet\](.*?)\[\/snippet\]/si',
 	    function ($m) {
-		   return get_textlib_by_fn($m[1]);
+		    return get_textlib($m[1]);
 	    },
 	    $text
 	);
