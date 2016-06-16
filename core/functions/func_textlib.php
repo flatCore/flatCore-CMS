@@ -76,7 +76,7 @@ function get_all_textlibs() {
 	global $fc_db_content;
 	
 	$dbh = new PDO("sqlite:$fc_db_content");
-	$sql = "SELECT textlib_name, textlib_content FROM fc_textlib";
+	$sql = "SELECT textlib_name, textlib_content, textlib_lang FROM fc_textlib";
 	$result = $dbh->query($sql);
 	$result= $result->fetchAll(PDO::FETCH_ASSOC);
 	$dbh = null;

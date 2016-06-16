@@ -69,8 +69,17 @@ $textlibs = get_all_textlibs();
 $cnt_textlibs = count($textlibs);
 
 for($i=0;$i<$cnt_textlibs;$i++) {
-	$textlib_key = "fc_snippet_" . str_replace("-","_",$textlibs[$i]['textlib_name']);
-	$smarty->assign("$textlib_key", text_parser(stripslashes($textlibs[$i]['textlib_content'])));
+	$snippet_lang = $textlibs[$i]['textlib_lang'];
+	$snippet_key = "fc_snippet_" . str_replace("-","_",$textlibs[$i]['textlib_name']);
+	/* assign the correct snippet by $languagePack */
+	if($snippet_lang == $languagePack) {
+		$smarty->assign("$snippet_key", text_parser(stripslashes($textlibs[$i]['textlib_content'])));
+		$matched_snippets[] = $textlibs[$i]['textlib_name'];
+	}
+	/* if we have no match by $languagePack - assign the last snippet with the same textlib_name */
+	if(!in_array($textlibs[$i]['textlib_name'], $matched_snippets)) {
+		$smarty->assign("$snippet_key", text_parser(stripslashes($textlibs[$i]['textlib_content'])));
+	}
 }
 
 
