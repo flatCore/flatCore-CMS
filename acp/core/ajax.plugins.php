@@ -33,6 +33,7 @@ $plugin = basename($_REQUEST['plugin']);
 
 if(is_file('../../'.FC_CONTENT_DIR.'/plugins/'.$plugin)) {
 	$plugin_src = file_get_contents('../../'.FC_CONTENT_DIR.'/plugins/'.$plugin);
+	$plugin_src = htmlentities($plugin_src,ENT_QUOTES,"UTF-8");
 	
 	if(!is_writable('../../'.FC_CONTENT_DIR.'/plugins/'.$plugin)) {
 		$message = '<div class="alert alert-info">The file is not writable</div>';

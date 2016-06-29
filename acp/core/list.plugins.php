@@ -29,7 +29,7 @@ if(count($all_plugin_files)<1) {
 		if($_SESSION['user_class'] == 'administrator') {
 			$edit_btn = '<a href="/acp/core/ajax.plugins.php?plugin='.$plugin.'" class="fancybox-ajax btn btn-sm btn-default"><span class="glyphicon glyphicon-pencil"></span> '.$lang['edit'].'</a>';
 		} else {
-			$edit_btn = '<a class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal'.$id.'">Source</a>';
+			$edit_btn = '<a class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal'.$id.'">Source</a>';
 		}
 		
 		$tpl_icon = "images/plugin-icon.png";
@@ -47,7 +47,7 @@ if(count($all_plugin_files)<1) {
 		$tpl = str_replace("{\$MOD_NAV}", "$edit_btn","$tpl");
 		
 		echo $tpl;
-	
+
 		/* Modal */
 		echo '<div class="modal fade" id="myModal'.$id.'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">';
 		echo '<div class="modal-dialog modal-lg" role="document">';
@@ -57,7 +57,7 @@ if(count($all_plugin_files)<1) {
 		echo '<h4 class="modal-title" id="myModalLabel'.$id.'">'.$plugin.'</h4>';
 		echo '</div>';
 		echo '<div class="modal-body">';
-		echo '<pre class="form-control" style="height:400px;overflow:auto;">'.htmlentities($plugin_src).'</pre>';
+		echo '<pre class="form-control" style="height:400px;overflow:auto;">'.htmlentities($plugin_src,ENT_QUOTES,"UTF-8").'</pre>';
 		echo '</div>';
 		echo '<div class="modal-footer">';
 		echo '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
