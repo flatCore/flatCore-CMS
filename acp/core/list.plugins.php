@@ -14,14 +14,17 @@ if(count($all_plugin_files)<1) {
 	
 	foreach($all_plugin_files as $plugin) {
 		
+		$pathinfo = pathinfo('/content/plugins/'.$plugin);
+		if($pathinfo['extension'] != 'php') {
+			continue;
+		}
+		
 		$id = md5($plugin);
 		$plugin_src = file_get_contents('../'.FC_CONTENT_DIR.'/plugins/'.$plugin);
 		$tokens = token_get_all($plugin_src);
 		$plugin_info = get_include_contents('../'.FC_CONTENT_DIR.'/plugins/'.$plugin);
 		$filesize = readable_filesize(filesize('../'.FC_CONTENT_DIR.'/plugins/'.$plugin));
 		$lastedit = date('Y-m-d H:i:s',filemtime('../'.FC_CONTENT_DIR.'/plugins/'.$plugin));
-		
-		
 		
 		if($_SESSION['user_class'] == 'administrator') {
 			$edit_btn = '<a href="/acp/core/ajax.plugins.php?plugin='.$plugin.'" class="fancybox-ajax btn btn-sm btn-default"><span class="glyphicon glyphicon-pencil"></span> '.$lang['edit'].'</a>';
@@ -40,7 +43,6 @@ if(count($all_plugin_files)<1) {
 		$tpl = str_replace("{\$MOD_ICON}", "$tpl_icon","$tpl");
 		$tpl = str_replace("{\$MOD_LIVECODE}", "","$tpl");
 		$tpl = str_replace("{\$MOD_CHECK_IN_OUT}", "","$tpl");
-		
 		
 		$tpl = str_replace("{\$MOD_NAV}", "$edit_btn","$tpl");
 		
