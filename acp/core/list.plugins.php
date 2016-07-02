@@ -1,7 +1,7 @@
 <?php
 
 //prohibit unauthorized access
-require("core/access.php");
+require 'core/access.php';
 
 $all_plugin_files = array_diff(scandir('../'.FC_CONTENT_DIR.'/plugins/'), array('..', '.','.DS_Store','index.html'));
 
@@ -10,7 +10,7 @@ if(count($all_plugin_files)<1) {
 	echo '<div class="alert alert-info">'.$lang['alert_no_plugins'].'</div>';
 } else {
 
-	$template_file = file_get_contents("templates/modlist.tpl");
+	$template_file = file_get_contents("templates/pluginlist.tpl");
 	
 	foreach($all_plugin_files as $plugin) {
 		
@@ -21,31 +21,54 @@ if(count($all_plugin_files)<1) {
 		
 		$id = md5($plugin);
 		$plugin_src = file_get_contents('../'.FC_CONTENT_DIR.'/plugins/'.$plugin);
-		$tokens = token_get_all($plugin_src);
+		$comment = getfirstcommentblock($plugin_src);
 		$plugin_info = get_include_contents('../'.FC_CONTENT_DIR.'/plugins/'.$plugin);
-		$filesize = readable_filesize(filesize('../'.FC_CONTENT_DIR.'/plugins/'.$plugin));
-		$lastedit = date('Y-m-d H:i:s',filemtime('../'.FC_CONTENT_DIR.'/plugins/'.$plugin));
+		$tpl_icon = "images/plugin-icon.png";
+		//$filesize = readable_filesize(filesize('../'.FC_CONTENT_DIR.'/plugins/'.$plugin));
+		//$lastedit = date('Y-m-d H:i:s',filemtime('../'.FC_CONTENT_DIR.'/plugins/'.$plugin));
 		
+		/* show edit btn or source code for non admins */
 		if($_SESSION['user_class'] == 'administrator') {
 			$edit_btn = '<a href="/acp/core/ajax.plugins.php?plugin='.$plugin.'" class="fancybox-ajax btn btn-sm btn-default"><span class="glyphicon glyphicon-pencil"></span> '.$lang['edit'].'</a>';
 		} else {
 			$edit_btn = '<a class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal'.$id.'">Source</a>';
 		}
 		
-		$tpl_icon = "images/plugin-icon.png";
+		/* show the first comment block */
+		$help_btn = '';
+		if($comment != '') {
+			echo '<div id="help'.$id.'" style="display:none;"><pre>'.$comment.'</pre></div>';
+			$help_btn = ' <a class="fancybox btn btn-default btn-sm" href="#help'.$id.'"><span class="glyphicon glyphicon-question-sign"></span></a>';
+		}
+		
+		$btn_group = '<div class="btn-group pull-right" role="group">'.$edit_btn.$help_btn.'</div>';
+		
+		/* shorten the filename if needed */
+		$plugin_name = basename($plugin,'.php');
+		if(strlen($plugin_name) > 10) {
+			$plugin_name = substr($plugin_name, 0,10);
+		}
+		
+		/* show version information */
+		$plugin_version = '<p class="text-muted">';
+		if($plugin_info['version'] != '') {
+			$plugin_version .= '<span class="">Version: '.$plugin_info['version'].'</span> · ';
+		}
+		/* show author information */
+		$plugin_author = '';
+		if($plugin_info['author'] != '') {
+			$plugin_version .= '<span class="">Author: '.$plugin_info['author'].'</span>';
+		}
+		$plugin_version .= '</p>';
+		
 		
 		$tpl = $template_file;
-		
-		$tpl = str_replace("{\$MOD_NAME}", "$plugin","$template_file"); 
-		$tpl = str_replace("{\$MOD_DESCRIPTION}", $plugin_info['description'],"$tpl");
-		$tpl = str_replace("{\$MOD_VERSION}", $plugin_info['version'],"$tpl");
-		$tpl = str_replace("{\$MOD_AUTHOR}", $plugin_info['author'],"$tpl");
-		$tpl = str_replace("{\$MOD_ICON}", "$tpl_icon","$tpl");
-		$tpl = str_replace("{\$MOD_LIVECODE}", "","$tpl");
-		$tpl = str_replace("{\$MOD_CHECK_IN_OUT}", "","$tpl");
-		
-		$tpl = str_replace("{\$MOD_NAV}", "$edit_btn","$tpl");
-		
+		$tpl = str_replace("{\$PLUGIN_NAME}", "$plugin_name","$template_file");
+		$tpl = str_replace("{\$PLUGIN_TITLE}", $plugin_info['title'],"$tpl");
+		$tpl = str_replace("{\$PLUGIN_DESCRIPTION}", $plugin_info['description'],"$tpl");
+		$tpl = str_replace("{\$PLUGIN_VERSION}", $plugin_version,"$tpl");
+		$tpl = str_replace("{\$PLUGIN_ICON}", "$tpl_icon","$tpl");
+		$tpl = str_replace("{\$PLUGIN_NAV}", "$btn_group","$tpl");
 		echo $tpl;
 
 		/* Modal */
@@ -80,5 +103,16 @@ function get_include_contents($filename) {
     }
     return false;
 }
+
+function getfirstcommentblock($str) {
+	$comments = array_filter(
+  	token_get_all($str),function($entry) {
+    	return $entry[0] == T_DOC_COMMENT;
+    }
+  );
+  $comment = array_shift($comments);
+  return $comment[1];
+}
+
 
 ?>
