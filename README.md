@@ -7,7 +7,6 @@
 flatCore is a Content Management System based on PHP5 and SQLite3.
 
 * Official Site: http://www.flatcore.org
-* German: http://www.flatcore.de
 * License: GNU GENERAL PUBLIC LICENSE Version 3
 
 ### Usermanual and Developer Documentation
@@ -25,8 +24,10 @@ flatCore is a Content Management System based on PHP5 and SQLite3.
 ___
 
 + jQuery - https://jquery.com/
-+ fancybox - http://fancyapps.com/fancybox/
-+ Chart.js - http://chartjs.org/
-+ Masonry - http://masonry.desandro.com
++ fancybox (2.1.5) - http://fancyapps.com/fancybox/
++ Chart.js (1.0.1-beta.4) - http://chartjs.org/
++ Masonry (v3.1.2) - http://masonry.desandro.com
 + DropzoneJS - http://www.dropzonejs.com
 + jquery.dirtyforms - https://github.com/snikch/jquery.dirtyforms
++ matchHeight - http://brm.io/jquery-match-height/
++ bootstrap-tagsinput (v0.6.1) - https://github.com/bootstrap-tagsinput/bootstrap-tagsinput
