@@ -131,7 +131,14 @@ function text_parser($text) {
 		}
 	}
  
- 
+	$text = preg_replace_callback(
+	    '/\[snippet\](.*?)\[\/snippet\]/si',
+	    function ($m) {
+		    return get_textlib($m[1]);
+	    },
+	    $text
+	);
+	
 	$text = preg_replace_callback(
 	    '/\[include\](.*?)\[\/include\]/s',
 	    function ($m) {
@@ -163,15 +170,7 @@ function text_parser($text) {
 	    },
 	    $text
 	);
-	
-	$text = preg_replace_callback(
-	    '/\[snippet\](.*?)\[\/snippet\]/si',
-	    function ($m) {
-		    return get_textlib($m[1]);
-	    },
-	    $text
-	);
-	
+		
 	$text = preg_replace_callback(
 	    '/\[mod=(.*?)\](.*?)\[\/mod\]/si',
 	    function ($m) {
