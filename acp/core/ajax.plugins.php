@@ -64,6 +64,7 @@ $form_tpl = str_replace('{label_filename}', $lang['label_filename'], $form_tpl);
 $form_tpl = str_replace('{label_content}', $lang['label_content'], $form_tpl);
 $form_tpl = str_replace('{plugin_src}', $plugin_src, $form_tpl);
 $form_tpl = str_replace('{save}', $lang['save'], $form_tpl);
+$form_tpl = str_replace('{delete}', $lang['delete'], $form_tpl);
 $form_tpl = str_replace('{message}', $message, $form_tpl);
 
 echo $form_tpl;
