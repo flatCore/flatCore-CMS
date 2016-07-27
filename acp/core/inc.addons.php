@@ -27,15 +27,24 @@ if(isset($a) && (is_file("../modules/$sub/info.inc.php"))) {
 	$addon_mode = 'list_plugins';
 	$active_plugins = 'active';
 	$active_modules = '';
+} else if($sub == 'u') {
+	$addon_mode = 'upload';
+	$active_modules = '';
+	$active_plugins = '';
+	$active_themes = '';	
 }
 
+echo '<div class="well well-sm">';
+echo '<div class="btn-group pull-right" role="group">';
+echo '<a href="?tn=moduls&sub=u" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-upload"></span> '.$lang['btn_install'].'</a>';
+echo '</div>';
 
 echo '<div class="btn-group" role="group">';
 echo '<a href="?tn=moduls&sub=m" class="btn btn-default '.$active_modules.'">Module</a>';
 echo '<a href="?tn=moduls&sub=p" class="btn btn-default '.$active_plugins.'">Plugins</a>';
 echo '<a href="?tn=moduls&sub=t" class="btn btn-default '.$active_themes.'">Themes</a>';
-echo '</div><hr>';
-
+echo '</div>';
+echo '</div>';
 
 /* list module */
 
@@ -60,6 +69,12 @@ if($addon_mode == 'list_themes') {
 
 if($addon_mode == 'list_plugins') {
 	include("list.plugins.php");
+}
+
+/* upload/update addons */
+
+if($addon_mode == 'upload') {
+	include("upload_addons.php");
 }
 
 

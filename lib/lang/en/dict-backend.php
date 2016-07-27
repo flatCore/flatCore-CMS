@@ -86,6 +86,7 @@ $lang['btn_images'] = "Images";
 
 $lang['btn_mod_enable'] = "Enable";
 $lang['btn_mod_disable'] = "Disable";
+$lang['btn_install'] = "Install";
 
 /* Headlines */
 
@@ -269,6 +270,8 @@ $lang['missing_value'] = 'missing value';
 $lang['label_filename'] = 'Filename';
 $lang['label_content'] = 'Content';
 
+$lang['label_ready_to_install'] = 'Ready to install';
+
 /* Preferences */
 
 $lang['f_prefs_descriptions'] = "Descriptions";
@@ -364,6 +367,10 @@ $lang['alert_no_page_title'] = 'No Pagetitle';
 $lang['alert_no_page_description'] = 'No Page Description';
 
 $lang['alert_no_plugins'] = 'There are no plugins available';
+
+$lang['dir_must_be_writable'] = 'The directory %s must be writable';
+$lang['section_is_beta'] = '<strong>Please note:</strong><br>This area is in a beta stage and has not yet been tested extensively.';
+$lang['msg_nothing_to_install'] = 'There are currently no addons been uploaded for installation.';
 
 
 /* System */

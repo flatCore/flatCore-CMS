@@ -16,7 +16,11 @@
 	    <div id="aceCodeEditor"></div>
 	  </div>
 	  
-	  <input type="submit" name="save" class="btn btn-success" value="{save}">
+	  <div class="btn-group pull-right">
+	  	<input type="submit" name="delete" class="btn btn-danger" id="btnDel" value="{delete}" onclick="return confirm('{delete_msg}')">
+			<input type="submit" name="save" class="btn btn-success" id="btnSave" value="{save}">
+	  </div>
+	  
 	</form>
 
 </div>

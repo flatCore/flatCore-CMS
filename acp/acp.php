@@ -393,8 +393,15 @@ foreach($fc_preferences as $k => $v) {
 				Dropzone.options.myDropzone = {
 			  	init: function() {
 			    	this.on("success", function(file, responseText) {
-			      	// Handle the responseText here. For example, add the text to the preview element:
 							file.previewTemplate.appendChild(document.createTextNode(responseText));
+						});
+					}
+				};
+				
+				Dropzone.options.dropAddons = {
+			  	init: function() {
+			    	this.on("success", function(file, responseText) {
+			      	window.location.href = "acp.php?tn=moduls&sub=u";
 						});
 					}
 				};

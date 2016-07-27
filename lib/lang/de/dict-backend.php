@@ -82,6 +82,7 @@ $lang['btn_images'] = "Grafiken";
 
 $lang['btn_mod_enable'] = "Aktivieren";
 $lang['btn_mod_disable'] = "Deaktivieren";
+$lang['btn_install'] = "Installieren";
 
 /* Headlines */
 
@@ -267,6 +268,8 @@ $lang['missing_value'] = 'fehlender Wert';
 $lang['label_filename'] = 'Dateiname';
 $lang['label_content'] = 'Inhalt';
 
+$lang['label_ready_to_install'] = 'Bereit für die Installation';
+
 /* Preferences */
 
 $lang['f_prefs_descriptions'] = "Beschreibungen";
@@ -362,6 +365,10 @@ $lang['alert_no_page_title'] = 'Kein Seitentitel';
 $lang['alert_no_page_description'] = 'Keine Seitenbeschreibung';
 
 $lang['alert_no_plugins'] = 'Es sind noch keine Plugins installiert.';
+
+$lang['dir_must_be_writable'] = 'Das Verzeichnis %s muss beschreibbar sein.';
+$lang['section_is_beta'] = '<strong>Bitte beachten:</strong><br>Dieser Bereich befindet sich in einem Betastadium und ist noch nicht ausgiebig getestet worden.';
+$lang['msg_nothing_to_install'] = 'Es sind noch keine Addons für die Installation hochgeladen worden.';
 
 
 /* System */

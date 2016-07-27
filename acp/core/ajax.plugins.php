@@ -15,21 +15,33 @@ require_once('functions.php');
 require_once('database.php');
 require('../../lib/lang/'.$_SESSION['lang'].'/dict-backend.php');
 
-
-if(isset($_POST['plugin'])) {
-	$file = basename($_POST['plugin']);
+if($_POST['action'] == "btnSave") {
+	
+	$file = basename($_POST['data'][0]['value']);
 	
 	if(is_file('../../'.FC_CONTENT_DIR.'/plugins/'.$file)) {
 		$filepath = '../../'.FC_CONTENT_DIR.'/plugins/'.$file;
-		$content = $_POST['plugin_src'];
+		$content = $_POST['data'][2]['value'];
 		file_put_contents($filepath, $content, LOCK_EX);
 	}
 	
 	$message = '<div class="alert alert-success alert-auto-close">'.$lang['db_changed'].'</div>';
 }
 
+if($_POST['action'] == "btnDel") {
+	$file = basename($_POST['data'][0]['value']);
+	if(is_file('../../'.FC_CONTENT_DIR.'/plugins/'.$file)) {
+		if(unlink('../../'.FC_CONTENT_DIR.'/plugins/'.$file)){
+			$message = '<div class="alert alert-info alert-auto-close">DELETED '.$lang['db_changed'].'</div>';
+		}
+	}
+}
+
 
 $plugin = basename($_REQUEST['plugin']);
+if(!empty($_POST['data'][0]['value'])) {
+	$plugin = basename($_POST['data'][0]['value']);
+}
 
 if(is_file('../../'.FC_CONTENT_DIR.'/plugins/'.$plugin)) {
 	$plugin_src = file_get_contents('../../'.FC_CONTENT_DIR.'/plugins/'.$plugin);
@@ -61,12 +73,14 @@ echo $form_tpl;
 
 <script>
 $(document).ready(function(){
-  $("#pluginForm").bind("submit", function() {
+	$('#pluginForm input[type="submit"]').on("click", function(e) { 
+		e.preventDefault;
+	  var el = $(this).attr('id');
       $.ajax({
           type : "POST",
           cache : false,
           url: "../acp/core/ajax.plugins.php",
-          data: $(this).serializeArray(),
+          data: {data:$("#pluginForm").serializeArray(),action:el},
           success:function(data){
               $.fancybox(data);
           }

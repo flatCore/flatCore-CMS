@@ -1,8 +1,8 @@
 <?php
 session_start();
-error_reporting(E_ALL);
+error_reporting(E_ALL ^E_NOTICE);
 
-require("../../config.php");
+require '../../config.php';
 define("CONTENT_DB", "../../$fc_db_content");
 
 if($_SESSION['user_class'] != "administrator"){
@@ -20,10 +20,9 @@ if($_REQUEST['d'] == 'images') {
 	$destination = '../../'.$files_path;
 }
 
-
+/* upload images to /content/images/ */
 if($_REQUEST['upload_type'] == 'images') {
 	if(array_key_exists('file',$_FILES) && $_FILES['file']['error'] == 0 ){
-		
 		$tmp_name = $_FILES['file']['tmp_name'];
 		$org_name = $_FILES['file']['name'];
 		$suffix = strtolower(substr(strrchr($org_name,'.'),1));
@@ -37,7 +36,7 @@ if($_REQUEST['upload_type'] == 'images') {
 }
 
 
-
+/* upload files to /content/files/ */
 if($_REQUEST['upload_type'] == 'files') {
 	if(array_key_exists('file',$_FILES) && $_FILES['file']['error'] == 0 ){
 		$tmp_name = $_FILES["file"]["tmp_name"];   
@@ -51,7 +50,54 @@ if($_REQUEST['upload_type'] == 'files') {
 			print ('Upload complete');
 		}
 	}
+}
 
+/* upload files to /upload/plugins/ */
+if($_REQUEST['upload_type'] == 'plugin') {
+	if(array_key_exists('file',$_FILES) && $_FILES['file']['error'] == 0 ){
+		$tmp_name = $_FILES["file"]["tmp_name"];   
+	  $org_name = $_FILES["file"]["name"];
+	  $suffix = strtolower(substr(strrchr($org_name,'.'),1));
+	  $prefix = basename($org_name,".$suffix");
+	  $files_name = clean_filename($prefix,$suffix);
+	  if(!is_dir('../../upload/plugins')) {
+		  mkdir("../../upload/plugins", 0777, true);
+	  }
+	  $target = "../../upload/plugins/$files_name";
+		@move_uploaded_file($tmp_name, $target);
+	}
+}
+
+/* upload files to /upload/themes/ */
+if($_REQUEST['upload_type'] == 'theme') {
+	if(array_key_exists('file',$_FILES) && $_FILES['file']['error'] == 0 ){
+		$tmp_name = $_FILES["file"]["tmp_name"];   
+	  $org_name = $_FILES["file"]["name"];
+	  $suffix = strtolower(substr(strrchr($org_name,'.'),1));
+	  $prefix = basename($org_name,".$suffix");
+	  $files_name = clean_filename($prefix,$suffix);
+	  if(!is_dir('../../upload/themes')) {
+		  mkdir("../../upload/themes", 0777, true);
+	  }
+	  $target = "../../upload/themes/$files_name";
+		@move_uploaded_file($tmp_name, $target);
+	}
+}
+
+/* upload files to /upload/modules/ */
+if($_REQUEST['upload_type'] == 'module') {
+	if(array_key_exists('file',$_FILES) && $_FILES['file']['error'] == 0 ){
+		$tmp_name = $_FILES["file"]["tmp_name"];   
+	  $org_name = $_FILES["file"]["name"];
+	  $suffix = strtolower(substr(strrchr($org_name,'.'),1));
+	  $prefix = basename($org_name,".$suffix");
+	  $files_name = clean_filename($prefix,$suffix);
+	  if(!is_dir('../../upload/modules')) {
+		  mkdir("../../upload/modules", 0777, true);
+	  }
+	  $target = "../../upload/modules/$files_name";
+		@move_uploaded_file($tmp_name, $target);
+	}
 }
 
 
