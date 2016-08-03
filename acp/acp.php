@@ -2,13 +2,13 @@
 session_start();
 error_reporting(0);
 
-require('core/access.php');
 require('../config.php');
-include('versions.php');
-
 if(is_file('../'.FC_CONTENT_DIR.'/config.php')) {
 	include('../'.FC_CONTENT_DIR.'/config.php');
 }
+require('core/access.php');
+include('versions.php');
+
 
 if(isset($fc_content_files) && is_array($fc_content_files)) {
 	/* switch database file $fc_db_content */
@@ -513,7 +513,7 @@ foreach($fc_preferences as $k => $v) {
 	                $('#expireDiv').addClass('expire-danger');
                 }
                 if(maxlifetime == 0) {
-	                window.location.href = "/index.php?goto=logout";
+	                //window.location.href = "/index.php?goto=logout";
                 }
                 --maxlifetime;
             }, 1000);

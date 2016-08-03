@@ -7,8 +7,24 @@
 unset($status_msg);
 
 if($goto == 'logout') {
+	if(is_numeric($_SESSION['user_id'])) {
+		// delete data from fc_tokens
+		$dbh = new PDO("sqlite:$fc_db_user");
+		$stmt = $dbh->prepare("DELETE FROM fc_tokens WHERE user_id = :user_id");
+		$stmt->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+		$stmt->execute();	
+		unset($_COOKIE['identifier']);
+		unset($_COOKIE['securitytoken']);
+		unset($_COOKIE['permit_cookies']);
+		setcookie('identifier', '', 1);
+		setcookie('securitytoken', '', 1);
+		setcookie('permit_cookies', '', 1);
+		$cookiesSet = array_keys($_COOKIE);
+		for ($x=0;$x<count($cookiesSet);$x++) setcookie($cookiesSet[$x],"",1);
+	}
 	session_destroy();
 	unset($_SESSION['user_nick']);
+	setcookie("PHPSESSID", "", 1);
 	$smarty->assign("msg_status","alert alert-success");
 	$smarty->assign('msg_text', "$lang[msg_logout]");
 	$output = $smarty->fetch("status_message.tpl");

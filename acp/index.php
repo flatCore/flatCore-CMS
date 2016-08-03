@@ -9,8 +9,13 @@ require("../lib/lang/$_SESSION[lang]/dict-backend.php");
 
 if($_POST['check'] == "Login") {
 
-	
-	fc_user_login($_POST['login_name'],$_POST['login_psw'],$acp=TRUE);
+	$remember = false;
+	if(isset($_POST['remember_me'])) {
+		$remember = true;
+	}
+		
+	fc_user_login($_POST['login_name'],$_POST['login_psw'],$acp=TRUE,$remember);
+
 	
 }
 
@@ -58,6 +63,15 @@ if($_POST['check'] == "Login") {
 						<input type="password" class="form-control" name="login_psw">
 					</div>
 				</div>
+			  <div class="form-group">
+			    <div class="col-sm-offset-2 col-sm-10">
+			      <div class="checkbox">
+			        <label>
+			          <input type="checkbox" name="remember_me"> <?php echo $lang['remember_me']; ?>
+			        </label>
+			      </div>
+			    </div>
+			  </div>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
 						<input type="submit" class="btn btn-success" name="check" value="Login">

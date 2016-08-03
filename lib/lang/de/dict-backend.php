@@ -269,6 +269,7 @@ $lang['label_filename'] = 'Dateiname';
 $lang['label_content'] = 'Inhalt';
 
 $lang['label_ready_to_install'] = 'Bereit für die Installation';
+$lang['remember_me'] = 'Angemeldet bleiben';
 
 /* Preferences */
 

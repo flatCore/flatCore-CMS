@@ -271,6 +271,7 @@ $lang['label_filename'] = 'Filename';
 $lang['label_content'] = 'Content';
 
 $lang['label_ready_to_install'] = 'Ready to install';
+$lang['remember_me'] = 'Remember me';
 
 /* Preferences */
 

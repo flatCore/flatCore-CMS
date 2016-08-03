@@ -118,9 +118,9 @@ function get_userdata_by_token($token) {
  */
 
 
-function randpsw() {
+function randpsw($length=8) {
 
-	$length = 8;
+
 	$chars = '123456789abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
 
 	$random_s = '';
@@ -137,7 +137,7 @@ function randpsw() {
  * user login
  */
  
-function fc_user_login($user,$psw,$acp = NULL) {
+function fc_user_login($user,$psw,$acp=NULL,$remember=NULL) {
 
 	global $fc_db_user;
 	unset($result);
@@ -145,7 +145,7 @@ function fc_user_login($user,$psw,$acp = NULL) {
 	if($acp == TRUE) {
 		$fc_db_user = '../'.$fc_db_user;
 	}
-	
+		
 	$login_hash  = md5($psw.$user);
 	
 	$dbh = new PDO("sqlite:$fc_db_user");
@@ -198,6 +198,23 @@ function fc_user_login($user,$psw,$acp = NULL) {
 			$stmt->bindValue(':user_nick', "$user", PDO::PARAM_STR);
 			$stmt->execute();
 		}
+		
+		/* set cookie to remember user */
+		if($remember == TRUE) {
+			$identifier = randpsw($length=24);
+			$securitytoken = randpsw($length=24);
+			
+			$sql = 'INSERT INTO fc_tokens (user_id, identifier, securitytoken, time) VALUES (:user_id, :identifier, :securitytoken, :time)';
+			$sth = $dbh->prepare($sql);
+			$sth->bindValue(':user_id', $result['user_id'], PDO::PARAM_INT);
+			$sth->bindValue(':identifier', "$identifier", PDO::PARAM_STR);
+			$sth->bindValue(':securitytoken', sha1($securitytoken), PDO::PARAM_STR);
+			$sth->bindValue(':time', time(), PDO::PARAM_STR);
+			$sth->execute();
+			setcookie("identifier",$identifier,time()+(3600*24*365)); //1 Jahr Gültigkeit
+			setcookie("securitytoken",$securitytoken,time()+(3600*24*365)); //1 Jahr Gültigkeit			
+		}
+		
 		
 		if(($acp == TRUE) AND ($_SESSION['user_class'] == "administrator")) {
 			header("location:acp.php");
