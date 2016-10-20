@@ -1063,3 +1063,82 @@ form.dropzone-module .dz-default.dz-message {
 form.dropzone-theme .dz-default.dz-message {
   background: transparent url(../images/filedrop-theme.png) no-repeat center center;
 }
+/* image-picker */
+.images-name {
+  font-size: 10px;
+  background: rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin: -3px -3px 3px -3px;
+  padding: 3px 1px;
+}
+.file-thumb {
+  max-width: 100%;
+  height: auto;
+}
+ul.image_picker_selector {
+  overflow: auto;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+}
+ul.image_picker_selector ul {
+  overflow: auto;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px;
+  display: block;
+  width: 100%;
+}
+ul.image_picker_selector li p {
+  font-size: 10px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  width: 100%;
+  padding: 2px 0;
+  margin: 0;
+  text-align: center;
+  overflow: hidden;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+ul.image_picker_selector li {
+  margin: 0px 3px 3px 0px;
+  float: left;
+  position: relative;
+}
+ul.image_picker_selector li.has-child {
+  clear: both;
+  display: block;
+  float: none;
+  width: 100%;
+  margin-top: 5px;
+}
+ul.image_picker_selector li.group_title {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 3px 5px;
+}
+ul.image_picker_selector li .thumbnail {
+  border: 1px solid #dddddd;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  margin: 0;
+  width: 128px;
+  height: 100px;
+  overflow: hidden;
+}
+ul.image_picker_selector li .thumbnail.selected {
+  background: #0088cc;
+  border: 1px solid #0088cc;
+}
+ul.image_picker_selector li .thumbnail.selected > p {
+  background: #0088cc;
+}

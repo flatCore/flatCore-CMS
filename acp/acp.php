@@ -107,7 +107,7 @@ foreach($fc_preferences as $k => $v) {
 		<script type="text/javascript" src="../lib/js/jquery/jquery.textareaCounter.plugin.js"></script>
 				
 		<link rel="stylesheet" href="../lib/css/bootstrap.min.css?v=3.3.6" type="text/css" media="screen, projection">
-		<link rel="stylesheet" href="css/styles.css?v=20151231" type="text/css" media="screen, projection">
+		<link rel="stylesheet" href="css/styles.css?v=20161020" type="text/css" media="screen, projection">
 		
 		<!-- masonry -->
 		<script type="text/javascript" src="../lib/js/masonry.pkgd.min.js"></script>
@@ -136,6 +136,9 @@ foreach($fc_preferences as $k => $v) {
 		
 		<!-- Tags -->
 		<script type="text/javascript" src="../lib/js/bootstrap-tagsinput.min.js"></script>
+		
+		<!-- image picker -->
+		<script type="text/javascript" src="../lib/js/jquery/image-picker.min.js"></script>
 		
 		<?php
 
@@ -371,6 +374,11 @@ foreach($fc_preferences as $k => $v) {
 					type: 'ajax',
 					minWidth: '50%',
 					height: '90%'
+				});
+				
+				$("select.image-picker").imagepicker({
+		    	hide_select : true,
+		      show_label  : true
 				});
 			
 	      $(document).on('mouseenter', '.hiddenControls', function () {

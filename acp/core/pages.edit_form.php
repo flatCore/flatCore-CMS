@@ -179,8 +179,8 @@ echo"<div class='form-group'>
 		<label class='control-label control-label-normal col-sm-2'>$lang[page_thumbnail]</label>
 		<div class='col-sm-10'>";
 		
-		
-echo'<select name="page_thumbnail" class="form-control">';
+echo '<div class="scroll-container">';
+echo '<select name="page_thumbnail" class="form-control image-picker">';
 echo "<option value=''>$lang[page_thumbnail]</option>";
 $arr_Images = get_all_images();
 	foreach($arr_Images as $page_thumbnails) {
@@ -188,13 +188,23 @@ $arr_Images = get_all_images();
 		if($page_thumbnail == "$page_thumbnails") {
 			$selected = "selected";
 		}
-		echo "<option $selected value='$page_thumbnails'>$page_thumbnails</option>";
+		echo '<option '.$selected.' data-img-src="/content/images/'.$page_thumbnails.'" class="masonry-item" value="'.$page_thumbnails.'">'.$page_thumbnails.'</option>';
 }
 echo"</select>";
+echo '</div>';
 echo"</div>
 	 </div>";
 
 echo"</fieldset>";
+
+
+foreach($arr_Images as $page_thumbnails) {
+		$selected = "";
+		if($page_thumbnail == "$page_thumbnails") {
+			$selected = "selected";
+		}
+		echo "<option $selected data-img-src='/content/iamages/$page_thumbnails' value='$page_thumbnails'>$page_thumbnails</option>";
+}
 
 
 		

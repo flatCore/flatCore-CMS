@@ -31,3 +31,4 @@ ___
 + jquery.dirtyforms - https://github.com/snikch/jquery.dirtyforms
 + matchHeight - http://brm.io/jquery-match-height/
 + bootstrap-tagsinput (v0.6.1) - https://github.com/bootstrap-tagsinput/bootstrap-tagsinput
++ image-picker (0.3.0) - https://github.com/rvera/image-picker
