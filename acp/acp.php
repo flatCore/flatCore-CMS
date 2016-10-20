@@ -246,13 +246,11 @@ foreach($fc_preferences as $k => $v) {
 	    		switchEditorMode(button);
 				});
 							
-				$(window).on("load", function () {
-					if(editor_mode !== 'optE1') {
-						switchEditorMode(editor_mode);
-					} else {
-						<?php echo $tinyMCE_config_contents; ?>
-					}
-				});
+				if(editor_mode !== 'optE1') {
+					switchEditorMode(editor_mode);
+				} else {
+					<?php echo $tinyMCE_config_contents; ?>
+				}
 				
 				setAceEditor();
 				
