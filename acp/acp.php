@@ -334,12 +334,7 @@ foreach($fc_preferences as $k => $v) {
 				  $('.glyphicon-collapse-down').toggleClass('glyphicon-collapse-up');
 				  $('.controls-container .btn-sm').toggleClass('btn-xs');
 				});
-				
-				$(".page-list-item").click(function() {
-				  $(this).find('.info-collapse').toggleClass('info-hide');
-				  $(this).find('.controls-container .btn-sm').toggleClass('btn-xs');
-				});				
-				
+							
 
 				$('#bsTabs').tab();
 					

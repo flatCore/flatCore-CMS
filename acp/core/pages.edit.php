@@ -522,7 +522,8 @@ if($show_form == "true" AND $sub != "new") {
 	
 	$cnt_result = count($cache_result);
 	
-	echo '<hr>';	
+	echo '<hr>';
+	echo '<div class="well well-sm">';
 	echo '<div class="accordion" id="versionsToggle">';
 	echo '<div class="accordion-group">';
 	echo '<div class="accordion-heading">';
@@ -531,7 +532,7 @@ if($show_form == "true" AND $sub != "new") {
 	
 	echo '<div id="showVersions" class="accordion-body collapse in">';
 	echo '<div class="accordion-inner">';
-
+	echo '<div class="scroll-container">';
 	echo '<table class="table table-condensed table-hover">';
 
 	for($i=0;$i<$cnt_result;$i++) {
@@ -581,7 +582,9 @@ if($show_form == "true" AND $sub != "new") {
 	
 	$dbh = null;
 	
+	echo '</div>';
 	echo '</table>';
+	echo '</div>';
 	echo '</div>';
 	echo '</div>';
 	echo '</div>';
