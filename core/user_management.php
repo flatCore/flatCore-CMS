@@ -68,13 +68,13 @@ if($_SESSION['user_nick'] != "") {
 	
 	$smarty->assign('status_msg', $status_msg);
 	$smarty->assign('link_profile', $link_profile);
-	$smarty->assign('lang_button_profile', $lang[button_profile]);
+	$smarty->assign('lang_button_profile', $lang['button_profile']);
 	$smarty->assign("link_logout","$link_logout");
-	$smarty->assign('lang_button_logout', $lang[button_logout]);	
+	$smarty->assign('lang_button_logout', $lang['button_logout']);	
 	$smarty->assign("link_acp","$link_acp");
-	$smarty->assign('lang_button_acp', $lang[button_acp]);
+	$smarty->assign('lang_button_acp', $lang['button_acp']);
 	$smarty->assign("link_edit_page","$link_edit_page");
-	$smarty->assign('lang_button_edit_page', $lang[button_acp_edit_page]);
+	$smarty->assign('lang_button_edit_page', $lang['button_acp_edit_page']);
 	
 	if(!isset($preview)) {
 		$output = $smarty->fetch("statusbox.tpl");
@@ -85,12 +85,13 @@ if($_SESSION['user_nick'] != "") {
 	// show the login form
 	
 	if($prefs_showloginform == 'yes') {
-		$smarty->assign("legend_login","$lang[legend_login]");
-		$smarty->assign("label_login","$lang[label_login]");
-		$smarty->assign("label_username","$lang[label_username]");
-		$smarty->assign("label_psw","$lang[label_psw]");
-		$smarty->assign("button_login","$lang[button_login]");
+		$smarty->assign("legend_login",$lang['legend_login']);
+		$smarty->assign("label_login",$lang['label_login']);
+		$smarty->assign("label_username",$lang['label_username']);
+		$smarty->assign("label_psw",$lang['label_psw']);
+		$smarty->assign("button_login",$lang['button_login']);
 		$smarty->assign('status_msg', $status_msg);
+		$smarty->assign('label_remember_me', $lang['label_remember_me']);
 		$smarty->assign("p","$p");
 		
 		if($fc_mod_rewrite == "permalink") {

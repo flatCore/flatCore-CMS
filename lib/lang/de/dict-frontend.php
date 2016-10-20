@@ -48,6 +48,7 @@ $lang['label_town'] = "Ort";
 $lang['label_tel'] = "Telefon";
 $lang['label_fax'] = "Fax";
 $lang['label_about_you'] = "Über Dich (öffentlich)";
+$lang['label_remember_me'] = 'Angemeldet bleiben';
 
 /* Buttons, Links */
 $lang['button_login'] = "Anmelden";
