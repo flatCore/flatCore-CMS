@@ -22,6 +22,15 @@ if(isset($_REQUEST['pid'])) {
 	$comments_id = 'p'.$page_id;
 }
 
+/* delete comment */
+if(isset($_REQUEST['did'])) {
+	$delete_id = (int) $_REQUEST['did'];
+	$sql_del_entry = "DELETE FROM fc_comments WHERE comment_id = $delete_id";
+	$dbh = new PDO("sqlite:".CONTENT_DB);
+	$cnt_del_comments = $dbh->exec($sql_del_entry);
+	$dbh = null;
+}
+
 if(isset($_GET['cid'])) {
 	$get_comment = fc_get_comment($_GET['cid']);
 	$e_comment_text = $get_comment['comment_text'];
@@ -77,8 +86,10 @@ for($i=0;$i<$cnt_comment;$i++) {
 	
 	if($_SESSION['user_nick'] == $comment_author) {
 		$show_entry = str_replace('{entry_edit_btn}', '<a class="btn btn-primary btn-xs fancybox" data-fancybox-type="ajax" href="/acp/core/ajax.comments.php?pid='.$page_id.'&cid='.$comment_id.'">'.$lang['edit'].'</a>', $comment_entry_tpl);
+		$show_entry = str_replace('{entry_delete_btn}', '<a class="btn btn-danger btn-xs fancybox" data-fancybox-type="ajax" href="/acp/core/ajax.comments.php?pid='.$page_id.'&did='.$comment_id.'">'.$lang['delete'].'</a>', $show_entry);
 	} else {
 		$show_entry = str_replace('{entry_edit_btn}', '', $comment_entry_tpl);
+		$show_entry = str_replace('{entry_delete_btn}', '', $show_entry);
 	}
 	$show_entry = str_replace('{comment_avatar}', $author_avatar, $show_entry);
 	$show_entry = str_replace('{comment_author}', $comment_author, $show_entry);
