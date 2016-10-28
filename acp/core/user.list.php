@@ -38,10 +38,10 @@ if($_GET['way'] == "up"){
 /* switch user status */
 
 if(isset($_GET['switch'])) {
-	$_SESSION['set_status'] = true;
+	$_SESSION['set_user_status'] = true;
 }
 
-if($_SESSION['checked_verified'] == '' AND $_SESSION['checked_waiting'] == '' AND $_SESSION['checked_paused'] == '' AND $_SESSION['set_status'] == false) {
+if($_SESSION['checked_verified'] == '' AND $_SESSION['checked_waiting'] == '' AND $_SESSION['checked_paused'] == '' AND $_SESSION['set_user_status'] == false) {
 	$_SESSION['checked_verified'] = 'checked';
 }
 
@@ -74,31 +74,31 @@ $set_status_filter = "user_verified = 'foobar' ";
 
 if($_SESSION['checked_waiting'] == "checked") {
 	$set_status_filter .= "OR user_verified = 'waiting' ";
-	$btn_status_waiting = 'btn-primary';
+	$btn_status_waiting = 'active';
 }
 
 if($_SESSION['checked_paused'] == "checked") {
 	$set_status_filter .= "OR user_verified = 'paused' ";
-	$btn_status_paused = 'btn-primary';
+	$btn_status_paused = 'active';
 }
 
 if($_SESSION['checked_verified'] == "checked") {
 	$set_status_filter .= "OR user_verified = 'verified' ";
-	$btn_status_verified = 'btn-primary';
+	$btn_status_verified = 'active';
 }
 
 if($_SESSION['checked_deleted'] == "checked") {
 	$set_status_filter .= "OR user_verified = '' ";
-	$btn_status_deleted = 'btn-primary';
+	$btn_status_deleted = 'active';
 }
 
 
 
 $status_btn_group  = '<div class="btn-group">';
-$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusVerified" class="btn btn-default btn-sm '.$btn_status_verified.'"><span class="glyphicon glyphicon-ok"></span></a>';
-$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusWaiting" class="btn btn-default btn-sm '.$btn_status_waiting.'"><span class="glyphicon glyphicon-time"></span></a>';
-$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusPaused" class="btn btn-default btn-sm '.$btn_status_paused.'"><span class="glyphicon glyphicon-warning-sign"></span></a>';
-$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusDeleted" class="btn btn-default btn-sm '.$btn_status_deleted.'"><span class="glyphicon glyphicon-ban-circle"></span></a>';
+$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusVerified" class="btn btn-fc btn-sm '.$btn_status_verified.'"><span class="glyphicon glyphicon-ok"></span></a>';
+$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusWaiting" class="btn btn-fc btn-sm '.$btn_status_waiting.'"><span class="glyphicon glyphicon-time"></span></a>';
+$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusPaused" class="btn btn-fc btn-sm '.$btn_status_paused.'"><span class="glyphicon glyphicon-warning-sign"></span></a>';
+$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusDeleted" class="btn btn-fc btn-sm '.$btn_status_deleted.'"><span class="glyphicon glyphicon-ban-circle"></span></a>';
 $status_btn_group .= '</div>';
 
 

@@ -43,13 +43,13 @@ $sort_direction = constant(trim('SORT_'.$_SESSION['sort_by_name'].$_SESSION['sor
 
 if($disk == "2") {
 	$path = '../content/files';
-	$disk2_class = 'btn btn-default btn-sm active';
-	$disk1_class = 'btn btn-default btn-sm';
+	$disk2_class = 'btn btn-fc btn-sm active';
+	$disk1_class = 'btn btn-fc btn-sm';
 	$tpl_file = file_get_contents('templates/list-files-grid.tpl');
 } else {
 	$path = '../content/images';
-	$disk1_class = 'btn btn-default btn-sm active';
-	$disk2_class = 'btn btn-default btn-sm';
+	$disk1_class = 'btn btn-fc btn-sm active';
+	$disk2_class = 'btn btn-fc btn-sm';
 	$tpl_file = file_get_contents('templates/list-files-thumbs.tpl');
 }
 
@@ -157,7 +157,7 @@ if($_SESSION['media_filter'] != "") {
 	foreach($all_filter as $f) {
 		if($_REQUEST['rm_keyword'] == "$f") { continue; }
 		if($f == "") { continue; }
-		$btn_remove_keyword .= '<a class="btn btn-default btn-sm" href="acp.php?tn=filebrowser&sub=browse&rm_keyword='.$f.'"><span class="glyphicon glyphicon-remove"></span> '.$f.'</a> ';
+		$btn_remove_keyword .= '<a class="btn btn-fc btn-sm" href="acp.php?tn=filebrowser&sub=browse&rm_keyword='.$f.'"><span class="glyphicon glyphicon-remove"></span> '.$f.'</a> ';
 	}
 }
 

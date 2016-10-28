@@ -85,6 +85,28 @@ foreach($fc_preferences as $k => $v) {
 }
 
 
+if(!isset($_COOKIE['acptheme'])) {
+	setcookie("acp_theme", "default",time()+(3600*24*365));
+}
+
+if(isset($_GET['theme'])) {
+	if($_COOKIE["acptheme"] == 'default') {
+		setcookie("acptheme", 'dark',time()+(3600*24*365));
+		$set_acptheme = 'dark';
+	} else {
+		setcookie("acptheme", 'default',time()+(3600*24*365));
+		$set_acptheme = 'default';
+	}
+}
+
+
+if(isset($set_acptheme)) {
+	$acptheme = $set_acptheme;
+} else {
+	$acptheme = $_COOKIE["acptheme"];
+}
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -108,6 +130,20 @@ foreach($fc_preferences as $k => $v) {
 				
 		<link rel="stylesheet" href="../lib/css/bootstrap.min.css?v=3.3.6" type="text/css" media="screen, projection">
 		<link rel="stylesheet" href="css/styles.css?v=20161020" type="text/css" media="screen, projection">
+		
+		<?php
+		
+
+		
+		if($acptheme == 'dark') {
+			echo '<link rel="stylesheet" href="css/dark.css?v=20161020" type="text/css" media="screen, projection">';
+		}
+		
+		
+		
+		
+		?>
+		
 		
 		<!-- masonry -->
 		<script type="text/javascript" src="../lib/js/masonry.pkgd.min.js"></script>
@@ -208,8 +244,15 @@ foreach($fc_preferences as $k => $v) {
 		
 		</div>
 		
-		<div style="position:fixed;bottom:0;right:0;padding:10px;z-index:600;">
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal"><span class="glyphicon glyphicon-upload"></span> Upload</button>
+		<div class="bottom-bar">
+			<?php
+				if($acptheme == 'default') {
+					echo '<a class="btn btn-default btn-sm" href="acp.php?tn='.$tn.'&theme=true">Dark Theme</a>';
+				} else {
+					echo '<a class="btn btn-default btn-sm" href="acp.php?tn='.$tn.'&theme=true">Default Theme</a>';
+				}
+			?>
+			<button type="button" class="btn btn-fc btn-sm" data-toggle="modal" data-target="#uploadModal"><span class="glyphicon glyphicon-upload"></span> Upload</button>
 		</div>
 		<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-hidden="true">
 		  <div class="modal-dialog modal-lg">
@@ -336,7 +379,7 @@ foreach($fc_preferences as $k => $v) {
 				});
 							
 
-				$('#bsTabs').tab();
+				$('#bsTabs').tab();				
 					
 		  	setTimeout(function() {
 		        $(".alert-auto-close").slideUp('slow');

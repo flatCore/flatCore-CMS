@@ -384,8 +384,8 @@ function show_log($nbr) {
 		$date = date("d.m.Y",$result[$i]['log_time']);
 		$log_priority = 'log_priority'.$result[$i]['log_priority'];
 		
-		echo '<dl class="dl-horizontal dl-logfile '.$log_priority.'">';
-		echo '<dt>'.$date.' '.$time.'</dt>';
+		echo '<dl class="dl-horizontal dl-logfile">';
+		echo '<dt><span class="priority-indicator '.$log_priority.'" title="'.$result[$i]['log_priority'].'"></span>'.$date.' '.$time.'</dt>';
 		echo '<dd>'.$result[$i]['log_trigger'].' - '. $result[$i]['log_entry'] .'</dd>';
 		echo '</dl>';
 

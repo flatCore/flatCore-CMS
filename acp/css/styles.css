@@ -73,6 +73,15 @@ div#bigHeader {
 #currentSeconds {
   font-weight: bold;
 }
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 10px;
+  z-index: 600;
+  background: rgba(0, 0, 0, 0.2);
+  border-top-left-radius: 5px;
+}
 #liveBox {
   width: 200px;
   margin-top: 15px;
@@ -487,7 +496,7 @@ span#w200 {
   font-size: 16px;
 }
 .page-list-item h4 a {
-  color: #286090;
+  color: #428bca;
 }
 .page-list-item h4 small {
   color: #333;
@@ -601,6 +610,28 @@ span#w200 {
   color: #999;
   border-color: #999;
 }
+.btn-fc {
+  background: #428bca;
+  color: #fff;
+}
+.btn-fc:hover,
+.btn-fc:focus,
+.btn-fc.focus {
+  color: #fff;
+  background: #3071a9;
+}
+.btn-fc:active,
+.btn-fc.active {
+  background: #245682;
+  text-shadow: 0px 0px 2px #2a6496, 0px 0px 4px #5697d0, 0px 0px 6px #5697d0, 0px 0px 12px #468dcb;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  -moz-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.btn-fc:active:hover,
+.btn-fc.active:hover {
+  color: #eee;
+}
 .masked-textarea,
 .masked-textarea:hover,
 .masked-textarea:focus {
@@ -638,7 +669,6 @@ span#w200 {
   margin: 0;
   padding: 2px 0;
   border-bottom: 1px solid #aaa;
-  border-left: 5px solid #fff;
   background-color: #fff;
 }
 .dl-logfile:nth-child(even) {
@@ -648,41 +678,49 @@ span#w200 {
   font-weight: normal;
   opacity: 0.6;
 }
+.priority-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-left: 3px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
 .log_priority0 {
-  border-left: 5px solid #FFFEFF;
+  background: #FFFEFF;
 }
 .log_priority1 {
-  border-left: 5px solid #F9F6FF;
+  background: #F9F6FF;
 }
 .log_priority2 {
-  border-left: 5px solid #EEEEFF;
+  background: #EEEEFF;
 }
 .log_priority3 {
-  border-left: 5px solid #E3E6F9;
+  background: #E3E6F9;
 }
 .log_priority4 {
-  border-left: 5px solid #D8DEF3;
+  background: #D8DEF3;
 }
 .log_priority5 {
-  border-left: 5px solid #CDD6ED;
+  background: #CDD6ED;
 }
 .log_priority6 {
-  border-left: 5px solid #C2CEE7;
+  background: #C2CEE7;
 }
 .log_priority7 {
-  border-left: 5px solid #B7C6E1;
+  background: #B7C6E1;
 }
 .log_priority8 {
-  border-left: 5px solid #ACBEDB;
+  background: #ACBEDB;
 }
 .log_priority9 {
-  border-left: 5px solid #A1B6D5;
+  background: #A1B6D5;
 }
 .log_priority10 {
-  border-left: 5px solid #96AECF;
+  background: #96AECF;
 }
 .log_priority11 {
-  border-left: 5px solid #C35B5B;
+  background: #C35B5B;
 }
 /* for errors only */
 .control-label-normal {
@@ -761,9 +799,9 @@ fieldset legend {
   padding: 4px 10px;
   margin: -20px 10px 0 10px;
   background: rgba(0, 0, 0, 0.1);
-  color: #888;
-  font-size: 12px;
-  line-height: 12px;
+  color: #5a89b2;
+  font-size: 13px;
+  line-height: 13px;
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
 }

@@ -10,29 +10,29 @@ require("core/access.php");
 
 $entries_per_page = 200;
 
-if($_SESSION[start] == "") {
-	$_SESSION[start] = 0;
+if($_SESSION['start'] == "") {
+	$_SESSION['start'] = 0;
 }
 
-if($_REQUEST[start] != "") {
+if($_REQUEST['start'] != "") {
 	$_SESSION[start] = (int) ($_REQUEST[start]*$entries_per_page);
 }
 
-if($_SESSION[filename] == "") {
+if($_SESSION['filename'] == "") {
 	//default: today's logfile
-	$_SESSION[filename] = "logfile" . date('Y') . date('m') . ".sqlite3";
+	$_SESSION['filename'] = "logfile" . date('Y') . date('m') . ".sqlite3";
 }
 
 if($_POST['select_logfile']) {
-	$_SESSION[filename] = strip_tags($_POST[select_logfile]);
-	$_SESSION[start] = 0; // reset pagination
+	$_SESSION['filename'] = strip_tags($_POST['select_logfile']);
+	$_SESSION['start'] = 0; // reset pagination
 }
 
 
 
 
-$start = $_SESSION[start];
-$filename = $_SESSION[filename];
+$start = $_SESSION['start'];
+$filename = $_SESSION['filename'];
 
 
 
@@ -63,7 +63,7 @@ foreach($logfiles as $fn) {
 
 echo"</select> ";
 echo '</div> ';
-echo"<input type='submit' class='btn' name='select_log' value='$lang[choose]'>";
+echo"<input type='submit' class='btn btn-default' name='select_log' value='$lang[choose]'>";
 echo"</form>";
 echo"</fieldset>";
 
@@ -160,12 +160,12 @@ echo"<div style='height:350px;overflow:auto;margin:0;padding:10px;background-col
 
 for($i=0;$i<$cnt_result;$i++) {
 
-	$log_time = date("d.m.Y H:i:s",$result[$i][log_time]);
-	$log_ip = $result[$i][log_ip];
-	$log_ref = $result[$i][log_ref];
-	$log_ua = $result[$i][log_ua];
-	$log_query = $result[$i][log_query];
-	$log_id = $result[$i][log_id];
+	$log_time = date("d.m.Y H:i:s",$result[$i]['log_time']);
+	$log_ip = $result[$i]['log_ip'];
+	$log_ref = $result[$i]['log_ref'];
+	$log_ua = $result[$i]['log_ua'];
+	$log_query = $result[$i]['log_query'];
+	$log_id = $result[$i]['log_id'];
 
 
 	if( $i%2 == "0" ) {
