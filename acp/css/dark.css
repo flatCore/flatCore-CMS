@@ -8,6 +8,9 @@ body {
 div#bigHeader {
   background: #111;
 }
+.subHeader {
+  background: rgba(0, 0, 0, 0.9);
+}
 a.topnav_selected span.mm {
   border-bottom: 4px solid #222;
 }
