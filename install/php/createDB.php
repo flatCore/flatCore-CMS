@@ -26,11 +26,13 @@ $user_registerdate = time();
 
 $sql_user_table = generate_sql_query("fc_user.php");
 $sql_groups_table = generate_sql_query("fc_groups.php");
+$sql_tokens_table = generate_sql_query("fc_tokens.php");
 
 $dbh = new PDO("sqlite:../$fc_db_user");
 
 $dbh->query($sql_user_table);
 $dbh->query($sql_groups_table);
+$dbh->query($sql_tokens_table);
 
 $sql_insert_admin = "INSERT INTO fc_user (
 		user_id, user_class, user_nick, user_verified, user_registerdate, user_drm, user_mail, user_psw_hash
