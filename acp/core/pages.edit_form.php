@@ -1,7 +1,6 @@
 <?php
-
 //prohibit unauthorized access
-require("core/access.php");
+require 'core/access.php';
 
 
 echo"\n <form id='editpage' action='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$editpage' class='form-horizontal' method='POST'>\n";
@@ -9,7 +8,6 @@ echo"\n <form id='editpage' action='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpag
 $custom_fields = get_custom_fields();
 sort($custom_fields);
 $cnt_custom_fields = count($custom_fields);
-
 echo '<div class="row" style="margin-right:0;">';
 echo '<div class="col-lg-9 col-md-8 col-sm-12">';
 
@@ -23,8 +21,6 @@ if($cnt_custom_fields > 0) {
 	echo '<li><a href="#custom" data-toggle="tab">'.$lang['legend_custom_fields'].'</a></li>';
 }
 echo '</ul>';
-
-
 
 
 echo '<div class="tab-content">';
@@ -250,8 +246,7 @@ echo'<div class="tab-pane fade" id="custom">';
 	for($i=0;$i<$cnt_custom_fields;$i++) {
 		
 		$custom_field_value = '';
-		$custom_field_value = $$custom_fields[$i];
-				
+		$custom_field_value = ${$custom_fields[$i]};
 		if(substr($custom_fields[$i],0,10) == "custom_one") {
 			$label = substr($custom_fields[$i],11);
 			echo tpl_form_control_group('',$label,'<input type="text" class="form-control" name="'.$custom_fields[$i].'" value="'.$custom_field_value.'">');

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * prohibit unauthorized access
  */
@@ -734,18 +733,18 @@ function get_custom_fields() {
 	$dbh = new PDO("sqlite:".CONTENT_DB);
 	$sql = "SELECT * FROM fc_pages";
 	
-	$result = $dbh->query($sql)->fetch(PDO::FETCH_ASSOC);
+	$cf = $dbh->query($sql);
+	$cf = $cf->fetch(PDO::FETCH_ASSOC);
 	$dbh = null;
 	
-	$result = array_keys($result);
-	$cnt_result = count($result);
+	$cf = array_keys($cf);
+	$cnt_cf = count($cf);
 	
-	for($i=0;$i<$cnt_result;$i++) {
-		if(substr($result[$i],0,7) == "custom_") {
-			$customs_fields[] = $result[$i];
+	for($i=0;$i<$cnt_cf;$i++) {
+		if(substr($cf[$i],0,7) == "custom_") {
+			$customs_fields[] = $cf[$i];
 		}
 	}
-	
 	return $customs_fields;
 
 }
@@ -763,7 +762,8 @@ function get_custom_user_fields() {
 	$dbh = new PDO("sqlite:".USER_DB);
 	$sql = "SELECT * FROM fc_user";
 	
-	$result = $dbh->query($sql)->fetch(PDO::FETCH_ASSOC);
+	$result = $dbh->query($sql);
+	$result = $result->fetch(PDO::FETCH_ASSOC);
 	$dbh = null;
 	
 	$result = array_keys($result);
