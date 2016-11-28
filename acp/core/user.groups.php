@@ -54,10 +54,10 @@ if($_POST[updateGroup]) {
 save new group
 */
 
-if($_POST[saveGroup]) {
+if($_POST['saveGroup']) {
 
 	
-	$arr_new_incUser = $_POST[incUser];
+	$arr_new_incUser = $_POST['incUser'];
 	
 	if(is_array($arr_new_incUser)) {
 		sort($arr_new_incUser);
@@ -76,8 +76,8 @@ if($_POST[saveGroup]) {
 				
 	$sth = $dbh->prepare($sql);
 	
-	$sth->bindParam(':new_group_name', $_POST[group_name], PDO::PARAM_STR);
-	$sth->bindParam(':new_group_description', $_POST[group_description], PDO::PARAM_STR);
+	$sth->bindParam(':new_group_name', $_POST['group_name'], PDO::PARAM_STR);
+	$sth->bindParam(':new_group_description', $_POST['group_description'], PDO::PARAM_STR);
 	$sth->bindParam(':new_incUser', $new_incUser, PDO::PARAM_STR);	
 	
 	$cnt_changes = $sth->execute();
@@ -99,9 +99,9 @@ delete the selected group
 */
 
 
-if($_POST[deleteGroup]) {
+if($_POST['deleteGroup']) {
 
-	$editgroup = (int) $_POST[editgroup];
+	$editgroup = (int) $_POST['editgroup'];
 	
 	$dbh = new PDO("sqlite:".USER_DB);
 	$sql = "DELETE FROM fc_groups WHERE group_id = $editgroup";
@@ -150,7 +150,7 @@ $result = $dbh->query($sql);
 $result= $result->fetchAll(PDO::FETCH_ASSOC);
 
 
-$editgroup = (int) $_POST[editgroup];
+$editgroup = (int) $_POST['editgroup'];
 
 
 echo"<fieldset>";
@@ -161,8 +161,8 @@ echo"<select name='editgroup' class='form-control'>";
 
 for($i=0;$i<count($result);$i++) {
 
-	$group_id = $result[$i][group_id];
-	$group_name = $result[$i][group_name];
+	$group_id = $result[$i]['group_id'];
+	$group_name = $result[$i]['group_name'];
 	
 	if($editgroup == $group_id) { $sel[$i] = "selected"; }
 	
@@ -172,7 +172,7 @@ for($i=0;$i<count($result);$i++) {
 
 echo"</select> ";
 echo '</div>';
-echo" <input type='submit' class='btn' name='select_group' value='$lang[edit]'>";
+echo" <input type='submit' class='btn btn-default' name='select_group' value='$lang[edit]'>";
 echo"</form>";
 echo"</fieldset>";
 
@@ -238,7 +238,9 @@ echo"<div class='col-md-4'>";
 
 echo"<label>Benutzer hinzufügen/entfernen</label>";
 
-echo"<div id='userlist'>";
+echo '<div id="userlist">';
+echo '<div class="scroll-container">';
+
 
 $dbh = new PDO("sqlite:".USER_DB);
 
@@ -254,32 +256,33 @@ echo"<table class='table table-hover table-condensed'>";
 
 for($i=0;$i<count($result);$i++) {
 
-	if($result[$i][user_class] == "deleted") {
+	if($result[$i]['user_class'] == "deleted") {
 	continue;
 	}
 	
-		$user_id = $result[$i][user_id];
-		$user_nick = $result[$i][user_nick];
-		$user_firstname = $result[$i][user_firstname];
-		$user_lastname = $result[$i][user_lastname];
+		$user_id = $result[$i]['user_id'];
+		$user_nick = $result[$i]['user_nick'];
+		$user_firstname = $result[$i]['user_firstname'];
+		$user_lastname = $result[$i]['user_lastname'];
 		
 	if (in_array("$user_id", $array_group_user)) {
 	    $checked = "checked";
 	} else {
 		$checked = "";
 	}
-		
+	
+	echo '';
 	
 	echo"<tr>";
-	echo"	<td><label class='checkbox'><input type='checkbox' $checked name='incUser[]' value='$user_id'> $user_nick </label></td>
+	echo"	<td><p><label><input type='checkbox' $checked name='incUser[]' value='$user_id'> $user_nick </label></td>
 			<td>$user_firstname $user_lastname</td>";
 	echo"</tr>\n";
 } //eol $i
 
 echo"</table>";
 
-
-echo"</div>";
+echo '</div>';
+echo '</div>';
 
 echo"</div>";
 
