@@ -8,8 +8,10 @@ if(!defined('INSTALLER')) {
 foreach($_POST as $key => $val) {
 	$$key = strip_tags($val); 
 }
-
-if(isset($_POST['step3'])) {
+if(isset($_GET['db']) & $_GET['db']=='insert'){
+    include("php/selectdb.php");
+}
+if(isset($_GET['step5'])) {
 	if(strlen($_POST['psw']) < 8) {
 		echo '<div class="alert alert-danger">';
 		echo '<p>'.$lang['password_too_short'].'</p>';
@@ -18,8 +20,14 @@ if(isset($_POST['step3'])) {
 	} else {
 		include("php/createDB.php");
 	}
-} elseif(isset($_POST['step2'])) {
+    // Administrator Account
+} elseif(isset($_GET['step4'])) {
 	include("php/form.php");
+	// MySQL
+    } elseif(isset($_GET['step3'])) {
+	include("php/create_dbconfig.php");
+} elseif(isset($_GET['step2'])) {
+	include("php/dbform.php");
 } else {
 	include("php/checkup.php");
 }
