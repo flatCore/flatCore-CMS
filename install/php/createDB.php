@@ -19,22 +19,21 @@ $drm_string = "drm_acp_pages|drm_acp_files|drm_acp_user|drm_acp_system|drm_acp_e
 $user_verified = "verified";
 $user_registerdate = time();
 
-
 /**
  * DATABASE USER
  */
 
+
 $sql_user_table = generate_sql_query("fc_user.php");
 $sql_groups_table = generate_sql_query("fc_groups.php");
-$sql_tokens_table = generate_sql_query("fc_tokens.php");
 
-$dbh = new PDO("sqlite:../$fc_db_user");
+if(!isset($db_host))  $fc_db_user = "sqlite:../$fc_db_user";
+$dbh = new PDO($fc_db_user);
 
 $dbh->query($sql_user_table);
 $dbh->query($sql_groups_table);
-$dbh->query($sql_tokens_table);
 
-$sql_insert_admin = "INSERT INTO fc_user (
+$sql_insert_admin = "INSERT INTO ".DB_PREFIX."user (
 		user_id, user_class, user_nick, user_verified, user_registerdate, user_drm, user_mail, user_psw_hash
 	) VALUES (
 		NULL, 'administrator', :username, 'verified', :user_registerdate, :drm_string, :mail, :user_psw_hash
@@ -65,7 +64,7 @@ $email_confirm_content = file_get_contents("contents/text_email_confirm.txt");
 $page_lastedit = time();
 
 
-$sql_portal_site = "INSERT INTO fc_pages (
+$sql_portal_site = "INSERT INTO ".DB_PREFIX."pages (
 							page_id , page_language , page_linkname ,
 							page_title , page_status , page_content ,
 							page_lastedit ,	page_lastedit_from , page_template ,
@@ -85,7 +84,7 @@ $sql_portal_site = "INSERT INTO fc_pages (
 
 
 
-$sql_first_site = "INSERT INTO fc_pages (
+$sql_first_site = "INSERT INTO ".DB_PREFIX."pages (
 						page_id , page_language , page_linkname ,
 						page_title , page_status , page_permalink,
 						page_content , page_lastedit , page_lastedit_from ,
@@ -103,7 +102,7 @@ $sql_first_site = "INSERT INTO fc_pages (
 						'', '', '' ) ";
 
 
-$sql_insert_prefs = "INSERT INTO fc_preferences (
+$sql_insert_prefs = "INSERT INTO ".DB_PREFIX."preferences (
 		prefs_id, prefs_status, prefs_pagetitle,
 		prefs_pagesubtitle, prefs_template, prefs_showloginform, prefs_xml_sitemap,
 		prefs_imagesuffix, prefs_maximagewidth, prefs_maximageheight, prefs_maxfilesize,
@@ -114,32 +113,32 @@ $sql_insert_prefs = "INSERT INTO fc_preferences (
 		'jpg jpeg gif png', '600', '500', '2800',
 		'on', 'layout_default.tpl', '216000' )";
 
-$sql_tl_footer_text = "INSERT INTO fc_textlib ( 
+$sql_tl_footer_text = "INSERT INTO ".DB_PREFIX."textlib (
 						textlib_id , textlib_name , textlib_content , textlib_lang 
 						) VALUES (
 						NULL , 'footer_text' , '$footer_content' , 'de' )";
 
-$sql_tl_extra_content_text = "INSERT INTO fc_textlib ( 
+$sql_tl_extra_content_text = "INSERT INTO ".DB_PREFIX."textlib (
 								textlib_id , textlib_name , textlib_content , textlib_lang
 								) VALUES (
 								NULL , 'extra_content_text' , '' , 'de' )";
 
-$sql_tl_agreement_text = "INSERT INTO fc_textlib ( 
+$sql_tl_agreement_text = "INSERT INTO ".DB_PREFIX."textlib (
 							textlib_id , textlib_name , textlib_content , textlib_lang
 							) VALUES (
 							NULL , 'agreement_text' , '$agreement_content' , 'de' )";
 
-$sql_tl_account_confirm = "INSERT INTO fc_textlib ( 
+$sql_tl_account_confirm = "INSERT INTO ".DB_PREFIX."textlib (
 							textlib_id , textlib_name , textlib_content , textlib_lang 
 							) VALUES (
 							NULL , 'account_confirm' , '<p>Dein Account wurde erfolgreich freigeschaltet.</p>' , 'de' )";
 
-$sql_tl_account_confirm_mail = "INSERT INTO fc_textlib ( 
+$sql_tl_account_confirm_mail = "INSERT INTO ".DB_PREFIX."textlib (
 								textlib_id , textlib_name , textlib_content , textlib_lang 
 								) VALUES ( 
 								NULL , 'account_confirm_mail' , '$email_confirm_content' , 'de' )";
 
-$sql_tl_no_access = "INSERT INTO fc_textlib ( 
+$sql_tl_no_access = "INSERT INTO ".DB_PREFIX."textlib (
 						textlib_id , textlib_name , textlib_content , textlib_lang 
 						) VALUES (
 						NULL , 'no_access' , 'Zugriff verweigert...' , 'de' )";
@@ -154,7 +153,8 @@ $sql_media_table = generate_sql_query("fc_media.php");
 $sql_labels_table = generate_sql_query("fc_labels.php");
 $sql_addons_table = generate_sql_query("fc_addons.php");
 
-$dbh = new PDO("sqlite:../$fc_db_content");
+if(!isset($db_host))  $fc_db_content = "sqlite:../$fc_db_content";
+$dbh = new PDO($fc_db_content);
 
 	$dbh->query($sql_pages_table);
 	$dbh->query($sql_pages_cache_table);
@@ -186,7 +186,8 @@ $dbh = null;
 $sql_hits_table = generate_sql_query("fc_hits.php");
 $sql_log_table = generate_sql_query("fc_log.php");
 
-$dbh = new PDO("sqlite:../$fc_db_stats");
+if(!isset($db_host))  $fc_db_stats = "sqlite:../$fc_db_stats";
+$dbh = new PDO($fc_db_stats);
 
 $dbh->query($sql_hits_table);
 $dbh->query($sql_log_table);
