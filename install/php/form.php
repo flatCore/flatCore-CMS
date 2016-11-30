@@ -9,7 +9,7 @@ if(!defined('INSTALLER')) {
 <?php echo $lang['msg_form']; ?>
 </div><hr>
 
-<form action="index.php" method="POST" class="form-horizontal">
+<form action="index.php?step3" method="POST" class="form-horizontal">
 
 	<div class="form-group">
 		<label class="col-sm-2 control-label"><?php echo $lang['username']; ?></label>
