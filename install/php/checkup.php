@@ -69,6 +69,7 @@ $check_this[] = "../$files_path";
 $check_this[] = "../" . FC_CONTENT_DIR . "/avatars";
 $check_this[] = "../" . FC_CONTENT_DIR . "/files";
 $check_this[] = "../" . FC_CONTENT_DIR . "/plugins";
+$check_this[] = "../dbconfig.php";
 
 
 $check_is_dir[] = "../modules/";
