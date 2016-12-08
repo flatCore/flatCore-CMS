@@ -173,11 +173,13 @@ function get_all_images() {
 	$images = array();
 
 	$dir = "../$img_path";
+	$scan_dir = array_diff(scandir($dir), array('..', '.','.DS_Store'));
+	$types = array('jpg','jpeg','png','gif');
 	
-	if(is_dir($dir)) {
-		$img = glob("$dir/{*.jpg,*.gif,*.png}", GLOB_BRACE);		
-		foreach($img as $v) {
-				$images[] = basename($v);
+	foreach($scan_dir as $key => $file) {
+		$suffix = substr($file, strrpos($file, '.') + 1);
+			if(in_array($suffix, $types)) {
+			$images[] = basename($file);
 		}
 	}
 	 return $images;
