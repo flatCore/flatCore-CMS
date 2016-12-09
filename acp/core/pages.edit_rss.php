@@ -7,13 +7,13 @@ echo '<h3>RSS <small>Feed</small></h3>';
 
 $dbh = new PDO("sqlite:".CONTENT_DB);
 
-/*
-if($_REQUEST[delete] != "") {
-	$delete = (int) $_REQUEST[delete];
+
+if($_REQUEST['delete'] != "") {
+	$delete = (int) $_REQUEST['delete'];
 	$sql = "DELETE FROM fc_feeds WHERE feed_id = $delete";
 	$cnt_changes = $dbh->exec($sql);
 }
-*/
+
 
 $sql = "SELECT * FROM fc_feeds ORDER BY feed_time DESC";
 $sql_prefs = "SELECT * FROM fc_preferences WHERE prefs_id = 1";
@@ -85,7 +85,7 @@ for($i=0;$i<$cnt_rssItems;$i++) {
 
 
 if($cnt_rssItems < 1) {
-	echo"<div class='alert alert-error'>";
+	echo"<div class='alert alert-info'>";
 	echo"<p>No entries</p>";
 	echo"</div>";
 }
