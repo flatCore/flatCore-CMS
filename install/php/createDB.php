@@ -27,6 +27,7 @@ $user_registerdate = time();
 $sql_user_table = generate_sql_query("fc_user.php");
 $sql_groups_table = generate_sql_query("fc_groups.php");
 
+
 if(!isset($db_host))  $dbh = dbconnect('sqlite','../'.$fc_db_user);
 else $dbh = dbconnect('mysql', $db_host, $db_user, $db_pass, $db_name);
 
@@ -150,6 +151,7 @@ $sql_media_table = generate_sql_query("fc_media.php");
 $sql_labels_table = generate_sql_query("fc_labels.php");
 $sql_addons_table = generate_sql_query("fc_addons.php");
 
+
 if(!isset($db_host))  $dbh = dbconnect('sqlite','../'.$fc_db_content);
 
 	dbquery($sql_pages_table);
@@ -173,12 +175,14 @@ if(!isset($db_host))  $dbh = dbconnect('sqlite','../'.$fc_db_content);
 	dbquery($sql_insert_prefs);
 
 
+
 /**
  * DATABASE TRACKER
  */
 
 $sql_hits_table = generate_sql_query("fc_hits.php");
 $sql_log_table = generate_sql_query("fc_log.php");
+
 
 if(!isset($db_host))  $dbh = dbconnect('sqlite','../'.$fc_db_stats);
 
@@ -188,4 +192,5 @@ dbquery($sql_log_table);
 
 echo '<div class="alert alert-success">'.$lang['installed'].' | Admin: '.$username.'</div>';
 echo '<hr><a class="btn" href="../acp/index.php">'.$lang['link_admin'].'</a><hr>';
+
 ?>
