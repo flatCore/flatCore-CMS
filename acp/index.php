@@ -1,6 +1,6 @@
 <?php
 session_start();
-error_reporting(0);
+//error_reporting(0);
 require('../config.php');
 require('../core/functions/func_userdata.php');
 

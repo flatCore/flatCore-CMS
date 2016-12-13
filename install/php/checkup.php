@@ -71,7 +71,6 @@ $check_this[] = "../" . FC_CONTENT_DIR . "/files";
 $check_this[] = "../" . FC_CONTENT_DIR . "/plugins";
 $check_this[] = "../dbconfig.php";
 
-
 $check_is_dir[] = "../modules/";
 $check_is_dir[] = "../lib/";
 $check_is_dir[] = "../styles/";
@@ -132,7 +131,7 @@ echo '</div>';
 
 if(!in_array("false",$goto_install)) {
 
-	echo"<hr><form class='' action='index.php' method='POST'>";
+	echo"<hr><form class='' action='index.php?step2' method='POST'>";
 	echo '<div class="row">';
 	echo '<div class="col-md-4"></div>';
 	echo '<div class="col-md-8">';

@@ -3,13 +3,14 @@ if(!defined('INSTALLER')) {
 	header("location:../login.php");
 	die("PERMISSION DENIED!");
 }
+
 ?>
 
 <div class="alert alert-info">
 <?php echo $lang['msg_form']; ?>
 </div><hr>
 
-<form action="index.php?step3" method="POST" class="form-horizontal">
+<form action="index.php?step5" method="POST" class="form-horizontal">
 
 	<div class="form-group">
 		<label class="col-sm-2 control-label"><?php echo $lang['username']; ?></label>

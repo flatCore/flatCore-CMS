@@ -27,11 +27,12 @@ $user_registerdate = time();
 $sql_user_table = generate_sql_query("fc_user.php");
 $sql_groups_table = generate_sql_query("fc_groups.php");
 
-if(!isset($db_host))  $fc_db_user = "sqlite:../$fc_db_user";
-$dbh = new PDO($fc_db_user);
 
-$dbh->query($sql_user_table);
-$dbh->query($sql_groups_table);
+if(!isset($db_host))  $dbh = dbconnect('sqlite','../'.$fc_db_user);
+else $dbh = dbconnect('mysql', $db_host, $db_user, $db_pass, $db_name);
+
+dbquery($sql_user_table);
+dbquery($sql_groups_table);
 
 $sql_insert_admin = "INSERT INTO ".DB_PREFIX."user (
 		user_id, user_class, user_nick, user_verified, user_registerdate, user_drm, user_mail, user_psw_hash
@@ -39,15 +40,12 @@ $sql_insert_admin = "INSERT INTO ".DB_PREFIX."user (
 		NULL, 'administrator', :username, 'verified', :user_registerdate, :drm_string, :mail, :user_psw_hash
 	)";
 
-$sth = $dbh->prepare($sql_insert_admin);
-$sth->bindParam(':username', $username, PDO::PARAM_STR);
-$sth->bindParam(':user_registerdate', $user_registerdate, PDO::PARAM_STR);
-$sth->bindParam(':drm_string', $drm_string, PDO::PARAM_STR);
-$sth->bindParam(':mail', $mail, PDO::PARAM_STR);
-$sth->bindParam(':user_psw_hash', $user_psw_hash, PDO::PARAM_STR);
-$sth->execute();
-
-$dbh = null;
+dbquery($sql_insert_admin, array(':username' => $username,
+								 ':user_registerdate' => $user_registerdate,
+								 ':drm_string' => $drm_string,
+								 ':mail' => $mail,
+								 ':user_psw_hash' => $user_psw_hash,
+	));
 
 
 
@@ -153,30 +151,29 @@ $sql_media_table = generate_sql_query("fc_media.php");
 $sql_labels_table = generate_sql_query("fc_labels.php");
 $sql_addons_table = generate_sql_query("fc_addons.php");
 
-if(!isset($db_host))  $fc_db_content = "sqlite:../$fc_db_content";
-$dbh = new PDO($fc_db_content);
 
-	$dbh->query($sql_pages_table);
-	$dbh->query($sql_pages_cache_table);
-	$dbh->query($sql_preferences_table);
-	$dbh->query($sql_textlib_table);
-	$dbh->query($sql_comments_table);
-	$dbh->query($sql_media_table);
-	$dbh->query($sql_feeds_table);
-	$dbh->query($sql_portal_site);
-	$dbh->query($sql_first_site);
-	$dbh->query($sql_tl_footer_text);
-	$dbh->query($sql_tl_extra_content_text);
-	$dbh->query($sql_tl_agreement_text);
-	$dbh->query($sql_tl_account_confirm);
-	$dbh->query($sql_tl_account_confirm_mail);
-	$dbh->query($sql_tl_no_access);
-	$dbh->query($sql_labels_table);
-	$dbh->query($sql_addons_table);
+if(!isset($db_host))  $dbh = dbconnect('sqlite','../'.$fc_db_content);
 
-	$dbh->query($sql_insert_prefs);
+	dbquery($sql_pages_table);
+	dbquery($sql_pages_cache_table);
+	dbquery($sql_preferences_table);
+	dbquery($sql_textlib_table);
+	dbquery($sql_comments_table);
+	dbquery($sql_media_table);
+	dbquery($sql_feeds_table);
+	dbquery($sql_portal_site);
+	dbquery($sql_first_site);
+	dbquery($sql_tl_footer_text);
+	dbquery($sql_tl_extra_content_text);
+	dbquery($sql_tl_agreement_text);
+	dbquery($sql_tl_account_confirm);
+	dbquery($sql_tl_account_confirm_mail);
+	dbquery($sql_tl_no_access);
+	dbquery($sql_labels_table);
+	dbquery($sql_addons_table);
 
-$dbh = null;
+	dbquery($sql_insert_prefs);
+
 
 
 /**
@@ -186,19 +183,14 @@ $dbh = null;
 $sql_hits_table = generate_sql_query("fc_hits.php");
 $sql_log_table = generate_sql_query("fc_log.php");
 
-if(!isset($db_host))  $fc_db_stats = "sqlite:../$fc_db_stats";
-$dbh = new PDO($fc_db_stats);
 
-$dbh->query($sql_hits_table);
-$dbh->query($sql_log_table);
+if(!isset($db_host))  $dbh = dbconnect('sqlite','../'.$fc_db_stats);
 
-$dbh = null;
+dbquery($sql_hits_table);
+dbquery($sql_log_table);
 
 
 echo '<div class="alert alert-success">'.$lang['installed'].' | Admin: '.$username.'</div>';
 echo '<hr><a class="btn" href="../acp/index.php">'.$lang['link_admin'].'</a><hr>';
-
-
-
 
 ?>
