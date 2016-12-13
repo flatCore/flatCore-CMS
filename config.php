@@ -26,23 +26,11 @@ $fc_rss_time_offset = '1800';
 define('FC_CONTENT_DIR',  "content");
 define('FC_ACP_DIR',  "acp");
 
-/* Database informations for mysql */
-include ('dbconfig.php');
 
-/* SQlite or MySQL */
-if(isset($db_host)){
-    $fc_db_content = "mysql:host=".$db_host.";dbname=".$db_name.";charset=utf8", $db_user, $db_pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8";
-    $fc_db_user    = "mysql:host=".$db_host.";dbname=".$db_name.";charset=utf8", $db_user, $db_pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8";
-    $fc_db_stats   = "mysql:host=".$db_host.";dbname=".$db_name.";charset=utf8", $db_user, $db_pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8";
-
-}else{
 /* Database Files */
-    $fc_db_content 	= FC_CONTENT_DIR . "/SQLite/content.sqlite3";
-    $fc_db_user 	= FC_CONTENT_DIR . "/SQLite/user.sqlite3";
-    $fc_db_stats 	= FC_CONTENT_DIR . "/SQLite/flatTracker.sqlite3";
-    $dbpref         = "fc_";
-    define("DB_PREFIX", $dbpref);
-}
+$fc_db_content 	= FC_CONTENT_DIR . "/SQLite/content.sqlite3";
+$fc_db_user 	= FC_CONTENT_DIR . "/SQLite/user.sqlite3";
+$fc_db_stats 	= FC_CONTENT_DIR . "/SQLite/flatTracker.sqlite3";
 
 
 /**
@@ -67,6 +55,17 @@ if($fc_inc_dir != "") {
 }
 
 define('FC_INC_DIR',  $fc_inc_dir);
+
+
+/* Database informations for mysql */
+include ('dbconfig.php');
+// database functions
+include (FC_CORE_DIR.'core/functions/func_database.php');
+
+if(!isset($db_host)){
+    $dbpref         = "fc_";
+    define("DB_PREFIX", $dbpref);
+}
 
 
 if(is_file(FC_CONTENT_DIR . '/config.php')){

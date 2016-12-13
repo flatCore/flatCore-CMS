@@ -175,7 +175,7 @@ function fc_user_login($user,$psw,$acp=NULL,$remember=NULL) {
 	}
 	
 	$cnt_result = count($result);
-	
+
 	if($cnt_result>1) {
 		
 
@@ -198,7 +198,7 @@ function fc_user_login($user,$psw,$acp=NULL,$remember=NULL) {
 			$stmt->bindValue(':user_nick', "$user", PDO::PARAM_STR);
 			$stmt->execute();
 		}
-		
+
 		/* set cookie to remember user */
 		if($remember == TRUE) {
 			$identifier = randpsw($length=24);
@@ -206,8 +206,9 @@ function fc_user_login($user,$psw,$acp=NULL,$remember=NULL) {
 			
 			$sql = 'INSERT INTO fc_tokens (user_id, identifier, securitytoken, time) VALUES (:user_id, :identifier, :securitytoken, :time)';
 			$sth = $dbh->prepare($sql);
+            if(!$sth) print_r($dbh->errorInfo()); 
 			$sth->bindValue(':user_id', $result['user_id'], PDO::PARAM_INT);
-			$sth->bindValue(':identifier', "$identifier", PDO::PARAM_STR);
+			$sth->bindValue(':identifier', $identifier, PDO::PARAM_STR);
 			$sth->bindValue(':securitytoken', sha1($securitytoken), PDO::PARAM_STR);
 			$sth->bindValue(':time', time(), PDO::PARAM_STR);
 			$sth->execute();

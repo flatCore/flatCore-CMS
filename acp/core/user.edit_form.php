@@ -221,13 +221,13 @@ echo'<div class="tab-pane fade" id="custom">';
 	for($i=0;$i<$cnt_custom_fields;$i++) {	
 		if(substr($custom_fields[$i],0,10) == "custom_one") {
 			$label = substr($custom_fields[$i],11);
-			echo tpl_form_control_group('',$label,"<input type='text' class='form-control' name='$custom_fields[$i]' value='" . ${$custom_fields[$i]} . "'>");
+			echo tpl_form_control_group('',$label,"<input type='text' class='form-control' name='$custom_fields[$i]' value='" . $$custom_fields[$i] . "'>");
 		}	elseif(substr($custom_fields[$i],0,11) == "custom_text") {
 			$label = substr($custom_fields[$i],12);
-			echo tpl_form_control_group('',$label,"<textarea class='form-control' rows='6' name='$custom_fields[$i]'>" . ${$custom_fields[$i]} . "</textarea>");
+			echo tpl_form_control_group('',$label,"<textarea class='form-control' rows='6' name='$custom_fields[$i]'>" . $$custom_fields[$i] . "</textarea>");
 		}	elseif(substr($custom_fields[$i],0,14) == "custom_wysiwyg") {
 			$label = substr($custom_fields[$i],15);
-			echo tpl_form_control_group('',$label,"<textarea class='mceEditor_small' name='$custom_fields[$i]'>" . ${$custom_fields[$i]} . "</textarea>");
+			echo tpl_form_control_group('',$label,"<textarea class='mceEditor_small' name='$custom_fields[$i]'>" . $$custom_fields[$i] . "</textarea>");
 		}		
 	}
 

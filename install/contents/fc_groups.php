@@ -1,13 +1,13 @@
 <?php
 
 $database = "user";
-$table_name = "fc_groups";
+$table_name = DB_PREFIX."groups";
 
 $cols = array(
-  "group_id"  => 'INTEGER NOT NULL PRIMARY KEY',
-  "group_name"  => 'VARCHAR',
-  "group_description"  => 'VARCHAR',
-  "group_user" => 'VARCHAR'
+  "group_id"  => 'INTEGER(3) NOT NULL PRIMARY KEY AUTO_INCREMENT',
+  "group_name"  => 'VARCHAR(30) NOT NULL DEFAULT ""',
+  "group_description"  => 'TEXT',
+  "group_user" => 'TEXT'
   
   );
 

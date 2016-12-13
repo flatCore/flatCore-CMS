@@ -1,7 +1,7 @@
 <p align="center">
 <img src="http://www.flatcore.org/content/images/icon-flatcore-128.png">
 </p>
-## Achtung nur Developer Version
+
 ## flatcore CMS
 
 flatCore is a Content Management System based on PHP5 and SQLite3.

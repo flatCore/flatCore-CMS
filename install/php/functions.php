@@ -6,6 +6,7 @@ if(!defined('INSTALLER')) {
 }
 
 /* returns all cols and types of a existung database/table */
+// Unter MySQL wird dies nicht funktionieren, auf jedenfall nicht bei shared Hosting
 function get_collumns($db,$table_name) {
 
 	$dbh = new PDO("sqlite:$db");
@@ -23,19 +24,6 @@ return $meta;
 
 
 
-/*  check if table exists - returns the number of existing tables */
-function table_exists($db,$table_name) {
-
-	$dbh = new PDO("sqlite:$db");
-
-  $result = $dbh->query("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='$table_name'")->fetch();
-	$cnt_tables = $result[0];
-	
-  return $cnt_tables;
-}
-
-
-
 
 
 
@@ -43,25 +31,28 @@ function table_exists($db,$table_name) {
 function generate_sql_query($file) {
 
 	include("contents/$file");
+	
+	$string = "";
 
 	foreach ($cols as $k => $v) {
     	$string .= "$k $v,\r"; 
 	}
 
 	$string = substr(trim("$string"), 0,-1); // cut last commata and returns
-
-	$sql_string = "
-		CREATE TABLE $table_name (
-		$string
-	  )
-	";
+	
+        $sql_string = "
+		    CREATE TABLE $table_name (
+		    $string
+	        ) ENGINE=MyISAM DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_unicode_ci;
+	    ";
+    
 
   /* return the sql string */
   return $sql_string;
 }
 
 
-
+// auch noch ändern !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 function update_table($col_name,$type,$table_name,$db) {
 
 $dbh = new PDO("sqlite:$db");
