@@ -18,16 +18,16 @@ function checkwritable($path) {
 	global $lang;
 	
 	echo '<div class="row">';
-	echo '<div class="col-md-4">'.$path.'</div>';
+	echo '<div class="col-md-4"><p>'.$path.'</p></div>';
 	echo '<div class="col-md-8">';
 	if(!is_writable("$path")){
 	
-		echo '<div class="alert alert-danger">' . $lang['permission_false'] . '</div>';
+		echo '<p class="text-danger">' . $lang['permission_false'] . '</p>';
 		$goto_install[] = "false";
 	
 	} else {
 	
-		echo '<div class="alert alert-success">' . $lang['permission_true'] . '</div>';
+		echo '<p class="text-success">' . $lang['permission_true'] . '</p>';
 		$goto_install[] = "true";
 	
 	}
@@ -45,9 +45,9 @@ function checkexistingdir($path) {
 	
 	if(!is_dir("$path")){
 		echo '<div class="row">';
-		echo '<div class="col-md-4">'.$path.'</div>';
+		echo '<div class="col-md-4"><p>'.$path.'</p></div>';
 		echo '<div class="col-md-8">';
-		echo '<div class="alert alert-danger">' . $lang['missing_folder'] . '</div>';
+		echo '<p class="text-danger">' . $lang['missing_folder'] . '</p>';
 		$goto_install[] = "false";
 		echo '</div>';
 		echo '</div>';
@@ -113,10 +113,10 @@ echo '</div>';
 
 
 echo '<div class="row">';
-echo '<div class="col-md-4">PDO/SQLite</div>';
+echo '<div class="col-md-4">'.$lang['label_database'].'</div>';
 echo '<div class="col-md-8">';
 
-if (in_array("pdo_sqlite", get_loaded_extensions())) {
+if(in_array("pdo_sqlite", get_loaded_extensions())) {
 	echo '<div class="alert alert-success">' . $lang['pdo_true'] . '</div>';
 	$goto_install[] = "true";
 } else {
@@ -124,9 +124,14 @@ if (in_array("pdo_sqlite", get_loaded_extensions())) {
 	$goto_install[] = "false";
 }
 
-echo '</div>';
-echo '</div>';
+if(in_array("pdo_mysql", get_loaded_extensions())) {
+	echo '<div class="alert alert-success">' . $lang['pdo_mysql_true'] . '</div>';
+} else {
+	echo '<div class="alert alert-danger">' . $lang['pdo_mysql_false'] . '</div>';
+}
 
+echo '</div>';
+echo '</div>';
 
 
 if(!in_array("false",$goto_install)) {
