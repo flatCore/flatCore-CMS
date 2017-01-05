@@ -9,6 +9,7 @@ $lang['permission_true'] = 'Permissions correct';
 $lang['missing_folder'] = 'Missing Folder';
 $lang['files_and_folders'] = 'Files and Folders';
 $lang['system_requirements'] = 'System Requirements';
+
 $lang['label_database'] = 'Database';
 $lang['php_false'] = 'flatCore needs PHP';
 $lang['php_true'] = 'Sufficiently PHP Version';
@@ -16,6 +17,9 @@ $lang['pdo_true'] = 'PDO/SQLite is ready';
 $lang['pdo_false'] = 'PDO/SQLite needs to be activated if you want to use this database';
 $lang['pdo_mysql_true'] = 'PDO/MYSQL is ready';
 $lang['pdo_mysql_false'] = 'PDO/MYSQL needs to be activated if you want to use this database';
+$lang['install_sqlite'] = 'Continue with SQLite';
+$lang['install_mysql'] = 'Continue with MySQL';
+
 $lang['username'] = 'Username';
 $lang['email'] = 'E-Mail';
 $lang['password'] = 'Password';

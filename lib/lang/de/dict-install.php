@@ -9,6 +9,7 @@ $lang['permission_true'] = 'Datei/Verzeichnis ist beschreibbar';
 $lang['missing_folder'] = 'Das Verzeichnis fehlt';
 $lang['files_and_folders'] = 'Dateien und Verzeichnisse';
 $lang['system_requirements'] = 'Systemvoraussetzungen';
+
 $lang['label_database'] = 'Datenbanken';
 $lang['php_false'] = 'flatCore benötigt mindestens PHP';
 $lang['php_true'] = 'PHP Version ausreichend';
@@ -16,6 +17,9 @@ $lang['pdo_true'] = 'PDO/SQLite ist installiert';
 $lang['pdo_false'] = 'PDO/SQLite muss installiert/aktiviert, wenn du diese Datenbank nutzen möchtest';
 $lang['pdo_mysql_true'] = 'PDO/MYSQL ist installiert';
 $lang['pdo_mysql_false'] = 'PDO/MYSQL muss installiert/aktiviert sein, wenn du diese Datenbank nutzen möchtest';
+$lang['install_sqlite'] = 'Mit SQLite fortfahren';
+$lang['install_mysql'] = 'Mit MySQL fortfahren';
+
 $lang['username'] = 'Username';
 $lang['email'] = 'E-Mail';
 $lang['password'] = 'Passwort';
