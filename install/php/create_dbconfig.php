@@ -33,7 +33,7 @@ if(isset($_POST['dbhost']) && isset($_POST['dbname']) && isset($_POST['dbpass'])
     $temp = fopen("../dbconfig.php","w");
     fwrite($temp, $config);
     fclose($temp);
-    chmod("../dbconfig.php",0544);
+    chmod("../dbconfig.php",0755);
 
     echo "<script language='JavaScript' type='text/javascript'><!--
   window.location.replace('index.php?step4');

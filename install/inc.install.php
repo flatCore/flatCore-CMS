@@ -8,9 +8,33 @@ if(!defined('INSTALLER')) {
 foreach($_POST as $key => $val) {
 	$$key = strip_tags($val); 
 }
-if(isset($_GET['db']) && $_GET['db']=='insert'){
-    include("php/selectdb.php");
+
+$inc = 'checkup.php';
+
+if(isset($_GET['step2']) && $_GET['db'] == 'mysql') {
+	$inc = 'dbform.php'; /* Form for MySQL data */
 }
+
+if(isset($_GET['step2']) && $_GET['db'] == 'sqlite') {
+	$inc = 'form.php'; /* Form for Administrator Data */
+}
+
+if(isset($_GET['step3'])) {
+	$inc = 'create_dbconfig.php'; /* Form for MySQL data */
+}
+
+if(isset($_GET['step4'])) {
+	$inc = 'form.php'; /* Form for Administrator Data */
+}
+
+if(isset($_GET['step5'])) {
+	$inc = 'createDB.php'; /* create SQLite or MySQL Database and fill in Basic Data */
+}
+
+
+include('php/'.$inc);
+
+/*
 if(isset($_GET['step5'])) {
 	if(strlen($_POST['psw']) < 8) {
 		echo '<div class="alert alert-danger">';
@@ -30,5 +54,6 @@ if(isset($_GET['step5'])) {
 } else {
 	include("php/checkup.php");
 }
+*/
 
 ?>

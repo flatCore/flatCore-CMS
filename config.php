@@ -58,7 +58,9 @@ define('FC_INC_DIR',  $fc_inc_dir);
 
 
 /* Database informations for mysql */
-include ('dbconfig.php');
+if(is_file('dbconfig.php')) {
+	include ('dbconfig.php');
+}
 // database functions
 include (FC_CORE_DIR.'core/functions/func_database.php');
 

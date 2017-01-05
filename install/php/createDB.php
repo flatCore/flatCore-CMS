@@ -5,6 +5,7 @@
  * create the sqlite database files
  */
 
+
 if(!defined('INSTALLER')) {
 	header("location:../login.php");
 	die("PERMISSION DENIED!");
@@ -23,13 +24,21 @@ $user_registerdate = time();
  * DATABASE USER
  */
 
+if(!isset($db_host)) {
+	$dbh = dbconnect('sqlite','../'.$fc_db_user);
+	$db_type = 'sqlite';
+	define("DB_PREFIX", "fc_");
+} else {
+	$dbh = dbconnect('mysql', $db_host, $db_user, $db_pass, $db_name);
+	$db_type = 'mysql';
+}
 
-$sql_user_table = generate_sql_query("fc_user.php");
-$sql_groups_table = generate_sql_query("fc_groups.php");
+$sql_user_table = fc_generate_sql_query("fc_user.php","$db_type");
+$sql_groups_table = fc_generate_sql_query("fc_groups.php","$db_type");
 
 
-if(!isset($db_host))  $dbh = dbconnect('sqlite','../'.$fc_db_user);
-else $dbh = dbconnect('mysql', $db_host, $db_user, $db_pass, $db_name);
+
+
 
 dbquery($sql_user_table);
 dbquery($sql_groups_table);
@@ -53,7 +62,7 @@ dbquery($sql_insert_admin, array(':username' => $username,
  * DATABASE CONTENT
  */
 
-$sql_feeds_table = generate_sql_query("fc_feeds.php");
+$sql_feeds_table = fc_generate_sql_query("fc_feeds.php","$db_type");
 $portal_content = file_get_contents("contents/text_welcome.txt");
 $example_content = file_get_contents("contents/text_example.txt");
 $footer_content = file_get_contents("contents/text_footer.txt");
@@ -84,7 +93,7 @@ $sql_portal_site = "INSERT INTO ".DB_PREFIX."pages (
 
 $sql_first_site = "INSERT INTO ".DB_PREFIX."pages (
 						page_id , page_language , page_linkname ,
-						page_title , page_status , page_permalink,
+						page_title , page_status , page_permalink ,
 						page_content , page_lastedit , page_lastedit_from ,
 						page_template ,	page_sort ,	page_meta_author ,
 						page_meta_date , page_meta_keywords , page_meta_description ,
@@ -142,17 +151,19 @@ $sql_tl_no_access = "INSERT INTO ".DB_PREFIX."textlib (
 						NULL , 'no_access' , 'Zugriff verweigert...' , 'de' )";
 
 
-$sql_pages_table = generate_sql_query("fc_pages.php");
-$sql_pages_cache_table = generate_sql_query("fc_pages_cache.php");
-$sql_preferences_table = generate_sql_query("fc_preferences.php");
-$sql_textlib_table = generate_sql_query("fc_textlib.php");
-$sql_comments_table = generate_sql_query("fc_comments.php");
-$sql_media_table = generate_sql_query("fc_media.php");
-$sql_labels_table = generate_sql_query("fc_labels.php");
-$sql_addons_table = generate_sql_query("fc_addons.php");
+$sql_pages_table = fc_generate_sql_query("fc_pages.php","$db_type");
+$sql_pages_cache_table = fc_generate_sql_query("fc_pages_cache.php","$db_type");
+$sql_preferences_table = fc_generate_sql_query("fc_preferences.php","$db_type");
+$sql_textlib_table = fc_generate_sql_query("fc_textlib.php","$db_type");
+$sql_comments_table = fc_generate_sql_query("fc_comments.php","$db_type");
+$sql_media_table = fc_generate_sql_query("fc_media.php","$db_type");
+$sql_labels_table = fc_generate_sql_query("fc_labels.php","$db_type");
+$sql_addons_table = fc_generate_sql_query("fc_addons.php","$db_type");
 
 
-if(!isset($db_host))  $dbh = dbconnect('sqlite','../'.$fc_db_content);
+if(!isset($db_host)) {
+	$dbh = dbconnect('sqlite','../'.$fc_db_content);
+}
 
 	dbquery($sql_pages_table);
 	dbquery($sql_pages_cache_table);
@@ -180,11 +191,13 @@ if(!isset($db_host))  $dbh = dbconnect('sqlite','../'.$fc_db_content);
  * DATABASE TRACKER
  */
 
-$sql_hits_table = generate_sql_query("fc_hits.php");
-$sql_log_table = generate_sql_query("fc_log.php");
+$sql_hits_table = fc_generate_sql_query("fc_hits.php","$db_type");
+$sql_log_table = fc_generate_sql_query("fc_log.php","$db_type");
 
 
-if(!isset($db_host))  $dbh = dbconnect('sqlite','../'.$fc_db_stats);
+if(!isset($db_host)) {
+	$dbh = dbconnect('sqlite','../'.$fc_db_stats);
+}
 
 dbquery($sql_hits_table);
 dbquery($sql_log_table);
