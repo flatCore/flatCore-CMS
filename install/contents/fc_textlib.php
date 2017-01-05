@@ -1,19 +1,19 @@
 <?php
 
 $database = "content";
-$table_name = "fc_textlib";
+$table_name = DB_PREFIX."textlib";
 
 $cols = array(
-  "textlib_id"  => 'INTEGER NOT NULL PRIMARY KEY',
-  "textlib_name"  => 'VARCHAR',
-  "textlib_title"  => 'VARCHAR',
-  "textlib_content"  => 'VARCHAR',
-  "textlib_keywords"  => 'VARCHAR',
-  "textlib_labels"  => 'VARCHAR',
-  "textlib_notes"  => 'VARCHAR',
-  "textlib_lastedit"  => 'VARCHAR',
-  "textlib_lastedit_from"  => 'VARCHAR',
-  "textlib_lang" => 'VARCHAR'
+  "textlib_id"  => 'INTEGER(12) NOT NULL PRIMARY KEY AUTO_INCREMENT',
+  "textlib_name"  => "VARCHAR(255) NOT NULL DEFAULT ''",
+  "textlib_title"  => "VARCHAR(255) NOT NULL DEFAULT ''",
+  "textlib_content"  => "VARCHAR(255) NOT NULL DEFAULT ''",
+  "textlib_keywords"  => "VARCHAR(255) NOT NULL DEFAULT ''",
+  "textlib_labels"  => "VARCHAR(255) NOT NULL DEFAULT ''",
+  "textlib_notes"  => "VARCHAR(255) NOT NULL DEFAULT ''",
+  "textlib_lastedit"  => "VARCHAR(255) NOT NULL DEFAULT ''",
+  "textlib_lastedit_from"  => "VARCHAR(255) NOT NULL DEFAULT ''",
+  "textlib_lang" => "VARCHAR(255) NOT NULL DEFAULT ''"
   );
 
 ?>

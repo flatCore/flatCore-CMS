@@ -8,14 +8,14 @@
  */
  
 $database = "content";
-$table_name = "fc_addons";
+$table_name = DB_PREFIX."addons";
 
 $cols = array(
-  "addon_id"  => 'INTEGER NOT NULL PRIMARY KEY',
-  "addon_type"  => 'VARCHAR',
-  "addon_dir"  => 'VARCHAR',
-  "addon_name"  => 'VARCHAR',
-  "addon_version"  => 'VARCHAR'
+  "addon_id"  => 'INTEGER(12) NOT NULL PRIMARY KEY AUTO_INCREMENT',
+  "addon_type"  => "VARCHAR(20) NOT NULL DEFAULT ''",
+  "addon_dir"  => "VARCHAR(255) NOT NULL DEFAULT ''",
+  "addon_name"  => "VARCHAR(255) NOT NULL DEFAULT ''",
+  "addon_version"  => "VARCHAR(255) NOT NULL DEFAULT ''"
   );
 
 ?>
