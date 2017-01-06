@@ -9,7 +9,10 @@ function dbquery($query, $execute=array()) {
     global $pdo;
     $result = $pdo->prepare($query);
     if (!$result) {
-        print_r($result->errorInfo());
+        print_r($pdo->errorInfo());
+        echo $query;
+        echo "<br>";
+        print_r($execute);
         return FALSE;
     } else {
         $result->execute($execute);
@@ -23,7 +26,7 @@ function dbcount($field, $table, $conditions = "") {
     $cond = ($conditions ? " WHERE ".$conditions : "");
     $result = $pdo->prepare("SELECT COUNT".$field." FROM ".$table.$cond);
     if (!$result) {
-        print_r($result->errorInfo());
+        print_r($pdo->errorInfo());
         return FALSE;
     } else {
         $result->execute();
@@ -35,7 +38,7 @@ function dbresult($query, $row) {
     global $pdo;
     $data = $query->fetchAll();
     if (!$query) {
-        print_r($query->errorInfo());
+        print_r($pdo->errorInfo());
         return FALSE;
     } else {
         $result = $query->getColumnMeta(0);
