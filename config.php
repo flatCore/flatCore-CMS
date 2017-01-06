@@ -58,15 +58,21 @@ define('FC_INC_DIR',  $fc_inc_dir);
 
 
 /* Database informations for mysql */
-if(is_file('dbconfig.php')) {
+//if(is_file('dbconfig.php')) {   not passed the rights
 	include ('dbconfig.php');
-}
+//}
 // database functions
 include (FC_CORE_DIR.'core/functions/func_database.php');
 
 if(!isset($db_host)){
     $dbpref         = "fc_";
     define("DB_PREFIX", $dbpref);
+    $db_type = 'sqlite';
+    $db_user = '';
+    $db_pass = '';
+    $db_name = '';
+} else {
+    $db_type = 'mysql';
 }
 
 
