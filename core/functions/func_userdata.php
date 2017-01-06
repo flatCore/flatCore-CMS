@@ -4,16 +4,18 @@
 
 /**
  * Return all registered user -> user_nick
- * $db = path to the database file
+ * $db_host = path to the database file
  */
 
 
-function get_all_usernames($db) {
-	$dbh = new PDO("sqlite:$db");
-	$sql = "SELECT user_nick FROM fc_user";
-  foreach ($dbh->query($sql) as $row) {
+function get_all_usernames($db_host) {
+
+    $dbh = dbconnect($db_type, $db_host, $db_user, $db_pass, $db_name);
+	$sql = "SELECT user_nick FROM ".DB_PREFIX."user";
+  foreach (dbquery($sql) as $row) {
 		$result[] = $row;
-  }  
+  }
+  $dbh = null;
 	return($result);
 }
 
@@ -22,16 +24,19 @@ function get_all_usernames($db) {
 
 /**
  * Return all registered user -> user_mail
- * $db = path to the database file
+ * $db_host = path to the database file
  */
 
-function get_all_usermail($db) {
+function get_all_usermail($db_host) {
 
-	$dbh = new PDO("sqlite:$db");
-	$sql = "SELECT user_mail FROM fc_user";
-  foreach ($dbh->query($sql) as $row) {
+    global $db_type, $db_host, $db_user, $db_pass, $db_name;
+
+	$dbh = dbconnect($db_type, $db_host, $db_user, $db_pass, $db_name);
+	$sql = "SELECT user_mail FROM ".DB_PREFIX."user";
+  foreach (dbquery($sql) as $row) {
 		$result[] = $row;
-  }  
+  }
+  $dbh = null;
 	return($result);
 }
 
@@ -46,13 +51,14 @@ function get_all_usermail($db) {
 
 function get_my_userdata() {
 
-	global $fc_db_user;
+	global $fc_db_user, $db_type, $db_host, $db_user, $db_pass, $db_name;
 
-	$dbh = new PDO("sqlite:$fc_db_user");
-	$sql = "SELECT * FROM fc_user WHERE user_id = '$_SESSION[user_id]' AND user_verified = 'verified' ";
-	
-	$result = $dbh->query($sql);
-	$result= $result->fetch(PDO::FETCH_ASSOC);
+    if($db_type == 'sqlite') $db_host = $fc_db_user;
+	$dbh = dbconnect($db_type, $db_host, $db_user, $db_pass, $db_name);
+	$sql = "SELECT * FROM ".DB_PREFIX."user WHERE user_id = '$_SESSION[user_id]' AND user_verified = 'verified' ";
+    $result = dbarray(dbquery($sql));
+
+    $dbh = null;
 
 	return($result);
 
@@ -69,15 +75,17 @@ function get_my_userdata() {
 
 function get_userdata_by_mail($mail) {
 
-	global $fc_db_user;
+	global $fc_db_user, $db_type, $db_host, $db_user, $db_pass, $db_name;
 
-	$dbh = new PDO("sqlite:$fc_db_user");
+    if($db_type == 'sqlite') $db_host = $fc_db_user;
+	$dbh = dbconnect($db_type, $db_host, $db_user, $db_pass, $db_name);
 	$mail = $dbh -> quote($mail);
 
-	$sql = "SELECT * FROM fc_user WHERE user_mail = $mail AND user_verified = 'verified' ";
+	$sql = "SELECT * FROM ".DB_PREFIX."user WHERE user_mail = $mail AND user_verified = 'verified' ";
 	
-	$result = $dbh->query($sql);
-	$result= $result->fetch(PDO::FETCH_ASSOC);
+	$result = dbarray(dbquery($sql));
+
+    $dbh = null;
 
 	return($result);
 }
@@ -94,16 +102,19 @@ function get_userdata_by_mail($mail) {
 
 function get_userdata_by_token($token) {
 
-	global $fc_db_user;
+	global $fc_db_user, $db_type, $db_host, $db_user, $db_pass, $db_name;
 
-	$dbh = new PDO("sqlite:$fc_db_user");
+    if($db_type == 'sqlite') $db_host = $fc_db_user;
+	$dbh = dbconnect($db_type, $db_host, $db_user, $db_pass, $db_name);
 	$token = $dbh -> quote($token);
-	$sql = "SELECT user_id, user_nick, user_mail FROM fc_user WHERE user_reset_psw = $token ";
+	$sql = "SELECT user_id, user_nick, user_mail FROM ".DB_PREFIX."user WHERE user_reset_psw = $token ";
 	
-	$result = $dbh->query($sql);
-	$result= $result->fetch(PDO::FETCH_ASSOC);
+	$result = dbarray(dbquery($sql));
+
+    $dbh = null;
 
 	return($result);
+
 }
 
 
@@ -139,7 +150,7 @@ function randpsw($length=8) {
  
 function fc_user_login($user,$psw,$acp=NULL,$remember=NULL) {
 
-	global $fc_db_user;
+	global $fc_db_user, $db_type, $db_host, $db_user, $db_pass, $db_name;
 	unset($result);
 	
 	if($acp == TRUE) {
@@ -147,31 +158,21 @@ function fc_user_login($user,$psw,$acp=NULL,$remember=NULL) {
 	}
 		
 	$login_hash  = md5($psw.$user);
-	
-	$dbh = new PDO("sqlite:$fc_db_user");
 
+    if($db_type == 'sqlite') $db_host = $fc_db_user;
+	$dbh = dbconnect($db_type, $db_host, $db_user, $db_pass, $db_name);
 
-	$sql_get_hash = "SELECT user_psw_hash FROM fc_user WHERE user_nick = :login_name AND user_verified = 'verified'";
-	$stmt = $dbh->prepare($sql_get_hash);
-	$stmt->bindValue(':login_name', "$user", PDO::PARAM_STR);
-	$stmt->execute();
-	$hash = $stmt->fetch(PDO::FETCH_ASSOC);
+	$sql_get_hash = "SELECT user_psw_hash FROM ".DB_PREFIX."user WHERE user_nick = :login_name AND user_verified = 'verified'";
+    $hash = dbarray(dbquery($sql_get_hash, array(':login_name'=>$user)));
 	
 	
 	if(password_verify($psw, $hash['user_psw_hash'])) {
 		/* valid psw */
-		$sql = "SELECT * FROM fc_user	WHERE user_nick = :user_nick AND user_verified = 'verified'";
-		$sth = $dbh->prepare($sql);
-		$sth->bindValue(':user_nick', "$user", PDO::PARAM_STR);
-		$sth->execute();
-		$result = $sth->fetch(PDO::FETCH_ASSOC);
+		$sql = "SELECT * FROM ".DB_PREFIX."user	WHERE user_nick = :user_nick AND user_verified = 'verified'";
+        $result = dbarray(dbquery($sql, array(':user_nick'=>$user)));
 	} else {
-		$sql = "SELECT * FROM fc_user	WHERE user_nick = :login_name AND user_psw = :login_hash AND user_verified = 'verified'";
-		$sth = $dbh->prepare($sql);
-		$sth->bindValue(':login_name', "$user", PDO::PARAM_STR);
-		$sth->bindValue(':login_hash', "$login_hash", PDO::PARAM_STR);
-		$sth->execute();
-		$result = $sth->fetch(PDO::FETCH_ASSOC);
+		$sql = "SELECT * FROM ".DB_PREFIX."user	WHERE user_nick = :login_name AND user_psw = :login_hash AND user_verified = 'verified'";
+        $result = dbarray(dbquery($sql, array(':login_name'=>$user, ':login_hash'=>$login_hash)));
 	}
 	
 	$cnt_result = count($result);
@@ -184,19 +185,14 @@ function fc_user_login($user,$psw,$acp=NULL,$remember=NULL) {
 		/* store new password_hash */
 		if(empty($result['user_psw_hash'])) {
 			$user_psw_hash = password_hash($psw, PASSWORD_DEFAULT);
-			$sql = 'UPDATE fc_user SET user_psw_hash = :user_psw_hash WHERE user_psw = :login_hash';
-			$sth = $dbh->prepare($sql);
-			$sth->bindParam(':user_psw_hash', $user_psw_hash, PDO::PARAM_STR);
-			$sth->bindParam(':login_hash', $login_hash, PDO::PARAM_STR);
-			$sth->execute();
+			$sql = 'UPDATE '.DB_PREFIX.'user SET user_psw_hash = :user_psw_hash WHERE user_psw = :login_hash';
+            dbquery($sql, array(':user_psw_hash'=>$user_psw_hash, ':login_hash'=>$login_hash));
 		}
 		
 		/* if user_psw_hash is not empty, delete user_psw */
 		if(!empty($result['user_psw_hash'])) {
-			$sql = 'UPDATE fc_user SET user_psw = NULL WHERE user_nick = :user_nick';
-			$stmt = $dbh->prepare($sql);
-			$stmt->bindValue(':user_nick', "$user", PDO::PARAM_STR);
-			$stmt->execute();
+			$sql = 'UPDATE '.DB_PREFIX.'user SET user_psw = NULL WHERE user_nick = :user_nick';
+            dbquery($sql, array(':user_nick'=>$user));
 		}
 
 		/* set cookie to remember user */
@@ -204,14 +200,8 @@ function fc_user_login($user,$psw,$acp=NULL,$remember=NULL) {
 			$identifier = randpsw($length=24);
 			$securitytoken = randpsw($length=24);
 			
-			$sql = 'INSERT INTO fc_tokens (user_id, identifier, securitytoken, time) VALUES (:user_id, :identifier, :securitytoken, :time)';
-			$sth = $dbh->prepare($sql);
-            if(!$sth) print_r($dbh->errorInfo()); 
-			$sth->bindValue(':user_id', $result['user_id'], PDO::PARAM_INT);
-			$sth->bindValue(':identifier', $identifier, PDO::PARAM_STR);
-			$sth->bindValue(':securitytoken', sha1($securitytoken), PDO::PARAM_STR);
-			$sth->bindValue(':time', time(), PDO::PARAM_STR);
-			$sth->execute();
+			$sql = 'INSERT INTO '.DB_PREFIX.'tokens (user_id, identifier, securitytoken, time) VALUES (:user_id, :identifier, :securitytoken, :time)';
+            dbquery($sql, array(':user_id'=>$result['user_id'], ':identifier'=>$identifier, ':securitytoken'=>sha1($securitytoken), ':time'=>time()));
 			setcookie("identifier",$identifier,time()+(3600*24*365)); //1 Jahr Gültigkeit
 			setcookie("securitytoken",$securitytoken,time()+(3600*24*365)); //1 Jahr Gültigkeit			
 		}
@@ -221,7 +211,7 @@ function fc_user_login($user,$psw,$acp=NULL,$remember=NULL) {
 			header("location:acp.php");
 		}
 		
-		
+
 	} else {
 		session_destroy();
 	}
