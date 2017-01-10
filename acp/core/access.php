@@ -44,39 +44,39 @@ if(!function_exists('fc_start_user_session')) {
 	}
 }
 
-if(($_SESSION['user_class'] != 'administrator') && isset($_COOKIE['identifier']) && isset($_COOKIE['securitytoken'])) {
-	$identifier = $_COOKIE['identifier'];
-	$securitytoken = $_COOKIE['securitytoken'];
+if(isset($_SESSION['user_class'])){
+    if(($_SESSION['user_class'] != 'administrator') && isset($_COOKIE['identifier']) && isset($_COOKIE['securitytoken'])) {
+	    $identifier = $_COOKIE['identifier'];
+	    $securitytoken = $_COOKIE['securitytoken'];
 	
-	$dbh = new PDO("sqlite:../$fc_db_user");
-	$stmt = $dbh->prepare("SELECT * FROM fc_tokens WHERE identifier = :identifier");
-	$stmt->bindValue(':identifier', $identifier, PDO::PARAM_STR);
-	$stmt->execute();
-	$token_row = $stmt->fetch(PDO::FETCH_ASSOC);
+	    if($db_type == 'sqlite') $db_host = '../'.$db_user;
+
+	    $dbh = dbconnect($db_type, $db_host, $db_user, $db_pass, $db_name);
 	
-	//Token is correct
-	if(sha1($securitytoken) == $token_row['securitytoken']) {
-		// update Token
-		$new_securitytoken = randpsw($length=24);			
-		$insert = $dbh->prepare("UPDATE fc_tokens SET securitytoken = :securitytoken WHERE identifier = :identifier");
-		$insert->bindValue(':securitytoken', sha1($new_securitytoken), PDO::PARAM_STR);
-		$insert->bindValue(':identifier', $identifier, PDO::PARAM_STR);
-		$insert->execute();
-		setcookie("identifier",$identifier,time()+(3600*24*365)); //1 Jahr Gültigkeit
-		setcookie("securitytoken",$new_securitytoken,time()+(3600*24*365)); //1 Jahr Gültigkeit
+	    $sql = "SELECT * FROM ".DB_PREFIX."tokens WHERE identifier = :identifier";
+	    $token_row = dbarray(dbquery($sql, array(':identifier'=>$identifier)));
+	
+	    //Token is correct
+	    if(sha1($securitytoken) == $token_row['securitytoken']) {
+		    // update Token
+		    $new_securitytoken = randpsw($length=24);
+		    $insert = "UPDATE ".DB_PREFIX."tokens SET securitytoken = :securitytoken WHERE identifier = :identifier";
+		    dbquery($insert, array(':securitytoken'=>sha1($new_securitytoken), ':identifier'=>$identifier));
 		
-		// get user data an set SESSION
-		$stmt = $dbh->prepare("SELECT * FROM fc_user	WHERE user_id = :user_id AND user_verified = 'verified'");
-		$stmt->bindValue(':user_id', $token_row['user_id'], PDO::PARAM_INT);
-		$stmt->execute();
-		$user_data = $stmt->fetch(PDO::FETCH_ASSOC);
-		fc_start_user_session($user_data);
+		    setcookie("identifier",$identifier,time()+(3600*24*365)); //1 Jahr Gültigkeit
+		    setcookie("securitytoken",$new_securitytoken,time()+(3600*24*365)); //1 Jahr Gültigkeit
+		
+		    // get user data an set SESSION
+		    $sql = "SELECT * FROM ".DB_PREFIX."user	WHERE user_id = :user_id AND user_verified = 'verified'";
+		    $user_data = dbarray(dbquery($sql, array(':user_id'=>$token_row['user_id'])));
+		    fc_start_user_session($user_data);
 				
-		$_SESSION['user_class'] = 'administrator';
-	} else {
-		header("location:../index.php");
-		die("PERMISSION DENIED");
-	}
+		    $_SESSION['user_class'] = 'administrator';
+	    } else {
+		    header("location:../index.php");
+		    die("PERMISSION DENIED");
+	    }
+    }
 }
 
 
