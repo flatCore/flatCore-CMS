@@ -8,10 +8,12 @@ if(isset($page_template)) {
 
 if($page_template == "use_standard" OR $page_template == "") {
 
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = "SELECT prefs_template FROM fc_preferences WHERE prefs_id = 1";
-	$result = $dbh->query($sql);
-	$result = $result->fetch(PDO::FETCH_ASSOC);
+    if($db_type == 'sqlite') $db_host = CONTENT_DB;
+
+	$dbh = dbconnect($db_type, $db_host, $db_user, $db_pass, $db_name);
+	$sql = "SELECT prefs_template FROM ".DB_PREFIX."preferences WHERE prefs_id = 1";
+	$result = dbquery($sql);
+	$result = dbarray($result);
 	$dbh = null;
 
 	$editor_tpl_folder = "$result[prefs_template]";
