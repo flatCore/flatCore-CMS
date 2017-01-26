@@ -269,6 +269,7 @@ $lang['label_notes'] = "Notes";
 $lang['missing_value'] = 'missing value';
 $lang['label_filename'] = 'Filename';
 $lang['label_content'] = 'Content';
+$lang['label_groups'] = 'Groups';
 
 $lang['label_ready_to_install'] = 'Ready to install';
 $lang['remember_me'] = 'Remember me';

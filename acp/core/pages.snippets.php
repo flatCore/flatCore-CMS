@@ -53,7 +53,7 @@ if(isset($_POST['save_snippet'])) {
 		$snip_id = (int) $_POST['snip_id'];
 	
 		$sql = "UPDATE fc_textlib
-						SET textlib_content = :textlib_content, textlib_notes = :textlib_notes,
+						SET textlib_content = :textlib_content, textlib_notes = :textlib_notes, textlib_groups = :textlib_groups,
 								textlib_name = :textlib_name, textlib_title = :textlib_title, textlib_keywords = :textlib_keywords,
 								textlib_lang = :textlib_lang
 						WHERE textlib_id = $snip_id";
@@ -61,9 +61,9 @@ if(isset($_POST['save_snippet'])) {
 	} else {
 		
 		$sql = "INSERT INTO fc_textlib (
-							textlib_content, textlib_notes, textlib_name, textlib_title, textlib_keywords, textlib_lang
+							textlib_content, textlib_notes, textlib_groups, textlib_name, textlib_title, textlib_keywords, textlib_lang
 						) VALUES (
-							:textlib_content, :textlib_notes, :textlib_name, :textlib_title, :textlib_keywords, :textlib_lang
+							:textlib_content, :textlib_notes, :textlib_groups, :textlib_name, :textlib_title, :textlib_keywords, :textlib_lang
 						)";		
 	}
 	
@@ -74,6 +74,7 @@ if(isset($_POST['save_snippet'])) {
 	$sth->bindParam(':textlib_notes', $_POST['textlib_notes'], PDO::PARAM_STR);
 	$sth->bindParam(':textlib_keywords', $_POST['snippet_keywords'], PDO::PARAM_STR);
 	$sth->bindParam(':textlib_title', $_POST['snippet_title'], PDO::PARAM_STR);
+	$sth->bindParam(':textlib_groups', $_POST['snippet_groups'], PDO::PARAM_STR);
 	$cnt_changes = $sth->execute();
 	
 	$db = null;
@@ -239,6 +240,11 @@ echo '</div>';
 echo '<div class="form-group">';
 echo '<label>'.$lang['label_keywords'].'</label>';
 echo '<input class="form-control" type="text" name="snippet_keywords" value="'.$textlib_keywords.'" data-role="tagsinput" />';
+echo '</div>';
+
+echo '<div class="form-group">';
+echo '<label>'.$lang['label_groups'].'</label>';
+echo '<input class="form-control" type="text" name="snippet_groups" value="'.$textlib_groups.'" />';
 echo '</div>';
 
 echo '<div class="alert alert-info" style="padding:2px 3px;">';

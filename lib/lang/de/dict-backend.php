@@ -267,6 +267,7 @@ $lang['label_color'] = "Farbe";
 $lang['missing_value'] = 'fehlender Wert';
 $lang['label_filename'] = 'Dateiname';
 $lang['label_content'] = 'Inhalt';
+$lang['label_groups'] = 'Gruppen';
 
 $lang['label_ready_to_install'] = 'Bereit für die Installation';
 $lang['remember_me'] = 'Angemeldet bleiben';
