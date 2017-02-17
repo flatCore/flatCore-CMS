@@ -1,10 +1,10 @@
 <div id="liveBox">
 	<?php
 		
-		$helpURL = 'http://docs.flatcore.org/en/';
+		$helpURL = 'https://flatcore.org/docs/en/';
 		
 		if($languagePack == 'de') {
-			$helpURL = 'http://docs.flatcore.org/de/';	
+			$helpURL = 'https://flatcore.org/docs/de/';	
 		}
 		
 		echo '<a class="fancybox-docs" href="'.$helpURL.'"><span class="glyphicon glyphicon-question-sign"></span> '.$lang['show_help'].'</a>';
