@@ -305,6 +305,7 @@ $lang['f_prefs_global_header'] = "Global Headers (HTML)";
 
 $lang['page_thumbnail'] = "Thumbnail";
 $lang['page_thumbnail_default'] = "Default Thumbnail";
+$lang['page_favicon'] = "Favicon";
 $lang['rss_offset'] = "RSS Offset (Seconds)";
 
 $lang['prefs_mailer_name'] = "Sender Name";

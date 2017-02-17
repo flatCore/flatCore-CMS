@@ -51,7 +51,8 @@ if(isset($_POST['save_prefs_descriptions'])) {
 if(isset($_POST['save_prefs_thumbnail'])) {
 
 	$pdo_fields = array(
-		'prefs_pagethumbnail' => 'STR'
+		'prefs_pagethumbnail' => 'STR',
+		'prefs_pagefavicon' => 'STR'
 	);
 	$dbh = new PDO("sqlite:".CONTENT_DB);
 	$sql = generate_sql_update_str($pdo_fields,"fc_preferences","WHERE prefs_id = 1");
@@ -277,6 +278,28 @@ $arr_Images = get_all_images();
 $select_prefs_thumbnail .= "</select>";
 
 echo tpl_form_control_group('',$lang['page_thumbnail'],$select_prefs_thumbnail);
+
+
+$select_prefs_favicon  = '<select name="prefs_pagefavicon" class="form-control">';
+$select_prefs_favicon .= '<option value="">'.$lang['page_favicon'].'</option>';
+$arr_Images = get_all_images();
+	foreach($arr_Images as $page_favicon) {
+		
+		if(substr($page_favicon, -4) != '.png') {
+			continue;
+		}
+		
+		$selected = "";
+		if($prefs_pagefavicon == "$page_favicon") {
+			$selected = "selected";
+		}
+		$select_prefs_favicon .= "<option $selected value='$page_favicon'>$page_favicon</option>";
+}
+$select_prefs_favicon .= "</select>";
+
+echo tpl_form_control_group('',$lang['page_favicon'],$select_prefs_favicon);
+
+
 
 echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_thumbnail' value='$lang[save]'>");
 echo '</form>';

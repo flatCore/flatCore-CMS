@@ -9,8 +9,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<link rel="icon" type="image/x-icon" href="{$fc_inc_dir}/styles/{$fc_template}/images/fav.ico" />
 
+<link rel="icon" href="/content/images/{$page_favicon}">
 <link rel="alternate" type="application/rss+xml" title="{$prefs_pagetitle} | RSS" href="/rss.php" />
 
 {$page_meta_enhanced}

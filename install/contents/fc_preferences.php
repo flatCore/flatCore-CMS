@@ -9,6 +9,7 @@ $cols = array(
   "prefs_pagetitle"  => 'VARCHAR',
   "prefs_pagesubtitle" => 'VARCHAR',
   "prefs_pagethumbnail" => 'VARCHAR',
+  "prefs_pagefavicon" => 'VARCHAR',
   "prefs_pagesglobalhead" => 'VARCHAR',
   "prefs_template" => 'VARCHAR',
   "prefs_usertemplate" => 'VARCHAR',

@@ -37,6 +37,7 @@ $cols = array(
 	"page_meta_robots" => 'VARCHAR',
 	"page_meta_enhanced" => 'VARCHAR',
 	"page_thumbnail" => 'VARCHAR',
+	"page_favicon" => 'VARCHAR',
 	"page_head_styles" => 'VARCHAR',
 	"page_head_enhanced" => 'VARCHAR',
 	"page_template" => 'VARCHAR',
