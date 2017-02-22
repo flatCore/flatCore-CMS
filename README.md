@@ -26,7 +26,7 @@ ___
 + jQuery - https://jquery.com/
 + fancybox (2.1.5) - http://fancyapps.com/fancybox/
 + Chart.js (1.0.1-beta.4) - http://chartjs.org/
-+ Masonry (v3.1.2) - http://masonry.desandro.com
++ Masonry (v4.1.1) - http://masonry.desandro.com
 + DropzoneJS - http://www.dropzonejs.com
 + jquery.dirtyforms - https://github.com/snikch/jquery.dirtyforms
 + matchHeight - http://brm.io/jquery-match-height/
