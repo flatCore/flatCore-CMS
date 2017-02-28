@@ -288,11 +288,17 @@ if($p == "password") {
 if($p == "404") {
 	header("HTTP/1.0 404 Not Found");
 	header("Status: 404 Not Found");
-	$smarty->assign('page_title', "404 Page Not Found");
-	$output = $smarty->fetch("404.tpl");
-	$smarty->assign('page_content', $output);
+	
+	if($page_contents['page_permalink'] == '') {
+	
+		$smarty->assign('page_title', "404 Page Not Found");
+		$output = $smarty->fetch("404.tpl");
+		$smarty->assign('page_content', $output);
+	}
+	
 	$show_404 = "false";
 }
+
 
 
 /**
@@ -308,6 +314,7 @@ if($show_404 == "true") {
 	$output = $smarty->fetch("404.tpl");
 	$smarty->assign('page_content', $output);
 }
+
 
 
 ?>

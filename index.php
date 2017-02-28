@@ -126,6 +126,15 @@ if($p == "" OR $p == "portal") {
 	list($page_contents,$fc_nav,$fc_prefs) = get_content('portal','page_sort');
 }
 
+/**
+ * 404 page
+ * if there is a page with permalink == 404, get the data
+ * if not, we use the 404.tpl file
+ */
+if($p == "404") {
+	list($page_contents,$fc_nav,$fc_prefs) = get_content('404','permalink');
+}
+
 
 /* if is set page_redirect, we can stop here and go straight to the desired location */
 if($page_contents['page_redirect'] != '') {
