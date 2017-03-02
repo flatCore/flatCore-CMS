@@ -142,6 +142,24 @@ ul.nav-tabs > li.active > a:hover {
 .dl-logfile:nth-child(even) {
   background: rgba(0, 0, 0, 0.1);
 }
+/* forms */
+textarea.form-control,
+input.form-control,
+input.form-control[readonly],
+select.form-control,
+.bootstrap-tagsinput {
+  background: #333;
+  color: #eee;
+  border-color: #111;
+}
+input.form-control[readonly] {
+  color: #aaa;
+}
+.input-group-addon {
+  background: #111;
+  color: #aaa;
+  border: 1px solid #111;
+}
 .btn-public,
 .btn-public.active {
   border-bottom: 1px solid #47a447;
@@ -199,9 +217,10 @@ fieldset {
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), 0%, rgba(0, 0, 0, 0), 100%);
 }
 fieldset legend {
-  margin-top: -22px;
+  margin-top: -25px;
   background: rgba(0, 0, 0, 0.7);
   border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  color: #bbb;
 }
 .formfooter {
   border: 1px solid #111;

@@ -314,6 +314,8 @@ $lang['prefs_mailer_adr'] = "Sender E-Mail";
 $lang['yes'] = "Ja";
 $lang['no'] = "Nein";
 
+$lang['labels'] = 'Labels';
+
 
 /* rights management */
 

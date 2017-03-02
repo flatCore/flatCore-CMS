@@ -16,6 +16,7 @@
 				<p class="text-muted small info-collapse info-show">
 					<span class="glyphicon glyphicon-sort-by-attributes"></span> {item-pagesort} | {item-lang}<br>
 					<span class="glyphicon glyphicon-file"></span> {item-template}<br>
+					{page_labels}
 				</p>
 				
 				<div class="controls-container">

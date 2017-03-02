@@ -7,7 +7,7 @@ $dbh = new PDO("sqlite:".CONTENT_DB);
 
 unset($result);
 /* $_SESSION[filter_string] was defined in inc.pages.php */
-$sql = "SELECT page_id, page_language, page_linkname, page_title, page_meta_description, page_sort, page_lastedit, page_lastedit_from, page_status, page_template, page_modul, page_authorized_users, page_permalink, page_redirect, page_redirect_code
+$sql = "SELECT page_id, page_language, page_linkname, page_title, page_meta_description, page_sort, page_lastedit, page_lastedit_from, page_status, page_template, page_modul, page_authorized_users, page_permalink, page_redirect, page_redirect_code, page_labels
 		FROM fc_pages
 		$_SESSION[filter_string]
 		ORDER BY page_language ASC, page_sort ASC, page_linkname ASC";
@@ -94,6 +94,7 @@ for($i=0;$i<$cnt_result;$i++) {
 	$page_redirect_code = $result[$i]['page_redirect_code'];
 	$page_modul = $result[$i]['page_modul'];
 	$page_cnt_comments = $result[$i]['cnt_comments'];
+	$page_labels = explode(',',$result[$i]['page_labels']);
 	
 	if($page_template == "use_standard") {
 		$show_template_name =  $lang['use_standard'];
@@ -114,7 +115,7 @@ for($i=0;$i<$cnt_result;$i++) {
 	}
 	
 	$points_of_page = substr_count($page_sort, '.');
-	$indent = ($points_of_page-1)*10 . 'px';
+	$indent = ($points_of_page)*10 . 'px';
 	$pi = get_page_impression($page_id);
 	
 	if($page_status == "public") {
@@ -158,6 +159,20 @@ for($i=0;$i<$cnt_result;$i++) {
 		$edit_button = "<a class='btn btn-sm btn-default' href='acp.php?tn=pages&sub=edit&editpage=$page_id' title='$lang[edit]'><span class='glyphicon glyphicon-edit'></span></a>";
 	}
 	
+	$label = '';
+	if($result[$i]['page_labels'] != '') {
+		foreach($page_labels as $page_label) {
+			
+			foreach($fc_labels as $l) {
+				if($page_label == $l['label_id']) {
+					$label_color = $l['label_color'];
+					$label_title = $l['label_title'];
+				}
+			}
+			
+			$label .= '<span class="label-dot" style="background-color:'.$label_color.';" title="'.$label_title.'"></span>';
+		}
+	}
 	
 	if($fc_mod_rewrite == "permalink") {
 		$frontend_link = "../$page_permalink";
@@ -184,13 +199,13 @@ for($i=0;$i<$cnt_result;$i++) {
 		'{status-label}','{item-linkname}','{item-title}',
 		'{item-mod}','{item-class}','{item-indent}','{edit-btn}','{duplicate-btn}',
 		'{comment-btn}','{item-permalink}','{item-lastedit}','{item-pagesort}','{item-template}',
-		'{item-redirect}','{frontend-link}','{item-description}','{item-lang}'
+		'{item-redirect}','{frontend-link}','{item-description}','{item-lang}', '{page_labels}'
 	);
 	$rplc = array(
 		$status_label,$page_linkname,$page_title,
 		$show_mod,$item_class,$indent,$edit_button,$duplicate_button,
 		$page_comments_link,$page_permalink,$last_edit,$page_sort, $show_template_name,
-		$page_redirect,$frontend_link,$page_description,$page_language
+		$page_redirect,$frontend_link,$page_description,$page_language,$label
 		);
 
 
@@ -246,6 +261,7 @@ for($i=0;$i<$cnt_result;$i++) {
 	$page_redirect = $result[$i]['page_redirect'];
 	$page_modul = $result[$i]['page_modul'];
 	$page_cnt_comments = $result[$i]['cnt_comments'];
+	$page_labels = explode(',',$result[$i]['page_labels']);
 		
 	if($page_template == "use_standard") {
 		$show_template_name =  "$lang[use_standard]";
@@ -316,6 +332,21 @@ for($i=0;$i<$cnt_result;$i++) {
 		$edit_button = "<a class='btn btn-sm btn-default' href='acp.php?tn=pages&sub=edit&editpage=$page_id' title='$lang[edit]'><span class='glyphicon glyphicon-edit'></span></a>";
 	}
 	
+	$label = '';
+	if($result[$i]['page_labels'] != '') {
+		foreach($page_labels as $page_label) {
+			
+			foreach($fc_labels as $l) {
+				if($page_label == $l['label_id']) {
+					$label_color = $l['label_color'];
+					$label_title = $l['label_title'];
+				}
+			}
+			
+			$label .= '<span class="label-dot" style="background-color:'.$label_color.';" title="'.$label_title.'"></span>';
+		}
+	}
+	
 	if($fc_mod_rewrite == "permalink") {
 		$frontend_link = "../$page_permalink";
 	} else {
@@ -341,13 +372,13 @@ for($i=0;$i<$cnt_result;$i++) {
 		'{status-label}','{item-linkname}','{item-title}',
 		'{item-mod}','{item-class}','{item-indent}','{edit-btn}','{duplicate-btn}',
 		'{comment-btn}','{item-permalink}','{item-lastedit}','{item-pagesort}','{item-template}',
-		'{item-redirect}','{frontend-link}','{item-description}','{item-lang}'
+		'{item-redirect}','{frontend-link}','{item-description}','{item-lang}', '{page_labels}'
 	);
 	$rplc = array(
 		$status_label,$page_linkname,$page_title,
 		$show_mod,$item_class,$indent,$edit_button,$duplicate_button,
 		$page_comments_link,$page_permalink,$last_edit,$page_sort, $show_template_name,
-		$page_redirect,$frontend_link,$page_description,$page_language
+		$page_redirect,$frontend_link,$page_description,$page_language,$label
 		);
 
 

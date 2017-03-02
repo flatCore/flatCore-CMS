@@ -55,7 +55,8 @@ $pdo_fields = array(
 	'page_modul' => 'STR',
 	'page_modul_query' => 'STR',
 	'page_authorized_users' => 'STR',
-	'page_version' => 'STR'
+	'page_version' => 'STR',
+	'page_labels' => 'STR'
 );
 
 $pdo_fields_new = array(
@@ -87,7 +88,8 @@ $pdo_fields_new = array(
 	'page_modul' => 'STR',
 	'page_modul_query' => 'STR',
 	'page_authorized_users' => 'STR',
-	'page_version' => 'STR'
+	'page_version' => 'STR',
+	'page_labels' => 'STR'
 );
 	
 $pdo_fields_cache = array(
@@ -121,7 +123,8 @@ $pdo_fields_cache = array(
 	'page_modul_query' => 'STR',
 	'page_authorized_users' => 'STR',
 	'page_cache_type' => 'STR',
-	'page_version' => 'STR'
+	'page_version' => 'STR',
+	'page_labels' => 'STR'
 );
 
 
@@ -230,6 +233,15 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$string_authorized_admins = "";
 	}
 	
+	/* labels */
+	$arr_labels = $_POST['set_page_labels'];
+	if(is_array($arr_labels)) {
+		sort($arr_labels);
+		$string_labels = implode(",", $arr_labels);
+	} else {
+		$string_labels = "";
+	}	
+	
 	// template
 	$select_template = explode("<|-|>", $_POST['select_template']);
 	$page_template 			= $select_template[0];
@@ -254,6 +266,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		
 		$sth->bindParam(':page_sort', $page_sort, PDO::PARAM_STR);
 		$sth->bindParam(':page_usergroup', $string_usergroup, PDO::PARAM_STR);
+		$sth->bindParam(':page_labels', $string_labels, PDO::PARAM_STR);
 		$sth->bindParam(':page_lastedit', $page_lastedit, PDO::PARAM_INT);
 		$sth->bindParam(':page_lastedit_from', $_SESSION[user_nick], PDO::PARAM_STR);
 		$sth->bindParam(':page_template', $page_template, PDO::PARAM_STR);
@@ -287,6 +300,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		
 		$std->bindParam(':page_sort', $page_sort, PDO::PARAM_STR);
 		$std->bindParam(':page_usergroup', $string_usergroup, PDO::PARAM_STR);
+		$sth->bindParam(':page_labels', $string_labels, PDO::PARAM_STR);
 		$std->bindParam(':page_lastedit', $page_lastedit, PDO::PARAM_INT);
 		$std->bindParam(':page_lastedit_from', $_SESSION[user_nick], PDO::PARAM_STR);
 		$std->bindParam(':page_template', $page_template, PDO::PARAM_STR);
@@ -315,6 +329,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		generate_bindParam_str($pdo_fields,$sth);
 		
 		$sth->bindParam(':page_usergroup', $string_usergroup, PDO::PARAM_STR);
+		$sth->bindParam(':page_labels', $string_labels, PDO::PARAM_STR);
 		$sth->bindParam(':page_lastedit', $page_lastedit, PDO::PARAM_INT);
 		$sth->bindParam(':page_lastedit_from', $_SESSION[user_nick], PDO::PARAM_STR);
 		$sth->bindParam(':page_template', $page_template, PDO::PARAM_STR);
@@ -351,6 +366,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		
 		$std->bindParam(':page_sort', $page_sort, PDO::PARAM_STR);
 		$std->bindParam(':page_usergroup', $string_usergroup, PDO::PARAM_STR);
+		$sth->bindParam(':page_labels', $string_labels, PDO::PARAM_STR);
 		$std->bindParam(':page_lastedit', $page_lastedit, PDO::PARAM_INT);
 		$std->bindParam(':page_lastedit_from', $_SESSION[user_nick], PDO::PARAM_STR);
 		$std->bindParam(':page_template', $page_template, PDO::PARAM_STR);
@@ -383,6 +399,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$std->bindParam(':page_id_original', $page_id_original, PDO::PARAM_STR);
 		$std->bindParam(':page_sort', $page_sort, PDO::PARAM_STR);
 		$std->bindParam(':page_usergroup', $string_usergroup, PDO::PARAM_STR);
+		$sth->bindParam(':page_labels', $string_labels, PDO::PARAM_STR);
 		$std->bindParam(':page_lastedit', $page_lastedit, PDO::PARAM_INT);
 		$std->bindParam(':page_lastedit_from', $_SESSION[user_nick], PDO::PARAM_STR);
 		$std->bindParam(':page_template', $page_template, PDO::PARAM_STR);

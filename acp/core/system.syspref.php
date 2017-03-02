@@ -414,8 +414,8 @@ echo '</fieldset>';
 
 /* Labels */
 
-echo"<fieldset>";
-echo"<legend>Labels</legend>";
+echo '<fieldset>';
+echo '<legend>'.$lang['labels'].'</legend>';
 
 $fc_labels = fc_get_labels();
 $cnt_labels = count($fc_labels);

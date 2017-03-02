@@ -479,7 +479,42 @@ echo '<div id="admins" class="collapse">';
 echo $checkbox_set_authorized_admins;
 echo '</div>';
 echo '</div>';
+
+
+
+/* select labels */
+
+
+$cnt_labels = count($fc_labels);
+$arr_checked_labels = explode(",", $page_labels);
+
+for($i=0;$i<$cnt_labels;$i++) {
+	$label_title = $fc_labels[$i]['label_title'];
+	$label_id = $fc_labels[$i]['label_id'];
+	$label_color = $fc_labels[$i]['label_color'];
+	
+  if(in_array("$label_id", $arr_checked_labels)) {
+		$checked_label = "checked";
+	} else {
+		$checked_label = "";
+	}
+	
+	$checkbox_set_labels .= '<div class="checkbox"><label>';
+ 	$checkbox_set_labels .= "<input type='checkbox' $checked_label name='set_page_labels[]' value='$label_id'> $label_title";
+ 	$checkbox_set_labels .= '</label></div>';
+	
+}
+
+
+echo '<div class="well well-sm">';
+echo '<a href="#" data-toggle="collapse" data-target="#labels">'.$lang['labels'].'</a>';
+echo '<div id="labels" class="collapse">';
+echo $checkbox_set_labels;
+echo '</div>';
+echo '</div>';
+
 echo '</div>'; // form-group
+
 
 
 echo '<input type="hidden" name="page_version" value="'.$page_version.'">';
