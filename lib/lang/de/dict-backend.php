@@ -308,6 +308,17 @@ $lang['rss_offset'] = "RSS Zeitpuffer (Sekunden)";
 
 $lang['prefs_mailer_name'] = "Absender Name";
 $lang['prefs_mailer_adr'] = "E-Mail Adresse";
+$lang['prefs_mail_type'] = "Mail Typ";
+$lang['prefs_mail_type_smtp'] = "SMTP verwenden";
+$lang['prefs_mail_type_mail'] = "Die PHP Funktion mail() verwenden";
+$lang['prefs_mail_return_path'] = "Return Path";
+$lang['prefs_mail_use_return_path'] = "Den return-path verwenden.";
+$lang['prefs_mailer_smtp_host'] = "SMTP Host";
+$lang['prefs_mailer_smtp_port'] = "SMTP Port";
+$lang['prefs_mailer_smtp_encryption'] = "Verschlüsselung";
+$lang['prefs_mailer_smtp_authentication'] = "Authentifizierung";
+$lang['prefs_mailer_smtp_username'] = "Username";
+$lang['prefs_mailer_smtp_password'] = "Passwort";
 
 $lang['yes'] = "Ja";
 $lang['no'] = "Nein";

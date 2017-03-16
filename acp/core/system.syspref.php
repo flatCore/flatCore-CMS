@@ -17,7 +17,14 @@ if(isset($_POST['save_prefs_contacts'])) {
 	
 		$pdo_fields = array(
 		'prefs_mailer_adr' => 'STR',
-		'prefs_mailer_name' => 'STR'
+		'prefs_mailer_name' => 'STR',
+		'prefs_mailer_type' => 'STR',
+		'prefs_smtp_host' => 'STR',
+		'prefs_smtp_port' => 'STR',
+		'prefs_smtp_encryption' => 'STR',
+		'prefs_smtp_username' => 'STR',
+		'prefs_smtp_psw' => 'STR'
+		
 	);
 	
 	$dbh = new PDO("sqlite:".CONTENT_DB);
@@ -25,6 +32,12 @@ if(isset($_POST['save_prefs_contacts'])) {
 	$sth = $dbh->prepare($sql);
 	$sth->bindParam(':prefs_mailer_adr', $_POST['prefs_mailer_adr'], PDO::PARAM_STR);
 	$sth->bindParam(':prefs_mailer_name', $_POST['prefs_mailer_name'], PDO::PARAM_STR);
+	$sth->bindParam(':prefs_mailer_type', $_POST['prefs_mailer_type'], PDO::PARAM_STR);
+	$sth->bindParam(':prefs_smtp_host', $_POST['prefs_smtp_host'], PDO::PARAM_STR);
+	$sth->bindParam(':prefs_smtp_port', $_POST['prefs_smtp_port'], PDO::PARAM_STR);
+	$sth->bindParam(':prefs_smtp_encryption', $_POST['prefs_smtp_encryption'], PDO::PARAM_STR);
+	$sth->bindParam(':prefs_smtp_username', $_POST['prefs_smtp_username'], PDO::PARAM_STR);
+	$sth->bindParam(':prefs_smtp_psw', $_POST['prefs_smtp_psw'], PDO::PARAM_STR);
 	$cnt_changes = $sth->execute();
 	$dbh = null;
 }
@@ -311,13 +324,43 @@ echo '</fieldset>';
 echo"<fieldset>";
 echo"<legend>System E-Mail</legend>";
 echo '<form action="acp.php?tn=system&sub=sys_pref" method="POST" class="form-horizontal">';
+
+if($prefs_mailer_type == '') {
+	$prefs_mailer_type = 'mail';
+}
+
 $prefs_mail_name_input = "<input class='form-control' type='text' name='prefs_mailer_name' value='$prefs_mailer_name'>";
 $prefs_mail_adr_input = "<input class='form-control' type='text' name='prefs_mailer_adr' value='$prefs_mailer_adr'>";
+$prefs_mail_smtp_host_input = "<input class='form-control' type='text' name='prefs_smtp_host' value='$prefs_smtp_host'>";
+$prefs_mail_smtp_port_input = "<input class='form-control' type='text' name='prefs_smtp_port' value='$prefs_smtp_port'>";
+$prefs_mail_smtp_encryption_input = "<input class='form-control' type='text' name='prefs_smtp_encryption' value='$prefs_smtp_encryption'>";
+$prefs_mail_smtp_username_input = "<input class='form-control' type='text' name='prefs_smtp_username' value='$prefs_smtp_username'>";
+$prefs_mail_smtp_psw_input = "<input class='form-control' type='password' name='prefs_smtp_psw' value='$prefs_smtp_psw'>";
+
+$prefs_mail_type_input  = '<div class="radio">';
+$prefs_mail_type_input .= '<label><input type="radio" name="prefs_mailer_type" value="smtp" '.($prefs_mailer_type == "smtp" ? 'checked' :'').'>'.$lang['prefs_mail_type_smtp'].'<label>';
+$prefs_mail_type_input .= '</div>';
+$prefs_mail_type_input .= '<div class="radio">';
+$prefs_mail_type_input .= '<label><input type="radio" name="prefs_mailer_type" value="mail" '.($prefs_mailer_type == "mail" ? 'checked' :'').'>'.$lang['prefs_mail_type_mail'].'<label>';
+$prefs_mail_type_input .= '</div>';
+
+
 echo tpl_form_control_group('',$lang['prefs_mailer_name'],$prefs_mail_name_input);
 echo tpl_form_control_group('',$lang['prefs_mailer_adr'],$prefs_mail_adr_input);
+echo tpl_form_control_group('',$lang['prefs_mail_type'],$prefs_mail_type_input);
+
+echo tpl_form_control_group('','','<p>SMTP</p>');
+
+echo tpl_form_control_group('',$lang['prefs_mailer_smtp_host'],$prefs_mail_smtp_host_input);
+echo tpl_form_control_group('',$lang['prefs_mailer_smtp_port'],$prefs_mail_smtp_port_input);
+echo tpl_form_control_group('',$lang['prefs_mailer_smtp_encryption'],$prefs_mail_smtp_encryption_input);
+echo tpl_form_control_group('',$lang['prefs_mailer_smtp_username'],$prefs_mail_smtp_username_input);
+echo tpl_form_control_group('',$lang['prefs_mailer_smtp_password'],$prefs_mail_smtp_psw_input);
+
 echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_contacts' value='$lang[save]'>");
+
 echo '</form>';
-echo"</fieldset>";
+echo '</fieldset>';
 
 
 /* User Preferences */

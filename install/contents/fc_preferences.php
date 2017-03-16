@@ -26,6 +26,14 @@ $cols = array(
   "prefs_xml_sitemap" => 'VARCHAR',
   "prefs_mailer_adr" => 'VARCHAR',
   "prefs_mailer_name" => 'VARCHAR',
+  "prefs_mailer_type" => 'VARCHAR',
+  "prefs_mailer_return_path" => 'VARCHAR',
+  "prefs_smtp_host" => 'VARCHAR',
+  "prefs_smtp_port" => 'VARCHAR',
+  "prefs_smtp_encryption" => 'VARCHAR',
+  "prefs_smtp_authentication" => 'VARCHAR',
+  "prefs_smtp_username" => 'VARCHAR',
+  "prefs_smtp_psw" => 'VARCHAR',
   "prefs_rss_time_offset" => 'VARCHAR'
   
   );
