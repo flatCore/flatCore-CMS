@@ -87,6 +87,7 @@ function fc_get_images_data($image,$parameters=NULL) {
 	$tpl = str_replace('{$image_credits}', $imageData['media_credits'], $tpl);
 	$tpl = str_replace('{$image_priority}', $imageData['media_priority'], $tpl);
 	$tpl = str_replace('{$image_link_class}', $aclass, $tpl);
+	$tpl = str_replace('{$image_class}', $iclass, $tpl);
 	
 	return $tpl;
 	

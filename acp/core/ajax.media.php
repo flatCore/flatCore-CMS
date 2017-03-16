@@ -67,6 +67,7 @@ $media_data = fc_get_media_data($realpath,$set_lang);
 
 $form_tpl = str_replace('{form_action}', "#", $form_tpl);
 $form_tpl = str_replace('{filename}', $media_filename, $form_tpl);
+$form_tpl = str_replace('{basename}', basename($media_filename), $form_tpl);
 $form_tpl = str_replace('{realpath}', $realpath, $form_tpl);
 $form_tpl = str_replace('{showpath}', $abs_path, $form_tpl);
 $form_tpl = str_replace('{filesize}', $filesize, $form_tpl);
