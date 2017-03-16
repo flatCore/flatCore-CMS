@@ -16,6 +16,7 @@ $cols = array(
   "prefs_imagesuffix" => 'VARCHAR',
   "prefs_maximagewidth" => 'VARCHAR',
   "prefs_maximageheight" => 'VARCHAR',
+  "prefs_uploads_remain_unchanged" => 'VARCHAR',
   "prefs_filesuffix" => 'VARCHAR',
   "prefs_maxfilesize" => 'VARCHAR',
   "prefs_showfilesize" => 'VARCHAR',

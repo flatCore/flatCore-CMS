@@ -14,6 +14,7 @@ $max_w = (int) $_REQUEST['w']; // max image width
 $max_h = (int) $_REQUEST['h']; // max image height
 $max_fz = (int) $_REQUEST['fz']; // max filesize
 
+
 if($_REQUEST['d'] == 'images') {
 	$destination = '../../'.$img_path;
 } else {
@@ -30,7 +31,12 @@ if($_REQUEST['upload_type'] == 'images') {
 		$img_name = clean_filename($prefix,$suffix);
 		$target = "$destination/$img_name";
 		fc_write_media_data_name("$destination/$img_name");
-		$target = resize_image($tmp_name,$target, $max_w,$max_h,90);
+		
+		if($_REQUEST['unchanged'] == 'yes') {
+			@move_uploaded_file($tmp_name, $target);
+		} else {
+			$target = resize_image($tmp_name,$target, $max_w,$max_h,90);
+		}
 
 	}
 }

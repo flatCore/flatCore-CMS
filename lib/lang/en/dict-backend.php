@@ -294,6 +294,7 @@ $lang['f_prefs_filesuffix'] = "Suffix (other)";
 $lang['f_prefs_maxfilesize'] = "Max. filesize (KB)";
 $lang['f_prefs_maximage'] = "Max. size (Pixel)";
 $lang['f_prefs_showfilesize'] = "Show filesize";
+$lang['f_prefs_uploads_remain_unchanged'] = "Let uploads unchanged";
 
 $lang['f_prefs_active_template'] = "Active Theme";
 $lang['f_prefs_userstyles'] = "Allow selection by visitor";

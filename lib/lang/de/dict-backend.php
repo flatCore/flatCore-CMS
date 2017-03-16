@@ -292,6 +292,7 @@ $lang['f_prefs_filesuffix'] = "Endungen (sonstige Dateien)";
 $lang['f_prefs_maxfilesize'] = "Max. Dateigröße (KB)";
 $lang['f_prefs_maximage'] = "Max. Größe (Pixel)";
 $lang['f_prefs_showfilesize'] = "Dateigrößen anzeigen";
+$lang['f_prefs_uploads_remain_unchanged'] = "Dateien unverändert hochladen";
 
 $lang['f_prefs_active_template'] = "Ausgewähltes Theme";
 $lang['f_prefs_userstyles'] = "Auswahl durch Besucher erlauben";

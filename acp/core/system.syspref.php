@@ -116,13 +116,20 @@ if(isset($_POST['save_prefs_upload'])) {
 		'prefs_maximageheight' => 'INT',
 		'prefs_filesuffix' => 'STR',
 		'prefs_maxfilesize' => 'INT',
-		'prefs_showfilesize' => 'STR'
+		'prefs_showfilesize' => 'STR',
+		'prefs_uploads_remain_unchanged' => 'STR'
 	);
 
 	if(isset($_POST['prefs_showfilesize'])) {
 		$prefs_showfilesize = 'yes';
 	} else {
 		$prefs_showfilesize = 'no';
+	}
+	
+	if(isset($_POST['prefs_uploads_remain_unchanged'])) {
+		$prefs_upload_unchanged = 'yes';
+	} else {
+		$prefs_upload_unchanged = 'no';
 	}	
 	
 	$dbh = new PDO("sqlite:".CONTENT_DB);
@@ -130,6 +137,7 @@ if(isset($_POST['save_prefs_upload'])) {
 	$sth = $dbh->prepare($sql);
 	generate_bindParam_str($pdo_fields,$sth);
 	$sth->bindParam(':prefs_showfilesize', $prefs_showfilesize, PDO::PARAM_STR);
+	$sth->bindParam(':prefs_uploads_remain_unchanged', $prefs_upload_unchanged, PDO::PARAM_STR);
 	$cnt_changes = $sth->execute();
 	$dbh = null;
 }
@@ -408,11 +416,16 @@ echo tpl_form_control_group('',$lang['f_prefs_maximage'],"$prefs_maximage_input"
 echo tpl_form_control_group('',$lang['f_prefs_filesuffix'],"<input class='form-control' type='text' name='prefs_filesuffix' value='$prefs_filesuffix'>");
 echo tpl_form_control_group('',$lang['f_prefs_maxfilesize'],"<input class='form-control' type='text' name='prefs_maxfilesize' value='$prefs_maxfilesize'>");
 
+$toggle_btn_upload_unchanged  = '<div class="make-switch" data-on="success" data-on-label="'.$lang['yes'].'" data-off-label="'.$lang['no'].'">';
+$toggle_btn_upload_unchanged .= '<input type="checkbox" name="prefs_uploads_remain_unchanged" '.($prefs_uploads_remain_unchanged == "yes" ? 'checked' :'').'>';
+$toggle_btn_upload_unchanged .= '</div>';
+echo tpl_form_control_group('',$lang['f_prefs_uploads_remain_unchanged'],$toggle_btn_upload_unchanged);
+
 $toggle_btn_showfilesize  = '<div class="make-switch" data-on="success" data-on-label="'.$lang['yes'].'" data-off-label="'.$lang['no'].'">';
 $toggle_btn_showfilesize .= '<input type="checkbox" name="prefs_showfilesize" '.($prefs_showfilesize == "yes" ? 'checked' :'').'>';
 $toggle_btn_showfilesize .= '</div>';
 
-echo tpl_form_control_group('',$lang['f_prefs_showfilesize'],$toggle_btn_showfilesize);
+//echo tpl_form_control_group('',$lang['f_prefs_showfilesize'],$toggle_btn_showfilesize);
 echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_upload' value='$lang[save]'>");
 
 echo '</form>';
