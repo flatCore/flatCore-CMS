@@ -80,7 +80,7 @@ if(isset($query)) {
     	}
     	
 			if(is_file('modules/'.$mod_name.'/global/index.php')) {
-				include('modules/'.$mod_name.'/global/index.php');
+				include 'modules/'.$mod_name.'/global/index.php';
   		}
 			
 		}
@@ -180,10 +180,14 @@ if($page_contents['page_template_layout'] == "use_standard") {
 	$fc_template_layout = $prefs_template_layout;
 }
 
+/* page has its own theme/template */
 if(is_dir('styles/'.$page_contents['page_template'].'/templates/')) {
 	$fc_template = $page_contents['page_template'];
 	$fc_template_layout = $page_contents['page_template_layout'];
 }
+
+/* module has its own theme/template */
+//echo $page_contents['page_modul'];
 
 $smarty->assign('fc_template', $fc_template);
 $smarty->assign('fc_template_layout', $fc_template_layout);

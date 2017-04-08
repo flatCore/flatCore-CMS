@@ -329,9 +329,9 @@ echo '</fieldset>';
 
 /* contacts */
 
-echo"<fieldset>";
-echo"<legend>System E-Mail</legend>";
-echo '<form action="acp.php?tn=system&sub=sys_pref" method="POST" class="form-horizontal">';
+echo '<fieldset id="mails">';
+echo '<legend>System E-Mail</legend>';
+echo '<form action="acp.php?tn=system&sub=sys_pref#mails" method="POST" class="form-horizontal">';
 
 if($prefs_mailer_type == '') {
 	$prefs_mailer_type = 'mail';
@@ -368,6 +368,46 @@ echo tpl_form_control_group('',$lang['prefs_mailer_smtp_password'],$prefs_mail_s
 echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_contacts' value='$lang[save]'>");
 
 echo '</form>';
+
+echo '<div class="well well-sm">';
+echo '<a href="acp.php?tn=system&sub=sys_pref&sendtest=1#mails" class="btn btn-default">'.$lang['prefs_mailer_send_test'].'</a> -> '.$prefs_mailer_adr;
+
+if($_GET['sendtest'] == 1) {
+	require_once("../lib/Swift/lib/swift_required.php");
+	
+	if($prefs_mailer_type == 'smtp') {
+		$trans = Swift_SmtpTransport::newInstance("$prefs_smtp_host", "$prefs_smtp_port")
+			->setUsername("$prefs_smtp_username")
+			->setPassword("$prefs_smtp_psw");
+			
+		if($prefs_mail_smtp_encryption_input != '') {
+			$trans ->setEncryption($pb_prefs['prefs_smtp_encryption']);
+		}
+	} else {
+		$trans = Swift_MailTransport::newInstance();
+	}
+	
+
+	$mailer = Swift_Mailer::newInstance($trans);
+	$message = Swift_Message::newInstance('flatCore Test')
+			->setFrom(array($prefs_mailer_adr => $prefs_mailer_name))
+			->setTo(array($prefs_mailer_adr => $prefs_mailer_name))
+			->setBody("flatCore Test (via $prefs_mailer_type)");
+			
+	if(!$mailer->send($message, $failures)) {
+		echo '<div class="alert alert-danger">';
+	  echo 'Failures:<br>';
+	  print_r($failures);
+	  echo '</div>';
+	} else {
+		echo '<p class="alert alert-success"><span class="glyphicon glyphicon-ok"></span> '.$lang['prefs_mailer_send_test_success'].'</p>';
+	}
+	
+}
+
+echo '</div>';
+
+
 echo '</fieldset>';
 
 

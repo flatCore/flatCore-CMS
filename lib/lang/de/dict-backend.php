@@ -320,6 +320,8 @@ $lang['prefs_mailer_smtp_encryption'] = "Verschlüsselung";
 $lang['prefs_mailer_smtp_authentication'] = "Authentifizierung";
 $lang['prefs_mailer_smtp_username'] = "Username";
 $lang['prefs_mailer_smtp_password'] = "Passwort";
+$lang['prefs_mailer_send_test'] = "Test E-Mail versenden";
+$lang['prefs_mailer_send_test_success'] = "The email has been sent";
 
 $lang['yes'] = "Ja";
 $lang['no'] = "Nein";
