@@ -167,6 +167,7 @@ $kw_form  = '<form action="acp.php?tn=filebrowser&sub=browse&d='.$disk.'" method
 $kw_form .= '<div class="input-group">';
 $kw_form .= '<span class="input-group-addon"><span class="glyphicon glyphicon-filter"></span></span>';
 $kw_form .= '<input class="form-control input-sm" type="text" name="media_filter" value="" placeholder="Filter">';
+$kw_form .= '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 $kw_form .= '</div>';
 $kw_form .= '</form>';
 
@@ -386,6 +387,7 @@ for($i=$start;$i<$end;$i++) {
 	$tpl_list = str_replace('{filesize}', "$filesize", $tpl_list);
 	$tpl_list = str_replace('{edit_button}', "$edit_btn", $tpl_list);
 	$tpl_list = str_replace('{delete_button}', "$delete_btn", $tpl_list);
+	
 	
 	echo $tpl_list;
 

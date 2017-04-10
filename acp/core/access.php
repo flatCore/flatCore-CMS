@@ -89,4 +89,19 @@ if($_SESSION['user_class'] != "administrator"){
 	die("PERMISSION DENIED!");
 }
 
+
+/* check token */
+
+if(!isset($_SESSION['token'])) {
+	die('Error: CSRF Token is invalid');
+}
+
+
+if(sizeof($_POST)>1) {
+	if($_POST['csrf_token'] !== $_SESSION['token']) {
+		die('Error: CSRF Token is invalid');	
+	}
+}
+
+
 ?>

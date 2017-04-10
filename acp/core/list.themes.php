@@ -82,9 +82,11 @@ $select_prefs_template .= '</select>';
 echo tpl_form_control_group('',$lang['f_prefs_active_template'],$select_prefs_template);
 
 
-echo"<div class='formfooter'>";
-echo"<input type='submit' class='btn btn-success' name='saveDesign' value='$lang[save]'>";
-echo"</div>";
+echo '<div class="formfooter">';
+echo '<input type="submit" class="btn btn-success" name="saveDesign" value="'.$lang['save'].'">';
+echo '</div>';
+
+echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 
 echo '</fieldset>';
 echo '</form>';

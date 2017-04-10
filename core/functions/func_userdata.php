@@ -246,6 +246,11 @@ function fc_start_user_session($ud) {
 	$_SESSION['user_lastname'] = $ud['user_lastname'];
 	$_SESSION['user_hash'] = md5($ud['user_nick']);
 	
+	/* CSRF Protection */
+	$token = md5(uniqid(rand(), TRUE));
+	$_SESSION['token']      = $token;
+	$_SESSION['token_time'] = time();
+	
 	$arr_drm = explode("|", $ud['user_drm']);
 	
 	if($arr_drm[0] == "drm_acp_pages")	{  $_SESSION['acp_pages'] = "allowed";  }

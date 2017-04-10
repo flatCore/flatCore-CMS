@@ -100,6 +100,7 @@ echo tpl_form_control_group('',$lang['page_thumbnail'],$select_prefs_thumbnail);
 
 echo"<div class='formfooter'>";
 echo"<input type='submit' class='btn btn-success' name='saveDesign' value='$lang[save]'>";
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo"</div>";
 
 echo '</fieldset>';

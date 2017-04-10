@@ -277,6 +277,7 @@ echo tpl_form_control_group('',$lang['f_prefs_pagetitle'],$prefs_pagetitle_input
 $prefs_pagesubtitle_input = "<input class='form-control' type='text' name='prefs_pagesubtitle' value='$prefs_pagesubtitle'>";
 echo tpl_form_control_group('',$lang['f_prefs_pagesubtitle'],$prefs_pagesubtitle_input);
 echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_descriptions' value='$lang[save]'>");
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
 
@@ -323,6 +324,7 @@ echo tpl_form_control_group('',$lang['page_favicon'],$select_prefs_favicon);
 
 
 echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_thumbnail' value='$lang[save]'>");
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
 
@@ -366,7 +368,7 @@ echo tpl_form_control_group('',$lang['prefs_mailer_smtp_username'],$prefs_mail_s
 echo tpl_form_control_group('',$lang['prefs_mailer_smtp_password'],$prefs_mail_smtp_psw_input);
 
 echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_contacts' value='$lang[save]'>");
-
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 
 echo '<div class="well well-sm">';
@@ -427,7 +429,7 @@ $toggle_btn_loginform .= '</div>';
 echo tpl_form_control_group('',$lang['f_prefs_showloginform'],$toggle_btn_loginform);
 
 echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_user' value='$lang[save]'>");
-
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
 
@@ -467,7 +469,7 @@ $toggle_btn_showfilesize .= '</div>';
 
 //echo tpl_form_control_group('',$lang['f_prefs_showfilesize'],$toggle_btn_showfilesize);
 echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_upload' value='$lang[save]'>");
-
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
 
@@ -481,7 +483,7 @@ $ta_pagesglobalhead = '<textarea name="prefs_pagesglobalhead" class="aceEditor_h
 $ta_pagesglobalhead .= '<div id="HTMLeditor"></div>';
 echo tpl_form_control_group('','&lt;head&gt;<br>...<br>&lt;/head&gt;',"$ta_pagesglobalhead");
 echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_head' value='$lang[save]'>");
-
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
 
@@ -503,6 +505,7 @@ echo tpl_form_control_group('',$lang['activate_xml_sitemap'],$toggle_btn_sitemap
 
 echo tpl_form_control_group('',$lang['rss_offset'],"<input class='form-control' type='text' name='prefs_rss_time_offset' value='$prefs_rss_time_offset'>");
 echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_misc' value='$lang[save]'>");
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 
 echo '</form>';
 echo '</fieldset>';
@@ -537,6 +540,7 @@ for($i=0;$i<$cnt_labels;$i++) {
 	echo '<div class="btn-group" role="group">';
 	echo '<button type="submit" name="update_label" class="btn btn-default"><span class="glyphicon glyphicon-refresh"></span></button>';
 	echo '<button type="submit" name="delete_label" class="btn btn-danger"><span class="glyphicon glyphicon glyphicon-trash"></span></button>';
+	echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 	echo '</div>';
 	echo '</div>';
 	echo '</form><br>';
@@ -562,6 +566,7 @@ echo '<input class="form-control" type="text" name="label_description" value="">
 echo '</div>';
 echo '<div class="col-md-2">';
 echo '<br><button type="submit" name="new_label" class="btn btn-success">'.$lang['save'].'</button>';
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</div>';
 echo '</div>';
 echo '</form>';

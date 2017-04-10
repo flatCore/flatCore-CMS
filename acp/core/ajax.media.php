@@ -97,6 +97,7 @@ $form_tpl = str_replace('{preview}', $preview_src, $form_tpl);
 $form_tpl = str_replace('{save}', $lang['save'], $form_tpl);
 $form_tpl = str_replace('{set_lang}', $set_lang, $form_tpl);
 $form_tpl = str_replace('{lang_switch}', $langSwitch, $form_tpl);
+$form_tpl = str_replace('{token}',$_SESSION['token'],$form_tpl);
 echo $form_tpl;
 
 

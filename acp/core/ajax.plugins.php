@@ -10,10 +10,16 @@ define("FC_ROOT", str_replace("/acp","",FC_INC_DIR));
 define("IMAGES_FOLDER", "../$img_path");
 define("FILES_FOLDER", "../$files_path");
 
+if(!empty($_POST['data'][1]['value'])) {
+	$_POST['csrf_token'] = $_POST['data'][1]['value'];
+}
+
 require_once('access.php');
 require_once('functions.php');
 require_once('database.php');
 require('../../lib/lang/'.$_SESSION['lang'].'/dict-backend.php');
+
+$form_tpl = file_get_contents('../templates/plugin-edit-form.tpl');
 
 if($_POST['action'] == "btnSave") {
 	
@@ -21,7 +27,7 @@ if($_POST['action'] == "btnSave") {
 	
 	if(is_file('../../'.FC_CONTENT_DIR.'/plugins/'.$file)) {
 		$filepath = '../../'.FC_CONTENT_DIR.'/plugins/'.$file;
-		$content = $_POST['data'][2]['value'];
+		$content = $_POST['data'][3]['value'];
 		file_put_contents($filepath, $content, LOCK_EX);
 	}
 	
@@ -54,7 +60,6 @@ if(is_file('../../'.FC_CONTENT_DIR.'/plugins/'.$plugin)) {
 }
 
 
-$form_tpl = file_get_contents('../templates/plugin-edit-form.tpl');
 
 
 $form_tpl = str_replace('{form_action}', "#", $form_tpl);
@@ -66,6 +71,7 @@ $form_tpl = str_replace('{plugin_src}', $plugin_src, $form_tpl);
 $form_tpl = str_replace('{save}', $lang['save'], $form_tpl);
 $form_tpl = str_replace('{delete}', $lang['delete'], $form_tpl);
 $form_tpl = str_replace('{message}', $message, $form_tpl);
+$form_tpl = str_replace('{token}', $_SESSION['token'], $form_tpl);
 
 echo $form_tpl;
 

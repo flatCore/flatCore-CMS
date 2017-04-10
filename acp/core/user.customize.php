@@ -17,7 +17,7 @@ require("core/access.php");
  * NO SQLITE SUPPORT FOR THE MOMENT
  */
  
-if($_POST[delete_field]) {
+if($_POST['delete_field']) {
 	$del_field = strip_tags($_POST[del_field]);
 	
 	if(substr($del_field,0,7) == "custom_") {
@@ -43,15 +43,15 @@ if($_POST[delete_field]) {
  * Add new Custom Column
  */
 
-if($_POST[add_field]) {
+if($_POST['add_field']) {
 	
-	$col = clean_vars($_POST[field_name]);
+	$col = clean_vars($_POST['field_name']);
 	if($col == "") {
 		/* if there is no name given, we use the timestamp */
 		$col = time();
 	}
 	
-	switch($_POST[field_type]) {
+	switch($_POST['field_type']) {
 		case 'one':
 			$type = "one";
 			break;
@@ -88,7 +88,7 @@ echo '<div class="row"><div class="col-md-12">';
 
 
 echo '<fieldset>';
-echo '<legend>' . $lang[add_custom_field] . '</legend>';
+echo '<legend>' . $lang['add_custom_field'] . '</legend>';
 
 echo '<form action="acp.php?tn=user&sub=customize" method="POST" class="form-horizontal">';
 
@@ -104,7 +104,7 @@ echo tpl_form_control_group('','',$radio_field_type);
 echo"<div class='formfooter'>";
 echo"<input type='submit' class='btn btn-success' name='add_field' value='$lang[save]'>";
 echo"</div>";
-
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
 
@@ -116,7 +116,7 @@ echo '</fieldset>';
 
 
 echo '<fieldset>';
-echo '<legend>' . $lang[delete_custom_field] . '</legend>';
+echo '<legend>' . $lang['delete_custom_field'] . '</legend>';
 
 echo '<form action="acp.php?tn=user&sub=customize" class="form-horizontal" method="POST">';
 
@@ -124,9 +124,9 @@ $result = get_custom_user_fields();
 $cnt_result = count($result);
 
 if($cnt_result < 1) {
-	echo '<div class="alert alert-info">' . $lang[no_custom_fields] . '</div>';
+	echo '<div class="alert alert-info">' . $lang['no_custom_fields'] . '</div>';
 } else {
-	echo '<div class="alert">' . $lang[delete_custom_field_desc] . '</div>';
+	echo '<div class="alert">' . $lang['delete_custom_field_desc'] . '</div>';
 
 	$select_del_field = '<select name="del_field" class="form-control">';
 	for($i=0;$i<$cnt_result;$i++) {
@@ -136,11 +136,12 @@ if($cnt_result < 1) {
 	}
 	$select_del_field .=  '</select>';
 
-echo tpl_form_control_group('',$lang[custom_field_name],$select_del_field);
+echo tpl_form_control_group('',$lang['custom_field_name'],$select_del_field);
 
 //submit form to save data
 echo"<div class='formfooter'>";
 echo"<input type='submit' class='btn btn-danger' name='delete_field' value='$lang[delete]'>";
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo"</div>";
 }
 

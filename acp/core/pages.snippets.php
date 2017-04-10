@@ -261,6 +261,7 @@ if($modus == 'new') {
 	echo '<a class="btn btn-default btn-block" href="acp.php?tn=pages&sub=snippets">'.$lang['discard_changes'].'</a>';
 	echo '<input type="submit" name="delete_snippet" class="btn btn-danger btn-sm btn-block" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_data'].'\')">';
 }
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</div>';
 
 

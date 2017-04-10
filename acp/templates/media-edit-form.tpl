@@ -67,6 +67,7 @@
 			  <input type="hidden" name="folder" value="{folder}">
 			  <input type="hidden" name="set_lang" value="{set_lang}">
 			  <input type="submit" name="save" class="btn btn-success" value="{save}">
+			  <input  type="hidden" name="csrf_token" value="{token}">
 			</form>
 		</div>
 		<div class="col-md-4">

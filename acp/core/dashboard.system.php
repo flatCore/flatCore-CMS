@@ -128,6 +128,7 @@ $chat_form = str_replace('{form_action}', "acp.php?tn=dashboard", $chat_form);
 $chat_form = str_replace('{value_textarea}', "$e_comment_text", $chat_form);
 $chat_form = str_replace('{value_send_btn}', $lang['save'], $chat_form);
 $chat_form = str_replace('{value_hidden_id}', "$e_comment_id", $chat_form);
+$chat_form = str_replace('{token}', $_SESSION['token'], $chat_form);
 $chat_form = str_replace('{form_legend}', $lang['label_comment'], $chat_form);
 
 $comment_entry_tpl = file_get_contents('templates/comment-entry.tpl');

@@ -44,7 +44,8 @@ if($user_registerdate != "") {
 
 echo tpl_form_control_group('',$lang['f_user_registerdate'],"<p class='form-control-static'>$show_registerdate</p>");
 
-echo"<input type='hidden' name='user_registerdate' value='$user_registerdate'>";
+echo '<input type="hidden" name="user_registerdate" value="'.$user_registerdate.'">';
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 
 
 if($user_verified == ""){

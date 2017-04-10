@@ -15,7 +15,7 @@ if($_SESSION['start'] == "") {
 }
 
 if($_REQUEST['start'] != "") {
-	$_SESSION[start] = (int) ($_REQUEST[start]*$entries_per_page);
+	$_SESSION['start'] = (int) ($_REQUEST['start']*$entries_per_page);
 }
 
 if($_SESSION['filename'] == "") {
@@ -64,6 +64,7 @@ foreach($logfiles as $fn) {
 echo"</select> ";
 echo '</div> ';
 echo"<input type='submit' class='btn btn-default' name='select_log' value='$lang[choose]'>";
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo"</form>";
 echo"</fieldset>";
 

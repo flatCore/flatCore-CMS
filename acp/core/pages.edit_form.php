@@ -525,6 +525,7 @@ echo '<div class="btn-group btn-group-justified">';
 echo '<div class="btn-group">'.$submit_button.'</div><div class="btn-group">'.$previev_button.'</div>';
 echo '</div>';
 echo $delete_button;
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</div>';
 
 echo '</div>'; // panel-body

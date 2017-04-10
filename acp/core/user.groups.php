@@ -13,10 +13,10 @@ $delete_button = "";
 Update existing group
 */
 
-if($_POST[updateGroup]) {
+if($_POST['updateGroup']) {
 
 	
-	$arr_update_incUser = $_POST[incUser];
+	$arr_update_incUser = $_POST['incUser'];
 	@sort($arr_update_incUser);
 	$update_incUser = implode(" ", $arr_update_incUser);
 	
@@ -31,10 +31,10 @@ if($_POST[updateGroup]) {
 			
 	$sth = $dbh->prepare($sql);
 	
-	$sth->bindParam(':update_group_name', $_POST[group_name], PDO::PARAM_STR);
-	$sth->bindParam(':update_group_description', $_POST[group_description], PDO::PARAM_STR);
+	$sth->bindParam(':update_group_name', $_POST['group_name'], PDO::PARAM_STR);
+	$sth->bindParam(':update_group_description', $_POST['group_description'], PDO::PARAM_STR);
 	$sth->bindParam(':update_incUser', $update_incUser, PDO::PARAM_STR);
-	$sth->bindParam(':editgroup', $_POST[editgroup], PDO::PARAM_INT);
+	$sth->bindParam(':editgroup', $_POST['editgroup'], PDO::PARAM_INT);
 			
 	$cnt_changes = $sth->execute();
 	
@@ -170,11 +170,12 @@ for($i=0;$i<count($result);$i++) {
 
 }
 
-echo"</select> ";
+echo '</select>';
 echo '</div>';
-echo" <input type='submit' class='btn btn-default' name='select_group' value='$lang[edit]'>";
-echo"</form>";
-echo"</fieldset>";
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+echo '<input type="submit" class="btn btn-default" name="select_group" value="'.$lang['edit'].'">';
+echo '</form>';
+echo '</fieldset>';
 
 
 /*
@@ -290,6 +291,7 @@ echo'</div>';
 
 echo"<div class='formfooter clear'>";
 echo"$hidden_field $delete_button $submit_button";
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo"</div>";
 echo"</form>";
 
