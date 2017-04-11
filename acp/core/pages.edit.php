@@ -300,7 +300,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		
 		$std->bindParam(':page_sort', $page_sort, PDO::PARAM_STR);
 		$std->bindParam(':page_usergroup', $string_usergroup, PDO::PARAM_STR);
-		$sth->bindParam(':page_labels', $string_labels, PDO::PARAM_STR);
+		$std->bindParam(':page_labels', $string_labels, PDO::PARAM_STR);
 		$std->bindParam(':page_lastedit', $page_lastedit, PDO::PARAM_INT);
 		$std->bindParam(':page_lastedit_from', $_SESSION[user_nick], PDO::PARAM_STR);
 		$std->bindParam(':page_template', $page_template, PDO::PARAM_STR);
@@ -309,7 +309,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$std->bindParam(':page_version', $page_version, PDO::PARAM_INT);
 		$std->bindParam(':page_id_original', $page_id_original, PDO::PARAM_STR);
 		$std->bindParam(':page_cache_type', $page_cache_type, PDO::PARAM_STR);
-		$sth->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
+		$std->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
 		
 		$cnt_changes_c = $std->execute();
 	
@@ -399,9 +399,9 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$std->bindParam(':page_id_original', $page_id_original, PDO::PARAM_STR);
 		$std->bindParam(':page_sort', $page_sort, PDO::PARAM_STR);
 		$std->bindParam(':page_usergroup', $string_usergroup, PDO::PARAM_STR);
-		$sth->bindParam(':page_labels', $string_labels, PDO::PARAM_STR);
+		$std->bindParam(':page_labels', $string_labels, PDO::PARAM_STR);
 		$std->bindParam(':page_lastedit', $page_lastedit, PDO::PARAM_INT);
-		$std->bindParam(':page_lastedit_from', $_SESSION[user_nick], PDO::PARAM_STR);
+		$std->bindParam(':page_lastedit_from', $_SESSION['user_nick'], PDO::PARAM_STR);
 		$std->bindParam(':page_template', $page_template, PDO::PARAM_STR);
 		$std->bindParam(':page_template_layout', $page_template_layout, PDO::PARAM_STR);
 		$std->bindParam(':page_authorized_users', $string_authorized_admins, PDO::PARAM_STR);
