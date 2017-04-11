@@ -12,15 +12,15 @@ function get_lastedit($num = 5) {
 	
 	$dbh = new PDO("sqlite:$fc_db_content");
 	$sql = "SELECT page_id, page_linkname, page_permalink, page_title, page_status, page_lastedit	FROM fc_pages
-			WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = '$languagePack'
+			WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = :languagePack
 			ORDER BY page_lastedit DESC 
-			LIMIT 0 , $num
-			";
+			LIMIT 0 , :num";
 	
-	foreach ($dbh->query($sql) as $row) {
-  	$result[] = $row;
-	}  
-	
+	$sth = $dbh->prepare($sql);
+	$sth->bindParam(':languagePack', $languagePack, PDO::PARAM_STR);
+	$sth->bindParam(':num', $num, PDO::PARAM_INT);
+	$sth->execute();
+	$result = $sth->fetchAll(PDO::FETCH_ASSOC);
 	$dbh = null;
 	
 	$count_result = count($result);

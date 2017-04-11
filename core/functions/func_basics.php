@@ -11,17 +11,17 @@ function is_user_in_group($user_id,$user_group) {
 
 	$dbh = new PDO("sqlite:$fc_db_user");
 
-	$sql = "SELECT group_name, group_user
-			FROM fc_groups
-			WHERE group_name = '$user_group'
-			";
-	
-	$result = $dbh->query($sql);
-	$result= $result->fetch(PDO::FETCH_ASSOC);
+	$sql = "SELECT group_name, group_user FROM fc_groups
+					WHERE group_name = :user_group";
+	$stmt = $dbh->prepare($sql);
+	$stmt->bindValue(':user_group', $user_group, PDO::PARAM_STR);
+	$stmt->execute();
+	$result = $stmt->fetch(PDO::FETCH_ASSOC);
+	$dbh = null;
    
-	$arr_users = explode(" ", $result[group_user]);
+	$arr_users = explode(" ", $result['group_user']);
 
-	if(in_array("$_SESSION[user_id]",$arr_users)) {
+	if(in_array($_SESSION['user_id'],$arr_users)) {
 		$in_group = "true";
 	} else {
 		$in_group = "false";

@@ -49,11 +49,12 @@ function get_my_userdata() {
 	global $fc_db_user;
 
 	$dbh = new PDO("sqlite:$fc_db_user");
-	$sql = "SELECT * FROM fc_user WHERE user_id = '$_SESSION[user_id]' AND user_verified = 'verified' ";
-	
-	$result = $dbh->query($sql);
-	$result= $result->fetch(PDO::FETCH_ASSOC);
-
+	$sql = "SELECT * FROM fc_user WHERE user_id = :user_id AND user_verified = 'verified' ";
+	$stmt = $dbh->prepare($sql);
+	$stmt->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_STR);
+	$stmt->execute();	
+	$result = $stmt->fetch(PDO::FETCH_ASSOC);
+	$dbh = null;
 	return($result);
 
 }
@@ -72,13 +73,12 @@ function get_userdata_by_mail($mail) {
 	global $fc_db_user;
 
 	$dbh = new PDO("sqlite:$fc_db_user");
-	$mail = $dbh -> quote($mail);
-
-	$sql = "SELECT * FROM fc_user WHERE user_mail = $mail AND user_verified = 'verified' ";
-	
-	$result = $dbh->query($sql);
-	$result= $result->fetch(PDO::FETCH_ASSOC);
-
+	$sql = "SELECT * FROM fc_user WHERE user_mail = :mail AND user_verified = 'verified' ";
+	$stmt = $dbh->prepare($sql);
+	$stmt->bindValue(':mail', $mail, PDO::PARAM_STR);
+	$stmt->execute();
+	$result = $stmt->fetch(PDO::FETCH_ASSOC);
+	$dbh = null;
 	return($result);
 }
 
@@ -97,12 +97,13 @@ function get_userdata_by_token($token) {
 	global $fc_db_user;
 
 	$dbh = new PDO("sqlite:$fc_db_user");
-	$token = $dbh -> quote($token);
-	$sql = "SELECT user_id, user_nick, user_mail FROM fc_user WHERE user_reset_psw = $token ";
 	
-	$result = $dbh->query($sql);
-	$result= $result->fetch(PDO::FETCH_ASSOC);
-
+	$sql = "SELECT user_id, user_nick, user_mail FROM fc_user WHERE user_reset_psw = :token ";
+	$stmt = $dbh->prepare($sql);
+	$stmt->bindValue(':token', $token, PDO::PARAM_STR);
+	$stmt->execute();
+	$result = $stmt->fetch(PDO::FETCH_ASSOC);
+	$dbh = null;
 	return($result);
 }
 
@@ -119,8 +120,7 @@ function get_userdata_by_token($token) {
 
 
 function randpsw($length=8) {
-
-
+	
 	$chars = '123456789abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
 
 	$random_s = '';

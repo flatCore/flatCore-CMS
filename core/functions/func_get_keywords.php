@@ -8,10 +8,15 @@ function get_keywords() {
 	
 	$dbh = new PDO("sqlite:$fc_db_content");
 	$sql = "SELECT page_meta_keywords FROM fc_pages
-			WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = '$languagePack' ";
-	
-	foreach ($dbh->query($sql) as $row) {
-		$clean_key = $row['page_meta_keywords'];
+			WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = :languagePack";
+	$sth = $dbh->prepare($sql);
+	$sth->bindParam(':languagePack', $languagePack, PDO::PARAM_STR);
+	$sth->execute();
+	$keys = $sth->fetchAll(PDO::FETCH_ASSOC);
+	$dbh = null;
+
+	foreach ($keys as $key) {
+		$clean_key = $key['page_meta_keywords'];
 	  $clean_key = preg_replace("/ +/", " ", $clean_key);
 	  $clean_key = trim($clean_key, " ");
 	  $clean_key = strtolower($clean_key); 
@@ -20,7 +25,6 @@ function get_keywords() {
 	  }
 	}  
 	
-	$dbh = null;
 	
 	$result = str_replace(", ",",",$result);
 	$result = substr("$result", 0, -1);

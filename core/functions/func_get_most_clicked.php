@@ -15,10 +15,14 @@ function get_most_clicked($num = 5) {
 	$dbh = new PDO("sqlite:$fc_db_content");
 	
 	$sql = "SELECT page_id,	page_language, page_linkname, page_permalink, page_title, page_status FROM fc_pages
-			WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = '$languagePack'
+			WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = :languagePack
 			ORDER BY page_sort ASC";
 	
-	$contents = $dbh->query($sql)->fetchAll();
+	$sth = $dbh->prepare($sql);
+	$sth->bindParam(':languagePack', $languagePack, PDO::PARAM_STR);
+	$sth->execute();
+	
+	$contents = $sth->fetchAll(PDO::FETCH_ASSOC);
 	$dbh = null;
 	
 	$cnt_contents = count($contents);
@@ -107,10 +111,14 @@ function cache_most_clicked($num = 5) {
 	$dbh = new PDO("sqlite:$fc_db_content");
 	
 	$sql = "SELECT page_id,	page_language, page_linkname, page_permalink, page_title, page_status FROM fc_pages
-			WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = '$languagePack'
+			WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = :languagePack
 			ORDER BY page_sort ASC";
-	
-	$contents = $dbh->query($sql)->fetchAll();
+
+	$sth = $dbh->prepare($sql);
+	$sth->bindParam(':languagePack', $languagePack, PDO::PARAM_STR);
+	$sth->execute();
+		
+	$contents = $sth->fetchAll(PDO::FETCH_ASSOC);
 	$dbh = null;
 	
 	$cnt_contents = count($contents);
@@ -176,10 +184,10 @@ function cache_most_clicked($num = 5) {
 			$mostclicked[$i]['link'] = FC_INC_DIR . "/" . $mostclicked[$i]['page_permalink'];
 		}
 		
-		$string .= "\$arr_mostclicked[$i][page_id] = \"" . $mostclicked[$i]['page_id'] . "\";\n";
-		$string .= "\$arr_mostclicked[$i][link] = \"" . $mostclicked[$i]['link'] . "\";\n";
-		$string .= "\$arr_mostclicked[$i][linkname] = \"" . htmlentities($mostclicked[$i]['linkname'],ENT_QUOTES) . "\";\n";
-		$string .= "\$arr_mostclicked[$i][pagetitle] = \"" . htmlentities($mostclicked[$i]['pagetitle'],ENT_QUOTES) . "\";\n";
+		$string .= "\$arr_mostclicked[$i]['page_id'] = \"" . $mostclicked[$i]['page_id'] . "\";\n";
+		$string .= "\$arr_mostclicked[$i]['link'] = \"" . $mostclicked[$i]['link'] . "\";\n";
+		$string .= "\$arr_mostclicked[$i]['linkname'] = \"" . htmlentities($mostclicked[$i]['linkname'],ENT_QUOTES) . "\";\n";
+		$string .= "\$arr_mostclicked[$i]['pagetitle'] = \"" . htmlentities($mostclicked[$i]['pagetitle'],ENT_QUOTES) . "\";\n";
 	
 	} // eol $i
 	
