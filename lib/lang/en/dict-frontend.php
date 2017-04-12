@@ -77,7 +77,7 @@ $lang['msg_register'] 		    = "Not registered? Here you can register.";
 
 $lang['msg_edit_psw'] 		    = "Complete these fields only if the password should be changed.";
 $lang['msg_edit_mail'] 		    = "Fill this field only if your e-mail address should be changed. After changing the e-mail address you will automatically receive an activation link sent to your new address.";
-
+$lang['msg_invalid_mail_format'] = 'Invalid e-mail format';
 $lang['msg_avatar'] 		    = "Displays a graphic next to each of your posts.";
 
 $lang['msg_delete_account'] 	= "Here you can delete your account. Personal information is so irrevocably removed from the database.";

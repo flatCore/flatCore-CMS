@@ -230,7 +230,7 @@ if($p == "register") {
 	} else {
 		
 		// INCLUDE/SHOW AGREEMENT TEXT
-		$agreement_txt = get_textlib("agreement_text");
+		$agreement_txt = get_textlib("agreement_text","$languagePack");
 		$smarty->assign("agreement_text","$agreement_txt");
 	
 		if($_POST['send_registerform']) {

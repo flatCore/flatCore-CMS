@@ -36,6 +36,11 @@ if($mail != $mailrepeat) {
 	$register_message .= $lang['msg_register_mailrepeat_error'].'<br>';
 }
 
+if(!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+	$send_data = 'false';
+	$register_message .= $lang['msg_invalid_mail_format'].'<br>';
+}
+
 //psw and psw_repeat
 if($psw != $psw_repeat) {
 	$send_data = 'false';
@@ -127,14 +132,24 @@ if($send_data == 'true') {
 	$dbh = null;
 	
 	/* generate the message */
-	$email_msg = get_textlib("account_confirm_mail");
+	$email_msg = get_textlib("account_confirm_mail","$languagePack");
 	$email_msg = str_replace("{USERNAME}","$username",$email_msg);
 	$email_msg = str_replace("{SITENAME}","$prefs_pagetitle",$email_msg);
 	$email_msg = str_replace("{ACTIVATIONLINK}","$user_activationlink",$email_msg);
 	
 	/* send register mail to the new user */
 	require_once("lib/Swift/lib/swift_required.php");
-	$transport = Swift_MailTransport::newInstance();
+	if($prefs_mailer_type == 'smtp') {
+		$transport = Swift_SmtpTransport::newInstance("$prefs_smtp_host", "$prefs_smtp_port")
+			->setUsername("$prefs_smtp_username")
+			->setPassword("$prefs_smtp_psw");
+			
+		if($prefs_mail_smtp_encryption_input != '') {
+			$transport ->setEncryption($pb_prefs['prefs_smtp_encryption']);
+		}
+	} else {
+		$transport = Swift_MailTransport::newInstance();
+	}
 	$mailer = Swift_Mailer::newInstance($transport);
 	$message = Swift_Message::newInstance()
 			->setSubject("Registrierungsdaten | $prefs_pagetitle")

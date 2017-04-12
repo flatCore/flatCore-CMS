@@ -28,7 +28,7 @@ function get_textlib($textlib_name,$textlib_lang) {
 	
 	try {
 		$dbh = new PDO("sqlite:$fc_db_content");
-		$text = $dbh->quote($text);
+		//$text = $dbh->quote($text);
 		$sql = 'SELECT * FROM fc_textlib WHERE textlib_name = :textlib_name AND textlib_lang = :textlib_lang ';
 		$sth = $dbh->prepare($sql);
 		$sth->bindParam(':textlib_name', $textlib_name, PDO::PARAM_STR);

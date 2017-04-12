@@ -75,6 +75,7 @@ $lang['msg_logout'] = "Erfolgreich abgemeldet";
 $lang['msg_register'] = "Noch nicht registriert? Hier können Sie sich anmelden.";
 $lang['msg_edit_psw'] = "Füllen Sie diese Felder nur aus, wenn das Passwort geändert werden soll.";
 $lang['msg_edit_mail'] = "Füllen Sie diese Felder nur aus, wenn Ihre E-Mail Adresse geändert werden soll. Nach dem Ändern der E-Mail Adresse bekommen Sie automatisch einen Aktivierungslink an die neue Adresse gesendet.";
+$lang['msg_invalid_mail_format'] = 'Die E-Mail Adresse enthält unerlaubte Zeichen';
 $lang['msg_avatar'] = "Zeigt eine Grafik neben jedem Ihrer Beiträge an.";
 $lang['msg_delete_account'] = "Hier können Sie Ihren Account löschen. Ihre persönlichen Daten werden damit unwiederruflich aus der Datenbank entfernt.";
 $lang['msg_register_error'] = "Bei der Registrierung sind Fehler aufgetreten.";

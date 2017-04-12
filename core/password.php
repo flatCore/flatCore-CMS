@@ -5,20 +5,24 @@ if($_POST['ask_for_psw']) {
 	
 	$mail = strip_tags($_POST['mail']);
 	$send_data = 'false';
+	$msg_mail_format = '';
 	
 	//check existing E-Mail Adresses	
 	$all_usermail_array = array();
 	
-	if(!empty($mail)) {
+	if(!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+		$msg_mail_format = $lang['msg_invalid_mail_format'];
+	} else {
 		$all_usermail_array = get_all_usermail($fc_db_user);
+
+		foreach($all_usermail_array as $entry) { 
+			if($mail == $entry['user_mail']) {
+		  	$send_data = "true";
+				break;
+		  }  
+		}		
 	}
-	
-	foreach($all_usermail_array as $entry) { 
-		if($mail == $entry['user_mail']) {
-	  	$send_data = "true";
-			break;
-	  }  
-	}
+
 	
 	// send E-Mail
 	if($send_data == "true") {
@@ -28,13 +32,16 @@ if($_POST['ask_for_psw']) {
 		$user_registerdate = $userdata_arry['user_registerdate'];
 		
 		/* unique token user_registerdate + user_mail */
-		$reset_token = md5('$user_registerdate$mail');
+		$reset_token = md5("$user_registerdate$mail");
 		$reset_link = "http://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]?p=password&token=$reset_token";
 		
 		/* input token */
 		$dbh = new PDO("sqlite:$fc_db_user");
-		$sql = "UPDATE fc_user SET user_reset_psw = '$reset_token' WHERE user_mail = '$mail' ";
-		$cnt = $dbh->exec($sql);
+		$sql = "UPDATE fc_user SET user_reset_psw = :reset_token WHERE user_mail = :mail";
+		$sth = $dbh->prepare($sql);
+		$sth->bindParam(':reset_token', $reset_token, PDO::PARAM_STR);
+		$sth->bindParam(':mail', $mail, PDO::PARAM_STR);
+		$sth->execute();
 		$dbh = null;
 		
 		/* generate the message */
@@ -43,14 +50,26 @@ if($_POST['ask_for_psw']) {
 		
 		/* send register mail to the new user */
 		require_once("lib/Swift/lib/swift_required.php");
-		$transport = Swift_MailTransport::newInstance();
+		
+		if($prefs_mailer_type == 'smtp') {
+			$transport = Swift_SmtpTransport::newInstance("$prefs_smtp_host", "$prefs_smtp_port")
+				->setUsername("$prefs_smtp_username")
+				->setPassword("$prefs_smtp_psw");
+				
+			if($prefs_mail_smtp_encryption_input != '') {
+				$transport ->setEncryption($pb_prefs['prefs_smtp_encryption']);
+			}
+		} else {
+			$transport = Swift_MailTransport::newInstance();
+		}
+	
 		$mailer = Swift_Mailer::newInstance($transport);
 		$message = Swift_Message::newInstance()
 			->setSubject("$lang[forgotten_psw_mail_subject] | $prefs_pagetitle")
 	  		->setFrom(array("$prefs_mailer_adr" => "$prefs_mailer_name"))
 	  		->setTo(array("$mail" => "$user_nick"))
 	  		->setBody("$email_msg", 'text/html');
-	  $result = $mailer->send($message);
+	  	$result = $mailer->send($message);
 		
 		$psw_message = $lang['msg_forgotten_psw_step1'];
 	
@@ -106,7 +125,17 @@ if($_GET['token'] != "") {
 	
 	/* send register mail to the new user */
 	require_once("lib/Swift/lib/swift_required.php");
-	$transport = Swift_MailTransport::newInstance();
+	if($prefs_mailer_type == 'smtp') {
+		$transport = Swift_SmtpTransport::newInstance("$prefs_smtp_host", "$prefs_smtp_port")
+			->setUsername("$prefs_smtp_username")
+			->setPassword("$prefs_smtp_psw");
+			
+		if($prefs_mail_smtp_encryption_input != '') {
+			$transport ->setEncryption($pb_prefs['prefs_smtp_encryption']);
+		}
+	} else {
+		$transport = Swift_MailTransport::newInstance();
+	}
 	$mailer = Swift_Mailer::newInstance($transport);
 	$message = Swift_Message::newInstance()
 		->setSubject("$lang[forgotten_psw_mail_subject] | $prefs_pagetitle")
