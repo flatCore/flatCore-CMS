@@ -68,7 +68,7 @@ if(isset($query)) {
 			$mod_name = $active_mods[$i]['page_modul'];
 			$permalink_length = strlen($mod_permalink);
 			
-			if(strpos("$query", "$mod_permalink") !== false) {
+			if(!empty($mod_permalink) && strpos("$query", "$mod_permalink") !== false) {
 						
 				if(strncmp($mod_permalink, $query, $permalink_length) == 0) {
     			$mod_slug = substr($query, $permalink_length);
