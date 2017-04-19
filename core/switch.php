@@ -88,7 +88,6 @@ for($i=0;$i<$cnt_textlibs;$i++) {
 
 /* include modul */
 if($page_modul != "") {
-	include("modules/$page_modul/index.php");
 	$page_content = "$page_content $modul_content";
 	$smarty->assign('modul_head_enhanced', $modul_head_enhanced);
 }

@@ -159,6 +159,10 @@ foreach($fc_prefs as $key => $val) {
 	$$key = stripslashes($val); 
 }
 
+if(!empty($page_contents['page_modul'])) {
+	include 'modules/'.$page_contents['page_modul'].'/index.php';
+}
+
 
 /* START SMARTY */
 require_once('lib/Smarty/Smarty.class.php');
