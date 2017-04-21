@@ -377,7 +377,7 @@ for($i=$start;$i<$end;$i++) {
 	$short_filename = str_replace('../content/images/', '', $filename);
 	
 	$delete_btn = "<a href='acp.php?tn=$tn&sub=browse&delete=$filename&d=$disk&start=$start' onclick=\"return confirm('$lang[confirm_delete_file]')\" class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-trash'></span></a></span>";
-	$edit_btn = '<a href="/acp/core/ajax.media.php?file='.$filename.'&folder='.$disk.'" class="fancybox-ajax btn btn-sm btn-default"><span class="glyphicon glyphicon-pencil"></span></a>';
+	$edit_btn = '<a data-fancybox data-type="ajax" data-src="/acp/core/ajax.media.php?file='.$filename.'&folder='.$disk.'" href="javascript:;" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-pencil"></span></a>';
 
 	$tpl_list = str_replace('{short_filename}', $short_filename, $tpl_file);
 	$tpl_list = str_replace('{filename}', $filename, $tpl_list);

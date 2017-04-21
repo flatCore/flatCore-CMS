@@ -123,8 +123,8 @@ if(isset($set_acptheme)) {
     <script language="javascript" type="text/javascript" src="../lib/js/tinymce/jquery.tinymce.min.js"></script>
 
 		<!-- Add fancyBox -->
-		<link rel="stylesheet" href="../lib/js/jquery/fancybox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
-		<script type="text/javascript" src="../lib/js/jquery/fancybox/jquery.fancybox.pack.js?v=2.1.5"></script>
+		<link rel="stylesheet" href="./css/jquery.fancybox.min.css?v=2.1.5" type="text/css" media="screen" />
+		<script type="text/javascript" src="./js/jquery.fancybox.min.js?v=2.1.5"></script>
 		
 		<script type="text/javascript" src="../lib/js/jquery/jquery.textareaCounter.plugin.js"></script>
 				
@@ -405,7 +405,9 @@ if(isset($set_acptheme)) {
 				$(".fancybox-docs").fancybox({
 					type: 'iframe',
 					width: '77%',
-					height: '90%'
+					height: '90%',
+					buttons : false,
+					smallBtn : true
 				});
 				
 				$(".fancybox-ajax").fancybox({

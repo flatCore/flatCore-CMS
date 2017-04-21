@@ -31,8 +31,8 @@ if(isset($_REQUEST['did'])) {
 	$dbh = null;
 }
 
-if(isset($_GET['cid'])) {
-	$get_comment = fc_get_comment($_GET['cid']);
+if(isset($_REQUEST['cid'])) {
+	$get_comment = fc_get_comment($_REQUEST['cid']);
 	$e_comment_text = $get_comment['comment_text'];
 	$e_comment_id = $get_comment['comment_id'];
 	if($_SESSION['user_nick'] != $get_comment['comment_author']) {
@@ -54,7 +54,8 @@ $chat_form = str_replace('{form_legend}', $lang['label_comment'], $chat_form);
 
 $comment_entry_tpl = file_get_contents('../templates/comment-entry.tpl');
 
-echo '<div class="container">' .$chat_form . '</div>';
+echo '<div>';
+echo '<div class="container" style="margin-top:0;margin-bottom:0;">' .$chat_form . '</div>';
 
 if(isset($_POST['comment'])) {
 	if(is_numeric($_POST['id'])) {
@@ -68,7 +69,7 @@ if(isset($_POST['comment'])) {
 $comments = fc_get_comments($comments_id);
 $cnt_comment = count($comments);
 
-echo '<div class="container">';
+echo '<div class="container" style="margin-top:0;margin-bottom:0;">';
 
 for($i=0;$i<$cnt_comment;$i++) {
 
@@ -86,8 +87,8 @@ for($i=0;$i<$cnt_comment;$i++) {
 	unset($show_entry);
 	
 	if($_SESSION['user_nick'] == $comment_author) {
-		$show_entry = str_replace('{entry_edit_btn}', '<a class="btn btn-primary btn-xs fancybox" data-fancybox-type="ajax" href="/acp/core/ajax.comments.php?pid='.$page_id.'&cid='.$comment_id.'">'.$lang['edit'].'</a>', $comment_entry_tpl);
-		$show_entry = str_replace('{entry_delete_btn}', '<a class="btn btn-danger btn-xs fancybox" data-fancybox-type="ajax" href="/acp/core/ajax.comments.php?pid='.$page_id.'&did='.$comment_id.'">'.$lang['delete'].'</a>', $show_entry);
+		$show_entry = str_replace('{entry_edit_btn}', '<a data-fancybox data-type="ajax" class="btn btn-primary btn-xs" data-src="/acp/core/ajax.comments.php?pid='.$page_id.'&cid='.$comment_id.'" href="javascript:;">'.$lang['edit'].'</a>', $comment_entry_tpl);
+		$show_entry = str_replace('{entry_delete_btn}', '<a data-fancybox data-type="ajax" class="btn btn-danger btn-xs" data-src="/acp/core/ajax.comments.php?pid='.$page_id.'&did='.$comment_id.'" href="javascript:;">'.$lang['delete'].'</a>', $show_entry);
 	} else {
 		$show_entry = str_replace('{entry_edit_btn}', '', $comment_entry_tpl);
 		$show_entry = str_replace('{entry_delete_btn}', '', $show_entry);
@@ -99,12 +100,18 @@ for($i=0;$i<$cnt_comment;$i++) {
 	
 	echo $show_entry;
 }
-
-
+echo '</div>';
+echo '</div>';
 ?>
 
 <script>
 $(document).ready(function(){
+
+	$('a.btn').click(function(e) {
+	    e.preventDefault();
+	    $.fancybox.close();
+	});
+
   $("#comment_form").bind("submit", function() {
       $.ajax({
           type : "POST",
@@ -112,15 +119,17 @@ $(document).ready(function(){
           url: "../acp/core/ajax.comments.php",
           data: $(this).serializeArray(),
           success:function(data){
-              $.fancybox(data);
+              $.fancybox.getInstance().setContent( $.fancybox.getInstance().current, data );
           }
       });
       return false;
 	});
-	$('.fancybox').fancybox({
+	
+	$("[data-fancybox]").fancybox({
 			minWidth: '50%',
 			height: '90%'
-		});
+	});
+	
 });
 
 </script>

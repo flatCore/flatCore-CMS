@@ -544,7 +544,7 @@ if($show_form == "true" AND $sub != "new") {
 	echo '<div class="accordion" id="versionsToggle">';
 	echo '<div class="accordion-group">';
 	echo '<div class="accordion-heading">';
-	echo '<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#showVersions">Versions</a>';
+	echo '<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#showVersions">Versions ('.$cnt_result.')</a>';
 	echo '</div>';
 	
 	echo '<div id="showVersions" class="accordion-body collapse in">';

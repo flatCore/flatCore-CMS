@@ -931,7 +931,17 @@ function fc_write_comment($author, $message, $parent, $id = NULL) {
 
 	$cnt_changes = $sth->execute();
 
+	$error = print_r($dbh->errorInfo(),true);
+	$lastId = $dbh->lastInsertId();
+	//debug_to_console($modus);
 	$dbh = null;
+	
+	if($cnt_changes == true) {
+		return 'success';
+	} else {
+		
+		return $error;
+	}
 
 }
 
@@ -1055,7 +1065,7 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 	
 	$error = print_r($dbh->errorInfo(),true);
 	$lastId = $dbh->lastInsertId();
-	debug_to_console($modus);
+	//debug_to_console($modus);
 	$dbh = null;
 	
 	if($cnt_changes == true) {

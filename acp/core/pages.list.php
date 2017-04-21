@@ -192,7 +192,7 @@ for($i=0;$i<$cnt_result;$i++) {
 		}
 	}
 	
-	$page_comments_link = '<a class="fancybox-ajax btn btn-sm btn-default" href="/acp/core/ajax.comments.php?pid='.$page_id.'"><span class="glyphicon glyphicon-comment"></span> '. $page_cnt_comments.'</a>';
+	$page_comments_link = '<a data-fancybox data-type="ajax" class="btn btn-sm btn-default" data-src="/acp/core/ajax.comments.php?pid='.$page_id.'"><span class="glyphicon glyphicon-comment"></span> '. $page_cnt_comments.'</a>';
 	
 	
 	$str = array(

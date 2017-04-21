@@ -57,7 +57,7 @@ $langSwitch = '<div class="btn-group" role="group">';
 foreach($arr_lang as $langs) {
 	$btn_status = '';
 	if($langs['lang_sign'] == "$set_lang") { $btn_status = 'active'; }
-	$langSwitch .= '<a class="btn btn-default btn-sm fancybox-ajax '.$btn_status.'" href="../acp/core/ajax.media.php?file='.$media_filename.'&folder='.$_REQUEST['folder'].'&set_lang='.$langs['lang_sign'].'">'.$langs['lang_sign'].'</a>';
+	$langSwitch .= '<a data-fancybox data-type="ajax" class="btn btn-default btn-sm '.$btn_status.'" data-src="../acp/core/ajax.media.php?file='.$media_filename.'&folder='.$_REQUEST['folder'].'&set_lang='.$langs['lang_sign'].'" href="javascript:;">'.$langs['lang_sign'].'</a>';
 }
 $langSwitch .= '</div>';
 
@@ -105,6 +105,12 @@ echo $form_tpl;
 
 <script>
 $(document).ready(function(){
+	
+	$('a.btn').click(function(e) {
+	    e.preventDefault();
+	    $.fancybox.close();
+	});
+	
   $("#media_form").bind("submit", function() {
       $.ajax({
           type : "POST",
@@ -112,19 +118,20 @@ $(document).ready(function(){
           url: "../acp/core/ajax.media.php",
           data: $(this).serializeArray(),
           success:function(data){
-              $.fancybox(data);
+              $.fancybox.getInstance().setContent( $.fancybox.getInstance().current, data );
           }
       });
       return false;
 	});
-	$('.fancybox').fancybox({
+	
+	$("[data-fancybox]").fancybox({
 			minWidth: '50%',
 			height: '90%'
-		});
+	});
+	
 	setTimeout(function() {
       $(".alert-auto-close").slideUp('slow');
 	}, 2000);
-	
 	
 });
 
