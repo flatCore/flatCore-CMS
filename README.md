@@ -25,7 +25,7 @@ flatCore is a Content Management System based on PHP5 and SQLite3.
 ___
 
 + jQuery - https://jquery.com/
-+ fancybox (2.1.5) - http://fancyapps.com/fancybox/
++ fancyBox (3.0.47) - http://fancyapps.com/fancybox/3/
 + Chart.js (1.0.1-beta.4) - http://chartjs.org/
 + Masonry (v4.1.1) - http://masonry.desandro.com
 + DropzoneJS - http://www.dropzonejs.com
