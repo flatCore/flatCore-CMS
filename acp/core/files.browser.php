@@ -5,7 +5,6 @@ error_reporting(0);
 //prohibit unauthorized access
 require("core/access.php");
 
-$deleteFile = strip_tags($_GET['delete']);
 
 if(isset($_GET['d'])) {
 	$_SESSION['disk'] = (int) $_GET['d'];
@@ -54,10 +53,9 @@ if($disk == "2") {
 }
 
 /* DELETE FILE OR IMAGE */
-if($deleteFile !== "") {
+if(isset($_POST['delete'])) {
 	
-	$deleteFile = str_replace('../content/files/', '', $deleteFile);
-	$deleteFile = str_replace('../content/images/', '', $deleteFile);
+	$deleteFile = basename($_POST['file']);
 	
 	if(is_file("$path/$deleteFile")) {
 		if(unlink("$path/$deleteFile")) {
@@ -376,7 +374,7 @@ for($i=$start;$i<$end;$i++) {
 	$short_filename = str_replace('../content/files/', '', $filename);
 	$short_filename = str_replace('../content/images/', '', $filename);
 	
-	$delete_btn = "<a href='acp.php?tn=$tn&sub=browse&delete=$filename&d=$disk&start=$start' onclick=\"return confirm('$lang[confirm_delete_file]')\" class='btn btn-danger btn-sm'><span class='glyphicon glyphicon-trash'></span></a></span>";
+	$delete_btn = '<input type="submit" onclick="return confirm(\''.$lang['confirm_delete_file'].'\')" class="btn btn-danger btn-sm" name="delete" value="'.$lang['delete'].'">';
 	$edit_btn = '<a data-fancybox data-type="ajax" data-src="/acp/core/ajax.media.php?file='.$filename.'&folder='.$disk.'" href="javascript:;" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-pencil"></span></a>';
 
 	$tpl_list = str_replace('{short_filename}', $short_filename, $tpl_file);
@@ -387,7 +385,7 @@ for($i=$start;$i<$end;$i++) {
 	$tpl_list = str_replace('{filesize}', "$filesize", $tpl_list);
 	$tpl_list = str_replace('{edit_button}', "$edit_btn", $tpl_list);
 	$tpl_list = str_replace('{delete_button}', "$delete_btn", $tpl_list);
-	
+	$tpl_list = str_replace('{csrf_token}', $_SESSION['token'], $tpl_list);
 	
 	echo $tpl_list;
 
