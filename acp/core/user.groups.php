@@ -5,13 +5,13 @@ require("core/access.php");
 
 $array_group_user = array();
 
-$submit_button = "<input type='submit' class='btn btn-success' name='saveGroup' value='$lang[save]'>";
-$delete_button = "";
+$submit_button = '<input type="submit" class="btn btn-success" name="saveGroup" value="'.$lang['save'].'">';
+$delete_button = '';
 
 
-/*
-Update existing group
-*/
+/**
+ * Update existing group
+ */
 
 if($_POST['updateGroup']) {
 
@@ -20,6 +20,7 @@ if($_POST['updateGroup']) {
 	@sort($arr_update_incUser);
 	$update_incUser = implode(" ", $arr_update_incUser);
 	
+	$group_name = filter_var($_POST['group_name'], FILTER_SANITIZE_STRING);
 	
 	$dbh = new PDO("sqlite:".USER_DB);
 	
@@ -31,7 +32,7 @@ if($_POST['updateGroup']) {
 			
 	$sth = $dbh->prepare($sql);
 	
-	$sth->bindParam(':update_group_name', $_POST['group_name'], PDO::PARAM_STR);
+	$sth->bindParam(':update_group_name', $group_name, PDO::PARAM_STR);
 	$sth->bindParam(':update_group_description', $_POST['group_description'], PDO::PARAM_STR);
 	$sth->bindParam(':update_incUser', $update_incUser, PDO::PARAM_STR);
 	$sth->bindParam(':editgroup', $_POST['editgroup'], PDO::PARAM_INT);
@@ -41,18 +42,19 @@ if($_POST['updateGroup']) {
 	$dbh = null;
 	
 	if($cnt_changes == TRUE) {
-		$success_message = "$lang[db_changed]";
+		$success_message = $lang['db_changed'];
+		record_log($_SESSION['user_nick'],"updated usergroup: $group_name","10");
 	} else {
-		$error_message = "$lang[db_not_changed]";
+		$error_message = $lang['db_not_changed'];
 	}
 
 
 }
 
 
-/*
-save new group
-*/
+/**
+ * save new group
+ */
 
 if($_POST['saveGroup']) {
 
@@ -66,6 +68,8 @@ if($_POST['saveGroup']) {
 		$new_incUser = "";
 	}
 	
+	$group_name = filter_var($_POST['group_name'], FILTER_SANITIZE_STRING);
+	
 	
 	$dbh = new PDO("sqlite:".USER_DB);
 	
@@ -76,7 +80,7 @@ if($_POST['saveGroup']) {
 				
 	$sth = $dbh->prepare($sql);
 	
-	$sth->bindParam(':new_group_name', $_POST['group_name'], PDO::PARAM_STR);
+	$sth->bindParam(':new_group_name', $group_name, PDO::PARAM_STR);
 	$sth->bindParam(':new_group_description', $_POST['group_description'], PDO::PARAM_STR);
 	$sth->bindParam(':new_incUser', $new_incUser, PDO::PARAM_STR);	
 	
@@ -85,18 +89,19 @@ if($_POST['saveGroup']) {
 	$dbh = null;
 	
 	if($cnt_changes == TRUE) {
-		$success_message = "$lang[db_changed]";
+		$success_message = $lang['db_changed'];
+		record_log($_SESSION['user_nick'],"created usergroup: $group_name","10");
 	} else {
-		$error_message = "$lang[db_not_changed]";
+		$error_message = $lang['db_not_changed'];
 	}
 
 }
 
 
 
-/*
-delete the selected group
-*/
+/**
+ * delete the selected group
+ */
 
 
 if($_POST['deleteGroup']) {
@@ -110,9 +115,10 @@ if($_POST['deleteGroup']) {
 	$show_data = false;
 	
 	if($cnt_changes > 0) {
-		$success_message = "$lang[db_changed]";
+		$success_message = $lang['db_changed'];
+		record_log($_SESSION['user_nick'],"deleted usergroup id: $editgroup","10");
 	} else {
-		$error_message = "$lang[db_not_changed]";
+		$error_message = $lang['db_not_changed'];
 	}
 
 }
@@ -125,11 +131,11 @@ if($_POST['deleteGroup']) {
 //print message
 
 if($success_message != ""){
-	echo"<div class='alert alert-success'><p>$success_message</p></div>";
+	echo '<div class="alert alert-success"><p>'.$success_message.'</p></div>';
 }
 
 if($error_message != ""){
-	echo"<div class='alert alert-error'><p>$error_message</p></div>";
+	echo '<div class="alert alert-error"><p>'.$error_message.'</p></div>';
 }
 
 
@@ -137,12 +143,12 @@ if($error_message != ""){
 
 
 
-/*
-choose the group
-<select>
-*/
+/**
+ * choose the group
+ * <select>
+ */
 
-// connect to database
+
 $dbh = new PDO("sqlite:".USER_DB);
 $sql = "SELECT * FROM fc_groups ORDER BY group_id ASC";
 
@@ -153,11 +159,15 @@ $result= $result->fetchAll(PDO::FETCH_ASSOC);
 $editgroup = (int) $_POST['editgroup'];
 
 
-echo"<fieldset>";
-echo"<legend>$lang[choose_usergroup]</legend>";
-echo"<form action='$_SERVER[PHP_SELF]?tn=user&sub=groups' class='form-inline' method='POST'>";
+echo '<fieldset>';
+echo '<legend>'.$lang['legend_choose_group'].'</legend>';
+echo '<form action="'.$_SERVER['PHP_SELF'].'?tn=user&sub=groups" method="POST">';
+
+echo '<div class="row">';
+echo '<div class="col-md-5">';
+
 echo '<div class="form-group">';
-echo"<select name='editgroup' class='form-control'>";
+echo '<select name="editgroup" class="form-control">';
 
 for($i=0;$i<count($result);$i++) {
 
@@ -166,21 +176,25 @@ for($i=0;$i<count($result);$i++) {
 	
 	if($editgroup == $group_id) { $sel[$i] = "selected"; }
 	
-	echo"<option $sel[$i] value='$group_id'>$group_name</option>";
+	echo "<option $sel[$i] value='$group_id'>$group_name</option>";
 
 }
 
 echo '</select>';
 echo '</div>';
+echo '</div>';
+echo '<div class="col-md-3">';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
-echo '<input type="submit" class="btn btn-default" name="select_group" value="'.$lang['edit'].'">';
+echo '<input type="submit" class="btn btn-default btn-block" name="select_group" value="'.$lang['edit'].'">';
+echo '</div>';
+echo '</div>';
 echo '</form>';
 echo '</fieldset>';
 
 
-/*
-show data of the selected group
-*/
+/**
+ * show data of the selected group
+ */
 
 if(($editgroup) && ($show_data !== false)) {
 
@@ -189,7 +203,6 @@ $dbh = new PDO("sqlite:".USER_DB);
 
 $sql =  "SELECT * FROM fc_groups WHERE group_id = $editgroup ";
 
-
 $result = $dbh->query($sql);
 $result= $result->fetch(PDO::FETCH_ASSOC);
 
@@ -197,12 +210,11 @@ foreach($result as $k => $v) {
    $$k = stripslashes($v);
 }
 
-
 $array_group_user = explode(" ", $group_user);
 
-$submit_button = "<input type='submit' class='btn btn-success' name='updateGroup' value='$lang[update]'>";
-$delete_button = "<input type='submit' class='btn btn-danger' name='deleteGroup' value='$lang[delete]' onclick=\"return confirm('$lang[confirm_delete_usergroup]')\">";
-$hidden_field = "<input type='hidden' name='editgroup' value='$editgroup'>";
+$submit_button = '<input type="submit" class="btn btn-success" name="updateGroup" value="'.$lang['update'].'">';
+$delete_button = '<input type="submit" class="btn btn-danger" name="deleteGroup" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_file'].'\')">';
+$hidden_field = '<input type="hidden" name="editgroup" value="'.$editgroup.'">';
 
 } else {
 // no group is selected
@@ -212,32 +224,28 @@ unset($group_name,$group_description,$hidden_field);
 
 
 
-/*
-FORM // EDIT GROUPS
-*/
+/**
+ * FORM // EDIT GROUPS
+ */
 
-echo"<fieldset>";
-echo"<legend>Benutzergruppe bearbeiten</legend>";
+echo '<fieldset>';
+echo '<legend>'.$lang['legend_groups_data'].'</legend>';
 
-echo"<form action='$_SERVER[PHP_SELF]?tn=user&sub=groups' method='POST' class=''>";
+echo '<form action="'.$_SERVER[PHP_SELF].'?tn=user&sub=groups" method="POST">';
 
+echo '<div class="row">';
+echo '<div class="col-md-8">';
 
-echo'<div class="row">';
+echo '<label class="">'.$lang['label_group_name'].'</label>';
+echo '<input type="text" class="form-control" name="group_name" value="'.$group_name.'">';
 
-echo"<div class='col-md-8'>";
+echo '<label>'.$lang['label_group_description'].'</label>';
+echo '<textarea class="mceEditor_small" rows="4" name="group_description">'.$group_description.'</textarea>';
 
+echo '</div>';
+echo '<div class="col-md-4">';
 
-echo '<label class="">Gruppenname</label>';
-echo "<input type='text' class='form-control' name='group_name' value='$group_name'></p>";
-
-
-echo"<label>Beschreibung</label>";
-echo"<textarea class='mceEditor_small' rows='4' name='group_description'>$group_description</textarea></p>";
-
-echo"</div>";
-echo"<div class='col-md-4'>";
-
-echo"<label>Benutzer hinzufügen/entfernen</label>";
+echo '<label>'.$lang['label_group_add_user'].'</label>';
 
 echo '<div id="userlist">';
 echo '<div class="scroll-container">';
@@ -253,52 +261,45 @@ unset($result);
    }
 
 
-echo"<table class='table table-hover table-condensed'>";
+echo '<table class="table table-hover table-condensed">';
 
 for($i=0;$i<count($result);$i++) {
 
 	if($result[$i]['user_class'] == "deleted") {
-	continue;
+		continue;
 	}
 	
-		$user_id = $result[$i]['user_id'];
-		$user_nick = $result[$i]['user_nick'];
-		$user_firstname = $result[$i]['user_firstname'];
-		$user_lastname = $result[$i]['user_lastname'];
+	$user_id = $result[$i]['user_id'];
+	$user_nick = $result[$i]['user_nick'];
+	$user_firstname = $result[$i]['user_firstname'];
+	$user_lastname = $result[$i]['user_lastname'];
 		
 	if (in_array("$user_id", $array_group_user)) {
-	    $checked = "checked";
+	   $checked = "checked";
 	} else {
 		$checked = "";
 	}
 	
-	echo '';
 	
-	echo"<tr>";
-	echo"	<td><p><label><input type='checkbox' $checked name='incUser[]' value='$user_id'> $user_nick </label></td>
-			<td>$user_firstname $user_lastname</td>";
-	echo"</tr>\n";
+	echo '<tr>';
+	echo '<td><label><input type="checkbox" '.$checked.' name="incUser[]" value="'.$user_id.'"> '.$user_nick.' </label></td>
+			<td>'.$user_firstname.' '.$user_lastname.'</td>';
+	echo '</tr>';
 } //eol $i
 
-echo"</table>";
+echo '</table>';
 
 echo '</div>';
 echo '</div>';
+echo '</div>';
+echo '</div>';
 
-echo"</div>";
-
-echo'</div>';
-
-echo"<div class='formfooter clear'>";
-echo"$hidden_field $delete_button $submit_button";
+echo '<div class="formfooter clear">';
+echo "$hidden_field $delete_button $submit_button";
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
-echo"</div>";
-echo"</form>";
+echo '</div>';
+echo '</form>';
 
-echo"</fieldset>";
-
-
-
-
+echo '</fieldset>';
 
 ?>
