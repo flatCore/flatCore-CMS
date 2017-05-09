@@ -44,6 +44,11 @@ $lang['list_user'] = "Show all user";
 $lang['customize_user'] = "Customize";
 
 $lang['edit_groups'] = "Edit Usergroup";
+$lang['legend_choose_group'] = "Choose Usergroup";
+$lang['legend_groups_data'] = "Group's Data";
+$lang['label_group_name'] = "Name";
+$lang['label_group_description'] = "Description";
+$lang['label_group_add_user'] = "Add/Remove User";
 
 $lang['manage_files'] = "Manage Files";
 $lang['go_to_upload'] = "Upload Files";
@@ -179,7 +184,6 @@ $lang['start_backup'] = "Download";
 $lang['counter_active'] = "Activate Counter";
 $lang['counter_inactive'] = "Disable Counter";
 
-$lang['choose_usergroup'] = "Choose Usergroup";
 
 $lang['f_page_position'] = "Position";
 $lang['f_page_order'] = "Page Order";
