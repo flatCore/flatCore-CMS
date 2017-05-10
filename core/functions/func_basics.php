@@ -116,6 +116,8 @@ function fc_global_mod_snippets($mod,$params=NULL) {
 	 
 function text_parser($text) {
 	
+	global $languagePack;
+	
 	if(function_exists('theme_text_parser')) {
 		$text = theme_text_parser($text);
 	}
@@ -135,7 +137,7 @@ function text_parser($text) {
 	$text = preg_replace_callback(
 	    '/\[snippet\](.*?)\[\/snippet\]/si',
 	    function ($m) {
-		    return get_textlib($m[1]);
+		    return get_textlib($m[1],$languagePack);
 	    },
 	    $text
 	);
