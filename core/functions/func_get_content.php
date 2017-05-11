@@ -18,10 +18,9 @@ function get_content($page, $mode = 'p') {
 	$dbh = new PDO("sqlite:$fc_db_content");
 
 	if($mode == 'permalink') {
-		$page_contents_sql = "SELECT * FROM fc_pages WHERE page_permalink = :page AND page_language = :languagePack";
+		$page_contents_sql = "SELECT * FROM fc_pages WHERE page_permalink = :page";
 		$sth = $dbh->prepare($page_contents_sql);
 		$sth->bindParam(':page', $page, PDO::PARAM_STR);
-		$sth->bindParam(':languagePack', $languagePack, PDO::PARAM_STR);
 	} elseif ($mode == 'page_sort') {
 		$page_contents_sql = "SELECT * FROM fc_pages WHERE page_sort = :page AND page_language = :languagePack";
 		$sth = $dbh->prepare($page_contents_sql);
