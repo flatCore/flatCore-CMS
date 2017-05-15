@@ -16,7 +16,7 @@ flatCore is a Content Management System based on PHP5 and SQLite3.
 
 #### 3rd Party Frameworks and Plugins
 
-+ TinyMCE (4.5.1) - http://www.tinymce.com/
++ TinyMCE (4.6.1) - http://www.tinymce.com/
 + Ace Editor - http://ace.c9.io/
 + Smarty (3.1.21) - http://www.smarty.net/
 + Swift Mailer (5.4.0) - http://swiftmailer.org/
