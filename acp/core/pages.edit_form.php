@@ -3,7 +3,7 @@
 require 'core/access.php';
 
 
-echo"\n <form id='editpage' action='$_SERVER[PHP_SELF]?tn=pages&sub=edit&editpage=$editpage' class='form-horizontal' method='POST'>\n";
+echo '<form id="editpage" action="acp.php?tn=pages&sub=edit&editpage='.$editpage.'" class="form-horizontal" method="POST">';
 
 $custom_fields = get_custom_fields();
 sort($custom_fields);
@@ -135,11 +135,11 @@ $select_page_redirect_code .= '</select>';
 
 echo tpl_form_control_group('',$lang['f_page_redirect'],'<div class="row"><div class="col-md-3">'.$select_page_redirect_code.'</div><div class="col-md-9"><input class="form-control" type="text" name="page_redirect" value="'.$page_redirect.'"></div></div>');
 
-echo'</div>'; /* EOL tab_info */
+echo '</div>'; /* EOL tab_info */
 
 
 /* tab_content */
-echo'<div class="tab-pane fade" id="content">';
+echo '<div class="tab-pane fade" id="content">';
 
 echo '<textarea name="page_content" class="form-control mceEditor textEditor switchEditor" id="textEditor">'.$page_content.'</textarea>';
 
@@ -149,16 +149,16 @@ echo"</div>";
 
 /* tab_extracontent */
 
-echo'<div class="tab-pane fade" id="extracontent">';
+echo '<div class="tab-pane fade" id="extracontent">';
 
 echo '<textarea name="page_extracontent" class="form-control mceEditor textEditor switchEditor" id="textEditor2">'.$page_extracontent.'</textarea>';
 
-echo"</div>"; /* EOL tab_extracontent */
+echo '</div>'; /* EOL tab_extracontent */
 
 
 
 /* tab_meta */
-echo'<div class="tab-pane fade" id="meta">';
+echo '<div class="tab-pane fade" id="meta">';
 
 echo tpl_form_control_group('',$lang['f_page_title'],'<input class="form-control" type="text" name="page_title" value="'.$page_title.'">');
 
@@ -171,13 +171,13 @@ echo tpl_form_control_group('',$lang['f_meta_keywords'],'<input class="form-cont
 echo tpl_form_control_group('',$lang['f_meta_description'],"<textarea name='page_meta_description' class='form-control cntValues' rows='5'>$page_meta_description</textarea>");
 
 
-echo"<div class='form-group'>
-		<label class='control-label control-label-normal col-sm-2'>$lang[page_thumbnail]</label>
-		<div class='col-sm-10'>";
+echo '<div class="form-group">';
+echo '<label class="control-label control-label-normal col-sm-2">'.$lang['page_thumbnail'].'</label>';
+echo '<div class="col-sm-10">';
 		
 echo '<div class="scroll-container">';
 echo '<select name="page_thumbnail" class="form-control image-picker">';
-echo "<option value=''>$lang[page_thumbnail]</option>";
+echo '<option value="">'.$lang['page_thumbnail'].'</option>';
 $arr_Images = get_all_images();
 	foreach($arr_Images as $page_thumbnails) {
 		$selected = "";
@@ -186,24 +186,14 @@ $arr_Images = get_all_images();
 		}
 		echo '<option '.$selected.' data-img-src="/content/images/'.$page_thumbnails.'" class="masonry-item" value="'.$page_thumbnails.'">'.$page_thumbnails.'</option>';
 }
-echo"</select>";
+echo '</select>';
 echo '</div>';
-echo"</div>
-	 </div>";
+echo '</div>';
+echo '</div>';
 
-echo"</fieldset>";
-
-
-foreach($arr_Images as $page_thumbnails) {
-		$selected = "";
-		if($page_thumbnail == "$page_thumbnails") {
-			$selected = "selected";
-		}
-		echo "<option $selected data-img-src='/content/iamages/$page_thumbnails' value='$page_thumbnails'>$page_thumbnails</option>";
-}
+echo '</fieldset>';
 
 
-		
 $select_page_meta_robots  = '<select name="page_meta_robots" class="form-control">';
 $select_page_meta_robots .= '<option value="all" '.($page_meta_robots == "all" ? 'selected="selected"' :'').'>all</option>';
 $select_page_meta_robots .= '<option value="noindex" '.($page_meta_robots == "noindex" ? 'selected="selected"' :'').'>noindex</option>';
@@ -215,33 +205,33 @@ echo tpl_form_control_group('',$lang['f_meta_robots'],$select_page_meta_robots);
 
 
 
-echo'</div>'; /* EOL tab_meta */
+echo '</div>'; /* EOL tab_meta */
 
 
 
 /* tab_head */
-echo'<div class="tab-pane fade" id="head">';
+echo '<div class="tab-pane fade" id="head">';
 
 echo $lang['f_head_styles'];
 echo '<span class="silent"> &lt;style type=&quot;text/css&quot;&gt;</span> ... <span class="silent">&lt;/styles&gt;</span>';
-echo "<textarea name='page_head_styles' class='form-control aceEditor_css' rows='12'>$page_head_styles</textarea>";
+echo '<textarea name="page_head_styles" class="form-control aceEditor_css" rows="12">'.$page_head_styles.'</textarea>';
 echo '<div id="CSSeditor"></div>';
 
 echo '<hr>';
 
 echo $lang['f_head_enhanced'];
 echo '<span class="silent"> &lt;head&gt;</span> ... <span class="silent">&lt;/head&gt;</span>';
-echo "<textarea name='page_head_enhanced' class='form-control aceEditor_html' rows='12'>$page_head_enhanced</textarea>";
+echo '<textarea name="page_head_enhanced" class="form-control aceEditor_html" rows="12">'.$page_head_enhanced.'</textarea>';
 echo '<div id="HTMLeditor"></div>';
 
-echo'</div>'; /* EOL tab_head */
+echo '</div>'; /* EOL tab_head */
 
 
 
 if($cnt_custom_fields > 0) {
 
 /* tab custom fields */
-echo'<div class="tab-pane fade" id="custom">';
+echo '<div class="tab-pane fade" id="custom">';
 
 	for($i=0;$i<$cnt_custom_fields;$i++) {
 		
@@ -259,11 +249,11 @@ echo'<div class="tab-pane fade" id="custom">';
 		}		
 	}
 
-echo'</div>'; /* EOL tab custom fields */
+echo '</div>'; /* EOL tab custom fields */
 
 }
 
-echo"</div>"; // EOL fancytabs
+echo '</div>'; // EOL fancytabs
 
 echo '</div>';
 echo '<div class="col-lg-3 col-md-4 col-sm-12">';

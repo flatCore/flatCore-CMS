@@ -196,7 +196,7 @@ $pag_forwardlink = "<a class='btn btn-primary' href='$_SERVER[PHP_SELF]?tn=user&
 
 echo '<div class="row">';
 echo '<div class="col-md-5">';
-echo "<form action='$_SERVER[PHP_SELF]?tn=user' class='form-inline' method='POST'>";
+echo "<form action='acp.php?tn=user' class='form-inline' method='POST'>";
 
 echo '<div class="input-group">';
 echo '<span class="input-group-addon"><span class="glyphicon glyphicon-filter"></span></span>';

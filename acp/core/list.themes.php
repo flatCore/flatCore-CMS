@@ -47,7 +47,7 @@ if($sys_message != ""){
 	print_sysmsg("$sys_message");
 }
 
-echo '<form action="'.$_SERVER['PHP_SELF'].'?tn=moduls&sub=t" method="POST" class="form-horizontal">';
+echo '<form action="acp.php?tn=moduls&sub=t" method="POST" class="form-horizontal">';
 echo '<fieldset>';
 echo '<legend>'.$lang['f_prefs_layout'].'</legend>';
 

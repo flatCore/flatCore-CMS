@@ -3,76 +3,81 @@
 //prohibit unauthorized access
 require 'core/access.php';
 
-echo '<h3>System</h3>';
+
+echo '<hr class="shadow" style="margin-top:0;">';
 
 echo '<div class="row">';
 
 echo '<div class="col-md-4">';
-echo '<h5>Config</h5>';
-echo '<dl class="dl-horizontal">';
-echo '<dt>Server:</dt><dd>' . $_SERVER['SERVER_NAME'] . ' (PHP '.phpversion().')</dd>';
+
+echo '<div class="panel panel-default">';
+
+echo '<div class="panel-heading">Config</div>';
+echo '<table class="table table-condensed">';
+echo '<tr><td>Server:</td><td>' . $_SERVER['SERVER_NAME'] . ' (PHP '.phpversion().')</td></tr>';
 if($prefs_mailer_adr != '') {
-	echo '<dt>System E-Mails:</dt><dd>' . $prefs_mailer_adr . '</dd>';
+	echo '<tr><td>System E-Mails:</td><td>' . $prefs_mailer_adr . '</td></tr>';
 } else {
-	echo '<dt>System E-Mails:</dt><dd><span class="text-danger">'.$lang['missing_value'].'</span></dd>';
+	echo '<tr><td>System E-Mails:</td><td><span class="text-danger">'.$lang['missing_value'].'</span></td></tr>';
 }
 if($prefs_mailer_name != '') {
-	echo '<dt>E-Mail Name:</dt><dd>' . $prefs_mailer_name . '</dd>';
+	echo '<tr><td>E-Mail Name:</td><td>' . $prefs_mailer_name . '</td></tr>';
 } else {
-	echo '<dt>E-Mail Name:</dt><dd><span class="text-danger">'.$lang['missing_value'].'</span></dd>';
+	echo '<tr><td>E-Mail Name:</td><td><span class="text-danger">'.$lang['missing_value'].'</span></td></tr>';
 }
-echo '</dl>';
+echo '</table>';
+
+echo '</div>';
 
 
-echo '<hr>';
-
-echo '<h4>' . $lang['f_user_drm'] . '</h4>';
-
+echo '<div class="panel panel-default">';
+echo '<div class="panel-heading">' . $lang['f_user_drm'] . '</div>';
+echo '<div class="panel-body">';
 
 echo"<p><span class='glyphicon glyphicon-user'></span> $_SESSION[user_firstname] $_SESSION[user_lastname] ($_SESSION[user_nick])</p>";
 
 $list_str = '<ul class="list-unstyled" style="padding-left:16px;">';
 
 if($_SESSION['acp_pages'] == "allowed") {
-	$list_str .= "<li><span class='glyphicon glyphicon-ok-circle'></span> $lang[drm_pages]</li>";
+	$list_str .= '<li><span class="glyphicon glyphicon-ok-circle text-success"></span> '. $lang['drm_pages'].'</li>';
 } else {
-	$list_str .= "<li><span class='glyphicon glyphicon-remove-circle'></span> $lang[drm_pages]</li>";
+	$list_str .= '<li><span class="glyphicon glyphicon-remove-circle text-danger"></span> '. $lang['drm_pages'].'</li>';
 }
 
 if($_SESSION['acp_editpages'] == "allowed") {
-	$list_str .= "<li><span class='glyphicon glyphicon-ok-circle'></span> $lang[drm_editpages]</li>";
+	$list_str .= '<li><span class="glyphicon glyphicon-ok-circle text-success"></span> '. $lang['drm_editpages'].'</li>';
 } else {
-	$list_str .= "<li><span class='glyphicon glyphicon-remove-circle'></span> $lang[drm_editpages]</li>";
+	$list_str .= '<li><span class="glyphicon glyphicon-remove-circle text-danger"></span> '. $lang['drm_editpages'].'</li>';
 }
 
 if($_SESSION['acp_editownpages'] == "allowed") {
-	$list_str .= "<li><span class='glyphicon glyphicon-ok-circle'></span> $lang[drm_editownpages]</li>";
+	$list_str .= '<li><span class="glyphicon glyphicon-ok-circle text-success"></span> '. $lang['drm_editownpages'].'</li>';
 } else {
-	$list_str .= "<li><span class='glyphicon glyphicon-remove-circle'></span> $lang[drm_editownpages]</li>";
+	$list_str .= '<li><span class="glyphicon glyphicon-remove-circle text-danger"></span> '. $lang['drm_editownpages'].'</li>';
 }
 
 if($_SESSION['acp_files'] == "allowed") {
-	$list_str .= "<li><span class='glyphicon glyphicon-ok-circle'></span> $lang[drm_files]</li>";
+	$list_str .= '<li><span class="glyphicon glyphicon-ok-circle text-success"></span> '. $lang['drm_files'].'</li>';
 } else {
-	$list_str .= "<li><span class='glyphicon glyphicon-remove-circle'></span> $lang[drm_files]</li>";
+	$list_str .= '<li><span class="glyphicon glyphicon-remove-circle text-danger"></span> '. $lang['drm_files'].'</li>';
 }
 
 if($_SESSION['acp_user'] == "allowed") {
-	$list_str .= "<li><span class='glyphicon glyphicon-ok-circle'></span> $lang[drm_user]</li>";
+	$list_str .= '<li><span class="glyphicon glyphicon-ok-circle text-success"></span> '. $lang['drm_user'].'</li>';
 } else {
-	$list_str .= "<li><span class='glyphicon glyphicon-remove-circle'></span> $lang[drm_files]</li>";
+	$list_str .= '<li><span class="glyphicon glyphicon-remove-circle text-danger"></span> '. $lang['drm_user'].'</li>';
 }
 
 if($_SESSION['acp_system'] == "allowed") {
-	$list_str .= "<li><span class='glyphicon glyphicon-ok-circle'></span> $lang[drm_system]</li>";
+	$list_str .= '<li><span class="glyphicon glyphicon-ok-circle text-success"></span> '. $lang['drm_system'].'</li>';
 } else {
-	$list_str .= "<li><span class='glyphicon glyphicon-remove-circle'></span> $lang[drm_files]</li>";
+	$list_str .= '<li><span class="glyphicon glyphicon-remove-circle text-danger"></span> '. $lang['drm_files'].'</li>';
 }
 
 if($_SESSION['drm_can_publish'] == "true") {
-	$list_str .= "<li><span class='glyphicon glyphicon-ok-circle'></span> $lang[drm_user_can_publish]</li>";
+	$list_str .= '<li><span class="glyphicon glyphicon-ok-circle text-success"></span> '. $lang['drm_user_can_publish'].'</li>';
 } else {
-	$list_str .= "<li><span class='glyphicon glyphicon-remove-circle'></span> $lang[drm_user_can_publish]</li>";
+	$list_str .= '<li><span class="glyphicon glyphicon-remove-circle text-danger"></span> '. $lang['drm_user_can_publish'].'</li>';
 }
 
 
@@ -80,7 +85,9 @@ $list_str .= "</ul>";
 
 echo $list_str;
 
+echo '</div>';
 
+echo '</div>';
 echo '</div>';
 
 

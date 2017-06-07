@@ -182,7 +182,7 @@ echo '</div>';
 echo '</div>';
 echo '<div class="col-md-9">';
 
-echo "<form action='$_SERVER[PHP_SELF]?tn=pages&sub=snippets' method='POST'>";
+echo "<form action='acp.php?tn=pages&sub=snippets' method='POST'>";
 
 
 

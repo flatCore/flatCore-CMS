@@ -45,7 +45,7 @@ $logfiles = glob("$log_dir/logfile*");
 
 echo"<fieldset>";
 echo"<legend>$lang[select_logfile]</legend>";
-echo"<form action='$_SERVER[PHP_SELF]?tn=system&sub=stats' method='POST' class='form-inline'>";
+echo"<form action='acp.php?tn=system&sub=stats' method='POST' class='form-inline'>";
 echo '<div class="form-group">';
 echo"<select name='select_logfile' class='form-control'>";
 

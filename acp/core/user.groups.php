@@ -161,7 +161,7 @@ $editgroup = (int) $_POST['editgroup'];
 
 echo '<fieldset>';
 echo '<legend>'.$lang['legend_choose_group'].'</legend>';
-echo '<form action="'.$_SERVER['PHP_SELF'].'?tn=user&sub=groups" method="POST">';
+echo '<form action="acp.php?tn=user&sub=groups" method="POST">';
 
 echo '<div class="row">';
 echo '<div class="col-md-5">';
@@ -231,7 +231,7 @@ unset($group_name,$group_description,$hidden_field);
 echo '<fieldset>';
 echo '<legend>'.$lang['legend_groups_data'].'</legend>';
 
-echo '<form action="'.$_SERVER[PHP_SELF].'?tn=user&sub=groups" method="POST">';
+echo '<form action="acp.php?tn=user&sub=groups" method="POST">';
 
 echo '<div class="row">';
 echo '<div class="col-md-8">';
