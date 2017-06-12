@@ -80,13 +80,13 @@ if(isset($_POST['save_snippet'])) {
 	$db = null;
 	
 	if($cnt_changes == TRUE) {
-		$sys_message = "{OKAY} $lang[db_changed]";
-		record_log("$_SESSION[user_nick]","edit textlib <b>$snippet_title</b>","2");
+		$sys_message = '{OKAY} '.$lang['db_changed'];
+		record_log("$_SESSION[user_nick]","edit textlib <strong>$snippet_name</strong>","2");
 	} else {
-		$sys_message = "{ERROR} $lang[db_not_changed]";
+		$sys_message = '{ERROR} '.$lang['db_not_changed'];
 	}
 	
-	print_sysmsg("$sys_message");
+	print_sysmsg($sys_message);
 
 } // eol save text
 
