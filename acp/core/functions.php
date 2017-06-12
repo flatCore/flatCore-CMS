@@ -933,13 +933,11 @@ function fc_write_comment($author, $message, $parent, $id = NULL) {
 
 	$error = print_r($dbh->errorInfo(),true);
 	$lastId = $dbh->lastInsertId();
-	//debug_to_console($modus);
 	$dbh = null;
 	
 	if($cnt_changes == true) {
 		return 'success';
 	} else {
-		
 		return $error;
 	}
 
@@ -974,13 +972,16 @@ function fc_get_media_data($filename,$lang=NULL) {
  */
 
 function fc_delete_media_data($filename) {
-
+	
 	$dbh = new PDO("sqlite:".CONTENT_DB);
 	$query = "DELETE FROM fc_media WHERE media_file = :filename";
 	$sth = $dbh -> prepare($query);
 	$sth -> bindParam(':filename', $filename, PDO::PARAM_STR);
 	$sth->execute();
 	$dbh = null;
+	
+	$record_msg = 'delete media data: <strong>'.basename($filename).'</strong>';
+	record_log($_SESSION['user_nick'],$record_msg,"2");
 
 }
 
@@ -1124,8 +1125,7 @@ function fc_get_labels() {
 
 
 function debug_to_console($data) {
-    if(is_array($data) || is_object($data))
-	{
+  if(is_array($data) || is_object($data)) {
 		echo("<script>console.log('PHP: ".json_encode($data)."');</script>");
 	} else {
 		echo("<script>console.log('PHP: ".$data."');</script>");
