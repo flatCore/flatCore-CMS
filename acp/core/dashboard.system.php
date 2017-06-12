@@ -140,7 +140,7 @@ $chat_form = str_replace('{form_legend}', $lang['label_comment'], $chat_form);
 
 $comment_entry_tpl = file_get_contents('templates/comment-entry.tpl');
 
-echo '<div class="scroll-conatiner" id="inlineComments">';
+echo '<div class="scroll-container" id="inlineComments">';
 
 echo $chat_form;
 
