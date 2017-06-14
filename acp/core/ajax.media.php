@@ -24,13 +24,16 @@ $form_tpl = file_get_contents('../templates/media-edit-form.tpl');
 
 if(isset($_REQUEST['file'])) {
 	$media_filename = strip_tags($_REQUEST['file']);
-	
+		
 	if($_REQUEST['folder'] == "2") {
 		$preview_src = '<p>Filetype: '.substr(strrchr($media_filename, "."), 1).'</p>';
 		$realpath = $media_filename;
+		$img_dimensions = '';
 	} else {
 		$preview_src = '<img src="'. $media_filename.'" class="img-responsive">';
 		$realpath = $media_filename;
+		list($img_width, $img_height) = getimagesize("../$media_filename");
+		$img_dimensions = ' | '.$img_width.' x '.$img_height.' px';
 	}	
 }
 
@@ -71,6 +74,7 @@ $form_tpl = str_replace('{basename}', basename($media_filename), $form_tpl);
 $form_tpl = str_replace('{realpath}', $realpath, $form_tpl);
 $form_tpl = str_replace('{showpath}', $abs_path, $form_tpl);
 $form_tpl = str_replace('{filesize}', $filesize, $form_tpl);
+$form_tpl = str_replace('{image_dimensions}', $img_dimensions, $form_tpl);
 $form_tpl = str_replace('{edittime}', $lastedit, $form_tpl);
 $form_tpl = str_replace('{folder}', $_REQUEST['folder'], $form_tpl);
 $form_tpl = str_replace('{title}', htmlspecialchars($media_data['media_title'], ENT_QUOTES), $form_tpl);

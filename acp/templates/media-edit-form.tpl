@@ -87,7 +87,7 @@
 				</tr>
 				<tr>
 					<td class="text-right"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></td>
-					<td>{filesize}</td>
+					<td>{filesize} {image_dimensions}</td>
 				</tr>
 				<tr>
 					<td class="text-right"><span class="glyphicon glyphicon-console" aria-hidden="true"></span></td>
