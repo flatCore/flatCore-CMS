@@ -11,15 +11,15 @@ require("core/access.php");
  */
 
 if(!isset($_GET['tn'])){
-	$tn = "dasboard";
+	$tn = "dashboard";
 } else {
-	$tn = clean_vars("$_GET[tn]");
+	$tn = clean_vars($_GET['tn']);
 }
 
 if(!isset($_GET['sub'])){
 	$sub = "";
 } else {
-	$sub = clean_vars("$_GET[sub]");
+	$sub = clean_vars($_GET['sub']);
 }
 
 
