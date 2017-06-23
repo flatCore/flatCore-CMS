@@ -144,6 +144,9 @@ echo '<h3>' . $lang['snippets'] . '</h3>';
 echo '<div class="row">';
 echo '<div class="col-md-3">';
 
+echo '<input class="form-control filter-list" type="search" placeholder="Filter ..."><hr>';
+
+
 echo '<div class="max-height-container">';
 echo '<div class="scroll-box">';
 echo '<div class="list-group">';
@@ -156,8 +159,10 @@ for($i=0;$i<$cnt_snippets;$i++) {
 	
 	if(in_array($get_snip_name, $system_snippets)) {
 		$show_snip_name = '<span class="glyphicon glyphicon-cog"></span> ' . $get_snip_name;
+		$data_groups = '"system"';
 	} else {
 		$show_snip_name = $get_snip_name;
+		$data_groups = '';
 	}
 		
 	unset($sel);
@@ -172,7 +177,7 @@ for($i=0;$i<$cnt_snippets;$i++) {
 		$active_class = 'active';
 	}
 	
-	echo '<a class="list-group-item '.$active_class.'" href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'">'.$show_snip_name.' <span class="badge">'.$get_snip_lang.'</span></a>';
+	echo '<a class="list-group-item filter-list-item '.$active_class.'" href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'" data-title="'.$get_snip_name.'" data-groups="['.$data_groups.']">'.$show_snip_name.' <span class="badge">'.$get_snip_lang.'</span></a>';
 }
 
 echo '</div>';

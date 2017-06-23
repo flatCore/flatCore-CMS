@@ -127,7 +127,7 @@ if(isset($set_acptheme)) {
 		<script type="text/javascript" src="./js/jquery.fancybox.min.js?v=2.1.5"></script>
 		
 		<script type="text/javascript" src="../lib/js/jquery/jquery.textareaCounter.plugin.js"></script>
-				
+
 		<link rel="stylesheet" href="../lib/css/bootstrap.min.css?v=3.3.6" type="text/css" media="screen, projection">
 		<link rel="stylesheet" href="css/styles.css?v=20161020" type="text/css" media="screen, projection">
 		
@@ -510,7 +510,21 @@ if(isset($set_acptheme)) {
 	   	var newHeight = $('div.app-container').innerHeight() - divTop +40;
 	   	$(this).height(newHeight);
 	  });
-  });
+
+
+		// filter snippets
+		$('.filter-list').keyup(function() {
+	
+			var value = $(this).val();
+			var exp = new RegExp('^' + value, 'i');
+				
+			$('a.filter-list-item').each(function() {
+				var isMatch = exp.test($(this).data("title"));
+				$(this).toggle(isMatch);
+			});
+		});
+
+	});
 
   $(window).resize(function () {
   	stretchAppContainer();
@@ -567,7 +581,7 @@ if(isset($set_acptheme)) {
         }
     };
     countdown.startInterval();
-   
+
 </script>
 
 	</body>
