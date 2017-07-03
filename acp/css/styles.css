@@ -543,6 +543,18 @@ span#w200 {
   height: 15px;
   border-radius: 50%;
 }
+.btn-label-dot {
+  background: transparent;
+  border: none;
+  padding: 5px;
+  margin: 0 5px 0 0;
+}
+.btn-label-dot.active span.label-dot {
+  border: 1px solid rgba(10, 10, 10, 0.7);
+  -webkit-box-shadow: inset 0 1px 3px rgba(10, 10, 10, 0.7);
+  -moz-box-shadow: inset 0 1px 3px rgba(10, 10, 10, 0.7);
+  box-shadow: inset 0 1px 3px rgba(10, 10, 10, 0.7);
+}
 .page-list-item-draft h5 {
   color: #888;
 }

@@ -71,7 +71,7 @@ if(isset($_GET['switchLang'])) {
 }
 
 /* build SQL query */
-$set_lang_filter = "page_language = 'foobar' OR "; // reset -> result = 0
+$set_lang_filter = "";
 for($i=0;$i<count($arr_lang);$i++) {
 	$lang_folder = $arr_lang[$i]['lang_folder'];
 	if(strpos("$_SESSION[checked_lang_string]", "$lang_folder") !== false) {
@@ -80,6 +80,34 @@ for($i=0;$i<count($arr_lang);$i++) {
 }
 
 $set_lang_filter = substr("$set_lang_filter", 0, -3); // cut the last ' OR'
+
+
+/* labels */
+if(!isset($_SESSION['checked_label_str'])) {
+	$_SESSION['checked_label_str'] = '';
+}
+
+if(isset($_POST['check_label'])) {
+		if(strpos("$_SESSION[checked_label_str]", "$_POST[check_label]") !== false) {
+			$checked_label_string = str_replace("$_POST[check_label]-", '', $_SESSION['checked_label_str']);
+		} else {
+			$checked_label_string = $_SESSION['checked_label_str'] . "$_POST[check_label]-";
+		}
+		$_SESSION['checked_label_str'] = "$checked_label_string";
+}
+
+/* build SQL query for labels */
+
+$set_label_filter = '';
+
+for($i=0;$i<count($fc_labels);$i++) {
+	$label = $fc_labels[$i]['label_id'];
+	if(strpos("$_SESSION[checked_label_str]", "$label") !== false) {
+		$set_label_filter .= "page_labels = '$label' OR ";
+	}
+}
+
+$set_label_filter = substr("$set_label_filter", 0, -3); // cut the last ' OR'
 
 
 /* switch page status */
@@ -201,6 +229,10 @@ if($set_lang_filter != "") {
 	$filter_string .= " AND ($set_lang_filter)";
 }
 
+if($set_label_filter != "") {
+	$filter_string .= " AND ($set_label_filter)";
+}
+
 if($set_keyword_filter != "") {
 	$filter_string .= " AND $set_keyword_filter";
 }
@@ -210,6 +242,25 @@ $_SESSION['filter_string'] = $filter_string;
 
 
 if($subinc == "pages.list") {
+	
+	
+	$label_btn  = '<form action="acp.php?tn=pages&sub=list" method="POST" class="form-horizontal">';
+	$this_btn_status = '';
+	foreach($fc_labels as $label) {
+		
+		if(strpos("$_SESSION[checked_label_str]", $label['label_id']) !== false) {
+			$this_btn_status = 'btn-label-dot active';
+		} else {
+			$this_btn_status = 'btn-label-dot';
+		}		
+			
+		$label_btn .= '<button name="check_label" value="'.$label['label_id'].'" class="'.$this_btn_status.'">';
+		$label_btn .= '<span class="label-dot" style="background-color:'.$label['label_color'].';" title="'.$label['label_title'].'"></span>';
+		$label_btn .= '</button>';
+		
+	}
+	$label_btn .= '</form>';
+	
 
 	/* Filter Languages */
 	$lang_btn_group = '<div class="btn-group">';

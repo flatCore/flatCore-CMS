@@ -28,8 +28,8 @@ foreach($result as $p) {
 $dbh = null;
    
 $cnt_result = count($result);
-
 $result = fc_array_multisort($result, 'page_language', SORT_ASC, 'page_sort', SORT_ASC, SORT_NATURAL);
+
 
 echo '<div class="app-container">';
 
@@ -43,14 +43,25 @@ if($btn_remove_keyword != '') {
 }
 echo '</fieldset>';
 echo '</div>';
-echo '<div class="col-md-9">';
+echo '<div class="col-md-7">';
 echo '<fieldset>';
 echo '<legend>'.$lang['f_page_status'].'/'.$lang['f_page_language'].'</legend>';
 echo $status_btn_group . ' ' . $lang_btn_group;
+
+echo '</fieldset>';
+echo '</div>';
+
+echo '<div class="col-md-2">';
+echo '<fieldset>';
+echo '<legend>Labels</legend>';
 echo '<div class="pull-right"><button id="toggleExpand" class="btn btn-link btn-sm"><span class="glyphicon glyphicon-collapse-down"></span></button></div>';
+echo $label_btn;
+
 echo '</fieldset>';
 echo '</div>';
 echo '</div>';
+
+
 
 echo '<div class="max-height-container">';
 echo '<div class="row">';
