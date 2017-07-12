@@ -5,7 +5,6 @@ $(function() {
 	  schema: 'html5',
 	  element_format: "html",
 	  allow_html_in_named_anchor: true,
-	  element_format : 'html',
 	  entity_encoding : "raw",
 	  menubar: "edit insert table tools view",
 	  toolbar_items_size: 'small',
