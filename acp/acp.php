@@ -164,7 +164,7 @@ if(isset($set_acptheme)) {
 		<link rel="stylesheet" href="../lib/css/dropzone.css" type="text/css" media="screen, projection">
 		
 		<!-- ACE Editor -->
-		<script src="../lib/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../lib/js/ace/ace.js" data-ace-base="../lib/js/ace" type="text/javascript" charset="utf-8"></script>
 		
 		<!-- dirty forms -->
 		<script src="../lib/js/jquery/jquery.dirtyforms.js" type="text/javascript" charset="utf-8"></script>
@@ -298,7 +298,7 @@ if(isset($set_acptheme)) {
 					<?php echo $tinyMCE_config_contents; ?>
 				}
 				
-				setAceEditor();
+				//setAceEditor();
 				
 				$("input[value="+editor_mode+"]").parent().addClass('active');
 			
@@ -355,16 +355,19 @@ if(isset($set_acptheme)) {
             	
             	var HTMLtextarea = $('textarea[class*=aceEditor_code]').hide();
 							var aceEditor = ace.edit(editDiv[0]);
-							
+							aceEditor.$blockScrolling = Infinity;
+							aceEditor.getSession().setMode({ path:'ace/mode/html', inline:true });
 							aceEditor.getSession().setValue(textarea.val());
 							aceEditor.setTheme("ace/theme/chrome");
-							aceEditor.getSession().setMode("ace/mode/html");
+							aceEditor.getSession().setUseWorker(false);
 							aceEditor.setShowPrintMargin(false);
+							
 							aceEditor.getSession().on('change', function(){
 								textarea.val(aceEditor.getSession().getValue());
-							});							
+							});
+		
 						});
-				  }  
+				  }
 				}
 
 				/* dirty forms */
@@ -472,18 +475,18 @@ if(isset($set_acptheme)) {
 				});
 			
 				$.fn.matchHeight._update('.equal');
-
-
+				
 				/* css and html editor for page header */
 				if($('#CSSeditor').length != 0) {
 					var CSSeditor = ace.edit("CSSeditor");
 					var CSStextarea = $('textarea[class*=aceEditor_css]').hide();
-				  
+				  CSSeditor.$blockScrolling = Infinity;
 				  CSSeditor.getSession().setValue(CSStextarea.val());
 				  CSSeditor.setTheme("ace/theme/chrome");
 				  CSSeditor.getSession().setMode("ace/mode/css");
+				  CSSeditor.getSession().setUseWorker(false);
 				  CSSeditor.setShowPrintMargin(false);
-					CSSeditor.getSession().on('change', function(){
+				  CSSeditor.getSession().on('change', function(){
 						CSStextarea.val(CSSeditor.getSession().getValue());
 					});
 				}
@@ -491,15 +494,17 @@ if(isset($set_acptheme)) {
 				if($('#HTMLeditor').length != 0) {
 					var HTMLeditor = ace.edit("HTMLeditor");
 					var HTMLtextarea = $('textarea[class*=aceEditor_html]').hide();
-				  
+				  HTMLeditor.$blockScrolling = Infinity;
 				  HTMLeditor.getSession().setValue(HTMLtextarea.val());
 				  HTMLeditor.setTheme("ace/theme/chrome");
-				  HTMLeditor.getSession().setMode("ace/mode/html");
+				  HTMLeditor.getSession().setMode({ path:'ace/mode/html', inline:true });
+				  HTMLeditor.getSession().setUseWorker(false);
 				  HTMLeditor.setShowPrintMargin(false);
 					HTMLeditor.getSession().on('change', function(){
 						HTMLtextarea.val(HTMLeditor.getSession().getValue());
 					});
-			  }
+			  }			  
+			  
 			});
 
 	$(document).ready(function() {
