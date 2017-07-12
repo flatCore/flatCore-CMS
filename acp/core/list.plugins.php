@@ -27,12 +27,7 @@ if(count($all_plugin_files)<1) {
 		//$filesize = readable_filesize(filesize('../'.FC_CONTENT_DIR.'/plugins/'.$plugin));
 		//$lastedit = date('Y-m-d H:i:s',filemtime('../'.FC_CONTENT_DIR.'/plugins/'.$plugin));
 		
-		/* show edit btn or source code for non admins */
-		if($_SESSION['user_class'] == 'administrator') {
-			$edit_btn = '<a href="/acp/core/ajax.plugins.php?plugin='.$plugin.'" class="fancybox-ajax btn btn-sm btn-default"><span class="glyphicon glyphicon-pencil"></span> '.$lang['edit'].'</a>';
-		} else {
-			$edit_btn = '<a class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal'.$id.'">Source</a>';
-		}
+		$edit_btn = '<a class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal'.$id.'">Source</a>';
 		
 		/* show the first comment block */
 		$help_btn = '';
