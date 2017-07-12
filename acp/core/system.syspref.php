@@ -59,6 +59,27 @@ if(isset($_POST['save_prefs_descriptions'])) {
 	$dbh = null;
 }
 
+/* save system settings */
+
+if(isset($_POST['save_system'])) {
+	
+	$pdo_fields = array(
+		'prefs_cms_domain' => 'STR',
+		'prefs_cms_ssl_domain' => 'STR',
+		'prefs_cms_base' => 'STR'
+	);
+	
+	$dbh = new PDO("sqlite:".CONTENT_DB);
+	$sql = generate_sql_update_str($pdo_fields,"fc_preferences","WHERE prefs_id = 1");
+	$sth = $dbh->prepare($sql);
+	$sth->bindParam(':prefs_cms_domain', $_POST['prefs_cms_domain'], PDO::PARAM_STR);
+	$sth->bindParam(':prefs_cms_ssl_domain', $_POST['prefs_cms_ssl_domain'], PDO::PARAM_STR);
+	$sth->bindParam(':prefs_cms_base', $_POST['prefs_cms_base'], PDO::PARAM_STR);
+	$cnt_changes = $sth->execute();
+	$dbh = null;	
+		
+}
+
 /* save thumbnail */
 
 if(isset($_POST['save_prefs_thumbnail'])) {
@@ -328,6 +349,23 @@ echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
 
+/* system */
+
+echo '<fieldset id="system">';
+echo '<legend>System</legend>';
+
+$prefs_cms_domain_input = "<input class='form-control' type='text' name='prefs_cms_domain' value='$prefs_cms_domain'>";
+$prefs_cms_ssl_domain_input = "<input class='form-control' type='text' name='prefs_cms_ssl_domain' value='$prefs_cms_ssl_domain'>";
+$prefs_cms_base_input = "<input class='form-control' type='text' name='prefs_cms_base' value='$prefs_cms_base'>";
+
+echo '<form action="acp.php?tn=system&sub=sys_pref#system" method="POST" class="form-horizontal">';
+echo tpl_form_control_group('',$lang['prefs_cms_domain'],$prefs_cms_domain_input);
+echo tpl_form_control_group('',$lang['prefs_cms_ssl_domain'],$prefs_cms_ssl_domain_input);
+echo tpl_form_control_group('',$lang['prefs_cms_base'],$prefs_cms_base_input);
+echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_system' value='$lang[save]'>");
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+echo '</form>';
+echo '</fieldset>';
 
 /* contacts */
 

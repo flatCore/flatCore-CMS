@@ -43,5 +43,13 @@ foreach($writable_items as $f) {
 
 }
 
+if($prefs_cms_domain == '') {
+	echo '<div class="alert alert-danger">'.$lang['alert_prefs_cms_domain'].'</div>';
+}
+
+if($prefs_cms_base == '') {
+	echo '<div class="alert alert-danger">'.$lang['alert_prefs_cms_base'].'</div>';
+}
+
 
 ?>

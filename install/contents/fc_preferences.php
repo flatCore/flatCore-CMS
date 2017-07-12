@@ -35,7 +35,10 @@ $cols = array(
   "prefs_smtp_authentication" => 'VARCHAR',
   "prefs_smtp_username" => 'VARCHAR',
   "prefs_smtp_psw" => 'VARCHAR',
-  "prefs_rss_time_offset" => 'VARCHAR'
+  "prefs_rss_time_offset" => 'VARCHAR',
+  "prefs_cms_domain" => 'VARCHAR',
+  "prefs_cms_ssl_domain" => 'VARCHAR',
+  "prefs_cms_base" => 'VARCHAR'
   
   );
 

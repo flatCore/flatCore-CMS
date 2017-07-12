@@ -107,12 +107,12 @@ $sql_insert_prefs = "INSERT INTO fc_preferences (
 		prefs_id, prefs_status, prefs_pagetitle,
 		prefs_pagesubtitle, prefs_template, prefs_showloginform, prefs_xml_sitemap,
 		prefs_imagesuffix, prefs_maximagewidth, prefs_maximageheight, prefs_maxfilesize,
-		prefs_logfile, prefs_template_layout, prefs_rss_time_offset
+		prefs_logfile, prefs_template_layout, prefs_rss_time_offset, prefs_cms_domain, prefs_cms_ssl_domain, prefs_cms_base
 		) VALUES (
 		NULL, 'active', 'Diese Homepage',
 		'rockt mit SQLite und PHP5', 'blucent', 'yes', 'off',
 		'jpg jpeg gif png', '600', '500', '2800',
-		'on', 'layout_default.tpl', '216000' )";
+		'on', 'layout_default.tpl', '216000', '$prefs_cms_domain', '$prefs_cms_ssl_domain', '$prefs_cms_base' )";
 
 $sql_tl_footer_text = "INSERT INTO fc_textlib ( 
 						textlib_id , textlib_name , textlib_content , textlib_lang 

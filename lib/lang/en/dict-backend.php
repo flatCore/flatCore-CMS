@@ -334,6 +334,11 @@ $lang['no'] = "Nein";
 
 $lang['labels'] = 'Labels';
 
+$lang['prefs_cms_domain'] = 'CMS Domain';
+$lang['prefs_cms_ssl_domain'] = 'SSL Domain';
+$lang['prefs_cms_base'] = 'Base URI';
+$lang['alert_prefs_cms_domain'] = 'lack of system settings: ' . $lang['prefs_cms_domain'];
+$lang['alert_prefs_cms_base'] = 'lack of system settings: ' . $lang['prefs_cms_base'];
 
 /* rights management */
 

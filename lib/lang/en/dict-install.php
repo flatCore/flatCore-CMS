@@ -22,5 +22,4 @@ $lang['start_install'] = 'Start Installation';
 $lang['installed'] = 'Installation was successfully';
 $lang['link_home'] = 'Homepage';
 $lang['link_admin'] = 'Administration';
-
 ?>

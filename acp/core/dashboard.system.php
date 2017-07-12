@@ -15,6 +15,9 @@ echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">Config</div>';
 echo '<table class="table table-condensed">';
 echo '<tr><td>Server:</td><td>' . $_SERVER['SERVER_NAME'] . ' (PHP '.phpversion().')</td></tr>';
+echo '<tr><td>'.$lang['prefs_cms_domain'].'</td><td>' . $prefs_cms_domain . '</td></tr>';
+echo '<tr><td>'.$lang['prefs_cms_ssl_domain'].'</td><td>' . $prefs_cms_ssl_domain . '</td></tr>';
+echo '<tr><td>'.$lang['prefs_cms_base'].'</td><td>' . $prefs_cms_base . '</td></tr>';
 if($prefs_mailer_adr != '') {
 	echo '<tr><td>System E-Mails:</td><td>' . $prefs_mailer_adr . '</td></tr>';
 } else {
