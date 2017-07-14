@@ -3,13 +3,12 @@
 
 $start_search = "true";
 
-$s = urldecode(strip_tags($s));
+$s = sanitizeUserInputs($s);
 
 if(strlen($s) < 3) {
 	$start_search = "false";
 	$search_msg = $lang['msg_search_undersized'];
 }
-
 
 if($start_search == "true") {
 
@@ -45,11 +44,7 @@ if($start_search == "true") {
 		
 		for($i=0;$i<$cnt_result;$i++) {
 		
-			if($fc_mod_rewrite == "permalink") {
-				$arr_results[$i]['set_link'] = FC_INC_DIR . "/" . $arr_results[$i]['page_permalink'];
-			} else {
-				$arr_results[$i]['set_link'] = "$_SERVER[PHP_SELF]?p=" . $arr_results[$i]['page_id'];
-			}
+			$arr_results[$i]['set_link'] = FC_INC_DIR . "/" . $arr_results[$i]['page_permalink'];
 		
 		} // eo $i
 		

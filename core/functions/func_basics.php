@@ -248,6 +248,23 @@ function clean_filename($str) {
 }  
 
 
+/**
+ * sanitize user inputs
+ *
+ */
+
+function sanitizeUserInputs($str,$type='str',$flags=NULL) {
+	
+	if($type == 'str') {
+		$str = trim($str);	
+		$str = strip_tags($str);
+		$str = filter_var($str, FILTER_SANITIZE_STRING);
+		$str = htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
+	}
+	
+	return $str;
+	
+}
 
 /**
  * get user avatar via e-mail adress
