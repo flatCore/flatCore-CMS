@@ -43,14 +43,10 @@ if($start_search == "true") {
 		$search_msg = sprintf($lang['msg_search_results'], $cnt_result);
 		
 		for($i=0;$i<$cnt_result;$i++) {
-		
 			$arr_results[$i]['set_link'] = FC_INC_DIR . "/" . $arr_results[$i]['page_permalink'];
-		
-		} // eo $i
-		
-		
-	}
+		}
 
+	}
 }
 
 
