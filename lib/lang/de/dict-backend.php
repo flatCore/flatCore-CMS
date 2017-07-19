@@ -307,6 +307,7 @@ $lang['select_filesize_no'] = "Dateigrößen nicht anzeigen";
 
 $lang['page_thumbnail'] = "Thumbnail";
 $lang['page_thumbnail_default'] = "Standard Thumbnail";
+$lang['page_thumbnail_prefix'] = "Thumbnail Prefix";
 $lang['page_favicon'] = "Favicon";
 $lang['rss_offset'] = "RSS Zeitpuffer (Sekunden)";
 

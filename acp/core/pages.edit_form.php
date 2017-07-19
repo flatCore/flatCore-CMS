@@ -174,11 +174,15 @@ echo tpl_form_control_group('',$lang['f_meta_description'],"<textarea name='page
 echo '<div class="form-group">';
 echo '<label class="control-label control-label-normal col-sm-2">'.$lang['page_thumbnail'].'</label>';
 echo '<div class="col-sm-10">';
+
+if($prefs_pagethumbnail_prefix != '') {
+	echo '<p>Prefix: '.$prefs_pagethumbnail_prefix.'</p>';
+}
 		
 echo '<div class="scroll-container">';
 echo '<select name="page_thumbnail" class="form-control image-picker">';
 echo '<option value="">'.$lang['page_thumbnail'].'</option>';
-$arr_Images = get_all_images();
+$arr_Images = fc_get_all_images($prefs_pagethumbnail_prefix);
 	foreach($arr_Images as $page_thumbnails) {
 		$selected = "";
 		if($page_thumbnail == "$page_thumbnails") {

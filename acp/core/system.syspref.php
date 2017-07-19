@@ -86,6 +86,7 @@ if(isset($_POST['save_prefs_thumbnail'])) {
 
 	$pdo_fields = array(
 		'prefs_pagethumbnail' => 'STR',
+		'prefs_pagethumbnail_prefix' => 'STR',
 		'prefs_pagefavicon' => 'STR'
 	);
 	$dbh = new PDO("sqlite:".CONTENT_DB);
@@ -322,7 +323,11 @@ $select_prefs_thumbnail .= "</select>";
 
 echo tpl_form_control_group('',$lang['page_thumbnail'],$select_prefs_thumbnail);
 
+/* Thumbnail Prefix */
+$prefs_tmb_prefix_input = "<input class='form-control' type='text' name='prefs_pagethumbnail_prefix' value='$prefs_pagethumbnail_prefix'>";
+echo tpl_form_control_group('',$lang['page_thumbnail_prefix'],$prefs_tmb_prefix_input);
 
+/* Favicon */
 $select_prefs_favicon  = '<select name="prefs_pagefavicon" class="form-control">';
 $select_prefs_favicon .= '<option value="">'.$lang['page_favicon'].'</option>';
 $arr_Images = get_all_images();

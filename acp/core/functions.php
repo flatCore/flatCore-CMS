@@ -185,6 +185,39 @@ function get_all_images() {
 	 return $images;
 }
 
+/**
+ * show all images from images folder
+ * optional filter by prefix
+ * return array
+ */
+
+function fc_get_all_images($prefix='') {
+
+	global $img_path;
+	$images = array();
+
+	$dir = "../$img_path";
+	$scan_dir = array_diff(scandir($dir), array('..', '.','.DS_Store'));
+	$types = array('jpg','jpeg','png','gif');
+	
+	foreach($scan_dir as $key => $file) {
+		$suffix = substr($file, strrpos($file, '.') + 1);
+		
+			if(in_array($suffix, $types)) {
+			
+				if($prefix != '') {
+					if(substr(basename($file), 0,strlen($prefix)) !== $prefix) {
+						continue;
+					}
+				}
+			
+				$images[] = basename($file);
+		  
+		  }
+	}
+	 return $images;
+}
+
 
 /**
  * get all files from directory (recursive)
