@@ -32,9 +32,8 @@ if($_POST['ask_for_psw']) {
 		$user_registerdate = $userdata_arry['user_registerdate'];
 		
 		/* unique token user_registerdate + user_mail */
-		$reset_token = md5("$user_registerdate$mail");
-		$reset_link = "http://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]?p=password&token=$reset_token";
-		
+		$reset_token = random_text('alnum',32);
+		$reset_link = $fc_base_url."?p=password&token=$reset_token";
 		/* input token */
 		$dbh = new PDO("sqlite:$fc_db_user");
 		$sql = "UPDATE fc_user SET user_reset_psw = :reset_token WHERE user_mail = :mail";
