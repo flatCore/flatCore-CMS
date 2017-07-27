@@ -245,17 +245,19 @@ if($p == "register") {
 
 /* confirm new account */
 if($p == "account") {
-
-	$dbh = new PDO("sqlite:$fc_db_user");
-	$sql = "UPDATE fc_user
-					SET user_verified = 'verified'
-					WHERE user_nick = '$user' AND user_activationkey = '$al' ";
 	
-	$cnt_changes = $dbh->exec($sql);
+	$dbh = new PDO("sqlite:$fc_db_user");					
+	$sql = "UPDATE fc_user SET user_verified = 'verified' WHERE user_nick = :user AND user_activationkey = :al";
+	$stmt = $dbh->prepare($sql);
+	$stmt->bindValue(':user', $user, PDO::PARAM_STR);
+	$stmt->bindValue(':al', $al, PDO::PARAM_STR);
+	$stmt->execute();	
+	
+	$cnt_changes = $stmt->rowCount();
 	$dbh = null;
 	
 	if($cnt_changes > 0){
-		$account_msg = get_textlib("account_confirm");
+		$account_msg = get_textlib("account_confirm",$languagePack);
 		$account_msg = str_replace("{USERNAME}","$user",$account_msg);
 		record_log("switch","user activated via mail - $user","5");
 	} else {
@@ -263,7 +265,6 @@ if($p == "account") {
 	}
 	
 	$smarty->assign('page_content', $account_msg);
-
 }
 
 

@@ -89,10 +89,9 @@ if($send_data == 'true') {
 	$drm_string = '';
 	$psw_string = md5("$psw$username");
 	$user_psw_hash = password_hash($psw, PASSWORD_DEFAULT);
-	
-	$user_activationkey = md5("$username$user_registerdate");
-	$activation_url = "http://$_SERVER[HTTP_HOST]$_SERVER[SCRIPT_NAME]?p=account&user=$username&al=$user_activationkey";
-	$user_activationlink = "<a href='$activation_url'>$activation_url</a>";
+	$user_activationkey = random_text('alnum',32);
+	$activation_url = $fc_base_url."?p=account&user=$username&al=$user_activationkey";
+	$user_activationlink = '<a href="'.$activation_url.'">'.$activation_url.'</a>';
 	
 	$dbh = new PDO("sqlite:$fc_db_user");
 	

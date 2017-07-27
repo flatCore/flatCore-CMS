@@ -135,6 +135,14 @@ if($p == "404") {
 	list($page_contents,$fc_nav,$fc_prefs) = get_content('404','permalink');
 }
 
+/* build absolute URL */
+if($fc_prefs['prefs_cms_ssl_domain'] != '') {
+	$fc_base_url = $fc_prefs['prefs_cms_ssl_domain'] . $fc_prefs['prefs_cms_base'];
+} else {
+	$fc_base_url = $fc_prefs['prefs_cms_domain'] . $fc_prefs['prefs_cms_base'];
+}
+
+
 
 /* if is set page_redirect, we can stop here and go straight to the desired location */
 if($page_contents['page_redirect'] != '') {
