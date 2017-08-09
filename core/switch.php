@@ -85,11 +85,27 @@ for($i=0;$i<$cnt_textlibs;$i++) {
 	}
 }
 
-
 /* include modul */
 if($page_modul != "") {
 	$page_content = "$page_content $modul_content";
 	$smarty->assign('modul_head_enhanced', $modul_head_enhanced);
+	
+	/* overwrite page's values by module */
+	if($mod['page_title'] != "") {
+		$page_title = $mod['page_title'];
+	}
+	if($mod['page_thumbnail'] != "") {
+		$page_thumbnail = $mod['page_thumbnail'];
+	}
+	if($mod['page_favicon'] != "") {
+		$page_favicon = $mod['page_favicon'];
+	}
+	if($mod['page_description'] != "") {
+		$page_meta_description = $mod['page_description'];
+	}	
+	if($mod['page_keywords'] != "") {
+		$page_meta_keywords = $mod['page_keywords'];
+	}		
 }
 
 
