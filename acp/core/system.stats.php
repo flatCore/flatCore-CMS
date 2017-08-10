@@ -162,12 +162,11 @@ echo"<div style='height:350px;overflow:auto;margin:0;padding:10px;background-col
 for($i=0;$i<$cnt_result;$i++) {
 
 	$log_time = date("d.m.Y H:i:s",$result[$i]['log_time']);
-	$log_ip = $result[$i]['log_ip'];
-	$log_ref = $result[$i]['log_ref'];
-	$log_ua = $result[$i]['log_ua'];
-	$log_query = $result[$i]['log_query'];
 	$log_id = $result[$i]['log_id'];
-
+	$log_ip = filter_var($result[$i]['log_ip'], FILTER_SANITIZE_STRING);
+	$log_ua = filter_var($result[$i]['log_ua'], FILTER_SANITIZE_STRING);
+	$log_query = filter_var($result[$i]['log_query'], FILTER_SANITIZE_STRING);
+	$log_ref = filter_var($result[$i]['log_ref'], FILTER_SANITIZE_STRING);
 
 	if( $i%2 == "0" ) {
 		$bg_color = "#fff";
