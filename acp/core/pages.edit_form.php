@@ -197,17 +197,26 @@ echo '</div>';
 
 echo '</fieldset>';
 
+$robots = array("all", "noindex", "nofollow", "none", "noarchive", "nosnippet", "noodp", "notranslate", "noimageindex");
 
-$select_page_meta_robots  = '<select name="page_meta_robots" class="form-control">';
-$select_page_meta_robots .= '<option value="all" '.($page_meta_robots == "all" ? 'selected="selected"' :'').'>all</option>';
-$select_page_meta_robots .= '<option value="noindex" '.($page_meta_robots == "noindex" ? 'selected="selected"' :'').'>noindex</option>';
-$select_page_meta_robots .= '<option value="nofollow" '.($page_meta_robots == "nofollow" ? 'selected="selected"' :'').'>nofollow</option>';
-$select_page_meta_robots .= '<option value="noodp" '.($page_meta_robots == "noodp" ? 'selected="selected"' :'').'>noodp</option>';
-$select_page_meta_robots .= '<option value="noydir" '.($page_meta_robots == "noydir" ? 'selected="selected"' :'').'>noydir</option>';
-$select_page_meta_robots .= '</select>';
-echo tpl_form_control_group('',$lang['f_meta_robots'],$select_page_meta_robots);
+$checkbox_robots = '<div class="btn-group" data-toggle="buttons">';
+foreach($robots as $r) {
+	
+	$active = '';
+	$checked = '';
+	
+	if(strpos($page_meta_robots, $r) !== false) {
+		$active = 'active';
+		$checked = 'checked';
+	}
+	
+	$checkbox_robots .= '<label class="btn btn-default btn-sm '.$active.'">';
+	$checkbox_robots .= '<input type="checkbox" name="page_meta_robots[]" value="'.$r.'" '.$checked.'> '.$r;
+	$checkbox_robots .= '</label>';
+}
+$checkbox_robots .= '</div>';
 
-
+echo tpl_form_control_group('',$lang['f_meta_robots'],$checkbox_robots);
 
 echo '</div>'; /* EOL tab_meta */
 

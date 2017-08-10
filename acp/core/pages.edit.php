@@ -246,6 +246,9 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 	$select_template = explode("<|-|>", $_POST['select_template']);
 	$page_template 			= $select_template[0];
 	$page_template_layout 	= $select_template[1];
+	
+	/* page_meta_robots */
+	$page_meta_robots = implode(',',$_POST['page_meta_robots']);
 
 
 	// connect to database
@@ -274,6 +277,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$sth->bindParam(':page_authorized_users', $string_authorized_admins, PDO::PARAM_STR);
 		$sth->bindParam(':page_version', $page_version, PDO::PARAM_INT);
 		$sth->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
+		$sth->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
 		
 		$cnt_changes = $sth->execute();
 	
@@ -310,6 +314,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$std->bindParam(':page_id_original', $page_id_original, PDO::PARAM_STR);
 		$std->bindParam(':page_cache_type', $page_cache_type, PDO::PARAM_STR);
 		$std->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
+		$sth->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
 		
 		$cnt_changes_c = $std->execute();
 	
@@ -337,6 +342,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$sth->bindParam(':page_sort', $page_sort, PDO::PARAM_STR);
 		$sth->bindParam(':page_authorized_users', $string_authorized_admins, PDO::PARAM_STR);
 		$sth->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
+		$sth->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
 		
 		$cnt_changes = $sth->execute();
 		$editpage = $dbh->lastInsertId();
@@ -375,6 +381,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$std->bindParam(':page_cache_type', $page_cache_type, PDO::PARAM_STR);
 		$std->bindParam(':page_version', $page_version, PDO::PARAM_INT);
 		$sth->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
+		$sth->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
 		
 		$cnt_changes_c = $std->execute();
 	
@@ -407,6 +414,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$std->bindParam(':page_authorized_users', $string_authorized_admins, PDO::PARAM_STR);
 		$std->bindParam(':page_version', $page_version, PDO::PARAM_INT);
 		$std->bindParam(':page_cache_type', $page_cache_type, PDO::PARAM_STR);
+		$sth->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
 		
 		$cnt_changes_c = $std->execute();
 		
