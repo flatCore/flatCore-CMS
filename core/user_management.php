@@ -44,14 +44,9 @@ if(isset($_POST['login'])) {
 
 if($_SESSION['user_nick'] != "") {
 
-	$status_msg = "$lang[msg_login_true]";
-	$link_logout = "$_SERVER[PHP_SELF]?goto=logout";
-
-	if($fc_mod_rewrite == "permalink") {
-		$link_profile = FC_INC_DIR . "/profile/";
-	} else {
-		$link_profile = "$_SERVER[PHP_SELF]?p=profile";
-	}
+	$status_msg = $lang['msg_login_true'];
+	$link_logout = $fc_base_url.'?goto=logout';
+	$link_profile = FC_INC_DIR . "/profile/";
 
 
 	/* user == administrator */
@@ -63,7 +58,7 @@ if($_SESSION['user_nick'] != "") {
 				$link_edit_page = FC_INC_DIR . "/" . FC_ACP_DIR . "/acp.php?tn=pages";
 			}
 		} else {
-			unset($link_acp,$lang[button_acp]);
+			unset($link_acp,$lang['button_acp']);
 	}
 	
 	$smarty->assign('status_msg', $status_msg);
@@ -94,13 +89,8 @@ if($_SESSION['user_nick'] != "") {
 		$smarty->assign('label_remember_me', $lang['label_remember_me']);
 		$smarty->assign("p","$p");
 		
-		if($fc_mod_rewrite == "permalink") {
-			$show_register_link = FC_INC_DIR . "/register/";
-			$show_forgotten_psw_link = FC_INC_DIR . "/password/";
-		} else {
-			$show_register_link = "$_SERVER[PHP_SELF]?p=register";
-			$show_forgotten_psw_link = "$_SERVER[PHP_SELF]?p=password";
-		}
+		$show_register_link = FC_INC_DIR . "/register/";
+		$show_forgotten_psw_link = FC_INC_DIR . "/password/";
 		
 		$smarty->assign("show_forgotten_psw_link","<a href='$show_forgotten_psw_link'>$lang[forgotten_psw]</a>");
 		
