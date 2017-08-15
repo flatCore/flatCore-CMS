@@ -86,16 +86,18 @@ echo '</div>';
 
 
 
+$arr_lang = get_all_languages();
+$current_lang_icon = '<img src="../lib/lang/'.$languagePack.'/flag.png" style="vertical-align: baseline; width:18px; height:auto;">';
 echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">';
-echo '<a class="sidebar-nav dashboard-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#lang">'.$lang['f_page_language'].'<span class="tri-left"></span></a>';
+echo '<a class="sidebar-nav dashboard-toggle" data-toggle="collapse" data-parent="#dashboard-collapse" href="#lang">'.$current_lang_icon.' '.$lang['f_page_language'].'<span class="tri-left"></span></a>';
 echo '</div>';
 
 echo '<div id="lang" class="panel-collapse collapse">';
-$arr_lang = get_all_languages();
 
 for($i=0;$i<count($arr_lang);$i++) {
-	echo '<a class="sidebar-sub" href="acp.php?set_lang='.$arr_lang[$i]['lang_folder'].'">'.$arr_lang[$i]['lang_desc'].'</a>';
+	$lang_icon = '<img src="../lib/lang/'.$arr_lang[$i]['lang_folder'].'/flag.png" style="vertical-align: baseline; width:18px; height:auto;">';
+	echo '<a class="sidebar-sub" href="acp.php?set_lang='.$arr_lang[$i]['lang_folder'].'">'.$lang_icon.' '.$arr_lang[$i]['lang_desc'].'</a>';
 }
 
 echo '</div>';

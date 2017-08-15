@@ -118,7 +118,6 @@ if(isset($set_acptheme)) {
 		
 		<script src="../lib/js/jquery/jquery.min.js"></script>
     <script src="../lib/js/bootstrap.min.js"></script>
-    
     <script language="javascript" type="text/javascript" src="../lib/js/tinymce/tinymce.min.js"></script>
     <script language="javascript" type="text/javascript" src="../lib/js/tinymce/jquery.tinymce.min.js"></script>
 
@@ -131,19 +130,17 @@ if(isset($set_acptheme)) {
 		<link rel="stylesheet" href="../lib/css/bootstrap.min.css?v=3.3.6" type="text/css" media="screen, projection">
 		<link rel="stylesheet" href="css/styles.css?v=20161020" type="text/css" media="screen, projection">
 		
-		<?php
+		<script type="text/javascript">
+			var languagePack = "<?php echo $languagePack; ?>";
+		</script>
 		
-
+		<?php
 		
 		if($acptheme == 'dark') {
 			echo '<link rel="stylesheet" href="css/dark.css?v=20161020" type="text/css" media="screen, projection">';
 		}
-		
-		
-		
-		
-		?>
-		
+
+		?>	
 		
 		<!-- masonry -->
 		<script type="text/javascript" src="../lib/js/masonry.pkgd.min.js"></script>
@@ -275,8 +272,6 @@ if(isset($set_acptheme)) {
 
 		<script type="text/javascript">
 			
-			
-
 			$(function() {
 
 				/* toggle editor class [mceEditor|plain|aceEditor_html] */

@@ -1,7 +1,7 @@
 $(function() {
 	$('textarea.mceEditor').tinymce({
 		selector: 'textarea.mceEditor',
-	  language : 'de',
+	  language : languagePack,
 	  schema: 'html5',
 	  element_format: "html",
 	  allow_html_in_named_anchor: true,
@@ -79,7 +79,7 @@ $(function() {
 
 	$('textarea.mceEditor_small').tinymce({
 	  selector: 'textarea.mceEditor_small',
-	  language : 'de',
+	  language : languagePack,
 	  toolbar_items_size: 'small',
 	  content_css : "../styles/blucent/css/editor.css",
 	  plugins: [

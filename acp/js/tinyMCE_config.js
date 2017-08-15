@@ -1,6 +1,6 @@
 $(function() {
 	$('textarea.mceEditor').tinymce({
-	  language : 'de',
+	  language : languagePack,
 	  element_format : "html",
 	  menubar: "edit insert table tools view",
 	  toolbar_items_size: 'small',
@@ -70,7 +70,7 @@ $(function() {
 
 	$('textarea.mceEditor_small').tinymce({
 	  selector: 'textarea.mceEditor_small',
-	  language : 'de',
+	  language : languagePack,
 	  toolbar_items_size: 'small',
 	  plugins: [
 	    "advlist autolink lists link image charmap preview anchor",
