@@ -26,20 +26,11 @@ function get_lastedit($num = 5) {
 	$count_result = count($result);
 	
 	for($i=0;$i<$count_result;$i++) {
-		if($fc_mod_rewrite == "on") {
-			$set_title = str_replace(" ","_",$result[$i]['page_title']);
-			$result[$i]['link'] = FC_INC_DIR . "/" . $result[$i]['page_linkname'] ."/". $result[$i]['page_id'] ."/". $set_title;
-		} elseif ($fc_mod_rewrite == "off") {
-			$result[$i]['link'] = "$_SERVER[PHP_SELF]?p=" . $result[$i]['page_id'];
-		} elseif ($fc_mod_rewrite == "permalink") {
-			$result[$i]['link'] = FC_INC_DIR . "/" . $result[$i]['page_permalink'];
-		}
-	
-	} // eol $i
+		$result[$i]['link'] = FC_INC_DIR . "/" . $result[$i]['page_permalink'];
+	}
 	
 	
 	return $result;
-
 }
 
 ?>

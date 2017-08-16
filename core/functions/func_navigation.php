@@ -42,11 +42,7 @@ function show_mainmenu() {
 			}
 		
 			/* generate the main menu */
-			if($fc_mod_rewrite == "off") {
-				$menu[$i]['link'] = "$_SERVER[PHP_SELF]?p=" . $fc_nav[$i]['page_id'];
-			} elseif ($fc_mod_rewrite == "permalink") {
-				$menu[$i]['link'] = FC_INC_DIR . "/" . $fc_nav[$i]['page_permalink'];
-			}
+			$menu[$i]['link'] = FC_INC_DIR . "/" . $fc_nav[$i]['page_permalink'];
 		}
 	}
 	
@@ -158,11 +154,7 @@ function build_submenu($index,$level=1) {
 		$submenu[$index]['link_status'] = 'sub_link'.$level;
 	}
 	
-	if($fc_mod_rewrite == "off") {
-		$submenu[$index]['sublink'] = "$_SERVER[PHP_SELF]?p=" . $fc_nav[$index]['page_id'];
-	} elseif ($fc_mod_rewrite == "permalink") {
-		$submenu[$index]['sublink'] = FC_INC_DIR . "/" . $fc_nav[$index]['page_permalink'];
-	}
+	$submenu[$index]['sublink'] = FC_INC_DIR . "/" . $fc_nav[$index]['page_permalink'];
 	
 	return $submenu;
 }
@@ -205,11 +197,7 @@ function show_sitemap() {
 			continue;
 		}
 		
-		if($fc_mod_rewrite == "permalink") {
-			$target = FC_INC_DIR . "/" . $page_permalink;
-		} else {
-			$target = "$_SERVER[PHP_SELF]?p=$page_id";
-		}
+		$target = FC_INC_DIR . "/" . $page_permalink;
 		
 		$points_of_item[$i] = substr_count($page_sort, '.');
 

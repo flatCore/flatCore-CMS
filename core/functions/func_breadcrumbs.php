@@ -40,11 +40,7 @@ function breadcrumbs_menu($num){
 				$bc[$i]['page_permalink'] = $fc_nav[$i]['page_permalink'];
 				$bc[$i]['page_title'] = $fc_nav[$i]['page_title'];
 				
-				if($fc_mod_rewrite == 'permalink') {
-					$bc[$i]['link'] = FC_INC_DIR . "/" . $fc_nav[$i]['page_permalink'];
-				} else {
-					$bc[$i]['link'] = "$_SERVER[PHP_SELF]?p=" . $fc_nav[$i]['page_id'];
-				}
+				$bc[$i]['link'] = FC_INC_DIR . "/" . $fc_nav[$i]['page_permalink'];
 			
 			}
 		

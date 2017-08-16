@@ -164,28 +164,23 @@ if($_SESSION['user_nick'] == "") {
 	
 	
 	// show data in form
-	
-	if($fc_mod_rewrite == "permalink") {
-		$form_url = FC_INC_DIR . "/profile/";
-	} else {
-		$form_url = "$_SERVER[PHP_SELF]?p=profile";
-	}
+	$form_url = FC_INC_DIR . "/profile/";
 	
 	if(is_file("content/avatars/".md5($_SESSION['user_nick']) . ".png")){
 
 		$avatar_url = FC_INC_DIR . "/content/avatars/".md5($_SESSION['user_nick']) . ".png";
 		$smarty->assign("avatar_url","$avatar_url");
 		
-		$link_avatar_delete = "<a href='$_SERVER[PHP_SELF]?p=profile&delete_avatar=true'>$lang[link_delete_avatar]</a>";
-		$link_avatar_delete_url = "$_SERVER[PHP_SELF]?p=profile&delete_avatar=true";
-		$link_avatar_delete_text = "$lang[link_delete_avatar]";
+		$link_avatar_delete_url = $fc_base_url.'?p=profile&delete_avatar=true';
+		$link_avatar_delete = '<a href="'.$link_avatar_delete_url.'">'.$lang['link_delete_avatar'].'</a>';
+		$link_avatar_delete_text = $lang['link_delete_avatar'];
 		
 		$smarty->assign("link_avatar_delete","$link_avatar_delete");
 		$smarty->assign("link_avatar_delete_url","$link_avatar_delete_url");
 		$smarty->assign("link_avatar_delete_text","$link_avatar_delete_text");
 		
 		if($delete_avatar == true) {
-			unlink("content/avatars/".md5($_SESSION[user_nick]) . ".png");
+			unlink("content/avatars/".md5($_SESSION['user_nick']) . ".png");
 			$smarty->assign("avatar_url","");
 			$smarty->assign("link_avatar_delete","");
 		}
@@ -197,14 +192,14 @@ if($_SESSION['user_nick'] == "") {
 	$get_my_userdata = get_my_userdata();
 	//example: $get_my_userdata['user_nick']
 	
-	$smarty->assign("user_nick","$_SESSION[user_nick]");
-	$smarty->assign("get_firstname","$get_my_userdata[user_firstname]");
-	$smarty->assign("get_lastname","$get_my_userdata[user_lastname]");
-	$smarty->assign("get_street","$get_my_userdata[user_street]");
-	$smarty->assign("get_nr","$get_my_userdata[user_street_nbr]");
-	$smarty->assign("get_zip","$get_my_userdata[user_zipcode]");
-	$smarty->assign("get_city","$get_my_userdata[user_city]");
-	$smarty->assign("send_about","$get_my_userdata[user_public_profile]");
+	$smarty->assign("user_nick",$_SESSION['user_nick']);
+	$smarty->assign("get_firstname",$get_my_userdata['user_firstname']);
+	$smarty->assign("get_lastname",$get_my_userdata['user_lastname']);
+	$smarty->assign("get_street",$get_my_userdata['user_street']);
+	$smarty->assign("get_nr",$get_my_userdata['user_street_nbr']);
+	$smarty->assign("get_zip",$get_my_userdata['user_zipcode']);
+	$smarty->assign("get_city",$get_my_userdata['user_city']);
+	$smarty->assign("send_about",$get_my_userdata['user_public_profile']);
 	
 	$output = $smarty->fetch("profile_main.tpl");
 	$smarty->assign('page_content', $output);

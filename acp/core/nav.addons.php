@@ -41,7 +41,7 @@ for($i=0;$i<$nbrModuls;$i++) {
 				$sub_link_class = "sidebar-sub";
 			}
 		
-			$mod_subnav .= "<a class='$sub_link_class' href='$_SERVER[PHP_SELF]?tn=moduls&sub=$modFolder&a=$incpage'>$showlink</a>";
+			$mod_subnav .= '<a class="'.$sub_link_class.'" href="acp.php?tn=moduls&sub='.$modFolder.'&a='.$incpage.'">'.$showlink.'</a>';
 		} // eo $x
 		
 		
@@ -50,9 +50,9 @@ for($i=0;$i<$nbrModuls;$i++) {
 		 * info.inc.php
 		 */
 		
-		$mod_name = "$mod[name]";
-		$mod_version = "$mod[version]";
-		$mod_db = "../$mod[database]";
+		$mod_name = $mod['name'];
+		$mod_version = $mod['version'];
+		$mod_db = '../'.$mod['database'];
 	
 	}
 	

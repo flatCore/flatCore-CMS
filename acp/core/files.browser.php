@@ -318,8 +318,8 @@ if($end>$nbr_of_files) {
 }
 
 
-$pag_backlink = "<a class='btn btn-primary' href='$_SERVER[PHP_SELF]?tn=filebrowser&start=$prev_start'>$lang[pagination_backward]</a>";
-$pag_forwardlink = "<a class='btn btn-primary' href='$_SERVER[PHP_SELF]?tn=filebrowser&start=$next_start'>$lang[pagination_forward]</a>";
+$pag_backlink = "<a class='btn btn-primary' href='acp.php?tn=filebrowser&start=$prev_start'>$lang[pagination_backward]</a>";
+$pag_forwardlink = "<a class='btn btn-primary' href='acp.php?tn=filebrowser&start=$next_start'>$lang[pagination_forward]</a>";
 
 unset($pag_string);
 for($x=0;$x<$cnt_pages;$x++) {
@@ -343,7 +343,7 @@ for($x=0;$x<$cnt_pages;$x++) {
 		}
 	}
 	
-	$a_pag_string[] = "<a class='$aclass' href='$_SERVER[PHP_SELF]?tn=filebrowser&start=$page_start'>$page_nbr</a> ";
+	$a_pag_string[] = "<a class='$aclass' href='acp.php?tn=filebrowser&start=$page_start'>$page_nbr</a> ";
 
 } //eol for $x
 

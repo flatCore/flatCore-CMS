@@ -601,7 +601,7 @@ if($show_form == "true" AND $sub != "new") {
 					<td width='100'>$time</td>
 					<td>" . $cache_result[$i]['page_title'] . "</td>
 					<td> " . $cache_result[$i]['page_lastedit_from'] . "</td>
-					<td width='100' align='right'><a class='btn btn-default btn-sm' href='$_SERVER[PHP_SELF]?tn=pages&sub=edit&restore_id=$page_id&editpage=$editpage'>$lang[edit]</a></td>
+					<td width='100' align='right'><a class='btn btn-default btn-sm' href='acp.php?tn=pages&sub=edit&restore_id=$page_id&editpage=$editpage'>$lang[edit]</a></td>
 				</tr>";
 	}
 	

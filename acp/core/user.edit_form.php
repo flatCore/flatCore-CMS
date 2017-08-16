@@ -14,7 +14,7 @@ if($_GET['sub'] == "new"){
 
 echo '<div class="row"><div class="col-md-12">';
 
-echo "<form action='$_SEVER[PHP_SELF]?tn=user&sub=$sub&edituser=$edituser' class='form-horizontal' method='POST'>";
+echo "<form action='acp.php?tn=user&sub=$sub&edituser=$edituser' class='form-horizontal' method='POST'>";
 
 $custom_fields = get_custom_user_fields();
 sort($custom_fields);

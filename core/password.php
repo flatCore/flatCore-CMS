@@ -156,11 +156,7 @@ if($_GET['token'] != "") {
 
 
 
-if($fc_mod_rewrite == 'permalink') {
-	$form_url = FC_INC_DIR . "/password/";
-} else {
-	$form_url = "$_SERVER[PHP_SELF]?p=password";
-}
+$form_url = FC_INC_DIR . "/password/";
 
 $smarty->assign("form_url","$form_url");
 $smarty->assign("forgotten_psw","$lang[forgotten_psw]");

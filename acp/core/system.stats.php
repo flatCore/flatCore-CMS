@@ -8,7 +8,7 @@ require("core/access.php");
 
 // defaults
 
-$entries_per_page = 200;
+$entries_per_page = 100;
 
 if($_SESSION['start'] == "") {
 	$_SESSION['start'] = 0;
@@ -204,9 +204,9 @@ $pages = ceil($cnt_entries/$entries_per_page);
 echo"<div id='pagina'><p>";
 	for($i=0;$i<$pages;$i++) {
 	$nbr = $i+1;
-	$pag_class = "buttonLink";
-	if(($i*$entries_per_page) == "$start") { $pag_class = "buttonLink_sel"; }
-		echo"<a class='$pag_class' href='$_SERVER[PHP_SELF]?tn=system&sub=stats&start=$i'>$nbr</a> ";
+	$pag_class = "btn btn-default btn-sm";
+	if(($i*$entries_per_page) == "$start") { $pag_class = "btn btn-default btn-sm active"; }
+		echo"<a class='$pag_class' href='acp.php?tn=system&sub=stats&start=$i'>$nbr</a> ";
 	}
 
 echo"</p></div>";

@@ -823,9 +823,9 @@ function get_custom_user_fields() {
 
 function show_editor_switch($tn,$sub) {
 
-	$btn_wysiwyg_link = "$_SERVER[PHP_SELF]?tn=$tn&sub=$sub&editor=wysiwyg";
-	$btn_code_link = "$_SERVER[PHP_SELF]?tn=$tn&sub=$sub&editor=code";
-	$btn_text_link = "$_SERVER[PHP_SELF]?tn=$tn&sub=$sub&editor=plain";
+	$btn_wysiwyg_link = "acp.php?tn=$tn&sub=$sub&editor=wysiwyg";
+	$btn_code_link = "acp.php?tn=$tn&sub=$sub&editor=code";
+	$btn_text_link = "acp.php?tn=$tn&sub=$sub&editor=plain";
 	
 	if($_SESSION['editor_class'] == "plain") {
 		$btn_wysiwyg = 'btn btn-default btn-sm';

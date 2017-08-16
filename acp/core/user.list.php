@@ -173,7 +173,7 @@ if($prev_start <= 0){
 }
 
 
-$pag_backlink = "<a class='btn btn-primary' href='$_SERVER[PHP_SELF]?tn=user&sub=list&start=$prev_start&sort=$_GET[sort]'>$lang[pagination_backward]</a>";
+$pag_backlink = "<a class='btn btn-primary' href='acp.php?tn=user&sub=list&start=$prev_start&sort=$_GET[sort]'>$lang[pagination_backward]</a>";
 
 
 for($x=0;$x<$cnt_pages;$x++) {
@@ -187,11 +187,11 @@ for($x=0;$x<$cnt_pages;$x++) {
 		$aclass = "btn btn-primary";
 	}
 
-	$pag_string .= "<a class='$aclass' href='$_SERVER[PHP_SELF]?tn=user&sub=list&start=$page_start'>$page_nbr</a> ";
+	$pag_string .= "<a class='$aclass' href='acp.php?tn=user&sub=list&start=$page_start'>$page_nbr</a> ";
 } //eol for $x
 
 
-$pag_forwardlink = "<a class='btn btn-primary' href='$_SERVER[PHP_SELF]?tn=user&sub=list&start=$next_start&sort=$_GET[sort]'>$lang[pagination_forward]</a>";
+$pag_forwardlink = "<a class='btn btn-primary' href='acp.php?tn=user&sub=list&start=$next_start&sort=$_GET[sort]'>$lang[pagination_forward]</a>";
 
 
 echo '<div class="row">';
@@ -220,12 +220,12 @@ echo '</div><br>';
 echo"<table class='table table-condensed table-hover table-list' border='0' cellpadding='0' cellspacing='0'>";
 
 echo"<thead><tr>
-<th class='head' style='text-align:right;'><a class='darklink' href='$_SERVER[PHP_SELF]?tn=user&sub=list&sort=0&way=$set_way'>ID</a></th>
+<th class='head' style='text-align:right;'><a class='darklink' href='acp.php?tn=user&sub=list&sort=0&way=$set_way'>ID</a></th>
 <th class='head'></th>
-<th class='head'><a class='darklink' href='$_SERVER[PHP_SELF]?tn=user&sub=list&sort=1&way=$set_way'>$lang[h_username]</a></th>
-<th class='head'><a class='darklink' href='$_SERVER[PHP_SELF]?tn=user&sub=list&sort=2&way=$set_way'>$lang[h_registerdate]</a></th>
-<th class='head'><a class='darklink' href='$_SERVER[PHP_SELF]?tn=user&sub=list&sort=3&way=$set_way'>$lang[h_realname]</a></th>
-<th class='head'><a class='darklink' href='$_SERVER[PHP_SELF]?tn=user&sub=list&sort=4&way=$set_way'>$lang[h_email]</a></th>
+<th class='head'><a class='darklink' href='acp.php?tn=user&sub=list&sort=1&way=$set_way'>$lang[h_username]</a></th>
+<th class='head'><a class='darklink' href='acp.php?tn=user&sub=list&sort=2&way=$set_way'>$lang[h_registerdate]</a></th>
+<th class='head'><a class='darklink' href='acp.php?tn=user&sub=list&sort=3&way=$set_way'>$lang[h_realname]</a></th>
+<th class='head'><a class='darklink' href='acp.php?tn=user&sub=list&sort=4&way=$set_way'>$lang[h_email]</a></th>
 <th class='head'>$lang[h_action]</th>
 </tr></thead>";
 
@@ -295,7 +295,7 @@ for($i=$start;$i<$end;$i++) {
 		<td class='$td_class'>$show_registerdate</td>
 		<td class='$td_class'>$user_firstname $user_lastname</td>
 		<td class='$td_class'>$user_mail</td>
-		<td class='$td_class'><a class='btn btn-default btn-sm' href='$_SERVER[PHP_SELF]?tn=user&sub=edit&edituser=$user_id'>$lang[edit]</a></td>
+		<td class='$td_class'><a class='btn btn-default btn-sm' href='acp.php?tn=user&sub=edit&edituser=$user_id'>$lang[edit]</a></td>
 	</tr>";
 
 

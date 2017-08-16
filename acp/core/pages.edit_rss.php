@@ -72,7 +72,7 @@ for($i=0;$i<$cnt_rssItems;$i++) {
 	echo $feed_text;
 	echo '<p><a href="'.$feed_url.'" target="_blank">'.$feed_url.'</a></p>';
 	echo '<div class="formfooter">';
-	echo "<a class='btn btn-danger' href='$_SERVER[PHP_SELF]?tn=pages&sub=rss&delete=$feed_id' onclick=\"return confirm('$lang[confirm_delete_data]')\">$lang[delete]</a>";
+	echo "<a class='btn btn-danger' href='acp.php?tn=pages&sub=rss&delete=$feed_id' onclick=\"return confirm('$lang[confirm_delete_data]')\">$lang[delete]</a>";
 	echo '</div>';
 	echo '</div>';
 	echo '</div>';

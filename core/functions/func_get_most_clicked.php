@@ -72,17 +72,8 @@ function get_most_clicked($num = 5) {
 	$count_result = count($mostclicked);
 	
 	for($i=0;$i<$count_result;$i++) {
-	
-		if($fc_mod_rewrite == "auto") {
-			$set_title = str_replace(" ","_",$mostclicked[$i]['pagetitle']);
-			$mostclicked[$i]['link'] = FC_INC_DIR . "/" . $mostclicked[$i]['linkname'] ."/". $mostclicked[$i]['page_id'] ."/". $set_title;
-		} elseif ($fc_mod_rewrite == "off") {
-			$mostclicked[$i]['link'] = "$_SERVER[PHP_SELF]?p=" . $mostclicked[$i]['page_id'];
-		} elseif ($fc_mod_rewrite == "permalink") {
-			$mostclicked[$i]['link'] = FC_INC_DIR . "/" . $mostclicked[$i]['page_permalink'];
-		}
-	
-	} // eol $i
+		$mostclicked[$i]['link'] = FC_INC_DIR . "/" . $mostclicked[$i]['page_permalink'];
+	}
 	
 	return $mostclicked;
 }
