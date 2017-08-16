@@ -404,8 +404,7 @@ if(isset($set_acptheme)) {
 					type: 'iframe',
 					width: '77%',
 					height: '90%',
-					buttons : false,
-					smallBtn : true
+					buttons: ['close'],
 				});
 				
 				$(".fancybox-ajax").fancybox({
