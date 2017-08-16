@@ -3,6 +3,7 @@
 //prohibit unauthorized access
 require("core/access.php");
 
+$sort = (int) $_GET['sort'];
 
 // sort by reference
 switch ($_GET['sort']) {
@@ -173,7 +174,7 @@ if($prev_start <= 0){
 }
 
 
-$pag_backlink = "<a class='btn btn-primary' href='acp.php?tn=user&sub=list&start=$prev_start&sort=$_GET[sort]'>$lang[pagination_backward]</a>";
+$pag_backlink = "<a class='btn btn-primary' href='acp.php?tn=user&sub=list&start=$prev_start&sort=$sort'>$lang[pagination_backward]</a>";
 
 
 for($x=0;$x<$cnt_pages;$x++) {
@@ -191,7 +192,7 @@ for($x=0;$x<$cnt_pages;$x++) {
 } //eol for $x
 
 
-$pag_forwardlink = "<a class='btn btn-primary' href='acp.php?tn=user&sub=list&start=$next_start&sort=$_GET[sort]'>$lang[pagination_forward]</a>";
+$pag_forwardlink = "<a class='btn btn-primary' href='acp.php?tn=user&sub=list&start=$next_start&sort=$sort'>$lang[pagination_forward]</a>";
 
 
 echo '<div class="row">';
@@ -287,16 +288,16 @@ for($i=$start;$i<$end;$i++) {
 			break;
 	}
 	
-	echo"
-	<tr class='$tr_class'>
-		<td class='$td_class' style='text-align:right;'>$user_id</td>
-		<td>$user_avatar</td>
-		<td class='$td_class'>$admin_img $user_nick</td>
-		<td class='$td_class'>$show_registerdate</td>
-		<td class='$td_class'>$user_firstname $user_lastname</td>
-		<td class='$td_class'>$user_mail</td>
-		<td class='$td_class'><a class='btn btn-default btn-sm' href='acp.php?tn=user&sub=edit&edituser=$user_id'>$lang[edit]</a></td>
-	</tr>";
+	echo '<tr class="'.$tr_class.'">';
+	echo '<td class="'.$td_class.'" style="text-align:right;">'.$user_id.'</td>';
+	echo '<td>'.$user_avatar.'</td>';
+	echo '<td class="'.$td_class.'">'.$admin_img.' '.$user_nick.'</td>';
+	echo '<td class="'.$td_class.'">'.$show_registerdate.'</td>';
+	echo '<td class="'.$td_class.'">'.$user_firstname.' '.$user_lastname.'</td>';
+	echo '<td class="'.$td_class.'">'.$user_mail.'</td>';
+	echo '<td class="'.$td_class.'"><a class="btn btn-default btn-sm" href="acp.php?tn=user&sub=edit&edituser='.$user_id.'">'.$lang['edit'].'</a></td>';
+	echo '</tr>';
+
 
 
 
