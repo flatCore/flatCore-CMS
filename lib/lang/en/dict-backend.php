@@ -197,6 +197,8 @@ $lang['f_page_permalink_short'] = "Short-Link";
 $lang['f_page_hash'] = "Hash";
 $lang['f_page_redirect'] = "Redirect";
 $lang['btn_redirect'] = "Redirects";
+$lang['legend_redirect'] = "Redirect";
+$lang['f_page_funnel_uri'] = "Funnel URI";
 $lang['f_page_title'] = "Page Title";
 $lang['f_page_status'] = "Status";
 

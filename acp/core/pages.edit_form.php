@@ -101,8 +101,30 @@ if($page_sort != "portal") {
 
 echo '<hr>';
 echo tpl_form_control_group('',$lang['f_page_linkname'],'<input class="form-control" type="text" name="page_linkname" value="'.$page_linkname.'">');
-echo tpl_form_control_group('',$lang['f_page_permalink'],"<input class='form-control' type='text' name='page_permalink' value='$page_permalink'>");
 
+
+echo '<div class="form-group">';
+echo '<label class="control-label control-label-normal col-md-2">'.$lang['f_page_permalink'].'</label>';
+echo '<div class="col-sm-10">';
+echo '<div class="input-group">';
+echo '<span class="input-group-addon">'.$fc_base_url.'</span>';
+echo '<input class="form-control" type="text" name="page_permalink" value="'.$page_permalink.'">';
+echo '</div>';
+echo '</div>';
+echo '</div>';
+
+//echo tpl_form_control_group('',$lang['f_page_permalink'],"<input class='form-control' type='text' name='page_permalink' value='$page_permalink'>");
+
+echo tpl_form_control_group('',$lang['f_page_hash'],"<input class='form-control' type='text' name='page_hash' value='$page_hash'>");
+
+
+
+/* redirect */
+echo '<hr><div class="col-sm-10 col-sm-offset-2">';
+echo '<fieldset>';
+echo '<legend>'.$lang['legend_redirect'].'</legend>';
+
+/* shortlink */
 if(empty($page_permalink_short_cnt)) {
 	$page_permalink_short_cnt = 0;
 }
@@ -117,7 +139,8 @@ echo '</div>';
 echo '</div>';
 echo '</div>';
 
-echo tpl_form_control_group('',$lang['f_page_hash'],"<input class='form-control' type='text' name='page_hash' value='$page_hash'>");
+/* funnel URI */
+echo tpl_form_control_group('',$lang['f_page_funnel_uri'],"<input class='form-control' type='text' name='page_funnel_uri' value='$page_funnel_uri'>");
 
 $select_page_redirect_code  = '<select name="page_redirect_code" class="form-control">';
 if($page_redirect_code == '') {
@@ -134,6 +157,11 @@ for($i=0;$i<10;$i++) {
 $select_page_redirect_code .= '</select>';
 
 echo tpl_form_control_group('',$lang['f_page_redirect'],'<div class="row"><div class="col-md-3">'.$select_page_redirect_code.'</div><div class="col-md-9"><input class="form-control" type="text" name="page_redirect" value="'.$page_redirect.'"></div></div>');
+
+
+echo '</fieldset>';
+echo '</div>';
+echo '<div class="clearfix"></div>';
 
 echo '</div>'; /* EOL tab_info */
 

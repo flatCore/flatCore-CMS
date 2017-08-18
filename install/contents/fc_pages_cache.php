@@ -20,6 +20,7 @@ $cols = array(
 	"page_permalink_short_cnt" => 'VARCHAR',
 	"page_redirect" => 'VARCHAR',
 	"page_redirect_code" => 'VARCHAR',
+	"page_funnel_uri" => 'VARCHAR',
 	"page_hash" => 'VARCHAR',
 	"page_psw" => 'VARCHAR',
 	"page_title" => 'VARCHAR',

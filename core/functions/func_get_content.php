@@ -100,15 +100,38 @@ function fc_check_shortlinks($shortlink) {
 		$sth->bindParam(':page_permalink_short_cnt', $page_permalink_short_cnt, PDO::PARAM_STR);
 		$sth->bindParam(':shortlink', $shortlink, PDO::PARAM_STR);
 		$sth->execute();
-		//$dbh->exec("UPDATE fc_pages SET page_permalink_short_cnt=$page_permalink_short_cnt WHERE page_permalink_short='$shortlink'");
-		
-		$redirect = 'http://'.$_SERVER['HTTP_HOST'].'/'.$page['page_permalink'];
-		
-		header("HTTP/1.1 301 Moved Permanently"); 
-		header("Location: $redirect"); 	
+				
+		$redirect = '/'.$page['page_permalink'];
+		header("location: $redirect",TRUE,301);	
 		exit;
 	}
 	$dbh = null;
+	
+}
+
+/**
+ * check if given url is a funnel uri
+ * if applicable, immediately redirect to page permalink
+ */
+
+function fc_check_funnel_uri($uri) {
+		
+	global $fc_db_content;
+	
+	$dbh = new PDO("sqlite:$fc_db_content");
+	
+	$page_sql = "SELECT page_permalink, page_funnel_uri FROM fc_pages WHERE page_funnel_uri = :uri";
+	$sth = $dbh->prepare($page_sql);
+	$sth->bindParam(':uri', $uri, PDO::PARAM_STR);
+	$sth->execute();
+	$page = $sth->fetch(PDO::FETCH_ASSOC);
+	
+		/* if page_funnel_uri == $fct_slug, we can stop here and go straight to page_permalink */
+		if($page['page_funnel_uri'] == $uri) {
+			$redirect = '/'.$page['page_permalink'];
+			header("location: $redirect",TRUE,301);
+			exit;
+		}	
 	
 }
 

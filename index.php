@@ -87,9 +87,9 @@ if(isset($query)) {
 
 		list($page_contents,$fc_nav,$fc_prefs) = get_content($fct_slug,'permalink');
 		$p = $page_contents['page_id'];
+
 		
-		
-		if($p == "") {		
+		if($p == "") {
 			$p = "404";					
 			foreach($a_allowed_p as $param) {
 				if($query == "$param/") {
@@ -97,6 +97,7 @@ if(isset($query)) {
 				}
 			}
 			
+			fc_check_funnel_uri($fct_slug);
 			fc_check_shortlinks($fct_slug);
 			
 		}
@@ -141,6 +142,7 @@ if($fc_prefs['prefs_cms_ssl_domain'] != '') {
 } else {
 	$fc_base_url = $fc_prefs['prefs_cms_domain'] . $fc_prefs['prefs_cms_base'];
 }
+
 
 
 

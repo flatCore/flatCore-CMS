@@ -84,6 +84,12 @@ foreach($fc_preferences as $k => $v) {
    $$k = stripslashes($v);
 }
 
+/* build absolute URL */
+if($fc_prefs['prefs_cms_ssl_domain'] != '') {
+	$fc_base_url = $prefs_cms_ssl_domain . $prefs_cms_base;
+} else {
+	$fc_base_url = $prefs_cms_domain . $prefs_cms_base;
+}
 
 if(!isset($_COOKIE['acptheme'])) {
 	setcookie("acp_theme", "default",time()+(3600*24*365));
