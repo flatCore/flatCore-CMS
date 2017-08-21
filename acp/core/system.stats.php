@@ -127,7 +127,7 @@ $month = $lang[$get_month];
 $get_year = substr("$filename", 7, 4);
 
 
-echo"<p style='background:#ddd;padding:4px;'><b>$month $get_year</b> » $cnt_entries $lang[logfile_hits] » $filesize kb</p>";
+echo"<h4>$month $get_year <small>$cnt_entries $lang[logfile_hits] » $filesize kb</small></h4>";
 
 echo"<div style='float:left;width:200px;padding:8px;'>";
 
@@ -156,7 +156,7 @@ echo"</div>"; // eo float
 
 echo"<div style='margin-left:220px;padding:8px;'>";
 
-echo"<div style='height:350px;overflow:auto;margin:0;padding:10px;background-color:#ddd;'>";
+echo '<div class="scroll-container">';
 
 
 for($i=0;$i<$cnt_result;$i++) {
@@ -175,7 +175,7 @@ for($i=0;$i<$cnt_result;$i++) {
 	}
 
 
-	echo"<dl class='dl-horizontal' style='background-color:$bg_color;margin:0;'>";
+	echo"<dl class='dl-horizontal dl-logfile'>";
 
 	echo"<dt>Zeit:</dt> <dd>$log_time</dd>";
 	echo"<dt>IP:</dt> <dd>$log_ip</dd>";

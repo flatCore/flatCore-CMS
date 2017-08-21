@@ -54,6 +54,12 @@ a {
   }
 }
 
+a.darklink,
+a.darklink:link,
+a.darklink:visited {
+  color: darken(desaturate(@brand_color,30),10);
+}
+
 hr {
 	border-bottom: 1px solid #000;
 }
@@ -106,7 +112,7 @@ ul.nav-tabs > li.active > a:hover {
 /* invert default button */
 
 .btn-default {
-	background: #252525;
+	background: #444;
 	color: #fff;
 	border-color: #333;
 
@@ -114,13 +120,13 @@ ul.nav-tabs > li.active > a:hover {
   &:focus,
   &.focus {
     color: #eee;
-    background: #111;
+    background: #333;
     border-color: #222;
   }
 
 	&:active,
   &.active {
-    background: #111 !important;
+    background: darken(desaturate(@brand_color,40),35) !important;
     border-color: #000;
     color: #fff;
     &:hover {
@@ -163,6 +169,17 @@ ul.nav-tabs > li.active > a:hover {
 	border: 1px solid #111;
 }
 
+.table-list tr:hover {
+  background-color: #111;
+}
+
+.files-list {
+  border-top: 1px solid #000;
+}
+
+.files-list:nth-child(even) {
+  background-color: #000;
+}
 
 .scroll-container {
 	background: rgba(0,0,0,0.2);
@@ -173,12 +190,15 @@ ul.nav-tabs > li.active > a:hover {
 
 .dl-logfile {
   border-bottom: 1px solid #111;
-  background: rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.5);
 }
 .dl-logfile:nth-child(even) {
   background: rgba(0,0,0,0.1);
 }
 
+div#pagina {
+	border: 1px solid #111;
+}
 
 /* forms */
 textarea.form-control,
@@ -201,7 +221,24 @@ input.form-control[readonly] {
 	border: 1px solid #111;
 }
 
+#CSSeditor,
+#HTMLeditor,
+.form-control {
+	border: 1px solid #222 !important;
+}
 
+
+.mce-panel {
+	border: 1px solid #333 !important;
+}
+
+.mce-menubar {
+  border: none !important;
+}
+
+.mce-branding-powered-by {
+	border: none !important;
+}
 
 .btn-public,
 .btn-public.active {
@@ -282,6 +319,13 @@ fieldset {
 	background: rgba(0,0,0,0.25);
 }
 
+.page-list-item h4 a {
+  color: @brand_color;
+}
+.page-list-item h4 small {
+  color: #aaa;
+}
+
 
 /*  */
 
@@ -298,13 +342,12 @@ fieldset {
 	
 	&:hover {
 		background: rgba(0,0,0,0.4);
-		box-shadow: 0 4px 10px -6px @brand_color;
 	}
 }
 
 .modlist-label span {
 	background: #151515;
-	box-shadow: 0 4px 10px -6px @brand_color;
+	box-shadow: 0 4px 10px -6px #000;
 }
 
 
@@ -345,3 +388,16 @@ fieldset {
 }
 
 
+/* shadow */
+
+
+hr.shadow:after {
+  content: "";
+  margin: 0 auto;
+  position: relative;
+  top: -35px;
+  display: block;
+  width: 90%;
+  height: 20px;
+  box-shadow: 0px 20px 10px #000;
+}

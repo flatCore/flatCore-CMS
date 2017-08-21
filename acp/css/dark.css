@@ -43,6 +43,11 @@ a:focus,
 a.focus {
   color: #7eb0db;
 }
+a.darklink,
+a.darklink:link,
+a.darklink:visited {
+  color: #506f89;
+}
 hr {
   border-bottom: 1px solid #000;
 }
@@ -84,7 +89,7 @@ ul.nav-tabs > li.active > a:hover {
 }
 /* invert default button */
 .btn-default {
-  background: #252525;
+  background: #444;
   color: #fff;
   border-color: #333;
 }
@@ -92,12 +97,12 @@ ul.nav-tabs > li.active > a:hover {
 .btn-default:focus,
 .btn-default.focus {
   color: #eee;
-  background: #111;
+  background: #333;
   border-color: #222;
 }
 .btn-default:active,
 .btn-default.active {
-  background: #111 !important;
+  background: #262d34 !important;
   border-color: #000;
   color: #fff;
 }
@@ -131,16 +136,28 @@ ul.nav-tabs > li.active > a:hover {
 .table-bordered > thead > tr > th {
   border: 1px solid #111;
 }
+.table-list tr:hover {
+  background-color: #111;
+}
+.files-list {
+  border-top: 1px solid #000;
+}
+.files-list:nth-child(even) {
+  background-color: #000;
+}
 .scroll-container {
   background: rgba(0, 0, 0, 0.2);
 }
 /* logfiles */
 .dl-logfile {
   border-bottom: 1px solid #111;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.5);
 }
 .dl-logfile:nth-child(even) {
   background: rgba(0, 0, 0, 0.1);
+}
+div#pagina {
+  border: 1px solid #111;
 }
 /* forms */
 textarea.form-control,
@@ -159,6 +176,20 @@ input.form-control[readonly] {
   background: #111;
   color: #aaa;
   border: 1px solid #111;
+}
+#CSSeditor,
+#HTMLeditor,
+.form-control {
+  border: 1px solid #222 !important;
+}
+.mce-panel {
+  border: 1px solid #333 !important;
+}
+.mce-menubar {
+  border: none !important;
+}
+.mce-branding-powered-by {
+  border: none !important;
 }
 .btn-public,
 .btn-public.active {
@@ -236,6 +267,12 @@ fieldset legend {
 .controls-container {
   background: rgba(0, 0, 0, 0.25);
 }
+.page-list-item h4 a {
+  color: #428bca;
+}
+.page-list-item h4 small {
+  color: #aaa;
+}
 /*  */
 .doughnut-legend li:hover {
   background-color: rgba(0, 0, 0, 0.4);
@@ -247,11 +284,10 @@ fieldset legend {
 }
 .modules-list-item:hover {
   background: rgba(0, 0, 0, 0.4);
-  box-shadow: 0 4px 10px -6px #428bca;
 }
 .modlist-label span {
   background: #151515;
-  box-shadow: 0 4px 10px -6px #428bca;
+  box-shadow: 0 4px 10px -6px #000;
 }
 .masonry-item {
   background: rgba(0, 0, 0, 0.2);
@@ -280,4 +316,15 @@ fieldset legend {
 .modal-footer {
   background: #151515;
   border-top: 1px solid #151515;
+}
+/* shadow */
+hr.shadow:after {
+  content: "";
+  margin: 0 auto;
+  position: relative;
+  top: -35px;
+  display: block;
+  width: 90%;
+  height: 20px;
+  box-shadow: 0px 20px 10px #000;
 }
