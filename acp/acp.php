@@ -138,6 +138,15 @@ if(isset($set_acptheme)) {
 		
 		<script type="text/javascript">
 			var languagePack = "<?php echo $languagePack; ?>";
+			var ace_theme = 'chrome';
+			var tinymce_skin = 'lightgray';
+			var acptheme = "<?php echo $acptheme; ?>";
+			
+			if(acptheme === 'dark') {
+				var ace_theme = 'twilight';
+				var tinymce_skin = 'tundora';
+			}
+			
 		</script>
 		
 		<?php
@@ -359,7 +368,7 @@ if(isset($set_acptheme)) {
 							aceEditor.$blockScrolling = Infinity;
 							aceEditor.getSession().setMode({ path:'ace/mode/html', inline:true });
 							aceEditor.getSession().setValue(textarea.val());
-							aceEditor.setTheme("ace/theme/chrome");
+							aceEditor.setTheme("ace/theme/" + ace_theme);
 							aceEditor.getSession().setUseWorker(false);
 							aceEditor.setShowPrintMargin(false);
 							
@@ -482,7 +491,7 @@ if(isset($set_acptheme)) {
 					var CSStextarea = $('textarea[class*=aceEditor_css]').hide();
 				  CSSeditor.$blockScrolling = Infinity;
 				  CSSeditor.getSession().setValue(CSStextarea.val());
-				  CSSeditor.setTheme("ace/theme/chrome");
+				  CSSeditor.setTheme("ace/theme/" + ace_theme);
 				  CSSeditor.getSession().setMode("ace/mode/css");
 				  CSSeditor.getSession().setUseWorker(false);
 				  CSSeditor.setShowPrintMargin(false);
@@ -496,7 +505,7 @@ if(isset($set_acptheme)) {
 					var HTMLtextarea = $('textarea[class*=aceEditor_html]').hide();
 				  HTMLeditor.$blockScrolling = Infinity;
 				  HTMLeditor.getSession().setValue(HTMLtextarea.val());
-				  HTMLeditor.setTheme("ace/theme/chrome");
+				  HTMLeditor.setTheme("ace/theme/" + ace_theme);
 				  HTMLeditor.getSession().setMode({ path:'ace/mode/html', inline:true });
 				  HTMLeditor.getSession().setUseWorker(false);
 				  HTMLeditor.setShowPrintMargin(false);
@@ -519,7 +528,7 @@ if(isset($set_acptheme)) {
             var editor = ace.edit(editDiv[0]);
             editor.$blockScrolling = Infinity;
             editor.getSession().setValue(textarea.val());
-            editor.setTheme("ace/theme/chrome");
+            editor.setTheme("ace/theme/" + ace_theme);
             editor.getSession().setMode("ace/mode/" + mode);
             editor.getSession().setUseWorker(false);
             editor.setShowPrintMargin(false);
