@@ -478,12 +478,13 @@ function add_feed($title, $text, $url, $sub_id, $feed_name, $time = NULL) {
 function generate_xml_sitemap() {
 
 	global $languagePack;
-	global $fc_mod_rewrite;
+	global $fc_base_url;
 	
 	$file = "../sitemap.xml";
+	$tpl_sitemap = file_get_contents('templates/sitemap.tpl');
+	$tpl_sitemap_urlset = file_get_contents('templates/sitemap_urlset.tpl');
 	
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	
+	$dbh = new PDO("sqlite:".CONTENT_DB);	
 	$sqlgp = "SELECT prefs_xml_sitemap FROM fc_preferences WHERE prefs_id = 1";
 	$prefs_xml_sitemap = $dbh->query($sqlgp)->fetchColumn(); // -> returns on|off
 	
@@ -497,10 +498,8 @@ function generate_xml_sitemap() {
 		$dbh = null;
 		
 		$cnt_results = count($results);
-		$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
 		
-		/* generate content for xml file */
-		
+		/* generate content for xml file */	
 		$url_set = "";
 		
 		for($i=0;$i<$cnt_results;$i++) {
@@ -509,27 +508,17 @@ function generate_xml_sitemap() {
 			$page_permalink = $results[$i]['page_permalink'];
 			$page_lastedit = date("Y-m-d",$results[$i]['page_lastedit']);
 			
-			$link = $protocol.$_SERVER['HTTP_HOST'] . FC_INC_DIR . '/' . $page_permalink;
+			$link = $fc_base_url . $page_permalink;
 			
 			$link = str_replace("/acp","",$link);
-				
-			$url_set .= "
-			<url>
-				<loc>$link</loc>
-				<lastmod>$page_lastedit</lastmod>
-			</url>";
 			
+			$url_set = str_replace('{url}', $link, $tpl_sitemap_urlset);
+			$url_set = str_replace('{lastmod}', $page_lastedit, $url_set);
+			$url_set_list .= $url_set."\r\n";			
 		}
-		
-		$file_content = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-		<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"
-		        xmlns:image=\"http://www.sitemaps.org/schemas/sitemap-image/1.1\"
-		        xmlns:video=\"http://www.sitemaps.org/schemas/sitemap-video/1.1\">
-				$url_set
-		</urlset>";
-			
-		file_put_contents($file, $file_content, LOCK_EX);
-	
+
+		$sitemap = str_replace('{url_set}', $url_set_list, $tpl_sitemap);	
+		file_put_contents($file, $sitemap, LOCK_EX);
 	}
 }
 

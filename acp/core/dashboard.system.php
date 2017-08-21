@@ -99,6 +99,7 @@ echo '<div class="col-md-8">';
 echo '<ul class="nav nav-tabs" id="bsTabs">';
 echo '<li class="active"><a href="#chat" data-toggle="tab"><span class="glyphicon glyphicon-comment"></span> CHAT</a></li>';
 echo '<li><a href="#log" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span> PROTOKOLL</a></li>';
+echo '<li><a href="#sitemap" data-toggle="tab"><span class="glyphicon glyphicon-list"></span> sitemap.xml</a></li>';
 echo '</ul>';
 
 echo '<div class="tab-content">';
@@ -197,6 +198,13 @@ echo '<div class="scroll-container">';
 show_log(10);
 echo'</div>';
 echo'</div>'; // #log
+
+echo'<div class="tab-pane fade" id="sitemap">';
+$sitemap = file_get_contents('../sitemap.xml');
+//echo '<pre class="form-control" style="height:400px;overflow:auto;">'.htmlentities($sitemap,ENT_QUOTES,"UTF-8").'</pre>';
+echo '<textarea name="my-xml-editor" data-editor="xml" rows="15">'.htmlentities($sitemap,ENT_QUOTES,"UTF-8").'</textarea>';
+echo'</div>'; // #sitemap
+
 
 echo'</div>'; // .tab-content
 
