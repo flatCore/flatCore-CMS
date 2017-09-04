@@ -1,14 +1,16 @@
 <?php
-ob_start();
 set_time_limit (0);
 
 //prohibit unauthorized access
-require("core/access.php");
-require_once('core/pclzip.lib.php');
-include('updatelist.php');
+require 'core/access.php';
+require_once 'core/pclzip.lib.php';
+include 'updatelist.php';
 
 define('INSTALLER', TRUE);
-include('../install/php/functions.php');
+include '../install/php/functions.php';
+
+$_SESSION['protocol'] = '';
+$_SESSION['errors_cnt'] = 0;
 
 /* build an array from all php files in folder ../install/contents */
 $all_tables = glob("../install/contents/*.php");
@@ -40,8 +42,19 @@ if(isset($_GET['a']) && $_GET['a'] == 'start') {
 
 echo '</fieldset>';
 
-ob_flush();
-flush();
+
+if(isset($_GET['a']) && $_GET['a'] == 'start') {
+	echo '<div style="height:350px;overflow:auto;margin:0;" class="well well-sm">';
+	echo '<h3>ERRORS: '.$_SESSION['errors_cnt'].'</h3>';
+	$protocol = explode('<|>', $_SESSION['protocol']);
+	$protocol = array_filter($protocol);
+	echo '<ul>';
+	foreach($protocol as $v) {
+		echo '<li>'.$v. '</li>';
+	}
+	echo '</ul>';
+	echo '</div>';
+}
 	
 /**
  * start the update
@@ -137,9 +150,6 @@ function move_new_files() {
 	
 	/* at first, the install folder */
 	copy_recursive("update/extract/$get_file/install","../install");
-
-	echo "<h3>" . count($new_files) . " updated Files:</h3>";
-	echo '<div style="height:350px;overflow:auto;margin:0;" class="well well-sm">';
 			
 	/* now copy the other files and directories */
 	foreach($new_files as $value) {
@@ -163,33 +173,17 @@ function move_new_files() {
 		if($value === '.' || $value === '..') {continue;}
 		if(basename($value) == "README.md") { continue;}
 		if(basename($value) == "robots.txt") { continue;}
+		if(basename($value) == "_htaccess") { continue;}
 			
 		/**
 		 * copy files from 'update/extract/*'
 		 */
-		$target = "../" . substr($value, strlen("update/extract/$get_file/"));
-		$copy_string .= "<tr><td>$i</td><td>$target</td>";
+		$target = '../' . substr($value, strlen("update/extract/$get_file/"));
 		$status = copy_recursive("$value","$target");
-		
-		if($status == 'success') {
-			$show_status = "<span class='label label-success'>ok</span>";
-		} else {
-			$show_status = '<span class="label label-danger">'.$status.'</span>';
-			$cnt_errors++;
-		}
-		
-		echo '<dl class="dl-horizontal">';
-		echo '<dt>'.$i.'</dt>';
-		echo '<dd>update/..'. basename($value) .' > '. $target .' '. $show_status .'</dd>';
-		echo '</dl>';
-		
-		ob_flush();
-		flush();
+
 	}
-	
-	echo '<p>Errors: '.$cnt_errors.'</p>';
-	
-	echo '</div>';
+
+	$_SESSION['errors_cnt'] = $cnt_errors;
 
 }
 
@@ -265,8 +259,6 @@ function compare_versions() {
 		echo '<div class="alert alert-success"><p>' . $lang['msg_no_update_available'] . '</p></div>';
 	}
 
-	ob_flush();
-	flush();
 }
 
 
@@ -279,11 +271,14 @@ function scandir_recursive($dir) {
 	$root = scandir($dir); 
   foreach($root as $value) { 
   	if($value === '.' || $value === '..') {continue;} 
-    if(is_file("$dir/$value")) {$result[]="$dir/$value";continue;} 
-    foreach(scandir_recursive("$dir/$value") as $value) { 
-    	$result[]=$value; 
-    } 
-   } 
+	  $result[]="$dir/$value";
+	  if(is_dir("$dir/$value")) {
+	    foreach(scandir_recursive("$dir/$value") as $value) { 
+	    	$result[]=$value; 
+	    }
+    }
+   }
+   $result = array_filter($result);
    return $result;  
 }
 
@@ -293,10 +288,11 @@ function scandir_recursive($dir) {
  */
  
 function copy_recursive($source, $target) {
-	if(is_dir($source)) {
 	
+	if(is_dir($source)) {
 		if(!is_dir("$target")) {
-			mkdir("$target", 0755, true);
+			$_SESSION['protocol'] .= "missing: $target <|>";
+			mkdir_recursive($target,0777);
 		}
 		
 		$dir = dir($source);
@@ -307,22 +303,24 @@ function copy_recursive($source, $target) {
 			$sub = $source . '/' . $entry;
 			
 			if(is_dir($sub)) {
-				@chmod("$sub", 0777);
+				chmod("$sub", 0755);
 				copy_recursive($sub, $target . '/' . $entry);
-				continue;
+				//continue;
 			}
 			copy($sub, $target . '/' . $entry);
 		}
  
 		$dir->close();
 	} else {
-		@chmod("$target", 0777);
-		@unlink("$target");
+		chmod("$target", 0777);
+		unlink("$target");
 		if(copy($source, $target)) {
-			return 'success';
+			$_SESSION['protocol'] .= '<b>copied:</b> '.$target.'<|>';
 		} else {
 			$errors = error_get_last();
-			return $errors['message'];
+			$_SESSION['protocol'] .= '<b class="text-danger">ERROR:</b> '.$errors['type']. '</b> ' . $errors['message'].'<|>';
+			$_SESSION['errors_cnt']++;
+			return $error_msg;
 		}
 	}
 }
@@ -355,12 +353,14 @@ function update_database($dbfile) {
 		} elseif($database == "tracker") {
 			$db_path = "../$fc_db_stats";
 		} else {
-			echo '<div class="alert alert-danger">DATABASE UNKNOWN: '.$database.'</div>';
+			$_SESSION['protocol'] .= '<b class="text-danger">DATABASE UNKNOWN:</b> '.$database.'<|>';
+			$_SESSION['errors_cnt']++;
 			continue;
 		}
 		
 		if(!is_file($db_path)) {
-			echo "DATABASE NOT FOUND | $db_path | $database | $all_tables[$i] <br>";
+			$_SESSION['protocol'] .= '<b class="text-danger">DATABASE NOT FOUND:</b> '.$db_path.'<|>';
+			$_SESSION['errors_cnt']++;
 			continue;
 		}
 	
@@ -369,7 +369,7 @@ function update_database($dbfile) {
 	
 		if($is_table < 1) {
 			add_table("$db_path","$table_name",$cols);
-			$table_updates[] = "New Table: <b>$table_name</b> in Database <b>$database</b>";
+			$_SESSION['protocol'] .= '<b class="text-success">new table:</b> '.$table_name.' in '.$database.'<|>';
 		}
 	
 	
@@ -381,53 +381,15 @@ function update_database($dbfile) {
 	  		if(!array_key_exists("$k", $existing_cols)) {
 	  			//update_table -> column, type, table, database
 	  			update_table("$k","$cols[$k]","$table_name","$db_path");
-	  			$col_updates[] = "New Column: <b>$k</b> in table <b>$table_name</b>";	
+	  			$_SESSION['protocol'] .= '<b class="text-success">new column:</b> '.$k.' in table '.$table_name.'<|>';
 	  		}
 	     
 		} // eo foreach
 	
-		/* updates are done, check all columns again */
-	
+		/* updates are done, check all columns again */	
 		$existing_cols = get_collumns("$db_path","$table_name");
-	
-		foreach ($cols as $b => $x) {
-	       
-	  		if(!array_key_exists("$b", $existing_cols)) {
-	  			$fails[] = "Missing Column: <b>$b</b> - table: <b>$table_name</b>";  	
-	  		} else {
-	  			$wins[] = "Column <b>$b</b> in table <b>$table_name</b> is ready";
-	  	}
-	  
-		} // eo foreach
-	
-	
-	} // EO $i
-	
-	
-	if(is_array($fails)) {
-		echo "<h3>" . count($fails) . " ERRORS</h3>";
-		
-		foreach ($fails as $value) {
-				echo"<span class='red'>$value</span><br />";
-			}
-		
-	} else {
-		echo "<h3>" . count($wins) . " Columns are ready</h3>";
-		
-		if(is_array($table_updates)) {
-			foreach ($table_updates as $value) {
-				echo"<span class='green'>$value</span><br />";
-			}
-		}
-		
-		if(is_array($col_updates)) {
-			foreach ($col_updates as $value) {
-				echo"<span class='green'>$value</span><br />";
-			}
-		}
-		
-	}
-	
+
+	}	
 }
 
 
@@ -454,6 +416,21 @@ function update_database($dbfile) {
    }
  }
 
-
+/**
+ * create directory (recursive)
+ */
+ 
+function mkdir_recursive($dir, $chmod=0777){
+  $dirs = explode('/', $dir);
+  $directory='';
+  foreach ($dirs as $part) {
+  	$directory .= $part.'/';
+    if(!is_dir($directory) && strlen($directory)>0) {
+    	mkdir($directory, $chmod);
+    	chmod("$sub", $chmod);
+    	$_SESSION['protocol'] .= "created: $directory <|>";
+    }
+  }
+}
 
 ?>
