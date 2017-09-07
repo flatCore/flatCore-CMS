@@ -332,6 +332,9 @@ $lang['prefs_mailer_smtp_password'] = "Password";
 $lang['prefs_mailer_send_test'] = "Send E-mail for testing";
 $lang['prefs_mailer_send_test_success'] = "Die E-Mail wurde versendet";
 
+$lang['prefs_nbr_page_versions'] = "Number of Page-Versions";
+
+
 $lang['yes'] = "Ja";
 $lang['no'] = "Nein";
 

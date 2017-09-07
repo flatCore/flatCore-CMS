@@ -534,10 +534,13 @@ if($show_form == "true" AND $sub != "new") {
 
 	$dbh = new PDO("sqlite:".CONTENT_DB);
 	
-	$max = 50;
+	$max = 25;
+	if($prefs_nbr_page_versions != '') {
+		$max = $prefs_nbr_page_versions;
+	}
 	$cnt_all_sql = "SELECT COUNT(*) AS 'nbr' FROM fc_pages_cache WHERE page_id_original = $editpage AND page_cache_type = 'history' ";
 	$cnt_all = $dbh->query("$cnt_all_sql")->fetch(PDO::FETCH_ASSOC);
-	$delete_nbr = $cnt_all[nbr]-$max;
+	$delete_nbr = $cnt_all['nbr']-$max;
 	
 	$sql = "SELECT page_id, page_linkname, page_title, page_lastedit, page_lastedit_from, page_version
 					FROM fc_pages_cache

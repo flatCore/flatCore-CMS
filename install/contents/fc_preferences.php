@@ -12,6 +12,7 @@ $cols = array(
   "prefs_pagethumbnail_prefix" => 'VARCHAR',
   "prefs_pagefavicon" => 'VARCHAR',
   "prefs_pagesglobalhead" => 'VARCHAR',
+  "prefs_nbr_page_versions" => 'INTEGER',
   "prefs_template" => 'VARCHAR',
   "prefs_usertemplate" => 'VARCHAR',
   "prefs_imagesuffix" => 'VARCHAR',

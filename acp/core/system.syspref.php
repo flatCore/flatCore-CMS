@@ -186,7 +186,8 @@ if(isset($_POST['save_prefs_misc'])) {
 	$pdo_fields = array(
 		'prefs_logfile' => 'STR',
 		'prefs_xml_sitemap' => 'STR',
-		'prefs_rss_time_offset' => 'STR'
+		'prefs_rss_time_offset' => 'STR',
+		'prefs_nbr_page_versions' => 'INT'
 	);
 	
 	if(isset($_POST['prefs_logfile'])) {
@@ -206,7 +207,8 @@ if(isset($_POST['save_prefs_misc'])) {
 	$sth = $dbh->prepare($sql);
 	$sth->bindParam(':prefs_rss_time_offset', $_POST['prefs_rss_time_offset'], PDO::PARAM_STR);
 	$sth->bindParam(':prefs_logfile', $prefs_logfile, PDO::PARAM_STR);
-	$sth->bindParam(':prefs_xml_sitemap', $prefs_xml_sitemap, PDO::PARAM_STR);	
+	$sth->bindParam(':prefs_xml_sitemap', $prefs_xml_sitemap, PDO::PARAM_STR);
+	$sth->bindParam(':prefs_nbr_page_versions', $prefs_nbr_page_versions, PDO::PARAM_INT);	
 	$cnt_changes = $sth->execute();
 	$dbh = null;
 }
@@ -547,6 +549,9 @@ $toggle_btn_sitemap .= '</div>';
 echo tpl_form_control_group('',$lang['activate_xml_sitemap'],$toggle_btn_sitemap);
 
 echo tpl_form_control_group('',$lang['rss_offset'],"<input class='form-control' type='text' name='prefs_rss_time_offset' value='$prefs_rss_time_offset'>");
+
+echo tpl_form_control_group('',$lang['prefs_nbr_page_versions'],"<input class='form-control' type='text' name='prefs_nbr_page_versions' value='$prefs_nbr_page_versions'>");
+
 echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_misc' value='$lang[save]'>");
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 
