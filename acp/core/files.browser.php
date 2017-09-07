@@ -220,7 +220,7 @@ if(is_array($all_filter)) {
 															media_text like '%$f%'
 															) AND";
 	}
-	$set_keyword_filter = substr("$set_keyword_filter", 0, -4); // cut the last ' AND'
+	$set_keyword_filter .= " (media_file like '%$path%')";
 
 	$filter_string = "WHERE media_id IS NOT NULL "; // -> result = match all entries
 	
