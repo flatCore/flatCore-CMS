@@ -475,7 +475,7 @@ for($i=0;$i<count($arr_groups);$i++) {
 
 echo '<div class="form-group">';
 echo '<div class="well well-sm">';
-echo '<a href="#" data-toggle="collapse" data-target="#usergroups">'.$lang['choose_usergroup'].'</a>';
+echo '<a href="#" data-toggle="collapse" data-target="#usergroups">'.$lang['legend_choose_group'].'</a>';
 echo '<div id="usergroups" class="collapse">';
 echo $checkbox_usergroup;
 echo '</div>';
