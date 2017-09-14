@@ -108,16 +108,27 @@ echo '<label class="control-label control-label-normal col-md-2">'.$lang['f_page
 echo '<div class="col-sm-10">';
 echo '<div class="input-group">';
 echo '<span class="input-group-addon">'.$fc_base_url.'</span>';
-echo '<input class="form-control" type="text" name="page_permalink" value="'.$page_permalink.'">';
-echo '</div>';
-echo '</div>';
-echo '</div>';
+echo '<input class="form-control" type="text" name="page_permalink" id="set_permalink" value="'.$page_permalink.'">';
+echo '<div class="input-group-addon"><a href="'.$fc_base_url.$page_permalink.'" target="_blank" id="check_link" title=""><span class="glyphicon glyphicon-share-alt"></span></a></div>';
 
-//echo tpl_form_control_group('',$lang['f_page_permalink'],"<input class='form-control' type='text' name='page_permalink' value='$page_permalink'>");
+echo '</div>';
+echo '</div>';
+echo '</div>';
+?>
+<script>
+$(function() {
+	var fc_base_url = "<? echo $fc_base_url; ?>";	
+	$("#set_permalink").keyup(function(){
+		var permalink = this.value;
+		var check_url = fc_base_url.concat(permalink);
+		$("a#check_link").attr("href", check_url);
+		$("a#check_link").attr("title", check_url);
+	});
+});
+</script>
+<?php
 
 echo tpl_form_control_group('',$lang['f_page_hash'],"<input class='form-control' type='text' name='page_hash' value='$page_hash'>");
-
-
 
 /* redirect */
 echo '<hr><div class="col-sm-10 col-sm-offset-2">';
