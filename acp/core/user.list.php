@@ -106,8 +106,8 @@ $status_btn_group .= '</div>';
 $whereString = "WHERE user_nick != '' ";
 
 if(!empty($_POST['findUser'])) {
-	$findUser = strip_tags($_POST['findUser']);
-	$search_user = "user_nick LIKE '%$findUser%' ";
+	$find_user = "%".strip_tags($_POST['findUser'])."%";
+	$search_user = "user_nick LIKE :find_user ";
 }
 
 
@@ -128,8 +128,13 @@ $sql = "SELECT user_id, user_nick, user_class, user_firstname, user_lastname, us
     		FROM fc_user
     		$whereString
     		ORDER BY $order_by $way";
+$sth = $dbh->prepare($sql);
+if($search_user != "") {
+	$sth->bindParam(':find_user', $find_user, PDO::PARAM_STR);
+}
+$sth->execute();
 
-foreach ($dbh->query($sql) as $row) {
+foreach ($sth->fetchAll(PDO::FETCH_ASSOC) as $row) {
 	$result[] = $row;
 }
 
