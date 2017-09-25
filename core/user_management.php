@@ -48,14 +48,13 @@ if($_SESSION['user_nick'] != "") {
 	$link_logout = $fc_base_url.'?goto=logout';
 	$link_profile = FC_INC_DIR . "/profile/";
 
-
 	/* user == administrator */
 	if($_SESSION['user_class'] == "administrator"){
 			$link_acp = FC_INC_DIR . "/" . FC_ACP_DIR . "/acp.php";
-			if($p != "") {
-				$link_edit_page = FC_INC_DIR . "/" . FC_ACP_DIR . "/acp.php?tn=pages&sub=edit&editpage=$p";
+			if(is_numeric($page_contents['page_id'])) {
+				$link_edit_page = FC_INC_DIR . '/' . FC_ACP_DIR . '/acp.php?tn=pages&sub=edit&editpage='.$page_contents['page_id'];
 			} else {
-				$link_edit_page = FC_INC_DIR . "/" . FC_ACP_DIR . "/acp.php?tn=pages";
+				$link_edit_page = FC_INC_DIR . '/' . FC_ACP_DIR . '/acp.php?tn=pages';
 			}
 		} else {
 			unset($link_acp,$lang['button_acp']);
