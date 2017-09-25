@@ -1028,38 +1028,405 @@ img.avatar {
   border: 1px solid #ccc;
   box-shadow: 0px 1px 5px #999;
 }
-.canvas-holder {
-  max-width: 100%;
-}
-.doughnut-legend {
-  list-style: none;
+/* charts */
+.charts {
+  width: 100%;
+  height: 100%;
   position: absolute;
-  left: 1px;
   top: 0;
-  padding-left: 0;
-}
-.doughnut-legend li {
-  display: block;
-  position: relative;
-  margin-bottom: 4px;
-  border-radius: 5px;
-  padding: 2px 8px 2px 18px;
-  font-size: 12px;
-  line-height: 15px;
-  color: #777;
-  cursor: default;
-}
-.doughnut-legend li:hover {
-  background-color: #eee;
-}
-.doughnut-legend li span {
-  display: block;
-  position: absolute;
   left: 0;
+  padding: 5px;
+}
+.chart {
+  margin: 0;
+}
+.chart ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.chart ul li {
+  margin: 0 0 4px 0;
+  padding: 0;
+}
+.chart:first-child {
+  margin: 0;
+}
+.chart-hor {
+  overflow: hidden;
+}
+.chart-hor li {
+  background: rgba(0, 0, 0, 0.05);
+  position: relative;
+  width: 100%;
+  height: 40px;
+}
+.chart_label {
+  position: absolute;
+  bottom: 1px;
+  left: 0;
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 2px 5px;
+  border-top-right-radius: 7px;
+  margin: 0;
+}
+.chart_bar {
+  position: absolute;
   top: 0;
-  width: 15px;
-  height: 15px;
-  border-radius: 5px;
+  left: 0;
+  height: 40px;
+  opacity: 0;
+  animation: 1s drive-in ease forwards;
+}
+.chart_bar_verified {
+  background: linear-gradient(to left, #5cb85c, #a3d7a3);
+}
+.chart_bar_queue {
+  background: linear-gradient(to left, rgba(92, 184, 92, 0.4), rgba(163, 215, 163, 0.4));
+}
+.chart_bar_banned {
+  background: linear-gradient(to left, #f0ad4e, #f8d9ac);
+}
+.chart_bar_deleted {
+  background: linear-gradient(to left, #d9534f, #eba5a3);
+}
+.chart_bar_public {
+  background: linear-gradient(to left, #5cb85c, #a3d7a3);
+}
+.chart_bar_ghost {
+  background: linear-gradient(to left, rgba(92, 184, 92, 0.4), rgba(163, 215, 163, 0.4));
+}
+.chart_bar_draft {
+  background: linear-gradient(to left, #989898, #cbcbcb);
+}
+.chart_bar_private {
+  background: linear-gradient(to left, #d9534f, #eba5a3);
+}
+.chart .chart_bar:nth-of-type(4) {
+  animation-delay: 0.8s;
+}
+.chart .chart_bar:nth-of-type(3) {
+  animation-delay: 0.6s;
+}
+.chart .chart_bar:nth-of-type(2) {
+  animation-delay: 0.4s;
+}
+.chart .chart_bar:nth-of-type(1) {
+  animation-delay: 0.2s;
+}
+.chart_bar[data-skill='0'] {
+  width: 0%;
+}
+.chart_bar[data-skill='1'] {
+  width: 1%;
+}
+.chart_bar[data-skill='2'] {
+  width: 2%;
+}
+.chart_bar[data-skill='3'] {
+  width: 3%;
+}
+.chart_bar[data-skill='4'] {
+  width: 4%;
+}
+.chart_bar[data-skill='5'] {
+  width: 5%;
+}
+.chart_bar[data-skill='6'] {
+  width: 6%;
+}
+.chart_bar[data-skill='7'] {
+  width: 7%;
+}
+.chart_bar[data-skill='8'] {
+  width: 8%;
+}
+.chart_bar[data-skill='9'] {
+  width: 9%;
+}
+.chart_bar[data-skill='10'] {
+  width: 10%;
+}
+.chart_bar[data-skill='11'] {
+  width: 11%;
+}
+.chart_bar[data-skill='12'] {
+  width: 12%;
+}
+.chart_bar[data-skill='13'] {
+  width: 13%;
+}
+.chart_bar[data-skill='14'] {
+  width: 14%;
+}
+.chart_bar[data-skill='15'] {
+  width: 15%;
+}
+.chart_bar[data-skill='16'] {
+  width: 16%;
+}
+.chart_bar[data-skill='17'] {
+  width: 17%;
+}
+.chart_bar[data-skill='18'] {
+  width: 18%;
+}
+.chart_bar[data-skill='19'] {
+  width: 19%;
+}
+.chart_bar[data-skill='20'] {
+  width: 20%;
+}
+.chart_bar[data-skill='21'] {
+  width: 21%;
+}
+.chart_bar[data-skill='22'] {
+  width: 22%;
+}
+.chart_bar[data-skill='23'] {
+  width: 23%;
+}
+.chart_bar[data-skill='24'] {
+  width: 24%;
+}
+.chart_bar[data-skill='25'] {
+  width: 25%;
+}
+.chart_bar[data-skill='26'] {
+  width: 26%;
+}
+.chart_bar[data-skill='27'] {
+  width: 27%;
+}
+.chart_bar[data-skill='28'] {
+  width: 28%;
+}
+.chart_bar[data-skill='29'] {
+  width: 29%;
+}
+.chart_bar[data-skill='30'] {
+  width: 30%;
+}
+.chart_bar[data-skill='31'] {
+  width: 31%;
+}
+.chart_bar[data-skill='32'] {
+  width: 32%;
+}
+.chart_bar[data-skill='33'] {
+  width: 33%;
+}
+.chart_bar[data-skill='34'] {
+  width: 34%;
+}
+.chart_bar[data-skill='35'] {
+  width: 35%;
+}
+.chart_bar[data-skill='36'] {
+  width: 36%;
+}
+.chart_bar[data-skill='37'] {
+  width: 37%;
+}
+.chart_bar[data-skill='38'] {
+  width: 38%;
+}
+.chart_bar[data-skill='39'] {
+  width: 39%;
+}
+.chart_bar[data-skill='40'] {
+  width: 40%;
+}
+.chart_bar[data-skill='41'] {
+  width: 41%;
+}
+.chart_bar[data-skill='42'] {
+  width: 42%;
+}
+.chart_bar[data-skill='43'] {
+  width: 43%;
+}
+.chart_bar[data-skill='44'] {
+  width: 44%;
+}
+.chart_bar[data-skill='45'] {
+  width: 45%;
+}
+.chart_bar[data-skill='46'] {
+  width: 46%;
+}
+.chart_bar[data-skill='47'] {
+  width: 47%;
+}
+.chart_bar[data-skill='48'] {
+  width: 48%;
+}
+.chart_bar[data-skill='49'] {
+  width: 49%;
+}
+.chart_bar[data-skill='50'] {
+  width: 50%;
+}
+.chart_bar[data-skill='51'] {
+  width: 51%;
+}
+.chart_bar[data-skill='52'] {
+  width: 52%;
+}
+.chart_bar[data-skill='53'] {
+  width: 53%;
+}
+.chart_bar[data-skill='54'] {
+  width: 54%;
+}
+.chart_bar[data-skill='55'] {
+  width: 55%;
+}
+.chart_bar[data-skill='56'] {
+  width: 56%;
+}
+.chart_bar[data-skill='57'] {
+  width: 57%;
+}
+.chart_bar[data-skill='58'] {
+  width: 58%;
+}
+.chart_bar[data-skill='59'] {
+  width: 59%;
+}
+.chart_bar[data-skill='60'] {
+  width: 60%;
+}
+.chart_bar[data-skill='61'] {
+  width: 61%;
+}
+.chart_bar[data-skill='62'] {
+  width: 62%;
+}
+.chart_bar[data-skill='63'] {
+  width: 63%;
+}
+.chart_bar[data-skill='64'] {
+  width: 64%;
+}
+.chart_bar[data-skill='65'] {
+  width: 65%;
+}
+.chart_bar[data-skill='66'] {
+  width: 66%;
+}
+.chart_bar[data-skill='67'] {
+  width: 67%;
+}
+.chart_bar[data-skill='68'] {
+  width: 68%;
+}
+.chart_bar[data-skill='69'] {
+  width: 69%;
+}
+.chart_bar[data-skill='70'] {
+  width: 70%;
+}
+.chart_bar[data-skill='71'] {
+  width: 71%;
+}
+.chart_bar[data-skill='72'] {
+  width: 72%;
+}
+.chart_bar[data-skill='73'] {
+  width: 73%;
+}
+.chart_bar[data-skill='74'] {
+  width: 74%;
+}
+.chart_bar[data-skill='75'] {
+  width: 75%;
+}
+.chart_bar[data-skill='76'] {
+  width: 76%;
+}
+.chart_bar[data-skill='77'] {
+  width: 77%;
+}
+.chart_bar[data-skill='78'] {
+  width: 78%;
+}
+.chart_bar[data-skill='79'] {
+  width: 79%;
+}
+.chart_bar[data-skill='80'] {
+  width: 80%;
+}
+.chart_bar[data-skill='81'] {
+  width: 81%;
+}
+.chart_bar[data-skill='82'] {
+  width: 82%;
+}
+.chart_bar[data-skill='83'] {
+  width: 83%;
+}
+.chart_bar[data-skill='84'] {
+  width: 84%;
+}
+.chart_bar[data-skill='85'] {
+  width: 85%;
+}
+.chart_bar[data-skill='86'] {
+  width: 86%;
+}
+.chart_bar[data-skill='87'] {
+  width: 87%;
+}
+.chart_bar[data-skill='88'] {
+  width: 88%;
+}
+.chart_bar[data-skill='89'] {
+  width: 89%;
+}
+.chart_bar[data-skill='90'] {
+  width: 90%;
+}
+.chart_bar[data-skill='91'] {
+  width: 91%;
+}
+.chart_bar[data-skill='92'] {
+  width: 92%;
+}
+.chart_bar[data-skill='93'] {
+  width: 93%;
+}
+.chart_bar[data-skill='94'] {
+  width: 94%;
+}
+.chart_bar[data-skill='95'] {
+  width: 95%;
+}
+.chart_bar[data-skill='96'] {
+  width: 96%;
+}
+.chart_bar[data-skill='97'] {
+  width: 97%;
+}
+.chart_bar[data-skill='98'] {
+  width: 98%;
+}
+.chart_bar[data-skill='99'] {
+  width: 99%;
+}
+.chart_bar[data-skill='100'] {
+  width: 100%;
+}
+@keyframes drive-in {
+  0% {
+    transform: translateX(-200%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 .bootstrap-tagsinput {
   background-color: #fff;

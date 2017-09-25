@@ -34,19 +34,15 @@ for($i=0;$i<$cnt_user;$i++) {
 	if($user_result[$i]['user_verified'] == "verified"){
 		$cnt_verified++;
 	}
-	
 	if($user_result[$i]['user_verified'] == "paused"){
 		$cnt_paused++;
 	}
-	
 	if($user_result[$i]['user_verified'] == "waiting"){
 		$cnt_waiting++;
 	}
-	
 	if($user_result[$i]['user_verified'] == ""){
 		$cnt_deleted++;
 	}
-	
 	if($user_result[$i]['user_class'] == "administrator"){
 		$cnt_admin++;
 	}
@@ -67,6 +63,11 @@ for($i=0;$i<$cnt_user;$i++) {
 } // eol $i
 
 $user_latest5 = '<dl class="dl-horizontal dl-dates">'.$user_latest5.'</dl>';
+
+$cnt_verified_per = round($cnt_verified*100/$cnt_user);
+$cnt_paused_per = round($cnt_paused*100/$cnt_user);
+$cnt_deleted_per = round($cnt_deleted*100/$cnt_user);
+$cnt_waiting_per = round($cnt_waiting*100/$cnt_user);
 
 
 /* get latest info from pages database */
@@ -97,20 +98,16 @@ for($i=0;$i<$cnt_pages;$i++) {
 	
 	if($allPages[$i]['page_status'] == "public"){
 		$cnt_public++;
-	}
-	
+	}	
 	if($allPages[$i]['page_status'] == "draft"){
 		$cnt_draft++;
-	}
-	
+	}	
 	if($allPages[$i]['page_status'] == "ghost"){
 		$cnt_ghost++;
 	}
-	
 	if($allPages[$i]['page_status'] == "private"){
 		$cnt_private++;
 	}
-
 
 	if($i < 5) {
 		$last_edit = @date("d.m.Y",$allPages[$i]['page_lastedit']);
@@ -125,7 +122,10 @@ for($i=0;$i<$cnt_pages;$i++) {
 
 $top5pages = '<dl class="dl-horizontal dl-dates">'.$top5pages.'</dl>';
 
-
+$cnt_public_per = round($cnt_public*100/$cnt_pages);
+$cnt_draft_per = round($cnt_draft*100/$cnt_pages);
+$cnt_ghost_per = round($cnt_ghost*100/$cnt_pages);
+$cnt_private_per = round($cnt_private*100/$cnt_pages);
 
 echo'<div class="row">';
 echo '<div class="hidden-xs col-sm-4 col-md-3">';
@@ -134,8 +134,35 @@ echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">'.$lang['db_user'].' <span class="badge pull-right">'.$cnt_user.'</span></div>';
 echo '<div class="panel-body equal" data-mh="panel-body-group">';
 echo '<div class="row">';
-echo '<div class="col-lg-6"><div class="canvas-holder"><canvas id="user-chart-area" width="30" height="30"/></canvas></div></div>';
-echo '<div class="col-lg-6 hidden-sm"><div id="user-chart-legend"></div></div>';
+echo '<div class="col-lg-12">';
+
+
+    
+echo '<div class="charts">';
+echo '<div class="chart">';
+
+echo '<ul class="chart-hor">';
+echo '<li>
+        	<div class="chart_bar chart_bar_verified" data-skill="'.$cnt_verified_per.'" title="'.$lang['f_user_select_verified'].'"></div>
+        	<span class="chart_label">'.$lang['f_user_select_verified'].' ('.$cnt_verified.')</span>
+      </li>';
+echo '<li>
+        	<div class="chart_bar chart_bar_queue" data-skill="'.$cnt_waiting_per.'" title="'.$lang['f_user_select_waiting'].'"></div>
+        	<span class="chart_label">'.$lang['f_user_select_waiting'].' ('.$cnt_waiting.')</span>
+      </li>';
+echo '<li>
+        	<div class="chart_bar chart_bar_banned" data-skill="'.$cnt_paused_per.'" title="'.$lang['f_user_select_paused'].'"></div>
+        	<span class="chart_label">'.$lang['f_user_select_paused'].' ('.$cnt_paused.')</span>
+        </li>';
+echo '<li>
+        	<div class="chart_bar chart_bar_deleted" data-skill="'.$cnt_deleted_per.'" title="'.$lang['f_user_select_deleted'].'"></div>
+        	<span class="chart_label">'.$lang['f_user_select_deleted'].' ('.$cnt_deleted.')</span>
+        </li>';
+echo '</ul>';
+echo '</div>';
+echo '</div>';
+
+echo '</div>';
 echo '</div>'; // row
 echo '</div>';
 echo '</div>';
@@ -157,8 +184,39 @@ echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">'.$lang['tn_pages'].' <span class="badge pull-right">'.$cnt_pages.'</span></div>';
 echo '<div class="panel-body equal" data-mh="panel-body-group">';
 echo '<div class="row">';
-echo '<div class="col-lg-6"><div class="canvas-holder"><canvas id="pages-chart-area" width="30" height="30"/></canvas></div></div>';
-echo '<div class="col-lg-6 hidden-sm"><div id="pages-chart-legend"></div></div>';
+
+
+echo '<div class="col-lg-12">';
+
+
+    
+echo '<div class="charts">';
+echo '<div class="chart">';
+
+echo '<ul class="chart-hor">';
+echo '<li>
+        	<div class="chart_bar chart_bar_public" data-skill="'.$cnt_public_per.'" title="'.$lang['f_page_status_puplic'].'"></div>
+        	<span class="chart_label">'.$lang['f_page_status_puplic'].' ('.$cnt_public.')</span>
+      </li>';
+echo '<li>
+        	<div class="chart_bar chart_bar_ghost" data-skill="'.$cnt_ghost_per.'" title="'.$lang['f_page_status_ghost'].'"></div>
+        	<span class="chart_label">'.$lang['f_page_status_ghost'].' ('.$cnt_ghost.')</span>
+        </li>';
+echo '<li>
+        	<div class="chart_bar chart_bar_private" data-skill="'.$cnt_private_per.'" title="'.$lang['f_page_status_private'].'"></div>
+        	<span class="chart_label">'.$lang['f_page_status_private'].' ('.$cnt_private.')</span>
+        </li>';
+echo '<li>
+        	<div class="chart_bar chart_bar_draft" data-skill="'.$cnt_draft_per.'" title="'.$lang['f_page_status_draft'].'"></div>
+        	<span class="chart_label">'.$lang['f_page_status_draft'].' ('.$cnt_draft.')</span>        	
+      </li>';
+echo '</ul>';
+echo '</div>';
+echo '</div>';
+
+echo '</div>';
+
+
 echo '</div>'; // row
 echo '</div>';
 echo '</div>';
@@ -176,32 +234,6 @@ echo '</div>';
 echo"</div>";
 
 echo'</div>'; // row
-
-
-$charts_script = file_get_contents('templates/script-dashboard-charts.tpl');
-
-$charts_script = str_replace('{label_user_verified}', $lang['f_user_select_verified'], $charts_script);
-$charts_script = str_replace('{label_user_waiting}', $lang['f_user_select_waiting'], $charts_script);
-$charts_script = str_replace('{label_user_paused}', $lang['f_user_select_paused'], $charts_script);
-$charts_script = str_replace('{label_user_deleted}', $lang['f_user_select_deleted'], $charts_script);
-
-$charts_script = str_replace('{cnt_user_verified}', $cnt_verified, $charts_script);
-$charts_script = str_replace('{cnt_user_waiting}', $cnt_waiting, $charts_script);
-$charts_script = str_replace('{cnt_user_paused}', $cnt_paused, $charts_script);
-$charts_script = str_replace('{cnt_user_deleted}', $cnt_deleted, $charts_script);
-
-$charts_script = str_replace('{label_pages_public}', $lang['f_page_status_puplic'], $charts_script);
-$charts_script = str_replace('{label_pages_draft}', $lang['f_page_status_draft'], $charts_script);
-$charts_script = str_replace('{label_pages_ghost}', $lang['f_page_status_ghost'], $charts_script);
-$charts_script = str_replace('{label_pages_private}', $lang['f_page_status_private'], $charts_script);
-
-$charts_script = str_replace('{cnt_pages_public}', $cnt_public, $charts_script);
-$charts_script = str_replace('{cnt_pages_draft}', $cnt_draft, $charts_script);
-$charts_script = str_replace('{cnt_pages_ghost}', $cnt_ghost, $charts_script);
-$charts_script = str_replace('{cnt_pages_private}', $cnt_private, $charts_script);
-
-
-echo "$charts_script";
 
 
 ?>

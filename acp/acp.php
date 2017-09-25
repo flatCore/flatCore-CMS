@@ -161,9 +161,6 @@ if(isset($set_acptheme)) {
 		<script type="text/javascript" src="../lib/js/masonry.pkgd.min.js"></script>
 		<script type="text/javascript" src="../lib/js/imagesloaded.pkgd.min.js"></script>
 		
-		<!-- Chart.js -->
-		<script type="text/javascript" src="../lib/js/Chart.min.js"></script>
-		
 		<!-- jquery.matchHeight-min.js-->
 		<script type="text/javascript" src="../lib/js/jquery/jquery.matchHeight-min.js"></script>
 		

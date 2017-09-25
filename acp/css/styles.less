@@ -9,16 +9,16 @@
 
 /* pages - status colors */
 @color_public: #5cb85c;
-@color_ghost: fade(@color_public,50%);
+@color_ghost: fade(@color_public,40%);
 @color_private: #d9534f;
 @color_draft: #989898;
 @color_redirect: #286090;
 
 /* user - status colors */
-@color_verified: #f938ab;
-@color_queue: #f938ab;
-@color_banned: #f938ab;
-@color_deleted: #f938ab;
+@color_verified: #5cb85c;
+@color_queue: @color_ghost;
+@color_banned: #f0ad4e;
+@color_deleted: #d9534f;
 
 ::selection {
 	background-color: #222;
@@ -1215,42 +1215,129 @@ img.avatar {
 	box-shadow: 0px 1px 5px #999;
 }
 
-.canvas-holder {
-	max-width: 100%;
-}
 
-.doughnut-legend {
-  list-style: none;
+/* charts */
+
+.charts {
+  width: 100%;
+  height: 100%;
   position: absolute;
-  left: 1px;
   top: 0;
-  padding-left: 0;
-}
-
-.doughnut-legend li {
-  display: block;
-  position: relative;
-  margin-bottom: 4px;
-  border-radius: 5px;
-  padding: 2px 8px 2px 18px;
-  font-size: 12px;
-  line-height: 15px;
-  color: #777;
-  cursor: default;
-}
-
-.doughnut-legend li:hover {
-  background-color: #eee;
-}
-
-.doughnut-legend li span {
-  display: block;
-  position: absolute;
   left: 0;
-  top: 0;
-  width: 15px;
-  height: 15px;
-  border-radius: 5px;
+  padding: 5px;
+}
+
+.chart {
+  margin: 0;
+  ul {
+	  list-style-type: none;
+	  margin: 0;
+	  padding: 0;
+	  li {
+		  margin: 0 0 4px 0;
+		  padding: 0;
+	  }
+  }
+}
+.chart:first-child {
+  margin: 0;
+}
+
+.chart-hor {
+  overflow: hidden;
+  li {
+	  background: rgba(0,0,0,0.05);
+	  position: relative;
+	  width: 100%;
+	  height: 40px;
+  }
+}
+
+.chart_label {
+	position: absolute;
+	bottom: 1px;
+	left: 0;
+	font-size: 11px;
+	background: rgba(255,255,255,0.7);
+	padding: 2px 5px;
+	border-top-right-radius: 7px;
+	margin: 0;
+}
+
+.chart_bar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 40px;
+	opacity: 0;
+	animation: 1s drive-in ease forwards;
+}
+
+.chart_bar_verified {
+	background: linear-gradient(to left, @color_verified, lighten(@color_verified,20%));
+}
+
+.chart_bar_queue {
+	background: linear-gradient(to left, @color_queue, lighten(@color_queue,20%));
+}
+
+.chart_bar_banned {
+	background: linear-gradient(to left, @color_banned, lighten(@color_banned,20%));
+}
+
+.chart_bar_deleted {
+	background: linear-gradient(to left, @color_deleted, lighten(@color_deleted,20%));
+}
+
+.chart_bar_public {
+	background: linear-gradient(to left, @color_public, lighten(@color_public,20%));
+}
+
+.chart_bar_ghost {
+	background: linear-gradient(to left, @color_ghost, lighten(@color_ghost,20%));
+}
+
+.chart_bar_draft {
+	background: linear-gradient(to left, @color_draft, lighten(@color_draft,20%));
+}
+
+.chart_bar_private {
+	background: linear-gradient(to left, @color_private, lighten(@color_private,20%));
+}
+
+.chart .chart_bar:nth-of-type(4) {
+  animation-delay: 0.8s;
+}
+.chart .chart_bar:nth-of-type(3) {
+  animation-delay: 0.6s;
+}
+.chart .chart_bar:nth-of-type(2) {
+  animation-delay: 0.4s;
+}
+.chart .chart_bar:nth-of-type(1) {
+  animation-delay: 0.2s;
+}
+
+.generate-bars(100);
+
+.generate-bars(@n, @i: 0) when (@i =< @n) {
+  .chart_bar[data-skill='@{i}'] {
+    width: (@i * 100% / @n);
+  }
+  .generate-bars(@n, (@i + 1));
+}
+
+
+
+@keyframes drive-in {
+  0% {
+    transform: translateX(-200%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 

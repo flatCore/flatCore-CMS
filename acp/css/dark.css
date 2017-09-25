@@ -57,7 +57,7 @@ hr {
   border-color: #111;
 }
 .panel-default .panel-heading {
-  background: #151515;
+  background: #191919;
   color: #eee;
   border-color: #111;
 }
@@ -273,7 +273,18 @@ fieldset legend {
 .page-list-item h4 small {
   color: #aaa;
 }
-/*  */
+/* charts */
+.chart-hor {
+  overflow: hidden;
+}
+.chart-hor li {
+  background: rgba(255, 255, 255, 0.05);
+}
+.chart_label {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.4);
+  text-shadow: 1px 1px 3px #000;
+}
 .doughnut-legend li:hover {
   background-color: rgba(0, 0, 0, 0.4);
 }
