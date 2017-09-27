@@ -397,10 +397,10 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 	 */
 	 							
 	if($modus == "preview") {
-	
+		
 		$page_id_original = "$editpage";
 		$page_cache_type = "preview";
-		
+				
 		$sql = generate_sql_insert_str($pdo_fields_cache,"fc_pages_cache");					
 		$std = $dbh->prepare($sql);
 		
@@ -417,7 +417,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$std->bindParam(':page_authorized_users', $string_authorized_admins, PDO::PARAM_STR);
 		$std->bindParam(':page_version', $page_version, PDO::PARAM_INT);
 		$std->bindParam(':page_cache_type', $page_cache_type, PDO::PARAM_STR);
-		$sth->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
+		$std->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
 		
 		$cnt_changes_c = $std->execute();
 		
