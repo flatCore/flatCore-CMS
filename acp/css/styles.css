@@ -1032,10 +1032,6 @@ img.avatar {
 .charts {
   width: 100%;
   height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 5px;
 }
 .chart {
   margin: 0;
@@ -1421,11 +1417,11 @@ img.avatar {
 @keyframes drive-in {
   0% {
     transform: translateX(-200%);
-    opacity: 1;
+    opacity: .5;
   }
   100% {
     transform: translateX(0);
-    opacity: 1;
+    opacity: .5;
   }
 }
 .bootstrap-tagsinput {

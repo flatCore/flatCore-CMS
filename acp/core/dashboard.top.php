@@ -128,7 +128,7 @@ $cnt_ghost_per = round($cnt_ghost*100/$cnt_pages);
 $cnt_private_per = round($cnt_private*100/$cnt_pages);
 
 echo'<div class="row">';
-echo '<div class="hidden-xs col-sm-4 col-md-3">';
+echo '<div class="hidden-xs col-sm-4 col-lg-3">';
 
 echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">'.$lang['db_user'].' <span class="badge pull-right">'.$cnt_user.'</span></div>';
@@ -159,16 +159,20 @@ echo '<li>
         	<span class="chart_label">'.$lang['f_user_select_deleted'].' ('.$cnt_deleted.')</span>
         </li>';
 echo '</ul>';
-echo '</div>';
+
 echo '</div>';
 
 echo '</div>';
+
+
+echo '</div>';
+
 echo '</div>'; // row
 echo '</div>';
 echo '</div>';
 
 echo"</div>";
-echo '<div class="col-xs-12 col-sm-8 col-md-3">';
+echo '<div class="col-xs-12 col-sm-8 col-lg-3">';
 
 echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">'.$lang['h_latest_user'].'</div>';
@@ -178,7 +182,7 @@ echo '</div>';
 echo '</div>';
 
 echo"</div>";
-echo '<div class="hidden-xs col-sm-4 col-md-3">';
+echo '<div class="hidden-xs col-sm-4 col-lg-3">';
 
 echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">'.$lang['tn_pages'].' <span class="badge pull-right">'.$cnt_pages.'</span></div>';
@@ -216,13 +220,12 @@ echo '</div>';
 
 echo '</div>';
 
-
 echo '</div>'; // row
 echo '</div>';
 echo '</div>';
 
 echo"</div>";
-echo '<div class="col-xs-12 col-sm-8 col-md-3">';
+echo '<div class="col-xs-12 col-sm-8 col-lg-3">';
 
 echo '<div class="panel panel-default">';
 echo '<div class="panel-heading">'.$lang['h_last_edit'].'</div>';
