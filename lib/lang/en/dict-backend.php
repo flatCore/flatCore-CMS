@@ -118,7 +118,7 @@ $lang['h_page_hits'] = "Klicks";
 $lang['h_modus_editpage'] = "Edit Page";
 $lang['h_modus_newpage'] = "New Page";
 $lang['h_modus_duplicate'] = "Duplicate Page";
-$lang['h_last_edit'] = "last edit";
+$lang['h_last_edit'] = "Last edit";
 
 $lang['h_modus_edituser'] = "Edit User";
 $lang['h_modus_newuser'] = "New User";
@@ -150,7 +150,7 @@ $lang['tab_content_description'] = "Content";
 $lang['tab_extracontent'] = "Additional Content";
 $lang['tab_extracontent_description'] = "Additional Content";
 
-$lang['tab_meta'] = "Meta Tags (Code/HTML)";
+$lang['tab_meta'] = "Meta Tags";
 $lang['tab_meta_description'] = "Meta Information - Keywords etc.";
 
 $lang['tab_head'] = "Head (Code/HTML)";
@@ -218,7 +218,7 @@ $lang['f_meta_robots'] = "Robots";
 $lang['f_meta_enhanced'] = "Other Meta tags (HTML)";
 
 $lang['f_head_styles'] = "Styles (CSS)";
-$lang['f_head_enhanced'] = "Other styles (HTML)";
+$lang['f_head_enhanced'] = "Other Styles (HTML)";
 
 $lang['f_page_language'] = "Language";
 
@@ -258,7 +258,7 @@ $lang['f_user_psw_description'] = "Complete only<br />when the password is to be
 
 $lang['f_user_select_waiting'] = "Wait for verification";
 $lang['f_user_select_verified'] = "Verified";
-$lang['f_user_select_paused'] = "Temporarily closed";
+$lang['f_user_select_paused'] = "Locked temporarily";
 $lang['f_user_select_deleted'] = "Deleted";
 $lang['f_administrators'] = "Administrators";
 

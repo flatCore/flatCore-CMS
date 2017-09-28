@@ -145,8 +145,8 @@ $lang['tab_content_description'] = "Inhalt";
 $lang['tab_extracontent'] = "Optionaler Inhalt";
 $lang['tab_extracontent_description'] = "Inhalt für die zusätzliche Anzeige";
 
-$lang['tab_meta'] = "Meta Tags (Code/HTML)";
-$lang['tab_meta_description'] = "Meta Information - Keywords etc.";
+$lang['tab_meta'] = "Meta Tags";
+$lang['tab_meta_description'] = "Meta Informationen - Keywords etc.";
 
 $lang['tab_head'] = "Head (Code/HTML)";
 $lang['tab_head_description'] = "Sonstige Header Informationen";
