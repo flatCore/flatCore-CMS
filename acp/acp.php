@@ -92,7 +92,7 @@ if($fc_prefs['prefs_cms_ssl_domain'] != '') {
 }
 
 if(!isset($_COOKIE['acptheme'])) {
-	setcookie("acp_theme", "default",time()+(3600*24*365));
+	setcookie("acptheme", "default",time()+(3600*24*365));
 }
 
 if(isset($_GET['theme'])) {
@@ -196,7 +196,7 @@ if(isset($set_acptheme)) {
 			include("../modules/$sub/backend/header.php");
 		}
 		
-		include("core/editors.php");
+		
 		include("core/templates.php");
 		
 		?>	
@@ -244,7 +244,7 @@ if(isset($set_acptheme)) {
 			<?php include("core/$maininc.php"); ?>
 		</div>
 
-
+		<?php include("core/editors.php"); ?>
 	
 		<div id="footer">
 		<b>flatCore</b> Content Management System (<?php echo $fc_version_name . ' <small>B: ' . $fc_version_build; ?>)</small><br />
