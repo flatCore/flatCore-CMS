@@ -11,7 +11,7 @@
 			
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-      	<li class="{$homelink_status}"><a href="{$link_home}" title="{$homepage_title}">&nbsp;<span class="glyphicon glyphicon-home"></span>&nbsp;</a></li>	
+      	<li class="{$homelink_status}"><a href="{$link_home}" title="{$homepage_title}">{$homepage_linkname}</a></li>	
 				{foreach item=nav from=$arr_menue}
 				<li class="{$nav.link_status}"><a class="nav-id-{$nav.page_id} {$nav.page_hash}" href="{$nav.link}" title="{$nav.page_title}">{$nav.page_linkname}</a></li>
 				{/foreach}

@@ -40,6 +40,9 @@ $submenu = show_menu($current_page_sort);
 $bcmenu = breadcrumbs_menu($current_page_sort);
 $fc_sitemap = show_sitemap();
 
+$smarty->assign('homepage_linkname', $mainmenu['homepage_linkname']);
+unset($mainmenu['homepage_linkname']);
+
 $arr_mainmenu = @array_values($mainmenu);
 $arr_subnmenu = @array_values($submenu);
 
@@ -112,9 +115,9 @@ if($page_modul != "") {
 /* parse [include] [script] [plugin] etc. */
 $page_content = text_parser($page_content);
 
-$smarty->assign('page_content', "$page_content");
-$smarty->assign('page_title', "$page_title");
-$smarty->assign('prefs_pagesglobalhead', "$prefs_pagesglobalhead");
+$smarty->assign('page_content', $page_content);
+$smarty->assign('page_title', $page_title);
+$smarty->assign('prefs_pagesglobalhead', $prefs_pagesglobalhead);
 $smarty->assign('page_meta_author', $page_meta_author);
 $smarty->assign('page_meta_date', date('Y-m-d', $page_lastedit));
 $smarty->assign('page_meta_keywords', $page_meta_keywords);

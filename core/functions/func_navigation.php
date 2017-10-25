@@ -18,6 +18,10 @@ function show_mainmenu() {
 	$count_result = count($fc_nav);
 	
 	for($i=0;$i<$count_result;$i++) {
+		
+		if($fc_nav[$i]['page_sort'] == 'portal') {
+			$menu['homepage_linkname'] = $fc_nav[$i]['page_linkname'];
+		}
 	
 		if($fc_nav[$i]['page_sort'] == "" || $fc_nav[$i]['page_sort'] == 'portal') {
 			continue; //no page_sort or portal -> no menu item
@@ -35,7 +39,7 @@ function show_mainmenu() {
 			$menu[$i]['page_hash'] = $fc_nav[$i]['page_hash'];
 			$menu[$i]['link_status'] = $fc_defs['main_nav_class'];
 		
-			if(left_string($current_page_sort) == left_string($menu[$i][page_sort]) ) {
+			if(left_string($current_page_sort) == left_string($menu[$i]['page_sort']) ) {
 				$menu[$i]['link_status'] = $fc_defs['main_nav_class_active'];
 				define('FC_MAIN_CAT', clean_filename($fc_nav[$i]['page_linkname']));
 				define('FC_TOC_HEADER', $menu[$i]['page_linkname']);
