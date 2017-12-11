@@ -85,7 +85,7 @@ foreach($fc_preferences as $k => $v) {
 }
 
 /* build absolute URL */
-if($fc_prefs['prefs_cms_ssl_domain'] != '') {
+if($fc_preferences['prefs_cms_ssl_domain'] != '') {
 	$fc_base_url = $prefs_cms_ssl_domain . $prefs_cms_base;
 } else {
 	$fc_base_url = $prefs_cms_domain . $prefs_cms_base;
