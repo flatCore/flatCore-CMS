@@ -196,7 +196,7 @@ $smarty->assign('page_keywords', $page_keywords);
 
 /* private pages, for admins only */
 if(($page_status == "private") AND ($_SESSION['user_class'] != "administrator")) {
-	$text = get_textlib("no_access");
+	$text = get_textlib("no_access", $languagePack);
 	$smarty->assign('page_content', $text);
 	$smarty->assign('extra_content', "");
 }
@@ -216,7 +216,7 @@ if($page_usergroup != "") {
 	}
 
 	if((!in_array("true",$is_user_in_group)) AND ($_SESSION['user_class'] != "administrator")) {
-		$text = get_textlib("no_access");
+		$text = get_textlib("no_access", $languagePack);
 		$smarty->assign('page_content', $text);
 		$smarty->assign('extra_content', "");
 	}
@@ -226,7 +226,7 @@ if($page_usergroup != "") {
 
 /* draft pages for administrators only */
 if(($page_status == "draft") AND ($_SESSION['user_class'] != "administrator")){
-	$text = get_textlib("no_access");
+	$text = get_textlib("no_access", $languagePack);
 	$smarty->assign('page_content', $text);
 	$smarty->assign('extra_content', "");
 }
@@ -248,7 +248,7 @@ if($p == "register") {
 	} else {
 		
 		// INCLUDE/SHOW AGREEMENT TEXT
-		$agreement_txt = get_textlib("agreement_text","$languagePack");
+		$agreement_txt = get_textlib("agreement_text", $languagePack);
 		$smarty->assign("agreement_text","$agreement_txt");
 	
 		if($_POST['send_registerform']) {
@@ -276,7 +276,7 @@ if($p == "account") {
 	$dbh = null;
 	
 	if($cnt_changes > 0){
-		$account_msg = get_textlib("account_confirm",$languagePack);
+		$account_msg = get_textlib("account_confirm", $languagePack);
 		$account_msg = str_replace("{USERNAME}","$user",$account_msg);
 		record_log("switch","user activated via mail - $user","5");
 	} else {
