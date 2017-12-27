@@ -5,8 +5,8 @@
  * used in tinyMCE's filebrowser
  */
  
-include('../../config.php');
-include('functions.php');
+include '../../config.php';
+include 'functions.php';
 
 $path = "../../$img_path";
 $abspath = '/'.$img_path;

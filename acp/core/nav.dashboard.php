@@ -1,6 +1,6 @@
 <?php
 
-require("core/access.php");
+require 'core/access.php';
 
 echo '<div class="panel-group panel-sidemenu" id="dashboard-collapse">';
 
@@ -76,7 +76,7 @@ for($i=0;$i<$nbrModuls;$i++) {
 	unset($modnav);
 	$mod_info_file = "../modules/$modFolder/info.inc.php";
 		if(is_file("$mod_info_file")) {
-			include("$mod_info_file");
+			include $mod_info_file;
 			echo '<a class="sidebar-sub" href="acp.php?tn=moduls&sub='.$modFolder.'&a=start">'.$mod['name'].'</a>';
 		}
 }

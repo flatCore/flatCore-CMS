@@ -120,18 +120,24 @@ function fc_check_funnel_uri($uri) {
 	
 	$dbh = new PDO("sqlite:$fc_db_content");
 	
-	$page_sql = "SELECT page_permalink, page_funnel_uri FROM fc_pages WHERE page_funnel_uri = :uri";
+	$page_sql = "SELECT page_permalink, page_funnel_uri FROM fc_pages WHERE page_funnel_uri LIKE :uri";
 	$sth = $dbh->prepare($page_sql);
-	$sth->bindParam(':uri', $uri, PDO::PARAM_STR);
+	$sth->bindValue(':uri', "%$uri%", PDO::PARAM_STR);
 	$sth->execute();
 	$page = $sth->fetch(PDO::FETCH_ASSOC);
 	
-		/* if page_funnel_uri == $fct_slug, we can stop here and go straight to page_permalink */
-		if($page['page_funnel_uri'] == $uri) {
-			$redirect = '/'.$page['page_permalink'];
-			header("location: $redirect",TRUE,301);
-			exit;
-		}	
+		$page_funnel_uri = explode(',', $page['page_funnel_uri']);
+		foreach($page_funnel_uri as $u) {
+
+			if($u == $uri) {
+				$redirect = '/'.$page['page_permalink'];
+				header("location: $redirect",TRUE,301);
+				exit;
+			}
+			
+		}
+		
+	
 	
 }
 

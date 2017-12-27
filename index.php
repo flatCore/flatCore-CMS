@@ -7,7 +7,7 @@
  * Information and contribution at https://www.flatcore.org
  * E-Mail: support@flatcore.org
  */
- 
+
 ini_set("url_rewriter.tags", '');
 session_start();
 error_reporting(0);
@@ -22,7 +22,7 @@ foreach($_REQUEST as $key => $val) {
 }
 
 
-require('config.php');
+require 'config.php';
 
 if(is_file(FC_CORE_DIR . "/maintance.html") OR (is_file($fc_db_content) == false)) {
 		header("location:" . FC_INC_DIR . "/maintance.html");
@@ -31,7 +31,7 @@ if(is_file(FC_CORE_DIR . "/maintance.html") OR (is_file($fc_db_content) == false
 
 
 
-require(FC_CORE_DIR . '/core/functions.php');
+require FC_CORE_DIR . '/core/functions.php';
 
 
 /* reserved $_GET['p'] parameters */
@@ -46,7 +46,7 @@ $a_allowed_p = array('register', 'account', 'profile', 'search', 'sitemap', 'log
 if(isset($query)) {
 	
 	if(is_file(FC_CONTENT_DIR.'/plugins/query.controller.php')) {
-		include(FC_CONTENT_DIR.'/plugins/query.controller.php');
+		include FC_CONTENT_DIR.'/plugins/query.controller.php';
 	}
 
 	$fct_slug = $query;
@@ -57,7 +57,7 @@ if(isset($query)) {
 		$active_mods = fc_get_active_mods();
 		$cnt_active_mods = count($active_mods);
 		
-		include(FC_CONTENT_DIR . "/cache/active_urls.php");
+		include FC_CONTENT_DIR . '/cache/active_urls.php';
 		if(in_array("$query", $existing_url)) {
 			$query_is_cached = true;
 		}
@@ -88,7 +88,7 @@ if(isset($query)) {
 		list($page_contents,$fc_nav,$fc_prefs) = get_content($fct_slug,'permalink');
 		$p = $page_contents['page_id'];
 
-		
+
 		if($p == "") {
 			$p = "404";					
 			foreach($a_allowed_p as $param) {
@@ -217,15 +217,15 @@ if(is_dir('styles/'.$page_contents['page_template'].'/templates/')) {
 $smarty->assign('fc_template', $fc_template);
 $smarty->assign('fc_template_layout', $fc_template_layout);
 
-include('core/definitions.php');
+include 'core/definitions.php';
 
 /* custom theme definitions and functions */
 if(is_file('styles/'.$fc_template.'/php/definitions.php')) {
-	include('styles/'.$fc_template.'/php/definitions.php');
+	include 'styles/'.$fc_template.'/php/definitions.php';
 }
 
 if(is_file("styles/$fc_template/php/index.php")) {
-	include("styles/$fc_template/php/index.php");
+	include 'styles/'.$fc_template.'/php/index.php';
 }
 
 $smarty->template_dir = 'styles/'.$fc_template.'/templates/';
@@ -246,7 +246,7 @@ require("core/user_management.php");
 require("core/switch.php");
 
 if(is_file('styles/'.$fc_template.'/php/options.php')) {
-	include('styles/'.$fc_template.'/php/options.php');
+	include 'styles/'.$fc_template.'/php/options.php';
 }
 
 // parse template vars
@@ -267,12 +267,12 @@ $smarty->display('index.tpl',$cache_id);
 
 /* track the hits */
 if(!isset($preview)) {
-	include_once('core/tracker.php');
+	include_once 'core/tracker.php';
 }
 
 /* track more statistics */
 if($prefs_logfile == "on") {
-	include_once('core/logfile.php');
+	include_once 'core/logfile.php';
 }
 
 

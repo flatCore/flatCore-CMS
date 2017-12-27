@@ -20,7 +20,7 @@ function get_all_languages($d='../lib/lang') {
 	
 	foreach($scanned_directory as $lang_folder) {
 		if(is_file("$d/$lang_folder/index.php")) {
-			include("$d/$lang_folder/index.php");
+			include $d.'/'.$lang_folder.'/index.php';
 			$arr_lang[$cntLangs]['lang_sign'] = "$lang_sign";
 			$arr_lang[$cntLangs]['lang_desc'] = "$lang_desc";
 			$arr_lang[$cntLangs]['lang_folder'] = "$lang_folder";
@@ -63,9 +63,9 @@ function get_all_moduls() {
 		
 	foreach($scanned_directory as $mod_folder) {
 		if(is_file("$mdir/$mod_folder/info.inc.php")) {
-			include("$mdir/$mod_folder/info.inc.php");
+			include $mdir.'/'.$mod_folder.'/info.inc.php';
 			$arr_iMods[$cntMods]['name'] = $mod['name'];
-			$arr_iMods[$cntMods]['folder'] = "$mod_folder";
+			$arr_iMods[$cntMods]['folder'] = $mod_folder;
 			$cntMods++;		
 		}
 	}

@@ -103,7 +103,7 @@ echo '<div class="row">';
 echo '<div class="col-md-9">';
 
 if(is_file("../styles/$prefs_template/php/options.php")) {
-	include("../styles/$prefs_template/php/options.php");
+	include '../styles/'.$prefs_template.'/php/options.php';
 }
 
 echo '</div>';

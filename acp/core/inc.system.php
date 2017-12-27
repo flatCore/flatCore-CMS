@@ -1,7 +1,7 @@
 <?php
 
 //prohibit unauthorized access
-require("core/access.php");
+require 'core/access.php';
 
 switch ($sub) {
 
@@ -42,6 +42,6 @@ if($_SESSION['acp_system'] != "allowed"){
 
 
 
-include("./core/$subinc.php");
+include './core/'.$subinc.'.php';
 
 ?>

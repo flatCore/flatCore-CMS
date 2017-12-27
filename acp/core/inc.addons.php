@@ -1,7 +1,7 @@
 <?php
 //error_reporting(E_ALL ^E_NOTICE);
 //prohibit unauthorized access
-require("core/access.php");
+require 'core/access.php';
 
 /**
  * list and access module
@@ -51,32 +51,32 @@ if($sub == 'list' OR $sub == 'p' OR $sub == 'm' OR $sub == 't' OR $sub == 'u') {
 /* list module */
 
 if($addon_mode == 'list_modules') {
-	include("list.addons.php");
+	include 'list.addons.php';
 }
 
 if($addon_mode == 'access_module') {
-	include("../modules/$sub/info.inc.php");
-	include("../modules/$sub/backend/$a.php");	
+	include '../modules/'.$sub.'/info.inc.php';
+	include '../modules/'.$sub.'/backend/'.$a.'.php';	
 }
 
 
 /* list themes */
 
 if($addon_mode == 'list_themes') {
-	include("list.themes.php");
+	include 'list.themes.php';
 }
 
 
 /* list plugins */
 
 if($addon_mode == 'list_plugins') {
-	include("list.plugins.php");
+	include 'list.plugins.php';
 }
 
 /* upload/update addons */
 
 if($addon_mode == 'upload') {
-	include("upload_addons.php");
+	include 'upload_addons.php';
 }
 
 

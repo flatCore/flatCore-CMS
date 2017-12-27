@@ -1,7 +1,7 @@
 <?php
 
 //prohibit unauthorized access
-require("core/access.php");
+require 'core/access.php';
 
 $sub_active[0] = "submenu";
 $sub_active[1] = "submenu";
@@ -27,6 +27,6 @@ default:
 }
 
 
-include("$subinc.php");
+include $subinc.'.php';
 
 ?>

@@ -1,5 +1,5 @@
 <?php
-require("core/access.php");
+require 'core/access.php';
 
 
 $a = '';
@@ -24,7 +24,7 @@ for($i=0;$i<$nbrModuls;$i++) {
 	
 	unset($modnav);
 	
-	include("../modules/$modFolder/info.inc.php");
+	include '../modules/'.$modFolder.'/info.inc.php';
 
 	$mod_subnav .= '<a class="sidebar-nav '.($sub == "$modFolder" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=moduls&sub='.$modFolder.'&a=start">'.$mod['name'].'<span class="tri-left"></span></a>';
 	

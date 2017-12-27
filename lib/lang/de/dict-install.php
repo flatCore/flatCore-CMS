@@ -1,6 +1,6 @@
 <?php
 	
-include('dict-backend.php');
+include 'dict-backend.php';
 
 $lang['progress'] = 'Fortschritt';
 $lang['step'] = 'Stufe';

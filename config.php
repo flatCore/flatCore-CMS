@@ -57,7 +57,7 @@ define('FC_INC_DIR',  $fc_inc_dir);
 
 
 if(is_file(FC_CONTENT_DIR . '/config.php')){
-	include(FC_CONTENT_DIR . '/config.php');
+	include FC_CONTENT_DIR . '/config.php';
 }
 
 ?>

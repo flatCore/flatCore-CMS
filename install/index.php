@@ -26,9 +26,9 @@ if(!isset($_SESSION['lang']) || $_SESSION['lang'] == '') {
 	$l = $_SESSION['lang'];
 }
 
-require("../config.php");
-require("php/functions.php");
-include('../lib/lang/'.$l.'/dict-install.php');
+require '../config.php';
+require 'php/functions.php';
+include '../lib/lang/'.$l.'/dict-install.php';
 
 
 

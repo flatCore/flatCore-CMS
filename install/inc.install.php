@@ -16,12 +16,12 @@ if(isset($_POST['step3'])) {
 		echo '<p><a href="javascript:history.back()" class="btn btn-default">'.$lang['pagination_backward'].'</a></p>';
 		echo '</div>';
 	} else {
-		include("php/createDB.php");
+		include 'php/createDB.php';
 	}
 } elseif(isset($_POST['step2'])) {
-	include("php/form.php");
+	include 'php/form.php';
 } else {
-	include("php/checkup.php");
+	include 'php/checkup.php';
 }
 
 ?>

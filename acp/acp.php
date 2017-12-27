@@ -2,17 +2,17 @@
 session_start();
 error_reporting(0);
 
-require('../config.php');
+require '../config.php';
 if(is_file('../'.FC_CONTENT_DIR.'/config.php')) {
-	include('../'.FC_CONTENT_DIR.'/config.php');
+	include '../'.FC_CONTENT_DIR.'/config.php';
 }
-require('core/access.php');
-include('versions.php');
+require 'core/access.php';
+include 'versions.php';
 
 
 if(isset($fc_content_files) && is_array($fc_content_files)) {
 	/* switch database file $fc_db_content */
-	include('core/contentSwitch.php');
+	include 'core/contentSwitch.php';
 }
 
 define("CONTENT_DB", "../$fc_db_content");
@@ -193,11 +193,11 @@ if(isset($set_acptheme)) {
 		 */
 		 
 		if(is_file("../modules/$sub/backend/header.php")) {
-			include("../modules/$sub/backend/header.php");
+			include '../modules/'.$sub.'/backend/header.php';
 		}
 		
 		
-		include("core/templates.php");
+		include 'core/templates.php';
 		
 		?>	
 		
@@ -215,8 +215,8 @@ if(isset($set_acptheme)) {
 	
 		<div id="page-sidebar">
 			<a href="acp.php?tn=dashboard" id="dashboard" title="Dashboard"></a>
-			<?php include("core/$navinc.php"); ?>
-			<?php include('core/livebox.php'); ?>
+			<?php include 'core/'.$navinc.'.php'; ?>
+			<?php include 'core/livebox.php'; ?>
 		</div>
 			
 		<div id="page-content">
@@ -241,10 +241,10 @@ if(isset($set_acptheme)) {
 	
 	
 		<div id="container">
-			<?php include("core/$maininc.php"); ?>
+			<?php include 'core/'.$maininc.'.php'; ?>
 		</div>
 
-		<?php include("core/editors.php"); ?>
+		<?php include 'core/editors.php'; ?>
 	
 		<div id="footer">
 		<b>flatCore</b> Content Management System (<?php echo $fc_version_name . ' <small>B: ' . $fc_version_build; ?>)</small><br />
@@ -271,7 +271,7 @@ if(isset($set_acptheme)) {
 		        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-upload"></span> Upload</h4>
 		      </div>
 		      <div class="modal-body">
-		        <?php include("core/files.upload.php"); ?>
+		        <?php include 'core/files.upload.php'; ?>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

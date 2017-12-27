@@ -1,7 +1,7 @@
 <?php
 
 //prohibit unauthorized access
-require("core/access.php");
+require 'core/access.php';
 
 
 switch ($sub) {
@@ -304,8 +304,6 @@ if($subinc == "pages.list") {
 }
 
 
-
-
-include("$subinc.php");
+include $subinc.'.php';
 
 ?>

@@ -42,7 +42,7 @@ function table_exists($db,$table_name) {
 /* generate an sql query from templates (php files) */
 function generate_sql_query($file) {
 
-	include("contents/$file");
+	include 'contents/'.$file;
 
 	foreach ($cols as $k => $v) {
     	$string .= "$k $v,\r"; 

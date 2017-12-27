@@ -216,7 +216,7 @@ function compare_versions() {
 	global $remote_versions;
 	
 	if(is_file("versions.php")){
-		include("versions.php");
+		include 'versions.php';
 	} else {
 		$fc_version_name = '';
 		$fc_version_build = '';
@@ -344,7 +344,7 @@ function update_database($dbfile) {
 	
 		unset($db_path,$table_name,$database);
 		
-		include("$all_tables[$i]"); // returns $cols and $table_name
+		include $all_tables[$i]; // returns $cols and $table_name
 		
 		if($database == "content") {
 			$db_path = "../$dbfile";

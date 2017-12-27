@@ -7,7 +7,7 @@
  */
 
 //prohibit unauthorized access
-require("core/access.php");
+require 'core/access.php';
 
 $show_form = "true";
 $modus = "new";
@@ -510,7 +510,7 @@ if($_SESSION['acp_editpages'] != "allowed") {
 
 
 if($show_form == "true") {
-	include("pages.edit_form.php");
+	include 'pages.edit_form.php';
 }
 
 

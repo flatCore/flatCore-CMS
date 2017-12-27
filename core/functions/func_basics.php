@@ -47,7 +47,7 @@ function buffer_script($script,$parameters=NULL) {
 
 	ob_start();
 	if(is_file("./content/plugins/$script")) {
-		include("./content/plugins/$script");
+		include './content/plugins/'.$script;
 	}
 
 	$content = ob_get_clean();
@@ -101,7 +101,7 @@ function fc_global_mod_snippets($mod,$params=NULL) {
 	}
 	
   if(is_file('modules/'.$mod.'.mod/global/snippets.php')) {
-		include('modules/'.$mod.'.mod/global/snippets.php');
+		include 'modules/'.$mod.'.mod/global/snippets.php';
   }
 	
 	return $mod_str;
@@ -474,7 +474,7 @@ function fc_get_active_mods() {
 	$cached_mods = FC_CONTENT_DIR . "/cache/active_mods.php";
 	
 	if(is_file($cached_mods)) {
-		include($cached_mods);
+		include $cached_mods;
 	}
 	
 	return $active_mods;	

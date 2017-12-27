@@ -1,6 +1,6 @@
 <?php
 //prohibit unauthorized access
-require("core/access.php");
+require 'core/access.php';
 
 
 
@@ -57,7 +57,7 @@ if($_SESSION['acp_user'] != "allowed" AND $subinc == "user.groups"){
 
 
 
-include("./core/$subinc.php");
+include './core/'.$subinc.'.php';
 
 
 ?>

@@ -27,7 +27,7 @@ $all_tables = glob("contents/*.php");
 for($i=0;$i<count($all_tables);$i++) {
 
 	unset($db_path,$table_name);
-	include("$all_tables[$i]"); // returns $cols and $table_name
+	include $all_tables[$i]; // returns $cols and $table_name
 	
 	if($database == "content") {
 		$db_path = "../$fc_db_content";

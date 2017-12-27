@@ -1,7 +1,7 @@
 <?php
 
 //prohibit unauthorized access
-require("core/access.php");
+require 'core/access.php';
 
 // defaults
 $show_form = "true";
@@ -320,7 +320,7 @@ if(is_numeric($edituser)){
 }
 
 if($show_form == "true") {
-	include("core/user.edit_form.php");
+	include 'core/user.edit_form.php';
 }
 
 ?>

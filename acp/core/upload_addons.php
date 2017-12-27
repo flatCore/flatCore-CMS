@@ -227,7 +227,7 @@ if(!empty($_GET['theme'])) {
 	if(is_dir("../upload/themes/extract/$extracted"))	{
 		
 		if(is_file("../upload/themes/extract/$extracted/contents.php")) {
-			include("../upload/themes/extract/$extracted/contents.php");
+			include '../upload/themes/extract/'.$extracted.'/contents.php';
 			/* themes root folder ($instRootDir) must be defined in contents.php */
 			$all_files = fc_scandir_rec("../upload/themes/extract/$extracted/$instRootDir");
 		} else {

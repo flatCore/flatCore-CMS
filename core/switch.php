@@ -159,7 +159,7 @@ if($textlib_global_extracontent != "") {
 /* last edit */
 $le_cache_file = FC_CONTENT_DIR . "/cache/cache_lastedit.php";
 if(is_file("$le_cache_file")) {
-	include("$le_cache_file");
+	include $le_cache_file;
 } else {
 	$arr_lastedit = get_lastedit();
 }
@@ -174,7 +174,7 @@ if(is_file("$mc_cache_file")) {
 	if(time() - filemtime("$mc_cache_file") >= $cache_life) {
 		cache_most_clicked();
 	}
-	include("$mc_cache_file");
+	include $mc_cache_file;
 } else {
 	$arr_mostclicked = get_most_clicked();
 	cache_most_clicked();
@@ -252,7 +252,7 @@ if($p == "register") {
 		$smarty->assign("agreement_text","$agreement_txt");
 	
 		if($_POST['send_registerform']) {
-			include("user_register.php");
+			include 'user_register.php';
 		}
 	
 		$output = $smarty->fetch("registerform.tpl");
@@ -289,18 +289,18 @@ if($p == "account") {
 
 /* edit profile */
 if(($p == "profile") AND ($goto != "logout")) {
-	include("user_updateprofile.php");
+	include 'user_updateprofile.php';
 }
 
 
 /* include search */
 if($p == "search") {
-	include("search.php");
+	include 'search.php';
 }
 
 /* forgotten password */
 if($p == "password") {
-	include("password.php");
+	include 'password.php';
 }
 
 
