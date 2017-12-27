@@ -25,8 +25,8 @@ if($goto == 'logout') {
 	session_destroy();
 	unset($_SESSION['user_nick']);
 	setcookie("PHPSESSID", "", 1);
-	$smarty->assign("msg_status","alert alert-success");
-	$smarty->assign('msg_text', "$lang[msg_logout]");
+	$smarty->assign("msg_status","alert alert-success",true);
+	$smarty->assign('msg_text', $lang['msg_logout'],true);
 	$output = $smarty->fetch("status_message.tpl");
 	$smarty->assign('msg_content', $output);
 }
@@ -60,7 +60,7 @@ if($_SESSION['user_nick'] != "") {
 			unset($link_acp,$lang['button_acp']);
 	}
 	
-	$smarty->assign('status_msg', $status_msg);
+	$smarty->assign('status_msg', $status_msg,true);
 	$smarty->assign('link_profile', $link_profile);
 	$smarty->assign('lang_button_profile', $lang['button_profile']);
 	$smarty->assign("link_logout","$link_logout");
@@ -71,8 +71,8 @@ if($_SESSION['user_nick'] != "") {
 	$smarty->assign('lang_button_edit_page', $lang['button_acp_edit_page']);
 	
 	if(!isset($preview)) {
-		$output = $smarty->fetch("statusbox.tpl");
-		$smarty->assign('status_box', $output);
+		$output = $smarty->fetch("statusbox.tpl",$cache_id);
+		$smarty->assign('status_box', $output, true);
 	}
 
 } else {
@@ -99,8 +99,8 @@ if($_SESSION['user_nick'] != "") {
 			$smarty->assign("link_register","$lang[link_register]");
 		}
 		
-		$output = $smarty->fetch("loginbox.tpl");
-		$smarty->assign('login_box', $output);
+		$output = $smarty->fetch("loginbox.tpl",$cache_id);
+		$smarty->assign('login_box', $output, true);
 	}
 
 } // eol show login form

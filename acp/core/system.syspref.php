@@ -187,7 +187,10 @@ if(isset($_POST['save_prefs_misc'])) {
 		'prefs_logfile' => 'STR',
 		'prefs_xml_sitemap' => 'STR',
 		'prefs_rss_time_offset' => 'STR',
-		'prefs_nbr_page_versions' => 'INT'
+		'prefs_nbr_page_versions' => 'INT',
+		'prefs_smarty_cache' => 'INT',
+		'prefs_smarty_cache_lifetime' => 'INT',
+		'prefs_smarty_compile_check' => 'INT'
 	);
 	
 	if(isset($_POST['prefs_logfile'])) {
@@ -200,7 +203,19 @@ if(isset($_POST['save_prefs_misc'])) {
 		$prefs_xml_sitemap = 'on';
 	} else {
 		$prefs_xml_sitemap = 'off';
-	}	
+	}
+	
+	if(isset($_POST['prefs_smarty_cache'])) {
+		$prefs_smarty_cache = 1;
+	} else {
+		$prefs_smarty_cache = 0;
+	}
+	
+	if(isset($_POST['prefs_smarty_compile_check'])) {
+		$prefs_smarty_compile_check = 1;
+	} else {
+		$prefs_smarty_compile_check = 0;
+	}
 
 	$dbh = new PDO("sqlite:".CONTENT_DB);
 	$sql = generate_sql_update_str($pdo_fields,"fc_preferences","WHERE prefs_id = 1");
@@ -208,7 +223,10 @@ if(isset($_POST['save_prefs_misc'])) {
 	$sth->bindParam(':prefs_rss_time_offset', $_POST['prefs_rss_time_offset'], PDO::PARAM_STR);
 	$sth->bindParam(':prefs_logfile', $prefs_logfile, PDO::PARAM_STR);
 	$sth->bindParam(':prefs_xml_sitemap', $prefs_xml_sitemap, PDO::PARAM_STR);
-	$sth->bindParam(':prefs_nbr_page_versions', $prefs_nbr_page_versions, PDO::PARAM_INT);	
+	$sth->bindParam(':prefs_nbr_page_versions', $prefs_nbr_page_versions, PDO::PARAM_INT);
+	$sth->bindParam(':prefs_smarty_cache', $prefs_smarty_cache, PDO::PARAM_INT);
+	$sth->bindParam(':prefs_smarty_cache_lifetime', $_POST['prefs_smarty_cache_lifetime'], PDO::PARAM_INT);
+	$sth->bindParam(':prefs_smarty_compile_check', $prefs_smarty_compile_check, PDO::PARAM_INT);
 	$cnt_changes = $sth->execute();
 	$dbh = null;
 }
@@ -551,6 +569,22 @@ echo tpl_form_control_group('',$lang['activate_xml_sitemap'],$toggle_btn_sitemap
 echo tpl_form_control_group('',$lang['rss_offset'],"<input class='form-control' type='text' name='prefs_rss_time_offset' value='$prefs_rss_time_offset'>");
 
 echo tpl_form_control_group('',$lang['prefs_nbr_page_versions'],"<input class='form-control' type='text' name='prefs_nbr_page_versions' value='$prefs_nbr_page_versions'>");
+
+echo '<hr>';
+
+$toggle_btn_cache  = '<div class="make-switch" data-on="success" data-on-label="'.$lang['yes'].'" data-off-label="'.$lang['no'].'">';
+$toggle_btn_cache .= '<input type="checkbox" name="prefs_smarty_cache" '.($prefs_smarty_cache == "1" ? 'checked' :'').'>';
+$toggle_btn_cache .= '</div>';
+echo tpl_form_control_group('',$lang['cache'],$toggle_btn_cache);
+
+echo tpl_form_control_group('',$lang['cache_lifetime'],"<input class='form-control' type='text' name='prefs_smarty_cache_lifetime' value='$prefs_smarty_cache_lifetime'>");
+
+$toggle_btn_cache_compile  = '<div class="make-switch" data-on="success" data-on-label="'.$lang['yes'].'" data-off-label="'.$lang['no'].'">';
+$toggle_btn_cache_compile .= '<input type="checkbox" name="prefs_smarty_compile_check" '.($prefs_smarty_compile_check == "1" ? 'checked' :'').'>';
+$toggle_btn_cache_compile .= '</div>';
+echo tpl_form_control_group('',$lang['compile_check'],$toggle_btn_cache_compile);
+
+
 
 echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_misc' value='$lang[save]'>");
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';

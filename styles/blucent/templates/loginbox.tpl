@@ -1,3 +1,4 @@
+{nocache}
 <div class="well well-sm">
 	<form action="{$smarty.server.SCRIPT_NAME}?p={$p}" method="POST">
 
@@ -27,3 +28,4 @@
 	<p>{$msg_register}<br>{$show_register_link}</p>
 
 </div>
+{/nocache}

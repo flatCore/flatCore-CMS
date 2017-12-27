@@ -3,9 +3,9 @@
  * flatCore - Free, Open Source, Content Management System
  * GNU General Public License (license.txt)
  *
- * copyright 2010-2015, Patrick Konstandin
- * Information and contribution at http://www.flatcore.de
- * E-Mail: support@flatcore.de
+ * copyright 2010-2017, Patrick Konstandin
+ * Information and contribution at https://www.flatcore.org
+ * E-Mail: support@flatcore.org
  */
  
 ini_set("url_rewriter.tags", '');
@@ -176,11 +176,22 @@ if(!empty($page_contents['page_modul'])) {
 
 /* START SMARTY */
 require_once('lib/Smarty/Smarty.class.php');
-
 $smarty = new Smarty;
-$smarty->caching = false;
-$smarty->compile_check = true;
-//$smarty->debugging = true;
+$cache_id = md5($fct_slug.$mod_slug);
+
+if($prefs_smarty_cache == 1) {
+	$smarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
+	if(is_numeric($prefs_smarty_cache_lifetime)) {
+		$smarty->setCacheLifetime($prefs_smarty_cache_lifetime);
+	}
+}
+
+if($prefs_smarty_compile_check == 1) {
+	$smarty->compile_check = true;
+} else {
+	$smarty->compile_check = false;
+}
+
 
 // default template
 $fc_template = $prefs_template;
@@ -221,6 +232,9 @@ $smarty->template_dir = 'styles/'.$fc_template.'/templates/';
 $smarty->compile_dir = 'content/cache/templates_c/';
 $smarty->cache_dir = 'content/cache/cache/';
 
+if(($p == "clearallcache") AND ($_SESSION['user_class'] == "administrator")) {
+	$smarty->clearAllCache();
+}
 
 foreach($lang as $key => $val) {
 	$smarty->assign("lang_$key", $val);
@@ -243,12 +257,12 @@ $smarty->assign("fc_inc_dir", FC_INC_DIR);
 
 $fc_end_time = microtime(true);
 $fc_pageload_time = round($fc_end_time-$fc_start_time,4);
-$smarty->assign('fc_start_time', $fc_start_time);
-$smarty->assign('fc_end_time', $fc_end_time);
-$smarty->assign('fc_pageload_time', $fc_pageload_time);
+$smarty->assign('fc_start_time', $fc_start_time,true);
+$smarty->assign('fc_end_time', $fc_end_time,true);
+$smarty->assign('fc_pageload_time', $fc_pageload_time,true);
 
 // display the template
-$smarty->display('index.tpl');
+$smarty->display('index.tpl',$cache_id);
 
 
 /* track the hits */

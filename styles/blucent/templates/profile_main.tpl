@@ -1,6 +1,8 @@
-<div class="{$msg_status}">
-{$register_message}
+{nocache}
+<div class="{$msg_status,nocache}">
+	{$register_message,nocache}
 </div>
+
 
 <h2>{$lang_headline_editprofile} ({$user_nick})</h2>
 
@@ -163,3 +165,4 @@
 </form>
 
 </div>
+{/nocache}

@@ -1,3 +1,4 @@
+{nocache}
 <div class="well well-sm">
 	<p>{$status_msg} <b>{$smarty.session.user_nick}</b></p>
 	
@@ -9,6 +10,7 @@
 		<a href="{$link_acp}" class="list-group-item"><i class="icon-cog"></i>  {$lang_button_acp}</a>
 		<a href="{$link_edit_page}" class="list-group-item"><i class="icon-edit"></i>  {$lang_button_edit_page}</a>
 		{/if}
-	
+		
 	</div>
 </div>
+{/nocache}

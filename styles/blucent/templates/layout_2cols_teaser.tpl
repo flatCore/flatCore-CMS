@@ -24,8 +24,10 @@
 			{include file='searchbox.tpl'}
 			{include file='extracontent.tpl'}
 			{include file='extracontent_global.tpl'}
+			{nocache}
 			{$login_box}
-			{$status_box}				
+			{$status_box}
+			{/nocache}			
 		</aside>
 
 	</div>

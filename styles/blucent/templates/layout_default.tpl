@@ -9,8 +9,10 @@
 			{include file='searchbox.tpl'}
 			{include file='extracontent.tpl'}
 			{include file='extracontent_global.tpl'}
-			{$login_box}
-			{$status_box}				
+			{nocache}
+			{$login_box nocache}
+			{$status_box nocache}
+			{/nocache}			
 		</aside>
 	</div>
 </section>

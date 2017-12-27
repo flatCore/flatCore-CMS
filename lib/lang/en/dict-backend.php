@@ -346,6 +346,11 @@ $lang['prefs_cms_base'] = 'Base URI';
 $lang['alert_prefs_cms_domain'] = 'lack of system settings: ' . $lang['prefs_cms_domain'];
 $lang['alert_prefs_cms_base'] = 'lack of system settings: ' . $lang['prefs_cms_base'];
 
+$lang['cache'] = 'Cache';
+$lang['cache_lifetime'] = 'Cache Lifetime';
+$lang['compile_check'] = 'Compile Check';
+
+
 /* rights management */
 
 $lang['drm_administrator'] = "User is Administrator";

@@ -59,11 +59,11 @@ if($_SESSION['user_nick'] == "") {
 		$dbh = null;
 		
 		if($count == TRUE){
-			$smarty->assign("msg_status","alert alert-success");
-			$smarty->assign("register_message",$lang['msg_update_profile']);
+			$smarty->assign("msg_status","alert alert-success",true);
+			$smarty->assign("register_message",$lang['msg_update_profile'],true);
 		} else {
-			$smarty->assign("msg_status","alert alert-danger");
-			$smarty->assign("register_message",$lang['msg_update_profile_error']);
+			$smarty->assign("msg_status","alert alert-danger",true);
+			$smarty->assign("register_message",$lang['msg_update_profile_error'],true);
 		}
 
 	}
@@ -110,14 +110,14 @@ if($_SESSION['user_nick'] == "") {
 			
 					
 			if(imagepng($new_image, $new_avatar_src,9) === true) {
-				$smarty->assign("msg_status","alert alert-success");
-				$smarty->assign("register_message",$lang['msg_upload_avatar_success']);			
+				$smarty->assign("msg_status","alert alert-success",true);
+				$smarty->assign("register_message",$lang['msg_upload_avatar_success'],true);			
 			}
 			imagedestroy($new_image);
 		
 		} else {
-			$smarty->assign("msg_status","alert alert-danger");
-			$smarty->assign("register_message",$lang['msg_upload_avatar_filetype']);
+			$smarty->assign("msg_status","alert alert-danger",true);
+			$smarty->assign("register_message",$lang['msg_upload_avatar_filetype'],true);
 		}
 		
 	}
@@ -202,7 +202,7 @@ if($_SESSION['user_nick'] == "") {
 	$smarty->assign("send_about",$get_my_userdata['user_public_profile']);
 	
 	$output = $smarty->fetch("profile_main.tpl");
-	$smarty->assign('page_content', $output);
+	$smarty->assign('page_content', $output, true);
 
 }
 

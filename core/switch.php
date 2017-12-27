@@ -180,7 +180,7 @@ if(is_file("$mc_cache_file")) {
 	cache_most_clicked();
 }
 
-$smarty->assign('arr_mostclicked', $arr_mostclicked);
+$smarty->assign('arr_mostclicked', $arr_mostclicked,true);
 
 
 /* tags */

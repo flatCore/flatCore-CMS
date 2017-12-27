@@ -40,8 +40,10 @@ $cols = array(
   "prefs_rss_time_offset" => 'VARCHAR',
   "prefs_cms_domain" => 'VARCHAR',
   "prefs_cms_ssl_domain" => 'VARCHAR',
-  "prefs_cms_base" => 'VARCHAR'
-  
+  "prefs_cms_base" => 'VARCHAR',
+  "prefs_smarty_cache" => 'INTEGER',
+  "prefs_smarty_cache_lifetime" => 'INTEGER',
+  "prefs_smarty_compile_check" => 'INTEGER'
   );
 
 ?>
