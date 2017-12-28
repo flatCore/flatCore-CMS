@@ -1,6 +1,6 @@
 {nocache}
-<div class="{$msg_status,nocache}">
-	{$register_message,nocache}
+<div class="{$msg_status}">
+	{$register_message}
 </div>
 
 
