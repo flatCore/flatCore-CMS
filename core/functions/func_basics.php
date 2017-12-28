@@ -441,7 +441,7 @@ function get_left_string($string,$separator) {
 /**
  * sort arrays like SQL Results
  * example:
- * $s = fc_array_multisort($pages, 'lang', SORT_ASC, 'page_sort', SORT_ASC, SORT_NATURAL);
+ * $s = fc_array_multisort($pages, 'page_language', SORT_ASC, 'page_sort', SORT_ASC, SORT_NATURAL);
  *
  */
 

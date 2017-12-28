@@ -48,7 +48,7 @@ function get_content($page, $mode = 'p') {
 		$page_contents['page_language'] = $languagePack;
 	}
 
-	if($_SESSION['user_class'] != 'administrator') {
+	if(!empty($_SESSION['user_class']) && $_SESSION['user_class'] != 'administrator') {
 		$nav_sql_filter = "WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = :language";
 	} else  {
 		$nav_sql_filter = "WHERE page_language = :language";
@@ -64,13 +64,14 @@ function get_content($page, $mode = 'p') {
 	$fc_nav = $sth->fetchAll();
 	
 	$dbh = null;
-	
-	$fc_nav = fc_array_multisort($fc_nav, 'lang', SORT_ASC, 'page_sort', SORT_ASC, SORT_NATURAL);
+	$fc_nav = fc_array_multisort($fc_nav, 'page_language', SORT_ASC, 'page_sort', SORT_ASC, SORT_NATURAL);
 	
 	$contents = array($page_contents,$fc_nav,$prefs);
 	
 	return $contents;
 }
+
+
 
 /**
  * check if given url is a shortlink

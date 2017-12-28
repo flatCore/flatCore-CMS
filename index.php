@@ -112,7 +112,7 @@ if(isset($preview)) {
 }
 
 
-if(preg_match('/[^0-9A-Za-z]/', $p)) {
+if(isset($p) && preg_match('/[^0-9A-Za-z]/', $p)) {
 	die('void id');
 }
 

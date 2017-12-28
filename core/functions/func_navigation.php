@@ -216,7 +216,7 @@ function show_sitemap() {
 		}
 		
 		// new level, increase class name sm_ul_class
-		unset($start_ul);
+		$start_ul = '';
 		if($points_of_item[$i] > $points_of_item[$i-1]) {
 			$stage_ul_class = $fc_defs['sm_ul_class'] . '-' . $points_of_item[$i];
 			$start_ul = "\r\n".'<ul class='.$stage_ul_class.'>'."\r\n";
@@ -225,7 +225,7 @@ function show_sitemap() {
 		}	
 		
 		// end this level </ul>
-		unset($end_ul);
+		$end_ul = '';
 		if($points_of_item[$i] < $points_of_item[$i-1]) {
 			$div_level = $points_of_item[$i] - $points_of_item[$i-1];
 			$end_ul = str_repeat("</ul>", abs($div_level));
