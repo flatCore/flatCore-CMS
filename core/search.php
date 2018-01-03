@@ -49,15 +49,16 @@ if($start_search == "true") {
 	}
 }
 
+$page_title = $lang['headline_searchresults'] . ' ('.$s.')';
 
-$smarty->assign('page_title', "$lang[headline_searchresults] ($s)");
-$smarty->assign('arr_results', $arr_results);
-$smarty->assign('headline_searchresults', $lang['headline_searchresults']);
-$smarty->assign('msg_searchresults', $search_msg);
+$smarty->assign('page_title', $page_title, true);
+$smarty->assign('arr_results', $arr_results, true);
+$smarty->assign('headline_searchresults', $lang['headline_searchresults'], true);
+$smarty->assign('msg_searchresults', $search_msg, true);
 
 
 $output = $smarty->fetch("searchresults.tpl");
-$smarty->assign('page_content', $output);
+$smarty->assign('page_content', $output, true);
 
 
 

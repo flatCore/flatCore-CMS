@@ -653,6 +653,29 @@ function delete_cache_file($file='cache_mostclicked') {
 	
 }
 
+/**
+ * delete smarty cache files
+ * $cache_id	(string)	md5(page_permalink) -> delete pages cach
+ * 				(string) 'all' -> delete complete cache
+ */
+
+function fc_delete_smarty_cache($cache_id) {
+	
+	require_once '../lib/Smarty/Smarty.class.php';
+	$smarty = new Smarty;
+	$smarty->cache_dir = '../'.FC_CONTENT_DIR.'/cache/cache/';
+	$smarty->compile_dir = '../'.FC_CONTENT_DIR.'/cache/templates_c/';
+	
+	if($cache_id == 'all') {
+		$smarty->clearAllCache();
+		$smarty->clearCompiledTemplate();
+	} else {
+		$smarty->clearCache(null,$cache_id);
+		$smarty->clearCompiledTemplate(null,$cache_id);		
+	}
+
+}
+
 
 /**
  * check in active modules

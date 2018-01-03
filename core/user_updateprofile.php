@@ -3,8 +3,8 @@
 /* PERMISSION DENIED */
 if($_SESSION['user_nick'] == "") {
 
-	$text = get_textlib("no_access");
-	$smarty->assign('page_content', $text);
+	$text = get_textlib("no_access",$languagePack);
+	$smarty->assign('page_content', $text, true);
 
 } else {
 
@@ -150,13 +150,13 @@ if($_SESSION['user_nick'] == "") {
 		$dbh = null;
 		
 		if($count > 0){
-			$smarty->assign("msg_status","alert alert-success");
-			$smarty->assign("register_message",$lang['msg_delete_account_success']);
+			$smarty->assign("msg_status","alert alert-success",true);
+			$smarty->assign("register_message",$lang['msg_delete_account_success'],true);
 			session_destroy();
 			unset($_SESSION['user_nick']);
 		} else {
-			$smarty->assign("msg_status","alert alert-warning");
-			$smarty->assign("register_message",$lang['msg_delete_account_error']);
+			$smarty->assign("msg_status","alert alert-warning",true);
+			$smarty->assign("register_message",$lang['msg_delete_account_error'],true);
 		}
 	}
 	
@@ -175,14 +175,14 @@ if($_SESSION['user_nick'] == "") {
 		$link_avatar_delete = '<a href="'.$link_avatar_delete_url.'">'.$lang['link_delete_avatar'].'</a>';
 		$link_avatar_delete_text = $lang['link_delete_avatar'];
 		
-		$smarty->assign("link_avatar_delete","$link_avatar_delete");
-		$smarty->assign("link_avatar_delete_url","$link_avatar_delete_url");
-		$smarty->assign("link_avatar_delete_text","$link_avatar_delete_text");
+		$smarty->assign("link_avatar_delete","$link_avatar_delete",true);
+		$smarty->assign("link_avatar_delete_url","$link_avatar_delete_url",true);
+		$smarty->assign("link_avatar_delete_text","$link_avatar_delete_text",true);
 		
 		if($delete_avatar == true) {
 			unlink("content/avatars/".md5($_SESSION['user_nick']) . ".png");
-			$smarty->assign("avatar_url","");
-			$smarty->assign("link_avatar_delete","");
+			$smarty->assign("avatar_url","",true);
+			$smarty->assign("link_avatar_delete","",true);
 		}
 	}
 	
@@ -192,16 +192,16 @@ if($_SESSION['user_nick'] == "") {
 	$get_my_userdata = get_my_userdata();
 	//example: $get_my_userdata['user_nick']
 	
-	$smarty->assign("user_nick",$_SESSION['user_nick']);
-	$smarty->assign("get_firstname",$get_my_userdata['user_firstname']);
-	$smarty->assign("get_lastname",$get_my_userdata['user_lastname']);
-	$smarty->assign("get_street",$get_my_userdata['user_street']);
-	$smarty->assign("get_nr",$get_my_userdata['user_street_nbr']);
-	$smarty->assign("get_zip",$get_my_userdata['user_zipcode']);
-	$smarty->assign("get_city",$get_my_userdata['user_city']);
-	$smarty->assign("send_about",$get_my_userdata['user_public_profile']);
+	$smarty->assign("user_nick",$_SESSION['user_nick'],true);
+	$smarty->assign("get_firstname",$get_my_userdata['user_firstname'],true);
+	$smarty->assign("get_lastname",$get_my_userdata['user_lastname'],true);
+	$smarty->assign("get_street",$get_my_userdata['user_street'],true);
+	$smarty->assign("get_nr",$get_my_userdata['user_street_nbr'],true);
+	$smarty->assign("get_zip",$get_my_userdata['user_zipcode'],true);
+	$smarty->assign("get_city",$get_my_userdata['user_city'],true);
+	$smarty->assign("send_about",$get_my_userdata['user_public_profile'],true);
 	
-	$output = $smarty->fetch("profile_main.tpl");
+	$output = $smarty->fetch("profile_main.tpl",$cache_id);
 	$smarty->assign('page_content', $output, true);
 
 }

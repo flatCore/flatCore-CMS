@@ -157,8 +157,8 @@ if($send_data == 'true') {
   		->setBody("$email_msg", 'text/html');
   $result = $mailer->send($message);
 	
-	$smarty->assign("msg_status","alert alert-success");
-	$smarty->assign("register_message",$lang['msg_register_success']);
+	$smarty->assign("msg_status","alert alert-success",true);
+	$smarty->assign("register_message",$lang['msg_register_success'],true);
 	
 	record_log("user_register","new user $username","6");
 	
@@ -171,20 +171,20 @@ if($send_data == 'true') {
 } else {
 	//oh no, don't create an new account
 	
-	$smarty->assign("msg_status","alert alert-danger");
-	$smarty->assign("register_message",'<p><strong>'.$lang['msg_register_error'].'</strong></p><p>'.$register_message.'</p>');
+	$smarty->assign("msg_status","alert alert-danger",true);
+	$smarty->assign("register_message",'<p><strong>'.$lang['msg_register_error'].'</strong></p><p>'.$register_message.'</p>',true);
 	
 	//show the entries again
-	$smarty->assign("send_username","$username");
-	$smarty->assign("send_mail","$mail");
-	$smarty->assign("send_mailrepeat","$mailrepeat");
-	$smarty->assign("send_firstname","$firstname");
-	$smarty->assign("send_name","$name");
-	$smarty->assign("send_zip","$zip");
-	$smarty->assign("send_city","$city");
-	$smarty->assign("send_street","$street");
-	$smarty->assign("send_nr","$nr");
-	$smarty->assign("about_you","$about_you");
+	$smarty->assign("send_username",$username,true);
+	$smarty->assign("send_mail",$mail,true);
+	$smarty->assign("send_mailrepeat",$mailrepeat,true);
+	$smarty->assign("send_firstname",$firstname,true);
+	$smarty->assign("send_name",$name,true);
+	$smarty->assign("send_zip",$zip,true);
+	$smarty->assign("send_city",$city,true);
+	$smarty->assign("send_street",$street,true);
+	$smarty->assign("send_nr",$nr,true);
+	$smarty->assign("about_you",$about_you,true);
 }
 
 

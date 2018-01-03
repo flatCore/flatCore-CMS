@@ -177,6 +177,8 @@ if(!empty($page_contents['page_modul'])) {
 /* START SMARTY */
 require_once('lib/Smarty/Smarty.class.php');
 $smarty = new Smarty;
+$smarty->compile_dir = 'content/cache/templates_c/';
+$smarty->cache_dir = 'content/cache/cache/';
 $cache_id = md5($fct_slug.$mod_slug);
 
 if($prefs_smarty_cache == 1) {
@@ -229,12 +231,7 @@ if(is_file("styles/$fc_template/php/index.php")) {
 }
 
 $smarty->template_dir = 'styles/'.$fc_template.'/templates/';
-$smarty->compile_dir = 'content/cache/templates_c/';
-$smarty->cache_dir = 'content/cache/cache/';
 
-if(($p == "clearallcache") AND ($_SESSION['user_class'] == "administrator")) {
-	$smarty->clearAllCache();
-}
 
 foreach($lang as $key => $val) {
 	$smarty->assign("lang_$key", $val);
@@ -263,6 +260,10 @@ $smarty->assign('fc_pageload_time', $fc_pageload_time,true);
 
 // display the template
 $smarty->display('index.tpl',$cache_id);
+
+if(($p == "clearallcache") AND ($_SESSION['user_class'] == "administrator")) {
+	$smarty->clearAllCache();
+}
 
 
 /* track the hits */

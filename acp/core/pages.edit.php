@@ -437,6 +437,8 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 	cache_keywords();
 	mods_check_in();
 	cache_url_paths();
+	
+	fc_delete_smarty_cache(md5($page_permalink));
 
 }
 

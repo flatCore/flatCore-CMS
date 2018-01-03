@@ -1,5 +1,5 @@
+{nocache}
 <h2>{$lang_legend_register}</h2>
-
 <div class="{$msg_status}">
 {$register_message}
 </div>
@@ -120,7 +120,5 @@
 		
 		</div>
 
-
-
-
 </form>
+{/nocache}

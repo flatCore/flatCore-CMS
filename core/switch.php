@@ -236,27 +236,27 @@ if(($page_status == "draft") AND ($_SESSION['user_class'] != "administrator")){
 if($p == "register") {
 
 	$form_url = FC_INC_DIR . "/register/";
-	$smarty->assign("form_url","$form_url");
+	$smarty->assign("form_url",$form_url);
 
 	if($prefs_userregistration != "yes") {
 	
-		$smarty->assign("msg_title","$lang[legend_register]");
-		$smarty->assign("msg_text","$lang[msg_register_intro_disabled]");	
-		$output = $smarty->fetch("status_message.tpl");
-		$smarty->assign('page_content', $output);
+		$smarty->assign("msg_title",$lang['legend_register']);
+		$smarty->assign("msg_text",$lang['msg_register_intro_disabled']);	
+		$output = $smarty->fetch("status_message.tpl",$cache_id);
+		$smarty->assign('page_content', $output, true);
 	
 	} else {
 		
 		// INCLUDE/SHOW AGREEMENT TEXT
 		$agreement_txt = get_textlib("agreement_text", $languagePack);
-		$smarty->assign("agreement_text","$agreement_txt");
+		$smarty->assign("agreement_text",$agreement_txt);
 	
 		if($_POST['send_registerform']) {
 			include 'user_register.php';
 		}
 	
-		$output = $smarty->fetch("registerform.tpl");
-		$smarty->assign('page_content', $output);
+		$output = $smarty->fetch("registerform.tpl",$cache_id);
+		$smarty->assign('page_content', $output, true);
 	
 	}
 }
@@ -283,7 +283,7 @@ if($p == "account") {
 		$account_msg = "";
 	}
 	
-	$smarty->assign('page_content', $account_msg);
+	$smarty->assign('page_content', $account_msg, true);
 }
 
 
