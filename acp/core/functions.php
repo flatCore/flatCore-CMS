@@ -326,6 +326,20 @@ function readable_filesize($bytes) {
   return $bytes;
 }
 
+/**
+ * get size of a directory
+ * returning bytes
+ */
+
+function fc_dir_size($dir) {
+    $size = 0;
+    foreach (glob(rtrim($dir, '/').'/*', GLOB_NOSORT) as $each) {
+        $size += is_file($each) ? filesize($each) : fc_dir_size($each);
+    }
+    return $size;
+}
+
+
 
 /**
  * PRINT SYSTEM MESSAGE

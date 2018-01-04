@@ -1,7 +1,7 @@
 <?php
 
 //prohibit unauthorized access
-require("core/access.php");
+require 'core/access.php';
 
 /**
  * save the preferences
@@ -229,6 +229,12 @@ if(isset($_POST['save_prefs_misc'])) {
 	$sth->bindParam(':prefs_smarty_compile_check', $prefs_smarty_compile_check, PDO::PARAM_INT);
 	$cnt_changes = $sth->execute();
 	$dbh = null;
+}
+
+/* delete smarty cache files */
+
+if(isset($_POST['delete_smarty_cache'])) {
+	fc_delete_smarty_cache('all');
 }
 
 
@@ -577,7 +583,17 @@ $toggle_btn_cache .= '<input type="checkbox" name="prefs_smarty_cache" '.($prefs
 $toggle_btn_cache .= '</div>';
 echo tpl_form_control_group('',$lang['cache'],$toggle_btn_cache);
 
-echo tpl_form_control_group('',$lang['cache_lifetime'],"<input class='form-control' type='text' name='prefs_smarty_cache_lifetime' value='$prefs_smarty_cache_lifetime'>");
+$cache_size = fc_dir_size('../'.FC_CONTENT_DIR.'/cache/cache/');
+$compile_size = fc_dir_size('../'.FC_CONTENT_DIR.'/cache/templates_c/');
+$complete_size = readable_filesize($cache_size+$compile_size);
+
+$input_group  = '<div class="input-group">';
+$input_group .= '<input class="form-control" type="text" name="prefs_smarty_cache_lifetime" value="'.$prefs_smarty_cache_lifetime.'">';
+$input_group .= '<span class="input-group-btn">';
+$input_group .= '<button class="btn btn-default" type="submit" name="delete_smarty_cache">('.$complete_size.') '.$lang['delete_cache'].'</button>';
+$input_group .= '</span>';
+$input_group .= '</div>';
+echo tpl_form_control_group('',$lang['cache_lifetime'],"$input_group");
 
 $toggle_btn_cache_compile  = '<div class="make-switch" data-on="success" data-on-label="'.$lang['yes'].'" data-off-label="'.$lang['no'].'">';
 $toggle_btn_cache_compile .= '<input type="checkbox" name="prefs_smarty_compile_check" '.($prefs_smarty_compile_check == "1" ? 'checked' :'').'>';

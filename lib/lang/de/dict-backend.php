@@ -345,6 +345,7 @@ $lang['alert_prefs_cms_base'] = 'Fehlende Einstellung: ' . $lang['prefs_cms_base
 $lang['cache'] = 'Cache';
 $lang['cache_lifetime'] = 'Cache Lifetime';
 $lang['compile_check'] = 'Compile Check';
+$lang['delete_cache'] = 'Cache löschen';
 
 
 /* Rights Management */

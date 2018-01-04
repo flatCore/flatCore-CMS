@@ -349,6 +349,7 @@ $lang['alert_prefs_cms_base'] = 'lack of system settings: ' . $lang['prefs_cms_b
 $lang['cache'] = 'Cache';
 $lang['cache_lifetime'] = 'Cache Lifetime';
 $lang['compile_check'] = 'Compile Check';
+$lang['delete_cache'] = 'Clear Cache';
 
 
 /* rights management */
