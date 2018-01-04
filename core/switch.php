@@ -90,8 +90,7 @@ for($i=0;$i<$cnt_textlibs;$i++) {
 
 /* include modul */
 if($page_modul != "") {
-	$page_content = "$page_content $modul_content";
-	$smarty->assign('modul_head_enhanced', $modul_head_enhanced);
+	$smarty->assign('modul_head_enhanced', $modul_head_enhanced, true);
 	
 	/* overwrite page's values by module */
 	if($mod['page_title'] != "") {
@@ -113,9 +112,15 @@ if($page_modul != "") {
 
 
 /* parse [include] [script] [plugin] etc. */
-$page_content = text_parser($page_content);
+$parsed_content = text_parser($page_content.$modul_content);
 
-$smarty->assign('page_content', $page_content);
+if($parsed_content != $page_content) {
+	$smarty->assign('page_content', $parsed_content,true);
+} else {
+	$smarty->assign('page_content', $page_content);
+}
+
+
 $smarty->assign('page_title', $page_title);
 $smarty->assign('prefs_pagesglobalhead', $prefs_pagesglobalhead);
 $smarty->assign('page_meta_author', $page_meta_author);
