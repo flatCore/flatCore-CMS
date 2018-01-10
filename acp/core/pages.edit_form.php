@@ -151,7 +151,7 @@ echo '</div>';
 echo '</div>';
 
 /* funnel URI */
-echo tpl_form_control_group('',$lang['f_page_funnel_uri'],"<input class='form-control' type='text' name='page_funnel_uri' value='$page_funnel_uri'>");
+echo tpl_form_control_group('',$lang['f_page_funnel_uri'],'<textarea class="form-control" name="page_funnel_uri">'.$page_funnel_uri.'</textarea>');
 
 $select_page_redirect_code  = '<select name="page_redirect_code" class="form-control">';
 if($page_redirect_code == '') {
