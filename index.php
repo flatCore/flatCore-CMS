@@ -3,7 +3,7 @@
  * flatCore - Free, Open Source, Content Management System
  * GNU General Public License (license.txt)
  *
- * copyright 2010-2017, Patrick Konstandin
+ * copyright 2010-2018, Patrick Konstandin
  * Information and contribution at https://www.flatcore.org
  * E-Mail: support@flatcore.org
  */
