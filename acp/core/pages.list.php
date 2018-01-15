@@ -231,8 +231,6 @@ echo '</div>';
 echo '</div>';
 echo '</fieldset>';
 
-
-
 echo '</div>';
 echo '<div class="col-sm-6">';
 

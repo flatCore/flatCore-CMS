@@ -25,8 +25,8 @@ foreach($_REQUEST as $key => $val) {
 require 'config.php';
 
 if(is_file(FC_CORE_DIR . "/maintance.html") OR (is_file($fc_db_content) == false)) {
-		header("location:" . FC_INC_DIR . "/maintance.html");
-		die("We'll be back soon.");
+	header("location:" . FC_INC_DIR . "/maintance.html");
+	die("We'll be back soon.");
 }
 
 
@@ -143,8 +143,17 @@ if($fc_prefs['prefs_cms_ssl_domain'] != '') {
 	$fc_base_url = $fc_prefs['prefs_cms_domain'] . $fc_prefs['prefs_cms_base'];
 }
 
+/**
+ * if $fct_slug is in prefs_deleted_resources
+ * show HTTP Status Code 410 and die
+ */
 
-
+$deleted_resources = explode(PHP_EOL, $fc_prefs['prefs_deleted_resources']);
+if(in_array("/$fct_slug", $deleted_resources)) {
+	header("HTTP/1.0 410 Gone");
+	header("Status: 410 Gone");
+	die('HTTP/1.0 410 Gone');
+}
 
 /* if is set page_redirect, we can stop here and go straight to the desired location */
 if($page_contents['page_redirect'] != '') {

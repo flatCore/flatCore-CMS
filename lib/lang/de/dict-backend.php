@@ -277,6 +277,8 @@ $lang['label_groups'] = 'Gruppen';
 $lang['label_ready_to_install'] = 'Bereit für die Installation';
 $lang['remember_me'] = 'Angemeldet bleiben';
 
+$lang['label_deleted_resources'] = 'Gelöschte Ressourcen';
+
 /* Preferences */
 
 $lang['f_prefs_descriptions'] = "Beschreibungen";

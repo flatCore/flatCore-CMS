@@ -100,11 +100,12 @@ echo '<ul class="nav nav-tabs" id="bsTabs">';
 echo '<li class="active"><a href="#chat" data-toggle="tab"><span class="glyphicon glyphicon-comment"></span> CHAT</a></li>';
 echo '<li><a href="#log" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span> PROTOKOLL</a></li>';
 echo '<li><a href="#sitemap" data-toggle="tab"><span class="glyphicon glyphicon-list"></span> sitemap.xml</a></li>';
+echo '<li><a href="#deleted_resources" data-toggle="tab"><span class="glyphicon glyphicon-trash"></span> '.$lang['label_deleted_resources'].'</a></li>';
 echo '</ul>';
 
 echo '<div class="tab-content">';
 
-echo'<div class="tab-pane fade in active" id="chat">';
+echo '<div class="tab-pane fade in active" id="chat">';
 
 $chat_form = file_get_contents('templates/comment-form.tpl');
 
@@ -120,7 +121,6 @@ if(isset($_GET['dcid'])) {
 	$sth -> bindParam(':comment_id', $delete_comment_id, PDO::PARAM_STR);
 	$sth->execute();
 	$dbh = null;
-	
 }
 
 if(isset($_GET['cid'])) {
@@ -199,19 +199,34 @@ show_log(10);
 echo'</div>';
 echo'</div>'; // #log
 
-echo'<div class="tab-pane fade" id="sitemap">';
+echo '<div class="tab-pane fade" id="sitemap">';
 $sitemap = file_get_contents('../sitemap.xml');
 //echo '<pre class="form-control" style="height:400px;overflow:auto;">'.htmlentities($sitemap,ENT_QUOTES,"UTF-8").'</pre>';
 echo '<textarea name="my-xml-editor" data-editor="xml" rows="15">'.htmlentities($sitemap,ENT_QUOTES,"UTF-8").'</textarea>';
-echo'</div>'; // #sitemap
+echo '</div>'; // #sitemap
 
 
-echo'</div>'; // .tab-content
+echo '<div class="tab-pane fade" id="deleted_resources">';
+echo '<div class="scroll-container">';
+$deleted_resources = explode(PHP_EOL, $prefs_deleted_resources);
+echo '<ul>';
+foreach($deleted_resources as $resource) {
+	echo '<li>'.$resource.'</li>';
+}
 
-echo'</div>';
+echo '<li><a href="acp.php?tn=system">'.$lang['system_preferences'].'</a></li>';
+
+echo '</ul>';
+echo '</div>';
+echo '</div>'; // #deleted resources
 
 
-echo'</div>';
+echo '</div>'; // .tab-content
+
+echo '</div>';
+
+
+echo '</div>';
 
 
 

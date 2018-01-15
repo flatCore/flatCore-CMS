@@ -179,6 +179,21 @@ if(isset($_POST['save_prefs_head'])) {
 	$dbh = null;
 }
 
+/* save deleted resources */
+if(isset($_POST['save_deleted_resources'])) {
+	
+		$pdo_fields = array(
+			'prefs_deleted_resources' => 'STR'
+	);
+
+	$dbh = new PDO("sqlite:".CONTENT_DB);
+	$sql = generate_sql_update_str($pdo_fields,"fc_preferences","WHERE prefs_id = 1");
+	$sth = $dbh->prepare($sql);
+	$sth->bindParam(':prefs_deleted_resources', $_POST['prefs_deleted_resources'], PDO::PARAM_STR);
+	$cnt_changes = $sth->execute();
+	$dbh = null;
+}
+
 
 /* save misc preferences */
 if(isset($_POST['save_prefs_misc'])) {
@@ -552,6 +567,18 @@ $ta_pagesglobalhead = '<textarea name="prefs_pagesglobalhead" class="aceEditor_h
 $ta_pagesglobalhead .= '<div id="HTMLeditor"></div>';
 echo tpl_form_control_group('','&lt;head&gt;<br>...<br>&lt;/head&gt;',"$ta_pagesglobalhead");
 echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_head' value='$lang[save]'>");
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+echo '</form>';
+echo '</fieldset>';
+
+/* deleted resources */
+echo '<fieldset>';
+echo '<legend>'.$lang['label_deleted_resources'].'</legend>';
+echo '<form action="acp.php?tn=system&sub=sys_pref" method="POST" class="form-horizontal">';
+
+
+echo tpl_form_control_group('','410 GONE','<textarea name="prefs_deleted_resources" rows="10" class="form-control">'.$prefs_deleted_resources.'</textarea>');
+echo tpl_form_control_group('','','<input type="submit" class="btn btn-success" name="save_deleted_resources" value="'.$lang['save'].'">');
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';

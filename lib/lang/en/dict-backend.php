@@ -280,6 +280,8 @@ $lang['label_groups'] = 'Groups';
 $lang['label_ready_to_install'] = 'Ready to install';
 $lang['remember_me'] = 'Remember me';
 
+$lang['label_deleted_resources'] = 'Deleted Resources';
+
 /* Preferences */
 
 $lang['f_prefs_descriptions'] = "Descriptions";

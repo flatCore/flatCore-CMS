@@ -43,7 +43,8 @@ $cols = array(
   "prefs_cms_base" => 'VARCHAR',
   "prefs_smarty_cache" => 'INTEGER',
   "prefs_smarty_cache_lifetime" => 'INTEGER',
-  "prefs_smarty_compile_check" => 'INTEGER'
+  "prefs_smarty_compile_check" => 'INTEGER',
+  "prefs_deleted_resources" => 'VARCHAR'
   );
 
 ?>
