@@ -48,21 +48,20 @@ function get_content($page, $mode = 'p') {
 		$page_contents['page_language'] = $languagePack;
 	}
 
-	if(!empty($_SESSION['user_class']) && $_SESSION['user_class'] != 'administrator') {
+	$nav_sql_filter = "WHERE page_language = :language";
+	if(empty($_SESSION['user_class']) && $_SESSION['user_class'] != 'administrator') {
 		$nav_sql_filter = "WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = :language";
-	} else  {
-		$nav_sql_filter = "WHERE page_language = :language";
 	}
-	
+
 	$nav_sql = "SELECT page_id, page_hash, page_language, page_linkname, page_permalink, page_title, page_sort, page_status
 			  FROM fc_pages $nav_sql_filter ORDER BY page_sort";
-	
+
 	$sth = $dbh->prepare($nav_sql);
 	$sth->bindParam(':language', $page_contents['page_language'], PDO::PARAM_STR);
 	$sth->execute();
-	
+
 	$fc_nav = $sth->fetchAll();
-	
+
 	$dbh = null;
 	$fc_nav = fc_array_multisort($fc_nav, 'page_language', SORT_ASC, 'page_sort', SORT_ASC, SORT_NATURAL);
 	
@@ -79,7 +78,7 @@ function get_content($page, $mode = 'p') {
  */
 
 function fc_check_shortlinks($shortlink) {
-		
+
 	global $fc_db_content;
 	
 	$dbh = new PDO("sqlite:$fc_db_content");
