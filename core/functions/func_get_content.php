@@ -124,8 +124,9 @@ function fc_check_funnel_uri($uri) {
 	$sth = $dbh->prepare($page_sql);
 	$sth->bindValue(':uri', "%$uri%", PDO::PARAM_STR);
 	$sth->execute();
-	$page = $sth->fetch(PDO::FETCH_ASSOC);
-	
+	$pages = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+	foreach($pages as $page) {
 		$page_funnel_uri = explode(',', $page['page_funnel_uri']);
 		foreach($page_funnel_uri as $u) {
 
@@ -136,7 +137,7 @@ function fc_check_funnel_uri($uri) {
 			}
 			
 		}
-		
+	}
 	
 	
 }
