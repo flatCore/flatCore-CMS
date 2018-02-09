@@ -45,9 +45,17 @@ if(isset($_POST['save_prefs_contacts'])) {
 /* save descriptions */
 if(isset($_POST['save_prefs_descriptions'])) {
 	
-		$pdo_fields = array(
+	if(isset($_POST['prefs_publisher_mode'])) {
+		$prefs_publisher_mode = 'overwrite';
+	} else {
+		$prefs_publisher_mode = 'no';
+	}
+	
+	$pdo_fields = array(
 		'prefs_pagetitle' => 'STR',
-		'prefs_pagesubtitle' => 'STR'
+		'prefs_pagesubtitle' => 'STR',
+		'prefs_default_publisher' => 'STR',
+		'prefs_publisher_mode' => 'STR'
 	);
 	
 	$dbh = new PDO("sqlite:".CONTENT_DB);
@@ -55,6 +63,8 @@ if(isset($_POST['save_prefs_descriptions'])) {
 	$sth = $dbh->prepare($sql);
 	$sth->bindParam(':prefs_pagetitle', $_POST['prefs_pagetitle'], PDO::PARAM_STR);
 	$sth->bindParam(':prefs_pagesubtitle', $_POST['prefs_pagesubtitle'], PDO::PARAM_STR);
+	$sth->bindParam(':prefs_default_publisher', $_POST['prefs_default_publisher'], PDO::PARAM_STR);
+	$sth->bindParam(':prefs_publisher_mode', $prefs_publisher_mode, PDO::PARAM_STR);
 	$cnt_changes = $sth->execute();
 	$dbh = null;
 }
@@ -339,7 +349,18 @@ $prefs_pagetitle_input = "<input class='form-control' type='text' name='prefs_pa
 echo tpl_form_control_group('',$lang['f_prefs_pagetitle'],$prefs_pagetitle_input);
 $prefs_pagesubtitle_input = "<input class='form-control' type='text' name='prefs_pagesubtitle' value='$prefs_pagesubtitle'>";
 echo tpl_form_control_group('',$lang['f_prefs_pagesubtitle'],$prefs_pagesubtitle_input);
+echo '<hr>';
+
+$prefs_publisher_input = '<input class="form-control" type="text" name="prefs_default_publisher" value="'.$prefs_default_publisher.'">';
+echo tpl_form_control_group('',$lang['f_prefs_default_publisher'],$prefs_publisher_input);
+
+$toggle_btn_publisher  = '<div class="make-switch" data-on="success" data-on-label="'.$lang['yes'].'" data-off-label="'.$lang['no'].'">';
+$toggle_btn_publisher .= '<input type="checkbox" name="prefs_publisher_mode" '.($prefs_publisher_mode == "overwrite" ? 'checked' :'').'>';
+$toggle_btn_publisher .= '</div>';
+echo tpl_form_control_group('',$lang['f_prefs_publisher_mode'],$toggle_btn_publisher);
+
 echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_descriptions' value='$lang[save]'>");
+
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';

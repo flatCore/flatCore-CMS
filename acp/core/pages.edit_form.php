@@ -201,6 +201,14 @@ echo '<div class="tab-pane fade" id="meta">';
 
 echo tpl_form_control_group('',$lang['f_page_title'],'<input class="form-control" type="text" name="page_title" value="'.$page_title.'">');
 
+if($prefs_publisher_mode == 'overwrite') {
+	$page_meta_author = $prefs_default_publisher;
+}
+
+if($page_meta_author == "" && $prefs_default_publisher != '') {
+	$page_meta_author = $prefs_default_publisher;
+}
+
 if($page_meta_author == "") {
 	$page_meta_author = $_SESSION['user_firstname'] .' '. $_SESSION['user_lastname'];
 }

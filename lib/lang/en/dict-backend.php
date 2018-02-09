@@ -295,6 +295,8 @@ $lang['f_prefs_custom_fields'] = "Custom Fields";
 $lang['f_prefs_pagetitle'] = "Page title";
 $lang['f_prefs_pagesubtitle'] = "Subtitle";
 
+$lang['f_prefs_default_publisher'] = 'Default Publisher';
+$lang['f_prefs_publisher_mode'] = 'Overwrite';
 
 $lang['f_prefs_imagesuffix'] = "Suffix (graphics)";
 $lang['f_prefs_filesuffix'] = "Suffix (other)";
@@ -337,8 +339,8 @@ $lang['prefs_mailer_send_test_success'] = "Die E-Mail wurde versendet";
 $lang['prefs_nbr_page_versions'] = "Number of Page-Versions";
 
 
-$lang['yes'] = "Ja";
-$lang['no'] = "Nein";
+$lang['yes'] = "Yes";
+$lang['no'] = "No";
 
 $lang['labels'] = 'Labels';
 

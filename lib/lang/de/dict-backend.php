@@ -292,6 +292,8 @@ $lang['f_prefs_custom_fields'] = "Eigene Felder";
 $lang['f_prefs_pagetitle'] = "Seitentitel";
 $lang['f_prefs_pagesubtitle'] = "Untertitel";
 
+$lang['f_prefs_default_publisher'] = 'Standard Publisher';
+$lang['f_prefs_publisher_mode'] = 'Überschreiben';
 
 $lang['f_prefs_imagesuffix'] = "Endungen (Grafiken)";
 $lang['f_prefs_filesuffix'] = "Endungen (sonstige Dateien)";
