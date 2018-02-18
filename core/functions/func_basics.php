@@ -111,7 +111,7 @@ function fc_global_mod_snippets($mod,$params=NULL) {
 
 /**
  * find [include] [script] [plugin] and [snippet]
- * except codes within <pre> … </pre>
+ * except codes within <pre> … </pre> or <code> … </code>
  */
 	 
 function text_parser($text) {
@@ -126,6 +126,15 @@ function text_parser($text) {
 	$text = str_replace(']</p>', ']', $text);
 	
 	if(preg_match_all('#\<pre.*?\>(.*?)\</pre\>#', $text, $matches)) {
+		$match = $matches[0];
+		foreach($match as $k => $v) {
+			$o = $match[$k];
+			$v = str_replace(array('[',']'),array('&#91','&#93'),$v);
+			$text = str_replace($o, $v, $text);
+		}
+	}
+	
+	if(preg_match_all('#\<code.*?\>(.*?)\</code\>#', $text, $matches)) {
 		$match = $matches[0];
 		foreach($match as $k => $v) {
 			$o = $match[$k];
