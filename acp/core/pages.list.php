@@ -240,10 +240,11 @@ echo '<div class="col-sm-6">';
  * or page_sort == portal
  */
 
-echo '<div class="scroll-box">';
+
 
 echo '<fieldset>';
 echo '<legend>' . $lang['legend_unstructured_pages'] . '</legend>';
+echo '<div class="scroll-box">';
 echo '<div class="pages-list-container">';
 
 
@@ -397,8 +398,9 @@ for($i=0;$i<$cnt_result;$i++) {
 } // eol for $i
 
 echo '</div>';
-echo"</fieldset>";
 echo '</div>';
+echo '</fieldset>';
+
 
 echo '</div>';
 echo '</div>';
