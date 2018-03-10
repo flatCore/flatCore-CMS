@@ -14,7 +14,8 @@ $cols = array(
   "textlib_notes"  => 'VARCHAR',
   "textlib_lastedit"  => 'VARCHAR',
   "textlib_lastedit_from"  => 'VARCHAR',
-  "textlib_lang" => 'VARCHAR'
+  "textlib_lang" => 'VARCHAR',
+  "textlib_priority" => 'INTEGER'
   );
 
 ?>

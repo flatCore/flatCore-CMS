@@ -55,15 +55,15 @@ if(isset($_POST['save_snippet'])) {
 		$sql = "UPDATE fc_textlib
 						SET textlib_content = :textlib_content, textlib_notes = :textlib_notes, textlib_groups = :textlib_groups,
 								textlib_name = :textlib_name, textlib_title = :textlib_title, textlib_keywords = :textlib_keywords,
-								textlib_lang = :textlib_lang
+								textlib_lang = :textlib_lang, textlib_priority = :textlib_priority
 						WHERE textlib_id = $snip_id";
 	
 	} else {
 		
 		$sql = "INSERT INTO fc_textlib (
-							textlib_content, textlib_notes, textlib_groups, textlib_name, textlib_title, textlib_keywords, textlib_lang
+							textlib_content, textlib_notes, textlib_groups, textlib_name, textlib_title, textlib_keywords, textlib_lang, textlib_priority
 						) VALUES (
-							:textlib_content, :textlib_notes, :textlib_groups, :textlib_name, :textlib_title, :textlib_keywords, :textlib_lang
+							:textlib_content, :textlib_notes, :textlib_groups, :textlib_name, :textlib_title, :textlib_keywords, :textlib_lang, :textlib_priority
 						)";		
 	}
 	
@@ -75,6 +75,7 @@ if(isset($_POST['save_snippet'])) {
 	$sth->bindParam(':textlib_keywords', $_POST['snippet_keywords'], PDO::PARAM_STR);
 	$sth->bindParam(':textlib_title', $_POST['snippet_title'], PDO::PARAM_STR);
 	$sth->bindParam(':textlib_groups', $_POST['snippet_groups'], PDO::PARAM_STR);
+	$sth->bindParam(':textlib_priority', $_POST['snippet_priority'], PDO::PARAM_INT);
 	$cnt_changes = $sth->execute();
 	
 	$db = null;
@@ -220,6 +221,11 @@ echo '</div>';
 echo '<div class="form-group">';
 echo '<label>'.$lang['filename'].' <small>(a-z,0-9)</small></label>';
 echo '<input class="form-control" type="text" name="snippet_name" value="'.$textlib_name.'">';
+echo '</div>';
+
+echo '<div class="form-group">';
+echo '<label>'.$lang['label_priority'].'</label>';
+echo '<input class="form-control" type="text" name="snippet_priority" value="'.$textlib_priority.'">';
 echo '</div>';
 
 
