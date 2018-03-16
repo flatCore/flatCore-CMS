@@ -124,8 +124,8 @@ if($_POST['save_the_user']) {
 	// drm -string- to save in database
 	$drm_string = "$drm_acp_pages|$drm_acp_files|$drm_acp_user|$drm_acp_system|$drm_acp_editpages|$drm_acp_editownpages|$drm_moderator|$drm_can_publish";
 	
-	$user_psw_new	= "$_POST[user_psw_new]";
-	$user_psw_reconfirmation = "$_POST[user_psw_reconfirmation]";
+	$user_psw_new	= $_POST['user_psw_new'];
+	$user_psw_reconfirmation = $_POST['user_psw_reconfirmation'];
 	
 	// check psw entries
 	$set_psw = "false";
@@ -138,7 +138,7 @@ if($_POST['save_the_user']) {
 		} else {
 			//generate password hash
 			$user_psw = password_hash($_POST['user_psw_new'], PASSWORD_DEFAULT);
-			$success_message .= "$lang[msg_psw_changed]<br>";
+			$success_message .= $lang['msg_psw_changed'].'<br>';
 		}
 
 	}
@@ -167,8 +167,8 @@ if($_POST['save_the_user']) {
 		}
 									
 		if($cnt_changes == TRUE) {
-			$success_message .= "$lang[msg_user_updated]<br />";
-			record_log("$_SESSION[user_nick]","update user id: $edituser via acp","5");
+			$success_message .= $lang['msg_user_updated'].'<br>';
+			record_log($_SESSION['user_nick'],"update user id: $edituser via acp","5");
 		}
 	}
 	
@@ -184,14 +184,14 @@ if($_POST['save_the_user']) {
 		$result = $dbh->query("SELECT user_nick FROM fc_user WHERE user_nick = '$user_nick' ")->fetchAll();
 		
 		if(count($result) > 0) {
-			$error_message .= "$lang[msg_user_exists]<br />";
+			$error_message .= $lang['msg_user_exists'].'<br>';
 			$db_status = "locked";
 		}
 		
 		$result = $dbh->query("SELECT user_mail FROM fc_user WHERE user_mail = '$user_mail' ")->fetchAll();
 		
 		if(count($result) > 0) {
-			$error_message .= "$lang[msg_usermail_exists]<br />";
+			$error_message .= $lang['msg_usermail_exists'].'<br>';
 			$db_status = "locked";
 		}
 		
@@ -210,8 +210,8 @@ if($_POST['save_the_user']) {
 			$cnt_changes = $sth->execute();
 			
 			if($cnt_changes == TRUE) {
-				$success_message .= "$lang[msg_new_user_saved]<br>";
-				record_log("$_SESSION[user_nick]","new user <i>$user_nick</i>","5");
+				$success_message .= $lang['msg_new_user_saved'].'<br>';
+				record_log($_SESSION['user_nick'],"new user <i>$user_nick</i>","5");
 			} else {
 				print_r($dbh->errorInfo());
 			}
@@ -236,9 +236,9 @@ if($_POST['save_the_user']) {
 			$enter_user_id = $dbh->lastInsertId();
 		}
 		
-		$user_groups = $_POST[user_groups];
-		$this_group = $_POST[this_group]; // not checked checkbox
-		$nbr_of_groups = $_POST[nbr_of_groups];
+		$user_groups = $_POST['user_groups'];
+		$this_group = $_POST['this_group']; // not checked checkbox
+		$nbr_of_groups = $_POST['nbr_of_groups'];
 		
 		
 		for($i=0;$i<$nbr_of_groups;$i++) {
@@ -253,7 +253,7 @@ if($_POST['save_the_user']) {
 			$result = $dbh->query("SELECT * FROM fc_groups WHERE group_id = $user_groups[$i] ");
 			$result= $result->fetch(PDO::FETCH_ASSOC);
 			
-			$array_existing_users = explode(" ", $result[group_user]);        // userlist - to array
+			$array_existing_users = explode(" ", $result['group_user']);        // userlist - to array
 			array_push($array_existing_users, "$enter_user_id");              // add the user
 			$array_existing_users = array_unique($array_existing_users);      // delete doubles
 			$existing_users = implode(" ", $array_existing_users);            // generate the new userlist - back to a string
@@ -304,12 +304,12 @@ if(is_numeric($edituser)){
 	
 	$user_avatar_path = '../'. FC_CONTENT_DIR . '/avatars/' . md5($user_nick) . '.png';
 	
-	echo"<h3>$lang[h_modus_edituser] - $user_nick [$user_id]</h3>";
+	echo '<h3>'.$lang['h_modus_edituser'].' - '.$user_nick.' <small>ID: '.$user_id.'</small></h3>';
 	$submit_button = "<input class='btn btn-success' type='submit' name='save_the_user' value='$lang[update_user]'>";
 		
 	//no delete_button for myself
-	if($user_nick != "$_SESSION[user_nick]"){
-		$delete_button = "<input class='btn btn-danger' type='submit' name='delete_the_user' value='$lang[delete_user]' onclick=\"return confirm('$lang[confirm_delete_user]')\">";
+	if($user_nick != $_SESSION['user_nick']){
+		$delete_button = '<input class="btn btn-danger" type="submit" name="delete_the_user" value="'.$lang['delete_user'].'" onclick="return confirm(\''.$lang['confirm_delete_user'].'\')">';
 	}
 
 } else {
