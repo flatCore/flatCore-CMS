@@ -288,22 +288,23 @@ fieldset legend {
 }
 /* modules */
 .modules-list-item {
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(0, 0, 0, 0.4);
+  background: #222;
+  border: 1px solid #1111;
 }
 .modules-list-item:hover {
-  background: rgba(0, 0, 0, 0.4);
+  background: #191919;
 }
 .modlist-label span {
   background: #151515;
   box-shadow: 0 4px 10px -6px #000;
 }
 .masonry-item {
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(0, 0, 0, 0.4);
+  background: #222;
+  border: 1px solid #111;
 }
 .masonry-item:hover {
-  background: rgba(0, 0, 0, 0.4);
+  background: #212121;
+  border: 1px solid #252525;
   box-shadow: 0 0 10px -10px #428bca;
 }
 /* fancybox and modal */
@@ -314,6 +315,9 @@ fieldset legend {
 }
 .fancybox-opened .fancybox-skin {
   box-shadow: 0 10px 25px #428bca;
+}
+.fancybox-slide > * {
+  background: #111;
 }
 .modal-header {
   background: #252525;
