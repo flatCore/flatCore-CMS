@@ -494,7 +494,7 @@ for($i=0;$i<count($arr_groups);$i++) {
 
 echo '<div class="form-group">';
 echo '<div class="well well-sm">';
-echo '<a href="#" data-toggle="collapse" data-target="#usergroups">'.$lang['legend_choose_group'].'</a>';
+echo '<a href="#usergroups" data-toggle="collapse" data-target="#usergroups">'.$lang['legend_choose_group'].'</a>';
 echo '<div id="usergroups" class="collapse">';
 echo $checkbox_usergroup;
 echo '</div>';
@@ -524,7 +524,7 @@ for($i=0;$i<$cnt_admins;$i++) {
 
 
 echo '<div class="well well-sm">';
-echo '<a href="#" data-toggle="collapse" data-target="#admins">'.$lang['f_page_authorized_admins'].'</a>';
+echo '<a href="#admins" data-toggle="collapse" data-target="#admins">'.$lang['f_page_authorized_admins'].'</a>';
 echo '<div id="admins" class="collapse">';
 echo $checkbox_set_authorized_admins;
 echo '</div>';
@@ -557,7 +557,7 @@ for($i=0;$i<$cnt_labels;$i++) {
 
 
 echo '<div class="well well-sm">';
-echo '<a href="#" data-toggle="collapse" data-target="#labels">'.$lang['labels'].'</a>';
+echo '<a href="#labels" data-toggle="collapse" data-target="#labels">'.$lang['labels'].'</a>';
 echo '<div id="labels" class="collapse">';
 echo $checkbox_set_labels;
 echo '</div>';
