@@ -166,7 +166,8 @@ $lang['filename'] = "Name";
 
 $lang['label_comment'] = "Comment ...";
 
-
+$lang['files'] = "Files";
+$lang['images'] = "Images";
 $lang['browse_files'] = "Browse Files";
 $lang['browse_images'] = "Browse images only";
 $lang['clear_list'] = "Delete List";
@@ -176,6 +177,10 @@ $lang['upload_files_legend'] = "Upload Files";
 $lang['upload_target_files'] = "Add to files";
 $lang['upload_target_images'] = "Add to images";
 $lang['upload_complete'] = "Completed uploading the Files";
+$lang['upload_destination'] = "Choose destination";
+$lang['create_new_folder'] = 'Create Folder';
+$lang['delete_folder'] = 'Delete Folder';
+$lang['confirm_delete_folder'] = 'Do you really want to delete this folder? All contents of the folder are deleted.';
 
 $lang['backup_db_content'] = "Database with Pages, Content, Preferences ...";
 $lang['backup_db_user'] = "User database";
@@ -292,8 +297,10 @@ $lang['f_prefs_uploads'] = "Uploads";
 $lang['f_prefs_layout'] = "Layout & Design";
 $lang['f_prefs_custom_fields'] = "Custom Fields";
 
-$lang['f_prefs_pagetitle'] = "Page title";
+$lang['f_prefs_pagename'] = "Page Name";
+$lang['f_prefs_pagetitle'] = "Page Title";
 $lang['f_prefs_pagesubtitle'] = "Subtitle";
+$lang['f_prefs_pagedescription'] = "Description";
 
 $lang['f_prefs_default_publisher'] = 'Default Publisher';
 $lang['f_prefs_publisher_mode'] = 'Overwrite';

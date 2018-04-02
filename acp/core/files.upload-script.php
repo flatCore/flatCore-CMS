@@ -14,19 +14,22 @@ $max_w = (int) $_REQUEST['w']; // max image width
 $max_h = (int) $_REQUEST['h']; // max image height
 $max_fz = (int) $_REQUEST['fz']; // max filesize
 
+if(strpos($_REQUEST['upload_destination'],'/images/') !== true) {
 
-if($_REQUEST['d'] == 'images') {
-	$destination = '../../'.$img_path;
+//if($_REQUEST['upload_destination'] == '/images/') {
+	$destination = '../'.$_REQUEST['upload_destination'];
+	$upload_type = 'images';
 } else {
-	$destination = '../../'.$files_path;
+	$destination = '../'.$_REQUEST['upload_destination'];
+	$upload_type = 'files';
 }
 
 /* upload images to /content/images/ */
-if($_REQUEST['upload_type'] == 'images') {
+if($upload_type == 'images') {
 	if(array_key_exists('file',$_FILES) && $_FILES['file']['error'] == 0 ){
 		$tmp_name = $_FILES['file']['tmp_name'];
 		$org_name = $_FILES['file']['name'];
-		$suffix = strtolower(substr(strrchr($org_name,'.'),1));
+		$suffix = substr(strrchr($org_name,'.'),1);
 		$prefix = basename($org_name,".$suffix");
 		$img_name = clean_filename($prefix,$suffix);
 		$target = "$destination/$img_name";
@@ -43,11 +46,11 @@ if($_REQUEST['upload_type'] == 'images') {
 
 
 /* upload files to /content/files/ */
-if($_REQUEST['upload_type'] == 'files') {
+if($upload_type == 'files') {
 	if(array_key_exists('file',$_FILES) && $_FILES['file']['error'] == 0 ){
 		$tmp_name = $_FILES["file"]["tmp_name"];   
 	  $org_name = $_FILES["file"]["name"];
-	  $suffix = strtolower(substr(strrchr($org_name,'.'),1));
+	  $suffix = substr(strrchr($org_name,'.'),1);
 	  $prefix = basename($org_name,".$suffix");
 	  $files_name = clean_filename($prefix,$suffix);
 	  $target = "$destination/$files_name";
@@ -209,6 +212,7 @@ function clean_filename($prefix,$suffix) {
 
 
 	$filename = $prefix . '.' . $suffix;
+	$filename = strtolower($filename);
 
 	return $filename; 
 }

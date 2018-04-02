@@ -195,6 +195,8 @@ if($prefs_smarty_cache == 1) {
 	if(is_numeric($prefs_smarty_cache_lifetime)) {
 		$smarty->setCacheLifetime($prefs_smarty_cache_lifetime);
 	}
+} else {
+	$smarty->setCaching(Smarty::CACHING_OFF);
 }
 
 if($prefs_smarty_compile_check == 1) {
@@ -256,8 +258,10 @@ if(is_file('styles/'.$fc_template.'/php/options.php')) {
 }
 
 // parse template vars
+$smarty->assign('prefs_pagename', $prefs_pagename);
 $smarty->assign('prefs_pagetitle', $prefs_pagetitle);
 $smarty->assign('prefs_pagesubtitle', $prefs_pagesubtitle);
+$smarty->assign('prefs_pagedescription', $prefs_pagedescription);
 $smarty->assign("p","$p");
 $smarty->assign("fc_inc_dir", FC_INC_DIR);
 

@@ -3,7 +3,11 @@
 
 <meta name="robots" content="{$page_meta_robots}" />
 <meta name="author" content="{$page_meta_author}" />
-<meta name="description" content="{$page_meta_description}" />
+{if $page_meta_description != ''}
+	<meta name="description" content="{$page_meta_description}" />
+{else}
+	<meta name="description" content="{$prefs_pagedescription}" />
+{/if}
 <meta name="keywords" content="{$page_meta_keywords}" />
 <meta name="date" content="{$page_meta_date}" />
 
@@ -17,7 +21,7 @@
 
 <!-- OpenGraph Meta Tags -->
 <meta property="og:title" content="{$page_title}">
-<meta property="og:image" content="/content/images/{$page_thumbnail}">
+<meta property="og:image" content="{$page_thumbnail}">
 <meta property="og:site_name" content="{$prefs_pagetitle}">
 
 <!-- CSS -->

@@ -23,7 +23,7 @@
 	<hr class="shadow">
 	
 	<p class="text-center">
-		<a href="http://www.flatcore.de/" title="Open Source Content Management System">powered by flatCore</a><br>
+		<strong>{$prefs_pagename}</strong> · <a href="http://www.flatcore.org/" title="Open Source Content Management System">powered by flatCore</a><br>
 		Designed and built with <a href="http://getbootstrap.com">Bootstrap, from Twitter</a><br>
 		Icons from <a href="http://glyphicons.com/">Glyphicons Free</a>, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>
 	</p>

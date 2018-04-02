@@ -52,6 +52,8 @@ if(isset($_POST['save_prefs_descriptions'])) {
 	}
 	
 	$pdo_fields = array(
+		'prefs_pagename' => 'STR',
+		'prefs_pagedescription' => 'STR',
 		'prefs_pagetitle' => 'STR',
 		'prefs_pagesubtitle' => 'STR',
 		'prefs_default_publisher' => 'STR',
@@ -61,6 +63,8 @@ if(isset($_POST['save_prefs_descriptions'])) {
 	$dbh = new PDO("sqlite:".CONTENT_DB);
 	$sql = generate_sql_update_str($pdo_fields,"fc_preferences","WHERE prefs_id = 1");
 	$sth = $dbh->prepare($sql);
+	$sth->bindParam(':prefs_pagename', $_POST['prefs_pagename'], PDO::PARAM_STR);
+	$sth->bindParam(':prefs_pagedescription', $_POST['prefs_pagedescription'], PDO::PARAM_STR);
 	$sth->bindParam(':prefs_pagetitle', $_POST['prefs_pagetitle'], PDO::PARAM_STR);
 	$sth->bindParam(':prefs_pagesubtitle', $_POST['prefs_pagesubtitle'], PDO::PARAM_STR);
 	$sth->bindParam(':prefs_default_publisher', $_POST['prefs_default_publisher'], PDO::PARAM_STR);
@@ -345,10 +349,19 @@ if(isset($_POST)) {
 echo '<fieldset>';
 echo '<legend>'.$lang['f_prefs_descriptions'].'</legend>';
 echo '<form action="acp.php?tn=system&sub=sys_pref" method="POST" class="form-horizontal">';
+
+$prefs_pagename_input = "<input class='form-control' type='text' name='prefs_pagename' value='$prefs_pagename'>";
+echo tpl_form_control_group('',$lang['f_prefs_pagename'],$prefs_pagename_input);
+
 $prefs_pagetitle_input = "<input class='form-control' type='text' name='prefs_pagetitle' value='$prefs_pagetitle'>";
 echo tpl_form_control_group('',$lang['f_prefs_pagetitle'],$prefs_pagetitle_input);
+
 $prefs_pagesubtitle_input = "<input class='form-control' type='text' name='prefs_pagesubtitle' value='$prefs_pagesubtitle'>";
 echo tpl_form_control_group('',$lang['f_prefs_pagesubtitle'],$prefs_pagesubtitle_input);
+
+$prefs_pagedescription_input = "<textarea class='form-control' name='prefs_pagedescription'>$prefs_pagedescription</textarea>";
+echo tpl_form_control_group('',$lang['f_prefs_pagedescription'],$prefs_pagedescription_input);
+
 echo '<hr>';
 
 $prefs_publisher_input = '<input class="form-control" type="text" name="prefs_default_publisher" value="'.$prefs_default_publisher.'">';

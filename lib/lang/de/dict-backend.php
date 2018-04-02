@@ -161,7 +161,8 @@ $lang['filename'] = "Name";
 
 $lang['label_comment'] = "Kommentar schreiben";
 
-
+$lang['files'] = "Dateien";
+$lang['images'] = "Bilder";
 $lang['browse_files'] = "Festplpatte nach Dateien durchsuchen";
 $lang['browse_images'] = "Festplatte nur nach Bildern durchsuchen";
 $lang['clear_list'] = "Liste löschen";
@@ -171,6 +172,10 @@ $lang['upload_files_legend'] = "Dateien hochladen";
 $lang['upload_target_files'] = "Zu Dateien hinzufügen";
 $lang['upload_target_images'] = "Zu Bildern hinzufügen";
 $lang['upload_complete'] = "Dateien wurden hochgeladen";
+$lang['upload_destination'] = "Zielordner auswählen";
+$lang['create_new_folder'] = 'Ordner anlegen';
+$lang['delete_folder'] = 'Ordner löschen';
+$lang['confirm_delete_folder'] = 'Willst Du diesen Ordner wirklich löschen? Alle Inhalte des Ordners werden gelöscht.';
 
 $lang['backup_db_content'] = "Datenbank für Seiten, Inhalte und Einstellungen etc.";
 $lang['backup_db_user'] = "Datenbank für Benutzerdaten";
@@ -289,8 +294,10 @@ $lang['f_prefs_uploads'] = "Uploads";
 $lang['f_prefs_layout'] = "Layout & Design";
 $lang['f_prefs_custom_fields'] = "Eigene Felder";
 
+$lang['f_prefs_pagename'] = "Seitenname";
 $lang['f_prefs_pagetitle'] = "Seitentitel";
 $lang['f_prefs_pagesubtitle'] = "Untertitel";
+$lang['f_prefs_pagedescription'] = "Beschreibung";
 
 $lang['f_prefs_default_publisher'] = 'Standard Publisher';
 $lang['f_prefs_publisher_mode'] = 'Überschreiben';

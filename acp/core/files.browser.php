@@ -6,14 +6,25 @@ error_reporting(0);
 require("core/access.php");
 
 
-if(isset($_GET['d'])) {
-	$_SESSION['disk'] = (int) $_GET['d'];
+$path_img = '../'.IMAGES_FOLDER;
+$img_dirs = fc_get_dirs_rec($path_img);
+array_unshift($img_dirs, $path_img);
+$path_files = '../'.FILES_FOLDER;
+$files_dirs = fc_get_dirs_rec($path_files);
+array_unshift($files_dirs, $path_files);
+
+$img_folder = basename($path_img);
+$files_folder = basename($path_files);
+
+
+if(isset($_REQUEST['selected_folder'])) {
+	$_SESSION['disk'] = $_REQUEST['selected_folder'];
 }
 
 if(isset($_SESSION['disk'])) {
 	$disk = $_SESSION['disk'];
 } else {
-	$disk = 1;
+	$disk = $path_img;
 }
 
 if($_SESSION['sort_by_name'] == '' AND $_SESSION['sort_by_size'] == '' AND $_SESSION['sort_by_time'] == '') {
@@ -40,46 +51,113 @@ if(isset($_GET['sort_by_time'])) {
 $sort_direction = constant(trim('SORT_'.$_SESSION['sort_by_name'].$_SESSION['sort_by_time'].$_SESSION['sort_by_size']));
 
 
-if($disk == "2") {
-	$path = '../content/files';
-	$disk2_class = 'btn btn-fc btn-sm active';
-	$disk1_class = 'btn btn-fc btn-sm';
-	$tpl_file = file_get_contents('templates/list-files-grid.tpl');
-} else {
-	$path = '../content/images';
-	$disk1_class = 'btn btn-fc btn-sm active';
-	$disk2_class = 'btn btn-fc btn-sm';
-	$tpl_file = file_get_contents('templates/list-files-thumbs.tpl');
+
+$select_dir = '';
+$select_dir  .= '<form action="acp.php?tn=filebrowser&sub=browse" method="POST" class="form-inline dirtyignore">';
+
+if($disk != $path_img AND $disk != $path_files) {
+	$level_up = dirname($disk);
+	$select_dir .= '<a href="acp.php?tn=filebrowser&sub=browse&selected_folder='.$level_up.'" class="btn btn-default"><span class="glyphicon glyphicon-level-up"></span></a> ';
 }
+
+$select_dir .= '<select name="selected_folder" onchange="this.form.submit()" class="form-control">';
+$select_dir .= '<optgroup label="'.$lang['images'].'">';
+foreach($img_dirs as $d) {
+	$selected = '';
+	if($disk == $d) {
+		$selected = 'selected';
+	}
+	$short_d = str_replace($path_img, '', $d);
+	$select_dir .= '<option value="'.$d.'" '.$selected.'>'.$img_folder.$short_d.'</option>';
+}
+$select_dir .= '</optgroup>';
+$select_dir .= '<optgroup label="'.$lang['files'].'">';
+foreach($files_dirs as $d) {
+	$selected = '';
+	if($disk == $d) {
+		$selected = 'selected';
+	}
+	$short_d = str_replace($path_files, '', $d);
+	$select_dir .= '<option value="'.$d.'" '.$selected.'>'.$files_folder.$short_d.'</option>';
+}
+$select_dir .= '</optgroup>';
+$select_dir .= '</select>';
+$select_dir .= '</form>';
+
+
+
+/* template file */
+
+$tpl_file = file_get_contents('templates/list-files-grid.tpl');
+$tpl_file_type = 'grid';
+if(strpos($disk,$path_img) !== FALSE) {
+	$tpl_file = file_get_contents('templates/list-files-thumbs.tpl');
+	$tpl_file_type = 'thumbs';
+}
+
+/* create new directory */
+
+if(isset($_POST['new_folder'])) {
+	$folder_name = clean_filename($_POST['new_folder']);
+	$create_path = $disk . '/' . $folder_name;	
+	mkdir($create_path, 0777, true);
+}
+
 
 /* DELETE FILE OR IMAGE */
 if(isset($_POST['delete'])) {
 	
 	$deleteFile = basename($_POST['file']);
 	
-	if(is_file("$path/$deleteFile")) {
-		if(unlink("$path/$deleteFile")) {
-			fc_delete_media_data("$path/$deleteFile");
+	if(is_file("$disk/$deleteFile")) {
+		if(unlink("$disk/$deleteFile")) {
+			fc_delete_media_data("$disk/$deleteFile");
 			echo '<div class="alert alert-success alert-auto-close">'.$lang['msg_file_delete'].'</div>';
 		} else {
-			echo '<div class="alert alert-danger"><strong>'.$path.'/'.$deleteFile.'</strong><br>'.$lang['msg_file_delete_error'].'</div>';
+			echo '<div class="alert alert-danger"><strong>'.$disk.'/'.$deleteFile.'</strong><br>'.$lang['msg_file_delete_error'].'</div>';
 		}	
 	} else {
-		echo '<div class="alert alert-error">File ('.$path.'/'.$deleteFile.') not found</div>';
+		echo '<div class="alert alert-error">File ('.$disk.'/'.$deleteFile.') not found</div>';
 	}
 }
 
-$scan_images = fc_scandir_rec('../'.FC_CONTENT_DIR.'/images');
-$scan_files = fc_scandir_rec('../'.FC_CONTENT_DIR.'/files');
+/* delete folder */
 
-$cnt_all_images = count($scan_images);
-$cnt_all_files = count($scan_files);
-
-if($disk == "1") {
-	$a_files = $scan_images;
-} else {
-	$a_files = $scan_files;
+if(isset($_POST['delete_folder']) && $_POST['delete_folder'] != '') {
+	delete_folder($_POST['delete_folder']);
 }
+
+function delete_folder($dir) {
+	
+	global $disk;
+	$delete_folder = $disk.'/'.basename($dir);
+   $files = array_diff(scandir($delete_folder), array('.','..')); 
+    foreach ($files as $file) {
+	    if(is_dir("$dir/$file")) {
+		    delete_folder("$dir/$file");
+	    } else {
+		    unlink("$dir/$file");
+		    fc_delete_media_data("$dir/$file");
+	    }
+	    
+    } 
+    return rmdir($delete_folder); 
+  } 
+
+
+unset($scan_files);
+$scan_files = scandir($disk);
+
+foreach ($scan_files as $key => $value) { 
+   if(in_array($value,array('..', '.','.DS_Store','index.html'))) {
+      continue;
+    }
+   $a_files[] = $disk.'/'.$value;
+}
+
+
+$cnt_all_files = count($a_files);
+
 
 
 /**
@@ -132,7 +210,7 @@ $dbh = null;
 
 
 /* expand filter */
-if(isset($_POST['media_filter'])) {
+if(isset($_POST['media_filter']) && (trim($_POST['media_filter']) != '')) {
 	$_SESSION['media_filter'] = $_SESSION['media_filter'] . ' ' . $_POST['media_filter'];
 }
 
@@ -161,10 +239,10 @@ if($_SESSION['media_filter'] != "") {
 
 
 
-$kw_form  = '<form action="acp.php?tn=filebrowser&sub=browse&d='.$disk.'" method="POST" class="form-inline">';
+$kw_form  = '<form action="acp.php?tn=filebrowser&sub=browse&d=" method="POST" class="form-inline dirtyignore">';
 $kw_form .= '<div class="input-group">';
 $kw_form .= '<span class="input-group-addon"><span class="glyphicon glyphicon-filter"></span></span>';
-$kw_form .= '<input class="form-control input-sm" type="text" name="media_filter" value="" placeholder="Filter">';
+$kw_form .= '<input class="form-control" type="text" name="media_filter" value="" placeholder="Filter">';
 $kw_form .= '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 $kw_form .= '</div>';
 $kw_form .= '</form>';
@@ -172,14 +250,26 @@ $kw_form .= '</form>';
 
 echo '<div class="well well-sm" style="margin-bottom:10px;">';
 echo '<div class="row">';
-echo '<div class="col-md-12">';
+
+echo '<div class="col-md-4">';
+echo $select_dir;
+echo '</div>';
+
+echo '<div class="col-md-4">';
+echo '<form action="acp.php?tn=filebrowser&sub=browse" method="POST" class="form dirtyignore">';
+echo '<div class="input-group">';
+echo '<input type="text" name="new_folder" class="form-control">';
+echo '<span class="input-group-btn">';
+echo '<input type="submit" name="submit" value="'.$lang['create_new_folder'].'" class="btn btn-default">';
+echo '</span>';
+echo '</div>';
+echo '</div>';
+
+echo '<div class="col-md-4">';
 
 echo '<div class="btn-toolbar">';
-echo '<div class="btn-group">';
-echo '<a class="'.$disk1_class.'" href="acp.php?tn='.$tn.'&sub=browse&d=1">'.$lang['btn_images'].' | <span class="">'.$cnt_all_images.'</small></a>';
-echo '<a class="'.$disk2_class.'" href="acp.php?tn='.$tn.'&sub=browse&d=2">'.$lang['btn_files'].' | <span class="">'.$cnt_all_files.'</span></a>';
-echo '</div>';
-echo '<div class="btn-group">';
+
+echo '<div class="btn-group pull-right">';
 echo "<a class='btn btn-sm btn-default' href='acp.php?tn=$tn&sub=browse&d=$disk&sort_by_name=1'>". show_sort_arrow($_SESSION['sort_by_name']) ." $lang[filename]</a>";
 echo "<a class='btn btn-sm btn-default' href='acp.php?tn=$tn&sub=browse&d=$disk&sort_by_time=1'>". show_sort_arrow($_SESSION['sort_by_time']) ." $lang[date_of_change]</a>";
 echo "<a class='btn btn-sm btn-default' href='acp.php?tn=$tn&sub=browse&d=$disk&sort_by_size=1'>". show_sort_arrow($_SESSION['sort_by_size']) ." $lang[filesize]</a>";
@@ -190,10 +280,10 @@ echo '</div>';
 echo '</div>';
 
 echo '<div class="row" style="margin-top:10px;">';
-echo '<div class="col-md-2">';
+echo '<div class="col-md-4">';
 echo "$kw_form";
 echo '</div>';
-echo '<div class="col-md-10">';
+echo '<div class="col-md-8">';
 echo "$btn_remove_keyword";
 echo '</div>';
 echo '</div>';
@@ -220,7 +310,7 @@ if(is_array($all_filter)) {
 															media_text like '%$f%'
 															) AND";
 	}
-	$set_keyword_filter .= " (media_file like '%$path%')";
+	$set_keyword_filter .= " (media_file like '%$disk%')";
 
 	$filter_string = "WHERE media_id IS NOT NULL "; // -> result = match all entries
 	
@@ -252,14 +342,19 @@ if(is_array($all_filter)) {
 foreach($a_files as $file) {
 
 	$f_suffix = substr (strrchr ($file, "."), 1 );
-	$f_time = filemtime("$file");
-	$f_size =  filesize("$file");
-	$imgsize = getimagesize("$file");
+	$f_time = filemtime($file);
+	$f_size =  filesize($file);
+	$imgsize = getimagesize($file);
+	$path_parts = pathinfo($file);
 	
 	if($imgsize[0] > 0) {
 		$fileinfo[$x]['filetype'] = "image";
 	} else {
 		$fileinfo[$x]['filetype'] = "other";
+	}
+	
+	if(is_dir($file)) {
+		$fileinfo[$x]['filetype'] = "folder";
 	}
 	
 	$fileinfo[$x]['filename'] = "$file";
@@ -347,6 +442,17 @@ for($x=0;$x<$cnt_pages;$x++) {
 
 } //eol for $x
 
+
+
+if($disk != $path_img AND $disk != $path_files) {
+	echo '<div class="container-fluid">';
+	echo '<form class="inline pull-right" action="acp.php?tn=filebrowser&sub=browse&selected_folder='.dirname($disk).'" method="POST">';
+	echo '<input type="submit" value="'.$lang['delete_folder'].'" class="btn btn-danger" onclick="return confirm(\''.$lang['confirm_delete_folder'].'\')">';
+	echo '<input type="hidden" name="delete_folder" value="'.$disk.'">';
+	echo '</form>';
+	echo '</div>';
+}
+
 echo"<div id='container'>";
 echo"<div id='masonry-container'>";
 
@@ -362,22 +468,41 @@ for($i=$start;$i<$end;$i++) {
 	$filesize = readable_filesize($fileinfo[$i]['size']);
 	$show_filetime = date('d.m.Y H:i',$filetime);
 
-	if($fileinfo[$i]['filetype'] == "image") {
-		$set_style = '';
-		$preview_img = "<img src='$filename'>";
+	if($tpl_file_type == 'grid') {
+		$short_filename = str_replace('../content/files/', '', $filename);
 	} else {
-		$set_style = "background-image: url(images/no-preview.gif); background-position: center; background-repeat: no-repeat;";
-		$preview_img = '';
+		$short_filename = str_replace('../content/images/', '', $filename);
 	}
 	
 	
-	$short_filename = str_replace('../content/files/', '', $filename);
-	$short_filename = str_replace('../content/images/', '', $filename);
 	
 	$delete_btn = '<input type="submit" onclick="return confirm(\''.$lang['confirm_delete_file'].'\')" class="btn btn-danger btn-sm" name="delete" value="'.$lang['delete'].'">';
 	$edit_btn = '<a data-fancybox data-type="ajax" data-src="/acp/core/ajax.media.php?file='.$filename.'&folder='.$disk.'" href="javascript:;" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-pencil"></span></a>';
+	
+	
+	$tpl_list = $tpl_file;
+	
+	if($fileinfo[$i]['filetype'] == "image") {
+		$set_style = '';
+		$preview_img = "<img src='$filename' class='img-responsive'>";
+		$tpl_list = str_replace('{preview_link}', $filename, $tpl_list);
+	} else if($fileinfo[$i]['filetype'] == "folder") {
+		$set_style = '';
+		$preview_img = '<a href="acp.php?tn=filebrowser&sub=browse&selected_folder='.$filename.'"><img src="images/folder.png" class="img-responsive"></a>';
+		$tpl_list = str_replace('{preview_link}', 'acp.php?tn=filebrowser&sub=browse&selected_folder={filename}', $tpl_list);
+		$edit_btn = '';
+		$delete_btn = '';
+		$filesize = '';
+	} else {
+		$set_style = "background-image: url(images/no-preview.gif); background-position: center; background-repeat: no-repeat;";
+		$preview_img = '';
+		$tpl_list = str_replace('{preview_link}', $filename, $tpl_list);
+	}
 
-	$tpl_list = str_replace('{short_filename}', $short_filename, $tpl_file);
+	
+	
+
+	$tpl_list = str_replace('{short_filename}', $short_filename, $tpl_list);
 	$tpl_list = str_replace('{filename}', $filename, $tpl_list);
 	$tpl_list = str_replace('{set_style}', "$set_style", $tpl_list);
 	$tpl_list = str_replace('{preview_img}', "$preview_img", $tpl_list);

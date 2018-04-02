@@ -2,7 +2,6 @@
 //prohibit unauthorized access
 require 'core/access.php';
 
-
 echo '<form id="editpage" action="acp.php?tn=pages&sub=edit&editpage='.$editpage.'" class="form-horizontal" method="POST">';
 
 $custom_fields = get_custom_fields();
@@ -225,17 +224,18 @@ echo '<div class="col-sm-10">';
 if($prefs_pagethumbnail_prefix != '') {
 	echo '<p>Prefix: '.$prefs_pagethumbnail_prefix.'</p>';
 }
-		
+	
+$arr_Images = fc_get_all_images_rec("$prefs_pagethumbnail_prefix",NULL);
 echo '<div class="scroll-container">';
 echo '<select name="page_thumbnail" class="form-control image-picker">';
 echo '<option value="">'.$lang['page_thumbnail'].'</option>';
-$arr_Images = fc_get_all_images($prefs_pagethumbnail_prefix);
 	foreach($arr_Images as $page_thumbnails) {
 		$selected = "";
+		$page_thumbnails = str_replace('../', '/', $page_thumbnails);
 		if($page_thumbnail == "$page_thumbnails") {
 			$selected = "selected";
 		}
-		echo '<option '.$selected.' data-img-src="/content/images/'.$page_thumbnails.'" class="masonry-item" value="'.$page_thumbnails.'">'.$page_thumbnails.'</option>';
+		echo '<option '.$selected.' data-img-src="'.$page_thumbnails.'" title="'.$page_thumbnails.'" class="masonry-item" value="'.$page_thumbnails.'">'.basename($page_thumbnails).'</option>';
 }
 echo '</select>';
 echo '</div>';

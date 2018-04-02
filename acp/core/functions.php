@@ -218,6 +218,50 @@ function fc_get_all_images($prefix='') {
 	 return $images;
 }
 
+/**
+ * show all images from images folder and it's subfolders
+ * optional filter by prefix
+ * return array
+ */
+
+function fc_get_all_images_rec($prefix='',$dir='') {
+
+	global $img_path;
+	$images = array();
+	
+	if($dir == '') {
+		$dir = "../$img_path";
+	}
+	
+	$scan_dir = array_diff(scandir($dir), array('..', '.','.DS_Store'));
+	$types = array('jpg','jpeg','png','gif');
+	
+	foreach($scan_dir as $key => $file) {
+		
+		if(is_dir($dir . '/' . $file)) {
+			$images[] = fc_get_all_images_rec("$prefix",$dir . '/' . $file);
+			continue;
+		}
+		$suffix = substr($file, strrpos($file, '.') + 1);
+		
+		if(in_array($suffix, $types)) {
+			
+			if($prefix != '') {
+				if(substr(basename($file), 0,strlen($prefix)) !== $prefix) {
+					continue;
+				}
+			}
+			
+			$images[] = $dir . '/' . $file;
+		  
+		}
+	}
+		
+	
+	$images = fc_flatten_array($images);
+	return $images;
+}
+
 
 /**
  * get all files from directory (recursive)
@@ -241,7 +285,33 @@ function fc_scandir_rec($dir) {
    } 
    $result = fc_flatten_array($result);
    return $result; 
-} 
+}
+
+/**
+ * get all (sub)directories from directory (recursive)
+ * return array
+ */
+
+function fc_get_dirs_rec($dir) { 
+   
+   $result = array(); 
+
+   $cdir = scandir($dir); 
+   foreach ($cdir as $key => $value) { 
+      if(in_array($value,array('..', '.','.DS_Store','index.html'))) {
+	      continue;
+	    }
+      if(is_dir($dir . '/' . $value)) {
+	      $result[] = $dir.'/'.$value;
+	      $result[] = fc_get_dirs_rec($dir . '/' . $value); 
+      }
+   } 
+   $result = fc_flatten_array($result);
+   return $result; 
+}
+
+
+
 
 function fc_flatten_array(array $array) {
     $flattened_array = array();
