@@ -14,15 +14,14 @@ $max_w = (int) $_REQUEST['w']; // max image width
 $max_h = (int) $_REQUEST['h']; // max image height
 $max_fz = (int) $_REQUEST['fz']; // max filesize
 
-if(strpos($_REQUEST['upload_destination'],'/images/') !== true) {
-
-//if($_REQUEST['upload_destination'] == '/images/') {
+if(strpos($_REQUEST['upload_destination'],"/images") !== false) {
 	$destination = '../'.$_REQUEST['upload_destination'];
 	$upload_type = 'images';
 } else {
 	$destination = '../'.$_REQUEST['upload_destination'];
 	$upload_type = 'files';
 }
+
 
 /* upload images to /content/images/ */
 if($upload_type == 'images') {
