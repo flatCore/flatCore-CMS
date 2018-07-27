@@ -21,8 +21,12 @@
 
 <!-- OpenGraph Meta Tags -->
 <meta property="og:title" content="{$page_title}">
-<meta property="og:image" content="{$page_thumbnail}">
 <meta property="og:site_name" content="{$prefs_pagetitle}">
+
+<meta property="og:image" content="{$page_thumbnail}">
+{foreach $page_thumbnails as $thumbs}
+<meta property="og:image" content="{$thumbs}">
+{/foreach}
 
 <!-- CSS -->
 <link rel="stylesheet" media="screen" href="{$fc_inc_dir}/styles/{$fc_template}/css/styles.min.css" />

@@ -226,18 +226,35 @@ if($prefs_pagethumbnail_prefix != '') {
 }
 	
 $arr_Images = fc_get_all_images_rec("$prefs_pagethumbnail_prefix",NULL);
+$page_thumbnail_array = explode("&lt;-&gt;", $page_thumbnail);
+
 echo '<div class="scroll-container">';
-echo '<select name="page_thumbnail" class="form-control image-picker">';
+echo '<select multiple="multiple" name="page_thumbnail[]" class="form-control image-picker">';
+
+/* if we have selected images, show them first */
+if(count($page_thumbnail_array) > 1) {
+	echo '<optgroup label="SELECTED">';
+	foreach($page_thumbnail_array as $sel_images) {
+		echo '<option selected data-img-src="'.$sel_images.'" title="'.$sel_images.'" class="masonry-item" value="'.$sel_images.'">'.basename($sel_images).'</option>';		
+	}
+	echo '</optgroup>'."\r\n";
+}
+
+echo '<optgroup label="NO SELECTED">';
 echo '<option value="">'.$lang['page_thumbnail'].'</option>';
 	foreach($arr_Images as $page_thumbnails) {
 		$selected = "";
 		$page_thumbnails = str_replace('../', '/', $page_thumbnails);
-		if($page_thumbnail == "$page_thumbnails") {
+		if(strpos($page_thumbnail, $page_thumbnails) !== false) {
 			$selected = "selected";
 		}
-		echo '<option '.$selected.' data-img-src="'.$page_thumbnails.'" title="'.$page_thumbnails.'" class="masonry-item" value="'.$page_thumbnails.'">'.basename($page_thumbnails).'</option>';
+		if(!in_array($page_thumbnails, $page_thumbnail_array)) {
+			echo '<option '.$selected.' data-img-src="'.$page_thumbnails.'" title="'.$page_thumbnails.'" class="masonry-item" value="'.$page_thumbnails.'">'.basename($page_thumbnails).'</option>';
+		}
 }
+echo '</optgroup>'."\r\n";
 echo '</select>';
+
 echo '</div>';
 echo '</div>';
 echo '</div>';

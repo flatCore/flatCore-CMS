@@ -20,11 +20,22 @@ $current_page_sort = "$page_sort";
 if($page_title == "") {
 	$page_title = "$prefs_pagetitle";
 }
-if($page_thumbnail == "") {
-	$page_thumbnail = "$prefs_pagethumbnail";
-}
+
 if($page_favicon == "") {
 	$page_favicon = "$prefs_pagefavicon";
+}
+
+/* page thumbnails */
+
+if($page_thumbnail == "") {
+	$page_thumbnail = $prefs_pagethumbnail;
+} else {
+	$page_thumbnail_array = explode("<->", $page_thumbnail);
+	$page_thumbnail = $page_thumbnail_array[0];
+	if(count($page_thumbnail_array > 0)) {
+		$page_thumbnails = array_shift($page_thumbnail_array);
+		$smarty->assign('page_thumbnails', $page_thumbnail_array);
+	}
 }
 
 
