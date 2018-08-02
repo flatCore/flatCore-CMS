@@ -135,6 +135,7 @@ if(isset($set_acptheme)) {
 
 		<link rel="stylesheet" href="../lib/css/bootstrap.min.css?v=3.3.6" type="text/css" media="screen, projection">
 		<link rel="stylesheet" href="css/styles.css?v=20161020" type="text/css" media="screen, projection">
+		<link href="fontawesome/css/all.min.css" rel="stylesheet">
 		
 		<script type="text/javascript">
 			var languagePack = "<?php echo $languagePack; ?>";
