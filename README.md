@@ -4,7 +4,7 @@
 
 ## flatcore CMS
 
-flatCore is a Content Management System based on PHP5 and SQLite3.
+flatCore is a Content Management System based on PHP and SQLite.
 
 * Official Site: https://flatcore.org
 * License: GNU GENERAL PUBLIC LICENSE Version 3
