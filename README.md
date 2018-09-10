@@ -21,9 +21,6 @@ flatCore is a Content Management System based on PHP and SQLite.
 + Smarty (3.1.21) - http://www.smarty.net/
 + Swift Mailer (5.4.0) - http://swiftmailer.org/
 + Bootstrap (3.3.4) - http://getbootstrap.com/
-
-___
-
 + jQuery - https://jquery.com/
 + fancyBox (3.0.47) - http://fancyapps.com/fancybox/3/
 + Chart.js (1.0.1-beta.4) - http://chartjs.org/
