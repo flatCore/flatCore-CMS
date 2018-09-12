@@ -24,6 +24,33 @@ if(isset($_POST['delete'])) {
 
 $dbfiles = glob("$data_folder/*.sqlite3");
 
+
+if(isset($_GET['vac'])) {
+	
+	$vac_file = $data_folder.'/'.basename($_GET['vac']);
+	
+	
+	
+	if(is_file($vac_file)) {
+		
+		echo '<div class="well well-sm">';
+		echo '<h3>VACUUM: '.$vac_file.' <small>';
+		echo $lang['filesize'].': '.readable_filesize(filesize("$vac_file")). '</small></h3>';
+		
+		$dbh = new PDO("sqlite:".$vac_file);
+		$sth = $dbh->prepare("VACUUM");
+		$sth->execute();
+		$dbh = null;
+		clearstatcache();
+		
+		echo '<p>'.$lang['filesize'].': '.readable_filesize(filesize("$vac_file")). '</p>';
+		
+		echo '</div>';
+		
+	}
+}
+
+
 echo"<div id='container'>";
 echo"<div id='masonry-container'>";
 
@@ -51,6 +78,10 @@ foreach($dbfiles as $filename) {
 		echo '<input type="submit" class="btn btn-danger btn-xs" name="delete" value="'.$lang['delete'].'">';
 		echo '</div>';
 	}
+	echo '<div class="btn-group" role="group">';
+	echo '<a class="btn btn-default btn-xs" title="VACUUM" href="?tn=system&sub=backup&vac='.$db_file.'"><span class="glyphicon glyphicon-resize-small"></span></a>';
+	echo '</div>';
+	
 	echo '</div>';
 	echo '<input  type="hidden" name="file" value="'.$db_file.'">';
 	echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
@@ -63,7 +94,6 @@ foreach($dbfiles as $filename) {
 echo '</div>'; // masonry-container
 echo '</div>';
 echo '<div class="clearfix"></div>';
-
 
 
 
