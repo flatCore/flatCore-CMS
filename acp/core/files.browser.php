@@ -159,7 +159,6 @@ foreach ($scan_files as $key => $value) {
 $cnt_all_files = count($a_files);
 
 
-
 /**
  * check if all files stored in media database
  * if not, catch up
@@ -172,7 +171,7 @@ $dbh = new PDO("sqlite:".CONTENT_DB);
 foreach($a_files as $file) {
 	
 	unset($mediaData);
-	$filename = "$file";
+	$filename = $file;
 	
 	if(is_dir($filename)) { continue; }
 	
@@ -193,7 +192,7 @@ foreach($a_files as $file) {
 	
 }
 
-$sql = "SELECT media_file FROM fc_media";
+$sql = "SELECT media_file FROM fc_media WHERE media_file like '%$disk%'";
 $sth = $dbh->prepare($sql);
 $sth->execute();
 $storedFiles = $sth->fetchAll(PDO::FETCH_COLUMN);
@@ -206,6 +205,7 @@ foreach($storedFiles as $f) {
 }
 	
 $dbh = null;
+
 
 
 
@@ -345,34 +345,37 @@ foreach($a_files as $file) {
 	$f_time = filemtime($file);
 	$f_size =  filesize($file);
 	$imgsize = getimagesize($file);
-	$path_parts = pathinfo($file);
+	//$path_parts = pathinfo($file);
 	
 	if($imgsize[0] > 0) {
-		$fileinfo[$x]['filetype'] = "image";
+		$fileinfo[$x]['filetype'] = 'image';
 	} else {
-		$fileinfo[$x]['filetype'] = "other";
+		$fileinfo[$x]['filetype'] = 'other';
 	}
 	
 	if(is_dir($file)) {
-		$fileinfo[$x]['filetype'] = "folder";
+		$fileinfo[$x]['filetype'] = 'folder';
 	}
 	
-	$fileinfo[$x]['filename'] = "$file";
-	$fileinfo[$x]['size'] = "$f_size";
-	$fileinfo[$x]['suffix'] = "$f_suffix";
-	$fileinfo[$x]['time'] = "$f_time";
+	$fileinfo[$x]['filename'] = $file;
+	$fileinfo[$x]['size'] = $f_size;
+	$fileinfo[$x]['suffix'] = $f_suffix;
+	$fileinfo[$x]['time'] = $f_time;
+	
+	clearstatcache();
 	
 	$x++;
 }
+
 
 //count all files
 $nbr_of_files = count($fileinfo);
 
 /* sorting */
 foreach ($fileinfo as $key => $row) {
-    $fi_filename[$key] = $row['filename'];
-    $fi_size[$key] = $row['size'];
-    $fi_time[$key] = $row['time'];
+	$fi_filename[$key] = $row['filename'];
+  $fi_size[$key] = $row['size'];
+  $fi_time[$key] = $row['time'];
 }
 
 
@@ -453,8 +456,8 @@ if($disk != $path_img AND $disk != $path_files) {
 	echo '</div>';
 }
 
-echo"<div id='container'>";
-echo"<div id='masonry-container'>";
+echo '<div id="container">';
+echo '<div id="masonry-container">';
 
 
 //list all files 
@@ -524,11 +527,11 @@ echo '<div class="clearfix"></div>';
 
 
 echo '<div id="well well-sm"><p class="text-center">';
-echo"$pag_backlink ";
+echo $pag_backlink .' ';
 foreach(range($pag_start, $pag_end) as $number) {
-    echo "$a_pag_string[$number]";
+    echo $a_pag_string[$number];
 }
-echo " $pag_forwardlink";
+echo ' '. $pag_forwardlink;
 echo '</p></div>'; //EOL PAGINATION
 
 

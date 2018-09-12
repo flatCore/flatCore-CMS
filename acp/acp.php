@@ -248,8 +248,9 @@ if(isset($set_acptheme)) {
 		<?php include 'core/editors.php'; ?>
 	
 		<div id="footer">
-		<b>flatCore</b> Content Management System (<?php echo $fc_version_name . ' <small>B: ' . $fc_version_build; ?>)</small><br />
-		copyright © <?php echo date('Y'); ?>, <a href="http://www.flatcore.org/" target="_blank">flatCore.org</a>
+		<p><b>flatCore</b> Content Management System (<?php echo $fc_version_name . ' <small>B: ' . $fc_version_build; ?>)</small><br />
+		copyright © <?php echo date('Y'); ?>, <a href="https://www.flatcore.org/" target="_blank">flatCore.org</a></p>
+		<p><?php echo microtime(true)-$_SERVER['REQUEST_TIME_FLOAT']; ?></p>
 		</div>
 		
 		</div>
