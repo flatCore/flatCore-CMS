@@ -1,9 +1,8 @@
 <?php
 
-error_reporting(0);
-
+//error_reporting(E_ALL ^E_NOTICE);
 //prohibit unauthorized access
-require("core/access.php");
+require 'core/access.php';
 
 
 $path_img = '../'.IMAGES_FOLDER;
@@ -27,28 +26,37 @@ if(isset($_SESSION['disk'])) {
 	$disk = $path_img;
 }
 
-if($_SESSION['sort_by_name'] == '' AND $_SESSION['sort_by_size'] == '' AND $_SESSION['sort_by_time'] == '') {
-	$_SESSION['sort_by_time'] = 'DESC';
+
+if(!isset($_SESSION['sort_by'])) {
+	$_SESSION['sort_by'] = 'media_lastedit';
 }
 
-
-if(isset($_GET['sort_by_name'])) {
-	switch_sort('sort_by_name');
-	unset($_SESSION['sort_by_size'],$_SESSION['sort_by_time']);
+if((isset($_GET['sort_by'])) && ($_GET['sort_by'] == 'name')) {
+	$_SESSION['sort_by'] = 'media_file';
 }
 
-if(isset($_GET['sort_by_size'])) {
-	switch_sort('sort_by_size');
-	unset($_SESSION['sort_by_name'],$_SESSION['sort_by_time']);
+if((isset($_GET['sort_by'])) && ($_GET['sort_by'] == 'size')) {
+	$_SESSION['sort_by'] = 'CAST(media_filesize AS INTEGER)';
 }
 
-if(isset($_GET['sort_by_time'])) {
-	switch_sort('sort_by_time');
-	unset($_SESSION['sort_by_size'],$_SESSION['sort_by_name']);
+if((isset($_GET['sort_by'])) && ($_GET['sort_by'] == 'time')) {
+	$_SESSION['sort_by'] = 'media_lastedit';
 }
 
+if(isset($_GET['sort_direction'])) {
+	switch_sort();
+}
 
-$sort_direction = constant(trim('SORT_'.$_SESSION['sort_by_name'].$_SESSION['sort_by_time'].$_SESSION['sort_by_size']));
+unset($check_lastedit,$check_size,$check_name);
+
+if($_SESSION['sort_by'] == 'media_lastedit') {
+	$check_lastedit = 'active';
+} else if($_SESSION['sort_by'] == 'media_file') {
+	$check_name = 'active';	
+} else {
+
+	$check_size = 'active';
+}
 
 
 
@@ -97,7 +105,7 @@ if(strpos($disk,$path_img) !== FALSE) {
 
 /* create new directory */
 
-if(isset($_POST['new_folder'])) {
+if((isset($_POST['new_folder'])) && ($_POST['new_folder'] != '')) {
 	$folder_name = clean_filename($_POST['new_folder']);
 	$create_path = $disk . '/' . $folder_name;	
 	mkdir($create_path, 0777, true);
@@ -145,67 +153,134 @@ function delete_folder($dir) {
   } 
 
 
-unset($scan_files);
-$scan_files = scandir($disk);
-
-foreach ($scan_files as $key => $value) { 
-   if(in_array($value,array('..', '.','.DS_Store','index.html'))) {
-      continue;
-    }
-   $a_files[] = $disk.'/'.$value;
-}
-
-
-$cnt_all_files = count($a_files);
-
-
 /**
  * check if all files stored in media database
  * if not, catch up
  *
  * check if entries stored in media database are still there
  * if not, drop entry
+ *
+ * check if media_filsize or media_lastedit is empty
+ * if yes, fill up
  */
 
-$dbh = new PDO("sqlite:".CONTENT_DB);
-foreach($a_files as $file) {
+if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
 	
-	unset($mediaData);
-	$filename = $file;
+	$incomplete = FALSE;
+	$rebuild_start = time();
+	$cnt_files_rebuild = 0;
+	$cnt_files_removed = 0;
+	$cnt_infos_completed = 0;
+
+
+	unset($scan_files);
+	$scan_files = scandir($disk);
 	
-	if(is_dir($filename)) { continue; }
+	foreach ($scan_files as $key => $value) { 
+	   if(in_array($value,array('..', '.','.DS_Store','index.html'))) {
+	      continue;
+	    }
+	   $a_files[] = $disk.'/'.$value;
+	}
 	
-	$sql = "SELECT media_file FROM fc_media WHERE media_file = :filename ";
-	$sth = $dbh->prepare($sql);
-	$sth->bindParam(':filename', $filename, PDO::PARAM_STR);
-	$sth->execute();
 	
-	$mediaData = $sth->fetch(PDO::FETCH_ASSOC);
+	$cnt_all_files = count($a_files);
+
+
+	$dbh = new PDO("sqlite:".CONTENT_DB);
 	
-	if(!is_array($mediaData)) {
-		$sql = "INSERT INTO fc_media ( media_id, media_file, media_lang ) VALUES ( NULL, :media_file, :media_lang) ";
+	/* add missing entries to database */
+	foreach($a_files as $file) {
+
+		unset($mediaData);
+		$filename = $file;
+		
+		if(is_dir($filename)) { continue; }
+		
+		$sql = "SELECT media_file FROM fc_media WHERE media_file = :filename ";
 		$sth = $dbh->prepare($sql);
-		$sth->bindParam(':media_file', $filename, PDO::PARAM_STR);
-		$sth->bindParam(':media_lang', $languagePack, PDO::PARAM_STR);
+		$sth->bindParam(':filename', $filename, PDO::PARAM_STR);
 		$sth->execute();
+	
+		$mediaData = $sth->fetch(PDO::FETCH_ASSOC);
+	
+		if(!is_array($mediaData)) {
+			$filesize = filesize($filename);
+			$filemtime = filemtime($filename);
+			$sql = "INSERT INTO fc_media ( media_id, media_file, media_lang, media_filesize, media_lastedit ) VALUES ( NULL, :media_file, :media_lang, :media_filesize, :media_lastedit) ";
+			$sth = $dbh->prepare($sql);
+			$sth->bindParam(':media_file', $filename, PDO::PARAM_STR);
+			$sth->bindParam(':media_lang', $languagePack, PDO::PARAM_STR);
+			$sth->bindParam(':media_filesize', $filesize, PDO::PARAM_STR);
+			$sth->bindParam(':media_lastedit', $filemtime, PDO::PARAM_STR);
+			$sth->execute();
+			$cnt_files_rebuild++;
+		}
+	
+		if((time()-$rebuild_start) > 5) {
+			$incomplete = TRUE;
+			break;
+		}
+	
+	}
+	
+	/* remove files from database if the file no longer exists */
+	$sql = "SELECT media_file FROM fc_media WHERE media_file like '%$disk%'";
+	$sth = $dbh->prepare($sql);
+	$sth->execute();
+	$storedFiles = $sth->fetchAll(PDO::FETCH_COLUMN);
+
+	
+	foreach($storedFiles as $f) {
+		if(!is_file($f)) {
+			fc_delete_media_data($f);
+			$cnt_files_removed++;
+				if((time()-$rebuild_start) > 5) {
+					$incomplete = TRUE;
+					break;
+				}
+		}
+	}
+	
+	
+	/* complete file's informations - filesize and/or filemtime  */
+	$sql = "SELECT * FROM fc_media WHERE media_filesize IS NULL OR media_filesize = '' OR media_lastedit IS NULL OR media_lastedit = '' ";
+	$sth = $dbh->query($sql);
+	$missing_rows = $sth->fetchAll(PDO::FETCH_ASSOC);
+	
+	if(count($missing_rows)>0) {
+		foreach($missing_rows as $row) {		
+			if(is_file($row['media_file'])) {
+							
+				$filesize = filesize($row['media_file']);
+				$filemtime = filemtime($row['media_file']);
+						
+				$sql = "UPDATE fc_media SET media_filesize = :media_filesize, media_lastedit = :media_lastedit WHERE media_file = :media_file ";
+				$sth = $dbh->prepare($sql);
+				$sth->bindParam(':media_file', $row['media_file'], PDO::PARAM_STR);
+				$sth->bindParam(':media_filesize', $filesize, PDO::PARAM_STR);
+				$sth->bindParam(':media_lastedit', $filemtime, PDO::PARAM_STR);
+				$sth->execute();
+				$cnt_infos_completed++;
+			}
+		
+			if((time()-$rebuild_start) > 5) {
+				$incomplete = TRUE;
+				break;
+			}
+		
+		}
+	}
+		
+	$dbh = null;
+	
+	echo '<div class="alert alert-info">Add '.$cnt_files_rebuild.' Files, removed '.$cnt_files_removed.' Files from Database. Completed '.$cnt_infos_completed.' File-Informations</div>';
+	
+	if($incomplete === TRUE) {
+		echo '<div class="alert alert-info">Maximum Time reached, <a href="?tn=filebrowser&sub=browse&rebuild=database">start again</a>.</div>';
 	}
 	
 }
-
-$sql = "SELECT media_file FROM fc_media WHERE media_file like '%$disk%'";
-$sth = $dbh->prepare($sql);
-$sth->execute();
-$storedFiles = $sth->fetchAll(PDO::FETCH_COLUMN);
-$dbh = null;
-
-foreach($storedFiles as $f) {
-	if(!is_file($f)) {
-		fc_delete_media_data($f);
-	}
-}
-	
-$dbh = null;
-
 
 
 
@@ -270,9 +345,13 @@ echo '<div class="col-md-4">';
 echo '<div class="btn-toolbar">';
 
 echo '<div class="btn-group pull-right">';
-echo "<a class='btn btn-sm btn-default' href='acp.php?tn=$tn&sub=browse&d=$disk&sort_by_name=1'>". show_sort_arrow($_SESSION['sort_by_name']) ." $lang[filename]</a>";
-echo "<a class='btn btn-sm btn-default' href='acp.php?tn=$tn&sub=browse&d=$disk&sort_by_time=1'>". show_sort_arrow($_SESSION['sort_by_time']) ." $lang[date_of_change]</a>";
-echo "<a class='btn btn-sm btn-default' href='acp.php?tn=$tn&sub=browse&d=$disk&sort_by_size=1'>". show_sort_arrow($_SESSION['sort_by_size']) ." $lang[filesize]</a>";
+echo '<a class="btn btn-sm btn-default" href="acp.php?tn='.$tn.'&sub=browse&rebuild=database"><span class="glyphicon glyphicon-wrench"></span></a>';
+echo '</div>';
+echo '<div class="btn-group pull-right">';
+echo '<a class="btn btn-sm btn-default '.$check_lastedit.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=time">'.$lang['date_of_change'].'</a>';
+echo '<a class="btn btn-sm btn-default '.$check_name.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=name">'.$lang['filename'].'</a>';
+echo '<a class="btn btn-sm btn-default '.$check_size.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=size">'.$lang['filesize'].'</a>';
+echo '<a class="btn btn-sm btn-default" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_direction=1">'. show_sort_arrow() .'</a>';
 echo '</div>';
 echo '</div>';
 
@@ -289,109 +368,37 @@ echo '</div>';
 echo '</div>';
 echo '</div>';
 
-
-$fileinfo = array();
-$x=0;
-
-
-/**
- * if there is a filter
- * reset $a_files from scandir to entries from fc_media
- */
-
+unset($_SESSION['media_filter_string']);
 if(is_array($all_filter)) {
+	$add_keyword_filter = ' AND ';
 	foreach($all_filter as $f) {
 		if($f == "") { continue; }
-		$set_keyword_filter .= "(	media_file like '%$f%' OR
+		$add_keyword_filter .= "(	media_file like '%$f%' OR
 															media_title like '%$f%' OR
 															media_notes like '%$f%' OR
 															media_keywords like '%$f%' OR
 															media_credit like '%$f%' OR
 															media_text like '%$f%'
-															) AND";
+															) AND ";
 	}
-	$set_keyword_filter .= " (media_file like '%$disk%')";
 
-	$filter_string = "WHERE media_id IS NOT NULL "; // -> result = match all entries
-	
-	if($set_keyword_filter != "") {
-		$filter_string .= " AND $set_keyword_filter";
-	}
-	
-	$_SESSION['media_filter_string'] = $filter_string;
-	
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = "SELECT media_file FROM fc_media $_SESSION[media_filter_string] ";
-	$sth = $dbh->prepare($sql);
-	$sth->execute();
-	$filterFiles = $sth->fetchAll(PDO::FETCH_COLUMN);
-	
-	$dbh = null;
-	
-	unset($a_files);
-	$filterFiles = array_unique($filterFiles);
-	foreach($filterFiles as $file) {
-		//$file = basename($file);
-		if(is_file("$file")) {
-			$a_files[] = $file;
-		}
-	}
-	
+	$add_keyword_filter = substr($add_keyword_filter, 0,-5);
+
+	$_SESSION['media_filter_string'] = $add_keyword_filter;
 }
 
-foreach($a_files as $file) {
+$dbh = new PDO("sqlite:".CONTENT_DB);
 
-	$f_suffix = substr (strrchr ($file, "."), 1 );
-	$f_time = filemtime($file);
-	$f_size =  filesize($file);
-	$imgsize = getimagesize($file);
-	//$path_parts = pathinfo($file);
-	
-	if($imgsize[0] > 0) {
-		$fileinfo[$x]['filetype'] = 'image';
-	} else {
-		$fileinfo[$x]['filetype'] = 'other';
-	}
-	
-	if(is_dir($file)) {
-		$fileinfo[$x]['filetype'] = 'folder';
-	}
-	
-	$fileinfo[$x]['filename'] = $file;
-	$fileinfo[$x]['size'] = $f_size;
-	$fileinfo[$x]['suffix'] = $f_suffix;
-	$fileinfo[$x]['time'] = $f_time;
-	
-	clearstatcache();
-	
-	$x++;
-}
-
-
-//count all files
-$nbr_of_files = count($fileinfo);
-
-/* sorting */
-foreach ($fileinfo as $key => $row) {
-	$fi_filename[$key] = $row['filename'];
-  $fi_size[$key] = $row['size'];
-  $fi_time[$key] = $row['time'];
-}
-
-
-if($_SESSION['sort_by_name'] != "") {
-	@array_multisort($fi_filename, $sort_direction, $fileinfo);
-} elseif($_SESSION['sort_by_size'] != "") {
-	@array_multisort($fi_size, $sort_direction, $fileinfo);
-} elseif($_SESSION['sort_by_time'] != "") {
-	@array_multisort($fi_time, $sort_direction, $fileinfo);
-}
+$sql_cnt = "SELECT count(*) AS 'all' FROM fc_media WHERE media_file LIKE '%$disk%' AND (media_lang LIKE '$languagePack' OR media_lang IS NULL) ".$_SESSION['media_filter_string'];
+$sth = $dbh->prepare($sql_cnt);
+$sth->execute();
+$all_files = $sth->fetch();
+$nbr_of_files = $all_files['all'];
 
 $files_per_page = 20;
 $show_numbers = 6;
 $start = 0;
-
-$cnt_pages = ceil($nbr_of_files/$files_per_page);
+$end = $files_per_page;
 
 
 if(isset($_GET['start'])) {
@@ -404,16 +411,35 @@ if($start<0) {
 
 
 $end = $start+$files_per_page;
-$next_start = $start+$files_per_page;
-$prev_start = $start-$files_per_page;
+$next_start = $start+$end;
+$prev_start = $start-$end;
 
-if($start>($nbr_of_files-$files_per_page)) {
+if($start>($nbr_of_files-$end)) {
 	$next_start = $start;
 }
 
 if($end>$nbr_of_files) {
 	$end = $nbr_of_files;
 }
+
+$order_sql = 'ORDER BY '.$_SESSION['sort_by'].' '.$_SESSION['sort_direction']. ' ';
+$where_sql = 'WHERE media_id IS NOT NULL AND ';
+$where_sql .= " (media_file like '%$disk%')";
+$where_sql .= " AND (media_lang LIKE '$languagePack' OR media_lang IS NULL)";
+
+$limit_sql = "LIMIT '$start','$files_per_page' ";
+
+
+$sql = "SELECT * FROM fc_media $where_sql ".$_SESSION['media_filter_string']." $order_sql $limit_sql";
+$sth = $dbh->prepare($sql);
+$sth->execute();
+$get_files = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+$dbh = null;
+
+$cnt_pages = ceil($nbr_of_files/$files_per_page);
+
+$cnt_get_files = count($get_files);
 
 
 $pag_backlink = "<a class='btn btn-primary' href='acp.php?tn=filebrowser&start=$prev_start'>$lang[pagination_backward]</a>";
@@ -443,9 +469,7 @@ for($x=0;$x<$cnt_pages;$x++) {
 	
 	$a_pag_string[] = "<a class='$aclass' href='acp.php?tn=filebrowser&start=$page_start'>$page_nbr</a> ";
 
-} //eol for $x
-
-
+}
 
 if($disk != $path_img AND $disk != $path_files) {
 	echo '<div class="container-fluid">';
@@ -460,15 +484,14 @@ echo '<div id="container">';
 echo '<div id="masonry-container">';
 
 
-//list all files 
-for($i=$start;$i<$end;$i++) {
+//list all files
+for($i=0;$i<$cnt_get_files;$i++) {
+	
+	$filename = '';
 
-	unset($filename);
-
-	$filename = $fileinfo[$i]['filename'];
-	$filetime = $fileinfo[$i]['time'];
-	$filesize = round($fileinfo[$i]['size'] / 1024) . ' KB';
-	$filesize = readable_filesize($fileinfo[$i]['size']);
+	$filename = $get_files[$i]['media_file'];
+	$filetime = $get_files[$i]['media_lastedit'];
+	$filesize = readable_filesize($get_files[$i]['media_filesize']);
 	$show_filetime = date('d.m.Y H:i',$filetime);
 
 	if($tpl_file_type == 'grid') {
@@ -484,26 +507,28 @@ for($i=$start;$i<$end;$i++) {
 	
 	
 	$tpl_list = $tpl_file;
+
+
+	$imgsize = getimagesize($filename);
 	
-	if($fileinfo[$i]['filetype'] == "image") {
+	if($imgsize[0] > 0) {
 		$set_style = '';
 		$preview_img = "<img src='$filename' class='img-responsive'>";
 		$tpl_list = str_replace('{preview_link}', $filename, $tpl_list);
-	} else if($fileinfo[$i]['filetype'] == "folder") {
+	} else {
+		$set_style = "background-image: url(images/no-preview.gif); background-position: center; background-repeat: no-repeat;";
+		$preview_img = '';
+		$tpl_list = str_replace('{preview_link}', $filename, $tpl_list);
+	}
+	
+	if(is_dir($filename)) {
 		$set_style = '';
 		$preview_img = '<a href="acp.php?tn=filebrowser&sub=browse&selected_folder='.$filename.'"><img src="images/folder.png" class="img-responsive"></a>';
 		$tpl_list = str_replace('{preview_link}', 'acp.php?tn=filebrowser&sub=browse&selected_folder={filename}', $tpl_list);
 		$edit_btn = '';
 		$delete_btn = '';
 		$filesize = '';
-	} else {
-		$set_style = "background-image: url(images/no-preview.gif); background-position: center; background-repeat: no-repeat;";
-		$preview_img = '';
-		$tpl_list = str_replace('{preview_link}', $filename, $tpl_list);
-	}
-
-	
-	
+	}	
 
 	$tpl_list = str_replace('{short_filename}', $short_filename, $tpl_list);
 	$tpl_list = str_replace('{filename}', $filename, $tpl_list);
@@ -537,19 +562,19 @@ echo '</p></div>'; //EOL PAGINATION
 
 
 
-function switch_sort($session_name) {
-	if($_SESSION[$session_name] == 'ASC') {
-		$_SESSION[$session_name] = 'DESC';
+function switch_sort() {
+	if($_SESSION['sort_direction'] == 'ASC') {
+		$_SESSION['sort_direction'] = 'DESC';
 	} else {
-		$_SESSION[$session_name] = 'ASC';
+		$_SESSION['sort_direction'] = 'ASC';
 	}
 }
 
-function show_sort_arrow($direction) {
+function show_sort_arrow() {
 	$icon = '';
-	if($direction == 'ASC') {
+	if($_SESSION['sort_direction'] == 'ASC') {
 		$icon = '<span class="glyphicon glyphicon-chevron-up"></span>';
-	} elseif($direction == 'DESC') {
+	} else {
 		$icon = '<span class="glyphicon glyphicon-chevron-down"></span>';
 	}
 	return $icon;

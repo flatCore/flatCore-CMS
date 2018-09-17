@@ -1,6 +1,6 @@
 <?php
 session_start();
-error_reporting(E_ALL ^E_NOTICE);
+error_reporting(0);
 
 require '../../config.php';
 define("CONTENT_DB", "../../$fc_db_content");
@@ -9,6 +9,8 @@ if($_SESSION['user_class'] != "administrator"){
 	header("location:../index.php");
 	die("PERMISSION DENIED!");
 }
+
+$time = time();
 
 $max_w = (int) $_REQUEST['w']; // max image width
 $max_h = (int) $_REQUEST['h']; // max image height
@@ -32,13 +34,16 @@ if($upload_type == 'images') {
 		$prefix = basename($org_name,".$suffix");
 		$img_name = clean_filename($prefix,$suffix);
 		$target = "$destination/$img_name";
-		fc_write_media_data_name("$destination/$img_name");
-		
+
+				
 		if($_REQUEST['unchanged'] == 'yes') {
 			@move_uploaded_file($tmp_name, $target);
 		} else {
-			$target = resize_image($tmp_name,$target, $max_w,$max_h,90);
+			resize_image($tmp_name,$target, $max_w,$max_h,90);
 		}
+		$filetype = mime_content_type(realpath($target));
+		$filesize = filesize(realpath($target));
+		fc_write_media_data_name($target,$filesize,$time,$filetype);
 
 	}
 }
@@ -53,7 +58,9 @@ if($upload_type == 'files') {
 	  $prefix = basename($org_name,".$suffix");
 	  $files_name = clean_filename($prefix,$suffix);
 	  $target = "$destination/$files_name";
-		fc_write_media_data_name("$destination/$files_name");
+	  $filetype = mime_content_type(realpath($target));
+	  $filesize = filesize(realpath($target));
+		fc_write_media_data_name($target,$filesize,$time,$filetype);
 		if(@move_uploaded_file($tmp_name, $target)) {
 			print ('Upload complete');
 		}
@@ -218,11 +225,15 @@ function clean_filename($prefix,$suffix) {
 
 
 
-function fc_write_media_data_name($filename) {
+function fc_write_media_data_name($filename,$filesize,$time,$mediatype) {
+	$filename = substr($filename, 3,strlen($filename));
 	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = "INSERT INTO fc_media ( media_id, media_file ) VALUES ( NULL, :media_file ) ";
+	$sql = "INSERT INTO fc_media ( media_id, media_file, media_filesize, media_lastedit, media_type ) VALUES ( NULL, :media_file, :media_filesize, :media_lastedit, :media_type ) ";
 	$sth = $dbh->prepare($sql);
 	$sth->bindParam(':media_file', $filename, PDO::PARAM_STR);
+	$sth->bindParam(':media_filesize', $filesize, PDO::PARAM_STR);
+	$sth->bindParam(':media_lastedit', $time, PDO::PARAM_STR);
+	$sth->bindParam(':media_type', $mediatype, PDO::PARAM_STR);
 	$cnt_changes = $sth->execute();
 	$dbh = null;
 }

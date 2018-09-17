@@ -21,7 +21,9 @@ $cols = array(
   "media_license"  => 'VARCHAR',
   "media_meta"  => 'VARCHAR',
   "media_notes"  => 'VARCHAR',
-  "media_labels"  => 'VARCHAR'
+  "media_labels"  => 'VARCHAR',
+  "media_filesize"  => 'VARCHAR',
+  "media_lastedit"  => 'VARCHAR'
   );
 
 ?>

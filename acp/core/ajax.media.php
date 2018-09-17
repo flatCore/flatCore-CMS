@@ -38,11 +38,12 @@ if(isset($_REQUEST['file'])) {
 }
 
 $abs_path = str_replace('../','/',$realpath);
-$filesize = readable_filesize(filesize("../$realpath"));
+$filesize = filesize("../$realpath");
+$rfilesize = readable_filesize(filesize("../$realpath"));
 $lastedit = date('d.m.Y H:i',filemtime("../$realpath"));
 
 if(isset($_POST['saveMedia'])) {
-	$savedMedia = fc_write_media_data($_POST['realpath'],$_POST['title'],$_POST['notes'],$_POST['keywords'],$_POST['text'],$_POST['url'],$_POST['alt'],$set_lang,$_POST['credit'],$_POST['priority'],$_POST['license']);
+	$savedMedia = fc_write_media_data($_POST['realpath'],$_POST['title'],$_POST['notes'],$_POST['keywords'],$_POST['text'],$_POST['url'],$_POST['alt'],$set_lang,$_POST['credit'],$_POST['priority'],$_POST['license'],time(),$filesize);
 	if($savedMedia == 'success') {
 		$message = '<div class="alert alert-success alert-auto-close">'.$lang['db_changed'].'</div>';
 	} else {
@@ -73,7 +74,7 @@ $form_tpl = str_replace('{filename}', $media_filename, $form_tpl);
 $form_tpl = str_replace('{basename}', basename($media_filename), $form_tpl);
 $form_tpl = str_replace('{realpath}', $realpath, $form_tpl);
 $form_tpl = str_replace('{showpath}', $abs_path, $form_tpl);
-$form_tpl = str_replace('{filesize}', $filesize, $form_tpl);
+$form_tpl = str_replace('{rfilesize}', $rfilesize, $form_tpl);
 $form_tpl = str_replace('{image_dimensions}', $img_dimensions, $form_tpl);
 $form_tpl = str_replace('{edittime}', $lastedit, $form_tpl);
 $form_tpl = str_replace('{folder}', $_REQUEST['folder'], $form_tpl);
@@ -100,6 +101,7 @@ $form_tpl = str_replace('{label_text}', $lang['label_text'], $form_tpl);
 $form_tpl = str_replace('{preview}', $preview_src, $form_tpl);
 $form_tpl = str_replace('{save}', $lang['save'], $form_tpl);
 $form_tpl = str_replace('{set_lang}', $set_lang, $form_tpl);
+$form_tpl = str_replace('{filesize}', $filesize, $form_tpl);
 $form_tpl = str_replace('{lang_switch}', $langSwitch, $form_tpl);
 $form_tpl = str_replace('{token}',$_SESSION['token'],$form_tpl);
 echo $form_tpl;

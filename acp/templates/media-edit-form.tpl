@@ -66,6 +66,7 @@
 			  <input type="hidden" name="realpath" value="{realpath}">
 			  <input type="hidden" name="folder" value="{folder}">
 			  <input type="hidden" name="set_lang" value="{set_lang}">
+			  <input type="hidden" name="filesize" value="{filesize}">
 			  <input type="submit" name="save" class="btn btn-success" value="{save}">
 			  <input  type="hidden" name="csrf_token" value="{token}">
 			</form>
@@ -87,7 +88,7 @@
 				</tr>
 				<tr>
 					<td class="text-right"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></td>
-					<td>{filesize} {image_dimensions}</td>
+					<td>{rfilesize} {image_dimensions}</td>
 				</tr>
 				<tr>
 					<td class="text-right"><span class="glyphicon glyphicon-console" aria-hidden="true"></span></td>

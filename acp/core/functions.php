@@ -1121,7 +1121,7 @@ function fc_delete_media_data($filename) {
  *
  */
 
-function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$text=NULL,$url=NULL,$alt=NULL,$lang=NULL,$credit=NULL,$priority=NULL,$license=NULL) {
+function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$text=NULL,$url=NULL,$alt=NULL,$lang=NULL,$credit=NULL,$priority=NULL,$license=NULL,$lastedit=NULL,$filesize=NULL) {
 
 	global $languagePack;
 	
@@ -1139,7 +1139,10 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 		'media_lang' => 'STR',
 		'media_priority' => 'STR',
 		'media_credit' => 'STR',
-		'media_license' => 'STR'
+		'media_license' => 'STR',
+		'media_filesize' => 'STR',
+		'media_lastedit' => 'STR',
+		'media_type' => 'STR'
 	);
 		
 	$pdo_fields_new = array(
@@ -1154,9 +1157,13 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 		'media_lang' => 'STR',
 		'media_priority' => 'STR',
 		'media_credit' => 'STR',
-		'media_license' => 'STR'
+		'media_license' => 'STR',
+		'media_filesize' => 'STR',
+		'media_lastedit' => 'STR',
+		'media_type' => 'STR'
 	);
-
+	
+	$filetype = mime_content_type("../$filename");
 	$dbh = new PDO("sqlite:".CONTENT_DB);
 	
 	$sql_cnt = "SELECT count(*) FROM fc_media WHERE media_file = :media_file AND (media_lang = :media_lang OR media_lang = '' OR media_lang is null)";
@@ -1190,6 +1197,9 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 	$sth->bindParam(':media_priority', $priority, PDO::PARAM_STR);
 	$sth->bindParam(':media_license', $license, PDO::PARAM_STR);
 	$sth->bindParam(':media_credit', $credit, PDO::PARAM_STR);
+	$sth->bindParam(':media_filesize', $filesize, PDO::PARAM_STR);
+	$sth->bindParam(':media_lastedit', $lastedit, PDO::PARAM_STR);
+	$sth->bindParam(':media_type', $filetype, PDO::PARAM_STR);
 
 	$cnt_changes = $sth->execute();
 	
