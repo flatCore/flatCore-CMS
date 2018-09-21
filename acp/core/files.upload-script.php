@@ -58,12 +58,13 @@ if($upload_type == 'files') {
 	  $prefix = basename($org_name,".$suffix");
 	  $files_name = clean_filename($prefix,$suffix);
 	  $target = "$destination/$files_name";
-	  $filetype = mime_content_type(realpath($target));
-	  $filesize = filesize(realpath($target));
+	  
+	  @move_uploaded_file($tmp_name, $target);
+
+		$filetype = mime_content_type(realpath($target));
+		$filesize = filesize(realpath($target));
 		fc_write_media_data_name($target,$filesize,$time,$filetype);
-		if(@move_uploaded_file($tmp_name, $target)) {
-			print ('Upload complete');
-		}
+
 	}
 }
 
