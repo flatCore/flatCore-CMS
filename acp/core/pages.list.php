@@ -7,7 +7,7 @@ $dbh = new PDO("sqlite:".CONTENT_DB);
 
 unset($result);
 /* $_SESSION[filter_string] was defined in inc.pages.php */
-$sql = "SELECT page_id, page_language, page_linkname, page_title, page_meta_description, page_sort, page_lastedit, page_lastedit_from, page_status, page_template, page_modul, page_authorized_users, page_permalink, page_redirect, page_redirect_code, page_labels
+$sql = "SELECT page_id, page_language, page_linkname, page_title, page_meta_description, page_sort, page_lastedit, page_lastedit_from, page_status, page_template, page_modul, page_authorized_users, page_permalink, page_redirect, page_redirect_code, page_labels, page_psw
 		FROM fc_pages
 		$_SESSION[filter_string]
 		ORDER BY page_language ASC, page_sort ASC, page_linkname ASC";
@@ -111,6 +111,12 @@ for($i=0;$i<$cnt_result;$i++) {
 		$show_template_name =  $lang['use_standard'];
 	} else {
 		$show_template_name = $page_template;
+	}
+	
+	$lock_icon = '';
+	if($result[$i]['page_psw'] != '') {
+		$lock_icon = '<span class="glyphicon glyphicon-lock text-muted"></span>';
+		$page_title = $lock_icon.' '.$page_title;
 	}
 	
 	if(strlen($page_description) > 100) {
@@ -277,6 +283,12 @@ for($i=0;$i<$cnt_result;$i++) {
 		$show_template_name =  "$lang[use_standard]";
 	} else {
 		$show_template_name = "$page_template";
+	}
+	
+	$lock_icon = '';
+	if($result[$i]['page_psw'] != '') {
+		$lock_icon = '<span class="glyphicon glyphicon-lock text-muted"></span>';
+		$page_title = $lock_icon.' '.$page_title;
 	}
 	
 	if($page_sort == 'portal') {

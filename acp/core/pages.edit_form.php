@@ -488,6 +488,24 @@ echo '</div>';
 echo '</div>';
 
 
+/* set or reset password */
+
+echo '<div class="form-group">';
+echo '<label>'.$lang['label_password'].'</label>';
+$placeholder = '';
+if($page_psw != '') {
+	echo '<input type="hidden" name="page_psw_relay" value="'.$page_psw.'">';
+	$placeholder = '*****';
+}
+echo '<input class="form-control" type="text" name="page_psw" value="" placeholder="'.$placeholder.'">';
+
+echo '<div class="checkbox"><label>';
+echo '<input type="checkbox" name="page_psw_reset" value="reset"> '.$lang['label_password_reset'];
+echo '</label></div>';
+
+echo '</div>';
+
+
 /* Select Usergroups */
 
 $arr_groups = get_all_groups();

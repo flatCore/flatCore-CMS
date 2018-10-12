@@ -57,7 +57,8 @@ $pdo_fields = array(
 	'page_modul_query' => 'STR',
 	'page_authorized_users' => 'STR',
 	'page_version' => 'STR',
-	'page_labels' => 'STR'
+	'page_labels' => 'STR',
+	'page_psw' => 'STR'
 );
 
 $pdo_fields_new = array(
@@ -91,7 +92,8 @@ $pdo_fields_new = array(
 	'page_modul_query' => 'STR',
 	'page_authorized_users' => 'STR',
 	'page_version' => 'STR',
-	'page_labels' => 'STR'
+	'page_labels' => 'STR',
+	'page_psw' => 'STR'
 );
 	
 $pdo_fields_cache = array(
@@ -127,7 +129,8 @@ $pdo_fields_cache = array(
 	'page_authorized_users' => 'STR',
 	'page_cache_type' => 'STR',
 	'page_version' => 'STR',
-	'page_labels' => 'STR'
+	'page_labels' => 'STR',
+	'page_psw' => 'STR'
 );
 
 
@@ -244,6 +247,18 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$string_authorized_admins = "";
 	}
 	
+	/* password */
+
+	if($_POST['page_psw'] != '') {
+		$page_psw = md5($_POST['page_psw']);
+	}
+	if($_POST['page_psw_relay'] != '' && $_POST['page_psw'] == '') {
+		$page_psw = $_POST['page_psw_relay'];
+	}
+	if($_POST['page_psw_reset'] == 'reset') {
+		$page_psw = '';
+	}
+	
 	/* labels */
 	$arr_labels = $_POST['set_page_labels'];
 	if(is_array($arr_labels)) {
@@ -290,6 +305,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$sth->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
 		$sth->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
 		$sth->bindParam(':page_thumbnail', $page_thumbnail, PDO::PARAM_STR);
+		$sth->bindParam(':page_psw', $page_psw, PDO::PARAM_STR);
 		
 		
 		$cnt_changes = $sth->execute();
@@ -329,6 +345,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$std->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
 		$sth->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
 		$sth->bindParam(':page_thumbnail', $page_thumbnail, PDO::PARAM_STR);
+		$sth->bindParam(':page_psw', $page_psw, PDO::PARAM_STR);
 		
 		$cnt_changes_c = $std->execute();
 	
@@ -358,6 +375,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$sth->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
 		$sth->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
 		$sth->bindParam(':page_thumbnail', $page_thumbnail, PDO::PARAM_STR);
+		$sth->bindParam(':page_psw', $page_psw, PDO::PARAM_STR);
 		
 		$cnt_changes = $sth->execute();
 		$editpage = $dbh->lastInsertId();
@@ -398,6 +416,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$sth->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
 		$sth->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
 		$sth->bindParam(':page_thumbnail', $page_thumbnail, PDO::PARAM_STR);
+		$sth->bindParam(':page_psw', $page_psw, PDO::PARAM_STR);
 		
 		$cnt_changes_c = $std->execute();
 	
@@ -432,6 +451,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$std->bindParam(':page_cache_type', $page_cache_type, PDO::PARAM_STR);
 		$std->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
 		$sth->bindParam(':page_thumbnail', $page_thumbnail, PDO::PARAM_STR);
+		$sth->bindParam(':page_psw', $page_psw, PDO::PARAM_STR);
 		
 		$cnt_changes_c = $std->execute();
 		

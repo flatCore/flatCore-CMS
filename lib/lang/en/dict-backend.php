@@ -281,6 +281,8 @@ $lang['missing_value'] = 'missing value';
 $lang['label_filename'] = 'Filename';
 $lang['label_content'] = 'Content';
 $lang['label_groups'] = 'Groups';
+$lang['label_password'] = 'Password';
+$lang['label_password_reset'] = 'Reset Password';
 
 $lang['label_ready_to_install'] = 'Ready to install';
 $lang['remember_me'] = 'Remember me';

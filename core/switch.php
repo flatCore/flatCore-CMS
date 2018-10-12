@@ -131,6 +131,39 @@ if($parsed_content != $page_content) {
 	$smarty->assign('page_content', $page_content);
 }
 
+/**
+ * check if page is protected
+ * if post psw, store md5 hash in session
+ * unset session via ?reset_page_psw
+ */
+
+if(isset($_POST['page_psw']) && $_POST['page_psw'] != '') {
+	if(md5($_POST['page_psw']) == $page_psw) {
+		$_SESSION['page_psw'] = md5($_POST['page_psw']);
+	}
+}
+
+if(isset($_GET['reset_page_psw'])) {
+	unset($_SESSION['page_psw']);
+}
+
+if($page_psw != '' && $_SESSION['page_psw'] != $page_psw) {
+	$formaction = FC_INC_DIR . '/'.$fct_slug;
+	$page_title = 'Password Protected Page';
+	$page_meta_robots = 'noindex';
+	
+	$smarty->assign('formaction', $formaction);
+	$smarty->assign('button_send', $lang['button_login']);
+	$smarty->assign('label_psw_protected_page', $lang['label_psw_protected_page']);
+	
+	$output = $smarty->fetch("page_psw_input.tpl");
+	$smarty->assign('page_content', $output);
+	$smarty->assign('extra_content', "");
+}
+
+
+
+
 
 $smarty->assign('page_title', $page_title);
 $smarty->assign('prefs_pagesglobalhead', $prefs_pagesglobalhead);

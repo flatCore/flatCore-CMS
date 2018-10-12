@@ -36,6 +36,7 @@ $lang['menu'] = 'Menü';
 $lang['label_login'] = "Login";
 $lang['label_psw'] = "Passwort";
 $lang['label_psw_repeat'] = "Passwort bestätigen";
+$lang['label_psw_protected_page'] = "Passwort geschützte Seite";
 $lang['label_username'] = "Benutzername";
 $lang['label_lastname'] = "Name";
 $lang['label_firstname'] = "Vorname";
