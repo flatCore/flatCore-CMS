@@ -31,19 +31,20 @@ if(isset($a) && (is_file("../modules/$sub/info.inc.php"))) {
 	$addon_mode = 'upload';
 	$active_modules = '';
 	$active_plugins = '';
-	$active_themes = '';	
+	$active_themes = '';
+	$active_upload = 'active';
 }
 
 if($sub == 'list' OR $sub == 'p' OR $sub == 'm' OR $sub == 't' OR $sub == 'u') {
 	echo '<div class="subHeader">';
 	echo '<div class="btn-group pull-right" role="group">';
-	echo '<a href="?tn=moduls&sub=u" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-upload"></span> '.$lang['btn_install'].'</a>';
+	echo '<a href="?tn=moduls&sub=u" class="btn btn-default '.$active_upload.'"><span class="glyphicon glyphicon-upload"></span> '.$lang['btn_install'].'</a>';
 	echo '</div>';
 	
 	echo '<div class="btn-group" role="group">';
-	echo '<a href="?tn=moduls&sub=m" class="btn btn-fc '.$active_modules.'">Module</a>';
-	echo '<a href="?tn=moduls&sub=p" class="btn btn-fc '.$active_plugins.'">Plugins</a>';
-	echo '<a href="?tn=moduls&sub=t" class="btn btn-fc '.$active_themes.'">Themes</a>';
+	echo '<a href="?tn=moduls&sub=m" class="btn btn-default '.$active_modules.'">Module</a>';
+	echo '<a href="?tn=moduls&sub=p" class="btn btn-default '.$active_plugins.'">Plugins</a>';
+	echo '<a href="?tn=moduls&sub=t" class="btn btn-default '.$active_themes.'">Themes</a>';
 	echo '</div>';
 	echo '</div>';
 }
