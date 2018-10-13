@@ -1,13 +1,11 @@
 <?php
 session_start();
 error_reporting(0);
-require('../config.php');
-require('../core/functions/func_userdata.php');
+require '../config.php';
+require '../core/functions/func_userdata.php';
+require '../lib/lang/'.$languagePack.'/dict-backend.php';
 
-$_SESSION['lang'] = "de";
-require("../lib/lang/$_SESSION[lang]/dict-backend.php");
-
-if($_POST['check'] == "Login") {
+if(isset($_POST['check']) && ($_POST['check'] == "Login")) {
 
 	$remember = false;
 	if(isset($_POST['remember_me'])) {
@@ -15,10 +13,7 @@ if($_POST['check'] == "Login") {
 	}
 		
 	fc_user_login($_POST['login_name'],$_POST['login_psw'],$acp=TRUE,$remember);
-
-	
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -26,6 +21,7 @@ if($_POST['check'] == "Login") {
 <head>
 	<meta charset="utf-8">
 	<title>Login <?php echo $_SERVER['SERVER_NAME']; ?></title>
+	<meta name="robots" content="noindex">
 	<link rel="stylesheet" href="../lib/css/bootstrap.min.css" type="text/css" media="screen, projection">
 
 	<style type="text/css">
@@ -52,19 +48,19 @@ if($_POST['check'] == "Login") {
 			<fieldset>
 				<legend>Login:</legend>	
 				<div class="form-group">
-					<label class="col-sm-2 control-label"><?php echo"$lang[f_user_nick]"; ?></label>
-					<div class="col-sm-10">
+					<label class="col-sm-3 control-label"><?php echo $lang['f_user_nick']; ?></label>
+					<div class="col-sm-9">
 						<input type="text" class="form-control" name="login_name" autofocus="autofocus">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label"><?php echo"$lang[f_user_psw]"; ?></label>
-					<div class="col-sm-10">
+					<label class="col-sm-3 control-label"><?php echo $lang['f_user_psw']; ?></label>
+					<div class="col-sm-9">
 						<input type="password" class="form-control" name="login_psw">
 					</div>
 				</div>
 			  <div class="form-group">
-			    <div class="col-sm-offset-2 col-sm-10">
+			    <div class="col-sm-offset-3 col-sm-9">
 			      <div class="checkbox">
 			        <label>
 			          <input type="checkbox" name="remember_me"> <?php echo $lang['remember_me']; ?>
@@ -73,7 +69,7 @@ if($_POST['check'] == "Login") {
 			    </div>
 			  </div>
 				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-10">
+					<div class="col-sm-offset-3 col-sm-9">
 						<input type="submit" class="btn btn-success" name="check" value="Login">
 					</div>
 				</div>
