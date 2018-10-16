@@ -92,7 +92,7 @@
 				</tr>
 				<tr>
 					<td class="text-right"><span class="glyphicon glyphicon-console" aria-hidden="true"></span></td>
-					<td><input type="text" class="form-control" name="bn" value="[image={basename}][/image]"></td>
+					<td><input type="text" class="form-control" name="bn" value="[{shortcode}={basename}][/{shortcode}]"></td>
 				</tr>
 				<tr>
 					<td class="text-right"></td>

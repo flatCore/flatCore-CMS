@@ -93,6 +93,41 @@ function fc_get_images_data($image,$parameters=NULL) {
 	
 }
 
+function fc_get_files_data($file,$parameters=NULL) {
+
+	global $fc_db_content;
+	global $fc_template;
+	global $languagePack;
+	
+	if($parameters !== NULL) {
+		$parameter = parse_str(html_entity_decode($parameters));
+	}
+	
+	$dbh = new PDO("sqlite:$fc_db_content");
+	$sql = "SELECT * FROM fc_media WHERE media_file LIKE :filename AND (media_lang = :lang OR media_lang = '' OR media_lang is null)";
+	$sth = $dbh->prepare($sql);
+	$sth->bindValue(':filename', "%$file%", PDO::PARAM_STR);
+	$sth->bindValue(':lang', "$languagePack", PDO::PARAM_STR);
+	$sth->execute();
+	$fileData = $sth->fetch(PDO::FETCH_ASSOC);
+	$dbh = null;
+	
+	$file_src = str_replace('../content/files/', '/content/files/', $fileData['media_file']);
+	$tpl = file_get_contents('./styles/'.$fc_template.'/templates/download.tpl');
+	$tpl = str_replace('{$file_src}', $file_src, $tpl);
+	$tpl = str_replace('{$file_title}', $fileData['media_title'], $tpl);
+	$tpl = str_replace('{$file_alt}', $fileData['media_alt'], $tpl);
+	$tpl = str_replace('{$file_caption}', $fileData['media_text'], $tpl);
+	$tpl = str_replace('{$file_license}', $fileData['media_license'], $tpl);
+	$tpl = str_replace('{$file_credits}', $fileData['media_credits'], $tpl);
+	$tpl = str_replace('{$file_priority}', $fileData['media_priority'], $tpl);
+	$tpl = str_replace('{$file_link_class}', $aclass, $tpl);
+	$tpl = str_replace('{$file_class}', $iclass, $tpl);
+	
+	return $tpl;
+	
+}
+
 
 function fc_global_mod_snippets($mod,$params=NULL) {
 
@@ -182,7 +217,15 @@ function text_parser($text) {
 	    },
 	    $text
 	);
-		
+
+	$text = preg_replace_callback(
+	    '/\[file=(.*?)\](.*?)\[\/file\]/si',
+	    function ($m) {
+		   return fc_get_files_data($m[1],$m[2]);
+	    },
+	    $text
+	);
+			
 	$text = preg_replace_callback(
 	    '/\[mod=(.*?)\](.*?)\[\/mod\]/si',
 	    function ($m) {

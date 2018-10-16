@@ -212,15 +212,27 @@ hr.shadow:after {
 }
 
 
-.image-container {
+.image-container,
+.download-container {
 	background: rgba(255,255,255,0.5);
 	padding: 10px;
+	margin-bottom: 10px;
 	border-radius: 5px;
+	
+	.image-caption,
+	.download-caption {
+		padding: 5px 0;
+		color: #888;
+	}
 }
 
-.image-container > .image-caption {
-	padding: 5px 0;
-	color: #888;
+.download-link {
+	&:hover {
+		text-decoration: none;
+		.download-container {
+			background: rgba(255,255,255,0.7);
+		}
+	}
 }
 
 

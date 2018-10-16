@@ -54,7 +54,6 @@ if($_SESSION['sort_by'] == 'media_lastedit') {
 } else if($_SESSION['sort_by'] == 'media_file') {
 	$check_name = 'active';	
 } else {
-
 	$check_size = 'active';
 }
 

@@ -1,19 +1,18 @@
 <?php
-
 session_start();
 error_reporting(0);
 
-require("../../config.php");
+require '../../config.php';
 
 define("CONTENT_DB", "../../$fc_db_content");
 define("FC_ROOT", str_replace("/acp","",FC_INC_DIR));
 define("IMAGES_FOLDER", "../$img_path");
 define("FILES_FOLDER", "../$files_path");
 
-require_once('access.php');
-require_once('functions.php');
-require_once('database.php');
-require('../../lib/lang/'.$_SESSION['lang'].'/dict-backend.php');
+require_once 'access.php';
+require_once 'functions.php';
+require_once 'database.php';
+require '../../lib/lang/'.$_SESSION['lang'].'/dict-backend.php';
 
 $set_lang = $_SESSION['lang'];
 if(isset($_REQUEST['set_lang'])) {
@@ -24,16 +23,17 @@ $form_tpl = file_get_contents('../templates/media-edit-form.tpl');
 
 if(isset($_REQUEST['file'])) {
 	$media_filename = strip_tags($_REQUEST['file']);
-		
-	if($_REQUEST['folder'] == "2") {
+	if(stripos($_REQUEST['file'],"$files_path") !== FALSE) {
 		$preview_src = '<p>Filetype: '.substr(strrchr($media_filename, "."), 1).'</p>';
 		$realpath = $media_filename;
 		$img_dimensions = '';
+		$shortcode = 'file';
 	} else {
 		$preview_src = '<img src="'. $media_filename.'" class="img-responsive">';
 		$realpath = $media_filename;
 		list($img_width, $img_height) = getimagesize("../$media_filename");
 		$img_dimensions = ' | '.$img_width.' x '.$img_height.' px';
+		$shortcode = 'image';
 	}	
 }
 
@@ -103,6 +103,7 @@ $form_tpl = str_replace('{save}', $lang['save'], $form_tpl);
 $form_tpl = str_replace('{set_lang}', $set_lang, $form_tpl);
 $form_tpl = str_replace('{filesize}', $filesize, $form_tpl);
 $form_tpl = str_replace('{lang_switch}', $langSwitch, $form_tpl);
+$form_tpl = str_replace('{shortcode}', $shortcode, $form_tpl);
 $form_tpl = str_replace('{token}',$_SESSION['token'],$form_tpl);
 echo $form_tpl;
 
