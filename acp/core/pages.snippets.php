@@ -1,15 +1,32 @@
 <?php
 
 //prohibit unauthorized access
-require("core/access.php");
-
-$system_snippets = array('footer_text', 'extra_content_text', 'agreement_text', 'account_confirm', 'account_confirm_mail', 'no_access');
+require 'core/access.php';
+$system_snippets_str = "'footer_text', 'extra_content_text', 'agreement_text', 'account_confirm', 'account_confirm_mail', 'no_access'";
+$system_snippets = explode(',',$system_snippets_str);
 $modus = 'new';
 
 
 if(isset($_REQUEST['suggest_name'])) {
 	$textlib_name = clean_filename($_REQUEST['suggest_name']);
 }
+
+if(isset($_REQUEST['type'])) {
+	if($_REQUEST['type'] == '1') {
+		$_SESSION['type'] = 'all';
+	} else if($_REQUEST['type'] == '2') {
+		$_SESSION['type'] = 'system';
+	} else if($_REQUEST['type'] == '3') {
+		$_SESSION['type'] = 'own';
+	}
+}
+
+if(empty($_SESSION['type'])) {
+	$_SESSION['type'] = 'all';
+}
+
+${'active_'.$_SESSION['type']} = 'active';
+
 
 /**
  * delete snippet
@@ -21,7 +38,7 @@ if(isset($_POST['delete_snippet'])) {
 
 	$dbh = new PDO("sqlite:".CONTENT_DB);
 	$sql = "DELETE FROM fc_textlib WHERE textlib_id = $delete_snip_id";
-  $cnt_changes = $dbh->exec($sql);
+	$cnt_changes = $dbh->exec($sql);
 
 	if($cnt_changes > 0){
 		$sys_message = '{OKAY} '. $lang['db_changed'];
@@ -97,9 +114,19 @@ if(isset($_POST['save_snippet'])) {
  * get all saved snippets
  */
 
+$sql_where = "WHERE textlib_id > 0";
+
+if($_SESSION['type'] == 'all') {
+	$sql_where = '';
+} else if($_SESSION['type'] == 'system') {
+	$sql_where = "WHERE textlib_name IN($system_snippets_str)";
+} else if($_SESSION['type'] == 'own') {
+	$sql_where = "WHERE textlib_name NOT IN($system_snippets_str)";
+}
+
 $dbh = new PDO("sqlite:".CONTENT_DB);
 
-$sql = "SELECT * FROM fc_textlib ORDER BY textlib_name ASC";
+$sql = "SELECT * FROM fc_textlib $sql_where ORDER BY textlib_name ASC";
 
 foreach($system_snippets as $snippet) {
 	$snippet_exception[] = " textlib_name != '$snippet' ";
@@ -140,8 +167,19 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	$modus = 'update';
 }
 
+
+
 echo '<div class="app-container">';
 echo '<h3>' . $lang['snippets'] . '</h3>';
+
+echo '<div class="well well-sm">';
+echo '<div class="btn-group" role="group">';
+echo '<a class="btn btn-default '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle</a>';
+echo '<a class="btn btn-default '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System</a>';
+echo '<a class="btn btn-default '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene</a>';
+echo '</div>';
+echo '</div>';
+
 echo '<div class="row">';
 echo '<div class="col-md-3">';
 
@@ -194,9 +232,20 @@ echo "<form action='acp.php?tn=pages&sub=snippets' method='POST'>";
 
 
 echo '<div class="row">';
-echo '<div class="col-md-9">';
+echo '<div class="col-md-8">';
+
+echo '<div class="well well-sm">';
+
+echo '<div class="form-group text-right">';
+echo '<div class="btn-group" data-toggle="buttons">';
+echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE1"> WYSIWYG</label>';
+echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE2"> Text</label>';
+echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE3"> Code</label>';
+echo '</div>';
+echo '</div>';
 
 echo '<textarea class="form-control mceEditor switchEditor" id="textEditor" name="textlib_content">'.$textlib_content.'</textarea>';
+echo '</div>';
 echo '<input type="hidden" name="text" value="'.$text.'">';
 
 if($get_snip_name_editor != '') {
@@ -207,16 +256,11 @@ if($get_snip_name_editor != '') {
 }
 
 echo '</div>';
-echo '<div class="col-md-3">';
+echo '<div class="col-md-4">';
 /* info col */
 echo '<div class="well well-sm">';
-echo '<div class="form-group">';
-echo '<div class="btn-group btn-group-justified" data-toggle="buttons">';
-echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE1"> WYSIWYG</label>';
-echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE2"> Text</label>';
-echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE3"> Code</label>';
-echo '</div>';
-echo '</div>';
+
+
 
 echo '<div class="form-group">';
 echo '<label>'.$lang['filename'].' <small>(a-z,0-9)</small></label>';
