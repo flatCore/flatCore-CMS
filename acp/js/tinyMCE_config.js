@@ -56,7 +56,7 @@ $(function() {
 		],
 	  fontsize_formats : "10px 12px 13px 14px 16px 18px 20px",
 		width : "100%",
-		height : "480",
+		height : 480,
 		remove_script_host : true,
 		rel_list: [
 			{title: 'Keine', value: ''},
@@ -127,7 +127,7 @@ $(function() {
 		],
 	  fontsize_formats : "10px 12px 13px 14px 16px 18px 20px",
 		width : "100%",
-		height : "350",
+		height : 350,
 		remove_script_host : true,
 		extended_valid_elements : "textarea[cols|rows|disabled|name|readonly|class]",
 		visual : true,

@@ -140,7 +140,7 @@ if(isset($set_acptheme)) {
 		<script type="text/javascript">
 			var languagePack = "<?php echo $languagePack; ?>";
 			var ace_theme = 'twilight';
-			var tinymce_skin = 'tundora';		
+			var tinymce_skin = 'oxide-dark';		
 		</script>
 		
 		<?php
