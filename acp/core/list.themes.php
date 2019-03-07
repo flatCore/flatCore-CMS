@@ -110,7 +110,7 @@ echo '</div>';
 echo '<div class="col-md-3">';
 
 if(is_file("../styles/$prefs_template/images/preview.png")) {
-	echo '<img src="../styles/'.$prefs_template.'/images/preview.png" class="img-responsive img-rounded">';
+	echo '<img src="../styles/'.$prefs_template.'/images/preview.png" class="img-fluid img-rounded">';
 }
 
 echo '<table class="table table-condensed">';

@@ -22,7 +22,7 @@ if(isset($_POST['check']) && ($_POST['check'] == "Login")) {
 	<meta charset="utf-8">
 	<title>Login <?php echo $_SERVER['SERVER_NAME']; ?></title>
 	<meta name="robots" content="noindex">
-	<link rel="stylesheet" href="../lib/css/bootstrap.min.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="screen, projection">
 
 	<style type="text/css">
 		#center {

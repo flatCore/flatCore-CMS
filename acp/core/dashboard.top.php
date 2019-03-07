@@ -56,13 +56,18 @@ for($i=0;$i<$cnt_user;$i++) {
 		if($user_result[$i]['user_class'] == "deleted"){
 			$user_nick = "<strike>$user_nick</strike>";
 		}
-		$user_latest5 .= '<dt>'.$user_registerdate.'</dt>';
-		$user_latest5 .=  "<dd><a href='acp.php?tn=user&sub=edit&edituser=$user_id' title='$lang[edit_user]'>$user_nick</a> <small>$user_name</small></dd>"; 
+		$user_latest5 .= '<a href="acp.php?tn=user&sub=edit&edituser='.$user_id.'" class="list-group-item list-group-item-ghost list-group-item-action flex-column align-items-start">';
+		$user_latest5 .= '<div class="d-flex w-100 justify-content-between">';
+		$user_latest5 .= '<h6 class="mb-1">'.$user_nick.'</h6>';
+		$user_latest5 .= '<small>'.$user_registerdate.'</small>';
+		$user_latest5 .= '</div>';
+		$user_latest5 .= '<small>'.$user_name.'</small>';
+		$user_latest5 .= '</a>';
 	}
 
-} // eol $i
+}
 
-$user_latest5 = '<dl class="dl-horizontal dl-dates">'.$user_latest5.'</dl>';
+$user_latest5 = '<div class="list-group list-group-flush">'.$user_latest5.'</div>';
 
 $cnt_verified_per = round($cnt_verified*100/$cnt_user);
 $cnt_paused_per = round($cnt_paused*100/$cnt_user);
@@ -113,55 +118,95 @@ for($i=0;$i<$cnt_pages;$i++) {
 		$last_edit = @date("d.m.Y",$allPages[$i]['page_lastedit']);
 		$page_linkname = $allPages[$i]['page_linkname'];
 		$page_title = first_words($allPages[$i]['page_title'],4);
-	
-		$top5pages .= '<dt>'.$last_edit.'</dt>';
-		$top5pages .= "<dd><a href='acp.php?tn=pages&sub=edit&editpage=$page_id' title='$lang[page_edit]'>$page_linkname</a> <small>$page_title</small></dd>"; 
+
+		
+		$top5pages .= '<a href="acp.php?tn=pages&sub=edit&editpage='.$allPages[$i]['page_id'].'" class="list-group-item list-group-item-ghost list-group-item-action flex-column align-items-start">';
+		$top5pages .= '<div class="d-flex w-100 justify-content-between">';
+		$top5pages .= '<h6 class="mb-1">'.$page_linkname.'</h6>';
+		$top5pages .= '<small>'.$last_edit.'</small>';
+		$top5pages .= '</div>';
+		$top5pages .= '<small>'.$page_title.'</small>';
+		$top5pages .= '</a>'; 
 	}
 	
 } // eol $i
 
-$top5pages = '<dl class="dl-horizontal dl-dates">'.$top5pages.'</dl>';
+$top5pages = '<div class="list-group list-group-flush">'.$top5pages.'</div>';
 
 $cnt_public_per = round($cnt_public*100/$cnt_pages);
 $cnt_draft_per = round($cnt_draft*100/$cnt_pages);
 $cnt_ghost_per = round($cnt_ghost*100/$cnt_pages);
 $cnt_private_per = round($cnt_private*100/$cnt_pages);
 
-echo'<div class="row">';
-echo '<div class="hidden-xs col-sm-4 col-lg-3">';
+echo'<div class="card-deck mb-1">';
 
-echo '<div class="panel panel-default">';
-echo '<div class="panel-heading">'.$lang['db_user'].' <span class="badge pull-right">'.$cnt_user.'</span></div>';
-echo '<div class="panel-body equal" data-mh="panel-body-group">';
+echo '<div class="card">';
+echo '<div class="card-header">'.$lang['db_user'].' <span class="badge badge-light float-right">'.$cnt_user.'</span></div>';
+echo '<div class="card-body">';
 echo '<div class="row">';
 echo '<div class="col-lg-12">';
 
+echo '<p class="mb-0">'.$lang['f_user_select_verified'].'</p>';
+echo '<div class="progress mb-2">';
+echo '<div class="progress-bar" role="progressbar" style="width: '.$cnt_verified_per.'%;" aria-valuenow="'.$cnt_verified_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_verified.'</div>';
+echo '</div>';
 
+echo '<p class="mb-0">'.$lang['f_user_select_waiting'].'</p>';
+echo '<div class="progress mb-2">';
+echo '<div class="progress-bar" role="progressbar" style="width: '.$cnt_waiting_per.'%;" aria-valuenow="'.$cnt_waiting_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_waiting.'</div>';
+echo '</div>';
+
+echo '<p class="mb-0">'.$lang['f_user_select_paused'].'</p>';
+echo '<div class="progress mb-2">';
+echo '<div class="progress-bar" role="progressbar" style="width: '.$cnt_paused_per.'%;" aria-valuenow="'.$cnt_paused_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_paused.'</div>';
+echo '</div>';
+
+echo '<p class="mb-0">'.$lang['f_user_select_deleted'].'</p>';
+echo '<div class="progress mb-2">';
+echo '<div class="progress-bar" role="progressbar" style="width: '.$cnt_deleted_per.'%;" aria-valuenow="'.$cnt_deleted_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_deleted.'</div>';
+echo '</div>';
     
-echo '<div class="charts">';
-echo '<div class="chart">';
 
-echo '<ul class="chart-hor">';
-echo '<li>
-        	<div class="chart_bar chart_bar_verified" data-skill="'.$cnt_verified_per.'" title="'.$lang['f_user_select_verified'].'"></div>
-        	<span class="chart_label">'.$lang['f_user_select_verified'].' ('.$cnt_verified.')</span>
-      </li>';
-echo '<li>
-        	<div class="chart_bar chart_bar_queue" data-skill="'.$cnt_waiting_per.'" title="'.$lang['f_user_select_waiting'].'"></div>
-        	<span class="chart_label">'.$lang['f_user_select_waiting'].' ('.$cnt_waiting.')</span>
-      </li>';
-echo '<li>
-        	<div class="chart_bar chart_bar_banned" data-skill="'.$cnt_paused_per.'" title="'.$lang['f_user_select_paused'].'"></div>
-        	<span class="chart_label">'.$lang['f_user_select_paused'].' ('.$cnt_paused.')</span>
-        </li>';
-echo '<li>
-        	<div class="chart_bar chart_bar_deleted" data-skill="'.$cnt_deleted_per.'" title="'.$lang['f_user_select_deleted'].'"></div>
-        	<span class="chart_label">'.$lang['f_user_select_deleted'].' ('.$cnt_deleted.')</span>
-        </li>';
-echo '</ul>';
+
 
 echo '</div>';
 
+echo '</div>'; // row
+echo '</div>';
+echo '</div>';
+
+echo '<div class="card">';
+echo '<div class="card-header">'.$lang['h_latest_user'].'</div>';
+echo $user_latest5;
+echo '</div>';
+
+
+echo '<div class="card">';
+echo '<div class="card-header">'.$lang['tn_pages'].' <span class="badge badge-light float-right">'.$cnt_pages.'</span></div>';
+echo '<div class="card-body equal" data-mh="panel-body-group">';
+echo '<div class="row">';
+
+
+echo '<div class="col-lg-12">';
+
+echo '<p class="mb-0">'.$lang['f_page_status_puplic'].'</p>';
+echo '<div class="progress mb-2">';
+echo '<div class="progress-bar" role="progressbar" style="width: '.$cnt_public_per.'%;" aria-valuenow="'.$cnt_public_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_public.'</div>';
+echo '</div>';
+
+echo '<p class="mb-0">'.$lang['f_page_status_ghost'].'</p>';
+echo '<div class="progress mb-2">';
+echo '<div class="progress-bar" role="progressbar" style="width: '.$cnt_ghost_per.'%;" aria-valuenow="'.$cnt_ghost_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_ghost.'</div>';
+echo '</div>';
+
+echo '<p class="mb-0">'.$lang['f_page_status_private'].'</p>';
+echo '<div class="progress mb-2">';
+echo '<div class="progress-bar" role="progressbar" style="width: '.$cnt_private_per.'%;" aria-valuenow="'.$cnt_private_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_private.'</div>';
+echo '</div>';
+
+echo '<p class="mb-0">'.$lang['f_page_status_draft'].'</p>';
+echo '<div class="progress mb-2">';
+echo '<div class="progress-bar" role="progressbar" style="width: '.$cnt_draft_per.'%;" aria-valuenow="'.$cnt_draft_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_draft.'</div>';
 echo '</div>';
 
 
@@ -171,70 +216,12 @@ echo '</div>'; // row
 echo '</div>';
 echo '</div>';
 
-echo"</div>";
-echo '<div class="col-xs-12 col-sm-8 col-lg-3">';
 
-echo '<div class="panel panel-default">';
-echo '<div class="panel-heading">'.$lang['h_latest_user'].'</div>';
-echo '<div class="panel-body equal" data-mh="panel-body-group">';
-echo"$user_latest5";
-echo '</div>';
+echo '<div class="card">';
+echo '<div class="card-header">'.$lang['h_last_edit'].'</div>';
+echo $top5pages;
 echo '</div>';
 
-echo"</div>";
-echo '<div class="hidden-xs col-sm-4 col-lg-3">';
-
-echo '<div class="panel panel-default">';
-echo '<div class="panel-heading">'.$lang['tn_pages'].' <span class="badge pull-right">'.$cnt_pages.'</span></div>';
-echo '<div class="panel-body equal" data-mh="panel-body-group">';
-echo '<div class="row">';
-
-
-echo '<div class="col-lg-12">';
-
-
-    
-echo '<div class="charts">';
-echo '<div class="chart">';
-
-echo '<ul class="chart-hor">';
-echo '<li>
-        	<div class="chart_bar chart_bar_public" data-skill="'.$cnt_public_per.'" title="'.$lang['f_page_status_puplic'].'"></div>
-        	<span class="chart_label">'.$lang['f_page_status_puplic'].' ('.$cnt_public.')</span>
-      </li>';
-echo '<li>
-        	<div class="chart_bar chart_bar_ghost" data-skill="'.$cnt_ghost_per.'" title="'.$lang['f_page_status_ghost'].'"></div>
-        	<span class="chart_label">'.$lang['f_page_status_ghost'].' ('.$cnt_ghost.')</span>
-        </li>';
-echo '<li>
-        	<div class="chart_bar chart_bar_private" data-skill="'.$cnt_private_per.'" title="'.$lang['f_page_status_private'].'"></div>
-        	<span class="chart_label">'.$lang['f_page_status_private'].' ('.$cnt_private.')</span>
-        </li>';
-echo '<li>
-        	<div class="chart_bar chart_bar_draft" data-skill="'.$cnt_draft_per.'" title="'.$lang['f_page_status_draft'].'"></div>
-        	<span class="chart_label">'.$lang['f_page_status_draft'].' ('.$cnt_draft.')</span>        	
-      </li>';
-echo '</ul>';
-echo '</div>';
-echo '</div>';
-
-echo '</div>';
-
-echo '</div>'; // row
-echo '</div>';
-echo '</div>';
-
-echo"</div>";
-echo '<div class="col-xs-12 col-sm-8 col-lg-3">';
-
-echo '<div class="panel panel-default">';
-echo '<div class="panel-heading">'.$lang['h_last_edit'].'</div>';
-echo '<div class="panel-body equal" data-mh="panel-body-group">';
-echo"$top5pages";
-echo '</div>';
-echo '</div>';
-
-echo"</div>";
 
 echo'</div>'; // row
 

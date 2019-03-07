@@ -101,9 +101,9 @@ $radio_field_type = "
 
 echo tpl_form_control_group('','',$radio_field_type);
 
-echo"<div class='formfooter'>";
-echo"<input type='submit' class='btn btn-success' name='add_field' value='$lang[save]'>";
-echo"</div>";
+echo '<hr>';
+echo '<input type="submit" class="btn btn-dark text-success" name="add_field" value="'.$lang['save'].'">';
+
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
@@ -128,7 +128,7 @@ if($cnt_result < 1) {
 } else {
 	echo '<div class="alert">' . $lang['delete_custom_field_desc'] . '</div>';
 
-	$select_del_field = '<select name="del_field" class="form-control">';
+	$select_del_field = '<select name="del_field" class="form-control custom-select">';
 	for($i=0;$i<$cnt_result;$i++) {
 		if(substr($result[$i],0,7) == "custom_") {
 			$select_del_field .=  "<option value='$result[$i]'>" . $result[$i] . "</option>";
@@ -139,10 +139,9 @@ if($cnt_result < 1) {
 echo tpl_form_control_group('',$lang['custom_field_name'],$select_del_field);
 
 //submit form to save data
-echo"<div class='formfooter'>";
-echo"<input type='submit' class='btn btn-danger' name='delete_field' value='$lang[delete]'>";
+echo '<input type="submit" class="btn btn-dark text-danger" name="delete_field" value="'.$lang['delete'].'">';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
-echo"</div>";
+
 }
 
 echo '</form>';

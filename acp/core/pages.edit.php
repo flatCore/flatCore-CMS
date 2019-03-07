@@ -430,7 +430,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 	 							
 	if($modus == "preview") {
 		
-		$page_id_original = "$editpage";
+		$page_id_original = $editpage;
 		$page_cache_type = "preview";
 				
 		$sql = generate_sql_insert_str($pdo_fields_cache,"fc_pages_cache");					
@@ -450,8 +450,6 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$std->bindParam(':page_version', $page_version, PDO::PARAM_INT);
 		$std->bindParam(':page_cache_type', $page_cache_type, PDO::PARAM_STR);
 		$std->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
-		$sth->bindParam(':page_thumbnail', $page_thumbnail, PDO::PARAM_STR);
-		$sth->bindParam(':page_psw', $page_psw, PDO::PARAM_STR);
 		
 		$cnt_changes_c = $std->execute();
 		
@@ -511,15 +509,15 @@ if(is_numeric($editpage)) {
 	
 	$form_title = '<h3>'.$lang['h_modus_editpage'].' - <small>'.$page_title.' (Version: '.$page_version.' ID: '.$editpage.')</small></h3>';
 	//set submit button
-	$submit_button = "<input type='submit' class='btn btn-success' name='save_the_page' value='$lang[update_page]'>";
+	$submit_button = "<input type='submit' class='btn btn-dark text-success w-100' name='save_the_page' value='$lang[update_page]'>";
 	$delete_button = "<hr><input type='submit' class='btn btn-danger btn-sm btn-block' name='delete_the_page' value='$lang[delete_page]' onclick=\"return confirm('$lang[confirm_delete_data]')\">";
-	$previev_button = "<input type='submit' class='btn btn-default' id='preview_the_page' name='preview_the_page' value='$lang[preview]'>";
+	$previev_button = "<input type='submit' class='btn btn-dark w-100' id='preview_the_page' name='preview_the_page' value='$lang[preview]'>";
 	
 	if($modus == 'duplicate') {
 		$form_title = '<h3>'.$lang['h_modus_duplicate'].' - '.$page_title.'</h3>';
-		$submit_button = "<input type='submit' class='btn btn-success' name='save_the_page' value='$lang[save_duplicate]'>";
+		$submit_button = "<input type='submit' class='btn btn-dark text-success w-100 btn-outline-success' name='save_the_page' value='$lang[save_duplicate]'>";
 		$delete_button = '';
-		$previev_button = "<input type='submit' class='btn btn-default btn-block disabled' id='preview_the_page' name='preview_the_page' value='$lang[preview]'>";
+		$previev_button = '';
 	}
 	
 } else {
@@ -528,9 +526,9 @@ if(is_numeric($editpage)) {
 	
 	$form_title = '<h3>'.$lang['h_modus_newpage'].'</h3>';
 	//set submit button
-	$submit_button = "<input type='submit' class='btn btn-success' name='save_the_page' value='$lang[save_new_page]'>";
-	$delete_button = "";
-	$previev_button = "<input type='submit' class='btn btn-default btn-block disabled' id='preview_the_page' name='preview_the_page' value='$lang[preview]'>";
+	$submit_button = "<input type='submit' class='btn btn-dark text-success btn-block' name='save_the_page' value='$lang[save_new_page]'>";
+	$delete_button = '';
+	$previev_button = '';
 }
 
 echo $form_title;
@@ -643,7 +641,7 @@ if($show_form == "true" AND $sub != "new") {
 					<td width='100'>$time</td>
 					<td>" . $cache_result[$i]['page_title'] . "</td>
 					<td> " . $cache_result[$i]['page_lastedit_from'] . "</td>
-					<td width='100' align='right'><a class='btn btn-default btn-sm' href='acp.php?tn=pages&sub=edit&restore_id=$page_id&editpage=$editpage'>$lang[edit]</a></td>
+					<td width='100' align='right'><a class='btn btn-light btn-sm' href='acp.php?tn=pages&sub=edit&restore_id=$page_id&editpage=$editpage'>$lang[edit]</a></td>
 				</tr>";
 	}
 	

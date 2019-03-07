@@ -29,7 +29,7 @@ if(isset($_REQUEST['file'])) {
 		$img_dimensions = '';
 		$shortcode = 'file';
 	} else {
-		$preview_src = '<img src="'. $media_filename.'" class="img-responsive">';
+		$preview_src = '<img src="'. $media_filename.'" class="img-fluid">';
 		$realpath = $media_filename;
 		list($img_width, $img_height) = getimagesize("../$media_filename");
 		$img_dimensions = ' | '.$img_width.' x '.$img_height.' px';
@@ -61,7 +61,7 @@ $langSwitch = '<div class="btn-group" role="group">';
 foreach($arr_lang as $langs) {
 	$btn_status = '';
 	if($langs['lang_sign'] == "$set_lang") { $btn_status = 'active'; }
-	$langSwitch .= '<a data-fancybox data-type="ajax" class="btn btn-default btn-sm '.$btn_status.'" data-src="../acp/core/ajax.media.php?file='.$media_filename.'&folder='.$_REQUEST['folder'].'&set_lang='.$langs['lang_sign'].'" href="javascript:;">'.$langs['lang_sign'].'</a>';
+	$langSwitch .= '<a data-fancybox data-type="ajax" class="btn btn-light btn-sm '.$btn_status.'" data-src="../acp/core/ajax.media.php?file='.$media_filename.'&folder='.$_REQUEST['folder'].'&set_lang='.$langs['lang_sign'].'" href="javascript:;">'.$langs['lang_sign'].'</a>';
 }
 $langSwitch .= '</div>';
 

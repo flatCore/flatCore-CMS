@@ -1,0 +1,67 @@
+/* fieldset */
+
+
+fieldset {
+	padding: 30px 10px 10px 10px;
+	margin: 15px 0 25px 0;
+	border: 1px solid darken(@widget_background,10);
+	background: @widget_background;
+	border-radius: 4px;
+	position: relative;
+}
+
+fieldset legend {
+ 	position:absolute;
+	left: 5px;
+	top: 10px;
+	width: auto;
+	padding: 7px 15px;
+	margin: -25px 10px 0 10px;
+	background: @widget_background;
+	color: @light_color;
+	font-size: 15px;
+	line-height: 14px;
+	border-radius: 3px;
+	border-left: 1px solid darken(@widget_background,10);
+	border-right: 1px solid darken(@widget_background,10);
+}
+
+
+textarea.form-control,
+input.form-control,
+input.form-control[readonly],
+select.form-control,
+.bootstrap-tagsinput {
+	background: #111;
+	color: @brand_color;
+	border-color: @dark_brand;
+	&:focus {
+		background: @dark_brand;
+		color: @brand_color;
+	}
+}
+
+input.form-control[readonly] {
+	color: #aaa;
+}
+
+.input-group-text {
+	border-color: @dark_brand;
+	background: #111;
+	color: @light_color;
+}
+
+
+#CSSeditor,
+#HTMLeditor,
+.form-control {
+	border: 1px solid #222 !important;
+}
+
+.mce-panel {
+	border-color: #111;
+}
+
+.custom-select {
+	background: #111 url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='white' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px !important;
+}

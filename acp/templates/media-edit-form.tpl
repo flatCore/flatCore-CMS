@@ -72,7 +72,7 @@
 			</form>
 		</div>
 		<div class="col-md-4">
-			<h4>{filename}</h4>
+			<h4 class="small">{filename}</h4>
 			<div class="well well-sm">
 				{preview}	
 			</div>

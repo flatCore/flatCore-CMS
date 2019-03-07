@@ -1,0 +1,29 @@
+.card {
+	background: @widget_background;
+	color: @light_color;
+	
+	.card-header {
+		background: darken(@widget_background,2);
+	}
+
+	.card-header-tabs {
+		border-bottom: 1px solid #111;
+		li {
+			.nav-link {
+				color: #eee;
+				&:hover {
+					border-color: @dark_brand;
+					border-bottom-color: #111;
+					background: #151515;
+				}
+			}
+			.active,
+			.active:hover {
+				background: #111;
+				border-color: #111;
+				color: @brand_color;
+			}
+		}
+	}
+
+}

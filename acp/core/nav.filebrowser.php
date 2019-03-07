@@ -5,6 +5,11 @@ if($sub == '') {
 	$sub = 'browse';
 }
 
-echo '<a class="sidebar-nav '.($sub == "browse" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=filebrowser&sub=browse">'.$lang['manage_files'].'<span class="tri-left"></span></a>';
-echo '<a class="sidebar-nav" data-toggle="modal" data-target="#uploadModal" href="#">'.$lang['go_to_upload'].'</a>';
+echo '<ul class="nav">';
+
+echo '<li><a class="sidebar-nav '.($sub == "browse" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=filebrowser&sub=browse">'.$icon['folder_open'].' '.$lang['manage_files'].'</a></li>';
+echo '<li><a class="sidebar-nav" data-toggle="modal" data-target="#uploadModal" href="#">'.$icon['upload'].' '.$lang['go_to_upload'].'</a></li>';
+
+echo '</ul>';
+
 ?>

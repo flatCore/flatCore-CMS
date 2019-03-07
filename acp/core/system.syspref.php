@@ -345,7 +345,15 @@ if(isset($_POST)) {
 	}
 }
 
+
+/* forms */
+
+echo '<div class="row">';
+echo '<div class="col-md-9">';
+
 /* descriptions */
+echo '<div id="descriptions" class="pt-2"></div>';
+
 echo '<fieldset>';
 echo '<legend>'.$lang['f_prefs_descriptions'].'</legend>';
 echo '<form action="acp.php?tn=system&sub=sys_pref" method="POST" class="form-horizontal">';
@@ -364,15 +372,22 @@ echo tpl_form_control_group('',$lang['f_prefs_pagedescription'],$prefs_pagedescr
 
 echo '<hr>';
 
-$prefs_publisher_input = '<input class="form-control" type="text" name="prefs_default_publisher" value="'.$prefs_default_publisher.'">';
-echo tpl_form_control_group('',$lang['f_prefs_default_publisher'],$prefs_publisher_input);
-
-$toggle_btn_publisher  = '<div class="make-switch" data-on="success" data-on-label="'.$lang['yes'].'" data-off-label="'.$lang['no'].'">';
+$toggle_btn_publisher  = '<div class="input-group-append">';
+$toggle_btn_publisher .= '<span class="input-group-text">'.$lang['f_prefs_publisher_mode'].'</span>';
+$toggle_btn_publisher .= '<div class="input-group-text">';
 $toggle_btn_publisher .= '<input type="checkbox" name="prefs_publisher_mode" '.($prefs_publisher_mode == "overwrite" ? 'checked' :'').'>';
 $toggle_btn_publisher .= '</div>';
-echo tpl_form_control_group('',$lang['f_prefs_publisher_mode'],$toggle_btn_publisher);
+$toggle_btn_publisher .= '</div>';
 
-echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_descriptions' value='$lang[save]'>");
+$prefs_publisher_input  = '<div class="input-group">';
+$prefs_publisher_input .= '<input class="form-control" type="text" name="prefs_default_publisher" value="'.$prefs_default_publisher.'">';
+$prefs_publisher_input .= $toggle_btn_publisher;
+$prefs_publisher_input .= '</div>';
+
+echo tpl_form_control_group('',$lang['f_prefs_default_publisher'],$prefs_publisher_input);
+
+
+echo tpl_form_control_group('','',"<input type='submit' class='btn btn-dark text-success' name='save_prefs_descriptions' value='$lang[save]'>");
 
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
@@ -380,11 +395,13 @@ echo '</fieldset>';
 
 
 /* default Thumbnail */
+echo '<div id="thumbnail" class="pt-2"></div>';
+
 echo '<fieldset>';
 echo '<legend>'.$lang['page_thumbnail_default'].'</legend>';
 echo '<form action="acp.php?tn=system&sub=sys_pref" method="POST" class="form-horizontal">';
 
-$select_prefs_thumbnail  = '<select name="prefs_pagethumbnail" class="form-control">';
+$select_prefs_thumbnail  = '<select name="prefs_pagethumbnail" class="form-control custom-select">';
 $select_prefs_thumbnail .= '<option value="">'.$lang['page_thumbnail'].'</option>';
 $arr_Images = get_all_images();
 	foreach($arr_Images as $page_thumbnail) {
@@ -403,7 +420,7 @@ $prefs_tmb_prefix_input = "<input class='form-control' type='text' name='prefs_p
 echo tpl_form_control_group('',$lang['page_thumbnail_prefix'],$prefs_tmb_prefix_input);
 
 /* Favicon */
-$select_prefs_favicon  = '<select name="prefs_pagefavicon" class="form-control">';
+$select_prefs_favicon  = '<select name="prefs_pagefavicon" class="form-control custom-select">';
 $select_prefs_favicon .= '<option value="">'.$lang['page_favicon'].'</option>';
 $arr_Images = get_all_images();
 	foreach($arr_Images as $page_favicon) {
@@ -424,14 +441,15 @@ echo tpl_form_control_group('',$lang['page_favicon'],$select_prefs_favicon);
 
 
 
-echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_thumbnail' value='$lang[save]'>");
+echo tpl_form_control_group('','',"<input type='submit' class='btn btn-dark text-success' name='save_prefs_thumbnail' value='$lang[save]'>");
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
 
 /* system */
+echo '<div id="system" class="pt-2"></div>';
 
-echo '<fieldset id="system">';
+echo '<fieldset>';
 echo '<legend>System</legend>';
 
 $prefs_cms_domain_input = "<input class='form-control' type='text' name='prefs_cms_domain' value='$prefs_cms_domain'>";
@@ -442,14 +460,15 @@ echo '<form action="acp.php?tn=system&sub=sys_pref#system" method="POST" class="
 echo tpl_form_control_group('',$lang['prefs_cms_domain'],$prefs_cms_domain_input);
 echo tpl_form_control_group('',$lang['prefs_cms_ssl_domain'],$prefs_cms_ssl_domain_input);
 echo tpl_form_control_group('',$lang['prefs_cms_base'],$prefs_cms_base_input);
-echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_system' value='$lang[save]'>");
+echo tpl_form_control_group('','',"<input type='submit' class='btn btn-dark text-success' name='save_system' value='$lang[save]'>");
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
 
 /* contacts */
+echo '<div id="mails" class="pt-2"></div>';
 
-echo '<fieldset id="mails">';
+echo '<fieldset>';
 echo '<legend>System E-Mail</legend>';
 echo '<form action="acp.php?tn=system&sub=sys_pref#mails" method="POST" class="form-horizontal">';
 
@@ -465,17 +484,20 @@ $prefs_mail_smtp_encryption_input = "<input class='form-control' type='text' nam
 $prefs_mail_smtp_username_input = "<input class='form-control' type='text' name='prefs_smtp_username' value='$prefs_smtp_username'>";
 $prefs_mail_smtp_psw_input = "<input class='form-control' type='password' name='prefs_smtp_psw' value='$prefs_smtp_psw'>";
 
-$prefs_mail_type_input  = '<div class="radio">';
-$prefs_mail_type_input .= '<label><input type="radio" name="prefs_mailer_type" value="smtp" '.($prefs_mailer_type == "smtp" ? 'checked' :'').'>'.$lang['prefs_mail_type_smtp'].'<label>';
+$prefs_mail_type_input  = '<div class="form-check">';
+$prefs_mail_type_input .= '<input type="radio" class="form-check-input" id="smtp" name="prefs_mailer_type" value="smtp" '.($prefs_mailer_type == "smtp" ? 'checked' :'').'>';
+$prefs_mail_type_input .= '<label class="form-check-label" for="smtp">'.$lang['prefs_mail_type_smtp'].'</label>';
 $prefs_mail_type_input .= '</div>';
-$prefs_mail_type_input .= '<div class="radio">';
-$prefs_mail_type_input .= '<label><input type="radio" name="prefs_mailer_type" value="mail" '.($prefs_mailer_type == "mail" ? 'checked' :'').'>'.$lang['prefs_mail_type_mail'].'<label>';
+$prefs_mail_type_input .= '<div class="form-check">';
+$prefs_mail_type_input .= '<input type="radio" class="form-check-input" id="mail" name="prefs_mailer_type" value="mail" '.($prefs_mailer_type == "mail" ? 'checked' :'').'>';
+$prefs_mail_type_input .= '<label class="form-check-label" for="mail">'.$lang['prefs_mail_type_mail'].'</label>';
 $prefs_mail_type_input .= '</div>';
 
 
 echo tpl_form_control_group('',$lang['prefs_mailer_name'],$prefs_mail_name_input);
 echo tpl_form_control_group('',$lang['prefs_mailer_adr'],$prefs_mail_adr_input);
-echo tpl_form_control_group('',$lang['prefs_mail_type'],$prefs_mail_type_input);
+
+echo $prefs_mail_type_input;
 
 echo tpl_form_control_group('','','<p>SMTP</p>');
 
@@ -485,12 +507,15 @@ echo tpl_form_control_group('',$lang['prefs_mailer_smtp_encryption'],$prefs_mail
 echo tpl_form_control_group('',$lang['prefs_mailer_smtp_username'],$prefs_mail_smtp_username_input);
 echo tpl_form_control_group('',$lang['prefs_mailer_smtp_password'],$prefs_mail_smtp_psw_input);
 
-echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_contacts' value='$lang[save]'>");
+echo '<input type="submit" class="btn btn-dark text-success" name="save_prefs_contacts" value="'.$lang['save'].'">';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 
-echo '<div class="well well-sm">';
-echo '<a href="acp.php?tn=system&sub=sys_pref&sendtest=1#mails" class="btn btn-default">'.$lang['prefs_mailer_send_test'].'</a> -> '.$prefs_mailer_adr;
+echo '<div class="mt-3">';
+if($prefs_mailer_adr != '') {
+	echo '<a href="acp.php?tn=system&sub=sys_pref&sendtest=1#mails" class="btn btn-dark btn-sm">'.$lang['prefs_mailer_send_test'].' ('.$prefs_mailer_adr.')</a>';
+}
+
 
 if($_GET['sendtest'] == 1) {
 	require_once("../lib/Swift/lib/swift_required.php");
@@ -515,12 +540,12 @@ if($_GET['sendtest'] == 1) {
 			->setBody("flatCore Test (via $prefs_mailer_type)");
 			
 	if(!$mailer->send($message, $failures)) {
-		echo '<div class="alert alert-danger">';
+		echo '<div class="alert alert-danger mt-3">';
 	  echo 'Failures:<br>';
 	  print_r($failures);
 	  echo '</div>';
 	} else {
-		echo '<p class="alert alert-success"><span class="glyphicon glyphicon-ok"></span> '.$lang['prefs_mailer_send_test_success'].'</p>';
+		echo '<p class="alert alert-success mt-3">'.$icon['check'].' '.$lang['prefs_mailer_send_test_success'].'</p>';
 	}
 	
 }
@@ -532,28 +557,33 @@ echo '</fieldset>';
 
 
 /* User Preferences */
+echo '<div id="user" class="pt-2"></div>';
+
 echo '<fieldset>';
 echo '<legend>'.$lang['f_prefs_user'].'</legend>';
-echo '<form action="acp.php?tn=system&sub=sys_pref" method="POST" class="form-horizontal">';
+echo '<form action="acp.php?tn=system&sub=sys_pref#user" method="POST" class="form-horizontal">';
 
-$toggle_btn_userregistration  = '<div class="make-switch" data-on="success" data-on-label="'.$lang['yes'].'" data-off-label="'.$lang['no'].'">';
-$toggle_btn_userregistration .= '<input type="checkbox" name="prefs_userregistration" '.($prefs_userregistration == "yes" ? 'checked' :'').'>';
-$toggle_btn_userregistration .= '</div>';
-echo tpl_form_control_group('',$lang['f_prefs_registration'],$toggle_btn_userregistration);
 
-$toggle_btn_loginform  = '<div class="make-switch" data-on="success" data-on-label="'.$lang['yes'].'" data-off-label="'.$lang['no'].'">';
-$toggle_btn_loginform .= '<input type="checkbox" name="prefs_showloginform" '.($prefs_showloginform == "yes" ? 'checked' :'').'>';
-$toggle_btn_loginform .= '</div>';
-echo tpl_form_control_group('',$lang['f_prefs_showloginform'],$toggle_btn_loginform);
+echo '<div class="form-group form-check mt-3">';
+echo '<input type="checkbox" class="form-check-input" id="userregister" name="prefs_userregistration" '.($prefs_userregistration == "yes" ? 'checked' :'').'>';
+echo '<label class="form-check-label" for="userregister">'.$lang['f_prefs_registration'].'</label>';
+echo '</div>';
 
-echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_user' value='$lang[save]'>");
+
+echo '<div class="form-group form-check mt-3">';
+echo '<input type="checkbox" class="form-check-input" id="loginform" name="prefs_showloginform" '.($prefs_showloginform == "yes" ? 'checked' :'').'>';
+echo '<label class="form-check-label" for="loginform">'.$lang['f_prefs_showloginform'].'</label>';
+echo '</div>';
+
+echo '<input type="submit" class="btn btn-dark text-success" name="save_prefs_user" value="'.$lang['save'].'">';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
 
 
-
 /* Upload Preferences */
+echo '<div id="uploads" class="pt-2"></div>';
+
 echo '<fieldset>';
 echo '<legend>'.$lang['f_prefs_uploads'].'</legend>';
 echo '<form action="acp.php?tn=system&sub=sys_pref" method="POST" class="form-horizontal">';
@@ -576,23 +606,35 @@ echo tpl_form_control_group('',$lang['f_prefs_maximage'],"$prefs_maximage_input"
 echo tpl_form_control_group('',$lang['f_prefs_filesuffix'],"<input class='form-control' type='text' name='prefs_filesuffix' value='$prefs_filesuffix'>");
 echo tpl_form_control_group('',$lang['f_prefs_maxfilesize'],"<input class='form-control' type='text' name='prefs_maxfilesize' value='$prefs_maxfilesize'>");
 
+/*
 $toggle_btn_upload_unchanged  = '<div class="make-switch" data-on="success" data-on-label="'.$lang['yes'].'" data-off-label="'.$lang['no'].'">';
 $toggle_btn_upload_unchanged .= '<input type="checkbox" name="prefs_uploads_remain_unchanged" '.($prefs_uploads_remain_unchanged == "yes" ? 'checked' :'').'>';
 $toggle_btn_upload_unchanged .= '</div>';
-echo tpl_form_control_group('',$lang['f_prefs_uploads_remain_unchanged'],$toggle_btn_upload_unchanged);
+*/
 
-$toggle_btn_showfilesize  = '<div class="make-switch" data-on="success" data-on-label="'.$lang['yes'].'" data-off-label="'.$lang['no'].'">';
-$toggle_btn_showfilesize .= '<input type="checkbox" name="prefs_showfilesize" '.($prefs_showfilesize == "yes" ? 'checked' :'').'>';
-$toggle_btn_showfilesize .= '</div>';
+$toggle_btn_upload_unchanged  = '<div class="form-group form-check">';
+$toggle_btn_upload_unchanged .= '<input type="checkbox" class="form-check-input" id="checkUpload" name="prefs_uploads_remain_unchanged" '.($prefs_uploads_remain_unchanged == "yes" ? 'checked' :'').'>';
+$toggle_btn_upload_unchanged .= '<label class="form-check-label" for="checkUpload">'.$lang['f_prefs_uploads_remain_unchanged'].'</label>';
+$toggle_btn_upload_unchanged .= '</div>';
+
+echo $toggle_btn_upload_unchanged;
+
+//echo tpl_form_control_group('',$lang['f_prefs_uploads_remain_unchanged'],$toggle_btn_upload_unchanged);
+
+//$toggle_btn_showfilesize  = '<div class="make-switch" data-on="success" data-on-label="'.$lang['yes'].'" data-off-label="'.$lang['no'].'">';
+//$toggle_btn_showfilesize .= '<input type="checkbox" name="prefs_showfilesize" '.($prefs_showfilesize == "yes" ? 'checked' :'').'>';
+//$toggle_btn_showfilesize .= '</div>';
 
 //echo tpl_form_control_group('',$lang['f_prefs_showfilesize'],$toggle_btn_showfilesize);
-echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_upload' value='$lang[save]'>");
+echo tpl_form_control_group('','',"<input type='submit' class='btn btn-dark text-success' name='save_prefs_upload' value='$lang[save]'>");
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
 
 
 /* global header enhancement */
+echo '<div id="globalheader" class="pt-2"></div>';
+
 echo '<fieldset>';
 echo '<legend>'.$lang['f_prefs_global_header'].'</legend>';
 echo '<form action="acp.php?tn=system&sub=sys_pref" method="POST" class="form-horizontal">';
@@ -600,38 +642,44 @@ echo '<form action="acp.php?tn=system&sub=sys_pref" method="POST" class="form-ho
 $ta_pagesglobalhead = '<textarea name="prefs_pagesglobalhead" class="aceEditor_html form-control">'.$prefs_pagesglobalhead.'</textarea>';
 $ta_pagesglobalhead .= '<div id="HTMLeditor"></div>';
 echo tpl_form_control_group('','&lt;head&gt;<br>...<br>&lt;/head&gt;',"$ta_pagesglobalhead");
-echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_head' value='$lang[save]'>");
+echo tpl_form_control_group('','',"<input type='submit' class='btn btn-dark text-success' name='save_prefs_head' value='$lang[save]'>");
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
 
 /* deleted resources */
+echo '<div id="deletedresources" class="pt-2"></div>';
 echo '<fieldset>';
 echo '<legend>'.$lang['label_deleted_resources'].'</legend>';
 echo '<form action="acp.php?tn=system&sub=sys_pref" method="POST" class="form-horizontal">';
 
 
 echo tpl_form_control_group('','410 GONE','<textarea name="prefs_deleted_resources" rows="10" class="form-control">'.$prefs_deleted_resources.'</textarea>');
-echo tpl_form_control_group('','','<input type="submit" class="btn btn-success" name="save_deleted_resources" value="'.$lang['save'].'">');
+echo tpl_form_control_group('','','<input type="submit" class="btn btn-dark text-success" name="save_deleted_resources" value="'.$lang['save'].'">');
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
 
 
 /* misc */
-echo"<fieldset>";
+echo '<div id="misc" class="pt-2"></div>';
+
+echo '<fieldset>';
 echo '<legend>'.$lang['system_misc'].'</legend>';
-echo '<form action="acp.php?tn=system&sub=sys_pref" method="POST" class="form-horizontal">';
+echo '<form action="acp.php?tn=system&sub=sys_pref#misc" method="POST" class="form-horizontal">';
 
-$toggle_btn_logfile  = '<div class="make-switch" data-on="success" data-on-label="'.$lang['yes'].'" data-off-label="'.$lang['no'].'">';
-$toggle_btn_logfile .= '<input type="checkbox" name="prefs_logfile" '.($prefs_logfile == "on" ? 'checked' :'').'>';
-$toggle_btn_logfile .= '</div>';
-echo tpl_form_control_group('',$lang['activate_logfile'],$toggle_btn_logfile);
 
-$toggle_btn_sitemap  = '<div class="make-switch" data-on="success" data-on-label="'.$lang['yes'].'" data-off-label="'.$lang['no'].'">';
-$toggle_btn_sitemap .= '<input type="checkbox" name="prefs_xml_sitemap" '.($prefs_xml_sitemap == "on" ? 'checked' :'').'>';
-$toggle_btn_sitemap .= '</div>';
-echo tpl_form_control_group('',$lang['activate_xml_sitemap'],$toggle_btn_sitemap);
+echo '<div class="form-group form-check mt-3">';
+echo '<input type="checkbox" class="form-check-input" id="logfile" name="prefs_logfile" '.($prefs_logfile == "on" ? 'checked' :'').'>';
+echo '<label class="form-check-label" for="logfile">'.$lang['activate_logfile'].'</label>';
+echo '</div>';
+
+echo '<div class="form-group form-check mt-3">';
+echo '<input type="checkbox" class="form-check-input" id="sitemap" name="prefs_xml_sitemap" '.($prefs_xml_sitemap == "on" ? 'checked' :'').'>';
+echo '<label class="form-check-label" for="sitemap">'.$lang['activate_xml_sitemap'].'</label>';
+echo '</div>';
+
+
 
 echo tpl_form_control_group('',$lang['rss_offset'],"<input class='form-control' type='text' name='prefs_rss_time_offset' value='$prefs_rss_time_offset'>");
 
@@ -639,31 +687,31 @@ echo tpl_form_control_group('',$lang['prefs_nbr_page_versions'],"<input class='f
 
 echo '<hr>';
 
-$toggle_btn_cache  = '<div class="make-switch" data-on="success" data-on-label="'.$lang['yes'].'" data-off-label="'.$lang['no'].'">';
-$toggle_btn_cache .= '<input type="checkbox" name="prefs_smarty_cache" '.($prefs_smarty_cache == "1" ? 'checked' :'').'>';
-$toggle_btn_cache .= '</div>';
-echo tpl_form_control_group('',$lang['cache'],$toggle_btn_cache);
+
+echo '<div class="form-group form-check mt-3">';
+echo '<input type="checkbox" class="form-check-input" id="cache" name="prefs_smarty_cache" '.($prefs_smarty_cache == "1" ? 'checked' :'').'>';
+echo '<label class="form-check-label" for="cache">'.$lang['cache'].'</label>';
+echo '</div>';
+
+
+echo '<div class="form-group form-check mt-3">';
+echo '<input type="checkbox" class="form-check-input" id="compile" name="prefs_smarty_compile_check" '.($prefs_smarty_compile_check == "1" ? 'checked' :'').'>';
+echo '<label class="form-check-label" for="compile">'.$lang['compile_check'].'</label>';
+echo '</div>';
+
 
 $cache_size = fc_dir_size('../'.FC_CONTENT_DIR.'/cache/cache/');
 $compile_size = fc_dir_size('../'.FC_CONTENT_DIR.'/cache/templates_c/');
 $complete_size = readable_filesize($cache_size+$compile_size);
 
-$input_group  = '<div class="input-group">';
-$input_group .= '<input class="form-control" type="text" name="prefs_smarty_cache_lifetime" value="'.$prefs_smarty_cache_lifetime.'">';
-$input_group .= '<span class="input-group-btn">';
-$input_group .= '<button class="btn btn-default" type="submit" name="delete_smarty_cache">('.$complete_size.') '.$lang['delete_cache'].'</button>';
-$input_group .= '</span>';
-$input_group .= '</div>';
-echo tpl_form_control_group('',$lang['cache_lifetime'],"$input_group");
+echo '<div class="input-group mb-3">';
+echo '<input class="form-control" type="text" name="prefs_smarty_cache_lifetime" value="'.$prefs_smarty_cache_lifetime.'">';
+echo '<div class="input-group-append">';
+echo '<button class="btn btn-dark" type="submit" name="delete_smarty_cache">('.$complete_size.') '.$lang['delete_cache'].'</button>';
+echo '</div>';
+echo '</div>';
 
-$toggle_btn_cache_compile  = '<div class="make-switch" data-on="success" data-on-label="'.$lang['yes'].'" data-off-label="'.$lang['no'].'">';
-$toggle_btn_cache_compile .= '<input type="checkbox" name="prefs_smarty_compile_check" '.($prefs_smarty_compile_check == "1" ? 'checked' :'').'>';
-$toggle_btn_cache_compile .= '</div>';
-echo tpl_form_control_group('',$lang['compile_check'],$toggle_btn_cache_compile);
-
-
-
-echo tpl_form_control_group('','',"<input type='submit' class='btn btn-success' name='save_prefs_misc' value='$lang[save]'>");
+echo '<input type="submit" class="btn btn-dark text-success" name="save_prefs_misc" value="'.$lang['save'].'">';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 
 echo '</form>';
@@ -671,6 +719,7 @@ echo '</fieldset>';
 
 
 /* Labels */
+echo '<div id="labels" class="pt-2"></div>';
 
 echo '<fieldset>';
 echo '<legend>'.$lang['labels'].'</legend>';
@@ -679,12 +728,15 @@ $fc_labels = fc_get_labels();
 $cnt_labels = count($fc_labels);
 
 
-echo '<div class="row">';
+
 for($i=0;$i<$cnt_labels;$i++) {
 	echo '<form action="acp.php?tn=system&sub=sys_pref#labels" method="POST" class="clearfix" id="labels">';
+	echo '<div class="row mb-1">';
 	echo '<div class="col-md-2">';
 	echo '<div class="input-group">';
-	echo '<span class="input-group-addon" id="basic-addon1" style="background-color:'.$fc_labels[$i]['label_color'].'"></span>';
+	echo '<div class="input-group-prepend">';
+	echo '<span class="input-group-text" id="basic-addon1" style="background-color:'.$fc_labels[$i]['label_color'].'"></span>';
+	echo '</div>';
 	echo '<input class="form-control" type="text" name="label_color" value="'.$fc_labels[$i]['label_color'].'">';
 	echo '</div>';
 	echo '</div>';
@@ -697,14 +749,21 @@ for($i=0;$i<$cnt_labels;$i++) {
 	echo '<div class="col-md-2">';
 	echo '<input type="hidden" name="label_id" value="'.$fc_labels[$i]['label_id'].'">';
 	echo '<div class="btn-group" role="group">';
-	echo '<button type="submit" name="update_label" class="btn btn-default"><span class="glyphicon glyphicon-refresh"></span></button>';
-	echo '<button type="submit" name="delete_label" class="btn btn-danger"><span class="glyphicon glyphicon glyphicon-trash"></span></button>';
+	echo '<button type="submit" name="update_label" class="btn btn-dark text-success">'.$icon['sync_alt'].'</button>';
+	echo '<button type="submit" name="delete_label" class="btn btn-dark text-danger">'.$icon['trash_alt'].'</button>';
 	echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 	echo '</div>';
 	echo '</div>';
-	echo '</form><br>';
+	
+	echo '</div>';
+	echo '</form>';
+	
+	if($i == $cnt_labels-1) {
+		echo '<hr>';
+	}
+	
 }
-echo '</div><br>';
+
 
 echo '<form action="acp.php?tn=system&sub=sys_pref#labels" method="POST" class="form-horizontal">';
 echo '<div class="row">';
@@ -724,7 +783,7 @@ echo $lang['label_description'];
 echo '<input class="form-control" type="text" name="label_description" value="">';
 echo '</div>';
 echo '<div class="col-md-2">';
-echo '<br><button type="submit" name="new_label" class="btn btn-success">'.$lang['save'].'</button>';
+echo '<br><button type="submit" name="new_label" class="btn btn-dark text-success">'.$lang['save'].'</button>';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</div>';
 echo '</div>';
@@ -733,6 +792,30 @@ echo '</form>';
 
 
 echo"</fieldset>";
+
+
+echo '</div>';
+echo '<div class="col-md-3">';
+
+echo '<div class="card mt-4">';
+echo '<div class="list-group list-group-flush">';
+
+echo '<a href="#descriptions" class="list-group-item list-group-item-ghost">'.$lang['f_prefs_descriptions'].'</a>';
+echo '<a href="#thumbnail" class="list-group-item list-group-item-ghost">'.$lang['page_thumbnail_default'].'</a>';
+echo '<a href="#system" class="list-group-item list-group-item-ghost">System</a>';
+echo '<a href="#mails" class="list-group-item list-group-item-ghost">System E-Mail</a>';
+echo '<a href="#user" class="list-group-item list-group-item-ghost">'.$lang['f_prefs_user'].'</a>';
+echo '<a href="#uploads" class="list-group-item list-group-item-ghost">'.$lang['f_prefs_uploads'].'</a>';
+echo '<a href="#globalheader" class="list-group-item list-group-item-ghost">'.$lang['f_prefs_global_header'].'</a>';
+echo '<a href="#deletedresources" class="list-group-item list-group-item-ghost">'.$lang['label_deleted_resources'].'</a>';
+echo '<a href="#misc" class="list-group-item list-group-item-ghost">'.$lang['system_misc'].'</a>';
+echo '<a href="#labels" class="list-group-item list-group-item-ghost">'.$lang['labels'].'</a>';
+echo '</div>';
+echo '</div>';
+
+
+echo '</div>';
+echo '</div>';
 
 
 

@@ -1,8 +1,7 @@
 <?php
 
 //prohibit unauthorized access
-require("core/access.php");
-
+require 'core/access.php';
 
 
 if($_GET['sub'] == "new"){
@@ -11,70 +10,82 @@ if($_GET['sub'] == "new"){
 	$sub = "edit";
 }
 
-
-echo '<div class="row"><div class="col-md-12">';
-
 echo "<form action='acp.php?tn=user&sub=$sub&edituser=$edituser' class='form-horizontal' method='POST'>";
 
 $custom_fields = get_custom_user_fields();
 sort($custom_fields);
 $cnt_custom_fields = count($custom_fields);
 
-echo '<ul class="nav nav-tabs" id="bsTabs">';
-echo '<li class="active"><a href="#info" data-toggle="tab">'.$lang['tab_user_info'].'</a></li>';
-echo '<li><a href="#contact" data-toggle="tab">'.$lang['tab_contact'].'</a></li>';
-echo '<li><a href="#psw" data-toggle="tab">'.$lang['tab_psw'].'</a></li>';
-if($cnt_custom_fields > 0) {
-	echo '<li><a href="#custom" data-toggle="tab">'.$lang['legend_custom_fields'].'</a></li>';
-}
-echo '</ul>';
-
-
-echo '<div class="tab-content">';
-echo '<div class="tab-pane fade in active" id="info">';
-
 echo '<div class="row">';
 echo '<div class="col-md-9">';
 
-echo tpl_form_control_group('',$lang['f_user_nick'],"<input class='form-control' type='text' name='user_nick' value='$user_nick'>");
+echo '<div class="card">';
+echo '<div class="card-header">';
 
-if($user_registerdate != "") {
-	$show_registerdate = @date("d.m.Y H:i:s",$user_registerdate);
+echo '<ul class="nav nav-tabs card-header-tabs" id="bsTabs" role="tablist">';
+echo '<li class="nav-item"><a class="nav-link active" href="#info" data-toggle="tab">'.$lang['tab_user_info'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#contact" data-toggle="tab">'.$lang['tab_contact'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#psw" data-toggle="tab">'.$lang['tab_psw'].'</a></li>';
+if($cnt_custom_fields > 0) {
+	echo '<li class="nav-item"><a class="nav-link" href="#custom" data-toggle="tab">'.$lang['legend_custom_fields'].'</a></li>';
 }
+echo '</ul>';
 
-echo tpl_form_control_group('',$lang['f_user_registerdate'],"<p class='form-control-static'>$show_registerdate</p>");
+echo '</div>';
+echo '<div class="card-body">';
 
-echo '<input type="hidden" name="user_registerdate" value="'.$user_registerdate.'">';
-echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+
+echo '<div class="tab-content">';
+echo '<div class="tab-pane fade show active" id="info">';
+
+echo '<div class="row">';
+echo '<div class="col-md-6">';
 
 
 if($user_verified == ""){
 	$user_verified = "waiting";
 }
 
-$select_user_status  = '<label class="radio">';
-$select_user_status .= "<input type='radio' name='user_verified' value='verified'".($user_verified == "verified" ? 'checked' :'').">";
-$select_user_status .= "<span class='label label-success'>$lang[f_user_select_verified]</span>";
-$select_user_status .= '</label>';
 
-$select_user_status .= '<label class="radio">';
-$select_user_status .= "<input type='radio' name='user_verified' value='waiting'".($user_verified == "waiting" ? 'checked' :'').">";
-$select_user_status .= "<span class='label label-default'>$lang[f_user_select_waiting]</span>";
-$select_user_status .= '</label>';
+$select_user_status .= tpl_radio('user_verified','verified','verified',$lang['f_user_select_verified'],($user_verified == "verified" ? 'checked' :''));
+$select_user_status .= tpl_radio('user_verified','waiting','waiting',$lang['f_user_select_waiting'],($user_verified == "waiting" ? 'checked' :''));
+$select_user_status .= tpl_radio('user_verified','paused','paused',$lang['f_user_select_paused'],($user_verified == "paused" ? 'checked' :''));
 
-$select_user_status .= '<label class="radio">';
-$select_user_status .= "<input type='radio' name='user_verified' value='paused'".($user_verified == "paused" ? 'checked' :'').">";
-$select_user_status .= "<span class='label label-danger'>$lang[f_user_select_paused]</span>";
-$select_user_status .= '</label>';
+echo '<fieldset>';
+echo '<legend>'.$lang['f_user_status'].'</legend>';
+echo $select_user_status;
+echo '</fieldset>';
 
-echo tpl_form_control_group('',$lang['f_user_status'],"$select_user_status");
 
+
+
+
+if($user_newsletter == "none" OR $user_newsletter == ""){
+	$user_newsletter = "none";
+} else if($user_newsletter == "html"){
+	$checked2 = "checked";
+} else if($user_newsletter == "text"){
+	$checked3 = "checked";
+}
+
+$select_nwsl .= tpl_radio('user_newsletter','none','nwsl_no',$lang['f_user_newsletter_none'],($user_newsletter == "none" ? 'checked' :''));	
+$select_nwsl .= tpl_radio('user_newsletter','html','nwsl_html',$lang['f_user_newsletter_html'],($user_newsletter == "html" ? 'checked' :''));
+$select_nwsl .= tpl_radio('user_newsletter','text','nwsl_txt',$lang['f_user_newsletter_text'],($user_newsletter == "text" ? 'checked' :''));
+
+
+echo '<fieldset>';
+echo '<legend>'.$lang['f_user_newsletter'].'</legend>';
+echo $select_nwsl;
+echo '</fieldset>';
+
+echo '</div>';
+echo '<div class="col-md-6">';
 
 $result = get_all_groups();
 
 $nbr_of_groups = count($result);
 
-echo"<input type='hidden' name='nbr_of_groups' value='$nbr_of_groups'>";
+echo '<input type="hidden" name="nbr_of_groups" value="'.$nbr_of_groups.'">';
 
 for($i=0;$i<$nbr_of_groups;$i++) {
 	$get_group_id = $result[$i]['group_id'];
@@ -91,60 +102,16 @@ for($i=0;$i<$nbr_of_groups;$i++) {
 	if($sub == "new") {
 		$checked = "";
 	}
-
-	$cb_usergroup .= '<label class="checkbox">';
-	$cb_usergroup .= "<input type='checkbox' name='user_groups[$i]' value='$get_group_id' $checked>";
-	$cb_usergroup .= "$get_group_name";
-	$cb_usergroup .= '</label>';
-	$cb_usergroup .= "<input type='hidden' name='this_group[$i]' value='$get_group_id'>";
+	
+	$cb_usergroup .= tpl_checkbox("user_groups[$i]","$get_group_id","check_group_$i",$get_group_name,$checked);	
 }
-
-echo tpl_form_control_group('',$lang['f_user_groups'],"$cb_usergroup");
-
-
-if($user_newsletter == "none" OR $user_newsletter == ""){
-	$user_newsletter = "none";
-}
-
-if($user_newsletter == "html"){
-	$checked2 = "checked";
-}
-
-if($user_newsletter == "text"){
-	$checked3 = "checked";
-}
-
-$select_nwsl .= '<label class="radio">';
-$select_nwsl .= "<input type='radio' name='user_newsletter' value='none'".($user_newsletter == "none" ? 'checked' :'').">";
-$select_nwsl .= "$lang[f_user_newsletter_none]";
-$select_nwsl .= '</label>';
-
-$select_nwsl .= '<label class="radio">';
-$select_nwsl .= "<input type='radio' name='user_newsletter' value='html'".($user_newsletter == "html" ? 'checked' :'').">";
-$select_nwsl .= "$lang[f_user_newsletter_html]";
-$select_nwsl .= '</label>';
-
-$select_nwsl .= '<label class="radio">';
-$select_nwsl .= "<input type='radio' name='user_newsletter' value='text'".($user_newsletter == "text" ? 'checked' :'').">";
-$select_nwsl .= "$lang[f_user_newsletter_text]";
-$select_nwsl .= '</label>';
-
-echo tpl_form_control_group('',$lang['f_user_newsletter'],"$select_nwsl");
-
-echo '</div>';
-echo '<div class="col-md-3">';
 
 echo '<fieldset>';
-echo '<legend>Avatar</legend>';
-if(is_file("$user_avatar_path")) {
-	echo '<p class="text-center"><img src="'.$user_avatar_path.'" class="img-circle avatar"></p>';
-	echo '<div class="checkbox">';
-	echo '<label><input type="checkbox" name="deleteAvatar"> ' . $lang['delete'] . '</label>';
-	echo '</div>';
-} else {
-	echo '<p class="text-center"><img src="images/avatar.png" class="img-circle avatar"></p>';
-}
+echo '<legend>'.$lang['f_user_groups'].'</legend>';
+echo $cb_usergroup;
 echo '</fieldset>';
+
+
 
 echo '</div>';
 echo '</div>';
@@ -198,26 +165,29 @@ if($arr_drm[5] == "drm_acp_editownpages")	{  $checked_editownpages = "checked"; 
 if($arr_drm[6] == "drm_moderator")	{  $checked_moderator = "checked";  }
 if($arr_drm[7] == "drm_can_publish")	{  $checked_can_publish = "checked";  }
 
+echo '<fieldset>';
+echo '<legend>'.$lang['f_user_drm'].'</legend>';
 
-$cb_user_drm .= "<label class='checkbox'><input type='checkbox' value='administrator' name='drm_acp_class' $checked_class> <b>$lang[drm_administrator]</b></label>";
-$cb_user_drm .= "<label class='checkbox'><input type='checkbox' value='drm_acp_pages' name='drm_acp_pages' $checked_pages> $lang[drm_pages]</label>";
-$cb_user_drm .= "<label class='checkbox'><input type='checkbox' value='drm_acp_editpages' name='drm_acp_editpages' $checked_editpages> $lang[drm_editpages]</label>";
-$cb_user_drm .= "<label class='checkbox'><input type='checkbox' value='drm_acp_editownpages' name='drm_acp_editownpages' $checked_editownpages> $lang[drm_editownpages]</label>";
-$cb_user_drm .= "<label class='checkbox'><input type='checkbox' value='drm_acp_files' name='drm_acp_files' $checked_files> $lang[drm_files]</label>";
-$cb_user_drm .= "<label class='checkbox'><input type='checkbox' value='drm_acp_user' name='drm_acp_user' $checked_user> $lang[drm_user]</label>";
-$cb_user_drm .= "<label class='checkbox'><input type='checkbox' value='drm_acp_system' name='drm_acp_system' $checked_system> $lang[drm_system]</label>";
-$cb_user_drm .= "<label class='checkbox'><input type='checkbox' value='drm_moderator' name='drm_moderator' $checked_moderator> $lang[drm_moderator]</label>";
-$cb_user_drm .= "<label class='checkbox'><input type='checkbox' value='drm_can_publish' name='drm_can_publish' $checked_can_publish> $lang[drm_user_can_publish]</label>";
+echo tpl_checkbox('drm_acp_class','administrator','check_admin',$lang['drm_administrator'],$checked_class);
+echo tpl_checkbox('drm_acp_pages','drm_acp_pages','check_page',$lang['drm_pages'],$checked_pages);
+echo tpl_checkbox('drm_acp_editpages','drm_acp_editpages','check_editpages',$lang['drm_editpages'],$checked_editpages);
+echo tpl_checkbox('drm_acp_editownpages','drm_acp_editownpages','check_ownpages',$lang['drm_editownpages'],$checked_editownpages);
+echo tpl_checkbox('drm_acp_files','drm_acp_files','check_files',$lang['drm_files'],$checked_files);
+echo tpl_checkbox('drm_acp_user','drm_acp_user','check_user',$lang['drm_user'],$checked_user);
+echo tpl_checkbox('drm_acp_system','drm_acp_system','check_system',$lang['drm_system'],$checked_system);
+echo tpl_checkbox('drm_moderator','drm_moderator','check_mod',$lang['drm_moderator'],$checked_moderator);
+echo tpl_checkbox('drm_can_publish','drm_can_publish','check_pub',$lang['drm_user_can_publish'],$checked_can_publish);
 
-echo tpl_form_control_group('',$lang['f_user_drm'],"$cb_user_drm");
+echo '</fieldset>';
+
 
 echo '</div>';
 
 
 if($cnt_custom_fields > 0) {
 
-/* tab custom fields */
-echo'<div class="tab-pane fade" id="custom">';
+	/* tab custom fields */
+	echo '<div class="tab-pane fade" id="custom">';
 
 	for($i=0;$i<$cnt_custom_fields;$i++) {	
 		if(substr($custom_fields[$i],0,10) == "custom_one") {
@@ -232,7 +202,7 @@ echo'<div class="tab-pane fade" id="custom">';
 		}		
 	}
 
-echo '</div>'; /* EOL tab custom fields */
+	echo '</div>';
 
 }
 
@@ -241,14 +211,49 @@ echo '</div>'; /* EOL tab custom fields */
 
 echo '</div>';
 
-//submit form to save data
-echo '<div class="formfooter">';
-echo "$delete_button $submit_button";
+
+
+echo '</div>'; // card-body
+echo '</div>'; // card
+
+echo '</div>';
+echo '<div class="col-md-3">';
+
+echo '<div class="well well-sm">';
+
+echo tpl_form_control_group('',$lang['f_user_nick'],"<input class='form-control' type='text' name='user_nick' value='$user_nick'>");
+
+echo '<fieldset>';
+echo '<legend>Avatar</legend>';
+if(is_file("$user_avatar_path")) {
+	echo '<p class="text-center"><img src="'.$user_avatar_path.'" class="img-circle avatar"></p>';
+	echo '<div class="checkbox">';
+	echo '<label><input type="checkbox" name="deleteAvatar"> ' . $lang['delete'] . '</label>';
+	echo '</div>';
+} else {
+	echo '<p class="text-center"><img src="images/avatar.png" class="img-circle avatar"></p>';
+}
+echo '</fieldset>';
+
+if($user_registerdate != "") {
+	$show_registerdate = @date("d.m.Y H:i:s",$user_registerdate);
+}
+
+echo tpl_form_control_group('',$lang['f_user_registerdate'],"<pre class='form-control'>$show_registerdate</pre>");
+
+echo '<input type="hidden" name="user_registerdate" value="'.$user_registerdate.'">';
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+
+echo '<hr>';
+echo $delete_button;
+echo $submit_button;
+echo '</div>';
+
+echo '</div>';
 echo '</div>';
 
 echo '</form>';
 
-echo '</div></div>';
 
 
 ?>

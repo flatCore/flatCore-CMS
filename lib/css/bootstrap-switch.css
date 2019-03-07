@@ -89,9 +89,9 @@
   position: relative;
   display: inline-block;
   height: 100%;
-  padding-bottom: 4px;
-  padding-top: 4px;
-  font-size: 14px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  font-size: 15px;
   line-height: 20px;
 }
 .has-switch span.switch-mini,

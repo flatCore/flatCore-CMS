@@ -5,7 +5,7 @@ require("core/access.php");
 
 $array_group_user = array();
 
-$submit_button = '<input type="submit" class="btn btn-success" name="saveGroup" value="'.$lang['save'].'">';
+$submit_button = '<input type="submit" class="btn btn-dark text-success" name="saveGroup" value="'.$lang['save'].'">';
 $delete_button = '';
 
 
@@ -135,7 +135,7 @@ if($success_message != ""){
 }
 
 if($error_message != ""){
-	echo '<div class="alert alert-error"><p>'.$error_message.'</p></div>';
+	echo '<div class="alert alert-danger"><p>'.$error_message.'</p></div>';
 }
 
 
@@ -167,7 +167,7 @@ echo '<div class="row">';
 echo '<div class="col-md-5">';
 
 echo '<div class="form-group">';
-echo '<select name="editgroup" class="form-control">';
+echo '<select name="editgroup" class="form-control custom-select">';
 
 for($i=0;$i<count($result);$i++) {
 
@@ -185,7 +185,7 @@ echo '</div>';
 echo '</div>';
 echo '<div class="col-md-3">';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
-echo '<input type="submit" class="btn btn-default btn-block" name="select_group" value="'.$lang['edit'].'">';
+echo '<input type="submit" class="btn btn-dark btn-block" name="select_group" value="'.$lang['edit'].'">';
 echo '</div>';
 echo '</div>';
 echo '</form>';
@@ -212,8 +212,8 @@ foreach($result as $k => $v) {
 
 $array_group_user = explode(" ", $group_user);
 
-$submit_button = '<input type="submit" class="btn btn-success" name="updateGroup" value="'.$lang['update'].'">';
-$delete_button = '<input type="submit" class="btn btn-danger" name="deleteGroup" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_file'].'\')">';
+$submit_button = '<input type="submit" class="btn btn-dark text-success" name="updateGroup" value="'.$lang['update'].'">';
+$delete_button = '<input type="submit" class="btn btn-dark text-danger" name="deleteGroup" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_file'].'\')">';
 $hidden_field = '<input type="hidden" name="editgroup" value="'.$editgroup.'">';
 
 } else {
@@ -261,7 +261,7 @@ unset($result);
    }
 
 
-echo '<table class="table table-hover table-condensed">';
+echo '<table class="table table-hover table-sm">';
 
 for($i=0;$i<count($result);$i++) {
 
@@ -282,8 +282,11 @@ for($i=0;$i<count($result);$i++) {
 	
 	
 	echo '<tr>';
-	echo '<td><label><input type="checkbox" '.$checked.' name="incUser[]" value="'.$user_id.'"> '.$user_nick.' </label></td>
-			<td>'.$user_firstname.' '.$user_lastname.'</td>';
+	echo '<td>';
+	echo tpl_checkbox('incUser[]',$user_id,"check_$user_nick",$user_nick,$checked);
+	//echo '<label><input type="checkbox" '.$checked.' name="incUser[]" value="'.$user_id.'"> '.$user_nick.' </label></td>';
+	echo '</td>';
+	echo '<td>'.$user_firstname.' '.$user_lastname.'</td>';
 	echo '</tr>';
 } //eol $i
 
@@ -294,7 +297,7 @@ echo '</div>';
 echo '</div>';
 echo '</div>';
 
-echo '<div class="formfooter clear">';
+echo '<div class="well well-sm mt-3">';
 echo "$hidden_field $delete_button $submit_button";
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</div>';

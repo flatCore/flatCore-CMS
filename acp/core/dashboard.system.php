@@ -4,16 +4,17 @@
 require 'core/access.php';
 
 
-echo '<hr class="shadow" style="margin-top:0;">';
+echo '<hr class="shadow">';
 
 echo '<div class="row">';
 
 echo '<div class="col-md-4">';
 
-echo '<div class="panel panel-default">';
+echo '<div class="card mb-1">';
 
-echo '<div class="panel-heading">Config</div>';
-echo '<table class="table table-condensed">';
+echo '<div class="card-header">'.$icon['cogs'].' Config</div>';
+echo '<div class="card-body">';
+echo '<table class="table table-sm">';
 echo '<tr><td>Server:</td><td>' . $_SERVER['SERVER_NAME'] . ' (PHP '.phpversion().')</td></tr>';
 echo '<tr><td>'.$lang['prefs_cms_domain'].'</td><td>' . $prefs_cms_domain . '</td></tr>';
 echo '<tr><td>'.$lang['prefs_cms_ssl_domain'].'</td><td>' . $prefs_cms_ssl_domain . '</td></tr>';
@@ -31,56 +32,57 @@ if($prefs_mailer_name != '') {
 echo '</table>';
 
 echo '</div>';
+echo '</div>';
 
 
-echo '<div class="panel panel-default">';
-echo '<div class="panel-heading">' . $lang['f_user_drm'] . '</div>';
-echo '<div class="panel-body">';
+echo '<div class="card">';
+echo '<div class="card-header">' . $lang['f_user_drm'] . '</div>';
+echo '<div class="card-body">';
 
-echo"<p><span class='glyphicon glyphicon-user'></span> $_SESSION[user_firstname] $_SESSION[user_lastname] ($_SESSION[user_nick])</p>";
+echo '<p>'.$icon['user'].' '.$_SESSION['user_firstname'].' '.$_SESSION['user_lastname'].' ('.$_SESSION['user_nick'].')</p>';
 
 $list_str = '<ul class="list-unstyled" style="padding-left:16px;">';
 
 if($_SESSION['acp_pages'] == "allowed") {
-	$list_str .= '<li><span class="glyphicon glyphicon-ok-circle text-success"></span> '. $lang['drm_pages'].'</li>';
+	$list_str .= '<li>'.$icon['check'].' '. $lang['drm_pages'].'</li>';
 } else {
-	$list_str .= '<li><span class="glyphicon glyphicon-remove-circle text-danger"></span> '. $lang['drm_pages'].'</li>';
+	$list_str .= '<li>'.$icon['ban'].' '. $lang['drm_pages'].'</li>';
 }
 
 if($_SESSION['acp_editpages'] == "allowed") {
-	$list_str .= '<li><span class="glyphicon glyphicon-ok-circle text-success"></span> '. $lang['drm_editpages'].'</li>';
+	$list_str .= '<li>'.$icon['check'].' '. $lang['drm_editpages'].'</li>';
 } else {
-	$list_str .= '<li><span class="glyphicon glyphicon-remove-circle text-danger"></span> '. $lang['drm_editpages'].'</li>';
+	$list_str .= '<li>'.$icon['ban'].' '. $lang['drm_editpages'].'</li>';
 }
 
 if($_SESSION['acp_editownpages'] == "allowed") {
-	$list_str .= '<li><span class="glyphicon glyphicon-ok-circle text-success"></span> '. $lang['drm_editownpages'].'</li>';
+	$list_str .= '<li>'.$icon['check'].' '. $lang['drm_editownpages'].'</li>';
 } else {
-	$list_str .= '<li><span class="glyphicon glyphicon-remove-circle text-danger"></span> '. $lang['drm_editownpages'].'</li>';
+	$list_str .= '<li>'.$icon['ban'].' '. $lang['drm_editownpages'].'</li>';
 }
 
 if($_SESSION['acp_files'] == "allowed") {
-	$list_str .= '<li><span class="glyphicon glyphicon-ok-circle text-success"></span> '. $lang['drm_files'].'</li>';
+	$list_str .= '<li>'.$icon['check'].' '. $lang['drm_files'].'</li>';
 } else {
-	$list_str .= '<li><span class="glyphicon glyphicon-remove-circle text-danger"></span> '. $lang['drm_files'].'</li>';
+	$list_str .= '<li>'.$icon['ban'].' '. $lang['drm_files'].'</li>';
 }
 
 if($_SESSION['acp_user'] == "allowed") {
-	$list_str .= '<li><span class="glyphicon glyphicon-ok-circle text-success"></span> '. $lang['drm_user'].'</li>';
+	$list_str .= '<li>'.$icon['check'].' '. $lang['drm_user'].'</li>';
 } else {
-	$list_str .= '<li><span class="glyphicon glyphicon-remove-circle text-danger"></span> '. $lang['drm_user'].'</li>';
+	$list_str .= '<li>'.$icon['ban'].' '. $lang['drm_user'].'</li>';
 }
 
 if($_SESSION['acp_system'] == "allowed") {
-	$list_str .= '<li><span class="glyphicon glyphicon-ok-circle text-success"></span> '. $lang['drm_system'].'</li>';
+	$list_str .= '<li>'.$icon['check'].' '. $lang['drm_system'].'</li>';
 } else {
-	$list_str .= '<li><span class="glyphicon glyphicon-remove-circle text-danger"></span> '. $lang['drm_files'].'</li>';
+	$list_str .= '<li>'.$icon['ban'].' '. $lang['drm_files'].'</li>';
 }
 
 if($_SESSION['drm_can_publish'] == "true") {
-	$list_str .= '<li><span class="glyphicon glyphicon-ok-circle text-success"></span> '. $lang['drm_user_can_publish'].'</li>';
+	$list_str .= '<li>'.$icon['check'].' '. $lang['drm_user_can_publish'].'</li>';
 } else {
-	$list_str .= '<li><span class="glyphicon glyphicon-remove-circle text-danger"></span> '. $lang['drm_user_can_publish'].'</li>';
+	$list_str .= '<li>'.$icon['ban'].' '. $lang['drm_user_can_publish'].'</li>';
 }
 
 
@@ -96,16 +98,22 @@ echo '</div>';
 
 echo '<div class="col-md-8">';
 
-echo '<ul class="nav nav-tabs" id="bsTabs">';
-echo '<li class="active"><a href="#chat" data-toggle="tab"><span class="glyphicon glyphicon-comment"></span> CHAT</a></li>';
-echo '<li><a href="#log" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span> PROTOKOLL</a></li>';
-echo '<li><a href="#sitemap" data-toggle="tab"><span class="glyphicon glyphicon-list"></span> sitemap.xml</a></li>';
-echo '<li><a href="#deleted_resources" data-toggle="tab"><span class="glyphicon glyphicon-trash"></span> '.$lang['label_deleted_resources'].'</a></li>';
+echo '<div class="card">';
+echo '<div class="card-header">';
+
+echo '<ul class="nav nav-tabs card-header-tabs" id="bsTabs" role="tablist">';
+echo '<li class="nav-item"><a class="nav-link active" href="#chat" data-toggle="tab">'.$icon['comments'].' Chat</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#log" data-toggle="tab">'.$icon['file_alt'].' Logfile</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#sitemap" data-toggle="tab">'.$icon['sitemap'].' sitemap.xml</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#deleted_resources" data-toggle="tab">'.$icon['trash_alt'].' '.$lang['label_deleted_resources'].'</a></li>';
 echo '</ul>';
+
+echo '</div>';
+echo '<div class="card-body">';
 
 echo '<div class="tab-content">';
 
-echo '<div class="tab-pane fade in active" id="chat">';
+echo '<div class="tab-pane fade show active" id="chat">';
 
 $chat_form = file_get_contents('templates/comment-form.tpl');
 
@@ -175,8 +183,8 @@ for($i=0;$i<$cnt_comment;$i++) {
 	unset($show_entry);
 	
 	if($_SESSION['user_nick'] == $comment_author) {
-		$show_entry = str_replace('{entry_edit_btn}', '<a class="btn btn-primary btn-xs" href="acp.php?tn=dashboard&cid='.$comment_id.'">'.$lang['edit'].'</a>', $comment_entry_tpl);
-		$show_entry = str_replace('{entry_delete_btn}', '<a class="btn btn-danger btn-xs" href="acp.php?tn=dashboard&dcid='.$comment_id.'"><span class="glyphicon glyphicon-trash"></span></a>', $show_entry);
+		$show_entry = str_replace('{entry_edit_btn}', '<a class="btn btn-dark btn-sm text-success" href="acp.php?tn=dashboard&cid='.$comment_id.'">'.$lang['edit'].'</a>', $comment_entry_tpl);
+		$show_entry = str_replace('{entry_delete_btn}', '<a class="btn btn-dark btn-sm text-danger" href="acp.php?tn=dashboard&dcid='.$comment_id.'">'.$icon['trash_alt'].'</a>', $show_entry);
 	} else {
 		$show_entry = str_replace('{entry_edit_btn}', '', $comment_entry_tpl);
 		$show_entry = str_replace('{entry_delete_btn}', '', $show_entry);
@@ -222,6 +230,8 @@ echo '</div>'; // #deleted resources
 
 
 echo '</div>'; // .tab-content
+echo '</div>'; // .card-body
+echo '</div>'; // .card
 
 echo '</div>';
 

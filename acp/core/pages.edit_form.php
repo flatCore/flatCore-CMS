@@ -7,25 +7,32 @@ echo '<form id="editpage" action="acp.php?tn=pages&sub=edit&editpage='.$editpage
 $custom_fields = get_custom_fields();
 sort($custom_fields);
 $cnt_custom_fields = count($custom_fields);
+
+
 echo '<div class="row" style="margin-right:0;">';
 echo '<div class="col-lg-9 col-md-8 col-sm-12">';
 
-echo '<ul class="nav nav-tabs" id="bsTabs">';
-echo '<li class="active"><a href="#info" data-toggle="tab">'.$lang['tab_info'].'</a></li>';
-echo '<li><a href="#content" data-toggle="tab">'.$lang['tab_content'].'</a></li>';
-echo '<li><a href="#extracontent" data-toggle="tab">'.$lang['tab_extracontent'].'</a></li>';
-echo '<li><a href="#meta" data-toggle="tab">'.$lang['tab_meta'].'</a></li>';
-echo '<li><a href="#head" data-toggle="tab">'.$lang['tab_head'].'</a></li>';
+echo '<div class="card">';
+echo '<div class="card-header">';
+
+echo '<ul class="nav nav-tabs card-header-tabs" id="bsTabs" role="tablist">';
+echo '<li class="nav-item"><a class="nav-link active" href="#info" data-toggle="tab">'.$lang['tab_info'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#content" data-toggle="tab">'.$lang['tab_content'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#extracontent" data-toggle="tab">'.$lang['tab_extracontent'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#meta" data-toggle="tab">'.$lang['tab_meta'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#head" data-toggle="tab">'.$lang['tab_head'].'</a></li>';
 if($cnt_custom_fields > 0) {
-	echo '<li><a href="#custom" data-toggle="tab">'.$lang['legend_custom_fields'].'</a></li>';
+	echo '<li class="nav-item"><a class="nav-link" href="#custom" data-toggle="tab">'.$lang['legend_custom_fields'].'</a></li>';
 }
 echo '</ul>';
 
+echo '</div>';
+echo '<div class="card-body">';
 
 echo '<div class="tab-content">';
 
 /* tab_info */
-echo'<div class="tab-pane fade in active" id="info">';
+echo'<div class="tab-pane fade show active" id="info">';
 
 $dbh = new PDO("sqlite:".CONTENT_DB);
 $sql = "SELECT page_linkname, page_sort, page_title, page_language FROM fc_pages
@@ -38,7 +45,7 @@ $dbh = null;
 $all_pages = fc_array_multisort($all_pages, 'page_language', SORT_ASC, 'page_sort', SORT_ASC, SORT_NATURAL);
 
 
-$select_page_position  = '<select name="page_position" class="form-control">';
+$select_page_position  = '<select name="page_position" class="custom-select form-control">';
 $select_page_position .= '<option value="null">' . $lang['legend_unstructured_pages'] . '</option>';
 
 
@@ -103,16 +110,15 @@ echo tpl_form_control_group('',$lang['f_page_linkname'],'<input class="form-cont
 
 
 echo '<div class="form-group">';
-echo '<label class="control-label control-label-normal col-md-2">'.$lang['f_page_permalink'].'</label>';
-echo '<div class="col-sm-10">';
+echo '<label>'.$lang['f_page_permalink'].'</label>';
 echo '<div class="input-group">';
-echo '<span class="input-group-addon">'.$fc_base_url.'</span>';
+echo '<div class="input-group-prepend">';
+echo '<span class="input-group-text">'.$fc_base_url.'</span>';
+echo '</div>';
 echo '<input class="form-control" type="text" name="page_permalink" id="set_permalink" value="'.$page_permalink.'">';
-echo '<div class="input-group-addon"><a href="'.$fc_base_url.$page_permalink.'" target="_blank" id="check_link" title=""><span class="glyphicon glyphicon-share-alt"></span></a></div>';
+echo '</div>';
+echo '</div>';
 
-echo '</div>';
-echo '</div>';
-echo '</div>';
 ?>
 <script>
 $(function() {
@@ -130,8 +136,8 @@ $(function() {
 echo tpl_form_control_group('',$lang['f_page_hash'],"<input class='form-control' type='text' name='page_hash' value='$page_hash'>");
 
 /* redirect */
-echo '<hr><div class="col-sm-10 col-sm-offset-2">';
-echo '<fieldset>';
+
+echo '<fieldset class="mt-4">';
 echo '<legend>'.$lang['legend_redirect'].'</legend>';
 
 /* shortlink */
@@ -140,11 +146,11 @@ if(empty($page_permalink_short_cnt)) {
 }
 
 echo '<div class="form-group">';
-echo '<label class="control-label control-label-normal col-md-2">'.$lang['f_page_permalink_short'].'</label>';
-echo '<div class="col-sm-10">';
+echo '<label>'.$lang['f_page_permalink_short'].'</label>';
 echo '<div class="input-group">';
 echo '<input class="form-control" type="text" name="page_permalink_short" value="'.$page_permalink_short.'">';
-echo '<span class="input-group-addon">'.$page_permalink_short_cnt.'</span>';
+echo '<div class="input-group-append">';
+echo '<span class="input-group-text">'.$page_permalink_short_cnt.'</span>';
 echo '</div>';
 echo '</div>';
 echo '</div>';
@@ -152,7 +158,7 @@ echo '</div>';
 /* funnel URI */
 echo tpl_form_control_group('',$lang['f_page_funnel_uri'],'<textarea class="form-control" name="page_funnel_uri">'.$page_funnel_uri.'</textarea>');
 
-$select_page_redirect_code  = '<select name="page_redirect_code" class="form-control">';
+$select_page_redirect_code  = '<select name="page_redirect_code" class="custom-select form-control">';
 if($page_redirect_code == '') {
 	$page_redirect_code = 301;
 }
@@ -170,7 +176,7 @@ echo tpl_form_control_group('',$lang['f_page_redirect'],'<div class="row"><div c
 
 
 echo '</fieldset>';
-echo '</div>';
+
 echo '<div class="clearfix"></div>';
 
 echo '</div>'; /* EOL tab_info */
@@ -274,7 +280,7 @@ foreach($robots as $r) {
 		$checked = 'checked';
 	}
 	
-	$checkbox_robots .= '<label class="btn btn-default btn-sm '.$active.'">';
+	$checkbox_robots .= '<label class="btn btn-light btn-sm '.$active.'">';
 	$checkbox_robots .= '<input type="checkbox" name="page_meta_robots[]" value="'.$r.'" '.$checked.'> '.$r;
 	$checkbox_robots .= '</label>';
 }
@@ -333,19 +339,23 @@ echo '</div>'; /* EOL tab custom fields */
 echo '</div>'; // EOL fancytabs
 
 echo '</div>';
+echo '</div>';
+
+
+echo '</div>';
 echo '<div class="col-lg-3 col-md-4 col-sm-12">';
 
 
-echo '<div class="panel panel-default">';
-echo '<div class="panel-heading">'.$lang['tab_page_preferences'].'</div>';
-echo '<div class="panel-body" style="padding-left:30px;padding-right:30px;">';
+echo '<div class="card">';
+echo '<div class="card-header">'.$lang['tab_page_preferences'].'</div>';
+echo '<div class="card-body" style="padding-left:30px;padding-right:30px;">';
 
 
 echo '<div class="form-group">';
-echo '<div class="btn-group btn-group-justified" data-toggle="buttons">';
-echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE1"> WYSIWYG</label>';
-echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE2"> Text</label>';
-echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE3"> Code</label>';
+echo '<div class="btn-group btn-group-toggle d-flex" data-toggle="buttons" role="flex">';
+echo '<label class="btn btn-sm btn-dark w-100"><input type="radio" name="optEditor" value="optE1"> WYSIWYG</label>';
+echo '<label class="btn btn-sm btn-dark w-100"><input type="radio" name="optEditor" value="optE2"> Text</label>';
+echo '<label class="btn btn-sm btn-dark w-100"><input type="radio" name="optEditor" value="optE3"> Code</label>';
 echo '</div>';
 echo '</div>';
 
@@ -353,7 +363,7 @@ echo '</div>';
 /* Select Language */
 $arr_lang = get_all_languages();
 
-$select_page_language  = '<select name="page_language" class="form-control">';
+$select_page_language  = '<select name="page_language" class="custom-select form-control">';
 for($i=0;$i<count($arr_lang);$i++) {
 
 	$lang_sign = $arr_lang[$i]['lang_sign'];
@@ -375,7 +385,7 @@ echo '</div>';
 
 $arr_Styles = get_all_templates();
 
-$select_select_template = '<select id="select_template" name="select_template"  class="form-control">';
+$select_select_template = '<select id="select_template" name="select_template"  class="custom-select form-control">';
 
 if($page_template == '') {
 	$selected_standard = 'selected';
@@ -416,7 +426,7 @@ echo '</div>';
 
 $arr_iMods = get_all_moduls();
 
-$select_page_modul = '<select name="page_modul"  class="form-control">';
+$select_page_modul = '<select name="page_modul"  class="custom-select form-control">';
 
 $select_page_modul .= '<option value="">Kein Modul</option>';
 
@@ -458,27 +468,26 @@ if($page_status == "") {
 }
 
 
-$select_page_status = '<div class="text-center">';
-$select_page_status .= '<div class="btn-group btn-group-justified" data-toggle="buttons">';
+$select_page_status = '<div class="btn-group btn-group-vertical btn-group-toggle d-flex" data-toggle="buttons" role="group">';
 
-$select_page_status .= '<label class="btn btn-xs btn-default btn-public '.($page_status == "public" ? 'active' :'').' ">';
+$select_page_status .= '<label class="btn btn-sm btn-dark w-100 btn-public '.($page_status == "public" ? 'active' :'').' ">';
 $select_page_status .= "<input type='radio' name='page_status' value='public'".($page_status == "public" ? 'checked' :'')."> $lang[f_page_status_puplic]";
 $select_page_status .= '</label>';
 
-$select_page_status .= '<label class="btn btn-xs btn-default btn-ghost '.($page_status == "ghost" ? 'active' :'').'">';
+$select_page_status .= '<label class="btn btn-sm btn-dark w-100 btn-ghost '.($page_status == "ghost" ? 'active' :'').'">';
 $select_page_status .= "<input type='radio' name='page_status' value='ghost'".($page_status == "ghost" ? 'checked' :'')."> $lang[f_page_status_ghost]";
 $select_page_status .= '</label>';
 
-$select_page_status .= '<label class="btn btn-xs btn-default btn-private '.($page_status == "private" ? 'active' :'').'">';
+$select_page_status .= '<label class="btn btn-sm btn-dark w-100 btn-private '.($page_status == "private" ? 'active' :'').'">';
 $select_page_status .= "<input type='radio' name='page_status' value='private'".($page_status == "private" ? 'checked' :'')."> $lang[f_page_status_private]";
 $select_page_status .= '</label>';
 
-$select_page_status .= '<label class="btn btn-xs btn-default btn-draft '.($page_status == "draft" ? 'active' :'').'">';
+$select_page_status .= '<label class="btn btn-sm btn-dark w-100 btn-draft '.($page_status == "draft" ? 'active' :'').'">';
 $select_page_status .= "<input type='radio' name='page_status' value='draft'".($page_status == "draft" ? 'checked' :'')."> $lang[f_page_status_draft]";	
 $select_page_status .= '</label>';
 
 $select_page_status .= '</div>';
-$select_page_status .= '</div>';
+
 
 echo '<div class="form-group">';
 echo '<label>'.$lang['f_page_status'].'</label>';
@@ -530,7 +539,7 @@ for($i=0;$i<count($arr_groups);$i++) {
 echo '<div class="form-group">';
 echo '<div class="well well-sm">';
 echo '<a href="#usergroups" data-toggle="collapse" data-target="#usergroups">'.$lang['legend_choose_group'].'</a>';
-echo '<div id="usergroups" class="collapse">';
+echo '<div id="usergroups" class="collapse p-3">';
 echo $checkbox_usergroup;
 echo '</div>';
 echo '</div>';
@@ -560,7 +569,7 @@ for($i=0;$i<$cnt_admins;$i++) {
 
 echo '<div class="well well-sm">';
 echo '<a href="#admins" data-toggle="collapse" data-target="#admins">'.$lang['f_page_authorized_admins'].'</a>';
-echo '<div id="admins" class="collapse">';
+echo '<div id="admins" class="collapse p-3">';
 echo $checkbox_set_authorized_admins;
 echo '</div>';
 echo '</div>';
@@ -593,7 +602,7 @@ for($i=0;$i<$cnt_labels;$i++) {
 
 echo '<div class="well well-sm">';
 echo '<a href="#labels" data-toggle="collapse" data-target="#labels">'.$lang['labels'].'</a>';
-echo '<div id="labels" class="collapse">';
+echo '<div id="labels" class="collapse p-3">';
 echo $checkbox_set_labels;
 echo '</div>';
 echo '</div>';
@@ -606,8 +615,8 @@ echo '<input type="hidden" name="page_version" value="'.$page_version.'">';
 echo '<input type="hidden" name="modus" value="'.$modus.'">';
 
 echo '<div class="form-group">';
-echo '<div class="btn-group btn-group-justified">';
-echo '<div class="btn-group">'.$submit_button.'</div><div class="btn-group">'.$previev_button.'</div>';
+echo '<div class="btn-group d-flex">';
+echo $submit_button.' '.$previev_button;
 echo '</div>';
 echo $delete_button;
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';

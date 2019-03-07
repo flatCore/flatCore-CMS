@@ -174,9 +174,9 @@ echo '<h3>' . $lang['snippets'] . '</h3>';
 
 echo '<div class="well well-sm">';
 echo '<div class="btn-group" role="group">';
-echo '<a class="btn btn-default '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle</a>';
-echo '<a class="btn btn-default '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System</a>';
-echo '<a class="btn btn-default '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene</a>';
+echo '<a class="btn btn-dark '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle</a>';
+echo '<a class="btn btn-dark '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System</a>';
+echo '<a class="btn btn-dark '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene</a>';
 echo '</div>';
 echo '</div>';
 
@@ -188,7 +188,8 @@ echo '<input class="form-control filter-list" type="search" placeholder="Filter 
 
 echo '<div class="max-height-container">';
 echo '<div class="scroll-box">';
-echo '<div class="list-group">';
+echo '<div class="card">';
+echo '<div class="list-group list-group-flush">';
 
 for($i=0;$i<$cnt_snippets;$i++) {
 	$active_class = '';
@@ -216,9 +217,10 @@ for($i=0;$i<$cnt_snippets;$i++) {
 		$active_class = 'active';
 	}
 	
-	echo '<a class="list-group-item filter-list-item '.$active_class.'" href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'" data-title="'.$get_snip_name.'" data-groups="['.$data_groups.']">'.$show_snip_name.' <span class="badge">'.$get_snip_lang.'</span></a>';
+	echo '<a class="list-group-item list-group-item-ghost filter-list-item '.$active_class.'" href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'" data-title="'.$get_snip_name.'" data-groups="['.$data_groups.']">'.$show_snip_name.' <span class="badge">'.$get_snip_lang.'</span></a>';
 }
 
+echo '</div>';
 echo '</div>';
 echo '</div>';
 echo '</div>';
@@ -237,10 +239,10 @@ echo '<div class="col-md-8">';
 echo '<div class="well well-sm">';
 
 echo '<div class="form-group text-right">';
-echo '<div class="btn-group" data-toggle="buttons">';
-echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE1"> WYSIWYG</label>';
-echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE2"> Text</label>';
-echo '<label class="btn btn-sm btn-default"><input type="radio" name="optEditor" value="optE3"> Code</label>';
+echo '<div class="btn-group btn-group-toggle" data-toggle="buttons" role="flex">';
+echo '<label class="btn btn-sm btn-dark w-100"><input type="radio" name="optEditor" value="optE1"> WYSIWYG</label>';
+echo '<label class="btn btn-sm btn-dark w-100"><input type="radio" name="optEditor" value="optE2"> Text</label>';
+echo '<label class="btn btn-sm btn-dark w-100"><input type="radio" name="optEditor" value="optE3"> Code</label>';
 echo '</div>';
 echo '</div>';
 
@@ -273,7 +275,7 @@ echo '<input class="form-control" type="text" name="snippet_priority" value="'.$
 echo '</div>';
 
 
-$select_textlib_language  = '<select name="sel_language" class="form-control">';
+$select_textlib_language  = '<select name="sel_language" class="custom-select form-control">';
 for($i=0;$i<count($arr_lang);$i++) {
 	$lang_sign = $arr_lang[$i]['lang_sign'];
 	$lang_desc = $arr_lang[$i]['lang_desc'];
@@ -302,19 +304,21 @@ echo '<label>'.$lang['label_groups'].'</label>';
 echo '<input class="form-control" type="text" name="snippet_groups" value="'.$textlib_groups.'" />';
 echo '</div>';
 
-echo '<div class="alert alert-info" style="padding:2px 3px;">';
+echo '<div class="alert alert-dark" style="padding:2px 3px;">';
 echo '<strong>'.$lang['label_notes'].':</strong>';
 echo '<textarea class="masked-textarea" name="textlib_notes" rows="5">'.$textlib_notes.'</textarea>';
 echo '</div>';
 
-echo '<div class="formfooter">';
+echo '<div class="well well-sm">';
 if($modus == 'new') {
-	echo '<input type="submit" name="save_snippet" class="btn btn-success btn-block" value="'.$lang['save'].'">';
+	echo '<input type="submit" name="save_snippet" class="btn btn-dark btn-block text-success" value="'.$lang['save'].'">';
 } else {
 	echo '<input type="hidden" name="snip_id" value="'.$snip_id.'">';
-	echo '<input type="submit" name="save_snippet" class="btn btn-success btn-block" value="'.$lang['update'].'"> ';
-	echo '<a class="btn btn-default btn-block" href="acp.php?tn=pages&sub=snippets">'.$lang['discard_changes'].'</a>';
-	echo '<input type="submit" name="delete_snippet" class="btn btn-danger btn-sm btn-block" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_data'].'\')">';
+	echo '<input type="submit" name="save_snippet" class="btn btn-dark btn-block text-success" value="'.$lang['update'].'"> ';
+	echo '<div class="mt-1 d-flex">';
+	echo '<a class="btn btn-dark w-100 mr-1" href="acp.php?tn=pages&sub=snippets">'.$lang['discard_changes'].'</a> ';
+	echo '<input type="submit" name="delete_snippet" class="btn btn-dark text-danger" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_data'].'\')">';
+	echo '</div>';
 }
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</div>';

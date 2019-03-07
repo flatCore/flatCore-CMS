@@ -63,17 +63,17 @@ for($i=0;$i<$cnt_rssItems;$i++) {
 	}
 
 	
-	echo '<div class="panel panel-default">';
-	echo '<div class="panel-heading">';
-	echo '<h3 class="panel-title">' .$feed_date. ' ' .$ts_diff_string. '</h3>';
+	echo '<div class="card mb-1">';
+	echo '<div class="card-header">';
+	echo $feed_date. ' ' .$ts_diff_string;
 	echo '</div>';
-	echo '<div class="panel-body">';
+	echo '<div class="card-body">';
 	echo '<h3>'.$feed_title.'</h3>';
 	echo $feed_text;
 	echo '<p><a href="'.$feed_url.'" target="_blank">'.$feed_url.'</a></p>';
-	echo '<div class="formfooter">';
-	echo "<a class='btn btn-danger' href='acp.php?tn=pages&sub=rss&delete=$feed_id' onclick=\"return confirm('$lang[confirm_delete_data]')\">$lang[delete]</a>";
-	echo '</div>';
+	echo '<hr>';
+	echo "<a class='btn btn-dark text-danger' href='acp.php?tn=pages&sub=rss&delete=$feed_id' onclick=\"return confirm('$lang[confirm_delete_data]')\">$lang[delete]</a>";
+
 	echo '</div>';
 	echo '</div>';
 	

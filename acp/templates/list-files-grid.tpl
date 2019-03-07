@@ -1,5 +1,5 @@
 <div class="row files-list">
-	<div class="col-md-1">
+	<div class="col-md-1 p-1">
 		{preview_img}
 	</div>
 	<div class="col-md-5">
@@ -11,15 +11,17 @@
 	<div class="col-md-2">
 		{show_filetime}
 	</div>
-	<div class="col-md-2 text-right">
+	<div class="col-md-2 text-right p-1">
+		
 		<form action="?tn=filebrowser" method="POST">
-			<div class="btn-group">
+			<div class="btn-group d-flex">
 				{edit_button}
 				{delete_button}
 				<input type="hidden" name="file" value="{short_filename}">
 				<input  type="hidden" name="csrf_token" value="{csrf_token}">
 			</div>
-		</form>	
+		</form>
+		
 	</div>
 </div>
 

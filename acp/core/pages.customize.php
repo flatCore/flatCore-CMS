@@ -105,10 +105,11 @@ $radio_field_type = "
 
 echo tpl_form_control_group('','',$radio_field_type);
 
-echo"<div class='formfooter'>";
-echo"<input type='submit' class='btn btn-success' name='add_field' value='$lang[save]'>";
+echo '<hr>';
+
+echo"<input type='submit' class='btn btn-dark text-success' name='add_field' value='$lang[save]'>";
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
-echo"</div>";
+
 
 echo '</form>';
 echo '</fieldset>';
@@ -148,7 +149,7 @@ if($cnt_result < 1) {
 			echo '<td>';
 			echo '<form action="acp.php?tn=pages&sub=customize" class="form-inline" method="POST">';
 			echo '<input type="hidden" name="del_field" value="'.$result[$i].'">';
-			echo '<button type="submit" class="btn btn-sm btn-danger btn-block" name="delete_field"><span class="glyphicon glyphicon-trash"></span></button>';
+			echo '<button type="submit" class="btn btn-sm btn-dark btn-block text-danger" name="delete_field">'.$icon['trash_alt'].'</button>';
 			echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 			echo '</form>';
 			echo '</td>';

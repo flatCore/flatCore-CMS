@@ -19,7 +19,7 @@ $lang['tn_contents_desc'] = "Seiten, Textvorlagen, RSS Feeds erstellen/bearbeite
 
 /* Links and Buttons */
 
-$lang['back_to_page'] = "zurück zur Homepage";
+$lang['back_to_page'] = "zur Homepage";
 $lang['show_help'] = "Hilfe anzeigen";
 $lang['logout'] = "Abmelden";
 $lang['edit'] = "Bearbeiten";
@@ -36,12 +36,11 @@ $lang['discard_changes'] = "Verwerfen";
 $lang['download'] = "Download";
 $lang['new_user'] = "Neuer Benutzer";
 $lang['edit_user'] = "Benutzer bearbeiten";
-$lang['new_user'] = "Neuen Benutzer anlegen";
-$lang['list_user'] = "Alle Benutzer anzeigen";
+$lang['list_user'] = "Alle Benutzer";
 $lang['customize_user'] = "Benutzer anpassen";
 
-$lang['edit_groups'] = "Benutzergruppen bearbeiten";
-$lang['legend_choose_group'] = "Benutzergruppe auswählen";
+$lang['edit_groups'] = "Gruppen bearbeiten";
+$lang['legend_choose_group'] = "Gruppe auswählen";
 $lang['legend_groups_data'] = "Daten der Benutzergruppe";
 $lang['label_group_name'] = "Gruppenname";
 $lang['label_group_description'] = "Beschreibung";
@@ -50,10 +49,10 @@ $lang['label_group_add_user'] = "Benutzer hinzufügen/entfernen";
 $lang['manage_files'] = "Dateien verwalten";
 $lang['go_to_upload'] = "Dateien hochladen";
 
-$lang['page_list'] = "Alle Seiten anzeigen";
+$lang['page_list'] = "Alle Seiten";
 $lang['page_edit'] = "Seite bearbeiten";
 $lang['page_customize'] = "Seiten anpassen";
-$lang['new_page'] = "Neue Seite anlegen";
+$lang['new_page'] = "Neue Seite";
 $lang['textlib'] = "Textbausteine";
 $lang['snippets'] = "Textvorlagen";
 $lang['filename'] = "Dateiname";

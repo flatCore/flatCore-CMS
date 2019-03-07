@@ -34,7 +34,7 @@ $fc_content_switch .= '<div>';
 
 $i=0;
 foreach($fc_content_files as $files) {
-	$fc_content_switch .= '<a class="btn btn-default btn-xs btn-block" href="acp.php?tn='.$_GET['tn'].'&amp;switchContent='.$i.'" title="'.$files['desc'].'">'.$files['file'].'</a>';
+	$fc_content_switch .= '<a class="btn btn-light btn-xs btn-block" href="acp.php?tn='.$_GET['tn'].'&amp;switchContent='.$i.'" title="'.$files['desc'].'">'.$files['file'].'</a>';
 	$i++;
 }
 

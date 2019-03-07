@@ -427,7 +427,7 @@ function print_sysmsg($msg) {
 	}
 
 	$msg = substr(strstr($msg, '}'), 2);
-	echo '<div class="'.$style.' alert-dismissible fade in" role="alert">';
+	echo '<div class="'.$style.' alert-dismissible" role="alert">';
 	echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>';
 	echo $msg;
 	echo '</div>';
@@ -502,9 +502,9 @@ function show_log($nbr) {
 		$date = date("d.m.Y",$result[$i]['log_time']);
 		$log_priority = 'log_priority'.$result[$i]['log_priority'];
 		
-		echo '<dl class="dl-horizontal dl-logfile">';
-		echo '<dt><span class="priority-indicator '.$log_priority.'" title="'.$result[$i]['log_priority'].'"></span>'.$date.' '.$time.'</dt>';
-		echo '<dd>'.$result[$i]['log_trigger'].' - '. $result[$i]['log_entry'] .'</dd>';
+		echo '<dl class="row dl-logfile">';
+		echo '<dt class="col-sm-3"><span class="priority-indicator '.$log_priority.'" title="'.$result[$i]['log_priority'].'"></span>'.$date.' '.$time.'</dt>';
+		echo '<dd class="col-sm-9">'.$result[$i]['log_trigger'].' - '. $result[$i]['log_entry'] .'</dd>';
 		echo '</dl>';
 
 	} // eol $i
@@ -924,16 +924,16 @@ function show_editor_switch($tn,$sub) {
 	$btn_text_link = "acp.php?tn=$tn&sub=$sub&editor=plain";
 	
 	if($_SESSION['editor_class'] == "plain") {
-		$btn_wysiwyg = 'btn btn-default btn-sm';
+		$btn_wysiwyg = 'btn btn-light btn-sm';
 		$btn_text = 'btn btn-primary btn-sm disabled';
-		$btn_code = 'btn btn-default btn-sm';
+		$btn_code = 'btn btn-light btn-sm';
 	} elseif($_SESSION['editor_class'] == "wysiwyg") {
 		$btn_wysiwyg = 'btn btn-primary btn-sm disabled';
-		$btn_text = 'btn btn-default btn-sm';
-		$btn_code = 'btn btn-default btn-sm';
+		$btn_text = 'btn btn-light btn-sm';
+		$btn_code = 'btn btn-light btn-sm';
 	} else {
-		$btn_wysiwyg = 'btn btn-default btn-sm';
-		$btn_text = 'btn btn-default btn-sm';
+		$btn_wysiwyg = 'btn btn-light btn-sm';
+		$btn_text = 'btn btn-light btn-sm';
 		$btn_code = 'btn btn-primary btn-sm disabled';
 	}
 	

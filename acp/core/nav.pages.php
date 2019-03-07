@@ -1,22 +1,26 @@
 <?php
-require("core/access.php");
+require 'core/access.php';
 
 
 if($sub == '') {
 	$sub = 'list';
 }
 
-echo '<a class="sidebar-nav '.($sub == "list" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=pages&sub=list">'.$lang['page_list'].'<span class="tri-left"></span></a>';
-echo '<a class="sidebar-nav '.($sub == "new" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=pages&sub=new">'.$lang['new_page'].'<span class="tri-left"></span></a>';
+echo '<ul class="nav">';
+
+echo '<li><a class="sidebar-nav '.($sub == "list" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=pages&sub=list">'.$icon['sitemap'].' '.$lang['page_list'].'</a></li>';
+echo '<li><a class="sidebar-nav '.($sub == "new" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=pages&sub=new">'.$icon['plus'].' '.$lang['new_page'].'</a></li>';
 
 if($sub == "edit") {
-	echo '<a class="sidebar-nav '.($sub == "edit" ? 'sidebar-nav-active' :'').'" href="#">'.$lang['page_edit'].'<span class="tri-left"></span></a>';
+	echo '<li><a class="sidebar-nav '.($sub == "edit" ? 'sidebar-nav-active' :'').'" href="#">'.$icon['edit'].' '.$lang['page_edit'].'</a></li>';
 } else {
-	echo "<span class='sidebar-nav sidebar-nav-disabled'>$lang[page_edit]</span>";
+	echo '<li><a class="sidebar-nav sidebar-nav-disabled" href="#">'.$icon['edit'].' '.$lang['page_edit'].'</a></li>';
 }
 
-echo '<a class="sidebar-nav '.($sub == "customize" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=pages&sub=customize">'.$lang['page_customize'].'<span class="tri-left"></span></a>';
-echo '<a class="sidebar-nav '.($sub == "snippets" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=pages&sub=snippets">'.$lang['snippets'].'<span class="tri-left"></span></a>';
-echo '<a class="sidebar-nav '.($sub == "rss" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=pages&sub=rss">RSS<span class="tri-left"></span></a>';
+echo '<li><a class="sidebar-nav '.($sub == "customize" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=pages&sub=customize">'.$icon['cogs'].' '.$lang['page_customize'].'</a></li>';
+echo '<li><a class="sidebar-nav '.($sub == "snippets" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=pages&sub=snippets">'.$icon['clipboard'].' '.$lang['snippets'].'</a></li>';
+echo '<li><a class="sidebar-nav '.($sub == "rss" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=pages&sub=rss">'.$icon['rss'].' RSS</a></li>';
+
+echo '</ul>';
 
 ?>

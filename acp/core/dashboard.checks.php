@@ -1,7 +1,7 @@
 <?php
 	
 //prohibit unauthorized access
-require("core/access.php");
+require 'core/access.php';
 
 
 if(!is_file('../.htaccess')) {

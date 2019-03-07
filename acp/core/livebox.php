@@ -1,4 +1,4 @@
-<div id="liveBox">
+<div class="sidebar-footer">
 	<?php
 		
 		$helpURL = 'https://flatcore.org/docs/en/';
@@ -7,11 +7,10 @@
 			$helpURL = 'https://flatcore.org/docs/de/';	
 		}
 		
-		echo '<a class="fancybox-docs" href="'.$helpURL.'"><span class="glyphicon glyphicon-question-sign"></span> '.$lang['show_help'].'</a>';
+		echo '<a class="fancybox-docs" href="'.$helpURL.'">'.$icon['question'].' '.$lang['show_help'].'</a>';
 		
-	?>		
+		echo '<a href="../">'.$icon['home'].' '.$lang['back_to_page'].'</a>';
+		echo '<a href="../index.php?goto=logout">'.$icon['sign_out_alt'].' '.$lang['logout'].'</a>';
 		
-	<a href='../'><span class="glyphicon glyphicon-home"></span>  <?php echo $lang['back_to_page']; ?></a>
-	<hr>
-	<a href='../index.php?goto=logout'><span class="glyphicon glyphicon-off"></span> <?php echo $lang['logout']; ?></a>
+	?>
 </div>

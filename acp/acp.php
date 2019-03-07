@@ -8,7 +8,7 @@ if(is_file('../'.FC_CONTENT_DIR.'/config.php')) {
 }
 require 'core/access.php';
 include 'versions.php';
-
+include 'core/icons.php';
 
 if(isset($fc_content_files) && is_array($fc_content_files)) {
 	/* switch database file $fc_db_content */
@@ -123,7 +123,7 @@ if(isset($set_acptheme)) {
 		<link rel="icon" type="image/x-icon" href="images/favicon.ico" />
 		
 		<script src="../lib/js/jquery/jquery.min.js"></script>
-    <script src="../lib/js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
     <script language="javascript" type="text/javascript" src="../lib/js/tinymce/tinymce.min.js"></script>
     <script language="javascript" type="text/javascript" src="../lib/js/tinymce/jquery.tinymce.min.js"></script>
 
@@ -133,21 +133,14 @@ if(isset($set_acptheme)) {
 		
 		<script type="text/javascript" src="../lib/js/jquery/jquery.textareaCounter.plugin.js"></script>
 
-		<link rel="stylesheet" href="../lib/css/bootstrap.min.css?v=3.3.6" type="text/css" media="screen, projection">
+		<link rel="stylesheet" href="css/bootstrap.min.css?v=3.3.6" type="text/css" media="screen, projection">
 		<link rel="stylesheet" href="css/styles.css?v=20161020" type="text/css" media="screen, projection">
 		<link href="fontawesome/css/all.min.css" rel="stylesheet">
 		
 		<script type="text/javascript">
 			var languagePack = "<?php echo $languagePack; ?>";
-			var ace_theme = 'chrome';
-			var tinymce_skin = 'lightgray';
-			var acptheme = "<?php echo $acptheme; ?>";
-			
-			if(acptheme === 'dark') {
-				var ace_theme = 'twilight';
-				var tinymce_skin = 'tundora';
-			}
-			
+			var ace_theme = 'twilight';
+			var tinymce_skin = 'tundora';		
 		</script>
 		
 		<?php
@@ -215,9 +208,10 @@ if(isset($set_acptheme)) {
 		?>
 	
 		<div id="page-sidebar">
-			<a href="acp.php?tn=dashboard" id="dashboard" title="Dashboard"></a>
+			<div id="page-sidebar-inner">
 			<?php include 'core/'.$navinc.'.php'; ?>
 			<?php include 'core/livebox.php'; ?>
+			</div>
 		</div>
 			
 		<div id="page-content">
@@ -256,27 +250,20 @@ if(isset($set_acptheme)) {
 		</div>
 		
 		<div class="bottom-bar">
-			<?php
-				if($acptheme == 'default') {
-					echo '<a class="btn btn-default btn-sm" href="acp.php?tn='.$tn.'&theme=true">Dark Theme</a>';
-				} else {
-					echo '<a class="btn btn-default btn-sm" href="acp.php?tn='.$tn.'&theme=true">Default Theme</a>';
-				}
-			?>
-			<button type="button" class="btn btn-fc btn-sm" data-toggle="modal" data-target="#uploadModal"><span class="glyphicon glyphicon-upload"></span> Upload</button>
+			<button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#uploadModal"><?php echo $icon['upload']; ?> Upload</button>
 		</div>
 		<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-hidden="true">
 		  <div class="modal-dialog modal-lg">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-upload"></span> Upload</h4>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		      </div>
 		      <div class="modal-body">
 		        <?php include 'core/files.upload.php'; ?>
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
 		      </div>
 		    </div>
 		  </div>
@@ -446,6 +433,17 @@ if(isset($set_acptheme)) {
 		        var id = $(this).attr('id');
 		        $('a[href="#' + id + '"]').removeClass('active');
 		    });
+		    
+		    
+				$(document).on('click', 'a[href^=#]', function(e){
+        	e.preventDefault();
+					var id = $(this).attr('href');
+					$('html,body').animate({scrollTop: $(id).offset().top}, 500);
+    		});		    
+		    
+		    
+		    
+		    
 				
 				Dropzone.options.myDropzone = {
 			  	init: function() {
@@ -558,7 +556,106 @@ if(isset($set_acptheme)) {
 			});
 		});
 
+	
+	
+	//SIDEBAR
+	
+var sidebarState = sessionStorage.getItem('sidebarState');
+
+windowWidth = $(window).width();
+
+$(window).resize(function() {
+  windowWidth = $(window).width();
+
+  if( windowWidth < 992 ){ //992 is the value of $screen-md-min in boostrap variables.scss
+					$('#page-sidebar-inner').addClass('sidebar-collapsed').removeClass('sidebar-expanded');
+					$('#page-content').addClass('sb-collapsed').removeClass('sb-expanded');
+					$('#page-sidebar').addClass('sb-collapsed').removeClass('sb-expanded');
+    }
+    else{
+        if(sidebarState){
+					$('#page-sidebar-inner').addClass('sidebar-collapsed').removeClass('sidebar-expanded');
+					$('#page-content').addClass('sb-collapsed').removeClass('sb-expanded');
+					$('#page-sidebar').addClass('sb-collapsed').removeClass('sb-expanded');
+        }
+        else{
+    $('#page-sidebar-inner').addClass('sidebar-expanded').removeClass('sidebar-collapsed');
+    $('#page-content').addClass('sb-expanded').removeClass('sb-collapsed');
+    $('#page-sidebar').addClass('sb-expanded').removeClass('sb-collapsed');
+        }
+    }
+});
+
+function setSidebarState(value){
+    sessionStorage.setItem('sidebarState', value);
+}
+
+function clearSidebarState(){
+    sessionStorage.removeItem('sidebarState');
+}
+
+function collapseSidebar(){
+    $('#page-sidebar-inner').addClass('sidebar-collapsed').removeClass('sidebar-expanded');
+    $('#page-content').addClass('sb-collapsed').removeClass('sb-expanded');
+    $('#page-sidebar').addClass('sb-collapsed').removeClass('sb-expanded');
+    $('.caret_left').addClass('d-none');
+    $('.caret_right').removeClass('d-none');
+}
+
+function expandSidebar(){
+    $('#page-sidebar-inner').addClass('sidebar-expanded').removeClass('sidebar-collapsed');
+    $('#page-content').addClass('sb-expanded').removeClass('sb-collapsed');
+    $('#page-sidebar').addClass('sb-expanded').removeClass('sb-collapsed');
+    $('.caret_right').addClass('d-none');
+    $('.caret_left').removeClass('d-none');
+}
+
+$(function(){
+
+    /** check sessionStorage to expand/collapse sidebar onload **/
+    if (sidebarState == "collapsed") {
+    	collapseSidebar();
+    } else {
+
+    	if( windowWidth < 992 ) {
+				$('#page-sidebar-inner').addClass('sidebar-collapsed').removeClass('sidebar-expanded');
+				$('#page-content').addClass('sb-collapsed').removeClass('sb-expanded');
+				$('#page-sidebar').addClass('sb-collapsed').removeClass('sb-expanded');
+      } else {
+      
+      	if(sidebarState){
+					$('#page-sidebar-inner').addClass('sidebar-collapsed').removeClass('sidebar-expanded');
+					$('#page-content').addClass('sb-collapsed').removeClass('sb-expanded');
+					$('#page-sidebar').addClass('sb-collapsed').removeClass('sb-expanded');
+        } else {
+					$('#page-sidebar-inner').addClass('sidebar-expanded').removeClass('sidebar-collapsed');
+					$('#page-content').addClass('sb-expanded').removeClass('sb-collapsed');
+					$('#page-sidebar').addClass('sb-expanded').removeClass('sb-collapsed');
+				  $('.caret_right').addClass('d-none');
+					$('.caret_left').removeClass('d-none');        }
+      }  
+    }
+
+
+    /** collapse the sidebar navigation **/    
+    $('#toggleNav').click(function(){
+        if(!($('#page-sidebar-inner').hasClass('sidebar-collapsed'))) { // if sidebar is not yet collapsed
+          collapseSidebar();
+          setSidebarState('collapsed');
+        } else {
+        	expandSidebar();
+          clearSidebarState();
+        }
+        return false;
+    })
+})
+
+//SIDEBAR
+	
+	
 	});
+	
+
 
   $(window).resize(function () {
   	stretchAppContainer();

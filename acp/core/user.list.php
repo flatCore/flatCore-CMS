@@ -1,7 +1,7 @@
 <?php
 
 //prohibit unauthorized access
-require("core/access.php");
+require 'core/access.php';
 
 $sort = (int) $_GET['sort'];
 
@@ -96,10 +96,10 @@ if($_SESSION['checked_deleted'] == "checked") {
 
 
 $status_btn_group  = '<div class="btn-group">';
-$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusVerified" class="btn btn-fc btn-sm '.$btn_status_verified.'"><span class="glyphicon glyphicon-ok"></span></a>';
-$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusWaiting" class="btn btn-fc btn-sm '.$btn_status_waiting.'"><span class="glyphicon glyphicon-time"></span></a>';
-$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusPaused" class="btn btn-fc btn-sm '.$btn_status_paused.'"><span class="glyphicon glyphicon-warning-sign"></span></a>';
-$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusDeleted" class="btn btn-fc btn-sm '.$btn_status_deleted.'"><span class="glyphicon glyphicon-ban-circle"></span></a>';
+$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusVerified" class="btn btn-dark '.$btn_status_verified.'">'.$icon['user_check'].'</span></a>';
+$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusWaiting" class="btn btn-dark '.$btn_status_waiting.'">'.$icon['user_clock'].'</a>';
+$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusPaused" class="btn btn-dark '.$btn_status_paused.'">'.$icon['user_lock'].'</a>';
+$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusDeleted" class="btn btn-dark '.$btn_status_deleted.'">'.$icon['user_slash'].'</a>';
 $status_btn_group .= '</div>';
 
 
@@ -179,7 +179,7 @@ if($prev_start <= 0){
 }
 
 
-$pag_backlink = "<a class='btn btn-primary' href='acp.php?tn=user&sub=list&start=$prev_start&sort=$sort'>$lang[pagination_backward]</a>";
+$pag_backlink = "<a class='btn btn-dark' href='acp.php?tn=user&sub=list&start=$prev_start&sort=$sort'>$lang[pagination_backward]</a>";
 
 
 for($x=0;$x<$cnt_pages;$x++) {
@@ -188,16 +188,16 @@ for($x=0;$x<$cnt_pages;$x++) {
 	$page_nbr = $x+1;
 
 	if($page_start == $start) {
-		$aclass = "btn btn-primary active";
+		$aclass = "btn btn-dark active";
 	} else {
-		$aclass = "btn btn-primary";
+		$aclass = "btn btn-dark";
 	}
 
 	$pag_string .= "<a class='$aclass' href='acp.php?tn=user&sub=list&start=$page_start'>$page_nbr</a> ";
 } //eol for $x
 
 
-$pag_forwardlink = "<a class='btn btn-primary' href='acp.php?tn=user&sub=list&start=$next_start&sort=$sort'>$lang[pagination_forward]</a>";
+$pag_forwardlink = "<a class='btn btn-dark' href='acp.php?tn=user&sub=list&start=$next_start&sort=$sort'>$lang[pagination_forward]</a>";
 
 
 echo '<div class="row">';
@@ -205,7 +205,9 @@ echo '<div class="col-md-5">';
 echo "<form action='acp.php?tn=user' class='form-inline' method='POST'>";
 
 echo '<div class="input-group">';
-echo '<span class="input-group-addon"><span class="glyphicon glyphicon-filter"></span></span>';
+echo '<div class="input-group-prepend">';
+echo '<span class="input-group-text">'.$icon['search'].'</span>';
+echo '</div>';
 echo '<input type="text" name="findUser" class="form-control" placeholder="Filter">';
 echo '</div>';
 echo "</form>";
@@ -223,15 +225,15 @@ echo '</div><br>';
 
 //print the list
 
-echo"<table class='table table-condensed table-hover table-list' border='0' cellpadding='0' cellspacing='0'>";
+echo"<table class='table table-sm'>";
 
 echo"<thead><tr>
 <th class='head' style='text-align:right;'><a class='darklink' href='acp.php?tn=user&sub=list&sort=0&way=$set_way'>ID</a></th>
 <th class='head'></th>
-<th class='head'><a class='darklink' href='acp.php?tn=user&sub=list&sort=1&way=$set_way'>$lang[h_username]</a></th>
-<th class='head'><a class='darklink' href='acp.php?tn=user&sub=list&sort=2&way=$set_way'>$lang[h_registerdate]</a></th>
-<th class='head'><a class='darklink' href='acp.php?tn=user&sub=list&sort=3&way=$set_way'>$lang[h_realname]</a></th>
-<th class='head'><a class='darklink' href='acp.php?tn=user&sub=list&sort=4&way=$set_way'>$lang[h_email]</a></th>
+<th class='head'><a class='' href='acp.php?tn=user&sub=list&sort=1&way=$set_way'>$lang[h_username]</a></th>
+<th class='head'><a class='' href='acp.php?tn=user&sub=list&sort=2&way=$set_way'>$lang[h_registerdate]</a></th>
+<th class='head'><a class='' href='acp.php?tn=user&sub=list&sort=3&way=$set_way'>$lang[h_realname]</a></th>
+<th class='head'><a class='' href='acp.php?tn=user&sub=list&sort=4&way=$set_way'>$lang[h_email]</a></th>
 <th class='head'>$lang[h_action]</th>
 </tr></thead>";
 
@@ -249,9 +251,9 @@ for($i=$start;$i<$end;$i++) {
 	$user_groups = $result[$i]['user_groups'];
 	$show_registerdate = @date("d.m.Y",$user_registerdate);
 	
-	$user_avatar = '<img src="images/avatar.png" class="img-circle avatar" width="50" height="50">';
+	$user_avatar = '<img src="images/avatar.png" class="rounded-circle avatar" width="50" height="50">';
 	if(is_file("$user_avatar_path")) {
-		$user_avatar = '<img src="'.$user_avatar_path.'" class="img-circle avatar" width="50" height="50">';
+		$user_avatar = '<img src="'.$user_avatar_path.'" class="rounded-circle avatar" width="50" height="50">';
 	}
 
 	//show me in bold
@@ -262,9 +264,9 @@ for($i=$start;$i<$end;$i++) {
 
 	//marking admins
 	if($user_class == "administrator"){
-		$admin_img = '<span style="color:#36a;"><span class="glyphicon glyphicon-user"></span></span>';
+		$admin_img = '<span style="color:#36a;">'.$icon['user'].'</span>';
 	} else {
-		$admin_img = '<span class="glyphicon glyphicon-user"></span>';
+		$admin_img = $icon['user'];
 	}
 
 	//deleted user
@@ -277,30 +279,34 @@ for($i=$start;$i<$end;$i++) {
 	switch ($user_verified) {
 		case "waiting":
 			$statusLabel = "label label-info center";
-			$tr_class = 'info';
+			$bg_class = 'table-info';
+			$label = 'badge badge-pill badge-info';
 			break;
 		case "paused":
 			$statusLabel = "label label-warning center";
-			$tr_class = 'warning';
+			$label = 'badge badge-pill badge-warning';
+			$bg_class = 'table-warning';
 			break;
 		case "verified":
 			$statusLabel = "alert alert-success center";
-			$tr_class = 'success';
+			$bg_class = 'table-success';
+			$label = 'badge badge-pill badge-success';
 			break;
 		case "":
-			$tr_class = 'danger';
+			$bg_class = 'table-danger';
 			$statusLabel = "label label-default center";
+			$label = 'badge badge-pill badge-danger';
 			break;
 	}
 	
 	echo '<tr class="'.$tr_class.'">';
 	echo '<td class="'.$td_class.'" style="text-align:right;">'.$user_id.'</td>';
 	echo '<td>'.$user_avatar.'</td>';
-	echo '<td class="'.$td_class.'">'.$admin_img.' '.$user_nick.'</td>';
+	echo '<td class="lead '.$td_class.'">'.$admin_img.' <span class="'.$label.'">'.$user_nick.'</span></td>';
 	echo '<td class="'.$td_class.'">'.$show_registerdate.'</td>';
 	echo '<td class="'.$td_class.'">'.$user_firstname.' '.$user_lastname.'</td>';
 	echo '<td class="'.$td_class.'">'.$user_mail.'</td>';
-	echo '<td class="'.$td_class.'"><a class="btn btn-default btn-sm" href="acp.php?tn=user&sub=edit&edituser='.$user_id.'">'.$lang['edit'].'</a></td>';
+	echo '<td class="'.$td_class.'"><a class="btn btn-sm btn-dark btn-block" href="acp.php?tn=user&sub=edit&edituser='.$user_id.'">'.$icon['edit'].' '.$lang['edit'].'</a></td>';
 	echo '</tr>';
 
 

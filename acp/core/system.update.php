@@ -214,6 +214,7 @@ function compare_versions() {
 
 	global $lang;
 	global $remote_versions;
+	global $icon;
 	
 	if(is_file("versions.php")){
 		include 'versions.php';
@@ -222,11 +223,11 @@ function compare_versions() {
 		$fc_version_build = '';
 	}
 	
-	echo '<table class="table table-condensed table-bordered">';
+	echo '<table class="table table-condensed">';
 	echo '<thead>';
 	echo '<tr>
-					<th><span class="glyphicon glyphicon-hdd"></span>  '. $_SERVER['SERVER_NAME'] .'</th>
-					<th><span class="glyphicon glyphicon-globe"></span> updates.flatCore.de</th>
+					<th>'.$icon['database'].'  '. $_SERVER['SERVER_NAME'] .'</th>
+					<th>'.$icon['server'].' updates.flatCore.de</th>
 				</tr>';
 	echo '</thead>';
 	

@@ -1,7 +1,7 @@
 <?php
 
 //prohibit unauthorized access
-require("core/access.php");
+require 'core/access.php';
 
 echo '<h3>Backup</h3>';
 echo '<div class="alert alert-info">'.$lang['backup_description'].'</div>';
@@ -65,22 +65,20 @@ foreach($dbfiles as $filename) {
 	
 	echo '<div class="masonry-item">';
 	echo '<div class="masonry-item-inner">';
-	echo '<h4>'.$db_file.'</h4>';
-	echo "<p>$lang[filesize]: ~ $db_bytes<br />$lang[lastedit]:<br />$db_time</p>";
+	echo '<h5>'.$db_file.'</h5>';
+	echo "<p>$lang[filesize]: ~ $db_bytes<br>$lang[lastedit]:<br>$db_time</p>";
 	echo '<form action="?tn=system&sub=backup" method="POST">';
-	echo '<div class="btn-group btn-group-justified" role="group">';
-	echo '<div class="btn-group" role="group">';
-	//echo '<input type="submit" class="btn btn-success btn-xs" name="dl" value="'.$lang['download'].'">';
-	echo '<a class="btn btn-success btn-xs" href="'.$dload_link.'"><span class="glyphicon glyphicon-cloud-download"></span> '.$lang['download'].'</a>';
-	echo '</div>';
+	echo '<div class="btn-group d-flex" role="group">';
+	echo '<a class="btn btn-dark btn-sm w-100 text-success" href="'.$dload_link.'">'.$icon['download'].' '.$lang['download'].'</a>';
+
 	if(substr("$db_file", 0, 7) == 'logfile') {
-		echo '<div class="btn-group" role="group">';
-		echo '<input type="submit" class="btn btn-danger btn-xs" name="delete" value="'.$lang['delete'].'">';
-		echo '</div>';
+
+		echo '<button type="submit" class="btn btn-dark btn-sm w-100 text-danger" name="delete">'.$icon['trash_alt'].'</button>';
+
 	}
-	echo '<div class="btn-group" role="group">';
-	echo '<a class="btn btn-default btn-xs" title="VACUUM" href="?tn=system&sub=backup&vac='.$db_file.'"><span class="glyphicon glyphicon-resize-small"></span></a>';
-	echo '</div>';
+
+	echo '<a class="btn btn-dark btn-sm w-100" title="VACUUM" href="?tn=system&sub=backup&vac='.$db_file.'">'.$icon['compress'].'</a>';
+
 	
 	echo '</div>';
 	echo '<input  type="hidden" name="file" value="'.$db_file.'">';

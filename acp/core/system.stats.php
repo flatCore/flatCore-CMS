@@ -43,11 +43,11 @@ $filename = $_SESSION['filename'];
 $log_dir = "../" . FC_CONTENT_DIR . "/SQLite";
 $logfiles = glob("$log_dir/logfile*");
 
-echo"<fieldset>";
-echo"<legend>$lang[select_logfile]</legend>";
-echo"<form action='acp.php?tn=system&sub=stats' method='POST' class='form-inline'>";
-echo '<div class="form-group">';
-echo"<select name='select_logfile' class='form-control'>";
+echo '<fieldset>';
+echo '<legend>'.$lang['select_logfile'].'</legend>';
+echo '<form action="acp.php?tn=system&sub=stats" method="POST" class="form-inline">';
+echo '<div class="form-group mx-sm-3">';
+echo '<select name="select_logfile" class="custom-select form-control">';
 
 foreach($logfiles as $fn) {
 	
@@ -61,12 +61,14 @@ foreach($logfiles as $fn) {
    		echo"<option $selected value='$fn'>$month $get_year</option>";
 }
 
-echo"</select> ";
+echo '</select>';
 echo '</div> ';
-echo"<input type='submit' class='btn btn-default' name='select_log' value='$lang[choose]'>";
+echo '<div class="form-group">';
+echo '<input type="submit" class="btn btn-dark" name="select_log" value="'.$lang['choose'].'">';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
-echo"</form>";
-echo"</fieldset>";
+echo '</div> ';
+echo '</form>';
+echo '</fieldset>';
 
 
 
@@ -103,10 +105,7 @@ $stat_result = $dbh->query("$sql_stat")->fetch(PDO::FETCH_ASSOC);
 
 $cnt_entries = $stat_result['All'];
 
-
-$sql = "SELECT * FROM fc_logfile
-				ORDER BY log_time DESC
-				LIMIT $start, $entries_per_page";
+$sql = "SELECT * FROM fc_logfile ORDER BY log_time DESC LIMIT $start, $entries_per_page";
 
 unset($result);
 foreach ($dbh->query($sql) as $row) {
@@ -117,9 +116,6 @@ $cnt_result = count($result);
 $dbh = null;
 
 
-
-
-
 $filesize = round((filesize("$logfile_path") / 1024), 2);
 
 $get_month = 'm' . substr("$filename", 11, 2);
@@ -127,28 +123,24 @@ $month = $lang[$get_month];
 $get_year = substr("$filename", 7, 4);
 
 
-echo"<h4>$month $get_year <small>$cnt_entries $lang[logfile_hits] » $filesize kb</small></h4>";
+echo "<h4>$month $get_year <small>$cnt_entries $lang[logfile_hits] » $filesize kb</small></h4>";
 
-echo"<div style='float:left;width:200px;padding:8px;'>";
+echo '<div style="float:left;width:200px;padding:8px;">';
 
 
-echo"<table class='table table-condensed'>";
+echo '<table class="table table-sm">';
 
 arsort($stat_result);
 
 foreach ($stat_result as $k => $v) {
 	if($v > 0){
-    	echo "	<tr>
-    						<td>$k:</td>
-    						<td align='right'>$v</td>
-    		  		</tr> ";
+    	echo '<tr><td>'.$k.':</td><td align="right">'.$v.'</td></tr>';
     }
 }
 
 
-echo"</table>";
-
-echo"</div>"; // eo float
+echo '</table>';
+echo '</div>'; // eo float
 
 
 
@@ -157,11 +149,12 @@ echo"</div>"; // eo float
 echo"<div style='margin-left:220px;padding:8px;'>";
 
 echo '<div class="scroll-container">';
-
+echo '<table class="table table-sm table-striped">';
 
 for($i=0;$i<$cnt_result;$i++) {
 
-	$log_time = date("d.m.Y H:i:s",$result[$i]['log_time']);
+	$log_time_day = date("d.m.Y",$result[$i]['log_time']);
+	$log_time = date("H:i:s",$result[$i]['log_time']);
 	$log_id = $result[$i]['log_id'];
 	$log_ip = filter_var($result[$i]['log_ip'], FILTER_SANITIZE_STRING);
 	$log_ua = filter_var($result[$i]['log_ua'], FILTER_SANITIZE_STRING);
@@ -174,25 +167,25 @@ for($i=0;$i<$cnt_result;$i++) {
 		$bg_color = "#f1f1f1";
 	}
 
-
-	echo"<dl class='dl-horizontal dl-logfile'>";
-
-	echo"<dt>Zeit:</dt> <dd>$log_time</dd>";
-	echo"<dt>IP:</dt> <dd>$log_ip</dd>";
-
+	echo '<tr>';
+	echo '<td>'.$log_time_day.'<br>'.$log_time.'</td>';
+	echo '<td>';
+	echo 'IP: '.$log_ip;
 	if($log_query != "") {
-		echo"<dt>query:</dt> <dd>$log_query</dd>";
+		echo '<br>Query: '.$log_query;
 	}
 	if($log_ref != "") {
-		echo"<dt>Referer:</dt> <dd><span style='color:#390;'>$log_ref</span></dd>";
+		echo '<br>Referer: '.$log_ref;
 	}
 	if($log_ua != "") {
-		echo"<dt>User Agent:</dt> <dd>$log_ua</dd>";
+		echo '<br>User Agent: '.$log_ua;
 	}
-	echo"</dl>";
+	echo '</td>';
+	echo '</tr>';
 
 } // eol $i
 
+echo '</table>';
 
 
 echo"</div>";
@@ -201,25 +194,23 @@ echo"</div>";
 
 /* pagination */
 $pages = ceil($cnt_entries/$entries_per_page);
-echo"<div id='pagina'><p>";
+echo '<hr>';
 	for($i=0;$i<$pages;$i++) {
 	$nbr = $i+1;
-	$pag_class = "btn btn-default btn-sm";
-	if(($i*$entries_per_page) == "$start") { $pag_class = "btn btn-default btn-sm active"; }
+	$pag_class = "btn btn-dark btn-sm";
+	if(($i*$entries_per_page) == "$start") { $pag_class = "btn btn-dark btn-sm active"; }
 		echo"<a class='$pag_class' href='acp.php?tn=system&sub=stats&start=$i'>$nbr</a> ";
 	}
-
-echo"</p></div>";
 /* pagination */
 
 
 
 
-echo"</div>"; // eo float div
+echo '</div>'; // eo float div
 
 } else {
 
-echo"<div id='sys_message_error'>No logfile</div>";
+echo '<div class="alert alert-info">No logfile</div>';
 
 }
 

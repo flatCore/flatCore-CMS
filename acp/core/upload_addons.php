@@ -4,7 +4,7 @@
 require 'core/access.php';
 require_once 'core/pclzip.lib.php';
 
-echo '<div class="alert alert-info">';
+echo '<div class="alert alert-info mb-4">';
 echo '<p>'.$lang['section_is_beta'].'</p>';
 echo '</div>';
 
