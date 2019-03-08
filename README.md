@@ -16,17 +16,16 @@ flatCore is a Content Management System based on PHP and SQLite.
 
 #### 3rd Party Frameworks and Plugins
 
-+ TinyMCE (4.7.6) - http://www.tinymce.com/
-+ Ace Editor (1.2.8) - http://ace.c9.io/
-+ Smarty (3.1.21) - http://www.smarty.net/
-+ Swift Mailer (5.4.0) - http://swiftmailer.org/
-+ Bootstrap (3.3.4) - http://getbootstrap.com/
++ TinyMCE - http://www.tinymce.com/
++ Ace Editor - http://ace.c9.io/
++ Smarty - http://www.smarty.net/
++ Swift Mailer - http://swiftmailer.org/
++ Bootstrap - http://getbootstrap.com/
 + jQuery - https://jquery.com/
-+ fancyBox (3.0.47) - http://fancyapps.com/fancybox/3/
-+ Chart.js (1.0.1-beta.4) - http://chartjs.org/
-+ Masonry (v4.1.1) - http://masonry.desandro.com
++ fancyBox - http://fancyapps.com/fancybox/3/
++ Masonry - http://masonry.desandro.com
 + DropzoneJS - http://www.dropzonejs.com
 + jquery.dirtyforms - https://github.com/snikch/jquery.dirtyforms
 + matchHeight - http://brm.io/jquery-match-height/
-+ bootstrap-tagsinput (v0.6.1) - https://github.com/bootstrap-tagsinput/bootstrap-tagsinput
-+ image-picker (0.3.0) - https://github.com/rvera/image-picker
++ bootstrap-tagsinput - https://github.com/bootstrap-tagsinput/bootstrap-tagsinput
++ image-picker - https://github.com/rvera/image-picker
