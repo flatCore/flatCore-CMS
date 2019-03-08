@@ -87,8 +87,8 @@ for($i=0;$i<$cnt_comment;$i++) {
 	unset($show_entry);
 	
 	if($_SESSION['user_nick'] == $comment_author) {
-		$show_entry = str_replace('{entry_edit_btn}', '<a data-fancybox data-type="ajax" class="btn btn-outline-success btn-sm" data-src="/acp/core/ajax.comments.php?pid='.$page_id.'&cid='.$comment_id.'" href="javascript:;">'.$lang['edit'].'</a>', $comment_entry_tpl);
-		$show_entry = str_replace('{entry_delete_btn}', '<a data-fancybox data-type="ajax" class="btn btn-outline-danger btn-sm" data-src="/acp/core/ajax.comments.php?pid='.$page_id.'&did='.$comment_id.'" href="javascript:;">'.$lang['delete'].'</a>', $show_entry);
+		$show_entry = str_replace('{entry_edit_btn}', '<a data-fancybox data-type="ajax" class="btn btn-dark text-success btn-sm" data-src="/acp/core/ajax.comments.php?pid='.$page_id.'&cid='.$comment_id.'" href="javascript:;">'.$lang['edit'].'</a>', $comment_entry_tpl);
+		$show_entry = str_replace('{entry_delete_btn}', '<a data-fancybox data-type="ajax" class="btn btn-dark text-danger btn-sm" data-src="/acp/core/ajax.comments.php?pid='.$page_id.'&did='.$comment_id.'" href="javascript:;">'.$lang['delete'].'</a>', $show_entry);
 	} else {
 		$show_entry = str_replace('{entry_edit_btn}', '', $comment_entry_tpl);
 		$show_entry = str_replace('{entry_delete_btn}', '', $show_entry);
@@ -108,8 +108,11 @@ echo '</div>';
 $(document).ready(function(){
 
 	$('a.btn').click(function(e) {
-	    e.preventDefault();
-	    $.fancybox.close();
+		e.preventDefault();
+		var target = $(this).data('src');
+		$.get(target, function (data) {
+			$.fancybox.getInstance().setContent( $.fancybox.getInstance().current, data );
+		});	
 	});
 
   $("#comment_form").bind("submit", function() {
@@ -126,7 +129,7 @@ $(document).ready(function(){
 	});
 	
 	$("[data-fancybox]").fancybox({
-			minWidth: '50%',
+			minWidth: '450px',
 			height: '90%'
 	});
 	

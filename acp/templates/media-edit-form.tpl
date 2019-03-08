@@ -2,7 +2,6 @@
 	<div class="row">
 		<div class="col-md-8">
 			<form role="form" action="{form_action}" id="media_form" method="POST">
-				<input type="hidden" name="file" value="{filename}">
 				<div class="row">
 					<div class="col-md-5">
 						<div class="form-group">
@@ -67,8 +66,10 @@
 			  <input type="hidden" name="folder" value="{folder}">
 			  <input type="hidden" name="set_lang" value="{set_lang}">
 			  <input type="hidden" name="filesize" value="{filesize}">
-			  <input type="submit" name="save" class="btn btn-success" value="{save}">
+			  <input type="hidden" name="file" value="{filename}">
 			  <input  type="hidden" name="csrf_token" value="{token}">
+			  <input type="submit" name="save" class="btn btn-dark text-success" value="{save}">
+			  
 			</form>
 		</div>
 		<div class="col-md-4">

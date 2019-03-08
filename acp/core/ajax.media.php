@@ -61,7 +61,7 @@ $langSwitch = '<div class="btn-group" role="group">';
 foreach($arr_lang as $langs) {
 	$btn_status = '';
 	if($langs['lang_sign'] == "$set_lang") { $btn_status = 'active'; }
-	$langSwitch .= '<a data-fancybox data-type="ajax" class="btn btn-light btn-sm '.$btn_status.'" data-src="../acp/core/ajax.media.php?file='.$media_filename.'&folder='.$_REQUEST['folder'].'&set_lang='.$langs['lang_sign'].'" href="javascript:;">'.$langs['lang_sign'].'</a>';
+	$langSwitch .= '<a data-fancybox data-type="ajax" class="change-fb btn btn-dark btn-sm '.$btn_status.'" data-src="../acp/core/ajax.media.php?file='.$media_filename.'&folder='.$_REQUEST['folder'].'&set_lang='.$langs['lang_sign'].'" href="javascript:;">'.$langs['lang_sign'].'</a>';
 }
 $langSwitch .= '</div>';
 
@@ -71,6 +71,7 @@ $media_data = fc_get_media_data($realpath,$set_lang);
 
 $form_tpl = str_replace('{form_action}', "#", $form_tpl);
 $form_tpl = str_replace('{filename}', $media_filename, $form_tpl);
+$form_tpl = str_replace('{file}', $media_filename, $form_tpl);
 $form_tpl = str_replace('{basename}', basename($media_filename), $form_tpl);
 $form_tpl = str_replace('{realpath}', $realpath, $form_tpl);
 $form_tpl = str_replace('{showpath}', $abs_path, $form_tpl);
@@ -111,12 +112,18 @@ echo $form_tpl;
 ?>
 
 <script>
+
 $(document).ready(function(){
 	
-	$('a.btn').click(function(e) {
-	    e.preventDefault();
-	    $.fancybox.close();
-	});
+	$('a.change-fb').click(function(e) {
+		e.preventDefault();
+		var target = $(this).data('src');
+		$.get(target, function (data) {
+			$.fancybox.getInstance().setContent( $.fancybox.getInstance().current, data );
+		});	  
+	  
+	 });
+	
 	
   $("#media_form").bind("submit", function() {
       $.ajax({
@@ -131,15 +138,19 @@ $(document).ready(function(){
       return false;
 	});
 	
+	
 	$("[data-fancybox]").fancybox({
-			minWidth: '50%',
+			type: 'ajax',
+			minWidth: '450px',
 			height: '90%'
 	});
+	
 	
 	setTimeout(function() {
       $(".alert-auto-close").slideUp('slow');
 	}, 2000);
-	
+
+
 });
 
 </script>

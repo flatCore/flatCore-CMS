@@ -1420,7 +1420,7 @@ img.avatar {
   max-height: 85%;
 }
 .fancybox-slide div .container {
-  min-width: 100%;
+  min-width: 450px;
 }
 /* dropzone */
 .dropzone.dropzone-sm {

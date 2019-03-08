@@ -122,7 +122,7 @@ if(isset($set_acptheme)) {
 		
 		<link rel="icon" type="image/x-icon" href="images/favicon.ico" />
 		
-		<script src="../lib/js/jquery/jquery.min.js"></script>
+		<script src="../lib/js/jquery/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script language="javascript" type="text/javascript" src="../lib/js/tinymce/tinymce.min.js"></script>
     <script language="javascript" type="text/javascript" src="../lib/js/tinymce/jquery.tinymce.min.js"></script>
@@ -392,6 +392,13 @@ if(isset($set_acptheme)) {
 				})
 			
 				$('.tooltip').tooltip();
+				/*
+				$('.fancybox-close-small').click(function() {
+					$.fancybox.close('true');
+					$.fancybox.destroy();
+					alert('hooo');
+				});
+				*/
 				
 				$(".fancybox").fancybox();
 				
@@ -407,12 +414,13 @@ if(isset($set_acptheme)) {
 					height: '90%',
 					buttons: ['close'],
 				});
-				
+												
 				$(".fancybox-ajax").fancybox({
 					type: 'ajax',
-					minWidth: '50%',
+					minWidth: '450px',
 					height: '90%'
 				});
+				
 				
 				$("select.image-picker").imagepicker({
 		    	hide_select : true,
@@ -435,13 +443,13 @@ if(isset($set_acptheme)) {
 		    });
 		    
 		    
-				$(document).on('click', 'a[href^=#]', function(e){
+				$(document).on('click', 'a[href^=\\#]', function(e){
         	e.preventDefault();
 					var id = $(this).attr('href');
 					$('html,body').animate({scrollTop: $(id).offset().top}, 500);
     		});		    
 		    
-		    
+
 		    
 		    
 				
