@@ -132,19 +132,28 @@ a.sidebar-sub-active {
 	display: block;
 	width: 100%;
 	color: @light_color;
+	background: @widget_background;
 	padding: 3px 2px 3px 0;
 	border-bottom: 1px solid #111;
 }
 
 a.sidebar-sub:hover {
-	background: @dark_brand;
-	color: #111;
+	color: darken(@light_color,5);
+	background: darken(@widget_background,5);
 }
 
 
 a.sidebar-sub-active {
-	color: #111;
+	color: @light_color;
 	background: @widget_background;
+	background: linear-gradient(to right, @widget_background 0%,@content_bg 100%);
+	i {
+		color: @brand_color;
+	}
+}
+
+li.sidebar-sub-end {
+	margin-bottom: 5px;
 }
 
 
@@ -181,7 +190,7 @@ a.sidebar-sub-active {
 .dashboard-toggle.active,
 .dashboard-toggle.active:hover {
 	background: @content_bg;
-	color: #428bca;
+	color: @brand_color;
 }
 
 .sidebar-nav-active span.tri-left,

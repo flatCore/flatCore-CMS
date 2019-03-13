@@ -23,16 +23,16 @@ for($i=0;$i<$nbrModuls;$i++) {
 
 	$modFolder = $arr_iMods[$i]['folder'];
 	
-	unset($modnav);
-	
+	unset($modnav);	
 	include '../modules/'.$modFolder.'/info.inc.php';
+	$cnt_modnav = count($modnav);
 
 	$mod_subnav .= '<li><a class="sidebar-nav '.($sub == "$modFolder" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=moduls&sub='.$modFolder.'&a=start">'.$icon['angle_right'].' '.$mod['name'].'</a></li>';
 	
 	//Show submenue of the current modul
 	if($sub == "$modFolder") {
 	
-		for($x=0;$x<count($modnav);$x++) {
+		for($x=0;$x<$cnt_modnav;$x++) {
 			$showlink = $modnav[$x]['link'];
 			$incpage = $modnav[$x]['file'];
 		
@@ -43,7 +43,12 @@ for($i=0;$i<$nbrModuls;$i++) {
 			}
 		
 			$mod_subnav .= '<li><a class="'.$sub_link_class.'" href="acp.php?tn=moduls&sub='.$modFolder.'&a='.$incpage.'">'.$icon['caret_right'].' '.$showlink.'</a></li>';
+			if($x==($cnt_modnav-1)) {
+				$mod_subnav .= '<li class="sidebar-sub-end"></li>';
+			}
 		} // eo $x
+		
+		
 		
 		
 		/**

@@ -29,6 +29,9 @@
   border-color: #111;
   color: #428bca;
 }
+.table thead th {
+  border-bottom: 2px solid #14212c;
+}
 .table th,
 .table td {
   border-top: 1px solid #14212c;
@@ -194,16 +197,24 @@ a.sidebar-sub-active {
   display: block;
   width: 100%;
   color: #ccc;
+  background: #252525;
   padding: 3px 2px 3px 0;
   border-bottom: 1px solid #111;
 }
 a.sidebar-sub:hover {
-  background: #14212c;
-  color: #111;
+  color: #bfbfbf;
+  background: #181818;
 }
 a.sidebar-sub-active {
-  color: #111;
+  color: #ccc;
   background: #252525;
+  background: linear-gradient(to right, #252525 0%, #333 100%);
+}
+a.sidebar-sub-active i {
+  color: #428bca;
+}
+li.sidebar-sub-end {
+  margin-bottom: 5px;
 }
 .sidebar-well {
   background: rgba(255, 255, 255, 0.2);
@@ -1136,11 +1147,8 @@ fieldset > [class*="form-line"]:last-child {
 */
 .formfooter {
   background: rgba(0, 0, 0, 0.2);
-  border: 1px solid #aaa;
   padding: 5px;
   margin-top: 18px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
 }
 .formfooter input,
 .formfooter button {
@@ -1190,6 +1198,11 @@ code {
   right: 20px;
   border-radius: 100px / 10px;
 }
+pre {
+  padding: 15px;
+  background: #252525;
+  color: #ccc;
+}
 /* List items - News, Guestbook ... */
 .modlist-label span {
   font-weight: 300;
@@ -1208,10 +1221,8 @@ code {
 }
 .modul_list_items {
   padding: 4px;
-  border: 1px solid #999;
+  background: #252525;
   margin: 8px 0;
-  font-size: 12px;
-  background-color: #14212c;
 }
 .modul_list_items > .formfooter {
   box-shadow: 0 0 0 0 transparent;
