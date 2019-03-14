@@ -152,11 +152,7 @@ function fc_global_mod_snippets($mod,$params=NULL) {
 function text_parser($text) {
 	
 	global $languagePack;
-	
-	if(function_exists('theme_text_parser')) {
-		$text = theme_text_parser($text);
-	}
-	
+		
 	$text = str_replace('<p>[', '[', $text);
 	$text = str_replace(']</p>', ']', $text);
 	
@@ -234,6 +230,10 @@ function text_parser($text) {
 	    $text
 	);
 
+	if(function_exists('theme_text_parser')) {
+		$text = theme_text_parser($text);
+	}
+	
 	return $text;
 
 }
