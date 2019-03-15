@@ -91,22 +91,32 @@ for($i=0;$i<count($all_pages);$i++) {
 $select_page_position .= '</optgroup>';
 $select_page_position .= '</select>';
 
-echo tpl_form_control_group('',$lang['f_page_position'],$select_page_position);
 
-if($page_sort != "portal") {
 
-	$page_order = substr (strrchr ($page_sort, "."), 1);
-	if(ctype_digit($page_sort)) {
-		$page_order = $page_sort;
-	}
-	
-	echo tpl_form_control_group('',$lang['f_page_order'],"<input class='form-control' type='text' name='page_order' value='$page_order'>");
-	
-
+$page_order = substr (strrchr ($page_sort, "."), 1);
+if(ctype_digit($page_sort)) {
+	$page_order = $page_sort;
 }
+	
+echo '<div class="row">';
+echo '<div class="col-md-9">';
+echo tpl_form_control_group('',$lang['f_page_position'],$select_page_position);
+echo '</div>';
+echo '<div class="col-md-3">';
+echo tpl_form_control_group('',$lang['f_page_order'],"<input class='form-control' type='text' name='page_order' value='$page_order'>");
+echo '</div>';
+echo '</div>';
 
 echo '<hr>';
+
+echo '<div class="row">';
+echo '<div class="col-md-9">';
 echo tpl_form_control_group('',$lang['f_page_linkname'],'<input class="form-control" type="text" name="page_linkname" value="'.$page_linkname.'">');
+echo '</div>';
+echo '<div class="col-md-3">';
+echo tpl_form_control_group('',$lang['f_page_hash'],"<input class='form-control' type='text' name='page_hash' value='$page_hash'>");
+echo '</div>';
+echo '</div>';
 
 
 echo '<div class="form-group">';
@@ -133,7 +143,7 @@ $(function() {
 </script>
 <?php
 
-echo tpl_form_control_group('',$lang['f_page_hash'],"<input class='form-control' type='text' name='page_hash' value='$page_hash'>");
+echo '<hr>';
 
 /* redirect */
 
@@ -224,8 +234,7 @@ echo tpl_form_control_group('',$lang['f_meta_description'],"<textarea name='page
 
 
 echo '<div class="form-group">';
-echo '<label class="control-label control-label-normal col-sm-2">'.$lang['page_thumbnail'].'</label>';
-echo '<div class="col-sm-10">';
+echo '<label>'.$lang['page_thumbnail'].'</label>';
 
 if($prefs_pagethumbnail_prefix != '') {
 	echo '<p>Prefix: '.$prefs_pagethumbnail_prefix.'</p>';
@@ -263,13 +272,12 @@ echo '</select>';
 
 echo '</div>';
 echo '</div>';
-echo '</div>';
 
 echo '</fieldset>';
 
 $robots = array("all", "noindex", "nofollow", "none", "noarchive", "nosnippet", "noodp", "notranslate", "noimageindex");
 
-$checkbox_robots = '<div class="btn-group" data-toggle="buttons">';
+$checkbox_robots = '<div class="btn-group btn-group-toggle" data-toggle="buttons">';
 foreach($robots as $r) {
 	
 	$active = '';
@@ -280,7 +288,7 @@ foreach($robots as $r) {
 		$checked = 'checked';
 	}
 	
-	$checkbox_robots .= '<label class="btn btn-light btn-sm '.$active.'">';
+	$checkbox_robots .= '<label class="btn btn-dark btn-sm '.$active.'">';
 	$checkbox_robots .= '<input type="checkbox" name="page_meta_robots[]" value="'.$r.'" '.$checked.'> '.$r;
 	$checkbox_robots .= '</label>';
 }
