@@ -509,13 +509,13 @@ if(is_numeric($editpage)) {
 	
 	$form_title = '<h3>'.$lang['h_modus_editpage'].' - <small>'.$page_title.' (Version: '.$page_version.' ID: '.$editpage.')</small></h3>';
 	//set submit button
-	$submit_button = "<input type='submit' class='btn btn-dark text-success w-100' name='save_the_page' value='$lang[update_page]'>";
+	$submit_button = "<input type='submit' class='btn btn-save w-100' name='save_the_page' value='$lang[update_page]'>";
 	$delete_button = "<hr><input type='submit' class='btn btn-danger btn-sm btn-block' name='delete_the_page' value='$lang[delete_page]' onclick=\"return confirm('$lang[confirm_delete_data]')\">";
 	$previev_button = "<input type='submit' class='btn btn-dark w-100' id='preview_the_page' name='preview_the_page' value='$lang[preview]'>";
 	
 	if($modus == 'duplicate') {
 		$form_title = '<h3>'.$lang['h_modus_duplicate'].' - '.$page_title.'</h3>';
-		$submit_button = "<input type='submit' class='btn btn-dark text-success w-100 btn-outline-success' name='save_the_page' value='$lang[save_duplicate]'>";
+		$submit_button = "<input type='submit' class='btn btn-save w-100 btn-outline-success' name='save_the_page' value='$lang[save_duplicate]'>";
 		$delete_button = '';
 		$previev_button = '';
 	}
@@ -526,7 +526,7 @@ if(is_numeric($editpage)) {
 	
 	$form_title = '<h3>'.$lang['h_modus_newpage'].'</h3>';
 	//set submit button
-	$submit_button = "<input type='submit' class='btn btn-dark text-success btn-block' name='save_the_page' value='$lang[save_new_page]'>";
+	$submit_button = "<input type='submit' class='btn btn-save btn-block' name='save_the_page' value='$lang[save_new_page]'>";
 	$delete_button = '';
 	$previev_button = '';
 }

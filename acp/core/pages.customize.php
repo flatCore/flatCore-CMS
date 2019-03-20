@@ -107,7 +107,7 @@ echo tpl_form_control_group('','',$radio_field_type);
 
 echo '<hr>';
 
-echo"<input type='submit' class='btn btn-dark text-success' name='add_field' value='$lang[save]'>";
+echo"<input type='submit' class='btn btn-save' name='add_field' value='$lang[save]'>";
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 
 

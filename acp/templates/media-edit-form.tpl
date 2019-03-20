@@ -68,7 +68,7 @@
 			  <input type="hidden" name="filesize" value="{filesize}">
 			  <input type="hidden" name="file" value="{filename}">
 			  <input  type="hidden" name="csrf_token" value="{token}">
-			  <input type="submit" name="save" class="btn btn-dark text-success" value="{save}">
+			  <input type="submit" name="save" class="btn btn-save" value="{save}">
 			  
 			</form>
 		</div>

@@ -29,12 +29,18 @@
   border-color: #111;
   color: #428bca;
 }
+.table {
+  color: #ccc;
+}
 .table thead th {
   border-bottom: 2px solid #14212c;
 }
 .table th,
 .table td {
   border-top: 1px solid #14212c;
+}
+.table-bordered td {
+  border-color: #000;
 }
 /* fieldset */
 fieldset {
@@ -260,20 +266,15 @@ li.sidebar-sub-end {
   border-right: 7px solid #111;
   border-bottom: 10px solid transparent;
 }
-.alert-danger {
-  background: #721c24;
-  border: 1px solid #5e171e;
-  color: #eee;
+.btn-save {
+  background: #3d8b3d;
+  border: 1px solid #1e441e;
+  color: #fff;
 }
-.alert-info {
-  background: #0c5460;
-  border: 1px solid #094049;
-  color: #eee;
-}
-.alert-success {
-  background: #155724;
-  border: 1px solid #10421b;
-  color: #eee;
+.btn-save:hover {
+  background: #b5dfb5;
+  color: #3d8b3d;
+  border: 1px solid #3d8b3d;
 }
 ::selection {
   background-color: #428bca;

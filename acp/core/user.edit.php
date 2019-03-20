@@ -305,7 +305,7 @@ if(is_numeric($edituser)){
 	$user_avatar_path = '../'. FC_CONTENT_DIR . '/avatars/' . md5($user_nick) . '.png';
 	
 	echo '<h3>'.$lang['h_modus_edituser'].' - '.$user_nick.' <small>ID: '.$user_id.'</small></h3>';
-	$submit_button = "<input class='btn btn-success btn-block' type='submit' name='save_the_user' value='$lang[update_user]'>";
+	$submit_button = "<input class='btn btn-save btn-block' type='submit' name='save_the_user' value='$lang[update_user]'>";
 		
 	//no delete_button for myself
 	if($user_nick != $_SESSION['user_nick']){
@@ -315,7 +315,7 @@ if(is_numeric($edituser)){
 } else {
 	// modus new user
 	echo"<h3>$lang[h_modus_newuser]</h3>";
-	$submit_button = "<input class='btn btn-success' type='submit' name='save_the_user' value='$lang[save_new_user]'>";
+	$submit_button = "<input class='btn btn-save' type='submit' name='save_the_user' value='$lang[save_new_user]'>";
 	$delete_button = "";
 }
 

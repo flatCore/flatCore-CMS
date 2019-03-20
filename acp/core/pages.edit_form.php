@@ -623,10 +623,10 @@ echo '<input type="hidden" name="page_version" value="'.$page_version.'">';
 echo '<input type="hidden" name="modus" value="'.$modus.'">';
 
 echo '<div class="form-group">';
-echo '<div class="btn-group d-flex">';
-echo $submit_button.' '.$previev_button;
+echo $submit_button;
+echo '<div class="btn-group d-flex mt-2">';
+echo $previev_button.' '.$delete_button;
 echo '</div>';
-echo $delete_button;
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</div>';
 

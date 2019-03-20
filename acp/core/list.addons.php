@@ -53,11 +53,11 @@ for($i=0;$i<$nbrModuls;$i++) {
 	unset($listlinks, $modnav);
 	
 	$modFolder = $arr_iMods[$i]['folder'];
-	$bnt_check_in_out = '<a class="btn btn-sm btn-success" href="acp.php?tn=moduls&enable='.$modFolder.'">'.$lang['btn_mod_enable'].'</a>';
+	$bnt_check_in_out = '<a class="btn btn-sm btn-dark text-success" href="acp.php?tn=moduls&enable='.$modFolder.'">'.$lang['btn_mod_enable'].'</a>';
 	
 	foreach($fc_addons as $a) {
 		if(in_array($modFolder, $a)) {
-			$bnt_check_in_out = '<a class="btn btn-sm btn-danger" href="acp.php?tn=moduls&disable='.$modFolder.'">'.$lang['btn_mod_disable'].'</a>';
+			$bnt_check_in_out = '<a class="btn btn-sm btn-dark text-danger" href="acp.php?tn=moduls&disable='.$modFolder.'">'.$lang['btn_mod_disable'].'</a>';
 		}
 	}
 	

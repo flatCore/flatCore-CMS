@@ -69,7 +69,12 @@ switch ($tn) {
 		$maininc = "inc.system";
 		$navinc = "nav.system";
 		break;
-	
+
+	case "tests":
+		$active[5] = "topnav_selected";
+		$maininc = "inc.tests";
+		$navinc = "nav.system";
+		break;	
 		
 	default:
 		$active[0] = "topnav_selected";

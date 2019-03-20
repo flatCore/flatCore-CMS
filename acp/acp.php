@@ -143,13 +143,7 @@ if(isset($set_acptheme)) {
 			var tinymce_skin = 'oxide-dark';		
 		</script>
 		
-		<?php
-		
-		if($acptheme == 'dark') {
-			echo '<link rel="stylesheet" href="css/dark.css?v=20161020" type="text/css" media="screen, projection">';
-		}
 
-		?>	
 		
 		<!-- masonry -->
 		<script type="text/javascript" src="../lib/js/masonry.pkgd.min.js"></script>

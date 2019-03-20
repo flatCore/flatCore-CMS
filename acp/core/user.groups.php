@@ -5,7 +5,7 @@ require("core/access.php");
 
 $array_group_user = array();
 
-$submit_button = '<input type="submit" class="btn btn-dark text-success" name="saveGroup" value="'.$lang['save'].'">';
+$submit_button = '<input type="submit" class="btn btn-save" name="saveGroup" value="'.$lang['save'].'">';
 $delete_button = '';
 
 

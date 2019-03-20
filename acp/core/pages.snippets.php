@@ -311,10 +311,10 @@ echo '</div>';
 
 echo '<div class="well well-sm">';
 if($modus == 'new') {
-	echo '<input type="submit" name="save_snippet" class="btn btn-dark btn-block text-success" value="'.$lang['save'].'">';
+	echo '<input type="submit" name="save_snippet" class="btn btn-save btn-block" value="'.$lang['save'].'">';
 } else {
 	echo '<input type="hidden" name="snip_id" value="'.$snip_id.'">';
-	echo '<input type="submit" name="save_snippet" class="btn btn-dark btn-block text-success" value="'.$lang['update'].'"> ';
+	echo '<input type="submit" name="save_snippet" class="btn btn-save btn-block" value="'.$lang['update'].'"> ';
 	echo '<div class="mt-1 d-flex">';
 	echo '<a class="btn btn-dark w-100 mr-1" href="acp.php?tn=pages&sub=snippets">'.$lang['discard_changes'].'</a> ';
 	echo '<input type="submit" name="delete_snippet" class="btn btn-dark text-danger" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_data'].'\')">';

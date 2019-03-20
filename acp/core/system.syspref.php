@@ -387,7 +387,7 @@ $prefs_publisher_input .= '</div>';
 echo tpl_form_control_group('',$lang['f_prefs_default_publisher'],$prefs_publisher_input);
 
 
-echo tpl_form_control_group('','',"<input type='submit' class='btn btn-dark text-success' name='save_prefs_descriptions' value='$lang[save]'>");
+echo tpl_form_control_group('','',"<input type='submit' class='btn btn-save' name='save_prefs_descriptions' value='$lang[save]'>");
 
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
@@ -441,7 +441,7 @@ echo tpl_form_control_group('',$lang['page_favicon'],$select_prefs_favicon);
 
 
 
-echo tpl_form_control_group('','',"<input type='submit' class='btn btn-dark text-success' name='save_prefs_thumbnail' value='$lang[save]'>");
+echo tpl_form_control_group('','',"<input type='submit' class='btn btn-save' name='save_prefs_thumbnail' value='$lang[save]'>");
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
@@ -460,7 +460,7 @@ echo '<form action="acp.php?tn=system&sub=sys_pref#system" method="POST" class="
 echo tpl_form_control_group('',$lang['prefs_cms_domain'],$prefs_cms_domain_input);
 echo tpl_form_control_group('',$lang['prefs_cms_ssl_domain'],$prefs_cms_ssl_domain_input);
 echo tpl_form_control_group('',$lang['prefs_cms_base'],$prefs_cms_base_input);
-echo tpl_form_control_group('','',"<input type='submit' class='btn btn-dark text-success' name='save_system' value='$lang[save]'>");
+echo tpl_form_control_group('','',"<input type='submit' class='btn btn-save' name='save_system' value='$lang[save]'>");
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
@@ -507,7 +507,7 @@ echo tpl_form_control_group('',$lang['prefs_mailer_smtp_encryption'],$prefs_mail
 echo tpl_form_control_group('',$lang['prefs_mailer_smtp_username'],$prefs_mail_smtp_username_input);
 echo tpl_form_control_group('',$lang['prefs_mailer_smtp_password'],$prefs_mail_smtp_psw_input);
 
-echo '<input type="submit" class="btn btn-dark text-success" name="save_prefs_contacts" value="'.$lang['save'].'">';
+echo '<input type="submit" class="btn btn-save" name="save_prefs_contacts" value="'.$lang['save'].'">';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 
@@ -575,7 +575,7 @@ echo '<input type="checkbox" class="form-check-input" id="loginform" name="prefs
 echo '<label class="form-check-label" for="loginform">'.$lang['f_prefs_showloginform'].'</label>';
 echo '</div>';
 
-echo '<input type="submit" class="btn btn-dark text-success" name="save_prefs_user" value="'.$lang['save'].'">';
+echo '<input type="submit" class="btn btn-save" name="save_prefs_user" value="'.$lang['save'].'">';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
@@ -626,7 +626,7 @@ echo $toggle_btn_upload_unchanged;
 //$toggle_btn_showfilesize .= '</div>';
 
 //echo tpl_form_control_group('',$lang['f_prefs_showfilesize'],$toggle_btn_showfilesize);
-echo tpl_form_control_group('','',"<input type='submit' class='btn btn-dark text-success' name='save_prefs_upload' value='$lang[save]'>");
+echo tpl_form_control_group('','',"<input type='submit' class='btn btn-save' name='save_prefs_upload' value='$lang[save]'>");
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
@@ -642,7 +642,7 @@ echo '<form action="acp.php?tn=system&sub=sys_pref" method="POST" class="form-ho
 $ta_pagesglobalhead = '<textarea name="prefs_pagesglobalhead" class="aceEditor_html form-control">'.$prefs_pagesglobalhead.'</textarea>';
 $ta_pagesglobalhead .= '<div id="HTMLeditor"></div>';
 echo tpl_form_control_group('','&lt;head&gt;<br>...<br>&lt;/head&gt;',"$ta_pagesglobalhead");
-echo tpl_form_control_group('','',"<input type='submit' class='btn btn-dark text-success' name='save_prefs_head' value='$lang[save]'>");
+echo tpl_form_control_group('','',"<input type='submit' class='btn btn-save' name='save_prefs_head' value='$lang[save]'>");
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
@@ -655,7 +655,7 @@ echo '<form action="acp.php?tn=system&sub=sys_pref" method="POST" class="form-ho
 
 
 echo tpl_form_control_group('','410 GONE','<textarea name="prefs_deleted_resources" rows="10" class="form-control">'.$prefs_deleted_resources.'</textarea>');
-echo tpl_form_control_group('','','<input type="submit" class="btn btn-dark text-success" name="save_deleted_resources" value="'.$lang['save'].'">');
+echo tpl_form_control_group('','','<input type="submit" class="btn btn-save" name="save_deleted_resources" value="'.$lang['save'].'">');
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
@@ -711,7 +711,7 @@ echo '<button class="btn btn-dark" type="submit" name="delete_smarty_cache">('.$
 echo '</div>';
 echo '</div>';
 
-echo '<input type="submit" class="btn btn-dark text-success" name="save_prefs_misc" value="'.$lang['save'].'">';
+echo '<input type="submit" class="btn btn-save" name="save_prefs_misc" value="'.$lang['save'].'">';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 
 echo '</form>';
@@ -749,7 +749,7 @@ for($i=0;$i<$cnt_labels;$i++) {
 	echo '<div class="col-md-2">';
 	echo '<input type="hidden" name="label_id" value="'.$fc_labels[$i]['label_id'].'">';
 	echo '<div class="btn-group" role="group">';
-	echo '<button type="submit" name="update_label" class="btn btn-dark text-success">'.$icon['sync_alt'].'</button>';
+	echo '<button type="submit" name="update_label" class="btn btn-save">'.$icon['sync_alt'].'</button>';
 	echo '<button type="submit" name="delete_label" class="btn btn-dark text-danger">'.$icon['trash_alt'].'</button>';
 	echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 	echo '</div>';
@@ -783,7 +783,7 @@ echo $lang['label_description'];
 echo '<input class="form-control" type="text" name="label_description" value="">';
 echo '</div>';
 echo '<div class="col-md-2">';
-echo '<br><button type="submit" name="new_label" class="btn btn-dark text-success">'.$lang['save'].'</button>';
+echo '<br><button type="submit" name="new_label" class="btn btn-save">'.$lang['save'].'</button>';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</div>';
 echo '</div>';
