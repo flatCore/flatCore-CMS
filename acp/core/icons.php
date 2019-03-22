@@ -58,6 +58,7 @@ $icon['long_arrow_alt_right'] = '<i class="fas fa-long-arrow-alt-right"></i>';
 
 $icon['map_marker_alt'] = '<i class="fas fa-map-marker-alt"></i>';
 
+$icon['paper_clip'] = '<i class="fas fa-paperclip"></i>';
 $icon['paper_plane'] = '<i class="fas fa-paper-plane"></i>';
 $icon['paste'] = '<i class="fas fa-paste"></i>';
 $icon['plus'] = '<i class="fas fa-plus"></i>';
@@ -81,6 +82,8 @@ $icon['tags'] = '<i class="fas fa-tags"></i>';
 $icon['tasks'] = '<i class="fas fa-tasks"></i>';
 $icon['trash_alt'] = '<i class="far fa-trash-alt"></i>';
 $icon['times_circle'] = '<i class="fas fa-times-circle"></i>';
+$icon['tools'] = '<i class="fas fa-tools"></i>';
+
 
 $icon['users'] = '<i class="fas fa-users"></i>';
 $icon['user'] = '<i class="fas fa-user"></i>';
