@@ -1,3 +1,11 @@
+
+
+#toggleNav {
+	display: inline-block;
+	height: 40px;
+	padding-top: 7px;
+}
+   
 div#page-sidebar {
 	display: block;
 	position: fixed;
@@ -5,7 +13,7 @@ div#page-sidebar {
 	left: 0;
 	z-index: 1000;
 	width: 55px;
-	padding-top: 60px;
+	padding-top: 30px;
 	color: @light_color;
 	background: #000;
 	height: 100%;
@@ -30,6 +38,15 @@ div#page-sidebar {
 			width: 100%;
 		}
 	}
+	
+	a#sidebar-dashboard {
+		display: block;
+		width: 55px;
+		height: 55px;
+		background: transparent url(../images/fc-logo.png) top left no-repeat;
+	}
+	
+
 	
 	
 	.sidebar-collapsed {
@@ -62,9 +79,9 @@ div#page-sidebar {
 		white-space: nowrap;
 		padding-top: 5px;
 		padding-bottom: 5px;
-      transition-property: top, bottom, width;
-      transition-duration: .2s, .2s, .35s;
-      transition-timing-function: linear, linear, ease;
+    transition-property: top, bottom, width;
+    transition-duration: .2s, .2s, .35s;
+    transition-timing-function: linear, linear, ease;
         
 		i {
 			width: 35px;

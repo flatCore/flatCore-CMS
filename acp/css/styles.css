@@ -29,7 +29,9 @@
   border-color: #111;
   color: #428bca;
 }
-.table {
+.table,
+.table-sm,
+.table-bordered {
   color: #ccc;
 }
 .table thead th {
@@ -102,6 +104,11 @@ input.form-control[readonly] {
 .custom-select {
   background: #111 url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='white' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.75rem center / 8px 10px !important;
 }
+#toggleNav {
+  display: inline-block;
+  height: 40px;
+  padding-top: 7px;
+}
 div#page-sidebar {
   display: block;
   position: fixed;
@@ -109,7 +116,7 @@ div#page-sidebar {
   left: 0;
   z-index: 1000;
   width: 55px;
-  padding-top: 60px;
+  padding-top: 30px;
   color: #ccc;
   background: #000;
   height: 100%;
@@ -128,6 +135,12 @@ div#page-sidebar:hover i {
 div#page-sidebar ul.nav li {
   display: block;
   width: 100%;
+}
+div#page-sidebar a#sidebar-dashboard {
+  display: block;
+  width: 55px;
+  height: 55px;
+  background: transparent url(../images/fc-logo.png) top left no-repeat;
 }
 div#page-sidebar .sidebar-collapsed {
   width: 100%;

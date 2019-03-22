@@ -54,7 +54,7 @@ echo '<legend>'.$lang['f_prefs_layout'].'</legend>';
 
 $arr_Styles = get_all_templates();
 
-$select_prefs_template = '<select name="select_template" class="form-control">';
+$select_prefs_template = '<select name="select_template" class="form-control custom-select">';
 
 
 /* templates list */
@@ -83,7 +83,7 @@ echo tpl_form_control_group('',$lang['f_prefs_active_template'],$select_prefs_te
 
 
 echo '<div class="formfooter">';
-echo '<input type="submit" class="btn btn-success" name="saveDesign" value="'.$lang['save'].'">';
+echo '<input type="submit" class="btn btn-save" name="saveDesign" value="'.$lang['save'].'">';
 echo '</div>';
 
 echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';

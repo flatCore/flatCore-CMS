@@ -202,6 +202,7 @@ if(isset($set_acptheme)) {
 		?>
 	
 		<div id="page-sidebar">
+			<a id="sidebar-dashboard" href="acp.php?tn=dashboard"></a>
 			<div id="page-sidebar-inner">
 			<?php include 'core/'.$navinc.'.php'; ?>
 			<?php include 'core/livebox.php'; ?>
