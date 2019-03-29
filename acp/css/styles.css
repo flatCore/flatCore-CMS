@@ -116,7 +116,7 @@ div#page-sidebar {
   left: 0;
   z-index: 1000;
   width: 55px;
-  padding-top: 30px;
+  padding-top: 25px;
   color: #ccc;
   background: #000;
   height: 100%;
@@ -127,7 +127,7 @@ div#page-sidebar {
 }
 div#page-sidebar:hover {
   width: 220px;
-  padding-right: 5px;
+  /*padding-right: 5px;*/
 }
 div#page-sidebar:hover i {
   width: auto;
@@ -138,15 +138,15 @@ div#page-sidebar ul.nav li {
 }
 div#page-sidebar a#sidebar-dashboard {
   display: block;
-  width: 55px;
-  height: 55px;
+  width: 100%;
+  height: 70px;
   background: transparent url(../images/fc-logo.png) top left no-repeat;
 }
 div#page-sidebar .sidebar-collapsed {
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
-  padding-top: 5px;
+  padding-top: 1px;
   padding-bottom: 5px;
 }
 div#page-sidebar .sidebar-collapsed i {
@@ -162,7 +162,7 @@ div#page-sidebar .sidebar-expanded {
   width: 220px;
   overflow: hidden;
   white-space: nowrap;
-  padding-top: 5px;
+  padding-top: 1px;
   padding-bottom: 5px;
   transition-property: top, bottom, width;
   transition-duration: 0.2s, 0.2s, 0.35s;
