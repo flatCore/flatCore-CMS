@@ -10,6 +10,7 @@ require 'core/access.php';
 
 include 'dashboard.checks.php';
 include 'dashboard.top.php';
+include 'dashboard.addons.php';
 include 'dashboard.system.php';
 
 

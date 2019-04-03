@@ -428,6 +428,7 @@ if(isset($set_acptheme)) {
 					$(this).find('.controls').hide();
 				});
 				
+				/*
 		   $('.collapse').on('show.bs.collapse', function() {
 		        var id = $(this).attr('id');
 		        $('a[href="#' + id + '"]').addClass('active');
@@ -436,7 +437,7 @@ if(isset($set_acptheme)) {
 		        var id = $(this).attr('id');
 		        $('a[href="#' + id + '"]').removeClass('active');
 		    });
-		    
+		    */
 		    
 				$(document).on('click', 'a[href^=\\#]', function(e){
         	e.preventDefault();
@@ -444,7 +445,7 @@ if(isset($set_acptheme)) {
 					$('html,body').animate({scrollTop: $(id).offset().top}, 500);
     		});		    
 		    
-
+				
 		    
 		    
 				

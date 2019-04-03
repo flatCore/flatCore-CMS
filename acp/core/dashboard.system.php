@@ -102,10 +102,10 @@ echo '<div class="card">';
 echo '<div class="card-header">';
 
 echo '<ul class="nav nav-tabs card-header-tabs" id="bsTabs" role="tablist">';
-echo '<li class="nav-item"><a class="nav-link active" href="#chat" data-toggle="tab">'.$icon['comments'].' Chat</a></li>';
-echo '<li class="nav-item"><a class="nav-link" href="#log" data-toggle="tab">'.$icon['file_alt'].' Logfile</a></li>';
-echo '<li class="nav-item"><a class="nav-link" href="#sitemap" data-toggle="tab">'.$icon['sitemap'].' sitemap.xml</a></li>';
-echo '<li class="nav-item"><a class="nav-link" href="#deleted_resources" data-toggle="tab">'.$icon['trash_alt'].' '.$lang['label_deleted_resources'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link active" href="#" data-target="#chat" data-toggle="tab">'.$icon['comments'].' Chat</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#" data-target="#log" data-toggle="tab">'.$icon['file_alt'].' Logfile</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#" data-target="#sitemap" data-toggle="tab">'.$icon['sitemap'].' sitemap.xml</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#" data-target="#deleted_resources" data-toggle="tab">'.$icon['trash_alt'].' '.$lang['label_deleted_resources'].'</a></li>';
 echo '</ul>';
 
 echo '</div>';
