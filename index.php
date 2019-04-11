@@ -51,58 +51,56 @@ if(isset($query)) {
 
 	$fct_slug = $query;
 
-	if($fc_mod_rewrite == "permalink") {
+
+	$active_mods = fc_get_active_mods();
+	$cnt_active_mods = count($active_mods);
 	
-		//include(FC_CONTENT_DIR . "/cache/active_mods.php");
-		$active_mods = fc_get_active_mods();
-		$cnt_active_mods = count($active_mods);
-		
-		include FC_CONTENT_DIR . '/cache/active_urls.php';
-		if(in_array("$query", $existing_url)) {
-			$query_is_cached = true;
-		}
-		
-		for($i=0;$i<$cnt_active_mods;$i++) {
-			
-			$mod_permalink = $active_mods[$i]['page_permalink'];
-			$mod_name = $active_mods[$i]['page_modul'];
-			$permalink_length = strlen($mod_permalink);
-			
-			if(!empty($mod_permalink) && strpos("$query", "$mod_permalink") !== false) {
-						
-				if(strncmp($mod_permalink, $query, $permalink_length) == 0) {
-    			$mod_slug = substr($query, $permalink_length);
-    			$fct_slug = substr("$query",0,$permalink_length);
-    			if($query_is_cached == true) {
-      			$fct_slug = $query;
-    			}
-    		}
-    	}
-    	
-			if(is_file('modules/'.$mod_name.'/global/index.php')) {
-				include 'modules/'.$mod_name.'/global/index.php';
-  		}
-			
-		}
-
-		list($page_contents,$fc_nav,$fc_prefs) = get_content($fct_slug,'permalink');
-		$p = $page_contents['page_id'];
-
-
-		if($p == "") {
-			$p = "404";					
-			foreach($a_allowed_p as $param) {
-				if($query == "$param/") {
-					$p = "$param";
-				}
-			}
-			
-			fc_check_funnel_uri($fct_slug);
-			fc_check_shortlinks($fct_slug);
-			
-		}
-			
+	include FC_CONTENT_DIR . '/cache/active_urls.php';
+	if(in_array("$query", $existing_url)) {
+		$query_is_cached = true;
 	}
+	
+	for($i=0;$i<$cnt_active_mods;$i++) {
+		
+		$mod_permalink = $active_mods[$i]['page_permalink'];
+		$mod_name = $active_mods[$i]['page_modul'];
+		$permalink_length = strlen($mod_permalink);
+		
+		if(!empty($mod_permalink) && strpos("$query", "$mod_permalink") !== false) {
+					
+			if(strncmp($mod_permalink, $query, $permalink_length) == 0) {
+  			$mod_slug = substr($query, $permalink_length);
+  			$fct_slug = substr("$query",0,$permalink_length);
+  			if($query_is_cached == true) {
+    			$fct_slug = $query;
+  			}
+  		}
+  	}
+  	
+		if(is_file('modules/'.$mod_name.'/global/index.php')) {
+			include 'modules/'.$mod_name.'/global/index.php';
+		}
+		
+	}
+
+	list($page_contents,$fc_nav,$fc_prefs) = get_content($fct_slug,'permalink');
+	$p = $page_contents['page_id'];
+
+
+	if($p == "") {
+		$p = "404";					
+		foreach($a_allowed_p as $param) {
+			if($query == "$param/") {
+				$p = "$param";
+			}
+		}
+		
+		fc_check_funnel_uri($fct_slug);
+		fc_check_shortlinks($fct_slug);
+		
+	}
+			
+
 } // eo $query
 
 if(isset($preview)) {
@@ -182,7 +180,6 @@ if(!empty($page_contents['page_modul'])) {
 	include 'modules/'.$page_contents['page_modul'].'/index.php';
 }
 
-
 /* START SMARTY */
 require_once('lib/Smarty/Smarty.class.php');
 $smarty = new Smarty;
@@ -250,8 +247,8 @@ foreach($lang as $key => $val) {
 
 $smarty->assign('languagePack', $languagePack);
 
-require("core/user_management.php");
-require("core/switch.php");
+require 'core/user_management.php';
+require 'core/switch.php';
 
 if(is_file('styles/'.$fc_template.'/php/options.php')) {
 	include 'styles/'.$fc_template.'/php/options.php';
