@@ -20,6 +20,8 @@ if($cnt_mods > 0) {
 		$poster_img = '';
 		if(is_file("../modules/$modFolder/backend/poster.jpg")) {
 			$poster_img = '<a href="acp.php?tn=moduls&sub='.$modFolder.'&a=start"><img src="../modules/'.$modFolder.'/backend/poster.jpg" class="card-img-top"></a>';
+		} else {
+			$poster_img = '<a href="acp.php?tn=moduls&sub='.$modFolder.'&a=start"><img src="images/poster-addons.jpg" class="card-img-top"></a>';
 		}
 		
 		if(is_file("$mod_info_file")) {

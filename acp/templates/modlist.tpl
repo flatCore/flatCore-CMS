@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-md-2">
 			<div class="text-center">
-				<img src="{$MOD_ICON}" class="rounded-circle modlist-icon">
+				{$MOD_ICON}
 				<h3 class="modlist-label"><span>{$MOD_NAME}</span></h3>
 			</div>
 		</div>

@@ -85,7 +85,12 @@ for($i=0;$i<$nbrModuls;$i++) {
 		include '../modules/'.$modFolder.'/backend/livecode.php';
 	}
 	
-	
+	$poster_img = '';
+	if(is_file("../modules/$modFolder/backend/poster.jpg")) {
+		$poster_img = '<a href="acp.php?tn=moduls&sub='.$modFolder.'&a=start"><img src="../modules/'.$modFolder.'/backend/poster.jpg" class="card-img-top"></a>';
+	} else {
+		$poster_img = '<a href="acp.php?tn=moduls&sub='.$modFolder.'&a=start"><img src="images/poster-addons.jpg" class="card-img-top"></a>';
+	}	
 	
 	$tpl = $template_file;
 	
@@ -93,7 +98,7 @@ for($i=0;$i<$nbrModuls;$i++) {
 	$tpl = str_replace("{\$MOD_DESCRIPTION}", "$mod[description]","$tpl");
 	$tpl = str_replace("{\$MOD_VERSION}", "$mod[version]","$tpl");
 	$tpl = str_replace("{\$MOD_AUTHOR}", "$mod[author]","$tpl");
-	$tpl = str_replace("{\$MOD_ICON}", "$tpl_icon","$tpl");
+	$tpl = str_replace("{\$MOD_ICON}", "$poster_img","$tpl");
 	$tpl = str_replace("{\$MOD_LIVECODE}", "$mod_livecode","$tpl");
 	$tpl = str_replace("{\$MOD_CHECK_IN_OUT}", "$bnt_check_in_out","$tpl");
 	
