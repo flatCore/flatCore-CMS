@@ -30,6 +30,7 @@ $lang['update'] = "Update";
 $lang['delete'] = "Delete";
 $lang['preview'] = "Preview";
 $lang['submit'] = "Go";
+$lang['new'] = "New";
 $lang['duplicate'] = "Duplicate";
 $lang['save_duplicate'] = "Save Copy";
 $lang['choose'] = "Auswählen";

@@ -28,6 +28,7 @@ $lang['delete'] = "Löschen";
 $lang['preview'] = "Vorschau";
 $lang['submit'] = "Los";
 $lang['duplicate'] = "Duplizieren";
+$lang['new'] = "Neu";
 $lang['save_duplicate'] = "Kopie Speichern";
 $lang['choose'] = "Auswählen";
 $lang['display'] = "Anzeigen";

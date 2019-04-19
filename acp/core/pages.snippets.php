@@ -60,10 +60,32 @@ if(isset($_POST['save_snippet'])) {
 	$db = new PDO("sqlite:".CONTENT_DB);
 	
 	$snippet_name = clean_filename($_POST['snippet_name']);
+	$timestamp =  time();
+	
+
+	$snippet_themes = explode('<|-|>', $_POST['select_template']);
+	$snippet_theme = $snippet_themes[0];
+	$snippet_template = $snippet_themes[1];
+	
+	if(count($_POST['snippet_thumbnail']) > 1) {
+		$snippet_thumbnail = implode("<->", $_POST['snippet_thumbnail']);
+	} else {
+		$st = $_POST['snippet_thumbnail'];
+		$snippet_thumbnail = $st[0].'<->';
+	}
 	
 	if($snippet_name == '') {
 		$snippet_name = date("Y_m_d_h_i",time());
 	}
+	
+	/* labels */
+	$arr_labels = $_POST['snippet_labels'];
+	if(is_array($arr_labels)) {
+		sort($arr_labels);
+		$string_labels = implode(",", $arr_labels);
+	} else {
+		$string_labels = "";
+	}	
 	
 	if($_POST['snip_id'] != '') {
 		
@@ -72,15 +94,20 @@ if(isset($_POST['save_snippet'])) {
 		$sql = "UPDATE fc_textlib
 						SET textlib_content = :textlib_content, textlib_notes = :textlib_notes, textlib_groups = :textlib_groups,
 								textlib_name = :textlib_name, textlib_title = :textlib_title, textlib_keywords = :textlib_keywords,
-								textlib_lang = :textlib_lang, textlib_priority = :textlib_priority
+								textlib_lang = :textlib_lang, textlib_priority = :textlib_priority,
+								textlib_lastedit = :textlib_lastedit, textlib_lastedit_from = :textlib_lastedit_from,
+								textlib_template = :textlib_template, textlib_theme = :textlib_theme, textlib_images = :textlib_images,
+								textlib_labels = :textlib_labels
 						WHERE textlib_id = $snip_id";
 	
 	} else {
 		
 		$sql = "INSERT INTO fc_textlib (
-							textlib_content, textlib_notes, textlib_groups, textlib_name, textlib_title, textlib_keywords, textlib_lang, textlib_priority
+							textlib_content, textlib_notes, textlib_groups, textlib_name, textlib_title, textlib_keywords, textlib_lang, textlib_priority,
+							textlib_lastedit, textlib_lastedit_from, textlib_template, textlib_theme, textlib_images, textlib_labels
 						) VALUES (
-							:textlib_content, :textlib_notes, :textlib_groups, :textlib_name, :textlib_title, :textlib_keywords, :textlib_lang, :textlib_priority
+							:textlib_content, :textlib_notes, :textlib_groups, :textlib_name, :textlib_title, :textlib_keywords, :textlib_lang, :textlib_priority,
+							:textlib_lastedit, :textlib_lastedit_from, :textlib_template, :textlib_theme, :textlib_images, :textlib_labels
 						)";		
 	}
 	
@@ -92,6 +119,12 @@ if(isset($_POST['save_snippet'])) {
 	$sth->bindParam(':textlib_keywords', $_POST['snippet_keywords'], PDO::PARAM_STR);
 	$sth->bindParam(':textlib_title', $_POST['snippet_title'], PDO::PARAM_STR);
 	$sth->bindParam(':textlib_groups', $_POST['snippet_groups'], PDO::PARAM_STR);
+	$sth->bindParam(':textlib_template', $snippet_template, PDO::PARAM_STR);
+	$sth->bindParam(':textlib_theme', $snippet_theme, PDO::PARAM_STR);
+	$sth->bindParam(':textlib_images', $snippet_thumbnail, PDO::PARAM_STR);
+	$sth->bindParam(':textlib_lastedit', $timestamp, PDO::PARAM_STR);
+	$sth->bindParam(':textlib_lastedit_from', $_SESSION['user_nick'], PDO::PARAM_STR);
+	$sth->bindParam(':textlib_labels', $string_labels, PDO::PARAM_STR);
 	$sth->bindParam(':textlib_priority', $_POST['snippet_priority'], PDO::PARAM_INT);
 	$cnt_changes = $sth->execute();
 	
@@ -147,194 +180,104 @@ $cnt_snippets = count($snippets_list);
 
 if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_snip_id)))  {
 
-	if(!isset($snip_id)) {
-		$snip_id = (int) $_REQUEST['snip_id'];
-  }
-    
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = "SELECT * FROM fc_textlib WHERE textlib_id = $snip_id ";
-
-	$result = $dbh->query($sql);
-	$result = $result->fetch(PDO::FETCH_ASSOC);
-
-	$dbh = null;
-
-	if(is_array($result)) {
-		foreach($result as $k => $v) {
- 				$$k = htmlspecialchars(stripslashes($v));
-		}
-	}
-	$modus = 'update';
-}
-
-
-
-echo '<div class="app-container">';
-echo '<h3>' . $lang['snippets'] . '</h3>';
-
-echo '<div class="well well-sm">';
-echo '<div class="btn-group" role="group">';
-echo '<a class="btn btn-dark '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle</a>';
-echo '<a class="btn btn-dark '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System</a>';
-echo '<a class="btn btn-dark '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene</a>';
-echo '</div>';
-echo '</div>';
-
-echo '<div class="row">';
-echo '<div class="col-md-3">';
-
-echo '<input class="form-control filter-list" type="search" placeholder="Filter ..."><hr>';
-
-
-echo '<div class="max-height-container">';
-echo '<div class="scroll-box">';
-echo '<div class="card">';
-echo '<div class="list-group list-group-flush">';
-
-for($i=0;$i<$cnt_snippets;$i++) {
-	$active_class = '';
-	$get_snip_id = $snippets_list[$i]['textlib_id'];
-	$get_snip_name = $snippets_list[$i]['textlib_name'];
-	$get_snip_lang = $snippets_list[$i]['textlib_lang'];
+	include 'pages.snippets_form.php';
 	
-	if(in_array($get_snip_name, $system_snippets)) {
-		$show_snip_name = '<span class="glyphicon glyphicon-cog"></span> ' . $get_snip_name;
-		$data_groups = '"system"';
-	} else {
-		$show_snip_name = $get_snip_name;
-		$data_groups = '';
-	}
-		
-	unset($sel);
-	if($snip_id == $get_snip_id) {
-		$sel = "selected";
-		$get_snip_name_editor = '[snippet]'.$get_snip_name.'[/snippet]';
-		$get_snip_name_smarty = '{$fc_snippet_'.$get_snip_name.'}';
-		$get_snip_name_smarty = str_replace('-', '_', $get_snip_name_smarty);
-	}
-	
-	if($_REQUEST['snip_id'] == $get_snip_id) {
-		$active_class = 'active';
-	}
-	
-	echo '<a class="list-group-item list-group-item-ghost filter-list-item '.$active_class.'" href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'" data-title="'.$get_snip_name.'" data-groups="['.$data_groups.']">'.$show_snip_name.' <span class="badge">'.$get_snip_lang.'</span></a>';
-}
-
-echo '</div>';
-echo '</div>';
-echo '</div>';
-echo '</div>';
-
-echo '</div>';
-echo '<div class="col-md-9">';
-
-echo "<form action='acp.php?tn=pages&sub=snippets' method='POST'>";
-
-
-
-
-echo '<div class="row">';
-echo '<div class="col-md-8">';
-
-echo '<div class="well well-sm">';
-
-echo '<div class="form-group text-right">';
-echo '<div class="btn-group btn-group-toggle" data-toggle="buttons" role="flex">';
-echo '<label class="btn btn-sm btn-dark w-100"><input type="radio" name="optEditor" value="optE1"> WYSIWYG</label>';
-echo '<label class="btn btn-sm btn-dark w-100"><input type="radio" name="optEditor" value="optE2"> Text</label>';
-echo '<label class="btn btn-sm btn-dark w-100"><input type="radio" name="optEditor" value="optE3"> Code</label>';
-echo '</div>';
-echo '</div>';
-
-echo '<textarea class="form-control mceEditor switchEditor" id="textEditor" name="textlib_content">'.$textlib_content.'</textarea>';
-echo '</div>';
-echo '<input type="hidden" name="text" value="'.$text.'">';
-
-if($get_snip_name_editor != '') {
-	echo '<hr><div class="form-group">';
-	echo '<label>Snippet</label>';
-	echo '<input type="text" class="form-control" placeholder="[snippet]...[/snippet]" value="'.$get_snip_name_editor.'" readonly>';
-	echo '</div>';
-}
-
-echo '</div>';
-echo '<div class="col-md-4">';
-/* info col */
-echo '<div class="well well-sm">';
-
-
-
-echo '<div class="form-group">';
-echo '<label>'.$lang['filename'].' <small>(a-z,0-9)</small></label>';
-echo '<input class="form-control" type="text" name="snippet_name" value="'.$textlib_name.'">';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label>'.$lang['label_priority'].'</label>';
-echo '<input class="form-control" type="text" name="snippet_priority" value="'.$textlib_priority.'">';
-echo '</div>';
-
-
-$select_textlib_language  = '<select name="sel_language" class="custom-select form-control">';
-for($i=0;$i<count($arr_lang);$i++) {
-	$lang_sign = $arr_lang[$i]['lang_sign'];
-	$lang_desc = $arr_lang[$i]['lang_desc'];
-	$lang_folder = $arr_lang[$i]['lang_folder'];
-	$select_textlib_language .= "<option value='$lang_folder'".($textlib_lang == "$lang_folder" ? 'selected="selected"' :'').">$lang_sign</option>";	
-}
-$select_textlib_language .= '</select>';
-
-echo '<div class="form-group">';
-echo '<label>'.$lang['f_page_language'].'</label>';
-echo $select_textlib_language;
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label>'.$lang['label_title'].'</label>';
-echo '<input class="form-control" type="text" name="snippet_title" value="'.$textlib_title.'">';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label>'.$lang['label_keywords'].'</label>';
-echo '<input class="form-control" type="text" name="snippet_keywords" value="'.$textlib_keywords.'" data-role="tagsinput" />';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label>'.$lang['label_groups'].'</label>';
-echo '<input class="form-control" type="text" name="snippet_groups" value="'.$textlib_groups.'" />';
-echo '</div>';
-
-echo '<div class="alert alert-dark" style="padding:2px 3px;">';
-echo '<strong>'.$lang['label_notes'].':</strong>';
-echo '<textarea class="masked-textarea" name="textlib_notes" rows="5">'.$textlib_notes.'</textarea>';
-echo '</div>';
-
-echo '<div class="well well-sm">';
-if($modus == 'new') {
-	echo '<input type="submit" name="save_snippet" class="btn btn-save btn-block" value="'.$lang['save'].'">';
 } else {
-	echo '<input type="hidden" name="snip_id" value="'.$snip_id.'">';
-	echo '<input type="submit" name="save_snippet" class="btn btn-save btn-block" value="'.$lang['update'].'"> ';
-	echo '<div class="mt-1 d-flex">';
-	echo '<a class="btn btn-dark w-100 mr-1" href="acp.php?tn=pages&sub=snippets">'.$lang['discard_changes'].'</a> ';
-	echo '<input type="submit" name="delete_snippet" class="btn btn-dark text-danger" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_data'].'\')">';
+	
+	/* list snippets */
+	
+	echo '<div class="app-container">';
+	echo '<h3>' . $lang['snippets'] . '</h3>';
+	
+	echo '<div class="well well-sm">';
+	echo '<div class="btn-group" role="group">';
+	echo '<a class="btn btn-dark '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle</a>';
+	echo '<a class="btn btn-dark '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System</a>';
+	echo '<a class="btn btn-dark '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene</a>';
 	echo '</div>';
+	
+	echo '<a href="?tn=pages&sub=snippets&snip_id=n" class="btn btn-dark text-success float-right">'.$icon['plus'].' '.$lang['new'].'</a>';
+	
+	echo '</div>';
+	
+	
+	echo '<div class="max-height-container">';
+	echo '<div class="scroll-box">';
+	
+	echo '<table class="table table-striped table-sm">';
+	
+	for($i=0;$i<$cnt_snippets;$i++) {
+		$active_class = '';
+		$get_snip_id = $snippets_list[$i]['textlib_id'];
+		$get_snip_name = $snippets_list[$i]['textlib_name'];
+		$get_snip_lang = $snippets_list[$i]['textlib_lang'];
+		$get_snip_title = $snippets_list[$i]['textlib_title'];
+		$get_snip_lastedit = $snippets_list[$i]['textlib_lastedit'];
+		$get_snip_lastedit_from = $snippets_list[$i]['textlib_lastedit_from'];
+		$get_snip_keywords = $snippets_list[$i]['textlib_keywords'];	
+		$get_snip_labels = explode(',',$snippets_list[$i]['textlib_labels']);
+		
+		$label = '';
+		if($snippets_list[$i]['textlib_labels'] != '') {
+			foreach($get_snip_labels as $snippet_label) {
+				
+				foreach($fc_labels as $l) {
+					if($snippet_label == $l['label_id']) {
+						$label_color = $l['label_color'];
+						$label_title = $l['label_title'];
+					}
+				}
+				
+				$label .= '<span class="label-dot" style="background-color:'.$label_color.';" title="'.$label_title.'"></span>';
+			}
+		}
+		
+		
+		if(in_array($get_snip_name, $system_snippets)) {
+			$show_snip_name = $icon['cogs']. ' ' . $get_snip_name;
+			$data_groups = '"system"';
+		} else {
+			$show_snip_name = $get_snip_name;
+			$data_groups = '';
+		}
+			
+		unset($sel);
+		if($snip_id == $get_snip_id) {
+			$sel = "selected";
+			$get_snip_name_editor = '[snippet]'.$get_snip_name.'[/snippet]';
+			$get_snip_name_smarty = '{$fc_snippet_'.$get_snip_name.'}';
+			$get_snip_name_smarty = str_replace('-', '_', $get_snip_name_smarty);
+		}
+
+		$lang_thumb = '<img src="/lib/lang/'.$get_snip_lang.'/flag.png" width="20">';
+		
+		echo '<tr>';
+		echo '<td>'.$lang_thumb.'</td>';
+		echo '<td>'.$show_snip_name.'</td>';
+		echo '<td>'.$get_snip_title.'</td>';
+		echo '<td><small>'.date('Y.m.d. H:i:s',$get_snip_lastedit).' '.$get_snip_lastedit_from.'</small></td>';
+		echo '<td>'.$label.'</td>';
+		echo '<td class="text-right"><a href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'" class="btn btn-dark btn-sm">'.$lang['edit'].'</a></td>';	
+		echo '</tr>';
+		
+	}
+	
+	
+	echo '</table>';
+	
+	echo '</div>';
+	echo '</div>';
+	
+	
+	
+	echo '</div>';
+	echo '</div>';
+	echo '</div>'; // .app-container
+
+	
 }
-echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
-echo '</div>';
 
 
-echo '</div>';
-/* end info col */
-echo '</div>';
-echo '</div>';
 
-
-echo '</form>';
-
-
-echo '</div>';
-echo '</div>';
-echo '</div>'; // .app-container
 
 ?>
