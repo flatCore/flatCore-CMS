@@ -54,6 +54,10 @@
 .table-bordered td {
   border-color: #000;
 }
+.table-hover tbody tr:hover {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.3);
+}
 /* fieldset */
 fieldset {
   padding: 30px 10px 10px 10px;

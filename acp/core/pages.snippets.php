@@ -204,7 +204,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	echo '<div class="max-height-container">';
 	echo '<div class="scroll-box">';
 	
-	echo '<table class="table table-striped table-sm">';
+	echo '<table class="table table-hover table-striped table-sm">';
 	
 	for($i=0;$i<$cnt_snippets;$i++) {
 		$active_class = '';

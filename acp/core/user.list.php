@@ -225,7 +225,7 @@ echo '</div><br>';
 
 //print the list
 
-echo"<table class='table table-sm'>";
+echo"<table class='table table-hover table-striped table-sm'>";
 
 echo"<thead><tr>
 <th class='head' style='text-align:right;'><a class='darklink' href='acp.php?tn=user&sub=list&sort=0&way=$set_way'>ID</a></th>
