@@ -38,7 +38,7 @@ if($cnt_mods > 0) {
 			echo '<div class="list-group list-group-flush">';
 			
 			foreach($modnav as $nav) {
-				echo '<a class="list-group-item list-group-item-ghost p-1 px-2" href="acp.php?tn=moduls&sub='.$modFolder.'&a='.$nav['file'].'">'.$nav['link'].'</a>';
+				echo '<a class="list-group-item list-group-item-ghost p-1 px-2" href="acp.php?tn=moduls&sub='.$modFolder.'&a='.$nav['file'].'">'.$icon['caret_right'].' '.$nav['link'].'</a>';
 			}
 			
 			echo '</div>';			
