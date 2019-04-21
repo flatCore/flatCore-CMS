@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * database used for
+ * acp -> pages -> comments
+ * comment_parent = p + page_id e.g. p22
+ *
+ * acp -> chat -> entries
+ * comment_parent = c
+ */
+
 $database = "content";
 $table_name = "fc_comments";
 

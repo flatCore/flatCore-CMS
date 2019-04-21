@@ -102,8 +102,7 @@ echo '<div class="card">';
 echo '<div class="card-header">';
 
 echo '<ul class="nav nav-tabs card-header-tabs" id="bsTabs" role="tablist">';
-echo '<li class="nav-item"><a class="nav-link active" href="#" data-target="#chat" data-toggle="tab">'.$icon['comments'].' Chat</a></li>';
-echo '<li class="nav-item"><a class="nav-link" href="#" data-target="#log" data-toggle="tab">'.$icon['file_alt'].' Logfile</a></li>';
+echo '<li class="nav-item"><a class="nav-link active" href="#" data-target="#log" data-toggle="tab">'.$icon['file_alt'].' Logfile</a></li>';
 echo '<li class="nav-item"><a class="nav-link" href="#" data-target="#sitemap" data-toggle="tab">'.$icon['sitemap'].' sitemap.xml</a></li>';
 echo '<li class="nav-item"><a class="nav-link" href="#" data-target="#deleted_resources" data-toggle="tab">'.$icon['trash_alt'].' '.$lang['label_deleted_resources'].'</a></li>';
 echo '</ul>';
@@ -113,94 +112,7 @@ echo '<div class="card-body">';
 
 echo '<div class="tab-content">';
 
-echo '<div class="tab-pane fade show active" id="chat">';
-
-$chat_form = file_get_contents('templates/comment-form.tpl');
-
-$e_comment_text = '';
-$e_comment_id = '';
-
-if(isset($_GET['dcid'])) {
-	$delete_comment_id = (int) $_GET['dcid'];
-
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$query = "DELETE FROM fc_comments WHERE comment_id = :comment_id";
-	$sth = $dbh -> prepare($query);
-	$sth -> bindParam(':comment_id', $delete_comment_id, PDO::PARAM_STR);
-	$sth->execute();
-	$dbh = null;
-}
-
-if(isset($_GET['cid'])) {
-	$get_comment = fc_get_comment($_GET['cid']);
-	$e_comment_text = $get_comment['comment_text'];
-	$e_comment_id = $get_comment['comment_id'];
-	if($_SESSION['user_nick'] != $get_comment['comment_author']) {
-		//you can't edit others entries
-		unset($e_comment_text,$e_comment_id);
-	}
-}
-
-
-
-$chat_form = str_replace('{form_action}', "acp.php?tn=dashboard", $chat_form);
-$chat_form = str_replace('{value_textarea}', "$e_comment_text", $chat_form);
-$chat_form = str_replace('{value_send_btn}', $lang['save'], $chat_form);
-$chat_form = str_replace('{value_hidden_id}', "$e_comment_id", $chat_form);
-$chat_form = str_replace('{token}', $_SESSION['token'], $chat_form);
-$chat_form = str_replace('{form_legend}', $lang['label_comment'], $chat_form);
-
-$comment_entry_tpl = file_get_contents('templates/comment-entry.tpl');
-
-echo '<div class="scroll-container" id="inlineComments">';
-
-echo $chat_form;
-
-if(isset($_POST['comment'])) {
-	if(is_numeric($_POST['id'])) {
-		fc_write_comment($_SESSION['user_nick'], $_POST['comment'], "c", $_POST['id']);
-	} else {
-		fc_write_comment($_SESSION['user_nick'], $_POST['comment'], "c");
-	}
-}
-
-$comments = fc_get_comments('c');
-$cnt_comment = count($comments);
-
-for($i=0;$i<$cnt_comment;$i++) {
-
-	$comment_time = date("d.m.Y H:i:s", $comments[$i]['comment_time']);
-	$comment_author = $comments[$i]['comment_author'];
-	$comment_text = nl2br($comments[$i]['comment_text']);
-	$comment_id = $comments[$i]['comment_id'];
-	
-	$author_avatar_path = '../'. FC_CONTENT_DIR . '/avatars/' . md5($comment_author) . '.png';
-	$author_avatar = '<img src="images/avatar.png" class="img-circle avatar" width="64" height="64">';
-	if(is_file("$author_avatar_path")) {
-		$author_avatar = '<img src="'.$author_avatar_path.'" class="img-circle avatar" width="64" height="64">';
-	}
-	
-	unset($show_entry);
-	
-	if($_SESSION['user_nick'] == $comment_author) {
-		$show_entry = str_replace('{entry_edit_btn}', '<a class="btn btn-dark btn-sm text-success" href="acp.php?tn=dashboard&cid='.$comment_id.'">'.$lang['edit'].'</a>', $comment_entry_tpl);
-		$show_entry = str_replace('{entry_delete_btn}', '<a class="btn btn-dark btn-sm text-danger" href="acp.php?tn=dashboard&dcid='.$comment_id.'">'.$icon['trash_alt'].'</a>', $show_entry);
-	} else {
-		$show_entry = str_replace('{entry_edit_btn}', '', $comment_entry_tpl);
-		$show_entry = str_replace('{entry_delete_btn}', '', $show_entry);
-	}
-	$show_entry = str_replace('{comment_avatar}', $author_avatar, $show_entry);
-	$show_entry = str_replace('{comment_author}', $comment_author, $show_entry);
-	$show_entry = str_replace('{comment_time}', $comment_time, $show_entry);
-	$show_entry = str_replace('{comment_text}', $comment_text, $show_entry);
-	
-	echo $show_entry;
-}
-
-echo'</div>';
-
-echo'</div>'; // #chat
-echo'<div class="tab-pane fade" id="log">';
+echo'<div class="tab-pane fade show active" id="log">';
 
 echo '<div class="scroll-container">';
 show_log(10);

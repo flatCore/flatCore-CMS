@@ -71,10 +71,10 @@ if(isset($_SESSION['lang'])) {
 	$languagePack = basename($_SESSION['lang']);
 }
 
-require("../lib/lang/index.php");
-require("core/functions.php");
-require("core/database.php");
-require("core/switch.php");
+require '../lib/lang/index.php';
+require 'core/functions.php';
+require 'core/database.php';
+require 'core/switch.php';
 
 
 /* READ THE PREFS */
@@ -226,7 +226,7 @@ if(isset($set_acptheme)) {
 		?>
 
 		<div id="bigHeader">
-		<?php require("core/topNav.php"); ?>
+		<?php require 'core/topNav.php'; ?>
 		</div>
 	
 	
