@@ -10,31 +10,6 @@ echo '<div class="row">';
 
 echo '<div class="col-md-4">';
 
-echo '<div class="card mb-1">';
-
-echo '<div class="card-header">'.$icon['cogs'].' Config</div>';
-echo '<div class="card-body">';
-echo '<table class="table table-sm">';
-echo '<tr><td>Server:</td><td>' . $_SERVER['SERVER_NAME'] . ' (PHP '.phpversion().')</td></tr>';
-echo '<tr><td>'.$lang['prefs_cms_domain'].'</td><td>' . $prefs_cms_domain . '</td></tr>';
-echo '<tr><td>'.$lang['prefs_cms_ssl_domain'].'</td><td>' . $prefs_cms_ssl_domain . '</td></tr>';
-echo '<tr><td>'.$lang['prefs_cms_base'].'</td><td>' . $prefs_cms_base . '</td></tr>';
-if($prefs_mailer_adr != '') {
-	echo '<tr><td>System E-Mails:</td><td>' . $prefs_mailer_adr . '</td></tr>';
-} else {
-	echo '<tr><td>System E-Mails:</td><td><span class="text-danger">'.$lang['missing_value'].'</span></td></tr>';
-}
-if($prefs_mailer_name != '') {
-	echo '<tr><td>E-Mail Name:</td><td>' . $prefs_mailer_name . '</td></tr>';
-} else {
-	echo '<tr><td>E-Mail Name:</td><td><span class="text-danger">'.$lang['missing_value'].'</span></td></tr>';
-}
-echo '</table>';
-
-echo '</div>';
-echo '</div>';
-
-
 echo '<div class="card">';
 echo '<div class="card-header">' . $lang['f_user_drm'] . '</div>';
 echo '<div class="card-body">';
@@ -105,6 +80,7 @@ echo '<ul class="nav nav-tabs card-header-tabs" id="bsTabs" role="tablist">';
 echo '<li class="nav-item"><a class="nav-link active" href="#" data-target="#log" data-toggle="tab">'.$icon['file_alt'].' Logfile</a></li>';
 echo '<li class="nav-item"><a class="nav-link" href="#" data-target="#sitemap" data-toggle="tab">'.$icon['sitemap'].' sitemap.xml</a></li>';
 echo '<li class="nav-item"><a class="nav-link" href="#" data-target="#deleted_resources" data-toggle="tab">'.$icon['trash_alt'].' '.$lang['label_deleted_resources'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#" data-target="#config" data-toggle="tab">'.$icon['cogs'].' Config</a></li>';
 echo '</ul>';
 
 echo '</div>';
@@ -140,6 +116,25 @@ echo '</ul>';
 echo '</div>';
 echo '</div>'; // #deleted resources
 
+echo '<div class="tab-pane fade" id="config">';
+echo '<table class="table table-sm">';
+echo '<tr><td>Server:</td><td>' . $_SERVER['SERVER_NAME'] . ' (PHP '.phpversion().')</td></tr>';
+echo '<tr><td>'.$lang['prefs_cms_domain'].'</td><td>' . $prefs_cms_domain . '</td></tr>';
+echo '<tr><td>'.$lang['prefs_cms_ssl_domain'].'</td><td>' . $prefs_cms_ssl_domain . '</td></tr>';
+echo '<tr><td>'.$lang['prefs_cms_base'].'</td><td>' . $prefs_cms_base . '</td></tr>';
+if($prefs_mailer_adr != '') {
+	echo '<tr><td>System E-Mails:</td><td>' . $prefs_mailer_adr . '</td></tr>';
+} else {
+	echo '<tr><td>System E-Mails:</td><td><span class="text-danger">'.$lang['missing_value'].'</span></td></tr>';
+}
+if($prefs_mailer_name != '') {
+	echo '<tr><td>E-Mail Name:</td><td>' . $prefs_mailer_name . '</td></tr>';
+} else {
+	echo '<tr><td>E-Mail Name:</td><td><span class="text-danger">'.$lang['missing_value'].'</span></td></tr>';
+}
+echo '</table>';
+
+echo '</div>'; // #config
 
 echo '</div>'; // .tab-content
 echo '</div>'; // .card-body
