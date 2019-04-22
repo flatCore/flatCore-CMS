@@ -76,7 +76,7 @@ $sql_portal_site = "INSERT INTO fc_pages (
 						) VALUES (
 							NULL, '$languagePack', 'Startseite', 'Home',
 							'public', '$portal_content', '$page_lastedit',
-							'Installer', 'blucent', 'layout_portal.tpl',
+							'Installer', 'default', 'layout_portal.tpl',
 							'portal', 'Installer', '$page_lastedit',
 							'Lorem, ipsum, dolor, sit', 'Testseite',
 							'all', '', '',
@@ -110,7 +110,7 @@ $sql_insert_prefs = "INSERT INTO fc_preferences (
 		prefs_logfile, prefs_template_layout, prefs_rss_time_offset, prefs_cms_domain, prefs_cms_ssl_domain, prefs_cms_base
 		) VALUES (
 		NULL, 'active', 'Diese Homepage',
-		'rockt mit SQLite und PHP5', 'blucent', 'yes', 'off',
+		'rockt mit SQLite und PHP5', 'default', 'yes', 'off',
 		'jpg jpeg gif png', '600', '500', '2800',
 		'on', 'layout_default.tpl', '216000', '$prefs_cms_domain', '$prefs_cms_ssl_domain', '$prefs_cms_base' )";
 
