@@ -133,8 +133,8 @@ if(isset($set_acptheme)) {
 		
 		<script type="text/javascript" src="../lib/js/jquery/jquery.textareaCounter.plugin.js"></script>
 
-		<link rel="stylesheet" href="css/bootstrap.min.css?v=3.3.6" type="text/css" media="screen, projection">
-		<link rel="stylesheet" href="css/styles.css?v=20161020" type="text/css" media="screen, projection">
+		<link rel="stylesheet" href="css/bootstrap.min.css?v=4.3.1" type="text/css" media="screen, projection">
+		<link rel="stylesheet" href="css/styles.css?v=20190423" type="text/css" media="screen, projection">
 		<link href="fontawesome/css/all.min.css" rel="stylesheet">
 		
 		<script type="text/javascript">
