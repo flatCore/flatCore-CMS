@@ -1,4 +1,4 @@
-<footer id="pageFooter">
+<footer id="pageFooter" class="pt-3">
 
 	{if is_array($arr_bcmenue) }
 	<div class="container">
