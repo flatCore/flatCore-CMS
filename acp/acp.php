@@ -237,6 +237,16 @@ if(isset($set_acptheme)) {
 		<?php include 'core/editors.php'; ?>
 	
 		<div id="footer">
+			<p class="text-center">
+			<?php
+				$arr_lang = get_all_languages();
+				for($i=0;$i<count($arr_lang);$i++) {
+	$lang_icon = '<img src="../lib/lang/'.$arr_lang[$i]['lang_folder'].'/flag.png" style="vertical-align: baseline; width:18px; height:auto;">';
+	echo '<a class="btn btn-outline-dark" href="acp.php?set_lang='.$arr_lang[$i]['lang_folder'].'">'.$lang_icon.' '.$arr_lang[$i]['lang_desc'].'</a> ';
+}
+			?>
+			</p>
+			
 		<p><b>flatCore</b> Content Management System (<?php echo $fc_version_name . ' <small>B: ' . $fc_version_build; ?>)</small><br />
 		copyright © <?php echo date('Y'); ?>, <a href="https://www.flatcore.org/" target="_blank">flatCore.org</a></p>
 		<p><?php echo microtime(true)-$_SERVER['REQUEST_TIME_FLOAT']; ?></p>
