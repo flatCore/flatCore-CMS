@@ -47,29 +47,29 @@ if(isset($_POST['check']) && ($_POST['check'] == "Login")) {
 		<form action="index.php" method="post" class="form-horizontal">
 			<fieldset>
 				<legend>Login:</legend>	
-				<div class="form-group">
-					<label class="col-sm-3 control-label"><?php echo $lang['f_user_nick']; ?></label>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label"><?php echo $lang['f_user_nick']; ?></label>
 					<div class="col-sm-9">
 						<input type="text" class="form-control" name="login_name" autofocus="autofocus">
 					</div>
 				</div>
-				<div class="form-group">
-					<label class="col-sm-3 control-label"><?php echo $lang['f_user_psw']; ?></label>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label"><?php echo $lang['f_user_psw']; ?></label>
 					<div class="col-sm-9">
 						<input type="password" class="form-control" name="login_psw">
 					</div>
 				</div>
-			  <div class="form-group">
-			    <div class="col-sm-offset-3 col-sm-9">
-			      <div class="checkbox">
+			  <div class="form-group row">
+			    <div class="offset-sm-3 col-sm-9">
+			      <div class="form-check form-check-inline">
 			        <label>
 			          <input type="checkbox" name="remember_me"> <?php echo $lang['remember_me']; ?>
 			        </label>
 			      </div>
 			    </div>
 			  </div>
-				<div class="form-group">
-					<div class="col-sm-offset-3 col-sm-9">
+				<div class="form-group row">
+					<div class="offset-sm-3 col-sm-9">
 						<input type="submit" class="btn btn-success" name="check" value="Login">
 					</div>
 				</div>
