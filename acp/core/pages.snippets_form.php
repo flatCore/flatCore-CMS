@@ -38,9 +38,6 @@ if(is_array($result)) {
 
 echo "<form action='acp.php?tn=pages&sub=snippets' method='POST'>";
 
-
-
-
 echo '<div class="row">';
 echo '<div class="col-md-9">';
 
@@ -138,7 +135,8 @@ echo '</div>';
 echo '</div>';
 
 
-if($get_snip_name_editor != '') {
+if($textlib_name != '') {
+	$get_snip_name_editor = '[snippet]'.$textlib_name.'[/snippet]';
 	echo '<hr><div class="form-group">';
 	echo '<label>Snippet</label>';
 	echo '<input type="text" class="form-control" placeholder="[snippet]...[/snippet]" value="'.$get_snip_name_editor.'" readonly>';
