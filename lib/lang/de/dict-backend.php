@@ -278,6 +278,7 @@ $lang['missing_value'] = 'fehlender Wert';
 $lang['label_filename'] = 'Dateiname';
 $lang['label_content'] = 'Inhalt';
 $lang['label_groups'] = 'Gruppen';
+$lang['label_classes'] = 'Klassen';
 $lang['label_password'] = 'Passwort';
 $lang['label_password_reset'] = 'Passwort zurücksetzen';
 

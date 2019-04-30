@@ -230,6 +230,16 @@ echo '<label>'.$lang['label_keywords'].'</label>';
 echo '<input class="form-control" type="text" name="snippet_keywords" value="'.$textlib_keywords.'" data-role="tagsinput" />';
 echo '</div>';
 
+echo '<div class="form-group">';
+echo '<label>'.$lang['label_url'].'</label>';
+echo '<input class="form-control" type="text" name="snippet_permalink" value="'.$textlib_permalink.'" />';
+echo '</div>';
+
+echo '<div class="form-group">';
+echo '<label>'.$lang['label_classes'].'</label>';
+echo '<input class="form-control" type="text" name="snippet_classes" value="'.$textlib_classes.'" />';
+echo '</div>';
+
 
 $cnt_labels = count($fc_labels);
 $arr_checked_labels = explode(",", $textlib_labels);

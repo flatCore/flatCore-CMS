@@ -97,17 +97,19 @@ if(isset($_POST['save_snippet'])) {
 								textlib_lang = :textlib_lang, textlib_priority = :textlib_priority,
 								textlib_lastedit = :textlib_lastedit, textlib_lastedit_from = :textlib_lastedit_from,
 								textlib_template = :textlib_template, textlib_theme = :textlib_theme, textlib_images = :textlib_images,
-								textlib_labels = :textlib_labels
+								textlib_labels = :textlib_labels, textlib_classes = :textlib_classes, textlib_permalink = :textlib_permalink
 						WHERE textlib_id = $snip_id";
 	
 	} else {
 		
 		$sql = "INSERT INTO fc_textlib (
 							textlib_content, textlib_notes, textlib_groups, textlib_name, textlib_title, textlib_keywords, textlib_lang, textlib_priority,
-							textlib_lastedit, textlib_lastedit_from, textlib_template, textlib_theme, textlib_images, textlib_labels
+							textlib_lastedit, textlib_lastedit_from, textlib_template, textlib_theme, textlib_images, textlib_labels,
+							textlib_classes, textlib_permalink
 						) VALUES (
 							:textlib_content, :textlib_notes, :textlib_groups, :textlib_name, :textlib_title, :textlib_keywords, :textlib_lang, :textlib_priority,
-							:textlib_lastedit, :textlib_lastedit_from, :textlib_template, :textlib_theme, :textlib_images, :textlib_labels
+							:textlib_lastedit, :textlib_lastedit_from, :textlib_template, :textlib_theme, :textlib_images, :textlib_labels,
+							:textlib_classes, :textlib_permalink
 						)";		
 	}
 	
@@ -119,6 +121,8 @@ if(isset($_POST['save_snippet'])) {
 	$sth->bindParam(':textlib_keywords', $_POST['snippet_keywords'], PDO::PARAM_STR);
 	$sth->bindParam(':textlib_title', $_POST['snippet_title'], PDO::PARAM_STR);
 	$sth->bindParam(':textlib_groups', $_POST['snippet_groups'], PDO::PARAM_STR);
+	$sth->bindParam(':textlib_classes', $_POST['snippet_classes'], PDO::PARAM_STR);
+	$sth->bindParam(':textlib_permalink', $_POST['snippet_permalink'], PDO::PARAM_STR);
 	$sth->bindParam(':textlib_template', $snippet_template, PDO::PARAM_STR);
 	$sth->bindParam(':textlib_theme', $snippet_theme, PDO::PARAM_STR);
 	$sth->bindParam(':textlib_images', $snippet_thumbnail, PDO::PARAM_STR);
