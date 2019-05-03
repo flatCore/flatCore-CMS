@@ -13,7 +13,6 @@ if($_REQUEST['snip_id'] == 'n') {
  * open snippet
  */
 
-
 if(!isset($snip_id)) {
 	$snip_id = (int) $_REQUEST['snip_id'];
 }
@@ -41,13 +40,13 @@ echo "<form action='acp.php?tn=pages&sub=snippets' method='POST'>";
 echo '<div class="row">';
 echo '<div class="col-md-9">';
 
-
 echo '<div class="card">';
 echo '<div class="card-header">';
 
 echo '<ul class="nav nav-tabs card-header-tabs" id="bsTabs" role="tablist">';
 echo '<li class="nav-item"><a class="nav-link active" href="#content" data-toggle="tab">'.$lang['tab_content'].'</a></li>';
 echo '<li class="nav-item"><a class="nav-link" href="#images" data-toggle="tab">'.$lang['images'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#link" data-toggle="tab">'.$lang['label_url'].'</a></li>';
 echo '</ul>';
 
 echo '</div>';
@@ -56,7 +55,6 @@ echo '<div class="card-body">';
 echo '<div class="tab-content">';
 
 echo '<div class="tab-pane fade show active" id="content">';
-
 
 echo '<div class="row">';
 echo '<div class="col-md-4">';
@@ -81,13 +79,29 @@ echo '</div>';
 
 
 
-
-
 echo '<textarea class="form-control mceEditor switchEditor" id="textEditor" name="textlib_content">'.$textlib_content.'</textarea>';
 echo '<input type="hidden" name="text" value="'.$text.'">';
 
 
 
+echo '<div class="row">';
+echo '<div class="col-md-6">';
+
+echo '<div class="form-group">';
+echo '<label>'.$lang['label_keywords'].'</label>';
+echo '<input class="form-control" type="text" name="snippet_keywords" value="'.$textlib_keywords.'" data-role="tagsinput" />';
+echo '</div>';
+
+echo '</div>';
+echo '<div class="col-md-6">';
+
+echo '<div class="form-group">';
+echo '<label>'.$lang['label_classes'].'</label>';
+echo '<input class="form-control" type="text" name="snippet_classes" value="'.$textlib_classes.'" />';
+echo '</div>';
+
+echo '</div>';
+echo '</div>';
 
 
 
@@ -125,14 +139,41 @@ echo '<option value="">'.$lang['page_thumbnail'].'</option>';
 }
 echo '</optgroup>'."\r\n";
 echo '</select>';
-
 echo '</div>';
 
+echo '</div>'; // images
+echo '<div class="tab-pane fade" id="link">';
+
+echo '<div class="form-group mt-2">';
+echo '<label>'.$lang['label_url'].'</label>';
+echo '<input class="form-control" type="text" name="snippet_permalink" value="'.$textlib_permalink.'" />';
 echo '</div>';
+
+echo '<div class="form-group mt-2">';
+echo '<label>'.$lang['label_url_name'].'</label>';
+echo '<input class="form-control" type="text" name="snippet_permalink_name" value="'.$textlib_permalink_name.'" />';
+echo '</div>';
+
+echo '<div class="form-group mt-2">';
+echo '<label>'.$lang['label_url_title'].'</label>';
+echo '<input class="form-control" type="text" name="snippet_permalink_title" value="'.$textlib_permalink_title.'" />';
+echo '</div>';
+
+echo '<div class="form-group mt-2">';
+echo '<label>'.$lang['label_url_classes'].'</label>';
+echo '<input class="form-control" type="text" name="snippet_permalink_classes" value="'.$textlib_permalink_classes.'" />';
+echo '</div>';
+
+echo '</div>'; // link
+
+
+
+
 
 echo '</div>';
 echo '</div>';
 echo '</div>';
+
 
 
 if($textlib_name != '') {
@@ -162,12 +203,6 @@ echo '</div>';
 echo '</div>';
 
 
-echo '<div class="form-group">';
-echo '<label>'.$lang['label_priority'].'</label>';
-echo '<input class="form-control" type="text" name="snippet_priority" value="'.$textlib_priority.'">';
-echo '</div>';
-
-
 $select_textlib_language  = '<select name="sel_language" class="custom-select form-control">';
 for($i=0;$i<count($arr_lang);$i++) {
 	$lang_sign = $arr_lang[$i]['lang_sign'];
@@ -177,9 +212,23 @@ for($i=0;$i<count($arr_lang);$i++) {
 }
 $select_textlib_language .= '</select>';
 
+echo '<div class="row">';
+echo '<div class="col-md-6">';
+
 echo '<div class="form-group">';
 echo '<label>'.$lang['f_page_language'].'</label>';
 echo $select_textlib_language;
+echo '</div>';
+
+echo '</div>';
+echo '<div class="col-md-6">';
+
+echo '<div class="form-group">';
+echo '<label>'.$lang['label_priority'].'</label>';
+echo '<input class="form-control" type="text" name="snippet_priority" value="'.$textlib_priority.'">';
+echo '</div>';
+
+echo '</div>';
 echo '</div>';
 
 /* Select Template */
@@ -221,23 +270,6 @@ $select_select_template .= '</select>';
 echo '<div class="form-group">';
 echo '<label>'.$lang['f_page_template'].'</label>';
 echo $select_select_template;
-echo '</div>';
-
-
-
-echo '<div class="form-group">';
-echo '<label>'.$lang['label_keywords'].'</label>';
-echo '<input class="form-control" type="text" name="snippet_keywords" value="'.$textlib_keywords.'" data-role="tagsinput" />';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label>'.$lang['label_url'].'</label>';
-echo '<input class="form-control" type="text" name="snippet_permalink" value="'.$textlib_permalink.'" />';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label>'.$lang['label_classes'].'</label>';
-echo '<input class="form-control" type="text" name="snippet_classes" value="'.$textlib_classes.'" />';
 echo '</div>';
 
 

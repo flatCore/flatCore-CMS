@@ -97,7 +97,9 @@ if(isset($_POST['save_snippet'])) {
 								textlib_lang = :textlib_lang, textlib_priority = :textlib_priority,
 								textlib_lastedit = :textlib_lastedit, textlib_lastedit_from = :textlib_lastedit_from,
 								textlib_template = :textlib_template, textlib_theme = :textlib_theme, textlib_images = :textlib_images,
-								textlib_labels = :textlib_labels, textlib_classes = :textlib_classes, textlib_permalink = :textlib_permalink
+								textlib_labels = :textlib_labels, textlib_classes = :textlib_classes,
+								textlib_permalink = :textlib_permalink, textlib_permalink_title = :textlib_permalink_title, textlib_permalink_name = :textlib_permalink_name,
+								textlib_permalink_classes = :textlib_permalink_classes
 						WHERE textlib_id = $snip_id";
 	
 	} else {
@@ -109,7 +111,7 @@ if(isset($_POST['save_snippet'])) {
 						) VALUES (
 							:textlib_content, :textlib_notes, :textlib_groups, :textlib_name, :textlib_title, :textlib_keywords, :textlib_lang, :textlib_priority,
 							:textlib_lastedit, :textlib_lastedit_from, :textlib_template, :textlib_theme, :textlib_images, :textlib_labels,
-							:textlib_classes, :textlib_permalink
+							:textlib_classes, :textlib_permalink, :textlib_permalink_name, :textlib_permalink_title, :textlib_permalink_classes
 						)";		
 	}
 	
@@ -123,6 +125,9 @@ if(isset($_POST['save_snippet'])) {
 	$sth->bindParam(':textlib_groups', $_POST['snippet_groups'], PDO::PARAM_STR);
 	$sth->bindParam(':textlib_classes', $_POST['snippet_classes'], PDO::PARAM_STR);
 	$sth->bindParam(':textlib_permalink', $_POST['snippet_permalink'], PDO::PARAM_STR);
+	$sth->bindParam(':textlib_permalink_title', $_POST['snippet_permalink_title'], PDO::PARAM_STR);
+	$sth->bindParam(':textlib_permalink_name', $_POST['snippet_permalink_name'], PDO::PARAM_STR);
+	$sth->bindParam(':textlib_permalink_classes', $_POST['snippet_permalink_classes'], PDO::PARAM_STR);
 	$sth->bindParam(':textlib_template', $snippet_template, PDO::PARAM_STR);
 	$sth->bindParam(':textlib_theme', $snippet_theme, PDO::PARAM_STR);
 	$sth->bindParam(':textlib_images', $snippet_thumbnail, PDO::PARAM_STR);
@@ -208,7 +213,17 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	echo '<div class="max-height-container">';
 	echo '<div class="scroll-box">';
 	
-	echo '<table class="table table-hover table-striped table-sm">';
+	echo '<table class="table table-hover table-striped table-sm mt-3">';
+	
+	echo '<thead><tr>';
+	echo '<th>'.$lang['f_page_language'].'</th>';
+	echo '<th>'.$lang['filename'].'</th>';
+	echo '<th>'.$lang['label_title'].'</th>';
+	echo '<th>'.$lang['label_date'].'</th>';
+	echo '<th>'.$lang['labels'].'</th>';
+	echo '<th></th>';
+	echo '</tr></thead>';
+	
 	
 	for($i=0;$i<$cnt_snippets;$i++) {
 		$active_class = '';
@@ -261,7 +276,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 		echo '<td>'.$get_snip_title.'</td>';
 		echo '<td><small>'.date('Y.m.d. H:i:s',$get_snip_lastedit).' '.$get_snip_lastedit_from.'</small></td>';
 		echo '<td>'.$label.'</td>';
-		echo '<td class="text-right"><a href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'" class="btn btn-dark btn-sm">'.$lang['edit'].'</a></td>';	
+		echo '<td class="text-right"><a href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'" class="btn btn-dark btn-sm text-success">'.$lang['edit'].'</a></td>';	
 		echo '</tr>';
 		
 	}
