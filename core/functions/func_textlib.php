@@ -57,6 +57,12 @@ function get_textlib($textlib_name,$textlib_lang) {
 				
 				$tpl_file = str_replace('{$snippet_title}',$textlib_title,$tpl_file);
 				$tpl_file = str_replace('{$snippet_text}',$textlib_content,$tpl_file);
+				$tpl_file = str_replace('{$snippet_teaser}',$textlib_teaser,$tpl_file);
+				$tpl_file = str_replace('{$snippet_classes}',$textlib_classes,$tpl_file);
+				$tpl_file = str_replace('{$snippet_url}',$textlib_permalink,$tpl_file);
+				$tpl_file = str_replace('{$snippet_url_name}',$textlib_permalink_name,$tpl_file);
+				$tpl_file = str_replace('{$snippet_url_title}',$textlib_permalink_title,$tpl_file);
+				$tpl_file = str_replace('{$snippet_url_classes}',$textlib_permalink_classes,$tpl_file);
 				return $tpl_file;
 			}
 			
