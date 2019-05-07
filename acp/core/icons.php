@@ -42,6 +42,7 @@ $icon['download'] = '<i class="fas fa-download"></i>';
 
 $icon['file'] = '<i class="fas fa-file"></i>';
 $icon['file_alt'] = '<i class="fas fa-file-alt"></i>';
+$icon['filter'] = '<i class="fas fa-filter"></i>';
 $icon['folder_open'] = '<i class="fas fa-folder-open"></i>';
 
 $icon['home'] = '<i class="fas fa-home"></i>';

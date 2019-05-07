@@ -322,7 +322,7 @@ if($_SESSION['media_filter'] != "") {
 
 $kw_form  = '<form action="acp.php?tn=filebrowser&sub=browse&d=" method="POST" class="form-inline dirtyignore">';
 $kw_form .= '<div class="input-group">';
-$kw_form .= '<span class="input-group-addon"><span class="glyphicon glyphicon-filter"></span></span>';
+$kw_form .= '<div class="input-group-prepend"><span class="input-group-text">'.$icon['filter'].'</span></div>';
 $kw_form .= '<input class="form-control" type="text" name="media_filter" value="" placeholder="Filter">';
 $kw_form .= '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 $kw_form .= '</div>';
