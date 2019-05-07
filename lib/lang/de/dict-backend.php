@@ -284,6 +284,8 @@ $lang['label_groups'] = 'Gruppen';
 $lang['label_classes'] = 'Klassen';
 $lang['label_password'] = 'Passwort';
 $lang['label_password_reset'] = 'Passwort zurücksetzen';
+$lang['label_filter'] = "Filter";
+$lang['label_type'] = "Type";
 
 $lang['label_ready_to_install'] = 'Bereit für die Installation';
 $lang['remember_me'] = 'Angemeldet bleiben';

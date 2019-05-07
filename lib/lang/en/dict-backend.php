@@ -288,6 +288,8 @@ $lang['label_groups'] = 'Groups';
 $lang['label_classes'] = 'Classes';
 $lang['label_password'] = 'Password';
 $lang['label_password_reset'] = 'Reset Password';
+$lang['label_filter'] = "Filter";
+$lang['label_type'] = "Type";
 
 $lang['label_ready_to_install'] = 'Ready to install';
 $lang['remember_me'] = 'Remember me';

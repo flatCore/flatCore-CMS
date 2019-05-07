@@ -156,19 +156,57 @@ if(isset($_POST['save_snippet'])) {
  * get all saved snippets
  */
 
-$sql_where = "WHERE textlib_id > 0";
+
+/* expand filter */
+if(isset($_POST['snippet_filter']) && (trim($_POST['snippet_filter']) != '')) {
+	$_SESSION['snippet_filter'] = $_SESSION['snippet_filter'] . ' ' . $_POST['snippet_filter'];
+}
+
+/* remove keyword from filter list */
+if($_REQUEST['rm_keyword'] != "") {
+	$all_filter = explode(" ", $_SESSION['snippet_filter']);
+	unset($_SESSION['snippet_filter'],$f);
+	foreach($all_filter as $f) {
+		if($_REQUEST['rm_keyword'] == "$f") { continue; }
+		if($f == "") { continue; }
+		$_SESSION['snippet_filter'] .= "$f ";
+	}
+	unset($all_filter);
+}
+
+if($_SESSION['snippet_filter'] != "") {
+	unset($all_filter);
+	$all_filter = explode(" ", $_SESSION['snippet_filter']);
+	foreach($all_filter as $f) {
+		if($_REQUEST['rm_keyword'] == "$f") { continue; }
+		if($f == "") { continue; }
+		$btn_remove_keyword .= '<a class="btn btn-dark btn-sm" href="acp.php?tn=pages&sub=snippets&rm_keyword='.$f.'">'.$icon['times_circle'].' '.$f.'</a> ';
+		$set_keyword_filter .= "(textlib_name like '%$f%' OR textlib_title like '%$f%' OR textlib_keywords like '%$f%') AND";
+	}
+}
+
+$set_keyword_filter = substr("$set_keyword_filter", 0, -4); // cut the last ' AND'
+
+$filter_string = "WHERE textlib_id IS NOT NULL";
 
 if($_SESSION['type'] == 'all') {
-	$sql_where = '';
+	$filter_type = '';
 } else if($_SESSION['type'] == 'system') {
-	$sql_where = "WHERE textlib_name IN($system_snippets_str)";
+	$filter_type = "textlib_name IN($system_snippets_str)";
 } else if($_SESSION['type'] == 'own') {
-	$sql_where = "WHERE textlib_name NOT IN($system_snippets_str)";
+	$filter_type = "textlib_name NOT IN($system_snippets_str)";
+}
+
+if($filter_type != "") {
+	$filter_string .= " AND ($filter_type) ";
+}
+
+if($set_keyword_filter != "") {
+	$filter_string .= " AND $set_keyword_filter";
 }
 
 $dbh = new PDO("sqlite:".CONTENT_DB);
-
-$sql = "SELECT * FROM fc_textlib $sql_where ORDER BY textlib_name ASC";
+$sql = "SELECT * FROM fc_textlib $filter_string ORDER BY textlib_name ASC";
 
 foreach($system_snippets as $snippet) {
 	$snippet_exception[] = " textlib_name != '$snippet' ";
@@ -179,6 +217,7 @@ foreach ($dbh->query($sql) as $row) {
 }
 
 $dbh = null;
+
 
 $cnt_snippets = count($snippets_list);
 
@@ -199,13 +238,49 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	echo '<h3>' . $lang['snippets'] . '</h3>';
 	
 	echo '<div class="well well-sm">';
-	echo '<div class="btn-group" role="group">';
-	echo '<a class="btn btn-dark '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle</a>';
-	echo '<a class="btn btn-dark '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System</a>';
-	echo '<a class="btn btn-dark '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene</a>';
-	echo '</div>';
 	
-	echo '<a href="?tn=pages&sub=snippets&snip_id=n" class="btn btn-dark text-success float-right">'.$icon['plus'].' '.$lang['new'].'</a>';
+	echo '<div class="row">';
+	echo '<div class="col-3">';
+	
+	echo '<fieldset class="mb-0">';
+	echo '<legend>'.$lang['label_type'].'</legend>';
+	echo '<div class="btn-group d-flex" role="group">';
+	echo '<a class="btn btn-dark w-100 '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle</a>';
+	echo '<a class="btn btn-dark w-100 '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System</a>';
+	echo '<a class="btn btn-dark w-100 '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene</a>';
+	echo '</div>';
+	echo '</fieldset>';
+	
+	echo '</div>';
+	echo '<div class="col-7">';
+	
+	echo '<fieldset class="mb-0">';
+	echo '<legend>'.$lang['label_filter'].'</legend>';
+
+	echo '<form action="acp.php?tn=pages&sub=snippets" method="POST" class="dirtyignore">';
+	echo '<div class="input-group">';
+	echo '<div class="input-group-prepend"><span class="input-group-text">'.$icon['filter'].'</span></div>';
+	echo '<input class="form-control" type="text" name="snippet_filter" value="" placeholder="Filter">';
+	echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+	echo '</div>';
+	echo '</form>';
+	
+	if($btn_remove_keyword != '') {
+		echo '<hr>'.$btn_remove_keyword;
+	}
+	
+	echo '</fieldset>';
+	
+	echo '</div>';
+	echo '<div class="col">';
+
+	echo '<fieldset class="mb-0">';
+	echo '<legend>'.$lang['snippets'].'</legend>';	
+	echo '<a href="?tn=pages&sub=snippets&snip_id=n" class="btn btn-dark text-success btn-block">'.$icon['plus'].' '.$lang['new'].'</a>';
+	echo '</fieldset>';
+	
+	echo '</div>';
+	echo '</div>';
 	
 	echo '</div>';
 	
