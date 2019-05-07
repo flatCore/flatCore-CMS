@@ -314,7 +314,7 @@ if($_SESSION['media_filter'] != "") {
 	foreach($all_filter as $f) {
 		if($_REQUEST['rm_keyword'] == "$f") { continue; }
 		if($f == "") { continue; }
-		$btn_remove_keyword .= '<a class="btn btn-dark btn-sm" href="acp.php?tn=filebrowser&sub=browse&rm_keyword='.$f.'"><span class="glyphicon glyphicon-remove"></span> '.$f.'</a> ';
+		$btn_remove_keyword .= '<a class="btn btn-dark btn-sm" href="acp.php?tn=filebrowser&sub=browse&rm_keyword='.$f.'">'.$icon['times_circle'].' '.$f.'</a> ';
 	}
 }
 
