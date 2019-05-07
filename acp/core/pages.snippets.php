@@ -107,7 +107,7 @@ if(isset($_POST['save_snippet'])) {
 		$sql = "INSERT INTO fc_textlib (
 							textlib_content, textlib_notes, textlib_groups, textlib_name, textlib_title, textlib_keywords, textlib_lang, textlib_priority,
 							textlib_lastedit, textlib_lastedit_from, textlib_template, textlib_theme, textlib_images, textlib_labels,
-							textlib_classes, textlib_permalink
+							textlib_classes, textlib_permalink, textlib_permalink_name, textlib_permalink_title, textlib_permalink_classes
 						) VALUES (
 							:textlib_content, :textlib_notes, :textlib_groups, :textlib_name, :textlib_title, :textlib_keywords, :textlib_lang, :textlib_priority,
 							:textlib_lastedit, :textlib_lastedit_from, :textlib_template, :textlib_theme, :textlib_images, :textlib_labels,
