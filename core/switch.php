@@ -118,7 +118,10 @@ if($page_modul != "") {
 	}	
 	if($mod['page_keywords'] != "") {
 		$page_meta_keywords = $mod['page_keywords'];
-	}		
+	}
+	if($mod['page_robots'] != "") {
+		$page_meta_robots = $mod['page_robots'];
+	}
 }
 
 
