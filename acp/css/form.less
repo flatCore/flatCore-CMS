@@ -34,7 +34,7 @@ select.form-control,
 .bootstrap-tagsinput {
 	background: #111;
 	color: @brand_color;
-	border-color: @dark_brand;
+	border-color: #555;
 	&:focus {
 		background: @dark_brand;
 		color: @brand_color;
@@ -46,9 +46,17 @@ input.form-control[readonly] {
 }
 
 .input-group-text {
-	border-color: @dark_brand;
+	border: 1px solid #222;
 	background: #111;
 	color: @light_color;
+}
+
+.input-group-prepend,
+.input-group-append {
+	.input-group-text {
+		background: #151515;
+		color: darken(@light_color,10);		
+	}
 }
 
 

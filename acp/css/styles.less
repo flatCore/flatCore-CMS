@@ -6,8 +6,8 @@
 
 @page_bg: #111;
 @content_bg: #333;
-@brand_color: #428bca;
-@dark_brand: desaturate(darken(@brand_color,40%),20);
+@brand_color: #5eacf0;
+@dark_brand: desaturate(darken(@brand_color,50%),20);
 
 @light_color: #ccc; /* font color */
 @widget_background: #252525; /* background for cards, fieldsets etc. */
@@ -223,7 +223,7 @@ div#footer a {
 
 h1, h2, h3, h4, h5, h6 {
 	font-weight: normal;
-	color: #369;
+	color: @brand_color;
 }
 
 .silent {
@@ -293,7 +293,7 @@ a.topnav_selected:visited {
 	line-height: 40px;
 	font-weight: normal;
 	background: #111;
-	color: #428bca;
+	color: @brand_color;
 	height: 40px;
 	.transition(background 0.3s linear, color 0.3s linear);
 	margin-right: 1px;
@@ -301,7 +301,7 @@ a.topnav_selected:visited {
 
 a.topnav:hover {
 	background: #222;
-	color: lighten(#428bca,15%);
+	color: lighten(@brand_color,15%);
 }
 
 a.topnav:active,
@@ -313,8 +313,8 @@ a.topnav:focus {
 
 a.topnav_selected,
 a.topnav_selected:visited {
-	background-color: #428bca;
-	color: #fff;
+	background-color: @brand_color;
+	color: #111;
 }
 
 
@@ -1076,10 +1076,11 @@ pre {
 	font-weight: 300;
 	font-size: 15px;
 	line-height: 15px;
-	color: @light_color;
-	background: @dark_brand;
-	padding: 3px 15px;
-	border-radius: 10px;
+	color: @brand_color;
+	background: #111;
+	padding: 5px 15px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
 	box-shadow: 0 4px 10px -6px #000;
 }
 
