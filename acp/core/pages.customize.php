@@ -149,7 +149,7 @@ if($cnt_result < 1) {
 			echo '<td>';
 			echo '<form action="acp.php?tn=pages&sub=customize" class="form-inline" method="POST">';
 			echo '<input type="hidden" name="del_field" value="'.$result[$i].'">';
-			echo '<button type="submit" class="btn btn-sm btn-dark btn-block text-danger" name="delete_field">'.$icon['trash_alt'].'</button>';
+			echo '<button type="submit" class="btn btn-sm btn-fc btn-block text-danger" name="delete_field">'.$icon['trash_alt'].'</button>';
 			echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 			echo '</form>';
 			echo '</td>';

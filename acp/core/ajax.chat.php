@@ -88,8 +88,8 @@ for($i=0;$i<$cnt_comment;$i++) {
 	unset($show_entry);
 	
 	if($_SESSION['user_nick'] == $comment_author) {
-		$show_entry = str_replace('{entry_edit_btn}', '<a data-fancybox data-type="ajax" class="btn btn-dark btn-sm text-success" data-src="/acp/core/ajax.chat.php?cid='.$comment_id.'" href="javascript:;">'.$lang['edit'].'</a>', $comment_entry_tpl);
-		$show_entry = str_replace('{entry_delete_btn}', '<a data-fancybox data-type="ajax" class="btn btn-dark btn-sm text-danger" data-src="/acp/core/ajax.chat.php?dcid='.$comment_id.'" href="javascript:;">'.$icon['trash_alt'].'</a>', $show_entry);
+		$show_entry = str_replace('{entry_edit_btn}', '<a data-fancybox data-type="ajax" class="btn btn-fc btn-sm text-success" data-src="/acp/core/ajax.chat.php?cid='.$comment_id.'" href="javascript:;">'.$lang['edit'].'</a>', $comment_entry_tpl);
+		$show_entry = str_replace('{entry_delete_btn}', '<a data-fancybox data-type="ajax" class="btn btn-fc btn-sm text-danger" data-src="/acp/core/ajax.chat.php?dcid='.$comment_id.'" href="javascript:;">'.$icon['trash_alt'].'</a>', $show_entry);
 	} else {
 		$show_entry = str_replace('{entry_edit_btn}', '', $comment_entry_tpl);
 		$show_entry = str_replace('{entry_delete_btn}', '', $show_entry);

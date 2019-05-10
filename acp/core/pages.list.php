@@ -164,8 +164,8 @@ for($i=0;$i<$cnt_result;$i++) {
 	/* check for display edit button */
 	
 	if($_SESSION['acp_editpages'] == "allowed"){
-		$edit_button = '<a class="btn btn-sm btn-dark w-100" href="acp.php?tn=pages&sub=edit&editpage='.$page_id.'" title="'.$lang['edit'].'">'.$icon['edit'].'</a>';
-		$duplicate_button = '<a class="btn btn-sm btn-dark w-100" href="acp.php?tn=pages&sub=edit&editpage='.$page_id.'&duplicate=1" title="'.$lang['duplicate'].'">'.$icon['copy'].'</a>';
+		$edit_button = '<a class="btn btn-sm btn-fc w-100" href="acp.php?tn=pages&sub=edit&editpage='.$page_id.'" title="'.$lang['edit'].'">'.$icon['edit'].'</a>';
+		$duplicate_button = '<a class="btn btn-sm btn-fc w-100" href="acp.php?tn=pages&sub=edit&editpage='.$page_id.'&duplicate=1" title="'.$lang['duplicate'].'">'.$icon['copy'].'</a>';
 	} else {
 		$edit_button = '';
 		$duplicate_button = '';
@@ -173,7 +173,7 @@ for($i=0;$i<$cnt_result;$i++) {
 	
 	$arr_checked_admins = explode(",",$page_authorized_users);
 	if(in_array("$_SESSION[user_nick]", $arr_checked_admins)) {
-		$edit_button = '<a class="btn btn-sm btn-dark w-100" href="acp.php?tn=pages&sub=edit&editpage='.$page_id.'" title="'.$lang['edit'].'">'.$icon['edit'].'</a>';
+		$edit_button = '<a class="btn btn-sm btn-fc w-100" href="acp.php?tn=pages&sub=edit&editpage='.$page_id.'" title="'.$lang['edit'].'">'.$icon['edit'].'</a>';
 	}
 	
 	$label = '';
@@ -209,7 +209,7 @@ for($i=0;$i<$cnt_result;$i++) {
 		}
 	}
 	
-	$page_comments_link = '<a data-fancybox data-type="ajax" href="javascript:;" class="btn btn-sm btn-dark w-100" data-src="core/ajax.comments.php?pid='.$page_id.'">'.$icon['comments'].' <small>'. $page_cnt_comments.'</small></a>';
+	$page_comments_link = '<a data-fancybox data-type="ajax" href="javascript:;" class="btn btn-sm btn-fc w-100" data-src="core/ajax.comments.php?pid='.$page_id.'">'.$icon['comments'].' <small>'. $page_cnt_comments.'</small></a>';
 	
 	
 	$str = array(
@@ -341,8 +341,8 @@ for($i=0;$i<$cnt_result;$i++) {
 	/* check for display edit button */
 	
 	if($_SESSION['acp_editpages'] == "allowed"){
-		$edit_button = '<a class="btn btn-sm btn-dark w-100" href="acp.php?tn=pages&sub=edit&editpage='.$page_id.'" title="'.$lang['edit'].'">'.$icon['edit'].'</a>';
-		$duplicate_button = '<a class="btn btn-sm btn-dark w-100" href="acp.php?tn=pages&sub=edit&editpage='.$page_id.'&duplicate=1" title="'.$lang['duplicate'].'">'.$icon['copy'].'</a>';
+		$edit_button = '<a class="btn btn-sm btn-fc w-100" href="acp.php?tn=pages&sub=edit&editpage='.$page_id.'" title="'.$lang['edit'].'">'.$icon['edit'].'</a>';
+		$duplicate_button = '<a class="btn btn-sm btn-fc w-100" href="acp.php?tn=pages&sub=edit&editpage='.$page_id.'&duplicate=1" title="'.$lang['duplicate'].'">'.$icon['copy'].'</a>';
 	} else {
 		$edit_button = '';
 		$duplicate_button = '';
@@ -350,7 +350,7 @@ for($i=0;$i<$cnt_result;$i++) {
 	
 	$arr_checked_admins = explode(",",$page_authorized_users);
 	if(in_array("$_SESSION[user_nick]", $arr_checked_admins)) {
-		$edit_button = '<a class="btn btn-sm btn-dark w-100" href="acp.php?tn=pages&sub=edit&editpage='.$page_id.'" title="'.$lang['edit'].'">'.$icon['edit'].'</a>';
+		$edit_button = '<a class="btn btn-sm btn-fc w-100" href="acp.php?tn=pages&sub=edit&editpage='.$page_id.'" title="'.$lang['edit'].'">'.$icon['edit'].'</a>';
 	}
 	
 	$label = '';
@@ -386,7 +386,7 @@ for($i=0;$i<$cnt_result;$i++) {
 		}
 	}
 
-	$page_comments_link = '<a data-fancybox data-type="ajax" href="javascript:;" class="btn btn-sm btn-dark w-100" data-src="core/ajax.comments.php?pid='.$page_id.'">'.$icon['comments'].' <small>'. $page_cnt_comments.'</small></a>';
+	$page_comments_link = '<a data-fancybox data-type="ajax" href="javascript:;" class="btn btn-sm btn-fc w-100" data-src="core/ajax.comments.php?pid='.$page_id.'">'.$icon['comments'].' <small>'. $page_cnt_comments.'</small></a>';
 	
 	$str = array(
 		'{status-label}','{item-linkname}','{item-title}',

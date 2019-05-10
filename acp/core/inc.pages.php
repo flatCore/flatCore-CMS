@@ -218,7 +218,7 @@ if($_SESSION['kw_filter'] != "") {
 		if($_REQUEST['rm_keyword'] == "$f") { continue; }
 		if($f == "") { continue; }
 		$set_keyword_filter .= "(page_meta_keywords like '%$f%' OR page_title like '%$f%' OR page_linkname like '%$f%') AND";
-		$btn_remove_keyword .= '<a class="btn btn-sm btn-dark" href="acp.php?tn=pages&sub=list&rm_keyword='.$f.'">'.$icon['times_circle'].' '.$f.'</a> ';
+		$btn_remove_keyword .= '<a class="btn btn-sm btn-fc" href="acp.php?tn=pages&sub=list&rm_keyword='.$f.'">'.$icon['times_circle'].' '.$f.'</a> ';
 	}
 	
 }
@@ -281,9 +281,9 @@ if($subinc == "pages.list") {
 		
 		$this_btn_status = '';
 		if(strpos("$_SESSION[checked_lang_string]", "$lang_folder") !== false) {
-			$this_btn_status = 'btn btn-dark btn-sm active';
+			$this_btn_status = 'btn btn-fc btn-sm active';
 		} else {
-			$this_btn_status = 'btn btn-dark btn-sm';
+			$this_btn_status = 'btn btn-fc btn-sm';
 		}
 		
 		$lang_btn_group .= '<a href="acp.php?tn=pages&sub=list&switchLang='.$lang_folder.'" class="'.$this_btn_status.'">'.$lang_folder.'</a>';
@@ -294,14 +294,14 @@ if($subinc == "pages.list") {
 	
 	
 	$status_btn_group  = '<div class="btn-group">';
-	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPuplic" class="btn btn-sm btn-dark text-public '.$btn_status_public.'">'.$dot_public.' '.$lang['f_page_status_puplic'].'</a>';
-	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusGhost" class="btn btn-sm btn-dark text-ghost '.$btn_status_ghost.'">'.$dot_ghost.' '.$lang['f_page_status_ghost'].'</a>';
-	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPrivate" class="btn btn-sm btn-dark text-private '.$btn_status_private.'">'.$dot_private.' '.$lang['f_page_status_private'].'</a>';
-	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusDraft" class="btn btn-sm btn-dark text-draft '.$btn_status_draft.'">'.$dot_draft.' '.$lang['f_page_status_draft'].'</a>';
+	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPuplic" class="btn btn-sm btn-fc text-public '.$btn_status_public.'">'.$dot_public.' '.$lang['f_page_status_puplic'].'</a>';
+	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusGhost" class="btn btn-sm btn-fc text-ghost '.$btn_status_ghost.'">'.$dot_ghost.' '.$lang['f_page_status_ghost'].'</a>';
+	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPrivate" class="btn btn-sm btn-fc text-private '.$btn_status_private.'">'.$dot_private.' '.$lang['f_page_status_private'].'</a>';
+	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusDraft" class="btn btn-sm btn-fc text-draft '.$btn_status_draft.'">'.$dot_draft.' '.$lang['f_page_status_draft'].'</a>';
 	$status_btn_group .= '</div> ';
 	
 	$status_btn_group .= '<div class="btn-group">';
-	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusRedirect" class="btn btn-sm btn-dark text-redirect '.$btn_status_redirect.'">'.$dot_redirect.' '.$lang['btn_redirect'].'</a>';
+	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusRedirect" class="btn btn-sm btn-fc text-redirect '.$btn_status_redirect.'">'.$dot_redirect.' '.$lang['btn_redirect'].'</a>';
 	$status_btn_group .= '</div>';
 
 	$kw_form  = '<form action="acp.php?tn=pages&sub=list" method="POST" class="form-horizontal">';

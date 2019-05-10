@@ -96,10 +96,10 @@ if($_SESSION['checked_deleted'] == "checked") {
 
 
 $status_btn_group  = '<div class="btn-group">';
-$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusVerified" class="btn btn-dark '.$btn_status_verified.'">'.$icon['user_check'].'</span></a>';
-$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusWaiting" class="btn btn-dark '.$btn_status_waiting.'">'.$icon['user_clock'].'</a>';
-$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusPaused" class="btn btn-dark '.$btn_status_paused.'">'.$icon['user_lock'].'</a>';
-$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusDeleted" class="btn btn-dark '.$btn_status_deleted.'">'.$icon['user_slash'].'</a>';
+$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusVerified" class="btn btn-fc '.$btn_status_verified.'">'.$icon['user_check'].'</span></a>';
+$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusWaiting" class="btn btn-fc '.$btn_status_waiting.'">'.$icon['user_clock'].'</a>';
+$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusPaused" class="btn btn-fc '.$btn_status_paused.'">'.$icon['user_lock'].'</a>';
+$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusDeleted" class="btn btn-fc '.$btn_status_deleted.'">'.$icon['user_slash'].'</a>';
 $status_btn_group .= '</div>';
 
 
@@ -179,7 +179,7 @@ if($prev_start <= 0){
 }
 
 
-$pag_backlink = "<a class='btn btn-dark' href='acp.php?tn=user&sub=list&start=$prev_start&sort=$sort'>$lang[pagination_backward]</a>";
+$pag_backlink = "<a class='btn btn-fc' href='acp.php?tn=user&sub=list&start=$prev_start&sort=$sort'>$lang[pagination_backward]</a>";
 
 
 for($x=0;$x<$cnt_pages;$x++) {
@@ -188,16 +188,16 @@ for($x=0;$x<$cnt_pages;$x++) {
 	$page_nbr = $x+1;
 
 	if($page_start == $start) {
-		$aclass = "btn btn-dark active";
+		$aclass = "btn btn-fc active";
 	} else {
-		$aclass = "btn btn-dark";
+		$aclass = "btn btn-fc";
 	}
 
 	$pag_string .= "<a class='$aclass' href='acp.php?tn=user&sub=list&start=$page_start'>$page_nbr</a> ";
 } //eol for $x
 
 
-$pag_forwardlink = "<a class='btn btn-dark' href='acp.php?tn=user&sub=list&start=$next_start&sort=$sort'>$lang[pagination_forward]</a>";
+$pag_forwardlink = "<a class='btn btn-fc' href='acp.php?tn=user&sub=list&start=$next_start&sort=$sort'>$lang[pagination_forward]</a>";
 
 
 echo '<div class="row">';
@@ -306,7 +306,7 @@ for($i=$start;$i<$end;$i++) {
 	echo '<td class="'.$td_class.'">'.$show_registerdate.'</td>';
 	echo '<td class="'.$td_class.'">'.$user_firstname.' '.$user_lastname.'</td>';
 	echo '<td class="'.$td_class.'">'.$user_mail.'</td>';
-	echo '<td class="'.$td_class.'"><a class="btn btn-sm btn-dark btn-block" href="acp.php?tn=user&sub=edit&edituser='.$user_id.'">'.$icon['edit'].' '.$lang['edit'].'</a></td>';
+	echo '<td class="'.$td_class.'"><a class="btn btn-sm btn-fc btn-block" href="acp.php?tn=user&sub=edit&edituser='.$user_id.'">'.$icon['edit'].' '.$lang['edit'].'</a></td>';
 	echo '</tr>';
 
 

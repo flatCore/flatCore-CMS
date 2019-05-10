@@ -87,8 +87,8 @@ for($i=0;$i<$cnt_comment;$i++) {
 	unset($show_entry);
 	
 	if($_SESSION['user_nick'] == $comment_author) {
-		$show_entry = str_replace('{entry_edit_btn}', '<a data-fancybox data-type="ajax" class="btn btn-dark text-success btn-sm" data-src="/acp/core/ajax.comments.php?pid='.$page_id.'&cid='.$comment_id.'" href="javascript:;">'.$lang['edit'].'</a>', $comment_entry_tpl);
-		$show_entry = str_replace('{entry_delete_btn}', '<a data-fancybox data-type="ajax" class="btn btn-dark text-danger btn-sm" data-src="/acp/core/ajax.comments.php?pid='.$page_id.'&did='.$comment_id.'" href="javascript:;">'.$lang['delete'].'</a>', $show_entry);
+		$show_entry = str_replace('{entry_edit_btn}', '<a data-fancybox data-type="ajax" class="btn btn-fc text-success btn-sm" data-src="/acp/core/ajax.comments.php?pid='.$page_id.'&cid='.$comment_id.'" href="javascript:;">'.$lang['edit'].'</a>', $comment_entry_tpl);
+		$show_entry = str_replace('{entry_delete_btn}', '<a data-fancybox data-type="ajax" class="btn btn-fc text-danger btn-sm" data-src="/acp/core/ajax.comments.php?pid='.$page_id.'&did='.$comment_id.'" href="javascript:;">'.$lang['delete'].'</a>', $show_entry);
 	} else {
 		$show_entry = str_replace('{entry_edit_btn}', '', $comment_entry_tpl);
 		$show_entry = str_replace('{entry_delete_btn}', '', $show_entry);

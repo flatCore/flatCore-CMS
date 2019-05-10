@@ -810,7 +810,7 @@ span#w200 {
 }
 .text-redirect,
 .text-redirect.active {
-  color: #286090 !important;
+  color: #078dfe !important;
 }
 .info-collapse.info-show,
 .info-collapse.info-show-this {
@@ -869,19 +869,18 @@ span#w200 {
   border-color: #999;
 }
 .btn-fc {
-  background: #5eacf0;
+  background: #555;
   color: #fff;
 }
 .btn-fc:hover,
 .btn-fc:focus,
 .btn-fc.focus {
   color: #fff;
-  background: #2f94ec;
+  background: #444;
 }
 .btn-fc:active,
 .btn-fc.active {
-  background: #147bd4;
-  text-shadow: 0px 0px 2px #1888e9, 0px 0px 4px #75b8f2, 0px 0px 6px #75b8f2, 0px 0px 12px #63aef0;
+  background: #333;
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   -moz-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
@@ -1069,16 +1068,16 @@ div.previewbox img {
   color: #abd2ab;
 }
 .btn-redirect {
-  border-bottom: 1px solid #286090;
-  background: #121d27;
-  color: #286090;
+  border-bottom: 1px solid #078dfe;
+  background: #0e4778;
+  color: #078dfe;
   text-shadow: none;
 }
 .btn-redirect.active {
-  background: #000000;
+  background: #061e33;
 }
 .btn-redirect:hover {
-  color: #22537c;
+  color: #0180eb;
 }
 .btn {
   -webkit-transition: all 0.2s linear;

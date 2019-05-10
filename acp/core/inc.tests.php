@@ -22,7 +22,7 @@ require 'core/access.php';
 		
 		<h4 id="buttons">Buttons</h4>
 		
-		<p><a href="#" class="btn btn-dark">btn dark</a> <a href="#" class="btn btn-primary">btn primary</a> <a href="#" class="btn btn-success">btn success</a> <a href="#" class="btn btn-danger">btn danger</a> <a href="#" class="btn btn-secondary">btn secondary</a> <a href="#" class="btn btn-info">btn info</a></p>
+		<p><a href="#" class="btn btn-fc">btn dark</a> <a href="#" class="btn btn-primary">btn primary</a> <a href="#" class="btn btn-success">btn success</a> <a href="#" class="btn btn-danger">btn danger</a> <a href="#" class="btn btn-secondary">btn secondary</a> <a href="#" class="btn btn-info">btn info</a></p>
 		<p><a href="#" class="btn btn-outline-primary">btn btn-outline-primary</a> <a href="#" class="btn btn-outline-secondary">btn btn-outline-secondary</a> <a href="#" class="btn btn-outline-success">btn btn-outline-success</a></p>
 		<p><a href="#" class="btn btn-fc">btn fc</a> <a href="#" class="btn btn-save">btn save</a></p>
 		

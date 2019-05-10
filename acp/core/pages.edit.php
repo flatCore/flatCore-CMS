@@ -511,7 +511,7 @@ if(is_numeric($editpage)) {
 	//set submit button
 	$submit_button = "<input type='submit' class='btn btn-save w-100' name='save_the_page' value='$lang[update_page]'>";
 	$delete_button = "<hr><input type='submit' class='btn btn-danger btn-sm btn-block' name='delete_the_page' value='$lang[delete_page]' onclick=\"return confirm('$lang[confirm_delete_data]')\">";
-	$previev_button = "<input type='submit' class='btn btn-dark w-100' id='preview_the_page' name='preview_the_page' value='$lang[preview]'>";
+	$previev_button = "<input type='submit' class='btn btn-fc w-100' id='preview_the_page' name='preview_the_page' value='$lang[preview]'>";
 	
 	if($modus == 'duplicate') {
 		$form_title = '<h3>'.$lang['h_modus_duplicate'].' - '.$page_title.'</h3>';

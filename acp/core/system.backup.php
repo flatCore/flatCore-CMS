@@ -69,15 +69,15 @@ foreach($dbfiles as $filename) {
 	echo "<p>$lang[filesize]: ~ $db_bytes<br>$lang[lastedit]:<br>$db_time</p>";
 	echo '<form action="?tn=system&sub=backup" method="POST">';
 	echo '<div class="btn-group d-flex" role="group">';
-	echo '<a class="btn btn-dark btn-sm w-100 text-success" href="'.$dload_link.'">'.$icon['download'].' '.$lang['download'].'</a>';
+	echo '<a class="btn btn-fc btn-sm w-100 text-success" href="'.$dload_link.'">'.$icon['download'].' '.$lang['download'].'</a>';
 
 	if(substr("$db_file", 0, 7) == 'logfile') {
 
-		echo '<button type="submit" class="btn btn-dark btn-sm w-100 text-danger" name="delete">'.$icon['trash_alt'].'</button>';
+		echo '<button type="submit" class="btn btn-fc btn-sm w-100 text-danger" name="delete">'.$icon['trash_alt'].'</button>';
 
 	}
 
-	echo '<a class="btn btn-dark btn-sm w-100" title="VACUUM" href="?tn=system&sub=backup&vac='.$db_file.'">'.$icon['compress'].'</a>';
+	echo '<a class="btn btn-fc btn-sm w-100" title="VACUUM" href="?tn=system&sub=backup&vac='.$db_file.'">'.$icon['compress'].'</a>';
 
 	
 	echo '</div>';

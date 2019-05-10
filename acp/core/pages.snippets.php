@@ -180,7 +180,7 @@ if($_SESSION['snippet_filter'] != "") {
 	foreach($all_filter as $f) {
 		if($_REQUEST['rm_keyword'] == "$f") { continue; }
 		if($f == "") { continue; }
-		$btn_remove_keyword .= '<a class="btn btn-dark btn-sm" href="acp.php?tn=pages&sub=snippets&rm_keyword='.$f.'">'.$icon['times_circle'].' '.$f.'</a> ';
+		$btn_remove_keyword .= '<a class="btn btn-fc btn-sm" href="acp.php?tn=pages&sub=snippets&rm_keyword='.$f.'">'.$icon['times_circle'].' '.$f.'</a> ';
 		$set_keyword_filter .= "(textlib_name like '%$f%' OR textlib_title like '%$f%' OR textlib_keywords like '%$f%') AND";
 	}
 }
@@ -245,9 +245,9 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	echo '<fieldset class="mb-0">';
 	echo '<legend>'.$lang['label_type'].'</legend>';
 	echo '<div class="btn-group d-flex" role="group">';
-	echo '<a class="btn btn-dark w-100 '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle</a>';
-	echo '<a class="btn btn-dark w-100 '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System</a>';
-	echo '<a class="btn btn-dark w-100 '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene</a>';
+	echo '<a class="btn btn-fc w-100 '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle</a>';
+	echo '<a class="btn btn-fc w-100 '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System</a>';
+	echo '<a class="btn btn-fc w-100 '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene</a>';
 	echo '</div>';
 	echo '</fieldset>';
 	
@@ -276,7 +276,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 
 	echo '<fieldset class="mb-0">';
 	echo '<legend>'.$lang['snippets'].'</legend>';	
-	echo '<a href="?tn=pages&sub=snippets&snip_id=n" class="btn btn-dark text-success btn-block">'.$icon['plus'].' '.$lang['new'].'</a>';
+	echo '<a href="?tn=pages&sub=snippets&snip_id=n" class="btn btn-fc text-success btn-block">'.$icon['plus'].' '.$lang['new'].'</a>';
 	echo '</fieldset>';
 	
 	echo '</div>';
@@ -351,7 +351,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 		echo '<td>'.$get_snip_title.'</td>';
 		echo '<td><small>'.date('Y.m.d. H:i:s',$get_snip_lastedit).' '.$get_snip_lastedit_from.'</small></td>';
 		echo '<td>'.$label.'</td>';
-		echo '<td class="text-right"><a href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'" class="btn btn-dark btn-sm text-success">'.$lang['edit'].'</a></td>';	
+		echo '<td class="text-right"><a href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'" class="btn btn-fc btn-sm text-success">'.$lang['edit'].'</a></td>';	
 		echo '</tr>';
 		
 	}

@@ -66,7 +66,7 @@ $select_dir  .= '<div class="row">';
 if($disk != $path_img AND $disk != $path_files) {
 	$level_up = dirname($disk);
 	$select_dir  .= '<div class="col-1">';
-	$select_dir .= '<a href="acp.php?tn=filebrowser&sub=browse&selected_folder='.$level_up.'" class="btn btn-dark">'.$icon['level_up_alt'].'</a> ';
+	$select_dir .= '<a href="acp.php?tn=filebrowser&sub=browse&selected_folder='.$level_up.'" class="btn btn-fc">'.$icon['level_up_alt'].'</a> ';
 	$select_dir  .= '</div>';
 }
 $select_dir  .= '<div class="col">';
@@ -314,7 +314,7 @@ if($_SESSION['media_filter'] != "") {
 	foreach($all_filter as $f) {
 		if($_REQUEST['rm_keyword'] == "$f") { continue; }
 		if($f == "") { continue; }
-		$btn_remove_keyword .= '<a class="btn btn-dark btn-sm" href="acp.php?tn=filebrowser&sub=browse&rm_keyword='.$f.'">'.$icon['times_circle'].' '.$f.'</a> ';
+		$btn_remove_keyword .= '<a class="btn btn-fc btn-sm" href="acp.php?tn=filebrowser&sub=browse&rm_keyword='.$f.'">'.$icon['times_circle'].' '.$f.'</a> ';
 	}
 }
 
@@ -341,7 +341,7 @@ echo '<form action="acp.php?tn=filebrowser&sub=browse" method="POST" class="form
 echo '<div class="input-group">';
 echo '<input type="text" name="new_folder" class="form-control">';
 echo '<div class="input-group-append">';
-echo '<input type="submit" name="submit" value="'.$lang['create_new_folder'].'" class="btn btn-dark">';
+echo '<input type="submit" name="submit" value="'.$lang['create_new_folder'].'" class="btn btn-fc">';
 echo '</div>';
 echo '</div>';
 echo '</div>';
@@ -351,13 +351,13 @@ echo '<div class="col-md-4">';
 echo '<div class="btn-toolbar float-right">';
 
 echo '<div class="btn-group float-right mr-1">';
-echo '<a class="btn btn-sm btn-dark" href="acp.php?tn='.$tn.'&sub=browse&rebuild=database">'.$icon['wrench'].'</a>';
+echo '<a class="btn btn-sm btn-fc" href="acp.php?tn='.$tn.'&sub=browse&rebuild=database">'.$icon['wrench'].'</a>';
 echo '</div>';
 echo '<div class="btn-group float-right">';
-echo '<a class="btn btn-sm btn-dark '.$check_lastedit.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=time">'.$lang['date_of_change'].'</a>';
-echo '<a class="btn btn-sm btn-dark '.$check_name.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=name">'.$lang['filename'].'</a>';
-echo '<a class="btn btn-sm btn-dark '.$check_size.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=size">'.$lang['filesize'].'</a>';
-echo '<a class="btn btn-sm btn-dark" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_direction=1">'. show_sort_arrow() .'</a>';
+echo '<a class="btn btn-sm btn-fc '.$check_lastedit.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=time">'.$lang['date_of_change'].'</a>';
+echo '<a class="btn btn-sm btn-fc '.$check_name.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=name">'.$lang['filename'].'</a>';
+echo '<a class="btn btn-sm btn-fc '.$check_size.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=size">'.$lang['filesize'].'</a>';
+echo '<a class="btn btn-sm btn-fc" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_direction=1">'. show_sort_arrow() .'</a>';
 echo '</div>';
 echo '</div>';
 
@@ -448,18 +448,18 @@ $cnt_pages = ceil($nbr_of_files/$files_per_page);
 $cnt_get_files = count($get_files);
 
 
-$pag_backlink = '<a class="btn btn-dark" href="acp.php?tn=filebrowser&start='.$prev_start.'">'.$icon['angle_double_left'].'</a>';
-$pag_forwardlink = '<a class="btn btn-dark" href="acp.php?tn=filebrowser&start='.$next_start.'">'.$icon['angle_double_right'].'</a>';
+$pag_backlink = '<a class="btn btn-fc" href="acp.php?tn=filebrowser&start='.$prev_start.'">'.$icon['angle_double_left'].'</a>';
+$pag_forwardlink = '<a class="btn btn-fc" href="acp.php?tn=filebrowser&start='.$next_start.'">'.$icon['angle_double_right'].'</a>';
 
 unset($pag_string);
 for($x=0;$x<$cnt_pages;$x++) {
 
-	$aclass = "btn btn-dark";
+	$aclass = "btn btn-fc";
 	$page_start = $x*$files_per_page;
 	$page_nbr = $x+1;
 	
 	if($page_start == $start) {
-		$aclass = "btn btn-dark active";
+		$aclass = "btn btn-fc active";
 		
 		$pag_start = 	$x-($show_numbers/2);
 		
@@ -507,8 +507,8 @@ for($i=0;$i<$cnt_get_files;$i++) {
 	}
 	
 	
-	$delete_btn = '<button type="submit" onclick="return confirm(\''.$lang['confirm_delete_file'].'\')" class="btn btn-dark btn-sm w-100 text-danger" name="delete" value="'.$lang['delete'].'">'.$icon['trash_alt'].'</button>';
-	$edit_btn = '<a data-fancybox data-type="ajax" data-src="/acp/core/ajax.media.php?file='.$filename.'&folder='.$disk.'" href="javascript:;" class="btn btn-sm btn-dark w-100 text-success">'.$icon['edit'].'</a>';
+	$delete_btn = '<button type="submit" onclick="return confirm(\''.$lang['confirm_delete_file'].'\')" class="btn btn-fc btn-sm w-100 text-danger" name="delete" value="'.$lang['delete'].'">'.$icon['trash_alt'].'</button>';
+	$edit_btn = '<a data-fancybox data-type="ajax" data-src="/acp/core/ajax.media.php?file='.$filename.'&folder='.$disk.'" href="javascript:;" class="btn btn-sm btn-fc w-100 text-success">'.$icon['edit'].'</a>';
 	
 	
 	

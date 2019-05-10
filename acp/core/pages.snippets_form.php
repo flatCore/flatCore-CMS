@@ -196,9 +196,9 @@ echo '<div class="card-body" style="padding-left:20px;padding-right:20px;">';
 
 echo '<div class="form-group">';
 echo '<div class="btn-group btn-group-toggle d-flex" data-toggle="buttons" role="flex">';
-echo '<label class="btn btn-sm btn-dark w-100"><input type="radio" name="optEditor" value="optE1"> WYSIWYG</label>';
-echo '<label class="btn btn-sm btn-dark w-100"><input type="radio" name="optEditor" value="optE2"> Text</label>';
-echo '<label class="btn btn-sm btn-dark w-100"><input type="radio" name="optEditor" value="optE3"> Code</label>';
+echo '<label class="btn btn-sm btn-fc w-100"><input type="radio" name="optEditor" value="optE1"> WYSIWYG</label>';
+echo '<label class="btn btn-sm btn-fc w-100"><input type="radio" name="optEditor" value="optE2"> Text</label>';
+echo '<label class="btn btn-sm btn-fc w-100"><input type="radio" name="optEditor" value="optE3"> Code</label>';
 echo '</div>';
 echo '</div>';
 
@@ -316,8 +316,8 @@ if($modus == 'new') {
 	echo '<input type="hidden" name="snip_id" value="'.$snip_id.'">';
 	echo '<input type="submit" name="save_snippet" class="btn btn-save btn-block" value="'.$lang['update'].'"> ';
 	echo '<div class="mt-1 d-flex">';
-	echo '<a class="btn btn-dark w-100 mr-1" href="acp.php?tn=pages&sub=snippets">'.$lang['discard_changes'].'</a> ';
-	echo '<input type="submit" name="delete_snippet" class="btn btn-dark text-danger" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_data'].'\')">';
+	echo '<a class="btn btn-fc w-100 mr-1" href="acp.php?tn=pages&sub=snippets">'.$lang['discard_changes'].'</a> ';
+	echo '<input type="submit" name="delete_snippet" class="btn btn-fc text-danger" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_data'].'\')">';
 	echo '</div>';
 }
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';

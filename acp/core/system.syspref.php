@@ -513,7 +513,7 @@ echo '</form>';
 
 echo '<div class="mt-3">';
 if($prefs_mailer_adr != '') {
-	echo '<a href="acp.php?tn=system&sub=sys_pref&sendtest=1#mails" class="btn btn-dark btn-sm">'.$lang['prefs_mailer_send_test'].' ('.$prefs_mailer_adr.')</a>';
+	echo '<a href="acp.php?tn=system&sub=sys_pref&sendtest=1#mails" class="btn btn-fc btn-sm">'.$lang['prefs_mailer_send_test'].' ('.$prefs_mailer_adr.')</a>';
 }
 
 
@@ -707,7 +707,7 @@ $complete_size = readable_filesize($cache_size+$compile_size);
 echo '<div class="input-group mb-3">';
 echo '<input class="form-control" type="text" name="prefs_smarty_cache_lifetime" value="'.$prefs_smarty_cache_lifetime.'">';
 echo '<div class="input-group-append">';
-echo '<button class="btn btn-dark" type="submit" name="delete_smarty_cache">('.$complete_size.') '.$lang['delete_cache'].'</button>';
+echo '<button class="btn btn-fc" type="submit" name="delete_smarty_cache">('.$complete_size.') '.$lang['delete_cache'].'</button>';
 echo '</div>';
 echo '</div>';
 
@@ -750,7 +750,7 @@ for($i=0;$i<$cnt_labels;$i++) {
 	echo '<input type="hidden" name="label_id" value="'.$fc_labels[$i]['label_id'].'">';
 	echo '<div class="btn-group" role="group">';
 	echo '<button type="submit" name="update_label" class="btn btn-save">'.$icon['sync_alt'].'</button>';
-	echo '<button type="submit" name="delete_label" class="btn btn-dark text-danger">'.$icon['trash_alt'].'</button>';
+	echo '<button type="submit" name="delete_label" class="btn btn-fc text-danger">'.$icon['trash_alt'].'</button>';
 	echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 	echo '</div>';
 	echo '</div>';

@@ -64,7 +64,7 @@ foreach($logfiles as $fn) {
 echo '</select>';
 echo '</div> ';
 echo '<div class="form-group">';
-echo '<input type="submit" class="btn btn-dark" name="select_log" value="'.$lang['choose'].'">';
+echo '<input type="submit" class="btn btn-fc" name="select_log" value="'.$lang['choose'].'">';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</div> ';
 echo '</form>';
@@ -197,8 +197,8 @@ $pages = ceil($cnt_entries/$entries_per_page);
 echo '<hr>';
 	for($i=0;$i<$pages;$i++) {
 	$nbr = $i+1;
-	$pag_class = "btn btn-dark btn-sm";
-	if(($i*$entries_per_page) == "$start") { $pag_class = "btn btn-dark btn-sm active"; }
+	$pag_class = "btn btn-fc btn-sm";
+	if(($i*$entries_per_page) == "$start") { $pag_class = "btn btn-fc btn-sm active"; }
 		echo"<a class='$pag_class' href='acp.php?tn=system&sub=stats&start=$i'>$nbr</a> ";
 	}
 /* pagination */

@@ -27,13 +27,13 @@ if(count($all_plugin_files)<1) {
 		//$filesize = readable_filesize(filesize('../'.FC_CONTENT_DIR.'/plugins/'.$plugin));
 		//$lastedit = date('Y-m-d H:i:s',filemtime('../'.FC_CONTENT_DIR.'/plugins/'.$plugin));
 		
-		$edit_btn = '<a class="btn btn-dark btn-sm" data-toggle="modal" data-target="#myModal'.$id.'" href="javascript:;">Source</a>';
+		$edit_btn = '<a class="btn btn-fc btn-sm" data-toggle="modal" data-target="#myModal'.$id.'" href="javascript:;">Source</a>';
 		
 		/* show the first comment block */
 		$help_btn = '';
 		if($comment != '') {
 			echo '<div id="help'.$id.'" style="display:none;"><pre>'.$comment.'</pre></div>';
-			$help_btn = ' <a class="fancybox btn btn-dark btn-sm" href="#help'.$id.'">'.$icon['question'].'</a>';
+			$help_btn = ' <a class="fancybox btn btn-fc btn-sm" href="#help'.$id.'">'.$icon['question'].'</a>';
 		}
 		
 		$btn_group = '<div class="btn-group float-right" role="group">'.$edit_btn.$help_btn.'</div>';
@@ -78,7 +78,7 @@ if(count($all_plugin_files)<1) {
 		echo '<pre class="form-control" style="height:400px;overflow:auto;">'.htmlentities($plugin_src,ENT_QUOTES,"UTF-8").'</pre>';
 		echo '</div>';
 		echo '<div class="modal-footer">';
-		echo '<button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>';
+		echo '<button type="button" class="btn btn-fc" data-dismiss="modal">Close</button>';
 		echo '</div>';
 		echo '</div>';
 		echo '</div>';

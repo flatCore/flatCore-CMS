@@ -61,7 +61,7 @@ $langSwitch = '<div class="btn-group" role="group">';
 foreach($arr_lang as $langs) {
 	$btn_status = '';
 	if($langs['lang_sign'] == "$set_lang") { $btn_status = 'active'; }
-	$langSwitch .= '<a data-fancybox data-type="ajax" class="change-fb btn btn-dark btn-sm '.$btn_status.'" data-src="../acp/core/ajax.media.php?file='.$media_filename.'&folder='.$_REQUEST['folder'].'&set_lang='.$langs['lang_sign'].'" href="javascript:;">'.$langs['lang_sign'].'</a>';
+	$langSwitch .= '<a data-fancybox data-type="ajax" class="change-fb btn btn-fc btn-sm '.$btn_status.'" data-src="../acp/core/ajax.media.php?file='.$media_filename.'&folder='.$_REQUEST['folder'].'&set_lang='.$langs['lang_sign'].'" href="javascript:;">'.$langs['lang_sign'].'</a>';
 }
 $langSwitch .= '</div>';
 

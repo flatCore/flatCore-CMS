@@ -38,13 +38,13 @@ if(isset($a) && (is_file("../modules/$sub/info.inc.php"))) {
 if($sub == 'list' OR $sub == 'p' OR $sub == 'm' OR $sub == 't' OR $sub == 'u') {
 	echo '<div class="subHeader">';
 	echo '<div class="btn-group float-right" role="group">';
-	echo '<a href="?tn=moduls&sub=u" class="btn btn-dark '.$active_upload.'">'.$icon['upload'].' '.$lang['btn_install'].'</a>';
+	echo '<a href="?tn=moduls&sub=u" class="btn btn-fc '.$active_upload.'">'.$icon['upload'].' '.$lang['btn_install'].'</a>';
 	echo '</div>';
 	
 	echo '<div class="btn-group" role="group">';
-	echo '<a href="?tn=moduls&sub=m" class="btn btn-dark '.$active_modules.'">Module</a>';
-	echo '<a href="?tn=moduls&sub=p" class="btn btn-dark '.$active_plugins.'">Plugins</a>';
-	echo '<a href="?tn=moduls&sub=t" class="btn btn-dark '.$active_themes.'">Themes</a>';
+	echo '<a href="?tn=moduls&sub=m" class="btn btn-fc '.$active_modules.'">Module</a>';
+	echo '<a href="?tn=moduls&sub=p" class="btn btn-fc '.$active_plugins.'">Plugins</a>';
+	echo '<a href="?tn=moduls&sub=t" class="btn btn-fc '.$active_themes.'">Themes</a>';
 	echo '</div>';
 	echo '</div>';
 }

@@ -185,7 +185,7 @@ echo '</div>';
 echo '</div>';
 echo '<div class="col-md-3">';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
-echo '<input type="submit" class="btn btn-dark btn-block" name="select_group" value="'.$lang['edit'].'">';
+echo '<input type="submit" class="btn btn-fc btn-block" name="select_group" value="'.$lang['edit'].'">';
 echo '</div>';
 echo '</div>';
 echo '</form>';
@@ -212,8 +212,8 @@ foreach($result as $k => $v) {
 
 $array_group_user = explode(" ", $group_user);
 
-$submit_button = '<input type="submit" class="btn btn-dark text-success" name="updateGroup" value="'.$lang['update'].'">';
-$delete_button = '<input type="submit" class="btn btn-dark text-danger" name="deleteGroup" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_file'].'\')">';
+$submit_button = '<input type="submit" class="btn btn-fc text-success" name="updateGroup" value="'.$lang['update'].'">';
+$delete_button = '<input type="submit" class="btn btn-fc text-danger" name="deleteGroup" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_file'].'\')">';
 $hidden_field = '<input type="hidden" name="editgroup" value="'.$editgroup.'">';
 
 } else {

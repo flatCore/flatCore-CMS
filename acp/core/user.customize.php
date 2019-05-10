@@ -139,7 +139,7 @@ if($cnt_result < 1) {
 echo tpl_form_control_group('',$lang['custom_field_name'],$select_del_field);
 
 //submit form to save data
-echo '<input type="submit" class="btn btn-dark text-danger" name="delete_field" value="'.$lang['delete'].'">';
+echo '<input type="submit" class="btn btn-fc text-danger" name="delete_field" value="'.$lang['delete'].'">';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 
 }
