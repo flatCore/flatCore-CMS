@@ -473,10 +473,11 @@ span#w100, span#w150, span#w200 {
 
 }
 
+/* not in use
 span#w100 { width: 100px; }
 span#w150 { width: 150px; }
 span#w200 { width: 200px; }
-
+*/
 
 .clear, #clear { clear:both; }
 
@@ -542,7 +543,10 @@ span#w200 { width: 200px; }
 		font-size: 15px;
 		a {
 			color: @brand_color;
-		}	
+		}
+		small {
+			color: #eee;
+		}
 	}
 	&:hover {
 		box-shadow: inset 0px 7px 12px -7px rgba(0,0,0,0.7);
@@ -551,23 +555,33 @@ span#w200 { width: 200px; }
 
 
 .page-list-item-public {
-
+	&:hover {
+		border-color: fade(@color_public,50);
+	}
 }
 
 .page-list-item-private {
-
+	&:hover {
+		border-color: fade(@color_private,50);
+	}
 }
 
 .page-list-item-ghost {
-
+	&:hover {
+		border-color: fade(@color_ghost,50);
+	}
 }
 
 .page-list-item-draft {
-
+	&:hover {
+		border-color: fade(@color_draft,50);
+	}
 }
 
 .page-list-item-redirect {
-
+	&:hover {
+		border-color: fade(@color_redirect,50);
+	}
 }
 
 
@@ -611,7 +625,7 @@ span#w200 { width: 200px; }
 	width: 0;
 	height: 0;
 	border-style: solid;
-	border-width: 0 20px 20px 0;
+	border-width: 0 25px 25px 0;
 	border-color: transparent #000 transparent transparent;
 }
 

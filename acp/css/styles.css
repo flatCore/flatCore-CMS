@@ -674,15 +674,11 @@ span#w200 {
   padding: 2px 4px;
   border-right: 1px solid #fff;
 }
-span#w100 {
-  width: 100px;
-}
-span#w150 {
-  width: 150px;
-}
-span#w200 {
-  width: 200px;
-}
+/* not in use
+span#w100 { width: 100px; }
+span#w150 { width: 150px; }
+span#w200 { width: 200px; }
+*/
 .clear,
 #clear {
   clear: both;
@@ -739,8 +735,26 @@ span#w200 {
 .page-list-item h4 a {
   color: #5eacf0;
 }
+.page-list-item h4 small {
+  color: #eee;
+}
 .page-list-item:hover {
   box-shadow: inset 0px 7px 12px -7px rgba(0, 0, 0, 0.7);
+}
+.page-list-item-public:hover {
+  border-color: rgba(92, 184, 92, 0.5);
+}
+.page-list-item-private:hover {
+  border-color: rgba(217, 83, 79, 0.5);
+}
+.page-list-item-ghost:hover {
+  border-color: rgba(188, 219, 188, 0.5);
+}
+.page-list-item-draft:hover {
+  border-color: rgba(152, 152, 152, 0.5);
+}
+.page-list-item-redirect:hover {
+  border-color: rgba(7, 141, 254, 0.5);
 }
 .label-white {
   background: #fff;
@@ -777,7 +791,7 @@ span#w200 {
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 0 20px 20px 0;
+  border-width: 0 25px 25px 0;
   border-color: transparent #000 transparent transparent;
 }
 .page-list-item-public .label-page-status {
