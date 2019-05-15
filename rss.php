@@ -1,6 +1,6 @@
 <?php
 
-require('config.php');
+require 'config.php';
 
 switch ($_REQUEST['type']) {
 	case 'rss':
@@ -20,12 +20,17 @@ $dbh = new PDO("sqlite:$fc_db_content");
 $sql = "SELECT * FROM fc_feeds ORDER BY feed_time DESC";
 
 foreach ($dbh->query($sql) as $row) {
- $rssItems[] = $row;
+	$rssItems[] = $row;
 }
 
 $sql_prefs = "SELECT * FROM fc_preferences WHERE prefs_id = 1";
 $prefs = $dbh->query($sql_prefs);
 $prefs = $prefs->fetch(PDO::FETCH_ASSOC);
+
+$cms_domain = $prefs['prefs_cms_ssl_domain'];
+if($cms_domain == '') {
+	$cms_domain = $prefs['prefs_cms_domain'];
+}
 
 $dbh = null;
 
@@ -36,17 +41,17 @@ $header_rss_tpl  = '<?xml version="1.0" encoding="utf-8" ?>';
 $header_rss_tpl .= '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">';
 $header_rss_tpl .= '<channel>';
 $header_rss_tpl .= '<title>'.$prefs['prefs_pagetitle'].'</title>';
-$header_rss_tpl .= '<link>http://'.$_SERVER['SERVER_NAME'].'</link>';
-$header_rss_tpl .= '<description>Feed @ '.$_SERVER['SERVER_NAME'].'</description>';
-$header_rss_tpl .= '<atom:link href="http://'.$_SERVER['SERVER_NAME'].'/rss.php" rel="self" type="application/rss+xml" />';
+$header_rss_tpl .= '<link>'.$cms_domain.'</link>';
+$header_rss_tpl .= '<description>Feed @ '.$cms_domain.'</description>';
+$header_rss_tpl .= '<atom:link href="'.$cms_domain.'/rss.php" rel="self" type="application/rss+xml" />';
 
 $header_atom_tpl  = '<?xml version="1.0" encoding="utf-8" ?>';
 $header_atom_tpl .= '<feed xmlns="http://www.w3.org/2005/Atom">';
-$header_atom_tpl .= '<id>tag:'.$_SERVER['SERVER_NAME'].',2013-11-14:'. urlencode($prefs['prefs_pagetitle']) .'</id>';
-$header_atom_tpl .= '<link rel="self" type="application/atom+xml" href="http://'.$_SERVER['SERVER_NAME'].'/rss.php?type=atom" />';
+//$header_atom_tpl .= '<id>tag:'.$cms_domain.',2013-11-14:'. urlencode($prefs['prefs_pagetitle']) .'</id>';
+$header_atom_tpl .= '<link rel="self" type="application/atom+xml" href="'.$cms_domain.'/rss.php?type=atom" />';
 $header_atom_tpl .= '<title>'.$prefs['prefs_pagetitle'].'</title>';
-$header_atom_tpl .= '<author><name>'.$_SERVER['SERVER_NAME'].'</name></author>';
-$header_atom_tpl .= '<subtitle>Feed @ '.$_SERVER['SERVER_NAME'].'</subtitle>';
+$header_atom_tpl .= '<author><name>'.$cms_domain.'</name></author>';
+$header_atom_tpl .= '<subtitle>Feed @ '.$cms_domain.'</subtitle>';
 $header_atom_tpl .= '<updated>'. gmdate("Y-m-d\TH:i:s\Z", $rssItems[0]['feed_time']) .'</updated>';
 
 $entry_rss_tpl = '<item>
