@@ -10,8 +10,11 @@ $(function() {
 	  menubar: "edit insert table tools view",
 	  toolbar_items_size: 'small',
 	  content_css : "../styles/default/css/editor.css?v=1",
+	  body_class: 'mce-content-body',
 	  plugins: [
-	    "advlist autolink lists link image charmap preview anchor", "searchreplace visualblocks code fullscreen wordcount template", "media table paste"
+	    "advlist autolink lists link image charmap preview anchor",
+	    "searchreplace visualblocks code fullscreen wordcount template",
+	    "media table paste"
 	  ],
 	  toolbar1: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link unlink anchor image media",
 	  toolbar2: "forecolor backcolor fontsizeselect | table | hr removeformat | subscript superscript | fullscreen visualchars visualchars visualblocks | template ",
@@ -66,7 +69,7 @@ $(function() {
 		],
 	  fontsize_formats : "10px 12px 13px 14px 16px 18px 20px",
 		width : "100%",
-		height : 480,
+		height : "480px",
 		remove_script_host : true,
 		rel_list: [
 			{title: 'Keine', value: ''},

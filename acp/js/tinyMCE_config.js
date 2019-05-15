@@ -6,10 +6,12 @@ $(function() {
 	  menubar: "edit insert table tools view",
 	  toolbar_items_size: 'small',
 	  plugins: [
-	    "advlist autolink lists link image charmap preview anchor", "searchreplace visualblocks code fullscreen wordcount template", "media table contextmenu paste textcolor"
+	    "advlist autolink lists link image charmap preview anchor",
+	    "searchreplace visualblocks code fullscreen wordcount template",
+	    "media table paste"
 	  ],
 	  toolbar1: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link unlink anchor image media",
-	  toolbar2: "forecolor backcolor fontsizeselect | table | hr removeformat | subscript superscript | fullscreen visualchars visualchars visualblocks | template | code",
+	  toolbar2: "forecolor backcolor fontsizeselect | table | hr removeformat | subscript superscript | fullscreen visualchars visualchars visualblocks | template ",
 	  image_list : "core/imagelist.php",
 	  image_advtab: true,
 	  image_title: true,
@@ -56,7 +58,7 @@ $(function() {
 		],
 	  fontsize_formats : "10px 12px 13px 14px 16px 18px 20px",
 		width : "100%",
-		height : 480,
+		height : "480px",
 		remove_script_host : true,
 		rel_list: [
 			{title: 'Keine', value: ''},
@@ -77,7 +79,7 @@ $(function() {
 	  plugins: [
 	    "advlist autolink lists link image charmap preview anchor",
 	    "searchreplace visualblocks code fullscreen wordcount template",
-	    "media table contextmenu paste textcolor"
+	    "media table paste"
 	  ],
 	  menubar: "edit insert table tools view",
 	  toolbar1: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link unlink anchor image media",

@@ -313,7 +313,7 @@ if(isset($set_acptheme)) {
 		  		if(mode == 'optE1') {
 			  		/* switch to wysiwyg */
 		    		textEditor.addClass('mceEditor form-control switchEditor');
-		    		textEditor.css("display","block");
+		    		textEditor.css("display","flex");
 		    		divEditor.remove();
 		    		/* load configs again */
 		    		<?php echo $tinyMCE_config_contents; ?>
