@@ -2,17 +2,16 @@
 <img src="http://www.flatcore.org/content/images/icon-flatcore-128.png">
 </p>
 
-## flatcore CMS
+## flatCore CMS
 
-flatCore is a Content Management System based on PHP and SQLite.
+flatCore is a lightweight Content Management System based on PHP and SQLite.
 
 * Official Site: https://flatcore.org
 * License: GNU GENERAL PUBLIC LICENSE Version 3
 
 ### Usermanual and Developer Documentation
-* https://flatcore.org/docs/en/
-* https://flatcore.org/docs/de/
-* Source: https://github.com/flatCore/flatCore-docs/tree/master/src_en
+* https://flatcore.org/documentation/
+* https://flatcore.org/de/dokumentation/
 
 #### 3rd Party Frameworks and Plugins
 
