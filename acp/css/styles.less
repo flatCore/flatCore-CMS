@@ -367,6 +367,20 @@ a:focus {
 	text-decoration: none;
 }
 
+.modal-content {
+	background: @widget_background;
+	.modal-header {
+		border-bottom: 1px solid darken(@widget_background,10);
+		.close {
+			color: @brand_color;
+			opacity: 1;
+			text-shadow: none;
+		}
+	}
+	.modal-footer {
+		border-top: 1px solid darken(@widget_background,10);
+	}
+}
 
 
 

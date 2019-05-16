@@ -595,6 +595,20 @@ a:focus {
   outline: none;
   text-decoration: none;
 }
+.modal-content {
+  background: #252525;
+}
+.modal-content .modal-header {
+  border-bottom: 1px solid #0c0c0c;
+}
+.modal-content .modal-header .close {
+  color: #5eacf0;
+  opacity: 1;
+  text-shadow: none;
+}
+.modal-content .modal-footer {
+  border-top: 1px solid #0c0c0c;
+}
 .list-group-item-ghost {
   color: #ccc;
   background: transparent;

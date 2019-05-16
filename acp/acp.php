@@ -261,14 +261,14 @@ if(isset($set_acptheme)) {
 		  <div class="modal-dialog modal-lg">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-upload"></span> Upload</h4>
+		        <h4 class="modal-title" id="myModalLabel"><?php echo $icon['upload']; ?> Upload</h4>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		      </div>
 		      <div class="modal-body">
 		        <?php include 'core/files.upload.php'; ?>
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-fc" data-dismiss="modal">Close</button>
 		      </div>
 		    </div>
 		  </div>
