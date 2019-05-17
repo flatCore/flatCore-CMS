@@ -142,9 +142,7 @@ if(isset($set_acptheme)) {
 			echo '<link rel="stylesheet" href="css/styles_light.css?v=20190516" type="text/css" media="screen, projection">';
 		}
 		?>
-		
-		<link rel="stylesheet" href="css/styles.css?v=20190510" type="text/css" media="screen, projection">
-		
+				
 		<link href="fontawesome/css/all.min.css" rel="stylesheet">
 		
 		<script type="text/javascript">
