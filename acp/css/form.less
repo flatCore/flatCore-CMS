@@ -18,7 +18,7 @@ fieldset legend {
 	padding: 7px 15px;
 	margin: -25px 10px 0 10px;
 	background: @widget_background;
-	color: @light_color;
+	color: @font_color;
 	font-size: 15px;
 	line-height: 14px;
 	border-radius: 3px;
@@ -32,30 +32,31 @@ input.form-control,
 input.form-control[readonly],
 select.form-control,
 .bootstrap-tagsinput {
-	background: #111;
-	color: @brand_color;
-	border-color: #555;
+	background: @input_background;
+	color: @input_color;
+	border-color: darken(@input_background,10);
 	&:focus {
-		background: @dark_brand;
-		color: @brand_color;
+		background: @input_background;
+		color: @input_color;
 	}
 }
 
 input.form-control[readonly] {
-	color: #aaa;
+	color: lighten(@input_color,10);
 }
 
 .input-group-text {
 	border: 1px solid #222;
 	background: #111;
-	color: @light_color;
+	color: @font_color;
 }
 
 .input-group-prepend,
 .input-group-append {
 	.input-group-text {
-		background: #151515;
-		color: darken(@light_color,10);		
+		background: lighten(@input_background,5);
+		color: darken(@font_color,10);
+		border-color: darken(@input_background,10);	
 	}
 }
 
@@ -63,13 +64,17 @@ input.form-control[readonly] {
 #CSSeditor,
 #HTMLeditor,
 .form-control {
-	border: 1px solid #222 !important;
+	border: 1px solid darken(@input_background,10) !important;
 }
 
 .mce-panel {
-	border-color: #111;
+	border-color: darken(@input_background,10);
+}
+
+.cs(@color) {
+	background: @input_background url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='@{color}' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px !important;
 }
 
 .custom-select {
-	background: #111 url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='white' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right .75rem center/8px 10px !important;
+	.cs(@input_fill);
 }

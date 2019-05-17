@@ -14,8 +14,8 @@ div#page-sidebar {
 	z-index: 1000;
 	width: 55px;
 	padding-top: 25px;
-	color: @light_color;
-	background: #000;
+	color: @sidebar_color;
+	background: @sidebar_background;
 	height: 100%;
 	border-right: 1px solid @content_bg;
    transition-property: top, bottom, width;
@@ -23,9 +23,7 @@ div#page-sidebar {
    transition-timing-function: linear, linear, ease;
       	
 	&:hover {
-		width: 220px;
-		/*padding-right: 5px;*/
-		
+		width: 220px;		
 		i {
 			width: auto;
 		}
@@ -101,13 +99,14 @@ div#page-sidebar {
 		padding-top: 10px;
 		a {
 			display: block;
-			color: @light_color;
+			color: @sidebar_color;
 		}
 	}	
 }
 
 div#page-sidebar.sb-expanded {
 	width: 220px;
+	overflow: hidden;
 }
 
 #page-content {
@@ -148,21 +147,21 @@ a.sidebar-sub,
 a.sidebar-sub-active {
 	display: block;
 	width: 100%;
-	color: @light_color;
-	background: @widget_background;
+	color: @sidebar_color;
+	background: @sidebar_link_background;
 	padding: 3px 2px 3px 0;
 	border-bottom: 1px solid #111;
 }
 
 a.sidebar-sub:hover {
-	color: darken(@light_color,5);
-	background: darken(@widget_background,5);
+	color: darken(@sidebar_color,5);
+	background: darken(@sidebar_link_background,5);
 }
 
 
 a.sidebar-sub-active {
-	color: @light_color;
-	background: @widget_background;
+	color: @font_color;
+	background: @content_bg;
 	background: linear-gradient(to right, @widget_background 0%,@content_bg 100%);
 	i {
 		color: @brand_color;

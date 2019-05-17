@@ -1,0 +1,35 @@
+@import (less) "lesshat.less";
+
+@page_bg: #eee;
+@content_bg: #fff;
+@brand_color: #3396ed;
+@dark_brand: desaturate(darken(@brand_color,50%),20);
+
+@font_color: #222; /* font color */
+@widget_background: #e5e5e5; /* background for cards, fieldsets etc. */
+
+@sidebar_background: #111;
+@sidebar_link_background: #222;
+@sidebar_color: #eee;
+
+@input_background: #fff;
+@input_color: darken(@brand_color,50%);
+@input_fill: 'black';
+
+@btn_fc_background: #f5f5f5;
+@btn_fc_color: #333;
+
+/* pages - status colors */
+@color_public: #2ca62c;
+@color_ghost: #5c7156;
+@color_private: #d9534f;
+@color_draft: #989898;
+@color_redirect: #078dfe;
+
+/* user - status colors */
+@color_verified: #5cb85c;
+@color_queue: @color_ghost;
+@color_banned: #f0ad4e;
+@color_deleted: #d9534f;
+
+@import "styles";

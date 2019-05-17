@@ -92,16 +92,16 @@ if($fc_preferences['prefs_cms_ssl_domain'] != '') {
 }
 
 if(!isset($_COOKIE['acptheme'])) {
-	setcookie("acptheme", "default",time()+(3600*24*365));
+	setcookie("acptheme", "dark",time()+(3600*24*365));
 }
 
 if(isset($_GET['theme'])) {
-	if($_COOKIE["acptheme"] == 'default') {
+	if($_COOKIE["acptheme"] == 'light') {
 		setcookie("acptheme", 'dark',time()+(3600*24*365));
 		$set_acptheme = 'dark';
 	} else {
-		setcookie("acptheme", 'default',time()+(3600*24*365));
-		$set_acptheme = 'default';
+		setcookie("acptheme", 'light',time()+(3600*24*365));
+		$set_acptheme = 'light';
 	}
 }
 
@@ -118,7 +118,7 @@ if(isset($set_acptheme)) {
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>ACP | <?php echo $_SERVER['SERVER_NAME'] . ' | ' . $tn; ?></title>
+		<title>ACP | <?php echo $fc_base_url . ' | ' . $tn; ?></title>
 		
 		<link rel="icon" type="image/x-icon" href="images/favicon.ico" />
 		
@@ -134,13 +134,28 @@ if(isset($set_acptheme)) {
 		<script type="text/javascript" src="../lib/js/jquery/jquery.textareaCounter.plugin.js"></script>
 
 		<link rel="stylesheet" href="css/bootstrap.min.css?v=4.3.1" type="text/css" media="screen, projection">
+		
+		<?php
+		if($acptheme == 'dark') {
+			echo '<link rel="stylesheet" href="css/styles_dark.css?v=20190516" type="text/css" media="screen, projection">';
+		} else {
+			echo '<link rel="stylesheet" href="css/styles_light.css?v=20190516" type="text/css" media="screen, projection">';
+		}
+		?>
+		
 		<link rel="stylesheet" href="css/styles.css?v=20190510" type="text/css" media="screen, projection">
+		
 		<link href="fontawesome/css/all.min.css" rel="stylesheet">
 		
 		<script type="text/javascript">
 			var languagePack = "<?php echo $languagePack; ?>";
-			var ace_theme = 'twilight';
-			var tinymce_skin = 'oxide-dark';		
+			var ace_theme = 'chrome';
+			var tinymce_skin = 'oxide';
+			var acptheme = "<?php echo $acptheme; ?>";
+			if(acptheme === 'dark') {
+				var ace_theme = 'twilight';
+				var tinymce_skin = 'oxide-dark';
+			}
 		</script>
 		
 
@@ -242,7 +257,7 @@ if(isset($set_acptheme)) {
 				$arr_lang = get_all_languages();
 				for($i=0;$i<count($arr_lang);$i++) {
 	$lang_icon = '<img src="../lib/lang/'.$arr_lang[$i]['lang_folder'].'/flag.png" style="vertical-align: baseline; width:18px; height:auto;">';
-	echo '<a class="btn btn-outline-dark" href="acp.php?set_lang='.$arr_lang[$i]['lang_folder'].'">'.$lang_icon.' '.$arr_lang[$i]['lang_desc'].'</a> ';
+	echo '<a class="btn btn-fc" href="acp.php?set_lang='.$arr_lang[$i]['lang_folder'].'">'.$lang_icon.' '.$arr_lang[$i]['lang_desc'].'</a> ';
 }
 			?>
 			</p>
@@ -255,6 +270,13 @@ if(isset($set_acptheme)) {
 		</div>
 		
 		<div class="bottom-bar">
+			<?php
+				if($acptheme == 'dark') {
+					echo '<a class="btn btn-sm btn-fc" href="acp.php?tn='.$tn.'&theme=true">Light Theme</a>';
+				} else {
+					echo '<a class="btn btn-sm btn-fc" href="acp.php?tn='.$tn.'&theme=true">Dark Theme</a>';
+				}
+			?>
 			<button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#uploadModal"><?php echo $icon['upload']; ?> Upload</button>
 		</div>
 		<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-hidden="true">

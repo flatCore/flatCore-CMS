@@ -1,19 +1,19 @@
 .table, .table-sm, .table-bordered {
-	color: @light_color;
+	color: @font_color;
 }
 .table thead th {
-	border-bottom: 1px solid #111;
+	border-bottom: 1px solid darken(@widget_background,15);
 }
 .table th,
 .table td {
-  border-top: 1px solid #222;
+  border-top: 1px solid darken(@widget_background,15);
 }
 
 .table-bordered td {
-	border-color: #000;
+	border-color: darken(@widget_background,25);
 }
 
 .table-hover tbody tr:hover {
-	color: #fff;
-	background: rgba(0,0,0,0.3);
+	color: @font_color;
+	background: darken(@widget_background,5);
 }
