@@ -19,6 +19,8 @@
 @btn_fc_background: #555;
 @btn_fc_color: #fff;
 
+@pages_list_items_background: darken(@widget_background,5);
+
 /* pages - status colors */
 @color_public: #5cb85c;
 @color_ghost: #bcdbbc;
@@ -31,5 +33,12 @@
 @color_queue: @color_ghost;
 @color_banned: #f0ad4e;
 @color_deleted: #d9534f;
+
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: normal;
+	color: lighten(@brand_color,15);
+}
+
 
 @import "styles";

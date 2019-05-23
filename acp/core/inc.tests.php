@@ -43,6 +43,7 @@ require 'core/access.php';
 		<fieldset class="mt-4">
 			<legend>fieldset .mt-4</legend>
 			<p>flatCore Content Management System</p>
+			<p><a href="#" class="btn btn-fc">btn fc</a> <a href="#" class="btn btn-save">btn save</a></p>
 		</fieldset>
 		
 		<pre>&lt;pre&gt; -> flatCore Content Management System</pre>
@@ -51,9 +52,10 @@ require 'core/access.php';
 		
 		<h4 id="icons">Icons</h4>
 		
+		<div class="scroll-container">
 		<?php
 			
-			echo '<table class="table table-sm table-bordered"">';
+			echo '<table class="table table-sm table-bordered table-striped">';
 			foreach($icon as $k => $v) {
 				
 				echo '<tr>';
@@ -66,6 +68,7 @@ require 'core/access.php';
 			echo '</table>';
 					
 		?>
+		</div>
 		
 
 	</div>

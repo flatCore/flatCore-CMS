@@ -2,6 +2,15 @@
 /* background for cards, fieldsets etc. */
 /* pages - status colors */
 /* user - status colors */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+  color: #a4d0f7;
+}
 /**
  * flatCore ACP
  */
@@ -56,7 +65,7 @@
 }
 .table-hover tbody tr:hover {
   color: #ccc;
-  background: #181818;
+  background: #2a2a2a;
 }
 /* fieldset */
 fieldset {
@@ -583,15 +592,6 @@ div#footer {
   overflow: hidden;
 }
 /* TYPO */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: normal;
-  color: #5eacf0;
-}
 .silent {
   font-size: 11px;
   color: #888;
@@ -1418,8 +1418,6 @@ ul.image_picker_selector li.has-child {
   margin-top: 5px;
 }
 ul.image_picker_selector li.group_title {
-  float: none;
-  display: block;
   width: 100%;
   background: #181818;
   padding: 3px 5px;
