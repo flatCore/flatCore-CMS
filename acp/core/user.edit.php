@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(E_ALL ^E_NOTICE);
 //prohibit unauthorized access
 require 'core/access.php';
 
@@ -102,7 +102,7 @@ if($_POST['delete_the_user']) {
 	if($cnt_changes > 0){
 		$success_message = "$lang[msg_user_deleted]<br />";
 		$show_form = "false";
-		record_log("$_SESSION[user_nick]","deleted user id: $edituser","0");
+		record_log($_SESSION['user_nick'],"deleted user id: $edituser","0");
 	}
 	
 	unset($edituser);
@@ -224,7 +224,7 @@ if($_POST['save_the_user']) {
 	
 	
 	/**
-	 * update table ff_groups
+	 * update table fc_groups
 	 */
 	
 	
@@ -237,33 +237,33 @@ if($_POST['save_the_user']) {
 		}
 		
 		$user_groups = $_POST['user_groups'];
-		$this_group = $_POST['this_group']; // not checked checkbox
+		$this_group = $_POST['this_group']; // not checked checkbox (hidden field)
 		$nbr_of_groups = $_POST['nbr_of_groups'];
 		
 		
 		for($i=0;$i<$nbr_of_groups;$i++) {
 		
 			if($user_groups[$i] == "") {
-				$user_groups[$i] = "$this_group[$i]";
+				$user_groups[$i] = $this_group[$i];
 				$sign_out = "true"; // delete user from this list
 			} else {
 				$sign_out = "false";
 			}
 			
-			$result = $dbh->query("SELECT * FROM fc_groups WHERE group_id = $user_groups[$i] ");
-			$result= $result->fetch(PDO::FETCH_ASSOC);
+			$group_data = $dbh->query("SELECT * FROM fc_groups WHERE group_id = $user_groups[$i] ");
+			$group_data = $group_data->fetch(PDO::FETCH_ASSOC);
 			
-			$array_existing_users = explode(" ", $result['group_user']);        // userlist - to array
-			array_push($array_existing_users, "$enter_user_id");              // add the user
-			$array_existing_users = array_unique($array_existing_users);      // delete doubles
-			$existing_users = implode(" ", $array_existing_users);            // generate the new userlist - back to a string
+			$array_existing_users = explode(" ", $group_data['group_user']);   // userlist - to array
+			array_push($array_existing_users, "$enter_user_id");               // add the user
+			$array_existing_users = array_unique($array_existing_users);       // delete doubles
+			$existing_users = implode(" ", $array_existing_users);             // generate the new userlist - back to a string
 			
 			if($sign_out == "true") {
 				$existing_users = str_replace("$enter_user_id","",$existing_users);
 			}
 			
 			$existing_users = preg_replace("/ +/", ' ', $existing_users);     // delete multiple spaces	
-			$result = $dbh->query("UPDATE fc_groups SET group_user = '$existing_users' WHERE group_id = $user_groups[$i]");
+			$group_data = $dbh->query("UPDATE fc_groups SET group_user = '$existing_users' WHERE group_id = $user_groups[$i]");
 		
 		}
 	}

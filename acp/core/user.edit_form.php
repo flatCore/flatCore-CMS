@@ -81,16 +81,17 @@ echo '</fieldset>';
 echo '</div>';
 echo '<div class="col-md-6">';
 
-$result = get_all_groups();
+$all_groups = get_all_groups();
 
-$nbr_of_groups = count($result);
+$nbr_of_groups = count($all_groups);
 
 echo '<input type="hidden" name="nbr_of_groups" value="'.$nbr_of_groups.'">';
 
 for($i=0;$i<$nbr_of_groups;$i++) {
-	$get_group_id = $result[$i]['group_id'];
-	$get_group_name = $result[$i]['group_name'];
-	$get_group_user = $result[$i]['group_user'];
+	
+	$get_group_id = $all_groups[$i]['group_id'];
+	$get_group_name = $all_groups[$i]['group_name'];
+	$get_group_user = $all_groups[$i]['group_user'];
 	
 	$array_group_user = explode(" ", $get_group_user);
 	
@@ -103,7 +104,8 @@ for($i=0;$i<$nbr_of_groups;$i++) {
 		$checked = "";
 	}
 	
-	$cb_usergroup .= tpl_checkbox("user_groups[$i]","$get_group_id","check_group_$i",$get_group_name,$checked);	
+	$cb_usergroup .= tpl_checkbox("user_groups[$i]","$get_group_id","check_group_$i",$get_group_name,$checked);
+	$cb_usergroup .= '<input type="hidden" name="this_group['.$i.']" value="'.$get_group_id.'">';
 }
 
 echo '<fieldset>';
