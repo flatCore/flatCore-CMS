@@ -321,16 +321,6 @@ if(isset($_POST['delete_label'])) {
 	
 }
 
-	/*
-	if($cnt_changes == TRUE) {
-		$sys_message = "{OKAY} $lang[db_changed]";
-		record_log("$_SESSION[user_nick]","edit system preferences","6");
-	} else {
-		$sys_message = "{ERROR} $lang[db_not_changed]";
-		record_log("$_SESSION[user_nick]","error on saving system preferences","11");
-	}
-	*/
-
 
 if($sys_message != ""){
 	print_sysmsg("$sys_message");
@@ -518,15 +508,18 @@ if($prefs_mailer_adr != '') {
 
 
 if($_GET['sendtest'] == 1) {
-	require_once("../lib/Swift/lib/swift_required.php");
+	require_once'../lib/Swift/lib/swift_required.php';
 	
 	if($prefs_mailer_type == 'smtp') {
-		$trans = Swift_SmtpTransport::newInstance("$prefs_smtp_host", "$prefs_smtp_port")
-			->setUsername("$prefs_smtp_username")
-			->setPassword("$prefs_smtp_psw");
+		
+		$trans = Swift_SmtpTransport::newInstance()
+            ->setUsername("$prefs_smtp_username")
+            ->setPassword("$prefs_smtp_psw")
+            ->setHost("$prefs_smtp_host")
+            ->setPort($prefs_smtp_port);
 			
 		if($prefs_mail_smtp_encryption_input != '') {
-			$trans ->setEncryption($pb_prefs['prefs_smtp_encryption']);
+			$trans->setEncryption($prefs_smtp_encryption);
 		}
 	} else {
 		$trans = Swift_MailTransport::newInstance();

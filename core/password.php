@@ -1,4 +1,5 @@
 <?php
+//error_reporting(E_ALL ^E_NOTICE);
 
 if($_POST['ask_for_psw']) {
 	// send password information
@@ -48,27 +49,30 @@ if($_POST['ask_for_psw']) {
 		$email_msg = str_replace("{RESET_LINK}","$reset_link",$email_msg);
 		
 		/* send register mail to the new user */
-		require_once("lib/Swift/lib/swift_required.php");
+		require_once 'lib/Swift/lib/swift_required.php';
 		
 		if($prefs_mailer_type == 'smtp') {
-			$transport = Swift_SmtpTransport::newInstance("$prefs_smtp_host", "$prefs_smtp_port")
-				->setUsername("$prefs_smtp_username")
-				->setPassword("$prefs_smtp_psw");
+			$trans = Swift_SmtpTransport::newInstance()
+            ->setUsername("$prefs_smtp_username")
+            ->setPassword("$prefs_smtp_psw")
+            ->setHost("$prefs_smtp_host")
+            ->setPort($prefs_smtp_port);
 				
 			if($prefs_mail_smtp_encryption_input != '') {
-				$transport ->setEncryption($pb_prefs['prefs_smtp_encryption']);
+				$trans->setEncryption($prefs_smtp_encryption);
 			}
 		} else {
-			$transport = Swift_MailTransport::newInstance();
+			$trans = Swift_MailTransport::newInstance();
 		}
-	
-		$mailer = Swift_Mailer::newInstance($transport);
-		$message = Swift_Message::newInstance()
-			->setSubject("$lang[forgotten_psw_mail_subject] | $prefs_pagetitle")
-	  		->setFrom(array("$prefs_mailer_adr" => "$prefs_mailer_name"))
-	  		->setTo(array("$mail" => "$user_nick"))
-	  		->setBody("$email_msg", 'text/html');
-	  	$result = $mailer->send($message);
+
+		$mailer_psw1 = Swift_Mailer::newInstance($trans);
+		$subj = $lang['forgotten_psw_mail_subject']. ' '.$prefs_pagetitle;
+		$message = Swift_Message::newInstance("$subj")
+	  	->setFrom(array($prefs_mailer_adr => $prefs_mailer_name))
+	  	->setTo(array($mail => $user_nick))
+	  	->setBody("$email_msg", "text/html");
+	  
+	  $res = $mailer_psw1->send($message);
 		
 		$psw_message = $lang['msg_forgotten_psw_step1'];
 	
@@ -121,16 +125,18 @@ if($_GET['token'] != "") {
 	$email_msg = $lang['forgotten_psw_mail_update'];
 	$email_msg = str_replace("{USERNAME}","$user_nick",$email_msg);
 	$email_msg = str_replace("{temp_psw}","$temp_psw",$email_msg);
-	
+
 	/* send register mail to the new user */
-	require_once("lib/Swift/lib/swift_required.php");
+	require_once 'lib/Swift/lib/swift_required.php';
 	if($prefs_mailer_type == 'smtp') {
-		$transport = Swift_SmtpTransport::newInstance("$prefs_smtp_host", "$prefs_smtp_port")
-			->setUsername("$prefs_smtp_username")
-			->setPassword("$prefs_smtp_psw");
+		$transport = Swift_SmtpTransport::newInstance()
+            ->setUsername("$prefs_smtp_username")
+            ->setPassword("$prefs_smtp_psw")
+            ->setHost("$prefs_smtp_host")
+            ->setPort($prefs_smtp_port);
 			
 		if($prefs_mail_smtp_encryption_input != '') {
-			$transport ->setEncryption($pb_prefs['prefs_smtp_encryption']);
+			$transport ->setEncryption($prefs_smtp_encryption);
 		}
 	} else {
 		$transport = Swift_MailTransport::newInstance();
@@ -138,7 +144,7 @@ if($_GET['token'] != "") {
 	$mailer = Swift_Mailer::newInstance($transport);
 	$message = Swift_Message::newInstance()
 		->setSubject("$lang[forgotten_psw_mail_subject] | $prefs_pagetitle")
-  	->setFrom(array("$prefs_mailer_adr" => "$prefs_mailer_name"))
+  	->setFrom(array($prefs_mailer_adr => $prefs_mailer_name))
   	->setTo(array("$user_mail" => "$user_nick"))
   	->setBody("$email_msg", 'text/html');
   $result = $mailer->send($message);
