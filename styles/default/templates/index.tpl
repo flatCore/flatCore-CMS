@@ -26,11 +26,11 @@
 		
 	$( "#permit_cookie" ).click(function() {
   	Cookies.set('permit_cookies', 'true', { expires: 7 });
-  	$( "div.privacy_policy" ).addClass( "hidden" );
+  	$( "div.privacy_policy" ).addClass( "d-none" );
 	});
 	
 	if(Cookies.get('permit_cookies') == 'true') {
-		$( "div.privacy_policy" ).addClass( "hidden" );
+		$( "div.privacy_policy" ).addClass( "d-none" );
 	}
 	
 	</script>

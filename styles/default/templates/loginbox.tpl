@@ -20,7 +20,7 @@
 	    </div>
 	  </div>
 		<div class="form-group">
-			<input class="btn btn-sm btn-default" type="submit" name="login" id="psw" value="{$button_login}">
+			<input class="btn btn-outline-secondary" type="submit" name="login" id="psw" value="{$button_login}">
 		</div>
 		<p>{$show_forgotten_psw_link}</p>
 	</form>
