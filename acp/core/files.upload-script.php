@@ -10,6 +10,10 @@ if($_SESSION['user_class'] != "administrator"){
 	die("PERMISSION DENIED!");
 }
 
+if($_POST['csrf_token'] !== $_SESSION['token']) {
+	die('Error: CSRF Token is invalid');
+}
+
 $time = time();
 
 $max_w = (int) $_REQUEST['w']; // max image width

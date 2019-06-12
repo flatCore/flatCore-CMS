@@ -1,7 +1,7 @@
 <?php
 
 //prohibit unauthorized access
-require("core/access.php");
+require 'core/access.php';
 
 
 $path_img = '../'.IMAGES_FOLDER;
@@ -51,7 +51,7 @@ $files_folder = basename($path_files);
 <input type="hidden" name="h" value="<?php echo $fc_preferences['prefs_maximageheight']; ?>" />
 <input type="hidden" name="fz" value="<?php echo $fc_preferences['prefs_maxfilesize']; ?>" />
 <input type="hidden" name="unchanged" value="<?php echo $fc_preferences['prefs_uploads_remain_unchanged']; ?>" />
-
+<input type="hidden" name="csrf_token" value="<?php echo $_SESSION['token']; ?>">
 
 </form>
 <hr>
