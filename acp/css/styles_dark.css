@@ -983,7 +983,7 @@ span#w200 { width: 200px; }
 }
 .controls-container {
   padding: 5px;
-  background: #000000;
+  background: #181818;
 }
 .masked-textarea,
 .masked-textarea:hover,
@@ -1162,11 +1162,12 @@ textarea#textEditor2,
   padding: 5px;
 }
 .files-list {
-  border-top: 1px solid #0f2940;
+  border-top: 1px solid #252525;
+  background: #222222;
   padding: 1px 0;
 }
 .files-list:nth-child(even) {
-  background: #133755;
+  background: #1d1d1d;
 }
 .formfooter {
   background: rgba(0, 0, 0, 0.2);

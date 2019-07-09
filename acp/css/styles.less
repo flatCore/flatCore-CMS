@@ -686,7 +686,7 @@ span#w200 { width: 200px; }
 
 .controls-container {
 	padding: 5px;
-	background: darken(@widget_background,15);
+	background: darken(@widget_background,5);
 }
 
 
@@ -878,12 +878,13 @@ textarea#textEditor2,
 }
 
 .files-list {
-	border-top:1px solid @dark_brand;
+	border-top:1px solid @widget_background;
+	background: darken(@widget_background,1);
 	padding: 1px 0;
 }
 
 .files-list:nth-child(even) {
-	background: lighten(@dark_brand,5);
+	background: darken(@widget_background,3);
 }
 
 
