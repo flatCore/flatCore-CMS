@@ -390,6 +390,7 @@ $lang['drm_user_can_publish'] = "User can publish";
 
 $lang['msg_sql_changes'] = "Updated Entries: %d";
 $lang['msg_user_exists'] = "User already exists";
+$lang['msg_user_mandatory'] = "Username is mandatory";
 $lang['msg_usermail_exists'] = "E-Mail Address already exists";
 $lang['db_changed'] = "Database updated";
 $lang['db_not_changed'] = "Error on updating";

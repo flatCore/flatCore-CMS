@@ -195,6 +195,11 @@ if($_POST['save_the_user']) {
 			$db_status = "locked";
 		}
 		
+		if($user_nick == '') {
+			$error_message .= $lang['msg_user_mandatory'].'<br>';
+			$db_status = "locked";			
+		}
+		
 		if($db_status == "unlocked") {
 		
 			$user_id = null;
@@ -285,7 +290,7 @@ if($success_message != ""){
 }
 
 if($error_message != ""){
-	echo"<div class='alert alert-error'><p>$error_message</p></div>";
+	echo"<div class='alert alert-danger'><p>$error_message</p></div>";
 }
 
 

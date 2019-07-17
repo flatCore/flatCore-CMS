@@ -38,6 +38,10 @@ echo '<div class="card-body">';
 echo '<div class="tab-content">';
 echo '<div class="tab-pane fade show active" id="info">';
 
+
+echo tpl_form_control_group('',$lang['f_user_nick'],"<input class='form-control' type='text' name='user_nick' value='$user_nick'>");
+echo '<hr>';
+
 echo '<div class="row">';
 echo '<div class="col-md-6">';
 
@@ -167,7 +171,7 @@ if($arr_drm[5] == "drm_acp_editownpages")	{  $checked_editownpages = "checked"; 
 if($arr_drm[6] == "drm_moderator")	{  $checked_moderator = "checked";  }
 if($arr_drm[7] == "drm_can_publish")	{  $checked_can_publish = "checked";  }
 
-echo '<fieldset>';
+echo '<fieldset class="mt-4">';
 echo '<legend>'.$lang['f_user_drm'].'</legend>';
 
 echo tpl_checkbox('drm_acp_class','administrator','check_admin',$lang['drm_administrator'],$checked_class);
@@ -221,9 +225,7 @@ echo '</div>'; // card
 echo '</div>';
 echo '<div class="col-md-3">';
 
-echo '<div class="well well-sm">';
-
-echo tpl_form_control_group('',$lang['f_user_nick'],"<input class='form-control' type='text' name='user_nick' value='$user_nick'>");
+echo '<div class="well">';
 
 echo '<fieldset>';
 echo '<legend>Avatar</legend>';
