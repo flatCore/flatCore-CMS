@@ -3,16 +3,14 @@
 //prohibit unauthorized access
 require 'core/access.php';
 
-$all_plugin_files = array_diff(scandir('../'.FC_CONTENT_DIR.'/plugins/'), array('..', '.','.DS_Store','index.html'));
-
-if(count($all_plugin_files)<1) {
+if(count($all_plugins)<1) {
 	/* no plugins */
 	echo '<div class="alert alert-info">'.$lang['alert_no_plugins'].'</div>';
 } else {
 
 	$template_file = file_get_contents("templates/pluginlist.tpl");
 	
-	foreach($all_plugin_files as $plugin) {
+	foreach($all_plugins as $plugin) {
 		
 		$pathinfo = pathinfo('/content/plugins/'.$plugin);
 		if($pathinfo['extension'] != 'php') {

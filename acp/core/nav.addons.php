@@ -12,8 +12,7 @@ if($sub == '') {
 }
 
 
-$arr_iMods = get_all_moduls();
-$nbrModuls = count($arr_iMods);
+$nbrModuls = count($all_mods);
 
 echo '<ul class="nav">';
 
@@ -21,7 +20,7 @@ $mod_subnav = '<li><a class="sidebar-nav '.($sub == "list" ? 'sidebar-nav-active
 
 for($i=0;$i<$nbrModuls;$i++) {
 
-	$modFolder = $arr_iMods[$i]['folder'];
+	$modFolder = $all_mods[$i]['folder'];
 	
 	unset($modnav);	
 	include '../modules/'.$modFolder.'/info.inc.php';

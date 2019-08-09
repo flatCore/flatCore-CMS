@@ -470,6 +470,8 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 	mods_check_in();
 	cache_url_paths();
 	
+	fc_get_hook('page_updated',$_POST);
+	
 	fc_delete_smarty_cache(md5($page_permalink));
 
 }

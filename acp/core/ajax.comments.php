@@ -14,7 +14,6 @@ define("FILES_FOLDER", "$files_path");
 
 require_once('access.php');
 require_once('functions.php');
-require_once('database.php');
 require('../../lib/lang/'.$_SESSION['lang'].'/dict-backend.php');
 
 if(isset($_REQUEST['pid'])) {

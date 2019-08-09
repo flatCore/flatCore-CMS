@@ -73,9 +73,10 @@ if(isset($_SESSION['lang'])) {
 
 require '../lib/lang/index.php';
 require 'core/functions.php';
-require 'core/database.php';
 require 'core/switch.php';
 
+$all_mods = get_all_moduls();
+$all_plugins = get_all_plugins();
 
 /* READ THE PREFS */
 $fc_preferences = get_preferences();

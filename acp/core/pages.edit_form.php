@@ -432,17 +432,15 @@ echo '</div>';
 
 /* Select Modul */
 
-$arr_iMods = get_all_moduls();
 
 $select_page_modul = '<select name="page_modul"  class="custom-select form-control">';
-
 $select_page_modul .= '<option value="">Kein Modul</option>';
 
-for($i=0;$i<count($arr_iMods);$i++) {
+for($i=0;$i<count($all_mods);$i++) {
 
 	$selected = "";
-	$mod_name = $arr_iMods[$i]['name'];
-	$mod_folder = $arr_iMods[$i]['folder'];
+	$mod_name = $all_mods[$i]['name'];
+	$mod_folder = $all_mods[$i]['folder'];
 
 	if($mod_folder == "$page_modul") {
 		$selected = "selected";

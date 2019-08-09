@@ -4,7 +4,7 @@
 require 'core/access.php';
 
 
-$all_mods = get_all_moduls();
+
 $cnt_mods = count($all_mods);
 
 if($cnt_mods > 0) {
@@ -52,6 +52,7 @@ if($cnt_mods > 0) {
 	}
 	echo '</div>';
 
+	fc_get_hook('dashboard_listed_all_addons','');
 
 }
 ?>
