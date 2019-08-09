@@ -150,11 +150,11 @@ div#page-sidebar {
   background: #111;
   height: 100%;
   border-right: 1px solid #fff;
-  transition-property: top, bottom, width;
-  transition-duration: 0.2s, 0.2s, 0.35s;
-  transition-timing-function: linear, linear, ease;
 }
 div#page-sidebar:hover {
+  transition-property: width;
+  transition-duration: 0.35s;
+  transition-timing-function: ease;
   width: 220px;
 }
 div#page-sidebar:hover i {

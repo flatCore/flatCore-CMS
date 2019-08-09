@@ -18,11 +18,11 @@ div#page-sidebar {
 	background: @sidebar_background;
 	height: 100%;
 	border-right: 1px solid @content_bg;
-   transition-property: top, bottom, width;
-   transition-duration: .2s, .2s, .35s;
-   transition-timing-function: linear, linear, ease;
-      	
+
 	&:hover {
+		transition-property: width;
+		transition-duration: .35s;
+		transition-timing-function: ease;
 		width: 220px;		
 		i {
 			width: auto;
@@ -48,6 +48,7 @@ div#page-sidebar {
 	
 	
 	.sidebar-collapsed {
+			
 		width: 100%;
 		overflow: hidden;
 		white-space: nowrap;
