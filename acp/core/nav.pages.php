@@ -16,6 +16,7 @@ if($sub == "edit") {
 } else {
 	echo '<li><a class="sidebar-nav sidebar-nav-disabled" href="#">'.$icon['edit'].' '.$lang['page_edit'].'</a></li>';
 }
+echo '<li><a class="sidebar-nav '.($sub == "index" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=pages&sub=index">'.$icon['database'].' '.$lang['page_index'].'</a></li>';
 
 echo '<li><a class="sidebar-nav '.($sub == "customize" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=pages&sub=customize">'.$icon['cogs'].' '.$lang['page_customize'].'</a></li>';
 echo '<li><a class="sidebar-nav '.($sub == "snippets" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=pages&sub=snippets">'.$icon['clipboard'].' '.$lang['snippets'].'</a></li>';

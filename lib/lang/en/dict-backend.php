@@ -57,6 +57,7 @@ $lang['go_to_upload'] = "Upload Files";
 $lang['page_list'] = "Show all Pages";
 $lang['page_edit'] = "Edit Page";
 $lang['page_customize'] = "Customize";
+$lang['page_index'] = "Index";
 $lang['new_page'] = "Create new Page";
 $lang['textlib'] = "Text Snippets";
 $lang['snippets'] = "Snippets";
@@ -295,6 +296,12 @@ $lang['label_ready_to_install'] = 'Ready to install';
 $lang['remember_me'] = 'Remember me';
 
 $lang['label_deleted_resources'] = 'Deleted Resources';
+
+$lang['label_missing_img_alt_tags'] = 'Missing Alt Tags';
+$lang['label_missing_img_title_tags'] = 'Missing Title Tags (Images)';
+$lang['label_missing_link_title_tags'] = 'Missing Title Tags (Links)';
+$lang['label_missing_h1'] = 'Missing H1';
+$lang['label_missing_h2'] = 'Missing H2';
 
 /* Preferences */
 

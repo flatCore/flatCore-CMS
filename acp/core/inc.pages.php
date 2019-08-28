@@ -21,6 +21,10 @@ switch ($sub) {
 	case "customize":
 		$subinc = "pages.customize";
 		break;
+		
+	case "index":
+		$subinc = "pages.index";
+		break;
 	
 	case "snippets":
 		$subinc = "pages.snippets";

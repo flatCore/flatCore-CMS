@@ -26,7 +26,7 @@ $all_tables = glob("contents/*.php");
 
 for($i=0;$i<count($all_tables);$i++) {
 
-	unset($db_path,$table_name);
+	unset($db_path,$table_name,$table_type);
 	include $all_tables[$i]; // returns $cols and $table_name
 	
 	if($database == "content") {
@@ -40,13 +40,17 @@ for($i=0;$i<count($all_tables);$i++) {
 	if($database == "tracker") {
 		$db_path = "../$fc_db_stats";
 	}
-
-
+	
 	$is_table = table_exists("$db_path","$table_name");
-
+	
 	if($is_table < 1) {
-		add_table("$db_path","$table_name",$cols);
-		$table_updates[] = "New Table: <b>$table_name</b> in Database <b>$database</b>";
+		if($table_type == 'virtual') {
+			add_virtual_table("$db_path","$table_name",$cols);
+		} else {
+			add_table("$db_path","$table_name",$cols);
+		}
+		
+		$table_updates[] = "New $table_type Table: <b>$table_name</b> in Database <b>$database</b>";
 	}
 
 

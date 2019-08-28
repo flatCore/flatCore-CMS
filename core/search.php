@@ -1,6 +1,5 @@
 <?php
 
-
 $start_search = "true";
 
 $s = sanitizeUserInputs($s);
@@ -12,50 +11,29 @@ if(strlen($s) < 3) {
 
 if($start_search == "true") {
 
-	$sql = "SELECT page_id, page_permalink, page_language, page_title, page_meta_description, page_status, page_meta_keywords, page_content
-			FROM fc_pages
-			WHERE (page_title like :searchstring OR page_content like :searchstring OR page_meta_keywords like :searchstring)
-			AND (page_language = :languagePack)
-			AND (page_status != 'draft')
-			AND (page_status != 'ghost')";
-	
-	
-	try {
-		$dbh = new PDO("sqlite:$fc_db_content");
-		$sth = $dbh->prepare($sql);
-		$sth->bindValue(':searchstring', "%{$s}%", PDO::PARAM_STR);
-		$sth->bindValue(':languagePack', "$languagePack", PDO::PARAM_STR);
-		$sth->execute();
-		$arr_results = $sth->fetchAll(PDO::FETCH_ASSOC);
-	}
-	
-	catch (PDOException $e) {
-		echo 'Error: ' . $e->getMessage();
-	}
-	
-	$dbh = null;
-	
-	$cnt_result = count($arr_results);
-	
+	$sr = fc_search($s,1,10);
+	$cnt_result = count($sr);
 	if($cnt_result < 1) {
 		$search_msg = $lang['msg_search_no_results'];
 	} else {
 		$search_msg = sprintf($lang['msg_search_results'], $cnt_result);
 		
 		for($i=0;$i<$cnt_result;$i++) {
-			$arr_results[$i]['set_link'] = FC_INC_DIR . "/" . $arr_results[$i]['page_permalink'];
+			$sr[$i]['set_link'] = $sr[$i]['page_url'];
+			$sr[$i]['page_meta_description'] = $sr[$i]['snipp'];
 		}
 
 	}
 }
 
+
 $page_title = $lang['headline_searchresults'] . ' ('.$s.')';
 
 $smarty->assign('page_title', $page_title, true);
-$smarty->assign('arr_results', $arr_results, true);
+$smarty->assign('arr_results', $sr, true);
 $smarty->assign('headline_searchresults', $lang['headline_searchresults'], true);
 $smarty->assign('msg_searchresults', $search_msg, true);
-
+$smarty->assign('search_string', $s, true);
 
 $output = $smarty->fetch("searchresults.tpl");
 $smarty->assign('page_content', $output, true);

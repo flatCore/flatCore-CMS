@@ -533,4 +533,72 @@ function fc_get_active_mods() {
 }
 
 
+
+/* search */
+
+function fc_search($query, $currentPage=1, $itemsPerPage=10) {
+	
+	global $fc_db_stats;
+	
+	$query = str_replace('-', ' ', $query);
+	
+	$dbh = new PDO("sqlite:$fc_db_stats");
+	$dbh->query("SET NAMES 'utf-8'");
+	$dbh->sqliteCreateFunction('rank', 'rankinfo', 1);
+	
+	$sqlquery = 'SELECT COUNT(*) AS totalrows FROM pages WHERE page_content LIKE :searchstring';
+	$sth = $dbh->prepare($sql);
+	$sth->bindValue(':searchstring', "%{$query}%", PDO::PARAM_STR);
+	$sth->execute();
+	$arr_results = $sth->fetchAll(PDO::FETCH_ASSOC);
+	
+	
+	$startOffset = (int) ($currentPage-1) * $itemsPerPage;
+	$endOffset = $startOffset + $itemsPerPage;
+		
+	$sql = "SELECT page_url, page_title, snippet(pages, '<mark class=\"hi\">', '</mark>', '...', -1, -50) AS snipp, rank(matchinfo(pages)) AS score FROM pages WHERE pages MATCH :search ORDER BY score DESC LIMIT $startOffset, $endOffset;"; // LIMIT 0,10
+
+	$stmt = $dbh->prepare($sql);
+	$stmt->bindValue(':search', "*$query*", PDO::PARAM_STR);
+	$stmt->execute();
+	$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	
+	$dbh = null;
+	return $results;
+	
+}
+
+
+/**
+ * get a rank
+ * https://www.sqlite.org/fts3.html#appendix_a
+ */
+
+function rankinfo($string) {
+	
+	$matchinfo = unpack("I*", $string);
+	$cnt_phrase = $matchinfo[1];
+	$cnt_col = $matchinfo[2];
+	
+	$score = 0;
+	
+	for($i=0; $i<$cnt_phrase; $i++) {
+		
+		$aPhraseinfo = array_slice($matchinfo, 2 + $i * $cnt_col * 3);
+		for($x=0; $x<$cnt_col; $x++) {
+		
+			$nHitCount = $aPhraseinfo[3 * $x];
+			$nGlobalHitCount = $aPhraseinfo[3 * $x + 1];
+			$weight = 10;
+			
+			if( $nHitCount > 0 ) {
+				$score += ((double)$nHitCount / (double)$nGlobalHitCount) * $weight;
+			}
+			
+		}
+	}
+	return $score;
+}
+
+
 ?>

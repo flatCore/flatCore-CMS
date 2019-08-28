@@ -53,6 +53,7 @@ $lang['go_to_upload'] = "Dateien hochladen";
 $lang['page_list'] = "Alle Seiten";
 $lang['page_edit'] = "Seite bearbeiten";
 $lang['page_customize'] = "Seiten anpassen";
+$lang['page_index'] = "Index";
 $lang['new_page'] = "Neue Seite";
 $lang['textlib'] = "Textbausteine";
 $lang['snippets'] = "Textvorlagen";
@@ -291,6 +292,13 @@ $lang['label_ready_to_install'] = 'Bereit für die Installation';
 $lang['remember_me'] = 'Angemeldet bleiben';
 
 $lang['label_deleted_resources'] = 'Gelöschte Ressourcen';
+
+$lang['label_missing_img_alt_tags'] = 'Fehlende Alt Tags';
+$lang['label_missing_img_title_tags'] = 'Fehlende Title Tags (Bilder)';
+$lang['label_missing_link_title_tags'] = 'Fehlende Title Tags (Links)';
+$lang['label_missing_h1'] = 'Fehlende H1';
+$lang['label_missing_h2'] = 'Fehlende H2';
+
 
 /* Preferences */
 

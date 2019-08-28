@@ -89,23 +89,41 @@ column_name3 data_type,
 function add_table($db,$table_name,$cols) {
 
 
-foreach ($cols as $k => $v) {
-	$cols_string .= "$k $cols[$k],\r";
+	foreach ($cols as $k => $v) {
+		$cols_string .= "$k $cols[$k],\r";
+	}
+	
+	$cols_string = substr(trim("$cols_string"), 0,-1); // cut last commata and returns
+	
+	$dbh = new PDO("sqlite:$db");
+	
+		$sql = "CREATE TABLE $table_name 
+							(
+							$cols_string
+							)";
+		$dbh->exec($sql);
+	
+	$dbh = null;
+
+
 }
 
-$cols_string = substr(trim("$cols_string"), 0,-1); // cut last commata and returns
+// create virtual table
 
-$dbh = new PDO("sqlite:$db");
+function add_virtual_table($db,$table_name,$cols) {
 
-	$sql = "CREATE TABLE $table_name 
-						(
-						$cols_string
-						)";
+	foreach ($cols as $k => $v) {
+		$cols_string .= "$k $cols[$k],";
+	}
+	
+	$cols_string = substr(trim("$cols_string"), 0,-1); // cut last commata and returns
+	
+	$dbh = new PDO("sqlite:$db");
+	$dbh->query("SET NAMES 'utf-8'");
+	$sql = "CREATE VIRTUAL TABLE $table_name USING fts3($cols_string,tokenize=porter)";
 	$dbh->exec($sql);
-
-$dbh = null;
-
-
+	$dbh = null;
+		
 }
 
 

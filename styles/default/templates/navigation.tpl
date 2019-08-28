@@ -1,3 +1,4 @@
+{nocache}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<div class="container">
   	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -16,8 +17,9 @@
 		</div>
 		
 		<form class="form-inline" action="/search/" method="POST">
-    	<input class="form-control mr-sm-2 searchbox" name="s" type="search" aria-label="Search">
+    	<input class="form-control mr-sm-2 searchbox" name="s" type="search" aria-label="Search" value="{$search_string}">
   	</form>
 		
 	</div>
 </nav>
+{/nocache}
