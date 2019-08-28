@@ -1,6 +1,6 @@
 <?php
 
-$database = "tracker";
+$database = "index";
 $table_name = "pages";
 $table_type = "virtual";
 

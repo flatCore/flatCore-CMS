@@ -27,7 +27,7 @@ function fc_crawler($id='') {
 		$url = '';
 	} else {
 		/* get url bei id */
-		$dbh = new PDO("sqlite:".STATS_DB);
+		$dbh = new PDO("sqlite:".INDEX_DB);
 		$sql = "SELECT page_url FROM pages WHERE page_id = :pid";
 		$sth = $dbh->prepare($sql);
 		$sth->bindParam(':pid', $id, PDO::PARAM_STR);
@@ -232,7 +232,7 @@ function fc_update_page_index($id) {
 	global $exclude_items;
 	$time = time();
 
-	$dbh = new PDO("sqlite:".STATS_DB);
+	$dbh = new PDO("sqlite:".INDEX_DB);
 	
 	$sql = "select page_url from pages where page_id = :id";
 	$sth = $dbh->prepare($sql);
@@ -308,7 +308,7 @@ function fc_update_page_index($id) {
 	$get_html = trim($get_html);
 	
 	
-	$dbh = new PDO("sqlite:".STATS_DB);
+	$dbh = new PDO("sqlite:".INDEX_DB);
 	$sql = "UPDATE pages SET
 		page_content = :page_content,
 		page_title = :page_title,	page_description = :page_description,
@@ -350,7 +350,7 @@ function fc_update_page_index($id) {
 function fc_add_url($url) {
 	
 	
-	$dbh = new PDO("sqlite:".STATS_DB);
+	$dbh = new PDO("sqlite:".INDEX_DB);
 	
 	$sql_check = "select count(1) from pages where page_url = :url";
 	$sth = $dbh->prepare($sql_check);
@@ -363,7 +363,7 @@ function fc_add_url($url) {
 	if($cnt_entries[0] < 1) {
 		
 		$url = htmlentities($url);		
-		$dbh = new PDO("sqlite:".STATS_DB);
+		$dbh = new PDO("sqlite:".INDEX_DB);
 		
 		$sql_insert = "INSERT INTO pages (
 				page_id, page_url
@@ -392,7 +392,7 @@ function fc_add_url($url) {
  */
 
 function fc_get_indexed_pages() {
-	$dbh = new PDO("sqlite:".STATS_DB);
+	$dbh = new PDO("sqlite:".INDEX_DB);
 	$sql = "SELECT * FROM pages";
 
 	$items = $dbh->query($sql);
@@ -414,7 +414,7 @@ function fc_get_indexed_pages() {
 
 function fc_delete_excludes($id) {
 	
-	$dbh = new PDO("sqlite:".STATS_DB);
+	$dbh = new PDO("sqlite:".INDEX_DB);
 	$sql = "DELETE FROM excludes WHERE item_id = :item_id";
 	$sth = $dbh->prepare($sql);
 	$sth->bindParam(':item_id', $id, PDO::PARAM_INT);
@@ -434,7 +434,7 @@ function fc_delete_excludes($id) {
  
 function fc_write_exclude_elements($element,$attribute) {
 	
-	$dbh = new PDO("sqlite:".STATS_DB);
+	$dbh = new PDO("sqlite:".INDEX_DB);
 
 	$sql = "INSERT INTO excludes	(
 			item_id, item_element, item_attributes
@@ -459,7 +459,7 @@ function fc_write_exclude_elements($element,$attribute) {
  */
 
 function fc_get_exclude_elements() {
-	$dbh = new PDO("sqlite:".STATS_DB);
+	$dbh = new PDO("sqlite:".INDEX_DB);
 	$sql = "SELECT * FROM excludes WHERE item_url IS NULL";
 
 	$items = $dbh->query($sql);
@@ -480,7 +480,7 @@ function fc_get_exclude_elements() {
 
 function fc_write_exclude_url($url) {
 	
-	$dbh = new PDO("sqlite:".STATS_DB);
+	$dbh = new PDO("sqlite:".INDEX_DB);
 
 	$sql = "INSERT INTO excludes	(
 			item_id , item_url
@@ -504,7 +504,7 @@ function fc_write_exclude_url($url) {
  */
  
 function fc_get_exclude_urls() {
-	$dbh = new PDO("sqlite:".STATS_DB);
+	$dbh = new PDO("sqlite:".INDEX_DB);
 	$sql = "SELECT * FROM excludes WHERE item_url IS NOT NULL";
 
 	$items = $dbh->query($sql);

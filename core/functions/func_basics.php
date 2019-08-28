@@ -538,11 +538,11 @@ function fc_get_active_mods() {
 
 function fc_search($query, $currentPage=1, $itemsPerPage=10) {
 	
-	global $fc_db_stats;
+	global $fc_db_index;
 	
 	$query = str_replace('-', ' ', $query);
 	
-	$dbh = new PDO("sqlite:$fc_db_stats");
+	$dbh = new PDO("sqlite:$fc_db_index");
 	$dbh->query("SET NAMES 'utf-8'");
 	$dbh->sqliteCreateFunction('rank', 'rankinfo', 1);
 	

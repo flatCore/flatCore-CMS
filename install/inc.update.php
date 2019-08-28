@@ -41,6 +41,10 @@ for($i=0;$i<count($all_tables);$i++) {
 		$db_path = "../$fc_db_stats";
 	}
 	
+	if($database == "index") {
+		$db_path = "../$fc_db_index";
+	}
+	
 	$is_table = table_exists("$db_path","$table_name");
 	
 	if($is_table < 1) {

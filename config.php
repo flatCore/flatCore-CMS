@@ -30,6 +30,7 @@ define('FC_ACP_DIR',  "acp");
 $fc_db_content 	= FC_CONTENT_DIR . "/SQLite/content.sqlite3";
 $fc_db_user 	= FC_CONTENT_DIR . "/SQLite/user.sqlite3";
 $fc_db_stats 	= FC_CONTENT_DIR . "/SQLite/flatTracker.sqlite3";
+$fc_db_index 	= FC_CONTENT_DIR . "/SQLite/index.sqlite3";
 
 
 /**
