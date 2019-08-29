@@ -470,9 +470,13 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 	mods_check_in();
 	cache_url_paths();
 	
-	fc_get_hook('page_updated',$_POST);
+	fc_get_hook('page_updated',$_POST);	
+	fc_delete_smarty_cache(md5($_POST['page_permalink']));
 	
-	fc_delete_smarty_cache(md5($page_permalink));
+	if($_POST['page_sort'] == 'ghost' OR $_POST['page_status'] == 'public') {
+		fc_update_or_insert_index($_POST['page_permalink']);
+	}
+	
 
 }
 

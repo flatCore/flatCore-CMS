@@ -334,6 +334,7 @@ function fc_update_page_index($id) {
 	$end_time = time();
 	
 	$return['duration'] = $end_time-$time;
+	$return['url'] = $url;
 	
 	
 	return $return;
@@ -357,10 +358,40 @@ function fc_update_bulk_page_index($num=5) {
 	$dbh = null;
 	
 	foreach($items as $item) {
-		fc_update_page_index($item['page_id']);
+		$update = fc_update_page_index($item['page_id']);
 	}
 	
 
+}
+
+
+/**
+ * update the page index
+ * this function is called by pages.edit.php if you save a plublic or ghost page
+ * if page is in index, update contents
+ * if not, add as new entry
+ */
+
+function fc_update_or_insert_index($permalink) {
+	
+	$url = '/'.$permalink;
+	$dbh = new PDO("sqlite:".INDEX_DB);
+	$sql_check = "select page_id from pages where page_url = :url LIMIT 1";
+	$sth = $dbh->prepare($sql_check);
+	$sth->bindParam(':url', $url, PDO::PARAM_STR);
+	$sth->execute();
+	$entry = $sth->fetch(PDO::FETCH_ASSOC);
+	$sth = null;
+	$dbh = null;
+	
+	if($entry['page_id'] == '') {
+		/* we have a new entry */
+	} else {
+		/* update entry */
+		$update = fc_update_page_index($entry['page_id']);
+	}
+	
+		
 }
 
 
@@ -374,7 +405,6 @@ function fc_add_url($url) {
 	
 	
 	$dbh = new PDO("sqlite:".INDEX_DB);
-	
 	$sql_check = "select count(1) from pages where page_url = :url";
 	$sth = $dbh->prepare($sql_check);
 	$sth->bindParam(':url', $url, PDO::PARAM_STR);
