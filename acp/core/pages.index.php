@@ -49,6 +49,14 @@ if(isset($_GET['a']) && $_GET['a'] == 'update') {
 	$status_msg = 'Script running '.$fc_upi['duration'].' seconds';
 }
 
+if(isset($_GET['a']) && $_GET['a'] == 'update_bulk') {
+	fc_update_bulk_page_index();
+}
+
+
+
+
+
 $indexed_entries = fc_get_indexed_pages();
 $cnt_indexed_entries = count($indexed_entries);
 
@@ -64,10 +72,6 @@ if($status_msg != '') {
 
 
 $item_tpl = file_get_contents('templates/list-indexed-pages-item.tpl');
-
-
-
-for($i=0;$i<$cnt_indexed_entries;$i++) {
 
 	$page_img_title_errors = 0;
 	$page_img_alt_errors = 0;
@@ -85,7 +89,9 @@ for($i=0;$i<$cnt_indexed_entries;$i++) {
 	$cnt_headlines = 0;
 	$cnt_error_h1 = 0;
 	$cnt_error_h2 = 0;
-	
+
+for($i=0;$i<$cnt_indexed_entries;$i++) {
+
 	
 	$url = $indexed_entries[$i]['page_url'];
 	$title = $indexed_entries[$i]['page_title'];
@@ -324,16 +330,15 @@ echo '<div class="col-8">';
 echo '<pre>'.$fc_base_url.'</pre>';
 echo '</div>';
 echo '<div class="col-4">';
-echo '<a href="acp.php?tn=pages&sub=index&a=start" class="btn btn-success btn-block">'.$icon['sitemap'].' Start Index</a>';
+echo '<a href="acp.php?tn=pages&sub=index&a=start" class="btn btn-save btn-block">'.$icon['sitemap'].' Start Index</a>';
 echo '</div>';
 echo '</div>';
 
+echo '<a href="acp.php?tn=pages&sub=index&a=update_bulk" class="btn btn-save btn-block">'.$icon['sync_alt'].' Bulk update</a>';
 
+echo '<hr>';
 
-
-echo '<h5>Exclude elements</h5>';
-
-
+echo '<div class="well well-sm">';
 echo '<table class="table table-sm">';
 echo '<tr><td class="text-right">'.$cnt_error_img_alt.'</td><td>'.$lang['label_missing_img_alt_tags'].'</td></tr>';
 echo '<tr><td class="text-right">'.$cnt_error_img_title.'</td><td>'.$lang['label_missing_img_title_tags'].'</td></tr>';
@@ -341,7 +346,9 @@ echo '<tr><td class="text-right">'.$cnt_error_link_title.'</td><td>'.$lang['labe
 echo '<tr><td class="text-right">'.$cnt_error_h1.'</td><td>'.$lang['label_missing_h1'].'</td></tr>';
 echo '<tr><td class="text-right">'.$cnt_error_h2.'</td><td>'.$lang['label_missing_h2'].'</td></tr>';
 echo '</table>';
+echo '</div>';
 
+echo '<h5>Exclude elements</h5>';
 
 echo '<table class="table table-sm">';
 foreach($exclude_items as $ex_item) {
@@ -426,8 +433,6 @@ echo '</fieldset>';
 
 echo '</div>';
 echo '</div>';
-
-
 
 
 

@@ -125,11 +125,16 @@ function fc_loadSourceCode($url) {
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER,TRUE);
 
   $data = curl_exec($ch);
-  $info = curl_getinfo($ch);
- 
+  
+  $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
   curl_close($ch);
- 
-  return $data;
+  
+  if($http_code>=200 && $http_code<300) {
+	  return $data;
+  } else {
+	  return false;
+  }
+  
 }
 
 
@@ -226,7 +231,7 @@ function fc_update_page_index($id) {
 	$sth->bindParam(':id', $id, PDO::PARAM_STR);
 	$sth->execute();
 	$item = $sth->fetch(PDO::FETCH_ASSOC);
-	
+	$sth = null;
 	$dbh = null;
 	
 	$url = $item['page_url'];
@@ -237,6 +242,13 @@ function fc_update_page_index($id) {
 	
 	$check_page = $fc_base_url.$url;
 	$get_html = fc_loadSourceCode($check_page);
+	
+	if($get_html === false) {
+		/* this page isn't available anymore */
+		echo '<div class="alert alert-danger">deleted: '.$url.'</div>';
+		fc_delete_url("/$url");
+		return;
+	}
 	
 	$html_data = fc_get_html_data($get_html);
 	
@@ -329,6 +341,30 @@ function fc_update_page_index($id) {
 }
 
 
+
+/**
+ * update the page index of the (num) oldest pages
+ */
+
+function fc_update_bulk_page_index($num=5) {
+
+	$dbh = new PDO("sqlite:".INDEX_DB);
+	$sql = "SELECT page_id FROM pages ORDER BY indexed_time ASC LIMIT $num";
+
+	$items = $dbh->query($sql);
+	$items = $items->fetchAll(PDO::FETCH_ASSOC);
+
+	$dbh = null;
+	
+	foreach($items as $item) {
+		fc_update_page_index($item['page_id']);
+	}
+	
+
+}
+
+
+
 /**
  * Add URL to list
  * check for existing entries
@@ -377,6 +413,20 @@ function fc_add_url($url) {
 }
 
 
+
+/**
+ * delete URL from pages table
+ */
+
+function fc_delete_url($url) {
+	
+	$dbh = new PDO("sqlite:".INDEX_DB);
+	$sql = "DELETE FROM pages WHERE page_url = :page_url";
+	$sth = $dbh->prepare($sql);
+	$sth->bindParam(':page_url', $url, PDO::PARAM_STR);
+	$cnt_changes = $sth->execute();
+	$dbh = null;
+}
 
 
 /**

@@ -1,5 +1,8 @@
 <div class="well well-sm clearfix">
-	<p class="mb-0"><strong>{title}</strong></p>
+	<p class="mb-0">
+		<span class="float-right">{indexed_time}</span>
+		<strong>{title}</strong>
+	</p>
 	<p class="mb-0">{description}</p>
 	<p class="small mb-0"><a href="{url}">{url}</a></p>
 
