@@ -28,12 +28,12 @@ function fc_crawler($id='') {
 	} else {
 		/* get url bei id */
 		$dbh = new PDO("sqlite:".INDEX_DB);
-		$sql = "SELECT page_url FROM pages WHERE page_id = :pid";
+		$sql = "SELECT page_url FROM pages WHERE page_id = :pid LIMIT 1";
 		$sth = $dbh->prepare($sql);
 		$sth->bindParam(':pid', $id, PDO::PARAM_STR);
 		$sth->execute();
 		$item = $sth->fetch(PDO::FETCH_ASSOC);
-
+		$sth = null;
 		$dbh = null;
 		
 		$url = $item['page_url'];
@@ -95,12 +95,11 @@ function fc_crawler($id='') {
 			continue;
 		}
 		
-		
 		fc_add_url($href);
 		
 	}
 	
-	return $links;
+	//return $links;
 }
 
 
@@ -117,19 +116,13 @@ function fc_loadSourceCode($url) {
 	curl_setopt($ch, CURLOPT_USERAGENT, 'flatCoreBot/1.0 (+https://flatcore.org)');
 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE); 
 	curl_setopt($ch, CURLOPT_HEADER, FALSE);
-	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 110);
-	curl_setopt($ch, CURLOPT_TIMEOUT, 110);
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 15);
 	curl_setopt($ch, CURLOPT_FAILONERROR, FALSE);
 	curl_setopt($ch, CURLOPT_FORBID_REUSE, TRUE);
 	curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
 	curl_setopt($ch, CURLOPT_ENCODING,  '');
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER,TRUE);
-	
-	curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, false);
-	curl_setopt($handle, CURLOPT_SSL_VERIFYHOST, false);
-	
-	curl_setopt($handle, CURLOPT_PROXY, "127.0.0.1");
-	curl_setopt($handle, CURLOPT_PROXYPORT, 8888);
 
   $data = curl_exec($ch);
   $info = curl_getinfo($ch);
@@ -147,21 +140,15 @@ function fc_loadSourceCode($url) {
 
 function fc_get_links($html) { 
 
-    // Create a new DOM Document to hold our webpage structure 
     $xml = new DOMDocument(); 
+    $xml->loadHTML($html,LIBXML_NOERROR); 
 
-    // Load the url's contents into the DOM 
-    $xml->loadHTML($html); 
-
-    // Empty array to hold all links to return 
     $links = array(); 
 
-    //Loop through each <a> tag in the dom and add it to the link array 
     foreach($xml->getElementsByTagName('a') as $link) { 
         $links[] = array('url' => $link->getAttribute('href'), 'text' => $link->nodeValue); 
     } 
 
-    //Return the links 
     return $links; 
 }
 
@@ -358,28 +345,33 @@ function fc_add_url($url) {
 	$sth->execute();
 	$cnt_entries = $sth->fetch(PDO::FETCH_NUM);
 	
-	$dbh = null;
+	if($cnt_entries[0] < 1) {
+		echo 'Insert: '. $url;
+	}
+	
+	
+	$page_id = md5($url);
+	
+	
+	$sql_insert = "INSERT INTO pages (
+				docid, page_id, page_url
+				) VALUES (
+				NULL, :page_id, :url ) ";
+	
+	$std = $dbh->prepare($sql_insert);
 	
 	if($cnt_entries[0] < 1) {
 		
 		$url = htmlentities($url);		
-		$dbh = new PDO("sqlite:".INDEX_DB);
+		$std->bindParam(':url', $url, PDO::PARAM_STR);
+		$std->bindParam(':page_id', $page_id, PDO::PARAM_STR);
+		$add = $std->execute();
 		
-		$sql_insert = "INSERT INTO pages (
-				page_id, page_url
-				) VALUES (
-				:page_id, :url ) ";
 		
-		try {
-			$sth = $dbh->prepare($sql_insert);
-			$sth->bindParam(':url', $url, PDO::PARAM_STR);
-			$sth->bindParam(':page_id', md5($url), PDO::PARAM_STR);
-			$add = $sth->execute();
-		} catch(PDOException $e) {
-			echo $e->getMessage();
-		}
-		$dbh = null;
 	}
+	
+	
+	$dbh = null;
 	
 	
 }
