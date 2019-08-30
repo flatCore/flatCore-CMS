@@ -284,6 +284,10 @@ if(($page_status == "draft") AND ($_SESSION['user_class'] != "administrator")){
 }
 
 
+/**
+ * todo: we need a better solution for permalinks of $a_allowed_p
+ * /search/ -> /suche/ /register/ -> /registrieren/
+ */
 
 if($p == "register") {
 
@@ -346,7 +350,7 @@ if(($p == "profile") AND ($goto != "logout")) {
 
 
 /* include search */
-if($p == "search") {
+if($p == 'search' OR $page_permalink == 'suche/' OR $page_permalink == 'search/') {
 	include 'search.php';
 }
 
