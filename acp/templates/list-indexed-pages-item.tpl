@@ -13,6 +13,7 @@
 					<button type="button" class="btn btn-sm btn-fc" data-toggle="modal" data-target="#modalHeadlines_{id}">Headlines {cnt_headlines} ({cnt_headline_errors})</button>
 					<button type="button" class="btn btn-sm btn-fc" data-toggle="modal" data-target="#modalLinks_{id}">Links {cnt_links} ({cnt_links_errors})</button>
 					<button type="button" class="btn btn-sm btn-fc" data-toggle="modal" data-target="#modalImages_{id}">Images {cnt_images} ({cnt_images_errors})</button>
+					<button type="button" class="btn btn-sm btn-fc" data-toggle="modal" data-target="#modalSource_{id}">Source</button>
 				</div>
 				
 		</div>
@@ -34,7 +35,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Links {item_url}</h5>
+        <h5 class="modal-title">Links {url}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -55,7 +56,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Headlines {item_url}</h5>
+        <h5 class="modal-title">Headlines {url}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -76,13 +77,33 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Images {item_url}</h5>
+        <h5 class="modal-title">Images {url}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         {images_str}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal for Source -->
+<div class="modal fade" id="modalSource_{id}" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Source {url}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <textarea class="form-control" rows="20">{page_content}</textarea>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

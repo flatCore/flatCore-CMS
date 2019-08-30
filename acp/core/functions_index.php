@@ -365,6 +365,31 @@ function fc_update_bulk_page_index($num=5) {
 }
 
 
+
+/**
+ * crawl for links in the (num) oldest pages
+ */
+
+function fc_crawler_bulk($num=5) {
+
+	$dbh = new PDO("sqlite:".INDEX_DB);
+	$sql = "SELECT page_id FROM pages ORDER BY indexed_time ASC LIMIT $num";
+
+	$items = $dbh->query($sql);
+	$items = $items->fetchAll(PDO::FETCH_ASSOC);
+
+	$dbh = null;
+	
+	foreach($items as $item) {
+		$update = fc_crawler($item['page_id']);
+	}
+	
+
+}
+
+
+
+
 /**
  * update the page index
  * this function is called by pages.edit.php if you save a plublic or ghost page
@@ -412,7 +437,7 @@ function fc_add_url($url) {
 	$cnt_entries = $sth->fetch(PDO::FETCH_NUM);
 	
 	if($cnt_entries[0] < 1) {
-		echo 'Insert: '. $url;
+		echo '<div class="alert alert-success">Insert: '.$url.'</div>';
 	}
 	
 	

@@ -53,6 +53,10 @@ if(isset($_GET['a']) && $_GET['a'] == 'update_bulk') {
 	fc_update_bulk_page_index();
 }
 
+if(isset($_GET['a']) && $_GET['a'] == 'index_bulk') {
+	fc_crawler_bulk();
+}
+
 
 
 
@@ -121,8 +125,12 @@ for($i=0;$i<$cnt_indexed_entries;$i++) {
 	 */
 	 
 	/* h1 */
-	$h1s = explode('<|>', $indexed_entries[$i]['page_h1']);
-	$cnt_h1s = count($h1s);
+	if($indexed_entries[$i]['page_h1'] != '') {
+		$h1s = explode('<|>', $indexed_entries[$i]['page_h1']);
+		$cnt_h1s = count($h1s);
+	} else {
+		$cnt_h1s = 0;
+	}
 	if($cnt_h1s > 0) {
 		$h1str = '<ul>';
 		foreach($h1s as $str) {
@@ -135,22 +143,29 @@ for($i=0;$i<$cnt_indexed_entries;$i++) {
 	}
 	
 	/* h2 */
-	$h2s = explode('<|>', $indexed_entries[$i]['page_h2']);
-	$cnt_h2s = count($h2s);
+	if($indexed_entries[$i]['page_h2'] != '') {
+		$h2s = explode('<|>', $indexed_entries[$i]['page_h2']);
+		$cnt_h2s = count($h2s);
+	} else {
+		$cnt_h2s = 0;
+	}
 	if($cnt_h2s > 0) {
-		$h2str = '<ul>';
+		$h2str = '';
 		foreach($h2s as $str) {
-			$h2str .= '<li>'.$str.'</li>';
+			$h2str .= '<span class="badge badge-secondary">'.$str.'</span> ';
 		}
-		$h2str .= '</ul>';
 	} else {
 		$h2str = '<span class="text-danger">'.$lang['msg_missing_headline'].'</span>';
 		$cnt_error_h2++;
 	}
 	
 	/* h3 */
-	$h3s = explode('<|>', $indexed_entries[$i]['page_h3']);
-	$cnt_h3s = count($h3s);
+	if($indexed_entries[$i]['page_h3'] != '') {
+		$h3s = explode('<|>', $indexed_entries[$i]['page_h3']);
+		$cnt_h3s = count($h3s);
+	} else {
+		$cnt_h3s = 0;
+	}
 	if($cnt_h3s > 0) {
 		$h3str = '';
 		foreach($h3s as $str) {
@@ -160,7 +175,7 @@ for($i=0;$i<$cnt_indexed_entries;$i++) {
 		$h3str = $lang['msg_missing_headline'];
 	}
 	
-	$cnt_headlines = $cnt_h1s+$cnt_h2s;
+	$cnt_headlines = $cnt_h1s+$cnt_h2s+$cnt_h3s;
 	
 	$headlines_str = '<table class="table table-sm table-striped">';
 	$headlines_str .= '<tr><td>H1 ('.$cnt_h1s.')</td><td>'.$h1str.'</td></tr>';
@@ -281,6 +296,8 @@ for($i=0;$i<$cnt_indexed_entries;$i++) {
 	$tpl = str_replace("{title}", $title, $tpl);
 	$tpl = str_replace("{description}", $description, $tpl);
 	$tpl = str_replace("{indexed_time}", $indexed_time, $tpl);
+	$tpl = str_replace("{page_content}", $indexed_entries[$i]['page_content'], $tpl);
+	
 	$tpl = str_replace("{btn_update_info}", $icon['sync_alt'], $tpl);
 	$tpl = str_replace("{btn_show_info}", $icon['info_circle'], $tpl);
 	$tpl = str_replace("{btn_start_index}", $icon['sitemap'], $tpl);
@@ -334,7 +351,10 @@ echo '<a href="acp.php?tn=pages&sub=index&a=start" class="btn btn-save btn-block
 echo '</div>';
 echo '</div>';
 
-echo '<a href="acp.php?tn=pages&sub=index&a=update_bulk" class="btn btn-save btn-block">'.$icon['sync_alt'].' Bulk update</a>';
+echo '<div class="btn-group d-flex" role="group">';
+echo '<a href="acp.php?tn=pages&sub=index&a=index_bulk" class="btn btn-save">'.$icon['sitemap'].' Bulk Index</a>';
+echo '<a href="acp.php?tn=pages&sub=index&a=update_bulk" class="btn btn-save">'.$icon['sync_alt'].' Bulk Update</a>';
+echo '</div>';
 
 echo '<hr>';
 
