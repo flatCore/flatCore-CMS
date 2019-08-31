@@ -4,8 +4,10 @@
 
 <ol id="searchlist">
 {foreach item=link from=$arr_results}
-	<li><a href="{$link.set_link}" title="{$link.page_title}">{$link.page_title}</a><br>
-	<span>{$link.page_meta_description}</span></li>
+	<li>
+	<a href="{$link.set_link}" title="{$link.page_title}">{$link.page_title}</a><br>
+	<p>{$link.page_meta_description}<br><small class="text-success">{$link.set_link}</small></p>
+	</li>
 {/foreach}
 </ol>
 {/nocache}
