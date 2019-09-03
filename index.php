@@ -245,6 +245,12 @@ foreach($lang as $key => $val) {
 	$smarty->assign("lang_$key", $val);
 }
 
+if($languagePack == 'de') {
+	$smarty->assign("search_uri", '/suche/');
+} else {
+	$smarty->assign("search_uri", '/search/');
+}
+
 $smarty->assign('languagePack', $languagePack);
 
 require 'core/user_management.php';

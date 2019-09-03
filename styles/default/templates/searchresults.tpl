@@ -1,5 +1,4 @@
 {nocache}
-<h3>{$headline_searchresults} <small>({$search_string})</small></h3>
 <p>{$msg_searchresults}</p>
 
 <ol id="searchlist">
