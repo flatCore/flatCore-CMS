@@ -336,6 +336,7 @@ function update_database($dbfile) {
 	
 	global $fc_db_user;
 	global $fc_db_stats;
+	global $fc_db_index;
 	global $all_tables;
 
 	/* build an array from all php files in folder ../install/contents */
