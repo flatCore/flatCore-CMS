@@ -77,6 +77,10 @@ if($status_msg != '') {
 
 $item_tpl = file_get_contents('templates/list-indexed-pages-item.tpl');
 
+$cnt_images_all_errors = 0;
+
+for($i=0;$i<$cnt_indexed_entries;$i++) {
+
 	$page_img_title_errors = 0;
 	$page_img_alt_errors = 0;
 	$page_img_file_not_found = 0;
@@ -89,13 +93,12 @@ $item_tpl = file_get_contents('templates/list-indexed-pages-item.tpl');
 	$cnt_error_img_alt = 0;
 	$cnt_error_img_title = 0;
 	$cnt_images_errors = 0;
+	
 	$cnt_error_link_title = 0;
 	$cnt_headlines = 0;
 	$cnt_error_h1 = 0;
 	$cnt_error_h2 = 0;
-
-for($i=0;$i<$cnt_indexed_entries;$i++) {
-
+	
 	
 	$url = $indexed_entries[$i]['page_url'];
 	$title = $indexed_entries[$i]['page_title'];
