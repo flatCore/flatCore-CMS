@@ -22,7 +22,6 @@
 			<div class="btn-group float-right" role="group">
 				<a href="acp.php?tn=pages&sub=index&a=start&id={id}" class="btn btn-fc btn-sm" title="{title_start_index}">{btn_start_index}</a>
 				<a href="acp.php?tn=pages&sub=index&a=update&id={id}" class="btn btn-fc btn-sm" title="{title_update_info}">{btn_update_info}</a>
-				<a href="acp.php?tn=pages&sub=index&a=show_info&id={id}" class="btn btn-fc btn-sm" title="{title_show_info}">{btn_show_info}</a>
 			</div>
 			
 		</div>
