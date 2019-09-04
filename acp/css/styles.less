@@ -100,28 +100,7 @@ div#bigHeader {
 	border: 1px solid darken(@widget_background,15);
 }
 
-/*
-#liveBox {
-	width: 200px;
-	margin-top: 15px;
-	padding: 5px 5px 5px 15px;
-}
 
-#liveBox a {
-	color: #666;
-	display: block;
-	padding: 3px;
-}
-
-#liveBox a:hover {
-	color: #428bca;
-}
-
-#liveBox hr {
-	border-bottom: 1px solid #111;
-	margin: 3px;
-}
-*/
 
 div#wrapper{
 	float: right;
@@ -143,14 +122,7 @@ div#container {
 	padding: 10px 15px;
 }
 
-/*
-div#container h3:first-of-type {
- line-height: 22px;
- font-size: 18px;
- color: #666;
- margin-top: 0;
-}
-*/
+
 
 hr.shadow {
   padding: 0;
@@ -437,34 +409,6 @@ div.header-bc span:first-child {
 
 
 
-
-/* listings */
-/*
-div#listItems {
-	padding: 2px;
-	border-bottom: 1px solid #fff;
-}
-
-div#listItems:hover {
-	background: #fff;
-}
-*/
-
-/*
-span#w100, span#w150, span#w200 {
-	display: block;
-	float: left;
-	padding: 2px 4px;
-	border-right: 1px solid #fff;
-
-}
-*/
-
-/* not in use
-span#w100 { width: 100px; }
-span#w150 { width: 150px; }
-span#w200 { width: 200px; }
-*/
 
 .clear, #clear { clear:both; }
 
@@ -999,15 +943,17 @@ img.avatar {
 
 .charleft {
 	width: 200px;
-	background: @widget_background;
+	padding-top: 2px;
 	span {
 		display: table-cell;
 		min-width: 100px;
 		text-align: center;
-		background: #111;
+		background: darken(@widget_background,5);
 		border: 1px solid @widget_background;
+		color: @font_color;
 	}
 }
+
 
 .bootstrap-tagsinput {
   /*background-color: @brand_color;*/
