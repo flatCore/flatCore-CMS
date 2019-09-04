@@ -14,8 +14,8 @@
 #pageHeader {
   background: #222;
 }
-#pageHeader h1,
-#pageHeader h2 {
+#pageHeader p.h1,
+#pageHeader p.h2 {
   color: #fff;
   font-weight: 200;
 }
