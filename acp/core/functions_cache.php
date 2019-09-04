@@ -113,7 +113,7 @@ function cache_keywords() {
 		$skey = urlencode(trim($key));
 		$fz = $font_size+($val*10);
 		if($key == "") {continue;}
-		$page_keywords .= '<span style="font-size:'.$fz.'%;"><a href="/search/?s='.$skey.'">'.$key.'</a></span>';
+		$page_keywords .= '<span style="font-size:'.$fz.'%;"><a href="/search/?s='.$skey.'" title="'.$key.'">'.$key.'</a></span>';
 	
 	} // eol foreach
 	
