@@ -293,12 +293,13 @@ $lang['remember_me'] = 'Angemeldet bleiben';
 
 $lang['label_deleted_resources'] = 'Gelöschte Ressourcen';
 
-$lang['label_missing_img_alt_tags'] = 'Fehlende Alt Tags';
-$lang['label_missing_img_title_tags'] = 'Fehlende Title Tags (Bilder)';
-$lang['label_missing_link_title_tags'] = 'Fehlende Title Tags (Links)';
+$lang['label_missing_img_alt_tags'] = 'Fehlende Alt Tags (&lt;img&gt;)';
+$lang['label_missing_img_title_tags'] = 'Fehlende Title Tags (&lt;img&gt;)';
+$lang['label_missing_link_title_tags'] = 'Fehlende Title Tags (&lt;href&gt;)';
 $lang['label_missing_h1'] = 'Fehlende H1';
 $lang['label_missing_h2'] = 'Fehlende H2';
-
+$lang['label_missing_title'] = 'Fehlende Seiten Titel';
+$lang['label_missing_meta_description'] = 'Fehlende Meta Description';
 
 /* Preferences */
 

@@ -77,28 +77,30 @@ if($status_msg != '') {
 
 $item_tpl = file_get_contents('templates/list-indexed-pages-item.tpl');
 
-$cnt_images_all_errors = 0;
+
+/* count all errors */
+$ce_img_alt = 0;
+$ce_img_title = 0;
+$ce_links_title = 0;
+$ce_h1 = 0;
+$ce_h2 = 0;
+$ce_description = 0;
+$ce_title = 0;
 
 for($i=0;$i<$cnt_indexed_entries;$i++) {
 
-	$page_img_title_errors = 0;
-	$page_img_alt_errors = 0;
-	$page_img_file_not_found = 0;
-	$page_link_title_errors = 0;
-	
-	$cnt_meta_errors = 0;
-		
-	$cnt_error_meta_description = 0;
-	$cnt_error_meta_title = 0;
-	$cnt_error_img_alt = 0;
-	$cnt_error_img_title = 0;
+	/* reset error counter for each page */
+	$ce_page_img_title = 0;
+	$ce_page_img_alt = 0;
+	$ce_page_img_file_not_found = 0;
 	$cnt_images_errors = 0;
-	
-	$cnt_error_link_title = 0;
-	$cnt_headlines = 0;
-	$cnt_error_h1 = 0;
-	$cnt_error_h2 = 0;
-	
+	$ce_page_link_title = 0;
+	$ce_page_img = 0;
+	$ce_page_link = 0;
+	$ce_page_headlines = 0;
+	$ce_page_h1 = 0;
+	$ce_page_h2 = 0;
+		
 	
 	$url = $indexed_entries[$i]['page_url'];
 	$title = $indexed_entries[$i]['page_title'];
@@ -107,11 +109,11 @@ for($i=0;$i<$cnt_indexed_entries;$i++) {
 	
 	if($title == '') {
 		$title = '<span class="text-danger">No Title</span>';
-		$cnt_error_meta_title++;
+		$ce_title++;
 	}
 	if($description == '') {
 		$description = '<span class="text-danger">No Description</span>';
-		$cnt_error_meta_description++;
+		$ce_description++;
 	}
 	
 	$cnt_meta_errors = $cnt_error_meta_description+$cnt_error_meta_title;
@@ -142,7 +144,8 @@ for($i=0;$i<$cnt_indexed_entries;$i++) {
 		$h1str .= '</ul>';
 	} else {
 		$h1str = '<span class="text-danger strong">'.$lang['msg_missing_headline'].'</span>';
-		$cnt_error_h1++;
+		$ce_page_h1++;
+		$ce_h1++;
 	}
 	
 	/* h2 */
@@ -159,7 +162,8 @@ for($i=0;$i<$cnt_indexed_entries;$i++) {
 		}
 	} else {
 		$h2str = '<span class="text-danger">'.$lang['msg_missing_headline'].'</span>';
-		$cnt_error_h2++;
+		$ce_page_h2++;
+		$ce_h2++;
 	}
 	
 	/* h3 */
@@ -179,6 +183,7 @@ for($i=0;$i<$cnt_indexed_entries;$i++) {
 	}
 	
 	$cnt_headlines = $cnt_h1s+$cnt_h2s+$cnt_h3s;
+	$ce_page_headlines = $ce_h1+$ce_h2;
 	
 	$headlines_str = '<table class="table table-sm table-striped">';
 	$headlines_str .= '<tr><td>H1 ('.$cnt_h1s.')</td><td>'.$h1str.'</td></tr>';
@@ -206,7 +211,7 @@ for($i=0;$i<$cnt_indexed_entries;$i++) {
 				if (stripos($file_headers[0],"404 Not Found") > 0  || (stripos($file_headers[0], "302 Found") > 0 && stripos($file_headers[7],"404 Not Found") > 0)) {
 					$img_str .= '<td>'.$this_img[0].' <span class="text-danger">(extern file not found)</span></td>';
 					$missing_img = true;
-					$page_img_file_not_found++;
+					$ce_page_img_file_not_found++;
 				} else {
 					$img_str .= '<td><strong><a href="'.$this_img[0].'" data-fancybox="images">'.basename($this_img[0]).'</a></strong></td>';
 				}
@@ -214,7 +219,7 @@ for($i=0;$i<$cnt_indexed_entries;$i++) {
 				if(!is_file('../'.FC_ROOT.$this_img[0])) {
 					$img_str .= '<td>'.FC_ROOT.$this_img[0].' <span class="text-danger">(file not found)</span></td>';
 					$missing_img = true;
-					$page_img_file_not_found++;
+					$ce_page_img_file_not_found++;
 				} else {
 					$img_str .= '<td><strong><a href="'.$this_img[0].'" data-fancybox="images">'.basename($this_img[0]).'</a></strong></td>';
 				}
@@ -222,14 +227,14 @@ for($i=0;$i<$cnt_indexed_entries;$i++) {
 			
 			if($this_img[1] == '' && $missing_img === false) {
 				$this_img[1] = '<span class="text-danger">NULL</span>';
-				$cnt_error_img_alt++;
-				$page_img_alt_errors++;
+				$ce_page_img_alt++;
+				$ce_img_alt++;
 			}
 	
 			if($this_img[2] == '' && $missing_img === false) {
 				$this_img[2] = '<span class="text-danger">NULL</span>';
-				$cnt_error_img_title++;
-				$page_img_title_errors++;
+				$ce_page_img_title++;
+				$ce_img_title++;
 			}
 			
 			$img_str .= '<td>'.$this_img[1].'</td>';
@@ -243,7 +248,7 @@ for($i=0;$i<$cnt_indexed_entries;$i++) {
 		$img_rerror_str .= 'Alt: '.$page_img_alt_errors. ' ';
 		$img_rerror_str .= 'Not found: '.$page_img_file_not_found;
 		
-		$cnt_images_errors = $page_img_title_errors+$page_img_alt_errors+$page_img_file_not_found;
+		$cnt_images_errors = $ce_page_img_title+$ce_page_img_alt+$ce_page_img_file_not_found;
 		
 	}
 	
@@ -273,8 +278,8 @@ for($i=0;$i<$cnt_indexed_entries;$i++) {
 
 			if($this_link[1] == '') {
 				$this_link[1] = '<span class="text-danger">NULL</span>';
-				$cnt_error_link_title++;
-				$page_link_title_errors++;
+				$ce_links_title++;
+				$ce_page_link_title++;
 			}			
 	
 			if($this_link[2] == '') {
@@ -302,19 +307,19 @@ for($i=0;$i<$cnt_indexed_entries;$i++) {
 	$tpl = str_replace("{page_content}", $indexed_entries[$i]['page_content'], $tpl);
 	
 	$tpl = str_replace("{btn_update_info}", $icon['sync_alt'], $tpl);
-	$tpl = str_replace("{btn_show_info}", $icon['info_circle'], $tpl);
+	//$tpl = str_replace("{btn_show_info}", $icon['info_circle'], $tpl);
 	$tpl = str_replace("{btn_start_index}", $icon['sitemap'], $tpl);
 
 	$tpl = str_replace('{meta_str}', $meta_str, $tpl);
 	$tpl = str_replace('{cnt_meta_errors}', $cnt_meta_errors, $tpl);
 	
 	$tpl = str_replace('{cnt_links}', $link_cnt, $tpl);
-	$tpl = str_replace('{cnt_links_errors}', $page_link_title_errors, $tpl);
+	$tpl = str_replace('{cnt_links_errors}', $ce_page_link_title, $tpl);
 	$tpl = str_replace('{link_str}', $link_str, $tpl);
 	
 	$tpl = str_replace('{headline_str}', $headlines_str, $tpl);
 	$tpl = str_replace('{cnt_headlines}', $cnt_headlines, $tpl);
-	$tpl = str_replace('{cnt_headline_errors}', $cnt_error_h1, $tpl);
+	$tpl = str_replace('{cnt_headline_errors}', $ce_page_headlines, $tpl);
 		
 	$tpl = str_replace('{cnt_images}', $cnt_images, $tpl);
 	$tpl = str_replace('{cnt_images_errors}', $cnt_images_errors, $tpl);
@@ -363,11 +368,13 @@ echo '<hr>';
 
 echo '<div class="well well-sm">';
 echo '<table class="table table-sm">';
-echo '<tr><td class="text-right">'.$cnt_error_img_alt.'</td><td>'.$lang['label_missing_img_alt_tags'].'</td></tr>';
-echo '<tr><td class="text-right">'.$cnt_error_img_title.'</td><td>'.$lang['label_missing_img_title_tags'].'</td></tr>';
-echo '<tr><td class="text-right">'.$cnt_error_link_title.'</td><td>'.$lang['label_missing_link_title_tags'].'</td></tr>';
-echo '<tr><td class="text-right">'.$cnt_error_h1.'</td><td>'.$lang['label_missing_h1'].'</td></tr>';
-echo '<tr><td class="text-right">'.$cnt_error_h2.'</td><td>'.$lang['label_missing_h2'].'</td></tr>';
+echo '<tr><td class="text-right">'.$ce_title.'</td><td>'.$lang['label_missing_title'].'</td></tr>';
+echo '<tr><td class="text-right">'.$ce_description.'</td><td>'.$lang['label_missing_meta_description'].'</td></tr>';
+echo '<tr><td class="text-right">'.$ce_img_alt.'</td><td>'.$lang['label_missing_img_alt_tags'].'</td></tr>';
+echo '<tr><td class="text-right">'.$ce_img_title.'</td><td>'.$lang['label_missing_img_title_tags'].'</td></tr>';
+echo '<tr><td class="text-right">'.$ce_links_title.'</td><td>'.$lang['label_missing_link_title_tags'].'</td></tr>';
+echo '<tr><td class="text-right">'.$ce_h1.'</td><td>'.$lang['label_missing_h1'].'</td></tr>';
+echo '<tr><td class="text-right">'.$ce_h2.'</td><td>'.$lang['label_missing_h2'].'</td></tr>';
 echo '</table>';
 echo '</div>';
 

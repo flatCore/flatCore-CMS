@@ -297,11 +297,13 @@ $lang['remember_me'] = 'Remember me';
 
 $lang['label_deleted_resources'] = 'Deleted Resources';
 
-$lang['label_missing_img_alt_tags'] = 'Missing Alt Tags';
-$lang['label_missing_img_title_tags'] = 'Missing Title Tags (Images)';
-$lang['label_missing_link_title_tags'] = 'Missing Title Tags (Links)';
+$lang['label_missing_img_alt_tags'] = 'Missing Alt Tags (&lt;img&gt;)';
+$lang['label_missing_img_title_tags'] = 'Missing Title Tags (&lt;img&gt;)';
+$lang['label_missing_link_title_tags'] = 'Missing Title Tags (&lt;a&gt;)';
 $lang['label_missing_h1'] = 'Missing H1';
 $lang['label_missing_h2'] = 'Missing H2';
+$lang['label_missing_title'] = 'Missing Page Title';
+$lang['label_missing_meta_description'] = 'Missing Meta Description';
 
 /* Preferences */
 
