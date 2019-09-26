@@ -182,6 +182,10 @@ if($page_meta_robots == "") {
 	$page_meta_robots = "all";
 }
 
+if($page_status == 'draft') {
+	$page_meta_robots = 'noindex, nofollow';
+}
+
 $smarty->assign('page_meta_robots', $page_meta_robots);
 $smarty->assign('page_meta_enhanced', $page_meta_enhanced);
 
