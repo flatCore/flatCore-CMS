@@ -47,7 +47,7 @@ function fc_crawler($id='') {
 	$check_page = $fc_base_url.$url;
 	
 	
-	echo '<div class="alert alert-info">checking: '.$check_page.'</div>';
+	//echo '<div class="alert alert-info">checking: '.$check_page.'</div>';
 	
 
 	$get_html = fc_loadSourceCode($check_page);

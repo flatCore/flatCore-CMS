@@ -95,6 +95,12 @@ $lang['btn_mod_enable'] = "Enable";
 $lang['btn_mod_disable'] = "Disable";
 $lang['btn_install'] = "Install";
 
+$lang['btn_start_index'] = "Start Index";
+$lang['btn_bulk_index'] = "Bulk Index";
+$lang['btn_bulk_update'] = "Bulk Update";
+$lang['btn_update_page_index'] = "Update Index";
+$lang['btn_update_page_content'] = "Update Content";
+
 /* Headlines */
 
 $lang['h_usermanagement'] = "Manage User";

@@ -90,6 +90,12 @@ $lang['btn_mod_enable'] = "Aktivieren";
 $lang['btn_mod_disable'] = "Deaktivieren";
 $lang['btn_install'] = "Installieren";
 
+$lang['btn_start_index'] = "Indexieren";
+$lang['btn_bulk_index'] = "Mehrere Indexieren";
+$lang['btn_bulk_update'] = "Mehrere Updaten";
+$lang['btn_update_page_index'] = "Seite neu indexieren";
+$lang['btn_update_page_content'] = "Inhalt aktualisieren";
+
 /* Headlines */
 
 $lang['h_usermanagement'] = "Benutzer verwalten";

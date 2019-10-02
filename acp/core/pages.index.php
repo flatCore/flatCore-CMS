@@ -307,8 +307,9 @@ for($i=0;$i<$cnt_indexed_entries;$i++) {
 	$tpl = str_replace("{page_content}", $indexed_entries[$i]['page_content'], $tpl);
 	
 	$tpl = str_replace("{btn_update_info}", $icon['sync_alt'], $tpl);
-	//$tpl = str_replace("{btn_show_info}", $icon['info_circle'], $tpl);
 	$tpl = str_replace("{btn_start_index}", $icon['sitemap'], $tpl);
+	$tpl = str_replace("{title_update_page_index}", $lang['btn_update_page_index'], $tpl);
+	$tpl = str_replace("{title_update_page_content}", $lang['btn_update_page_content'], $tpl);
 
 	$tpl = str_replace('{meta_str}', $meta_str, $tpl);
 	$tpl = str_replace('{cnt_meta_errors}', $cnt_meta_errors, $tpl);
@@ -355,13 +356,13 @@ echo '<div class="col-8">';
 echo '<pre>'.$fc_base_url.'</pre>';
 echo '</div>';
 echo '<div class="col-4">';
-echo '<a href="acp.php?tn=pages&sub=index&a=start" class="btn btn-save btn-block">'.$icon['sitemap'].' Start Index</a>';
+echo '<a href="acp.php?tn=pages&sub=index&a=start" class="btn btn-save btn-block" title="'.$lang['btn_start_index'].'">'.$icon['sitemap'].'</a>';
 echo '</div>';
 echo '</div>';
 
 echo '<div class="btn-group d-flex" role="group">';
-echo '<a href="acp.php?tn=pages&sub=index&a=index_bulk" class="btn btn-save">'.$icon['sitemap'].' Bulk Index</a>';
-echo '<a href="acp.php?tn=pages&sub=index&a=update_bulk" class="btn btn-save">'.$icon['sync_alt'].' Bulk Update</a>';
+echo '<a href="acp.php?tn=pages&sub=index&a=index_bulk" class="btn btn-save">'.$icon['sitemap'].' '.$lang['btn_bulk_index'].'</a>';
+echo '<a href="acp.php?tn=pages&sub=index&a=update_bulk" class="btn btn-save">'.$icon['sync_alt'].' '.$lang['btn_bulk_update'].'</a>';
 echo '</div>';
 
 echo '<hr>';
@@ -378,7 +379,7 @@ echo '<tr><td class="text-right">'.$ce_h2.'</td><td>'.$lang['label_missing_h2'].
 echo '</table>';
 echo '</div>';
 
-echo '<h5>Exclude elements</h5>';
+echo '<h5 class="mt-3">Exclude elements</h5>';
 
 echo '<table class="table table-sm">';
 foreach($exclude_items as $ex_item) {
