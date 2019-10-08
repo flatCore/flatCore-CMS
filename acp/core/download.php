@@ -1,15 +1,13 @@
 <?php
 session_start();
 
-require("../../config.php");
-require("access.php");
+require '../../config.php';
+require 'access.php';
 
 /*
  * DOWNLOAD FILES
  * USED FOR BACKUP SQLITE DB FILES
 */
-
-
 
 if($_GET["dl"]) {
 
