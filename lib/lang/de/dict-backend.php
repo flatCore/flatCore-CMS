@@ -76,6 +76,7 @@ $lang['system_update'] = "Update";
 $lang['system_statistics'] = "Statistik";
 $lang['system_misc'] = "Sonstiges";
 $lang['activate_logfile'] = "Logfile aktivieren";
+$lang['anonymize_ip'] = "Anonymisiere IP Adressen";
 $lang['activate_xml_sitemap'] = "XML Sitemap aktivieren";
 $lang['select_logfile'] = "Logfile auswählen";
 $lang['logfile_hits'] = "Einträge";

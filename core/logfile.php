@@ -51,6 +51,10 @@ $log_ua = $_SERVER['HTTP_USER_AGENT'];
 $log_ref = $_SERVER['HTTP_REFERER'];
 $log_query = $_SERVER['QUERY_STRING'];
 
+if($fc_prefs['prefs_anonymize_ip'] == 'on') {
+	$log_ip = 'anonymous';
+}
+
 $parse_ref = parse_url($log_ref);
 
 if($parse_ref['host'] == $_SERVER['HTTP_HOST']) {

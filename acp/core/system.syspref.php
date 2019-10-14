@@ -214,6 +214,7 @@ if(isset($_POST['save_prefs_misc'])) {
 	
 	$pdo_fields = array(
 		'prefs_logfile' => 'STR',
+		'prefs_anonymize_ip' => 'STR',
 		'prefs_xml_sitemap' => 'STR',
 		'prefs_rss_time_offset' => 'STR',
 		'prefs_nbr_page_versions' => 'INT',
@@ -226,6 +227,12 @@ if(isset($_POST['save_prefs_misc'])) {
 		$prefs_logfile = 'on';
 	} else {
 		$prefs_logfile = 'off';
+	}
+	
+	if(isset($_POST['prefs_anonymize_ip'])) {
+		$prefs_anonymize_ip = 'on';
+	} else {
+		$prefs_anonymize_ip = 'off';
 	}
 	
 	if(isset($_POST['prefs_xml_sitemap'])) {
@@ -251,6 +258,7 @@ if(isset($_POST['save_prefs_misc'])) {
 	$sth = $dbh->prepare($sql);
 	$sth->bindParam(':prefs_rss_time_offset', $_POST['prefs_rss_time_offset'], PDO::PARAM_STR);
 	$sth->bindParam(':prefs_logfile', $prefs_logfile, PDO::PARAM_STR);
+	$sth->bindParam(':prefs_anonymize_ip', $prefs_anonymize_ip, PDO::PARAM_STR);
 	$sth->bindParam(':prefs_xml_sitemap', $prefs_xml_sitemap, PDO::PARAM_STR);
 	$sth->bindParam(':prefs_nbr_page_versions', $prefs_nbr_page_versions, PDO::PARAM_INT);
 	$sth->bindParam(':prefs_smarty_cache', $prefs_smarty_cache, PDO::PARAM_INT);
@@ -661,11 +669,18 @@ echo '<fieldset>';
 echo '<legend>'.$lang['system_misc'].'</legend>';
 echo '<form action="acp.php?tn=system&sub=sys_pref#misc" method="POST" class="form-horizontal">';
 
-
 echo '<div class="form-group form-check mt-3">';
 echo '<input type="checkbox" class="form-check-input" id="logfile" name="prefs_logfile" '.($prefs_logfile == "on" ? 'checked' :'').'>';
 echo '<label class="form-check-label" for="logfile">'.$lang['activate_logfile'].'</label>';
 echo '</div>';
+
+echo '<div class="form-group form-check mt-3">';
+echo '<input type="checkbox" class="form-check-input" id="ips" name="prefs_anonymize_ip" '.($prefs_anonymize_ip == "on" ? 'checked' :'').'>';
+echo '<label class="form-check-label" for="ips">'.$lang['anonymize_ip'].'</label>';
+echo '</div>';
+
+
+
 
 echo '<div class="form-group form-check mt-3">';
 echo '<input type="checkbox" class="form-check-input" id="sitemap" name="prefs_xml_sitemap" '.($prefs_xml_sitemap == "on" ? 'checked' :'').'>';

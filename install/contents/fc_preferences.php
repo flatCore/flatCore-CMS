@@ -27,6 +27,7 @@ $cols = array(
   "prefs_userregistration" => 'VARCHAR',
   "prefs_showloginform" => 'VARCHAR',
   "prefs_logfile" => 'VARCHAR',
+  "prefs_anonymize_ip" => 'VARCHAR',
   "prefs_template_layout" => 'VARCHAR',
   "prefs_xml_sitemap" => 'VARCHAR',
   "prefs_mailer_adr" => 'VARCHAR',

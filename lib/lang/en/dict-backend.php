@@ -81,6 +81,7 @@ $lang['system_misc'] = "Misc";
 $lang['search_for_update'] = "Search for Update";
 $lang['system_statistics'] = "Statistics";
 $lang['activate_logfile'] = "Activate Logfile";
+$lang['anonymize_ip'] = "Anonymize IP Addresses";
 $lang['activate_xml_sitemap'] = "Activate XML Sitemap";
 $lang['select_logfile'] = "Select Logfile";
 $lang['logfile_hits'] = "Entries";

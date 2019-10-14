@@ -125,10 +125,10 @@ $get_year = substr("$filename", 7, 4);
 
 echo "<h4>$month $get_year <small>$cnt_entries $lang[logfile_hits] » $filesize kb</small></h4>";
 
-echo '<div style="float:left;width:200px;padding:8px;">';
+echo '<div class="row">';
+echo '<div class="col-md-3">';
 
-
-echo '<table class="table table-sm">';
+echo '<table class="table table-sm table-striped">';
 
 arsort($stat_result);
 
@@ -140,13 +140,12 @@ foreach ($stat_result as $k => $v) {
 
 
 echo '</table>';
-echo '</div>'; // eo float
-
+echo '</div>';
+echo '<div class="col-md-9">';
 
 
 /* listing */
 
-echo"<div style='margin-left:220px;padding:8px;'>";
 
 echo '<div class="scroll-container">';
 echo '<table class="table table-sm table-striped">';
@@ -161,29 +160,21 @@ for($i=0;$i<$cnt_result;$i++) {
 	$log_query = filter_var($result[$i]['log_query'], FILTER_SANITIZE_STRING);
 	$log_ref = filter_var($result[$i]['log_ref'], FILTER_SANITIZE_STRING);
 
-	if( $i%2 == "0" ) {
-		$bg_color = "#fff";
-	} else {
-		$bg_color = "#f1f1f1";
-	}
-
-	echo '<tr>';
-	echo '<td>'.$log_time_day.'<br>'.$log_time.'</td>';
-	echo '<td>';
-	echo 'IP: '.$log_ip;
+	echo '<tr><td>Time:</td><td>'.$log_time_day.' '.$log_time.'</td></tr>';
+	echo '<tr><td>IP:</td><td>'.$log_ip.'</td></tr>';
 	if($log_query != "") {
-		echo '<br>Query: '.$log_query;
+		echo '<tr><td>Query:</td><td>'.$log_query.'</td></tr>';
 	}
 	if($log_ref != "") {
-		echo '<br>Referer: '.$log_ref;
+		echo '<tr><td>Referer:</td><td>'.$log_ref.'</td></tr>';
 	}
 	if($log_ua != "") {
-		echo '<br>User Agent: '.$log_ua;
+		echo '<tr><td class="text-nowrap">User Agent:</td><td>'.$log_ua.'</td></tr>';
 	}
-	echo '</td>';
-	echo '</tr>';
+	
+	echo '<tr><td colspan="2" class="p-0 border-top-0"><hr class="shadow mt-1"></td></tr>';
 
-} // eol $i
+}
 
 echo '</table>';
 
@@ -206,7 +197,7 @@ echo '<hr>';
 
 
 
-echo '</div>'; // eo float div
+echo '</div>';
 
 } else {
 
