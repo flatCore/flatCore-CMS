@@ -482,14 +482,15 @@ $prefs_mail_smtp_encryption_input = "<input class='form-control' type='text' nam
 $prefs_mail_smtp_username_input = "<input class='form-control' type='text' name='prefs_smtp_username' value='$prefs_smtp_username'>";
 $prefs_mail_smtp_psw_input = "<input class='form-control' type='password' name='prefs_smtp_psw' value='$prefs_smtp_psw'>";
 
-$prefs_mail_type_input  = '<div class="form-check">';
-$prefs_mail_type_input .= '<input type="radio" class="form-check-input" id="smtp" name="prefs_mailer_type" value="smtp" '.($prefs_mailer_type == "smtp" ? 'checked' :'').'>';
-$prefs_mail_type_input .= '<label class="form-check-label" for="smtp">'.$lang['prefs_mail_type_smtp'].'</label>';
-$prefs_mail_type_input .= '</div>';
-$prefs_mail_type_input .= '<div class="form-check">';
+$prefs_mail_type_input = '<div class="form-check">';
 $prefs_mail_type_input .= '<input type="radio" class="form-check-input" id="mail" name="prefs_mailer_type" value="mail" '.($prefs_mailer_type == "mail" ? 'checked' :'').'>';
 $prefs_mail_type_input .= '<label class="form-check-label" for="mail">'.$lang['prefs_mail_type_mail'].'</label>';
 $prefs_mail_type_input .= '</div>';
+$prefs_mail_type_input .= '<div class="form-check">';
+$prefs_mail_type_input .= '<input type="radio" class="form-check-input" id="smtp" name="prefs_mailer_type" value="smtp" '.($prefs_mailer_type == "smtp" ? 'checked' :'').'>';
+$prefs_mail_type_input .= '<label class="form-check-label" for="smtp">'.$lang['prefs_mail_type_smtp'].'</label>';
+$prefs_mail_type_input .= '</div>';
+
 
 
 echo tpl_form_control_group('',$lang['prefs_mailer_name'],$prefs_mail_name_input);
@@ -499,11 +500,25 @@ echo $prefs_mail_type_input;
 
 echo tpl_form_control_group('','','<p>SMTP</p>');
 
+echo '<div class="row">';
+echo '<div class="col-md-4">';
 echo tpl_form_control_group('',$lang['prefs_mailer_smtp_host'],$prefs_mail_smtp_host_input);
+echo '</div>';
+echo '<div class="col-md-4">';
 echo tpl_form_control_group('',$lang['prefs_mailer_smtp_port'],$prefs_mail_smtp_port_input);
+echo '</div>';
+echo '<div class="col-md-4">';
 echo tpl_form_control_group('',$lang['prefs_mailer_smtp_encryption'],$prefs_mail_smtp_encryption_input);
+echo '</div>';
+echo '</div>';
+echo '<div class="row">';
+echo '<div class="col-md-6">';
 echo tpl_form_control_group('',$lang['prefs_mailer_smtp_username'],$prefs_mail_smtp_username_input);
+echo '</div>';
+echo '<div class="col-md-6">';
 echo tpl_form_control_group('',$lang['prefs_mailer_smtp_password'],$prefs_mail_smtp_psw_input);
+echo '</div>';
+echo '</div>';
 
 echo '<input type="submit" class="btn btn-save" name="save_prefs_contacts" value="'.$lang['save'].'">';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
@@ -594,12 +609,12 @@ echo tpl_form_control_group('',$lang['f_prefs_imagesuffix'],"<input class='form-
 $prefs_maximage_input  = '<div class="row"><div class="col-md-3">';
 $prefs_maximage_input .= '<div class="input-group">';
 $prefs_maximage_input .= '<input class="form-control" type="text" name="prefs_maximagewidth" value="'.$prefs_maximagewidth.'">';
-$prefs_maximage_input .= '<span class="input-group-addon"><span class="glyphicon glyphicon-resize-horizontal"></span></span>';
+$prefs_maximage_input .= '<div class="input-group-append"><span class="input-group-text"><i class="fas fa-arrows-alt-h"></i></span></div>';
 $prefs_maximage_input .= '</div>';
 $prefs_maximage_input .= '</div><div class="col-md-3">';
 $prefs_maximage_input .= '<div class="input-group">';
 $prefs_maximage_input .= '<input class="form-control" type="text" name="prefs_maximageheight" value="'.$prefs_maximageheight.'">';
-$prefs_maximage_input .= '<span class="input-group-addon"><span class="glyphicon glyphicon-resize-vertical"></span></span>';
+$prefs_maximage_input .= '<div class="input-group-append"><span class="input-group-text"><i class="fas fa-arrows-alt-v"></i></span></div>';
 $prefs_maximage_input .= '</div>';
 $prefs_maximage_input .= '</div></div>';
 
@@ -607,11 +622,7 @@ echo tpl_form_control_group('',$lang['f_prefs_maximage'],"$prefs_maximage_input"
 echo tpl_form_control_group('',$lang['f_prefs_filesuffix'],"<input class='form-control' type='text' name='prefs_filesuffix' value='$prefs_filesuffix'>");
 echo tpl_form_control_group('',$lang['f_prefs_maxfilesize'],"<input class='form-control' type='text' name='prefs_maxfilesize' value='$prefs_maxfilesize'>");
 
-/*
-$toggle_btn_upload_unchanged  = '<div class="make-switch" data-on="success" data-on-label="'.$lang['yes'].'" data-off-label="'.$lang['no'].'">';
-$toggle_btn_upload_unchanged .= '<input type="checkbox" name="prefs_uploads_remain_unchanged" '.($prefs_uploads_remain_unchanged == "yes" ? 'checked' :'').'>';
-$toggle_btn_upload_unchanged .= '</div>';
-*/
+
 
 $toggle_btn_upload_unchanged  = '<div class="form-group form-check">';
 $toggle_btn_upload_unchanged .= '<input type="checkbox" class="form-check-input" id="checkUpload" name="prefs_uploads_remain_unchanged" '.($prefs_uploads_remain_unchanged == "yes" ? 'checked' :'').'>';
@@ -620,13 +631,7 @@ $toggle_btn_upload_unchanged .= '</div>';
 
 echo $toggle_btn_upload_unchanged;
 
-//echo tpl_form_control_group('',$lang['f_prefs_uploads_remain_unchanged'],$toggle_btn_upload_unchanged);
 
-//$toggle_btn_showfilesize  = '<div class="make-switch" data-on="success" data-on-label="'.$lang['yes'].'" data-off-label="'.$lang['no'].'">';
-//$toggle_btn_showfilesize .= '<input type="checkbox" name="prefs_showfilesize" '.($prefs_showfilesize == "yes" ? 'checked' :'').'>';
-//$toggle_btn_showfilesize .= '</div>';
-
-//echo tpl_form_control_group('',$lang['f_prefs_showfilesize'],$toggle_btn_showfilesize);
 echo tpl_form_control_group('','',"<input type='submit' class='btn btn-save' name='save_prefs_upload' value='$lang[save]'>");
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
