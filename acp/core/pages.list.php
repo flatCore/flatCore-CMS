@@ -47,7 +47,7 @@ echo '</div>';
 echo '<div class="col-md-7">';
 echo '<fieldset class="mb-0">';
 echo '<legend>'.$lang['f_page_status'].'/'.$lang['f_page_language'].'</legend>';
-echo $status_btn_group . ' ' . $lang_btn_group;
+echo $status_btn_group . ' <div class="float-right">' . $lang_btn_group.'</div>';
 
 echo '</fieldset>';
 echo '</div>';

@@ -187,6 +187,28 @@ if($_SESSION['snippet_filter'] != "") {
 
 $set_keyword_filter = substr("$set_keyword_filter", 0, -4); // cut the last ' AND'
 
+
+$snippet_lang_filter = "";
+for($i=0;$i<count($arr_lang);$i++) {
+	$lang_folder = $arr_lang[$i]['lang_folder'];
+	if(strpos("$_SESSION[checked_lang_string]", "$lang_folder") !== false) {
+		$snippet_lang_filter .= "textlib_lang = '$lang_folder' OR ";
+	}
+}
+$snippet_lang_filter = substr("$snippet_lang_filter", 0, -3); // cut the last ' OR'
+
+
+$snippet_label_filter = '';
+for($i=0;$i<count($fc_labels);$i++) {
+	$label = $fc_labels[$i]['label_id'];
+	if(strpos("$_SESSION[checked_label_str]", "$label") !== false) {
+		$snippet_label_filter .= "textlib_labels LIKE '%$label%' OR ";
+	}
+}
+$snippet_label_filter = substr("$snippet_label_filter", 0, -3); // cut the last ' OR'
+
+
+
 $filter_string = "WHERE textlib_id IS NOT NULL";
 
 if($_SESSION['type'] == 'all') {
@@ -205,6 +227,14 @@ if($set_keyword_filter != "") {
 	$filter_string .= " AND $set_keyword_filter";
 }
 
+if($snippet_label_filter != "") {
+	$filter_string .= " AND ($snippet_label_filter)";
+}
+
+if($snippet_lang_filter != "") {
+	$filter_string .= " AND ($snippet_lang_filter)";
+}
+
 $dbh = new PDO("sqlite:".CONTENT_DB);
 $sql = "SELECT * FROM fc_textlib $filter_string ORDER BY textlib_name ASC";
 
@@ -220,6 +250,7 @@ $dbh = null;
 
 
 $cnt_snippets = count($snippets_list);
+
 
 
 /**
@@ -240,19 +271,19 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	echo '<div class="well well-sm">';
 	
 	echo '<div class="row">';
-	echo '<div class="col-3">';
+	echo '<div class="col-lg-3 col-md-6">';
 	
 	echo '<fieldset class="mb-0">';
 	echo '<legend>'.$lang['label_type'].'</legend>';
 	echo '<div class="btn-group d-flex" role="group">';
-	echo '<a class="btn btn-fc w-100 '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle</a>';
-	echo '<a class="btn btn-fc w-100 '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System</a>';
-	echo '<a class="btn btn-fc w-100 '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene</a>';
+	echo '<a class="btn btn-sm btn-fc w-100 '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle</a>';
+	echo '<a class="btn btn-sm btn-fc w-100 '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System</a>';
+	echo '<a class="btn btn-sm btn-fc w-100 '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene</a>';
 	echo '</div>';
 	echo '</fieldset>';
 	
 	echo '</div>';
-	echo '<div class="col-7">';
+	echo '<div class="col-lg-3 col-md-6">';
 	
 	echo '<fieldset class="mb-0">';
 	echo '<legend>'.$lang['label_filter'].'</legend>';
@@ -272,7 +303,42 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	echo '</fieldset>';
 	
 	echo '</div>';
-	echo '<div class="col">';
+	
+	echo '<div class="col-lg-2">';
+	echo '<fieldset class="mb-0">';
+	echo '<legend>'.$lang['f_page_language'].'</legend>';
+	echo $lang_btn_group;
+
+	echo '</fieldset>';
+	echo '</div>';
+	
+	echo '<div class="col-lg-2">';
+	echo '<fieldset class="mb-0">';
+	echo '<legend>Labels</legend>';
+
+	$label_btn  = '<form action="acp.php?tn=pages&sub=snippets" method="POST" class="form-horizontal">';
+	$this_btn_status = '';
+	foreach($fc_labels as $label) {
+		
+		if(strpos("$_SESSION[checked_label_str]", $label['label_id']) !== false) {
+			$this_btn_status = 'btn-label-dot active';
+		} else {
+			$this_btn_status = 'btn-label-dot';
+		}		
+			
+		$label_btn .= '<button name="check_label" value="'.$label['label_id'].'" class="'.$this_btn_status.'">';
+		$label_btn .= '<span class="label-dot" style="background-color:'.$label['label_color'].';" title="'.$label['label_title'].'"></span>';
+		$label_btn .= '</button>';
+		
+	}
+	$label_btn .= '</form>';
+	echo $label_btn;
+
+	echo '</fieldset>';
+	echo '</div>';
+
+	
+	echo '<div class="col-lg-2">';
 
 	echo '<fieldset class="mb-0">';
 	echo '<legend>'.$lang['snippets'].'</legend>';	

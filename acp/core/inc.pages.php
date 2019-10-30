@@ -107,7 +107,7 @@ $set_label_filter = '';
 for($i=0;$i<count($fc_labels);$i++) {
 	$label = $fc_labels[$i]['label_id'];
 	if(strpos("$_SESSION[checked_label_str]", "$label") !== false) {
-		$set_label_filter .= "page_labels = '$label' OR ";
+		$set_label_filter .= "page_labels LIKE '%$label%' OR ";
 	}
 }
 
@@ -255,10 +255,10 @@ if($set_keyword_filter != "") {
 $_SESSION['filter_string'] = $filter_string;
 
 
-if($subinc == "pages.list") {
+if($sub == "list" OR $sub == "snippets") {
 	
 	
-	$label_btn  = '<form action="acp.php?tn=pages&sub=list" method="POST" class="form-horizontal">';
+	$label_btn  = '<form action="acp.php?tn=pages&sub='.$sub.'" method="POST" class="form-horizontal">';
 	$this_btn_status = '';
 	foreach($fc_labels as $label) {
 		
@@ -277,7 +277,7 @@ if($subinc == "pages.list") {
 	
 
 	/* Filter Languages */
-	$lang_btn_group = '<div class="btn-group float-right">';
+	$lang_btn_group = '<div class="btn-group">';
 
 	for($i=0;$i<count($arr_lang);$i++) {
 		$lang_desc = $arr_lang[$i]['lang_desc'];
@@ -290,7 +290,7 @@ if($subinc == "pages.list") {
 			$this_btn_status = 'btn btn-fc btn-sm';
 		}
 		
-		$lang_btn_group .= '<a href="acp.php?tn=pages&sub=list&switchLang='.$lang_folder.'" class="'.$this_btn_status.'">'.$lang_folder.'</a>';
+		$lang_btn_group .= '<a href="acp.php?tn=pages&sub='.$sub.'&switchLang='.$lang_folder.'" class="'.$this_btn_status.'">'.$lang_folder.'</a>';
 	}
 	
 	$lang_btn_group .= '</div>';
