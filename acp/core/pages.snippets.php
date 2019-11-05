@@ -320,7 +320,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	$this_btn_status = '';
 	foreach($fc_labels as $label) {
 		
-		if(strpos("$_SESSION[checked_label_str]", $label['label_id']) !== false) {
+		if(in_array($label['label_id'], $a_checked_labels)) {
 			$this_btn_status = 'btn-label-dot active';
 		} else {
 			$this_btn_status = 'btn-label-dot';

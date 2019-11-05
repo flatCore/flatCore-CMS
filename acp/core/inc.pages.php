@@ -91,14 +91,23 @@ if(!isset($_SESSION['checked_label_str'])) {
 	$_SESSION['checked_label_str'] = '';
 }
 
+$a_checked_labels = explode('-', $_SESSION['checked_label_str']);
+
 if(isset($_POST['check_label'])) {
-		if(strpos("$_SESSION[checked_label_str]", "$_POST[check_label]") !== false) {
-			$checked_label_string = str_replace("$_POST[check_label]-", '', $_SESSION['checked_label_str']);
+	
+		if(in_array($_POST['check_label'], $a_checked_labels)) {
+			/* remove label*/
+			if(($key = array_search($_POST['check_label'], $a_checked_labels)) !== false) {
+				unset($a_checked_labels[$key]);
+			}
 		} else {
-			$checked_label_string = $_SESSION['checked_label_str'] . "$_POST[check_label]-";
+			/* add label */
+			$a_checked_labels[] = $_POST['check_label'];
 		}
-		$_SESSION['checked_label_str'] = "$checked_label_string";
+
+		$_SESSION['checked_label_str'] = implode('-', $a_checked_labels);
 }
+$a_checked_labels = explode('-', $_SESSION['checked_label_str']);
 
 /* build SQL query for labels */
 
@@ -262,7 +271,7 @@ if($sub == "list" OR $sub == "snippets") {
 	$this_btn_status = '';
 	foreach($fc_labels as $label) {
 		
-		if(strpos("$_SESSION[checked_label_str]", $label['label_id']) !== false) {
+		if(in_array($label['label_id'], $a_checked_labels)) {
 			$this_btn_status = 'btn-label-dot active';
 		} else {
 			$this_btn_status = 'btn-label-dot';
