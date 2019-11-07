@@ -231,7 +231,7 @@ if($_SESSION['kw_filter'] != "") {
 		if($_REQUEST['rm_keyword'] == "$f") { continue; }
 		if($f == "") { continue; }
 		$set_keyword_filter .= "(page_meta_keywords like '%$f%' OR page_title like '%$f%' OR page_linkname like '%$f%') AND";
-		$btn_remove_keyword .= '<a class="btn btn-sm btn-fc" href="acp.php?tn=pages&sub=list&rm_keyword='.$f.'">'.$icon['times_circle'].' '.$f.'</a> ';
+		$btn_remove_keyword .= '<a class="btn btn-sm btn-fc" href="acp.php?tn=pages&sub='.$sub.'&rm_keyword='.$f.'">'.$icon['times_circle'].' '.$f.'</a> ';
 	}
 	
 }
