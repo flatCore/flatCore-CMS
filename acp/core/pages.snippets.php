@@ -86,12 +86,9 @@ if(isset($_POST['save_snippet'])) {
 	} else {
 		$string_labels = "";
 	}	
-	
-	if($_POST['snip_id'] != '') {
-		
-		$snip_id = (int) $_POST['snip_id'];
-	
-		$sql = "UPDATE fc_textlib
+
+
+	$sql_update = "UPDATE fc_textlib
 						SET textlib_content = :textlib_content, textlib_notes = :textlib_notes, textlib_groups = :textlib_groups,
 								textlib_name = :textlib_name, textlib_title = :textlib_title, textlib_keywords = :textlib_keywords,
 								textlib_lang = :textlib_lang, textlib_priority = :textlib_priority,
@@ -100,11 +97,9 @@ if(isset($_POST['save_snippet'])) {
 								textlib_labels = :textlib_labels, textlib_classes = :textlib_classes,
 								textlib_permalink = :textlib_permalink, textlib_permalink_title = :textlib_permalink_title, textlib_permalink_name = :textlib_permalink_name,
 								textlib_permalink_classes = :textlib_permalink_classes
-						WHERE textlib_id = $snip_id";
+						WHERE textlib_id = :snip_id";
 	
-	} else {
-		
-		$sql = "INSERT INTO fc_textlib (
+	$sql_insert = "INSERT INTO fc_textlib (
 							textlib_content, textlib_notes, textlib_groups, textlib_name, textlib_title, textlib_keywords, textlib_lang, textlib_priority,
 							textlib_lastedit, textlib_lastedit_from, textlib_template, textlib_theme, textlib_images, textlib_labels,
 							textlib_classes, textlib_permalink, textlib_permalink_name, textlib_permalink_title, textlib_permalink_classes
@@ -112,10 +107,21 @@ if(isset($_POST['save_snippet'])) {
 							:textlib_content, :textlib_notes, :textlib_groups, :textlib_name, :textlib_title, :textlib_keywords, :textlib_lang, :textlib_priority,
 							:textlib_lastedit, :textlib_lastedit_from, :textlib_template, :textlib_theme, :textlib_images, :textlib_labels,
 							:textlib_classes, :textlib_permalink, :textlib_permalink_name, :textlib_permalink_title, :textlib_permalink_classes
-						)";		
+						)";	
+						
+	
+	if($_POST['modus'] == 'update') {
+		
+		$snip_id = (int) $_POST['snip_id'];
+		$sth = $db->prepare($sql_update);
+		$sth->bindParam(':snip_id', $snip_id, PDO::PARAM_INT);
+	
+	} else {
+		
+		$sth = $db->prepare($sql_insert);
 	}
 	
-	$sth = $db->prepare($sql);
+	
 	$sth->bindParam(':textlib_content', $_POST['textlib_content'], PDO::PARAM_STR);
 	$sth->bindParam(':textlib_name', $snippet_name, PDO::PARAM_STR);
 	$sth->bindParam(':textlib_lang', $_POST['sel_language'], PDO::PARAM_STR);
@@ -417,7 +423,12 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 		echo '<td>'.$get_snip_title.'</td>';
 		echo '<td><small>'.date('Y.m.d. H:i:s',$get_snip_lastedit).' '.$get_snip_lastedit_from.'</small></td>';
 		echo '<td>'.$label.'</td>';
-		echo '<td class="text-right"><a href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'" class="btn btn-fc btn-sm text-success">'.$lang['edit'].'</a></td>';	
+		echo '<td class="text-right">';
+		echo '<div class="btn-group" role="group">';
+		echo '<a href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'" class="btn btn-fc btn-sm text-success">'.$lang['edit'].'</a>';
+		echo '<a href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'&duplicate=1" class="btn btn-fc btn-sm">'.$icon['copy'].'</a>';
+		echo '</div>';
+		echo '</td>';	
 		echo '</tr>';
 		
 	}

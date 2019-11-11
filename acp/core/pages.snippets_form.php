@@ -9,6 +9,11 @@ if($_REQUEST['snip_id'] == 'n') {
 	$modus = 'update';
 }
 
+if((!empty($_REQUEST['duplicate'])) OR ($_REQUEST['modus'] == 'duplicate')) {
+	$snip_id = (int) $_REQUEST['snip_id'];
+	$modus = "duplicate";
+}
+
 /**
  * open snippet
  */
@@ -312,6 +317,8 @@ echo '</div>';
 echo '<div class="well well-sm">';
 if($modus == 'new') {
 	echo '<input type="submit" name="save_snippet" class="btn btn-save btn-block" value="'.$lang['save'].'">';
+} else if($modus == 'duplicate') {
+	echo '<input type="submit" name="save_snippet" class="btn btn-save btn-block" value="'.$lang['duplicate'].'">';
 } else {
 	echo '<input type="hidden" name="snip_id" value="'.$snip_id.'">';
 	echo '<input type="submit" name="save_snippet" class="btn btn-save btn-block" value="'.$lang['update'].'"> ';
@@ -321,6 +328,7 @@ if($modus == 'new') {
 	echo '</div>';
 }
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+echo '<input type="hidden" name="modus" value="'.$modus.'">';
 echo '</div>';
 
 
