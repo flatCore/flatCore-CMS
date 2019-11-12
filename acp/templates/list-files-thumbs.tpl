@@ -1,8 +1,8 @@
-<div class="masonry-item">
-	<div class="masonry-item-inner">
-		{preview_img}
-		<h6>{short_filename}</h6>
-		<div><small>{show_filetime}<br>{filesize}</small></div>
+<div class="card">
+	<div class="card-header p-1">{short_filename}</div>
+	{preview_img}
+	<div class="card-body p-1">
+		<p class="m-0"><small>{show_filetime} / {filesize}</small></p>
 		<form action="?tn=filebrowser" method="POST">
 			<div class="btn-group d-flex">
 

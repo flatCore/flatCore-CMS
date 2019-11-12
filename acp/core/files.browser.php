@@ -102,11 +102,11 @@ $select_dir .= '</form>';
 
 $tpl_file = file_get_contents('templates/list-files-grid.tpl');
 $tpl_file_type = 'grid';
-$tpl_container_id = 'list-container';
+$tpl_container_class = 'list-container';
 if(strpos($disk,$path_img) !== FALSE) {
 	$tpl_file = file_get_contents('templates/list-files-thumbs.tpl');
 	$tpl_file_type = 'thumbs';
-	$tpl_container_id = 'masonry-container';
+	$tpl_container_class = 'card-columns custom-columns';
 }
 
 /* create new directory */
@@ -486,8 +486,8 @@ if($disk != $path_img AND $disk != $path_files) {
 	echo '</div>';
 }
 
-echo '<div id="container">';
-echo '<div id="'.$tpl_container_id.'">';
+
+echo '<div class="'.$tpl_container_class.'">';
 
 
 //list all files
@@ -519,7 +519,7 @@ for($i=0;$i<$cnt_get_files;$i++) {
 	
 	if($imgsize[0] > 0) {
 		$set_style = '';
-		$preview_img = "<img src='$filename' class='img-fluid'>";
+		$preview_img = "<img src='$filename' class='card-img-top'>";
 		$tpl_list = str_replace('{preview_link}', $filename, $tpl_list);
 	} else {
 		$set_style = "background-image: url(images/no-preview.gif); background-position: center; background-repeat: no-repeat;";
@@ -529,7 +529,7 @@ for($i=0;$i<$cnt_get_files;$i++) {
 	
 	if(is_dir($filename)) {
 		$set_style = '';
-		$preview_img = '<a href="acp.php?tn=filebrowser&sub=browse&selected_folder='.$filename.'"><img src="images/folder.png" class="img-fluid"></a>';
+		$preview_img = '<a href="acp.php?tn=filebrowser&sub=browse&selected_folder='.$filename.'"><img src="images/folder.png" class="card-img"></a>';
 		$tpl_list = str_replace('{preview_link}', 'acp.php?tn=filebrowser&sub=browse&selected_folder={filename}', $tpl_list);
 		$edit_btn = '';
 		$delete_btn = '';
@@ -552,9 +552,7 @@ for($i=0;$i<$cnt_get_files;$i++) {
 
 
 
-echo '</div>'; // masonry-container
-echo '</div>';
-echo '<div class="clearfix"></div>';
+echo '</div>'; // columns
 
 
 echo '<div id="well well-sm"><p class="text-center">';

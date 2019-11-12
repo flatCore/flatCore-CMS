@@ -158,19 +158,10 @@ if(isset($set_acptheme)) {
 			}
 		</script>
 		
-
-		
-		<!-- masonry -->
-		<script type="text/javascript" src="../lib/js/masonry.pkgd.min.js"></script>
-		<script type="text/javascript" src="../lib/js/imagesloaded.pkgd.min.js"></script>
 		
 		<!-- jquery.matchHeight-min.js-->
 		<script type="text/javascript" src="../lib/js/jquery/jquery.matchHeight-min.js"></script>
-		
-		<!-- bootstrap switch -->
-		<link rel="stylesheet" href="../lib/css/bootstrap-switch.css" type="text/css" media="screen, projection">
-		<script type="text/javascript" src="../lib/js/bootstrap-switch.min.js"></script>
-		
+				
 		<!-- uploader -->
 		<script src="../lib/js/dropzone.js"></script>
 		<link rel="stylesheet" href="../lib/css/dropzone.css" type="text/css" media="screen, projection">
@@ -187,6 +178,7 @@ if(isset($set_acptheme)) {
 		
 		<!-- image picker -->
 		<script type="text/javascript" src="../lib/js/jquery/image-picker.min.js"></script>
+	
 		
 		<?php
 
@@ -419,13 +411,7 @@ if(isset($set_acptheme)) {
 				})
 			
 				$('.tooltip').tooltip();
-				/*
-				$('.fancybox-close-small').click(function() {
-					$.fancybox.close('true');
-					$.fancybox.destroy();
-					alert('hooo');
-				});
-				*/
+
 				
 				$(".fancybox").fancybox();
 				
@@ -453,23 +439,14 @@ if(isset($set_acptheme)) {
 		    	hide_select : true,
 		      show_label  : true
 				});
+
 			
 	      $(document).on('mouseenter', '.hiddenControls', function () {
 					$(this).find('.controls').fadeIn();
 	      }).on('mouseleave', '.hiddenControls', function () {
 					$(this).find('.controls').hide();
 				});
-				
-				/*
-		   $('.collapse').on('show.bs.collapse', function() {
-		        var id = $(this).attr('id');
-		        $('a[href="#' + id + '"]').addClass('active');
-		    });
-		    $('.collapse').on('hide.bs.collapse', function() {
-		        var id = $(this).attr('id');
-		        $('a[href="#' + id + '"]').removeClass('active');
-		    });
-		    */
+
 		    
 				$(document).on('click', 'a[href^=\\#]', function(e){
         	e.preventDefault();
@@ -504,17 +481,7 @@ if(isset($set_acptheme)) {
 			  $('.cntValues').textareaCount(options);  
 			  
 		
-				var $container = $('#masonry-container');
-				
-				$('#masonry-container').imagesLoaded( function(){
-				  $('#masonry-container').masonry({
-				   itemSelector: '.masonry-item',
-				   isAnimated: true,
-				   isFitWidth: true,
-				 
-				   gutter: 10
-				  });
-				});
+
 			
 				$.fn.matchHeight._update('.equal');
 				
