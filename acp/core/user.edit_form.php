@@ -153,7 +153,8 @@ echo tpl_form_control_group('',$lang['f_user_psw'],"<div class='alert alert-dang
 
 echo tpl_form_control_group('',$lang['f_user_psw_new'],"<input class='form-control' type='password' name='user_psw_new' value=''>");
 echo tpl_form_control_group('',$lang['f_user_psw_reconfirmation'],"<input class='form-control' type='password' name='user_psw_reconfirmation' value=''>");
-echo"\n<input type='hidden' name='user_psw' value='$user_psw'>\n";
+echo '<input type="hidden" name="user_psw" value="'.$user_psw.'">';
+echo '<input type="hidden" name="user_psw_hash" value="'.$user_psw_hash.'">';
 
 
 

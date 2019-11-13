@@ -128,7 +128,7 @@ if($_POST['save_the_user']) {
 	$user_psw_reconfirmation = $_POST['user_psw_reconfirmation'];
 	
 	// check psw entries
-	$set_psw = "false";
+	$set_psw = 'false';
 	
 	if($_POST['user_psw_new'] != "") {
 
@@ -139,6 +139,7 @@ if($_POST['save_the_user']) {
 			//generate password hash
 			$user_psw = password_hash($_POST['user_psw_new'], PASSWORD_DEFAULT);
 			$success_message .= $lang['msg_psw_changed'].'<br>';
+			$set_psw = 'true';
 		}
 
 	}
@@ -151,8 +152,10 @@ if($_POST['save_the_user']) {
 		$sth = $dbh->prepare($sql_u);
 		generate_bindParam_str($pdo_fields,$sth);
 		
-		if($db_status == "unlocked") {
+		if($set_psw == "true") {
 			$sth->bindParam(':user_psw_hash', $user_psw, PDO::PARAM_STR);
+		} else {
+			$sth->bindParam(':user_psw_hash', $user_psw_hash, PDO::PARAM_STR);
 		}
 		
 		$sth->bindParam(':user_drm', $drm_string, PDO::PARAM_STR);
