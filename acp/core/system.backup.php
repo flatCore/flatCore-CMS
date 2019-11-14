@@ -33,9 +33,9 @@ if(isset($_GET['vac'])) {
 	
 	if(is_file($vac_file)) {
 		
-		echo '<div class="well well-sm">';
-		echo '<h3>VACUUM: '.$vac_file.' <small>';
-		echo $lang['filesize'].': '.readable_filesize(filesize("$vac_file")). '</small></h3>';
+		echo '<div class="well">';
+		echo '<h4>VACUUM: '.$vac_file.' </h4>';
+		echo '<p>'.$lang['filesize'].': '.readable_filesize(filesize("$vac_file")). ' -> ';
 		
 		$dbh = new PDO("sqlite:".$vac_file);
 		$sth = $dbh->prepare("VACUUM");
@@ -43,7 +43,7 @@ if(isset($_GET['vac'])) {
 		$dbh = null;
 		clearstatcache();
 		
-		echo '<p>'.$lang['filesize'].': '.readable_filesize(filesize("$vac_file")). '</p>';
+		echo readable_filesize(filesize("$vac_file")). '</p>';
 		
 		echo '</div>';
 		
@@ -51,8 +51,15 @@ if(isset($_GET['vac'])) {
 }
 
 
-echo"<div id='container'>";
-echo"<div id='masonry-container'>";
+echo '<table class="table table-sm table-hover">';
+echo '<thead>';
+echo '<tr>';
+echo '<th>'.$lang['filename'].'</th>';
+echo '<th>'.$lang['filesize'].'</th>';
+echo '<th>'.$lang['lastedit'].'</th>';
+echo '<th class="text-right"></th>';
+echo '</thead>';
+echo '<tr>';
 
 foreach($dbfiles as $filename) {
 
@@ -63,35 +70,33 @@ foreach($dbfiles as $filename) {
 	$dload_link = "/acp/core/download.php?dl=$db_file";
 	$delete_link = "acp.php?tn=system&sub=backup&delete=$db_file";
 	
-	echo '<div class="masonry-item">';
-	echo '<div class="masonry-item-inner">';
-	echo '<h5>'.$db_file.'</h5>';
-	echo "<p>$lang[filesize]: ~ $db_bytes<br>$lang[lastedit]:<br>$db_time</p>";
+	echo '<tr>';
+	echo '<td>'.$db_file.'</td>';
+	echo '<td>'.$db_bytes.'</td>';
+	echo '<td>'.$db_time.'</td>';
+	echo '<td class="text-right">';
+
 	echo '<form action="?tn=system&sub=backup" method="POST">';
-	echo '<div class="btn-group d-flex" role="group">';
-	echo '<a class="btn btn-fc btn-sm w-100 text-success" href="'.$dload_link.'">'.$icon['download'].' '.$lang['download'].'</a>';
+	echo '<div class="btn-group" role="group">';
+	echo '<a class="btn btn-fc btn-sm text-success" href="'.$dload_link.'">'.$icon['download'].' '.$lang['download'].'</a>';
+	echo '<a class="btn btn-fc btn-sm" title="VACUUM" href="?tn=system&sub=backup&vac='.$db_file.'">'.$icon['compress'].'</a>';
 
 	if(substr("$db_file", 0, 7) == 'logfile') {
-
-		echo '<button type="submit" class="btn btn-fc btn-sm w-100 text-danger" name="delete">'.$icon['trash_alt'].'</button>';
-
+		echo '<button type="submit" class="btn btn-fc btn-sm text-danger" name="delete">'.$icon['trash_alt'].'</button>';
 	}
-
-	echo '<a class="btn btn-fc btn-sm w-100" title="VACUUM" href="?tn=system&sub=backup&vac='.$db_file.'">'.$icon['compress'].'</a>';
-
 	
 	echo '</div>';
 	echo '<input  type="hidden" name="file" value="'.$db_file.'">';
 	echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 	echo '</form>';
-  echo '</div>';
-  echo '</div>'; 
+
+  echo '</td>';  
+  echo '</tr>'; 
 
 }
 
-echo '</div>'; // masonry-container
-echo '</div>';
-echo '<div class="clearfix"></div>';
+echo '</table>';
+
 
 
 
