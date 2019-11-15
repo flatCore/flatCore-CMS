@@ -1,7 +1,7 @@
 <?php
 
 //prohibit unauthorized access
-require("core/access.php");
+require 'core/access.php';
 
 /* check in a new module */
 if(isset($_GET['enable'])) {
@@ -52,7 +52,7 @@ for($i=0;$i<$nbrModuls;$i++) {
 
 	unset($listlinks, $modnav);
 	
-	$modFolder = $arr_iMods[$i]['folder'];
+	$modFolder = $all_mods[$i]['folder'];
 	$bnt_check_in_out = '<a class="btn btn-sm btn-fc text-success" href="acp.php?tn=moduls&enable='.$modFolder.'">'.$lang['btn_mod_enable'].'</a>';
 	
 	foreach($fc_addons as $a) {
@@ -60,8 +60,7 @@ for($i=0;$i<$nbrModuls;$i++) {
 			$bnt_check_in_out = '<a class="btn btn-sm btn-fc text-danger" href="acp.php?tn=moduls&disable='.$modFolder.'">'.$lang['btn_mod_disable'].'</a>';
 		}
 	}
-	
-	
+		
 	include '../modules/'.$modFolder.'/info.inc.php';
 	
 	$listlinks = '<div class="btn-group">';
