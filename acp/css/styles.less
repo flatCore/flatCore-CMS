@@ -343,6 +343,30 @@ a:focus {
 	}
 }
 
+
+.popover {
+	background: darken(@widget_background,1);
+
+	.popover-header {
+		background: darken(@widget_background,5);
+		border-bottom: 1px solid darken(@widget_background,5);
+	}
+
+	.popover-body {
+		color: @font_color;
+	}
+
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+	.arrow::after {
+		border-right-color: darken(@widget_background,1);
+	}
+}
+
+
+
 .progress {
 	background: lighten(@widget_background,10);
 	padding: 2px;

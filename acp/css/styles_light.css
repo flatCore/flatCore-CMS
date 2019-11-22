@@ -712,6 +712,23 @@ a:focus {
   background: #d5d5d5;
   color: #222;
 }
+.popover {
+  background: #ebebeb;
+}
+.popover .popover-header {
+  background: #e1e1e1;
+  border-bottom: 1px solid #e1e1e1;
+}
+.popover .popover-body {
+  color: #222;
+}
+.popover img {
+  max-width: 100%;
+  height: auto;
+}
+.popover .arrow::after {
+  border-right-color: #ebebeb;
+}
 .progress {
   background: #ffffff;
   padding: 2px;
