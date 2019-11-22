@@ -52,6 +52,7 @@ $icon['images'] = '<i class="fas fa-images"></i>';
 
 $icon['language'] = '<i class="fas fa-language"></i>';
 $icon['level_up_alt'] = '<i class="fas fa-level-up-alt"></i>';
+$icon['link'] = '<i class="fas fa-link"></i>';
 $icon['list'] = '<i class="far fa-list"></i>';
 $icon['lock'] = '<i class="far fa-lock"></i>';
 $icon['lock_open'] = '<i class="far fa-lock-open"></i>';

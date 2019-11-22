@@ -411,6 +411,7 @@ if(isset($set_acptheme)) {
 				})
 			
 				$('.tooltip').tooltip();
+				$('[data-toggle="popover"]').popover()
 
 				
 				$(".fancybox").fancybox();

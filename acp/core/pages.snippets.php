@@ -2,8 +2,8 @@
 
 //prohibit unauthorized access
 require 'core/access.php';
-$system_snippets_str = "'footer_text', 'extra_content_text', 'agreement_text', 'account_confirm', 'account_confirm_mail', 'no_access'";
-$system_snippets = explode(',',$system_snippets_str);
+$system_snippets_str = "'footer_text','extra_content_text','agreement_text','account_confirm','account_confirm_mail','no_access'";
+$system_snippets = explode(',',str_replace("'",'',$system_snippets_str));
 $modus = 'new';
 
 
@@ -242,7 +242,43 @@ if($snippet_lang_filter != "") {
 }
 
 $dbh = new PDO("sqlite:".CONTENT_DB);
-$sql = "SELECT * FROM fc_textlib $filter_string ORDER BY textlib_name ASC";
+
+$sql_cnt = "SELECT count(*) AS 'cnt_all_snippets',
+(SELECT count(*) FROM fc_textlib WHERE textlib_name IN($system_snippets_str) ) AS 'cnt_system_snippets',
+(SELECT count(*) FROM fc_textlib WHERE textlib_name NOT IN($system_snippets_str) ) AS 'cnt_custom_snippets',
+(SELECT count(*) FROM fc_textlib $filter_string ) AS 'cnt_filter_snippets'
+FROM fc_textlib";
+
+$cnt = $dbh->query("$sql_cnt")->fetch(PDO::FETCH_ASSOC);
+
+$files_per_page = 50;
+$show_numbers = 6;
+$start = 0;
+$disable_next_start = '';
+$disable_prev_start = '';
+
+if(isset($_GET['start'])) {
+	$start = (int) $_GET['start'];
+}
+
+if($start<0) {
+	$start = 0;
+}
+
+$next_start = $start+$files_per_page;
+$prev_start = $start-$files_per_page;
+
+if($start>($cnt['cnt_filter_snippets']-$files_per_page)) {
+	$next_start = $start;
+	$disable_next_start = 'disabled';
+}
+
+if($start < 1) {
+	$disable_prev_start = 'disabled';
+}
+
+
+$sql = "SELECT * FROM fc_textlib $filter_string ORDER BY textlib_name ASC LIMIT $start,$files_per_page";
 
 foreach($system_snippets as $snippet) {
 	$snippet_exception[] = " textlib_name != '$snippet' ";
@@ -254,10 +290,38 @@ foreach ($dbh->query($sql) as $row) {
 
 $dbh = null;
 
+$cnt_pages = ceil($cnt['cnt_filter_snippets']/$files_per_page);
 
 $cnt_snippets = count($snippets_list);
 
+$pag_backlink = '<a class="btn btn-fc '.$disable_prev_start.'" href="acp.php?tn=pages&sub=snippets&start='.$prev_start.'">'.$icon['angle_double_left'].'</a>';
+$pag_forwardlink = '<a class="btn btn-fc '.$disable_next_start.'" href="acp.php?tn=pages&sub=snippets&start='.$next_start.'">'.$icon['angle_double_right'].'</a>';
 
+unset($pag_string);
+for($x=0;$x<$cnt_pages;$x++) {
+
+	$aclass = "btn btn-fc";
+	$page_start = $x*$files_per_page;
+	$page_nbr = $x+1;
+	
+	if($page_start == $start) {
+		$aclass = "btn btn-fc active";
+		
+		$pag_start = 	$x-($show_numbers/2);
+		
+		if($pag_start < 0) {
+			$pag_start = 0;
+		}
+		
+		$pag_end = 		$pag_start+$show_numbers;
+		if($pag_end > $cnt_pages) {
+			$pag_end = $cnt_pages;
+		}
+	}
+	
+	$a_pag_string[] = "<a class='$aclass' href='acp.php?tn=pages&sub=snippets&start=$page_start'>$page_nbr</a> ";
+
+}
 
 /**
  * open snippet
@@ -282,9 +346,9 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	echo '<fieldset class="mb-0">';
 	echo '<legend>'.$lang['label_type'].'</legend>';
 	echo '<div class="btn-group d-flex" role="group">';
-	echo '<a class="btn btn-sm btn-fc w-100 '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle</a>';
-	echo '<a class="btn btn-sm btn-fc w-100 '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System</a>';
-	echo '<a class="btn btn-sm btn-fc w-100 '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene</a>';
+	echo '<a class="btn btn-sm btn-fc w-100 '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle ('.$cnt['cnt_all_snippets'].')</a>';
+	echo '<a class="btn btn-sm btn-fc w-100 '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System ('.$cnt['cnt_system_snippets'].')</a>';
+	echo '<a class="btn btn-sm btn-fc w-100 '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene ('.$cnt['cnt_custom_snippets'].')</a>';
 	echo '</div>';
 	echo '</fieldset>';
 	
@@ -355,8 +419,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	echo '</div>';
 	
 	echo '</div>';
-	
-	
+		
 	echo '<div class="max-height-container">';
 	echo '<div class="scroll-box">';
 	
@@ -365,12 +428,14 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	echo '<thead><tr>';
 	echo '<th>'.$lang['f_page_language'].'</th>';
 	echo '<th>'.$lang['filename'].'</th>';
-	echo '<th>'.$lang['label_title'].'</th>';
-	echo '<th>'.$lang['label_date'].'</th>';
+	echo '<th>'.$lang['label_title'].'/'.$lang['label_content'].'</th>';
+	echo '<th>'.$lang['label_classes'].'</th>';
 	echo '<th>'.$lang['labels'].'</th>';
+	echo '<th>'.$lang['images'].'</th>';
+	echo '<th>URL</th>';
+	echo '<th>'.$lang['date_of_change'].'</th>';
 	echo '<th></th>';
 	echo '</tr></thead>';
-	
 	
 	for($i=0;$i<$cnt_snippets;$i++) {
 		$active_class = '';
@@ -378,10 +443,21 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 		$get_snip_name = $snippets_list[$i]['textlib_name'];
 		$get_snip_lang = $snippets_list[$i]['textlib_lang'];
 		$get_snip_title = $snippets_list[$i]['textlib_title'];
+		$get_snip_content = $snippets_list[$i]['textlib_content'];
 		$get_snip_lastedit = $snippets_list[$i]['textlib_lastedit'];
 		$get_snip_lastedit_from = $snippets_list[$i]['textlib_lastedit_from'];
 		$get_snip_keywords = $snippets_list[$i]['textlib_keywords'];	
 		$get_snip_labels = explode(',',$snippets_list[$i]['textlib_labels']);
+		$get_snip_url = $snippets_list[$i]['textlib_permalink'];
+		$get_snip_url_title = $snippets_list[$i]['textlib_permalink_title'];
+		$get_snip_url_name = $snippets_list[$i]['textlib_permalink_name'];
+		$get_snip_url_classes = $snippets_list[$i]['textlib_permalink_classes'];
+		$get_snip_images = $snippets_list[$i]['textlib_images'];
+		
+		$get_snip_content = strip_tags($get_snip_content);
+		if(strlen($get_snip_content) > 150) {
+			$get_snip_content = substr($get_snip_content, 0, 100) . ' <small><i>(...)</i></small>';
+		}
 		
 		$label = '';
 		if($snippets_list[$i]['textlib_labels'] != '') {
@@ -398,31 +474,54 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 			}
 		}
 		
+		$snippet_classes = explode(' ',$snippets_list[$i]['textlib_classes']);
+		$class_badge = '';
+		foreach($snippet_classes as $class) {
+			$class_badge .= '<span class="badge badge-secondary">'.$class.'</span> ';
+		}
+		
+		
 		
 		if(in_array($get_snip_name, $system_snippets)) {
-			$show_snip_name = $icon['cogs']. ' ' . $get_snip_name;
+			$show_snip_name = '<span>' . $get_snip_name.'</span>'.' <sup>'.$icon['cog'].'</sup>';
 			$data_groups = '"system"';
 		} else {
-			$show_snip_name = $get_snip_name;
+			$show_snip_name = '<span>'.$get_snip_name.'</span>';
 			$data_groups = '';
 		}
-			
-		unset($sel);
-		if($snip_id == $get_snip_id) {
-			$sel = "selected";
-			$get_snip_name_editor = '[snippet]'.$get_snip_name.'[/snippet]';
-			$get_snip_name_smarty = '{$fc_snippet_'.$get_snip_name.'}';
-			$get_snip_name_smarty = str_replace('-', '_', $get_snip_name_smarty);
-		}
-
+		
 		$lang_thumb = '<img src="/lib/lang/'.$get_snip_lang.'/flag.png" width="20">';
+		
+		$snippet_images = explode('<->',$get_snip_images);
+		
 		
 		echo '<tr>';
 		echo '<td>'.$lang_thumb.'</td>';
-		echo '<td>'.$show_snip_name.'</td>';
-		echo '<td>'.$get_snip_title.'</td>';
-		echo '<td><small>'.date('Y.m.d. H:i:s',$get_snip_lastedit).' '.$get_snip_lastedit_from.'</small></td>';
+		echo '<td nowrap>'.$show_snip_name.'</td>';
+		echo '<td><strong>'.$get_snip_title.'</strong><br><small>'.$get_snip_content.'</small></td>';
+		echo '<td>'.$class_badge.'</td>';
 		echo '<td>'.$label.'</td>';
+		echo '<td>';
+		if(count($snippet_images) > 1) {
+			$x=0;
+			foreach($snippet_images as $img) {
+				if(is_file("../$img")) {
+					$x++;
+					echo '<a data-toggle="popover" data-trigger="hover" data-html="true" data-content="<img src=\''.$img.'\'>">'.$icon['images'].'</a> ';
+				}
+				if($x>2) {
+					echo '<small>(...)</small>';
+					break;
+				}
+			}
+		}
+		echo '</td>';
+		echo '<td>';
+		if($get_snip_url != '') {
+			echo '<a data-toggle="popover" data-trigger="hover" data-html="true" title="'.$get_snip_url_title.'" data-content="URL: '.$get_snip_url.'<br>Name: '.$get_snip_url_name.'<br>'.$lang['label_classes'].': '.$get_snip_url_classes.'">'.$icon['link'].'</a>';
+		}
+		echo '</td>';
+		echo '<td nowrap><small>'.$icon['clock']. ' '.date('Y.m.d H:i:s',$get_snip_lastedit).'<br>'.$icon['user'].' '.$get_snip_lastedit_from.'</small></td>';
 		echo '<td class="text-right">';
 		echo '<div class="btn-group" role="group">';
 		echo '<a href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'" class="btn btn-fc btn-sm text-success">'.$lang['edit'].'</a>';
@@ -436,19 +535,19 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	
 	echo '</table>';
 	
-	echo '</div>';
-	echo '</div>';
+	echo '<div class="well well-sm text-center">';
+	echo $pag_backlink .' ';
+	foreach(range($pag_start, $pag_end) as $number) {
+    echo $a_pag_string[$number];
+	}
+	echo ' '. $pag_forwardlink;
+	echo '</div>'; //EOL PAGINATION
 	
-	
-	
 	echo '</div>';
 	echo '</div>';
+
 	echo '</div>'; // .app-container
 
 	
 }
-
-
-
-
 ?>
