@@ -106,7 +106,7 @@ $tpl_container_class = 'list-container';
 if(strpos($disk,$path_img) !== FALSE) {
 	$tpl_file = file_get_contents('templates/list-files-thumbs.tpl');
 	$tpl_file_type = 'thumbs';
-	$tpl_container_class = 'card-columns custom-columns';
+	$tpl_container_class = 'row';
 }
 
 /* create new directory */
@@ -401,10 +401,11 @@ $sth->execute();
 $all_files = $sth->fetch();
 $nbr_of_files = $all_files['all'];
 
-$files_per_page = 20;
+$files_per_page = 24;
 $show_numbers = 6;
 $start = 0;
-$end = $files_per_page;
+$disable_next_start = '';
+$disable_prev_start = '';
 
 
 if(isset($_GET['start'])) {
@@ -415,17 +416,16 @@ if($start<0) {
 	$start = 0;
 }
 
+$next_start = $start+$files_per_page;
+$prev_start = $start-$files_per_page;
 
-$end = $start+$files_per_page;
-$next_start = $start+$end;
-$prev_start = $start-$end;
-
-if($start>($nbr_of_files-$end)) {
+if($start>($nbr_of_files-$files_per_page)) {
 	$next_start = $start;
+	$disable_next_start = 'disabled';
 }
 
-if($end>$nbr_of_files) {
-	$end = $nbr_of_files;
+if($start < 1) {
+	$disable_prev_start = 'disabled';
 }
 
 $order_sql = 'ORDER BY '.$_SESSION['sort_by'].' '.$_SESSION['sort_direction']. ' ';
@@ -448,8 +448,8 @@ $cnt_pages = ceil($nbr_of_files/$files_per_page);
 $cnt_get_files = count($get_files);
 
 
-$pag_backlink = '<a class="btn btn-fc" href="acp.php?tn=filebrowser&start='.$prev_start.'">'.$icon['angle_double_left'].'</a>';
-$pag_forwardlink = '<a class="btn btn-fc" href="acp.php?tn=filebrowser&start='.$next_start.'">'.$icon['angle_double_right'].'</a>';
+$pag_backlink = '<a class="btn btn-fc '.$disable_prev_start.'" href="acp.php?tn=filebrowser&start='.$prev_start.'">'.$icon['angle_double_left'].'</a>';
+$pag_forwardlink = '<a class="btn btn-fc '.$disable_next_start.'" href="acp.php?tn=filebrowser&start='.$next_start.'">'.$icon['angle_double_right'].'</a>';
 
 unset($pag_string);
 for($x=0;$x<$cnt_pages;$x++) {

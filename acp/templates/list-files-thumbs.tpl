@@ -1,8 +1,11 @@
-<div class="card">
-	<div class="card-header p-1">{short_filename}</div>
+<div class="col-md-3 col-xl-2 mb-2">
+<div class="card h-100">
+	<div class="card-header p-1 small text-center">{short_filename}</div>
 	{preview_img}
 	<div class="card-body p-1">
-		<p class="m-0"><small>{show_filetime} / {filesize}</small></p>
+		<p class="m-0 text-center"><small>{show_filetime} / {filesize}</small></p>
+	</div>
+	<div class="card-footer p-1">
 		<form action="?tn=filebrowser" method="POST">
 			<div class="btn-group d-flex">
 
@@ -14,4 +17,5 @@
 			</div>
 		</form>
 	</div>
+</div>
 </div>
