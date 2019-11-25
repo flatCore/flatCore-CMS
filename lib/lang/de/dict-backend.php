@@ -308,6 +308,9 @@ $lang['label_missing_h2'] = 'Fehlende H2';
 $lang['label_missing_title'] = 'Fehlende Seiten Titel';
 $lang['label_missing_meta_description'] = 'Fehlende Meta Description';
 
+$lang['label_active_theme'] = 'Aktives Theme';
+$lang['label_installed_themes'] = 'Installierte Themes';
+
 /* Preferences */
 
 $lang['f_prefs_descriptions'] = "Beschreibungen";

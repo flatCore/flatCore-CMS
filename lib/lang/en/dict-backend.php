@@ -312,6 +312,9 @@ $lang['label_missing_h2'] = 'Missing H2';
 $lang['label_missing_title'] = 'Missing Page Title';
 $lang['label_missing_meta_description'] = 'Missing Meta Description';
 
+$lang['label_active_theme'] = 'Active Theme';
+$lang['label_installed_themes'] = 'Installed Themes';
+
 /* Preferences */
 
 $lang['f_prefs_descriptions'] = "Descriptions";
