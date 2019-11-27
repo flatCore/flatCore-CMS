@@ -729,6 +729,10 @@ a:focus {
 .popover .arrow::after {
   border-right-color: #222222;
 }
+.badge-secondary {
+  color: #ccc;
+  background-color: #181818;
+}
 .progress {
   background: #3f3f3f;
   padding: 2px;
@@ -743,7 +747,7 @@ a:focus {
   background: #252525;
   border-radius: 0.75rem;
 }
-/* PAGINATION */
+/* PAGINATION (deprecated) */
 div#pagina {
   margin: 4px 0;
   background: rgba(0, 0, 0, 0.75);
