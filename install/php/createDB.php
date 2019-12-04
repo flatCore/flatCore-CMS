@@ -180,6 +180,25 @@ $dbh = null;
 
 
 /**
+ * DATABASE INDEX
+ */
+ 
+ 
+
+
+$dbh = new PDO("sqlite:../$fc_db_index");
+
+$sql_index_excludes_table = generate_sql_query("fc_index_excludes.php");
+$sql_index_items_table = generate_sql_query("fc_index_items.php");
+
+$dbh->query($sql_index_excludes_table);
+$dbh->query("SET NAMES 'utf-8'");
+$dbh->query($sql_index_items_table);
+
+$dbh = null;
+  
+
+/**
  * DATABASE TRACKER
  */
 

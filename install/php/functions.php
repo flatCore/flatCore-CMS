@@ -49,12 +49,20 @@ function generate_sql_query($file) {
 	}
 
 	$string = substr(trim("$string"), 0,-1); // cut last commata and returns
+	
+	if($table_type == 'virtual') {
+		
+		$sql_string = "CREATE VIRTUAL TABLE $table_name USING fts3($string,tokenize=porter)";
+		
+	} else {
+		$sql_string = "
+			CREATE TABLE $table_name (
+			$string
+			)
+		";		
+	}
 
-	$sql_string = "
-		CREATE TABLE $table_name (
-		$string
-	  )
-	";
+
 
   /* return the sql string */
   return $sql_string;
