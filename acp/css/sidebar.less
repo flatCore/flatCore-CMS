@@ -18,6 +18,9 @@ div#page-sidebar {
 	background: @sidebar_background;
 	height: 100%;
 	border-right: 1px solid @content_bg;
+	
+	overflow: hidden;
+	overflow-y: auto;
 
 	&:hover {
 		transition-property: width;
@@ -26,8 +29,7 @@ div#page-sidebar {
 		width: 220px;		
 		i {
 			width: auto;
-		}
-		
+		}	
 	}
 	
 	ul.nav {
@@ -44,13 +46,9 @@ div#page-sidebar {
 		background: transparent url(../images/fc-logo.png) top left no-repeat;
 	}
 	
-
-	
-	
 	.sidebar-collapsed {
 			
 		width: 100%;
-		overflow: hidden;
 		white-space: nowrap;
 		padding-top: 1px;
 		padding-bottom: 5px;
@@ -67,20 +65,18 @@ div#page-sidebar {
 				text-align: center;				
 			}
 		}
-		     
-
 	}
 
 	.sidebar-expanded {
 		display: block;
 		width: 220px;
-		overflow: hidden;
+		//overflow: hidden;
 		white-space: nowrap;
 		padding-top: 1px;
 		padding-bottom: 5px;
-    transition-property: top, bottom, width;
-    transition-duration: .2s, .2s, .35s;
-    transition-timing-function: linear, linear, ease;
+		transition-property: top, bottom, width;
+		transition-duration: .2s, .2s, .35s;
+		transition-timing-function: linear, linear, ease;
         
 		i {
 			width: 35px;
@@ -93,7 +89,6 @@ div#page-sidebar {
 				text-align: center;				
 			}
 		}
-
 	}
 
 	.sidebar-footer {
@@ -108,6 +103,7 @@ div#page-sidebar {
 div#page-sidebar.sb-expanded {
 	width: 220px;
 	overflow: hidden;
+	overflow-y: auto;
 }
 
 #page-content {

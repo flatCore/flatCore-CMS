@@ -155,6 +155,8 @@ div#page-sidebar {
   background: #111;
   height: 100%;
   border-right: 1px solid #fff;
+  overflow: hidden;
+  overflow-y: auto;
 }
 div#page-sidebar:hover {
   transition-property: width;
@@ -177,7 +179,6 @@ div#page-sidebar a#sidebar-dashboard {
 }
 div#page-sidebar .sidebar-collapsed {
   width: 100%;
-  overflow: hidden;
   white-space: nowrap;
   padding-top: 1px;
   padding-bottom: 5px;
@@ -193,7 +194,6 @@ div#page-sidebar .sidebar-collapsed .sidebar-footer i {
 div#page-sidebar .sidebar-expanded {
   display: block;
   width: 220px;
-  overflow: hidden;
   white-space: nowrap;
   padding-top: 1px;
   padding-bottom: 5px;
@@ -219,6 +219,7 @@ div#page-sidebar .sidebar-footer a {
 div#page-sidebar.sb-expanded {
   width: 220px;
   overflow: hidden;
+  overflow-y: auto;
 }
 #page-content {
   margin-left: 55px;
