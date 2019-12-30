@@ -124,7 +124,7 @@ if(isset($set_acptheme)) {
 		
 		<link rel="icon" type="image/x-icon" href="images/favicon.ico" />
 		
-		<script src="../lib/js/jquery/jquery-3.3.1.min.js"></script>
+		<script src="../lib/js/jquery/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script language="javascript" type="text/javascript" src="../lib/js/tinymce/tinymce.min.js"></script>
     <script language="javascript" type="text/javascript" src="../lib/js/tinymce/jquery.tinymce.min.js"></script>
