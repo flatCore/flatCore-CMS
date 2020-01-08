@@ -21,6 +21,7 @@ echo '<li class="nav-item"><a class="nav-link" href="#content" data-toggle="tab"
 echo '<li class="nav-item"><a class="nav-link" href="#extracontent" data-toggle="tab">'.$lang['tab_extracontent'].'</a></li>';
 echo '<li class="nav-item"><a class="nav-link" href="#meta" data-toggle="tab">'.$lang['tab_meta'].'</a></li>';
 echo '<li class="nav-item"><a class="nav-link" href="#head" data-toggle="tab">'.$lang['tab_head'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#addons" data-toggle="tab">'.$lang['tab_addons'].'</a></li>';
 if($cnt_custom_fields > 0) {
 	echo '<li class="nav-item"><a class="nav-link" href="#custom" data-toggle="tab">'.$lang['legend_custom_fields'].'</a></li>';
 }
@@ -317,6 +318,52 @@ echo '<div id="HTMLeditor"></div>';
 
 echo '</div>'; /* EOL tab_head */
 
+/* tab addons */
+echo '<div class="tab-pane fade" id="addons">';
+
+/* Select Modul */
+
+$select_page_modul = '<select name="page_modul"  class="custom-select form-control">';
+$select_page_modul .= '<option value="">Kein Modul</option>';
+
+for($i=0;$i<count($all_mods);$i++) {
+
+	$selected = "";
+	$mod_name = $all_mods[$i]['name'];
+	$mod_folder = $all_mods[$i]['folder'];
+
+	if($mod_folder == $page_modul) {
+		$selected = 'selected';
+	}
+
+	$select_page_modul .= "<option value='$mod_folder' $selected>$mod_name</option>";
+
+}
+
+
+$select_page_modul .= '</select>';
+
+
+echo '<div class="form-group">';
+echo '<label>'.$lang['f_page_modul'].'</label>';
+echo $select_page_modul;
+echo '</div>';
+
+echo '<div class="form-group">';
+echo '<label>'.$lang['f_page_modul_query'].'</label>';
+echo "<input class='form-control' type='text' name='page_modul_query' value='$page_modul_query'>";
+echo '</div>';
+
+/* if there is */
+if($page_modul != '') {
+		/* check if the module has its own form */
+		if(is_file("../modules/$page_modul/backend/page-form.php")) {
+			include "../modules/$page_modul/backend/page-form.php";
+		}
+}
+
+
+echo '</div>'; /* EOL tab addons */
 
 
 if($cnt_custom_fields > 0) {
@@ -430,39 +477,6 @@ echo '<label>'.$lang['f_page_template'].'</label>';
 echo $select_select_template;
 echo '</div>';
 
-/* Select Modul */
-
-
-$select_page_modul = '<select name="page_modul"  class="custom-select form-control">';
-$select_page_modul .= '<option value="">Kein Modul</option>';
-
-for($i=0;$i<count($all_mods);$i++) {
-
-	$selected = "";
-	$mod_name = $all_mods[$i]['name'];
-	$mod_folder = $all_mods[$i]['folder'];
-
-	if($mod_folder == "$page_modul") {
-		$selected = "selected";
-	}
-
-	$select_page_modul .= "<option value='$mod_folder' $selected>$mod_name</option>";
-
-}
-
-
-$select_page_modul .= '</select>';
-
-
-echo '<div class="form-group">';
-echo '<label>'.$lang['f_page_modul'].'</label>';
-echo $select_page_modul;
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label>'.$lang['f_page_modul_query'].'</label>';
-echo "<input class='form-control' type='text' name='page_modul_query' value='$page_modul_query'>";
-echo '</div>';
 
 
 /* Select  Status */

@@ -55,6 +55,7 @@ $pdo_fields = array(
 	'page_thumbnail' => 'STR',
 	'page_modul' => 'STR',
 	'page_modul_query' => 'STR',
+	'page_addon_string' => 'STR',
 	'page_authorized_users' => 'STR',
 	'page_version' => 'STR',
 	'page_labels' => 'STR',
@@ -90,6 +91,7 @@ $pdo_fields_new = array(
 	'page_thumbnail' => 'STR',
 	'page_modul' => 'STR',
 	'page_modul_query' => 'STR',
+	'page_addon_string' => 'STR',
 	'page_authorized_users' => 'STR',
 	'page_version' => 'STR',
 	'page_labels' => 'STR',
@@ -126,6 +128,7 @@ $pdo_fields_cache = array(
 	'page_thumbnail' => 'STR',
 	'page_modul' => 'STR',
 	'page_modul_query' => 'STR',
+	'page_addon_string' => 'STR',
 	'page_authorized_users' => 'STR',
 	'page_cache_type' => 'STR',
 	'page_version' => 'STR',
@@ -195,7 +198,7 @@ if(isset($_POST['delete_the_page'])) {
  */
 
 if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
-
+	
 	$page_lastedit = time();
 	$page_lastedit_from = $_SESSION['user_nick'];
 	
@@ -276,6 +279,11 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 	/* page_meta_robots */
 	$page_meta_robots = implode(',',$_POST['page_meta_robots']);
 
+	/* addon injection */
+	$page_addon_string = '';
+	if(is_array($_POST['addon'])) {
+		$page_addon_string = json_encode($_POST['addon'],JSON_UNESCAPED_UNICODE);
+	}
 
 	// connect to database
 	$dbh = new PDO("sqlite:".CONTENT_DB);
@@ -306,6 +314,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$sth->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
 		$sth->bindParam(':page_thumbnail', $page_thumbnail, PDO::PARAM_STR);
 		$sth->bindParam(':page_psw', $page_psw, PDO::PARAM_STR);
+		$sth->bindParam(':page_addon_string', $page_addon_string, PDO::PARAM_STR);
 		
 		
 		$cnt_changes = $sth->execute();
@@ -346,6 +355,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$sth->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
 		$sth->bindParam(':page_thumbnail', $page_thumbnail, PDO::PARAM_STR);
 		$sth->bindParam(':page_psw', $page_psw, PDO::PARAM_STR);
+		$sth->bindParam(':page_addon_string', $page_addon_string, PDO::PARAM_STR);
 		
 		$cnt_changes_c = $std->execute();
 	

@@ -39,6 +39,7 @@ $cols = array(
 	"page_template_layout" => 'VARCHAR',
 	"page_modul" => 'VARCHAR',
 	"page_modul_query" => 'VARCHAR',
+	"page_addon_string" => 'VARCHAR',
 	"page_authorized_users" => 'VARCHAR',
 	"page_version" => 'INTEGER',
 	"page_version_date" => 'VARCHAR',

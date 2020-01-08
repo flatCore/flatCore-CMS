@@ -159,6 +159,8 @@ $lang['tab_meta_description'] = "Meta Informationen - Keywords etc.";
 $lang['tab_head'] = "Head (Code/HTML)";
 $lang['tab_head_description'] = "Sonstige Header Informationen";
 
+$lang['tab_addons'] = "Addons";
+
 $lang['tab_page_preferences'] = "Einstellungen";
 $lang['tab_page_preferences_description'] = "Templates....";
 
