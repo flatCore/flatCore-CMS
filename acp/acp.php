@@ -9,6 +9,7 @@ if(is_file('../'.FC_CONTENT_DIR.'/config.php')) {
 require 'core/access.php';
 include 'versions.php';
 include 'core/icons.php';
+include '../lib/parsedown/Parsedown.php';
 
 if(isset($fc_content_files) && is_array($fc_content_files)) {
 	/* switch database file $fc_db_content */

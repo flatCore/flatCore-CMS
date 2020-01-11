@@ -43,6 +43,7 @@ if(isset($_GET['disable'])) {
 $fc_addons = fc_get_addons($t='module');
 
 $template_file = file_get_contents("templates/modlist.tpl");
+$modal_template_file = file_get_contents("templates/bs-modal.tpl");
 
 if($nbrModuls < 1) {
 	echo '<div class="alert alert-info">'.$lang['alert_no_modules'].'</div>';
@@ -54,7 +55,7 @@ for($i=0;$i<$nbrModuls;$i++) {
 	
 	$modFolder = $all_mods[$i]['folder'];
 	$bnt_check_in_out = '<a class="btn btn-sm btn-fc text-success" href="acp.php?tn=moduls&enable='.$modFolder.'">'.$lang['btn_mod_enable'].'</a>';
-	
+		
 	foreach($fc_addons as $a) {
 		if(in_array($modFolder, $a)) {
 			$bnt_check_in_out = '<a class="btn btn-sm btn-fc text-danger" href="acp.php?tn=moduls&disable='.$modFolder.'">'.$lang['btn_mod_disable'].'</a>';
@@ -89,7 +90,28 @@ for($i=0;$i<$nbrModuls;$i++) {
 		$poster_img = '<a href="acp.php?tn=moduls&sub='.$modFolder.'&a=start"><img src="../modules/'.$modFolder.'/backend/poster.jpg" class="card-img-top"></a>';
 	} else {
 		$poster_img = '<a href="acp.php?tn=moduls&sub='.$modFolder.'&a=start"><img src="images/poster-addons.jpg" class="card-img-top"></a>';
-	}	
+	}
+	
+	
+	
+	$btn_help_text = '';
+	$modal = '';
+	if(is_file('../modules/'.$modFolder.'/readme.md')) {
+		$addon_id = 'addonID'.$i;
+		$btn_help_text = '<button type="button" class="btn btn-sm btn-fc" data-toggle="modal" data-target="#'.$addon_id.'">'.$icon['question'].'</button>';
+		
+		$modal_body_text = file_get_contents('../modules/'.$modFolder.'/readme.md');
+		$Parsedown = new Parsedown();
+		$modal_body = $Parsedown->text($modal_body_text);
+		
+		$modal = $modal_template_file;
+		$modal = str_replace('{modalID}', $addon_id, $modal);
+		$modal = str_replace('{modalTitle}', $mod['name'], $modal);
+		$modal = str_replace('{modalBody}', $modal_body, $modal);
+		echo $modal;
+	}
+	
+	
 	
 	$tpl = $template_file;
 	
@@ -100,7 +122,7 @@ for($i=0;$i<$nbrModuls;$i++) {
 	$tpl = str_replace("{\$MOD_ICON}", "$poster_img","$tpl");
 	$tpl = str_replace("{\$MOD_LIVECODE}", "$mod_livecode","$tpl");
 	$tpl = str_replace("{\$MOD_CHECK_IN_OUT}", "$bnt_check_in_out","$tpl");
-	
+	$tpl = str_replace("{\$MOD_README}", "$btn_help_text","$tpl");
 	
 	$tpl = str_replace("{\$MOD_NAV}", "$listlinks","$tpl");
 	
