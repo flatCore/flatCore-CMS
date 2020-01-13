@@ -68,7 +68,8 @@ if(isset($_POST['save_snippet'])) {
 	$snippet_template = $snippet_themes[1];
 	
 	if(count($_POST['snippet_thumbnail']) > 1) {
-		$snippet_thumbnail = implode("<->", $_POST['snippet_thumbnail']);
+		
+		$snippet_thumbnail = implode("<->", array_unique($_POST['snippet_thumbnail']));
 	} else {
 		$st = $_POST['snippet_thumbnail'];
 		$snippet_thumbnail = $st[0].'<->';

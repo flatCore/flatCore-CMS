@@ -441,6 +441,16 @@ if(isset($set_acptheme)) {
 		    	hide_select : true,
 		      show_label  : true
 				});
+				
+				$('.filter-images').keyup(function() {
+		    	var value = $(this).val();
+					var exp = new RegExp('^' + value, 'i');
+				
+			    $('.thumbnail').each(function() {
+			        var isMatch = exp.test($('p:first', this).text());
+			        $(this).toggle(isMatch);
+			    });
+				});
 
 			
 	      $(document).on('mouseenter', '.hiddenControls', function () {
