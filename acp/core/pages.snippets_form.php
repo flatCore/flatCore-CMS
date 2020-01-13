@@ -141,7 +141,7 @@ echo '<option value="">'.$lang['page_thumbnail'].'</option>';
 			$selected = "selected";
 		}
 		if(in_array("$page_thumbnails", $snippet_thumbnail_array) == false) {
-			echo '<option '.$selected.' data-img-src="'.$page_thumbnails.'" title="'.$page_thumbnails.'" value="'.$page_thumbnails.'">'.$page_thumbnails.'</option>';
+			echo '<option '.$selected.' data-img-src="'.$page_thumbnails.'" title="'.$page_thumbnails.'" value="'.$page_thumbnails.'">'.basename($page_thumbnails).'</option>';
 		}
 }
 echo '</optgroup>'."\r\n";
