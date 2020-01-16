@@ -56,7 +56,7 @@ function fc_crawler($id='') {
 	foreach($links as $link) {
 		
 		$href = $link['url'];
-		
+
 		/* we accept absolute urls only */
 		if(substr("$href",0,1) !== '/') {
 			continue;
@@ -69,7 +69,7 @@ function fc_crawler($id='') {
 			foreach($allowed_extensions as $extension) {
 				
 				$extension_length = strlen($extension);				
-				$url_extension = substr($link, -$extension_length);
+				$url_extension = substr($href, -$extension_length);
 				
 				if(in_array($url_extension, $allowed_extensions)) {
 					$skip = FALSE;
@@ -222,8 +222,9 @@ function fc_update_page_index($id) {
 	
 	global $fc_base_url;
 	global $exclude_items;
+	global $exclude_urls;
 	$time = time();
-
+	
 	$dbh = new PDO("sqlite:".INDEX_DB);
 	
 	$sql = "select page_url from pages where page_id = :id";
@@ -238,6 +239,14 @@ function fc_update_page_index($id) {
 	
 	if(substr($url, 0,1) == '/') {
 		$url = substr($url, 1,strlen($url));
+	}
+	
+	foreach($exclude_urls as $u) {
+		if($u['item_url'] == "/$url") {
+			echo '<div class="alert alert-danger">deleted: '.$url.'</div>';
+			fc_delete_url("/$url");
+			return;
+		}
 	}
 	
 	$check_page = $fc_base_url.$url;
@@ -490,7 +499,7 @@ function fc_delete_url($url) {
 
 function fc_get_indexed_pages() {
 	$dbh = new PDO("sqlite:".INDEX_DB);
-	$sql = "SELECT * FROM pages";
+	$sql = "SELECT * FROM pages ORDER BY indexed_time ASC";
 
 	$items = $dbh->query($sql);
 	$items = $items->fetchAll(PDO::FETCH_ASSOC);
