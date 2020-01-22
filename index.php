@@ -77,18 +77,19 @@ for($i=0;$i<$cnt_active_mods;$i++) {
   			$fct_slug = $query;
 			}
 		}
-	}
-	
-	if(is_file('modules/'.$mod_name.'/global/index.php')) {
-		include 'modules/'.$mod_name.'/global/index.php';
-	}
-	
+	}	
 }
 
 if($query == '/') {
 	list($page_contents,$fc_nav,$fc_prefs) = get_content('portal','page_sort');
 } else {
 	list($page_contents,$fc_nav,$fc_prefs) = get_content($fct_slug,'permalink');
+}
+
+foreach($active_mods as $mods) {
+	if(is_file('modules/'.$mods['page_modul'].'/global/index.php')) {
+		include 'modules/'.$mods['page_modul'].'/global/index.php';
+	}
 }
 
 $p = $page_contents['page_id'];
