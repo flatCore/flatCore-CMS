@@ -47,7 +47,10 @@ if($upload_type == 'images') {
 		}
 		$filetype = mime_content_type(realpath($target));
 		$filesize = filesize(realpath($target));
-		fc_write_media_data_name($target,$filesize,$time,$filetype);
+		if($_POST['file_mode'] != 'overwrite') {
+			fc_write_media_data_name($target,$filesize,$time,$filetype);
+		}
+		
 
 	}
 }
@@ -67,7 +70,9 @@ if($upload_type == 'files') {
 
 		$filetype = mime_content_type(realpath($target));
 		$filesize = filesize(realpath($target));
-		fc_write_media_data_name($target,$filesize,$time,$filetype);
+		if($_POST['file_mode'] != 'overwrite') {
+			fc_write_media_data_name($target,$filesize,$time,$filetype);
+		}
 
 	}
 }
@@ -217,7 +222,7 @@ function clean_filename($prefix,$suffix) {
 
 	$target = "$destination/$prefix.$suffix";
 
-	if(is_file($target)) {
+	if((is_file($target) && $_POST['file_mode'] != 'overwrite')) {
 		$prefix = $prefix . '_' . increment_prefix('0',"$target");	    
 	}
 

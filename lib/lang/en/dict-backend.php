@@ -300,6 +300,7 @@ $lang['label_password'] = 'Password';
 $lang['label_password_reset'] = 'Reset Password';
 $lang['label_filter'] = "Filter";
 $lang['label_type'] = "Type";
+$lang['label_overwrite_existing_files'] = "Overwrite existing";
 
 $lang['label_ready_to_install'] = 'Ready to install';
 $lang['remember_me'] = 'Remember me';

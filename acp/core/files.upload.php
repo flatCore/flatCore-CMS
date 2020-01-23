@@ -16,10 +16,8 @@ $files_folder = basename($path_files);
 
 <form action="core/files.upload-script.php" id="myDropzone" class="dropzone dropzone-default">
 <div class="row">
-	<div class="col-md-3">
-		<label><?php echo $lang['upload_destination']; ?></label>
-	</div>
 	<div class="col-md-9">
+		<label><?php echo $lang['upload_destination']; ?></label>
 		<select name="upload_destination" class="form-control">
 			<optgroup label="<?php echo $lang['upload_target_images']; ?>">
 				<option value="<?php echo $path_img; ?>"><?php echo $img_folder; ?></option>
@@ -40,6 +38,14 @@ $files_folder = basename($path_files);
 				?>
 			</optgroup>
 		</select>
+	</div>
+	<div class="col-md-3">
+		<div class="form-check">
+			<input class="form-check-input" type="checkbox" name="file_mode" value="overwrite" id="overwrite">
+			<label class="form-check-label" for="overwrite">
+				<?php echo $lang['label_overwrite_existing_files']; ?>
+			</label>
+		</div>
 	</div>
 </div>
 
