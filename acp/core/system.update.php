@@ -15,10 +15,10 @@ $_SESSION['errors_cnt'] = 0;
 /* build an array from all php files in folder ../install/contents */
 $all_tables = glob("../install/contents/*.php");
 
-$remote_versions_file = file_get_contents("http://updates.flatCore.de/versions.txt");
+$remote_versions_file = file_get_contents("https://flatCore.org/_updates/versions.txt");
 
 if(isset($_GET['beta']) && $_GET['beta'] > 0) {
-	$remote_versions_file = file_get_contents("http://updates.flatCore.de/versions-beta.txt");
+	$remote_versions_file = file_get_contents("https://flatCore.org/_updates/versions-beta.txt");
 }
 
 // example string: 2013-06-29<|>Release Candidate 3<|>39<|>fc_b39.zip
@@ -80,7 +80,7 @@ function start_update() {
 	if($remote_versions[3] == 'flatCore-CMS-master.zip') {
 		$source_file = 'https://github.com/flatCore/flatCore-CMS/archive/master.zip';
 	} else {
-		$source_file = 'http://updates.flatcore.de/zip/'.$get_file;
+		$source_file = 'https://flatcore.org/_updates/zip/'.$get_file;
 	}
 	
 	mkdir("update", 0777);
@@ -227,7 +227,7 @@ function compare_versions() {
 	echo '<thead>';
 	echo '<tr>
 					<th>'.$icon['database'].'  '. $_SERVER['SERVER_NAME'] .'</th>
-					<th>'.$icon['server'].' updates.flatCore.de</th>
+					<th>'.$icon['server'].' flatCore.org</th>
 				</tr>';
 	echo '</thead>';
 	
