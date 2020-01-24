@@ -481,7 +481,18 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 			$class_badge .= '<span class="badge badge-secondary">'.$class.'</span> ';
 		}
 		
-		
+		$kw_string = '';
+		$snippet_keywords = explode(',',$get_snip_keywords);
+		if(count($snippet_keywords) > 0) {
+			$kw_string = '<form action="acp.php?tn=pages&sub=snippets" method="POST" class="form-inline">';
+			foreach($snippet_keywords as $kw) {
+				if($kw == '') {
+					continue;
+				}
+				$kw_string .= ' <button type="submit" class="btn btn-fc btn-xs mr-1" name="snippet_filter" value="'.$kw.'">'.$kw.'</button> ';
+			}
+			$kw_string .= '</form>';
+		}
 		
 		if(in_array($get_snip_name, $system_snippets)) {
 			$show_snip_name = '<span>' . $get_snip_name.'</span>'.' <sup>'.$icon['cog'].'</sup>';
@@ -499,7 +510,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 		echo '<tr>';
 		echo '<td>'.$lang_thumb.'</td>';
 		echo '<td nowrap>'.$show_snip_name.'</td>';
-		echo '<td><strong>'.$get_snip_title.'</strong><br><small>'.$get_snip_content.'</small></td>';
+		echo '<td><strong>'.$get_snip_title.'</strong><br><small>'.$get_snip_content.'</small><br>'.$kw_string.'</td>';
 		echo '<td>'.$class_badge.'</td>';
 		echo '<td>'.$label.'</td>';
 		echo '<td>';
