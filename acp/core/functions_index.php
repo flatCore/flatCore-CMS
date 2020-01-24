@@ -243,7 +243,7 @@ function fc_update_page_index($id) {
 	
 	foreach($exclude_urls as $u) {
 		if($u['item_url'] == "/$url") {
-			echo '<div class="alert alert-danger">deleted: '.$url.'</div>';
+			echo '<div class="alert alert-danger">removed from index: '.$url.' (page defined as excluded)</div>';
 			fc_delete_url("/$url");
 			return;
 		}
@@ -254,7 +254,7 @@ function fc_update_page_index($id) {
 	
 	if($get_html === false) {
 		/* this page isn't available anymore */
-		echo '<div class="alert alert-danger">deleted: '.$url.'</div>';
+		echo '<div class="alert alert-danger">removed from index: '.$url.' (page is not available)</div>';
 		fc_delete_url("/$url");
 		return;
 	}
@@ -446,7 +446,7 @@ function fc_add_url($url) {
 	$cnt_entries = $sth->fetch(PDO::FETCH_NUM);
 	
 	if($cnt_entries[0] < 1) {
-		echo '<div class="alert alert-success">Insert: '.$url.'</div>';
+		echo '<div class="alert alert-success">Add to index: '.$url.'</div>';
 	}
 	
 	
