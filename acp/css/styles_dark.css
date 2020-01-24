@@ -431,6 +431,10 @@ li.sidebar-sub-end {
   -o-transition: all 0.2s linear;
   transition: all 0.2s linear;
 }
+.btn-xs {
+  padding: 0.25em 0.4em;
+  font-size: 75%;
+}
 ::selection {
   background-color: #5eacf0;
   color: #ccc;
