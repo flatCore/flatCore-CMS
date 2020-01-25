@@ -15,6 +15,7 @@ echo '<div class="col-md-4">';
 echo '<div class="well well-sm">';
 echo '<form action="core/files.upload-script.php" id="dropAddons" class="dropzone dropzone-plugin dropzone-sm">';
 echo '<input type="hidden" name="upload_type" value="plugin">';
+echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '<div class="fallback"><input name="file" type="file"></div>';
 echo '</form>';
 echo '</div>';
@@ -23,6 +24,7 @@ echo '<div class="col-md-4">';
 echo '<div class="well well-sm">';
 echo '<form action="core/files.upload-script.php" id="dropAddons" class="dropzone dropzone-module dropzone-sm">';
 echo '<input type="hidden" name="upload_type" value="module">';
+echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '<div class="fallback"><input name="file" type="file"></div>';
 echo '</form>';
 echo '</div>';
@@ -31,6 +33,7 @@ echo '<div class="col-md-4">';
 echo '<div class="well well-sm">';
 echo '<form action="core/files.upload-script.php" id="dropAddons" class="dropzone dropzone-theme dropzone-sm">';
 echo '<input type="hidden" name="upload_type" value="theme">';
+echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '<div class="fallback"><input name="file" type="file"></div>';
 echo '</form>';
 echo '</div>';
@@ -111,6 +114,7 @@ if(!empty($_GET['plg'])) {
 		echo '<div class="alert alert-danger">No Source found: '. $extracted .'</div>';
 	}
 
+	echo '<div class="scroll-container">';
 	if(is_array($all_files)) {
 		foreach($all_files as $f) {
 			
@@ -119,15 +123,15 @@ if(!empty($_GET['plg'])) {
 			$status = copy_recursive("$f","$target");
 		
 			if($status == 'success') {
-				$show_status = "<span class='label label-success'>ok</span>";
+				$show_status = "<span class='badge badge-success'>ok</span>";
 			} else {
-				$show_status = '<span class="label label-danger">'.$status.'</span>';
+				$show_status = '<span class="badge badge-danger">'.$status.'</span>';
 				$cnt_errors++;
 			}
 			
-			echo '<dl class="dl-horizontal">';
-			echo '<dt>'.$i.'</dt>';
-			echo '<dd>from: extract/(..)'. basename($f) .'<br>to: '. $target .' '. $show_status .'</dd>';
+			echo '<dl class="row">';
+			echo '<dt class="col-sm-1 text-right">'.$i.'</dt>';
+			echo '<dd class="col-sm-11">from: <code>extract/(..)'. basename($f) .'</code> to: <code>'. $target .' '. $show_status .'</code></dd>';
 			echo '</dl>';
 		
 		}
@@ -138,6 +142,7 @@ if(!empty($_GET['plg'])) {
 		}
 		
 	}
+	echo '</div>';
 }	
 
 
@@ -172,6 +177,7 @@ if(!empty($_GET['mod'])) {
 		echo '<div class="alert alert-danger">No Source found: '. $extracted .'</div>';
 	}
 	
+	echo '<div class="scroll-container">';
 	if(is_array($all_files)) {
 		foreach($all_files as $f) {
 			
@@ -180,15 +186,15 @@ if(!empty($_GET['mod'])) {
 			$status = copy_recursive("$f","$target");
 		
 			if($status == 'success') {
-				$show_status = "<span class='label label-success'>ok</span>";
+				$show_status = "<span class='badge badge-success'>ok</span>";
 			} else {
-				$show_status = '<span class="label label-danger">'.$status.'</span>';
+				$show_status = '<span class="badge badge-danger">'.$status.'</span>';
 				$cnt_errors++;
 			}
 			
-			echo '<dl class="dl-horizontal">';
-			echo '<dt>'.$i.'</dt>';
-			echo '<dd>from: extract/(..)'. basename($f) .'<br>to: '. $target .' '. $show_status .'</dd>';
+			echo '<dl class="row">';
+			echo '<dt class="col-sm-1 text-right">'.$i.'</dt>';
+			echo '<dd class="col-sm-11">from: <code>extract/(..)'. basename($f) .'</code> to: <code>'. $target .' '. $show_status .'</code></dd>';
 			echo '</dl>';
 		
 		}
@@ -197,6 +203,7 @@ if(!empty($_GET['mod'])) {
 			echo '<div class="alert alert-success">Module installed</div>';
 		}
 	}
+	echo '</div>';
 	
 }
 
@@ -206,13 +213,13 @@ if(!empty($_GET['mod'])) {
  * 2. find theme folder from contents.php
  * 3. copy theme folder and it's contents to /styles/
  */
-if(!empty($_GET['theme'])) {
+if(!empty($_GET['installtheme'])) {
 	
 	if(!is_dir("../upload/themes/extract")) {
 		mkdir("../upload/themes/extract", 0777);
 	}
 	unset($all_files);
-	$theme = basename($_GET['theme']);
+	$theme = basename($_GET['installtheme']);
 	$archive = new PclZip("../upload/themes/$theme");
 	$list = $archive->extract(
 			PCLZIP_OPT_PATH, '../upload/themes/extract',
@@ -238,7 +245,7 @@ if(!empty($_GET['theme'])) {
 		echo '<div class="alert alert-danger">No Source found: '. $extracted .'</div>';
 	}
 	
-	
+	echo '<div class="scroll-container">';
 	if(is_array($all_files)) {
 		foreach($all_files as $f) {
 			
@@ -247,15 +254,15 @@ if(!empty($_GET['theme'])) {
 			$status = copy_recursive("$f","$target");
 		
 			if($status == 'success') {
-				$show_status = "<span class='label label-success'>ok</span>";
+				$show_status = "<span class='badge badge-success'>ok</span>";
 			} else {
-				$show_status = '<span class="label label-danger">'.$status.'</span>';
+				$show_status = '<span class="badge badge-danger">'.$status.'</span>';
 				$cnt_errors++;
 			}
 			
-			echo '<dl class="dl-horizontal">';
-			echo '<dt>'.$i.'</dt>';
-			echo '<dd>from: extract/(..)'. basename($f) .'<br>to: '. $target .' '. $show_status .'</dd>';
+			echo '<dl class="row">';
+			echo '<dt class="col-sm-1 text-right">'.$i.'</dt>';
+			echo '<dd class="col-sm-11">from: <code>extract/(..)'. basename($f) .'</code> to: <code>'. $target .' '. $show_status .'</code></dd>';
 			echo '</dl>';
 		
 		}
@@ -266,6 +273,7 @@ if(!empty($_GET['theme'])) {
 		}
 		
 	}
+	echo '</div>';
 }
 
 
@@ -275,7 +283,7 @@ if(!empty($_GET['theme'])) {
 if(is_dir('../upload')) {
 	$all_uploads = fc_scandir_rec('../upload');
 	
-	echo '<fieldset>';
+	echo '<fieldset class="mt-3">';
 	echo '<legend>'.$lang['label_ready_to_install'].'</legend>';
 	
 	if(count($all_uploads) < 1) {
@@ -292,10 +300,10 @@ if(is_dir('../upload')) {
 			if($this_pathinfo['dirname'] == '../upload/modules') {
 				
 				echo '<tr>';
-				echo '<td>Module:</td><td><strong>'.$this_pathinfo['basename'].'</strong> <small>Upload time:'.$filemtime.'</small></td>';
+				echo '<td>Module:</td><td><strong>'.$this_pathinfo['basename'].'</strong> <small>Upload time: '.$filemtime.'</small></td>';
 				echo '<td>';
-				echo '<div class="btn-group pull-right">';
-				echo '<a href="?tn=moduls&sub=u&mod='.$this_pathinfo['basename'].'" class="btn btn-default">Install</a>';
+				echo '<div class="btn-group float-right">';
+				echo '<a href="?tn=moduls&sub=u&mod='.$this_pathinfo['basename'].'" class="btn btn-fc">Install</a>';
 				echo '<a href="?tn=moduls&sub=u&dir=modules&del='.$this_pathinfo['basename'].'" class="btn btn-danger">'.$lang['delete'].'</a>';
 				echo '</div>';
 				echo '</td>';
@@ -304,10 +312,10 @@ if(is_dir('../upload')) {
 			} else if($this_pathinfo['dirname'] == '../upload/plugins') {
 				
 				echo '<tr>';
-				echo '<td>Plugin:</td><td><strong>'.$this_pathinfo['basename'].'</strong> <small>Upload time:'.$filemtime.'</small></td>';
+				echo '<td>Plugin:</td><td><strong>'.$this_pathinfo['basename'].'</strong> <small>Upload time: '.$filemtime.'</small></td>';
 				echo '<td>';
-				echo '<div class="btn-group pull-right">';
-				echo '<a href="?tn=moduls&sub=u&plg='.$this_pathinfo['basename'].'" class="btn btn-default">Install</a>';
+				echo '<div class="btn-group float-right">';
+				echo '<a href="?tn=moduls&sub=u&plg='.$this_pathinfo['basename'].'" class="btn btn-fc">Install</a>';
 				echo '<a href="?tn=moduls&sub=u&dir=plugins&del='.$this_pathinfo['basename'].'" class="btn btn-danger">'.$lang['delete'].'</a>';
 				echo '</div>';
 				echo '</td>';
@@ -316,10 +324,10 @@ if(is_dir('../upload')) {
 			} else if($this_pathinfo['dirname'] == '../upload/themes') {
 	
 				echo '<tr>';
-				echo '<td>Theme:</td><td><strong>'.$this_pathinfo['basename'].'</strong> <small>Upload time:'.$filemtime.'</small></td>';
+				echo '<td>Theme:</td><td><strong>'.$this_pathinfo['basename'].'</strong> <small>Upload time: '.$filemtime.'</small></td>';
 				echo '<td>';
-				echo '<div class="btn-group pull-right">';
-				echo '<a href="?tn=moduls&sub=u&theme='.$this_pathinfo['basename'].'" class="btn btn-default">Install</a>';
+				echo '<div class="btn-group float-right">';
+				echo '<a href="?tn=moduls&sub=u&installtheme='.$this_pathinfo['basename'].'" class="btn btn-fc">Install</a>';
 				echo '<a href="?tn=moduls&sub=u&dir=themes&del='.$this_pathinfo['basename'].'" class="btn btn-danger">'.$lang['delete'].'</a>';
 				echo '</div>';
 				echo '</td>';

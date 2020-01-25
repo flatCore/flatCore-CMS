@@ -23,7 +23,7 @@ $max_fz = (int) $_REQUEST['fz']; // max filesize
 if(strpos($_REQUEST['upload_destination'],"/images") !== false) {
 	$destination = '../'.$_REQUEST['upload_destination'];
 	$upload_type = 'images';
-} else {
+} else if(strpos($_REQUEST['upload_destination'],"/files") !== false) {
 	$destination = '../'.$_REQUEST['upload_destination'];
 	$upload_type = 'files';
 }
