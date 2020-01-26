@@ -1,5 +1,5 @@
 <?php
-$fc_version_date = '2020-01-24';
-$fc_version_name = '1.5.4';
-$fc_version_build = '110';
+$fc_version_date = '2020-01-26';
+$fc_version_name = '1.5.5';
+$fc_version_build = '111';
 ?>
