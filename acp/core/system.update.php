@@ -168,8 +168,11 @@ function move_new_files() {
 			continue;
 		}
 		
-		
 		if(preg_match("#\/modules\/#i", "$value")) {
+			continue;
+		}
+
+		if(preg_match("#\/.github\/#i", "$value")) {
 			continue;
 		}
 		
@@ -178,6 +181,8 @@ function move_new_files() {
 		if(basename($value) == "README.md") { continue;}
 		if(basename($value) == "robots.txt") { continue;}
 		if(basename($value) == "_htaccess") { continue;}
+		if(basename($value) == "CODE_OF_CONDUCT.md") { continue;}
+		
 			
 		/**
 		 * copy files from 'update/extract/*'
