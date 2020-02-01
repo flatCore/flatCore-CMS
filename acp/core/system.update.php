@@ -24,6 +24,10 @@ if(isset($_GET['beta']) && $_GET['beta'] > 0) {
 // example string: 2013-06-29<|>Release Candidate 3<|>39<|>fc_b39.zip
 $remote_versions = explode("<|>",$remote_versions_file);
 
+if(isset($_GET['alpha']) && $_GET['alpha'] > 0) {
+	$remote_versions_file = file_get_contents("https://flatCore.org/_updates/versions-alpha.txt");
+}
+
 if(isset($_GET['github']) && $_GET['github'] > 0) {
 	$remote_versions[0] = '';
 	$remote_versions[1] = 'GitHub';

@@ -290,6 +290,7 @@ $lang['label_url_classes'] = "Classes";
 $lang['label_priority'] = "Priority";
 $lang['label_license'] = "License";
 $lang['label_credits'] = "Credits";
+$lang['label_version'] = 'Version';
 $lang['label_notes'] = "Notes";
 $lang['missing_value'] = 'missing value';
 $lang['label_filename'] = 'Filename';

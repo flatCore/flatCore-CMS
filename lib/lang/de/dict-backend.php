@@ -285,6 +285,7 @@ $lang['label_url_classes'] = "Klassen";
 $lang['label_priority'] = "Priorität";
 $lang['label_license'] = "Lizenz";
 $lang['label_credits'] = "Copyright";
+$lang['label_version'] = 'Version';
 $lang['label_notes'] = "Notizen";
 $lang['label_color'] = "Farbe";
 $lang['missing_value'] = 'fehlender Wert';

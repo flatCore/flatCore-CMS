@@ -843,7 +843,7 @@ function fc_delete_media_data($filename) {
  *
  */
 
-function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$text=NULL,$url=NULL,$alt=NULL,$lang=NULL,$credit=NULL,$priority=NULL,$license=NULL,$lastedit=NULL,$filesize=NULL) {
+function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$text=NULL,$url=NULL,$alt=NULL,$lang=NULL,$credit=NULL,$priority=NULL,$license=NULL,$lastedit=NULL,$filesize=NULL,$version=NULL) {
 
 	global $languagePack;
 	
@@ -862,6 +862,7 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 		'media_priority' => 'STR',
 		'media_credit' => 'STR',
 		'media_license' => 'STR',
+		'media_version' => 'STR',
 		'media_filesize' => 'STR',
 		'media_lastedit' => 'STR',
 		'media_type' => 'STR'
@@ -880,6 +881,7 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 		'media_priority' => 'STR',
 		'media_credit' => 'STR',
 		'media_license' => 'STR',
+		'media_version' => 'STR',
 		'media_filesize' => 'STR',
 		'media_lastedit' => 'STR',
 		'media_type' => 'STR'
@@ -919,6 +921,7 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 	$sth->bindParam(':media_priority', $priority, PDO::PARAM_STR);
 	$sth->bindParam(':media_license', $license, PDO::PARAM_STR);
 	$sth->bindParam(':media_credit', $credit, PDO::PARAM_STR);
+	$sth->bindParam(':media_version', $version, PDO::PARAM_STR);
 	$sth->bindParam(':media_filesize', $filesize, PDO::PARAM_STR);
 	$sth->bindParam(':media_lastedit', $lastedit, PDO::PARAM_STR);
 	$sth->bindParam(':media_type', $filetype, PDO::PARAM_STR);

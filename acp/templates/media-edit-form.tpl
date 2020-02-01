@@ -41,25 +41,30 @@
 			    <textarea class="form-control" name="text" rows="5">{text}</textarea>
 			  </div>
 			  <div class="row">
-				  <div class="col-md-6">
-						<div class="form-group">
-					    <label>{label_notes}</label>
-					    <textarea class="form-control" name="notes" rows="5">{notes}</textarea>
-					  </div>
-				  </div>
-				  <div class="col-md-6">
-
+				   <div class="col-md-4">
 						<div class="form-group">
 					    <label>{label_license}</label>
 					    <input type="text" class="form-control" name="license" value="{license}">
 					  </div>
+				   </div>
+				   <div class="col-md-4">
 						<div class="form-group">
 					    <label>{label_credits}</label>
 					    <input type="text" class="form-control" name="credit" value="{credit}">
 					  </div>
-					  
-				  </div>
+				   </div>
+				   <div class="col-md-4">
+						<div class="form-group">
+					    <label>{label_version}</label>
+					    <input type="text" class="form-control" name="version" value="{version}">
+					  </div>
+				   </div>
 			  </div>
+			  
+						<div class="form-group">
+					    <label>{label_notes}</label>
+					    <textarea class="form-control" name="notes" rows="5">{notes}</textarea>
+					  </div>
 			  
 			  <input type="hidden" name="saveMedia" value="save">
 			  <input type="hidden" name="realpath" value="{realpath}">
