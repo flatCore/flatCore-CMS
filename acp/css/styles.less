@@ -330,11 +330,13 @@ a:focus {
 .list-group-item-ghost {
 	color: @font_color;
 	background: transparent;
+	background-color: @btn_fc_background;
 	&.active {
-		background-color: darken(@widget_background,10);
-		border-color: lighten(@widget_background,20);
+		background-color: @btn_fc_background_active;
+		border-color: darken(@btn_fc_background_active,10);
+		color: @btn_fc_color_active;
 		&:hover {
-			color: @brand_color;
+			color: @btn_fc_color_active;
 		}
 	}
 	&:hover {
