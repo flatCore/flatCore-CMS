@@ -110,6 +110,8 @@ for($i=0;$i<$cnt_result;$i++) {
 	$page_cnt_comments = $result[$i]['cnt_comments'];
 	$page_labels = explode(',',$result[$i]['page_labels']);
 	
+	$page_lang_thumb = '<img src="/lib/lang/'.$page_language.'/flag.png" width="15" title="'.$page_language.'" alt="'.$page_language.'">';
+	
 	if($page_template == "use_standard") {
 		$show_template_name =  $lang['use_standard'];
 	} else {
@@ -222,7 +224,7 @@ for($i=0;$i<$cnt_result;$i++) {
 		$status_label,$page_linkname,$page_title,
 		$show_mod,$item_class,$indent,$edit_button,$duplicate_button,
 		$page_comments_link,$page_permalink,$last_edit,$page_sort, $show_template_name,
-		$page_redirect,$frontend_link,$page_description,$page_language,$label
+		$page_redirect,$frontend_link,$page_description,$page_lang_thumb,$label
 		);
 
 
@@ -279,6 +281,8 @@ for($i=0;$i<$cnt_result;$i++) {
 	$page_modul = $result[$i]['page_modul'];
 	$page_cnt_comments = $result[$i]['cnt_comments'];
 	$page_labels = explode(',',$result[$i]['page_labels']);
+	
+	$page_lang_thumb = '<img src="/lib/lang/'.$page_language.'/flag.png" width="15" title="'.$page_language.'" alt="'.$page_language.'">';
 		
 	if($page_template == "use_standard") {
 		$show_template_name =  "$lang[use_standard]";
@@ -398,7 +402,7 @@ for($i=0;$i<$cnt_result;$i++) {
 		$status_label,$page_linkname,$page_title,
 		$show_mod,$item_class,$indent,$edit_button,$duplicate_button,
 		$page_comments_link,$page_permalink,$last_edit,$page_sort, $show_template_name,
-		$page_redirect,$frontend_link,$page_description,$page_language,$label
+		$page_redirect,$frontend_link,$page_description,$page_lang_thumb,$label
 		);
 
 
