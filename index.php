@@ -3,7 +3,7 @@
  * flatCore - Free, Open Source, Content Management System
  * GNU General Public License (license.txt)
  *
- * copyright 2010-2018, Patrick Konstandin
+ * copyright 2010-2020, Patrick Konstandin
  * Information and contribution at https://www.flatcore.org
  * E-Mail: support@flatcore.org
  */
@@ -273,6 +273,16 @@ $smarty->assign('prefs_pagesubtitle', $prefs_pagesubtitle);
 $smarty->assign('prefs_pagedescription', $prefs_pagedescription);
 $smarty->assign("p","$p");
 $smarty->assign("fc_inc_dir", FC_INC_DIR);
+
+$fc_page_url = $fc_base_url;
+if($fct_slug != '' AND $fct_slug != '/') {
+	$fc_page_url .= $fct_slug;
+}
+if($mod_slug != '') {
+	$fc_page_url .= $mod_slug;
+}
+
+$smarty->assign('fc_page_url', $fc_page_url,true);
 
 $fc_end_time = microtime(true);
 $fc_pageload_time = round($fc_end_time-$fc_start_time,4);

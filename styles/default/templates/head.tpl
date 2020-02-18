@@ -14,12 +14,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 
-<link rel="icon" href="/content/images/{$page_favicon}">
+<link rel="icon" href="{$page_favicon}">
 <link rel="alternate" type="application/rss+xml" title="{$prefs_pagetitle} | RSS" href="/rss.php" />
 
 {$page_meta_enhanced}
 
-<!-- OpenGraph Meta Tags -->
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="{$fc_page_url}">
 <meta property="og:title" content="{$page_title}">
 <meta property="og:site_name" content="{$prefs_pagetitle}">
 
@@ -27,6 +29,13 @@
 {foreach $page_thumbnails as $thumbs}
 <meta property="og:image" content="{$thumbs}">
 {/foreach}
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="{$fc_page_url}">
+<meta property="twitter:title" content="{$page_title}">
+<meta property="twitter:description" content="{$page_meta_description}">
+<meta property="twitter:image" content="{$page_thumbnail}">
 
 <!-- CSS -->
 <link rel="stylesheet" media="screen" href="{$fc_inc_dir}/styles/default/css/styles.min.css" />

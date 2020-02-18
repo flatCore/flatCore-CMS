@@ -401,13 +401,14 @@ echo '<form action="acp.php?tn=system&sub=sys_pref" method="POST" class="form-ho
 
 $select_prefs_thumbnail  = '<select name="prefs_pagethumbnail" class="form-control custom-select">';
 $select_prefs_thumbnail .= '<option value="">'.$lang['page_thumbnail'].'</option>';
-$arr_Images = get_all_images();
+$arr_Images = fc_get_all_images_rec();
 	foreach($arr_Images as $page_thumbnail) {
 		$selected = "";
 		if($prefs_pagethumbnail == "$page_thumbnail") {
 			$selected = "selected";
 		}
-		$select_prefs_thumbnail .= "<option $selected value='$page_thumbnail'>$page_thumbnail</option>";
+		$show_page_thumbnail_filename = str_replace('../content/','/',$page_thumbnail);
+		$select_prefs_thumbnail .= '<option '.$selected.' value="'.$page_thumbnail.'">'.$show_page_thumbnail_filename.'</option>';
 }
 $select_prefs_thumbnail .= "</select>";
 
@@ -420,7 +421,7 @@ echo tpl_form_control_group('',$lang['page_thumbnail_prefix'],$prefs_tmb_prefix_
 /* Favicon */
 $select_prefs_favicon  = '<select name="prefs_pagefavicon" class="form-control custom-select">';
 $select_prefs_favicon .= '<option value="">'.$lang['page_favicon'].'</option>';
-$arr_Images = get_all_images();
+$arr_Images = fc_get_all_images_rec();
 	foreach($arr_Images as $page_favicon) {
 		
 		if(substr($page_favicon, -4) != '.png') {
@@ -431,7 +432,8 @@ $arr_Images = get_all_images();
 		if($prefs_pagefavicon == "$page_favicon") {
 			$selected = "selected";
 		}
-		$select_prefs_favicon .= "<option $selected value='$page_favicon'>$page_favicon</option>";
+		$show_page_favicon_filename = str_replace('../content/','/',$page_favicon);
+		$select_prefs_favicon .= '<option '.$selected.' value="'.$page_favicon.'">'.$show_page_favicon_filename.'</option>';
 }
 $select_prefs_favicon .= "</select>";
 
