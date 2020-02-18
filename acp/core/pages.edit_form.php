@@ -215,6 +215,9 @@ echo '</div>'; /* EOL tab_extracontent */
 /* tab_meta */
 echo '<div class="tab-pane fade" id="meta">';
 
+echo '<div class="row">';
+echo '<div class="col-md-6">';
+
 echo tpl_form_control_group('',$lang['f_page_title'],'<input class="form-control" type="text" name="page_title" value="'.$page_title.'">');
 
 if($prefs_publisher_mode == 'overwrite') {
@@ -233,6 +236,8 @@ echo tpl_form_control_group('',$lang['f_meta_author'],'<input class="form-contro
 echo tpl_form_control_group('',$lang['f_meta_keywords'],'<input class="form-control" type="text" name="page_meta_keywords" value="'.$page_meta_keywords.'" data-role="tagsinput">');
 echo tpl_form_control_group('',$lang['f_meta_description'],"<textarea name='page_meta_description' class='form-control cntValues' rows='5'>$page_meta_description</textarea>");
 
+echo '</div>';
+echo '<div class="col-md-6">';
 
 echo '<div class="form-group">';
 echo '<label>'.$lang['page_thumbnail'].'</label>';
@@ -243,6 +248,8 @@ if($prefs_pagethumbnail_prefix != '') {
 	
 $arr_Images = fc_get_all_images_rec("$prefs_pagethumbnail_prefix",NULL);
 $page_thumbnail_array = explode("&lt;-&gt;", $page_thumbnail);
+
+echo '<input class="filter-images form-control" name="filter-images" placeholder="Filter ..." type="text">';
 
 echo '<div class="scroll-container">';
 echo '<select multiple="multiple" name="page_thumbnail[]" class="form-control image-picker">';
@@ -270,6 +277,9 @@ echo '<option value="">'.$lang['page_thumbnail'].'</option>';
 }
 echo '</optgroup>'."\r\n";
 echo '</select>';
+
+echo '</div>';
+echo '</div>';
 
 echo '</div>';
 echo '</div>';
