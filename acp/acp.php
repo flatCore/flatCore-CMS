@@ -446,7 +446,7 @@ if(isset($set_acptheme)) {
 		    	var value = $(this).val();
 					var exp = new RegExp('^' + value, 'i');
 				
-			    $('.thumbnail').each(function() {
+			    $('.thumbnail').not('.selected').each(function() {
 			        var isMatch = exp.test($('p:first', this).text());
 			        $(this).toggle(isMatch);
 			    });
@@ -560,6 +560,7 @@ if(isset($set_acptheme)) {
 
 
 		// filter snippets
+		/*
 		$('.filter-list').keyup(function() {
 	
 			var value = $(this).val();
@@ -570,6 +571,7 @@ if(isset($set_acptheme)) {
 				$(this).toggle(isMatch);
 			});
 		});
+		*/
 
 	
 	
