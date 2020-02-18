@@ -25,23 +25,6 @@ if($page_favicon == "") {
 	$page_favicon = "$prefs_pagefavicon";
 }
 
-/* page thumbnails */
-
-if($page_thumbnail == "") {
-	$page_thumbnail = $prefs_pagethumbnail;
-} else {
-	$page_thumbnail_array = explode("<->", $page_thumbnail);
-	$page_thumbnail = $page_thumbnail_array[0];
-	if(count($page_thumbnail_array > 0)) {
-		$page_thumbnail = '..'.array_shift($page_thumbnail_array);
-		foreach($page_thumbnail_array as $t) {
-			$t = str_replace('/content/', $fc_base_url.'content/', $t);
-			$thumb[] = $t;
-		}
-		$smarty->assign('page_thumbnails', $thumb);
-	}
-}
-
 
 /**
  * gereate mainmenu, submenu, breadcrumps and sitemap
@@ -166,6 +149,24 @@ if($page_psw != '' && $_SESSION['page_psw'] != $page_psw) {
 	$output = $smarty->fetch("page_psw_input.tpl");
 	$smarty->assign('page_content', $output);
 	$smarty->assign('extra_content', "");
+}
+
+
+/* page thumbnails */
+
+if($page_thumbnail == "") {
+	$page_thumbnail = $prefs_pagethumbnail;
+} else {
+	$page_thumbnail_array = explode("<->", $page_thumbnail);
+	$page_thumbnail = $page_thumbnail_array[0];
+	if(count($page_thumbnail_array > 0)) {
+		$page_thumbnail = '..'.array_shift($page_thumbnail_array);
+		foreach($page_thumbnail_array as $t) {
+			$t = str_replace('/content/', $fc_base_url.'content/', $t);
+			$thumb[] = $t;
+		}
+		$smarty->assign('page_thumbnails', $thumb);
+	}
 }
 
 
