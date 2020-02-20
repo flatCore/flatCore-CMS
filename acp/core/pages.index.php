@@ -183,7 +183,7 @@ for($i=0;$i<$cnt_indexed_entries;$i++) {
 	}
 	
 	$cnt_headlines = $cnt_h1s+$cnt_h2s+$cnt_h3s;
-	$ce_page_headlines = $ce_h1+$ce_h2;
+	$ce_page_headlines = $ce_page_h1+$ce_page_h2;
 	
 	$headlines_str = '<table class="table table-sm table-striped">';
 	$headlines_str .= '<tr><td>H1 ('.$cnt_h1s.')</td><td>'.$h1str.'</td></tr>';
@@ -369,13 +369,48 @@ echo '<hr>';
 
 echo '<div class="well well-sm">';
 echo '<table class="table table-sm">';
-echo '<tr><td class="text-right">'.$ce_title.'</td><td>'.$lang['label_missing_title'].'</td></tr>';
-echo '<tr><td class="text-right">'.$ce_description.'</td><td>'.$lang['label_missing_meta_description'].'</td></tr>';
-echo '<tr><td class="text-right">'.$ce_img_alt.'</td><td>'.$lang['label_missing_img_alt_tags'].'</td></tr>';
-echo '<tr><td class="text-right">'.$ce_img_title.'</td><td>'.$lang['label_missing_img_title_tags'].'</td></tr>';
-echo '<tr><td class="text-right">'.$ce_links_title.'</td><td>'.$lang['label_missing_link_title_tags'].'</td></tr>';
-echo '<tr><td class="text-right">'.$ce_h1.'</td><td>'.$lang['label_missing_h1'].'</td></tr>';
-echo '<tr><td class="text-right">'.$ce_h2.'</td><td>'.$lang['label_missing_h2'].'</td></tr>';
+
+$ce_title_class = 'text-success';
+if($ce_title > 0) {
+	$ce_title_class = 'text-danger';
+}
+echo '<tr><td class="text-right '.$ce_title_class.'">'.$ce_title.'</td><td>'.$lang['label_missing_title'].'</td></tr>';
+
+$ce_description_class = 'text-success';
+if($ce_description > 0) {
+	$ce_description_class = 'text-danger';
+}
+echo '<tr><td class="text-right '.$ce_description_class.'">'.$ce_description.'</td><td>'.$lang['label_missing_meta_description'].'</td></tr>';
+
+$ce_img_alt_class = 'text-success';
+if($ce_img_alt > 0) {
+	$ce_img_alt_class = 'text-danger';
+}
+echo '<tr><td class="text-right '.$ce_img_alt_class.'">'.$ce_img_alt.'</td><td>'.$lang['label_missing_img_alt_tags'].'</td></tr>';
+
+$ce_img_title_class = 'text-success';
+if($ce_img_title > 0) {
+	$ce_img_title_class = 'text-danger';
+}
+echo '<tr><td class="text-right '.$ce_img_title_class.'">'.$ce_img_title.'</td><td>'.$lang['label_missing_img_title_tags'].'</td></tr>';
+
+$ce_links_title_class = 'text-success';
+if($ce_links_title > 0) {
+	$ce_links_title_class = 'text-danger';
+}
+echo '<tr><td class="text-right '.$ce_links_title_class.'">'.$ce_links_title.'</td><td>'.$lang['label_missing_link_title_tags'].'</td></tr>';
+
+$ce_h1_class = 'text-success';
+if($ce_h1 > 0) {
+	$ce_h1_class = 'text-danger';
+}
+echo '<tr><td class="text-right '.$ce_h1_class.'">'.$ce_h1.'</td><td>'.$lang['label_missing_h1'].'</td></tr>';
+
+$ce_h2_class = 'text-success';
+if($ce_h2 > 0) {
+	$ce_h2_class = 'text-danger';
+}
+echo '<tr><td class="text-right '.$ce_h2_class.'">'.$ce_h2.'</td><td>'.$lang['label_missing_h2'].'</td></tr>';
 echo '</table>';
 echo '</div>';
 
