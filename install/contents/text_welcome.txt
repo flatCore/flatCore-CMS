@@ -6,6 +6,6 @@
 
 <hr class="shadow">
 
-<p>Der bewusst minimalistisch gehaltene Kern von flatCore bedeutet nicht, dass es f&uuml;r umfangreichere Projekte bzw. Aufgaben nicht geeignet w&auml;re. Eben, um den Kern des Systems so einfach wie nur m&ouml;glich zu halten, wurde von Beginn an auf eine leicht zu bediehnende Schnittstelle f&uuml;r Module und Plugins gesorgt.</p>
+<p>Der bewusst minimalistisch gehaltene Kern von flatCore bedeutet nicht, dass es f&uuml;r umfangreichere Projekte bzw. Aufgaben nicht geeignet w&auml;re. Eben, um den Kern des Systems so einfach wie nur m&ouml;glich zu halten, wurde von Beginn an auf eine leicht zu bedienende Schnittstelle f&uuml;r Module und Plugins gesorgt.</p>
 
 <p>Weiere Informationen zu Modulen, Plugins und Themes findest du auf <a href="https://www.flatcore.org">flatCore.de</a></p>

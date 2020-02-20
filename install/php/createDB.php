@@ -97,7 +97,7 @@ $sql_first_site = "INSERT INTO fc_pages (
 						NULL, '$languagePack', 'Testseite',
 						'flatCore',	'public', 'flatcore/',
 						'$example_content', '$page_lastedit', 'Installer',
-						'use_standard', '10', 'Installer',
+						'use_standard', '100', 'Installer',
 						'$page_lastedit', 'Lorem, ipsum, dolor, sit', 'Testseite',
 						'all', '', '',
 						'', '', '' ) ";
