@@ -13,6 +13,13 @@ $icon['angle_down']  = '<i class="far fa-angle-down"></i>';
 $icon['angle_double_right']  = '<i class="fas fa-angle-double-right"></i>';
 $icon['angle_double_left']  = '<i class="fas fa-angle-double-left"></i>';
 
+$icon['arrow_down']  = '<i class="fas fa-arrow-down"></i>';
+$icon['arrow_up']  = '<i class="fas fa-arrow-up"></i>';
+$icon['arrow_left']  = '<i class="fas fa-arrow-left"></i>';
+$icon['arrow_right']  = '<i class="fas fa-arrow-right"></i>';
+
+$icon['at']  = '<i class="fas fa-at"></i>';
+
 $icon['ban'] = '<i class="far fa-ban"></i>';
 $icon['bars'] = '<i class="fas fa-bars"></i>';
 $icon['bookmark'] = '<i class="fas fa-bookmark"></i>';
@@ -32,6 +39,8 @@ $icon['cogs'] = '<i class="fas fa-cogs"></i>';
 
 $icon['edit'] = '<i class="fas fa-edit"></i>';
 $icon['exclamation_triangle']  = '<i class="fas fa-exclamation-triangle"></i>';
+$icon['eye']  = '<i class="fas fa-eye"></i>';
+$icon['eye_slash']  = '<i class="fas fa-eye-slash"></i>';
 
 $icon['chart_bar'] = '<i class="fas fa-chart-bar"></i>';
 $icon['code'] = '<i class="far fa-code"></i>';
@@ -44,6 +53,8 @@ $icon['file'] = '<i class="fas fa-file"></i>';
 $icon['file_alt'] = '<i class="fas fa-file-alt"></i>';
 $icon['filter'] = '<i class="fas fa-filter"></i>';
 $icon['folder_open'] = '<i class="fas fa-folder-open"></i>';
+
+$icon['github'] = '<i class="fab fa-github"></i>';
 
 $icon['home'] = '<i class="fas fa-home"></i>';
 
@@ -85,7 +96,8 @@ $icon['tasks'] = '<i class="fas fa-tasks"></i>';
 $icon['trash_alt'] = '<i class="far fa-trash-alt"></i>';
 $icon['times_circle'] = '<i class="fas fa-times-circle"></i>';
 $icon['tools'] = '<i class="fas fa-tools"></i>';
-
+$icon['toggle_on'] = '<i class="fas fa-toggle-on"></i>';
+$icon['toggle_off'] = '<i class="fas fa-toggle-off"></i>';
 
 $icon['users'] = '<i class="fas fa-users"></i>';
 $icon['user'] = '<i class="fas fa-user"></i>';

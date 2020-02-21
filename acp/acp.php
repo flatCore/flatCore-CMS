@@ -256,8 +256,8 @@ if(isset($set_acptheme)) {
 			</p>
 			
 		<p><b>flatCore</b> Content Management System (<?php echo $fc_version_name . ' <small>B: ' . $fc_version_build; ?>)</small><br />
-		copyright © <?php echo date('Y'); ?>, <a href="https://www.flatcore.org/" target="_blank">flatCore.org</a></p>
-		<p><?php echo microtime(true)-$_SERVER['REQUEST_TIME_FLOAT']; ?></p>
+		copyright © <?php echo date('Y'); ?>, <a href="https://www.flatcore.org/" target="_blank">flatCore.org</a> | <a href="https://github.com/flatCore/flatCore-CMS"><i class="fab fa-github"></i> flatCore-CMS</a></p>
+		<p class="d-none"><?php echo microtime(true)-$_SERVER['REQUEST_TIME_FLOAT']; ?></p>
 		</div>
 		
 		</div>

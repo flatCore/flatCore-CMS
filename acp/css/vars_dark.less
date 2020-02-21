@@ -2,7 +2,7 @@
 
 @page_bg: #111;
 @content_bg: #333;
-@brand_color: #5eacf0;
+@brand_color: #40a4fb;
 @dark_brand: desaturate(darken(@brand_color,50%),20);
 
 @font_color: #ccc; /* font color */
@@ -37,10 +37,18 @@
 @color_deleted: #d9534f;
 
 
-h1, h2, h3, h4, h5, h6 {
-	font-weight: normal;
-	color: lighten(@brand_color,15);
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+	font-weight: 200;
+	color: lighten(@brand_color,5);
+	small {
+		font-weight: 300;
+	}
 }
+
+/* tables */
+
+@table_striped_bg_odd: lighten(@widget_background,5);
 
 
 @import "styles";

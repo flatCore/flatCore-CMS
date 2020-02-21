@@ -7,10 +7,31 @@ h2,
 h3,
 h4,
 h5,
-h6 {
-  font-weight: normal;
-  color: #116fc2;
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-weight: 200;
+  color: #1c8aeb;
 }
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small,
+.h1 small,
+.h2 small,
+.h3 small,
+.h4 small,
+.h5 small,
+.h6 small {
+  font-weight: 300;
+}
+/* tables */
 /**
  * flatCore ACP
  */
@@ -71,6 +92,12 @@ h6 {
 .table-hover tbody tr:hover {
   color: #222;
   background: #f3f3f3;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #fbfbfb;
+}
+.table-hover tbody tr:hover {
+  background-color: #eee;
 }
 /* fieldset */
 fieldset {
@@ -546,6 +573,7 @@ hr.shadow {
   margin-right: 0;
   margin-bottom: 15px;
   margin-left: 0;
+  box-shadow: none !important;
 }
 hr.shadow:after {
   content: "";
@@ -555,7 +583,7 @@ hr.shadow:after {
   display: block;
   width: 90%;
   height: 20px;
-  box-shadow: 0px 20px 10px #c8c8c8;
+  box-shadow: 0px 20px 10px #e1e1e1;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;

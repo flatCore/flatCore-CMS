@@ -22,7 +22,7 @@ require 'core/access.php';
 		
 		<h4 id="buttons">Buttons</h4>
 		
-		<p><a href="#" class="btn btn-fc">btn dark</a> <a href="#" class="btn btn-primary">btn primary</a> <a href="#" class="btn btn-success">btn success</a> <a href="#" class="btn btn-danger">btn danger</a> <a href="#" class="btn btn-secondary">btn secondary</a> <a href="#" class="btn btn-info">btn info</a></p>
+		<p><a href="#" class="btn btn-fc">btn fc</a> <a href="#" class="btn btn-fc text-success">btn fc text-success</a> <a href="#" class="btn btn-primary">btn primary</a> <a href="#" class="btn btn-success">btn success</a> <a href="#" class="btn btn-danger">btn danger</a> <a href="#" class="btn btn-secondary">btn secondary</a> <a href="#" class="btn btn-info">btn info</a></p>
 		<p><a href="#" class="btn btn-outline-primary">btn btn-outline-primary</a> <a href="#" class="btn btn-outline-secondary">btn btn-outline-secondary</a> <a href="#" class="btn btn-outline-success">btn btn-outline-success</a></p>
 		<p><a href="#" class="btn btn-fc">btn fc</a> <a href="#" class="btn btn-save">btn save</a></p>
 		
@@ -44,6 +44,19 @@ require 'core/access.php';
 			<legend>fieldset .mt-4</legend>
 			<p>flatCore Content Management System</p>
 			<p><a href="#" class="btn btn-fc">btn fc</a> <a href="#" class="btn btn-save">btn save</a></p>
+			
+			<div class="card">
+				<div class="card-header">Card</div>
+				<div class="card-body">
+					<p class="card-text">Card Body Text</p>
+				</div>
+				<div class="list-group list-group-flush">
+					<a href="#" class="list-group-item list-group-item-ghost p-1 px-2">Link #1</a>
+					<a href="#" class="list-group-item list-group-item-ghost p-1 px-2 active">Link #2 active</a>
+					<a href="#" class="list-group-item list-group-item-ghost p-1 px-2">Link #3</a>
+				</div>
+			</div>
+			
 		</fieldset>
 		
 		<pre>&lt;pre&gt; -> flatCore Content Management System</pre>
@@ -55,21 +68,90 @@ require 'core/access.php';
 		<div class="scroll-container">
 		<?php
 			
-			echo '<table class="table table-sm table-bordered table-striped">';
+			echo '<div class="card-columns custom-columns">';
 			foreach($icon as $k => $v) {
 				
-				echo '<tr>';
-				echo '<td><span class="text-secondary h2">'.$v.'</span></td> ';
-				echo '<td><code>$icon[\''.$k.'\']</code></td>';
-				
-				echo '</tr>';
+				echo '<div class="card text-center">';
+				echo '<div class="card-body">';
+				echo '<span class="text-secondary h1">'.$v.'</span>';
+				echo '<p class="card-text"><code>$icon[\''.$k.'\']</code></p>';
+				echo '</div>';
+				echo '</div>';
 				
 			}
-			echo '</table>';
+			echo '</div>';
 					
 		?>
 		</div>
 		
+		<hr class="shadow">
+		
+		<h4 id="tables">Tables</h4>
+		
+		<p>class=&quot;table&quot;</p>
+		<table class="table">
+		  <thead>
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">Addon</th>
+		      <th scope="col">Theme</th>
+		      <th scope="col">Module</th>
+		      <th scope="col">Plugin</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr>
+		      <th scope="row">1</th>
+		      <td>publisher.mod</td>
+		      <td>no</td>
+		      <td>yes</td>
+		      <td>no</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">2</th>
+		      <td>cookies.mod</td>
+		      <td>no</td>
+		      <td>yes</td>
+		      <td>no</td>
+		    </tr>
+		  </tbody>
+		</table>
+
+		<p>class=&quot;table table-sm table-striped&quot;</p>
+		<table class="table table-sm table-striped table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">Addon</th>
+		      <th scope="col">Theme</th>
+		      <th scope="col">Module</th>
+		      <th scope="col">Plugin</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr>
+		      <th scope="row">1</th>
+		      <td>publisher.mod</td>
+		      <td>no</td>
+		      <td>yes</td>
+		      <td>no</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">2</th>
+		      <td>cookies.mod</td>
+		      <td>no</td>
+		      <td>yes</td>
+		      <td>no</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">2</th>
+		      <td>default</td>
+		      <td>yes</td>
+		      <td>no</td>
+		      <td>no</td>
+		    </tr>
+		  </tbody>
+		</table>		
 
 	</div>
 	<div class="col-md-3">
@@ -78,6 +160,7 @@ require 'core/access.php';
 		<li><a href="#buttons">buttons</a></li>
 		<li><a href="#container">container</a></li>
 		<li><a href="#icons">icons</a></li>
+		<li><a href="#tables">tables</a></li>
 		</ul>
 	</div>
 </div>
