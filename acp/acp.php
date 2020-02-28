@@ -6,10 +6,9 @@ require '../config.php';
 if(is_file('../'.FC_CONTENT_DIR.'/config.php')) {
 	include '../'.FC_CONTENT_DIR.'/config.php';
 }
-require 'core/access.php';
-include 'versions.php';
-include 'core/icons.php';
-include '../lib/parsedown/Parsedown.php';
+require '../lib/Medoo.php';
+use Medoo\Medoo;
+
 
 if(isset($fc_content_files) && is_array($fc_content_files)) {
 	/* switch database file $fc_db_content */
@@ -24,6 +23,22 @@ define("FC_ROOT", str_replace("/acp","",FC_INC_DIR));
 define("IMAGES_FOLDER", "$img_path");
 define("FILES_FOLDER", "$files_path");
 define("FC_SOURCE", "backend");
+
+$db_content = new Medoo([
+	'database_type' => 'sqlite',
+	'database_file' => CONTENT_DB
+]);
+
+$db_user = new Medoo([
+	'database_type' => 'sqlite',
+	'database_file' => USER_DB
+]);
+
+
+require 'core/access.php';
+include 'versions.php';
+include 'core/icons.php';
+include '../lib/parsedown/Parsedown.php';
 
 
 if(!isset($_SESSION['editor_class'])) {

@@ -9,32 +9,25 @@ if(isset($_GET['enable'])) {
 	$modFolder = basename($_GET['enable']);
 	include '../modules/'.$modFolder.'/info.inc.php';
 	
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = "INSERT INTO fc_addons	(
-			addon_id , addon_type, addon_dir , addon_name , addon_version
-			) VALUES (
-			NULL, :addon_type, :addon_dir, :addon_name, :addon_version ) ";
-			
-	$sth = $dbh->prepare($sql);
-	$sth->bindParam(':addon_dir', $_GET['enable'], PDO::PARAM_STR);
-	$sth->bindParam(':addon_name', $mod['name'], PDO::PARAM_STR);
-	$sth->bindParam(':addon_version', $mod['version'], PDO::PARAM_STR);
-	$sth->bindValue(':addon_type', "module", PDO::PARAM_STR);
-	$cnt_changes = $sth->execute();
-	$dbh = null;
+	$db_content->insert("fc_addons", [
+		"addon_type" => "module",
+		"addon_dir" => $_GET['enable'],
+		"addon_name" => $mod['name'],
+		"addon_version" => $mod['version']
+	]);
+	
 	
 	mods_check_in();
 }
 
 /* check out an existing module */
 if(isset($_GET['disable'])) {
-				
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = "DELETE FROM fc_addons WHERE addon_dir = :disable";
-	$sth = $dbh->prepare($sql);
-	$sth->bindParam(':disable', $_GET['disable'], PDO::PARAM_STR);
-	$cnt_changes = $sth->execute();
-	$dbh = null;
+	
+	$db_content->delete("fc_addons", [
+		"AND" => [
+			"addon_dir" => $_GET['disable']
+		]
+	]);
 	
 	mods_check_in();
 }

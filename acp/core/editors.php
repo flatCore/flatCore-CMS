@@ -14,14 +14,10 @@ if(isset($page_template)) {
 }
 
 if($editor_tpl_folder == 'use_standard') {
-
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = "SELECT prefs_template FROM fc_preferences WHERE prefs_id = 1";
-	$result = $dbh->query($sql);
-	$result = $result->fetch(PDO::FETCH_ASSOC);
-	$dbh = null;
-
-	$editor_tpl_folder = $result['prefs_template'];
+	$prefs_template = $db_content->select("fc_preferences", "prefs_template", [
+		"prefs_id" => 1
+	]);
+	$editor_tpl_folder = $prefs_template;
 }
 
 $editor_styles = '../styles/'.$editor_tpl_folder.'/css/editor.css';

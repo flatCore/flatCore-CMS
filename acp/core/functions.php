@@ -43,15 +43,13 @@ function get_all_languages($d='../lib/lang') {
  */
  
 function get_preferences() {
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = "SELECT * FROM fc_preferences WHERE prefs_id = 1";
-
-	$result = $dbh->query($sql);
-	$result = $result->fetch(PDO::FETCH_ASSOC);
-
-	$dbh = null;
+	global $db_content;
 	
-	return $result;
+	$prefs = $db_content->get("fc_preferences", "*", [
+		"prefs_id" => 1
+	]);
+	
+	return $prefs;
 }
 
 
@@ -92,15 +90,14 @@ function fc_get_hook($posion,$data) {
  */
 
 function get_all_groups() {
-
-	$dbh = new PDO("sqlite:".USER_DB);	
-	$sql = "SELECT * FROM fc_groups ORDER BY group_id ASC";
 	
-	foreach ($dbh->query($sql) as $row) {
-		$result[] = $row;
-	}
+	global $db_user;
 	
-	return($result);
+	$groups = $db_user->select("fc_groups", "*", [
+	"ORDER" => ["group_id" => "ASC"]
+	]);
+	
+	return $groups;
 }
 
 
@@ -111,16 +108,13 @@ function get_all_groups() {
 
 function get_all_admins() {
 
-	$dbh = new PDO("sqlite:".USER_DB);
-	$sql = "SELECT * FROM fc_user WHERE user_class = 'administrator'";
+	global $db_user;
+		
+	$admins = $db_user->select("fc_user", "*", [
+	"user_class" => "administrator"
+	]);
 	
-	   foreach ($dbh->query($sql) as $row) {
-	     $result[] = $row;
-	   }
-	
-	$dbh = null;
-	
-	return($result);
+	return $admins;
 }
 
 

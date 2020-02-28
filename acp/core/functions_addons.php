@@ -62,6 +62,7 @@ function get_all_moduls() {
  
 function fc_get_addons($t='module') {
 	
+	global $db_content;
 	$result = array();
 	
 	if($t == 'module') {
@@ -69,18 +70,12 @@ function fc_get_addons($t='module') {
 	} else {
 		$type = 'theme';
 	}
-	
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = "SELECT * FROM fc_addons WHERE addon_type = '$type' ";
 
-	foreach ($dbh->query($sql) as $row) {
-		$result[] = $row;
-	}
+	$result = $db_content->select("fc_addons", "*", [
+	"addon_type" => "$type"
+	]);
 	
-	$dbh = null;
-	
-	return($result);
-		
+	return $result;
 }
 
 
@@ -117,30 +112,22 @@ function get_all_templates() {
 
 function mods_check_in() {
 	
+	global $db_content;
+	
 	$pages = array();
 	$mods = array();
 	$m = array();
 
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	
-	$sql_get_mods = "SELECT addon_dir FROM fc_addons WHERE addon_type = 'module'";
-	foreach ($dbh->query($sql_get_mods) as $row) {
-		$mods[] = $row;
-	}
+	$mods = $db_content->select("fc_addons", "addon_dir", [
+	"addon_type" => "module"
+	]);
 	
 	for($i=0;$i<count($mods);$i++) {
-		$m[]['page_modul'] = $mods[$i]['addon_dir'];
+		$m[]['page_modul'] = $mods[$i];
 		$m[]['page_permalink'] = 'NULL';
 	}
-	
-	
-	$sql = "SELECT page_modul, page_permalink FROM fc_pages";
-	
-	foreach ($dbh->query($sql) as $row) {
-		$pages[] = $row;
-	}
-	
-	$dbh = null;
+		
+	$pages = $db_content->select("fc_pages", ["page_modul","page_permalink"]);
 	
 	$items = array_merge($pages, $m);
 	

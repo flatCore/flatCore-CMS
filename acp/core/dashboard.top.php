@@ -5,19 +5,13 @@ require 'core/access.php';
 
 
 /* get latest infos from user database */
-$dbh = new PDO("sqlite:".USER_DB);
 
-$sql = "SELECT user_id, user_nick, user_class, user_firstname, user_lastname, user_registerdate, user_verified, user_mail
-					FROM fc_user
-					ORDER BY user_id DESC ";
+$user_result = $db_user->select("fc_user", ["user_id", "user_nick", "user_class", "user_firstname", "user_lastname", "user_registerdate", "user_verified", "user_mail"], [
+	"ORDER" => ["user_id" => "DESC"]
+]);
 
-foreach ($dbh->query($sql) as $row) {
-	$user_result[] = $row;
-}
 
 $cnt_user = count($user_result);
-
-$dbh = null;
 
 $cnt_verified = 0;
 $cnt_paused = 0;
@@ -75,23 +69,11 @@ $cnt_deleted_per = round($cnt_deleted*100/$cnt_user);
 $cnt_waiting_per = round($cnt_waiting*100/$cnt_user);
 
 
-/* get latest info from pages database */
-
-$dbh = new PDO("sqlite:".CONTENT_DB);
-
-$sql = "SELECT page_id, page_linkname, page_title, page_sort, page_lastedit, page_lastedit_from, page_status 
-				FROM fc_pages ORDER BY page_lastedit DESC";
-
-unset($allPages);
-
-foreach ($dbh->query($sql) as $row) {
-	$allPages[] = $row;
-}
+$allPages = $db_content->select("fc_pages", ["page_id", "page_linkname", "page_title", "page_sort", "page_lastedit", "page_lastedit_from", "page_status"], [
+	"ORDER" => ["page_lastedit" => "DESC"]
+]);
 
 $cnt_pages = count($allPages);
-
-$dbh = null;
-
 $cnt_public = 0;
 $cnt_draft = 0;
 $cnt_ghost = 0;
