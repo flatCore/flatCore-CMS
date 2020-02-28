@@ -1,5 +1,5 @@
 <p align="center">
-<img src="http://www.flatcore.org/content/images/icon-flatcore-128.png">
+<img src="https://www.flatcore.org/content/images/icon-flatcore-128.png">
 </p>
 
 ## flatCore CMS
@@ -15,6 +15,7 @@ flatCore is a lightweight Content Management System based on PHP and SQLite.
 
 #### 3rd Party Frameworks and Plugins
 
++ Medoo - https://github.com/catfan/Medoo
 + TinyMCE - http://www.tinymce.com/
 + Ace Editor - http://ace.c9.io/
 + Smarty - http://www.smarty.net/
