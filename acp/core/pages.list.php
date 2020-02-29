@@ -211,7 +211,7 @@ for($i=0;$i<$cnt_result;$i++) {
 		}
 	}
 	
-	$page_comments_link = '<a data-fancybox data-type="ajax" href="javascript:;" class="btn btn-sm btn-fc w-100" data-src="core/ajax.comments.php?pid='.$page_id.'">'.$icon['comments'].' <small>'. $page_cnt_comments.'</small></a>';
+	$page_comments_link = '';
 	
 	
 	$str = array(
@@ -390,7 +390,7 @@ for($i=0;$i<$cnt_result;$i++) {
 		}
 	}
 
-	$page_comments_link = '<a data-fancybox data-type="ajax" href="javascript:;" class="btn btn-sm btn-fc w-100" data-src="core/ajax.comments.php?pid='.$page_id.'">'.$icon['comments'].' <small>'. $page_cnt_comments.'</small></a>';
+	$page_comments_link = '';
 	
 	$str = array(
 		'{status-label}','{item-linkname}','{item-title}',
