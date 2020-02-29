@@ -456,6 +456,7 @@ $lang['dir_must_be_writable'] = 'The directory %s must be writable';
 $lang['section_is_beta'] = '<strong>Please note:</strong><br>This area is in a beta stage and has not yet been tested extensively.';
 $lang['msg_nothing_to_install'] = 'There are currently no addons been uploaded for installation.';
 
+$lang['msg_no_help_doc'] = 'Sorry, there are no instructions yet';
 
 /* System */
 

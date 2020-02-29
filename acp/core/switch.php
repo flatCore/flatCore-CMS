@@ -44,7 +44,13 @@ switch ($tn) {
 		$maininc = "inc.pages";
 		$navinc = "nav.pages";
 		break;
-		
+
+	case "addons":
+		$active[2] = "topnav_selected";
+		$maininc = "inc.addons";
+		$navinc = "nav.addons";
+		break;
+	/* we remove this soon */
 	case "moduls":
 		$active[2] = "topnav_selected";
 		$maininc = "inc.addons";

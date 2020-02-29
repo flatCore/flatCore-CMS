@@ -243,6 +243,28 @@ div#page-sidebar .sidebar-footer a {
   display: block;
   color: #eee;
 }
+/* right sidebar */
+div#page-sidebar-help {
+  display: block;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  width: 0;
+  padding-top: 25px;
+  color: #eee;
+  background: #111;
+  height: 100%;
+  border-right: 1px solid #333;
+}
+div#page-sidebar-help #page-sidebar-help-inner {
+  padding: 15px;
+}
+div#page-sidebar-help.sb-help-expanded {
+  width: 380px;
+  overflow: hidden;
+  overflow-y: auto;
+}
 div#page-sidebar.sb-expanded {
   width: 220px;
   overflow: hidden;
@@ -256,6 +278,9 @@ div#page-sidebar.sb-expanded {
 }
 div#page-content.sb-expanded {
   margin-left: 220px;
+}
+div#page-content.sb-help-expanded {
+  margin-right: 380px;
 }
 /* Navigation Submenu */
 #dashboard-collapse .panel {

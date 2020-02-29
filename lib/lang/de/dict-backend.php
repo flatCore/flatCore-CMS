@@ -451,6 +451,8 @@ $lang['dir_must_be_writable'] = 'Das Verzeichnis %s muss beschreibbar sein.';
 $lang['section_is_beta'] = '<strong>Bitte beachten:</strong><br>Dieser Bereich befindet sich in einem Betastadium und ist noch nicht ausgiebig getestet worden.';
 $lang['msg_nothing_to_install'] = 'Es sind noch keine Addons für die Installation hochgeladen worden.';
 
+$lang['msg_no_help_doc'] = 'Leider gibt es hierzu noch keine Anleitung';
+
 /* System */
 
 $lang['txtlib_welcome'] = "Einleitung (Portal)";

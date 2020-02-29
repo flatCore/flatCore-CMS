@@ -231,6 +231,12 @@ if(isset($set_acptheme)) {
 			<?php include 'core/livebox.php'; ?>
 			</div>
 		</div>
+		
+		<div id="page-sidebar-help">
+			<div id="page-sidebar-help-inner">		
+				<?php require 'core/docs.php'; ?>
+			</div>
+		</div>
 			
 		<div id="page-content">
 
@@ -466,6 +472,8 @@ if(isset($set_acptheme)) {
 			        $(this).toggle(isMatch);
 			    });
 				});
+				
+				$( "#chat_container" ).load( "core/ajax.chat.php" );
 
 			
 	      $(document).on('mouseenter', '.hiddenControls', function () {
@@ -573,26 +581,12 @@ if(isset($set_acptheme)) {
 	   	$(this).height(newHeight);
 	  });
 
-
-		// filter snippets
-		/*
-		$('.filter-list').keyup(function() {
-	
-			var value = $(this).val();
-			var exp = new RegExp('^' + value, 'i');
-				
-			$('a.filter-list-item').each(function() {
-				var isMatch = exp.test($(this).data("title"));
-				$(this).toggle(isMatch);
-			});
-		});
-		*/
-
 	
 	
 	//SIDEBAR
 	
 var sidebarState = sessionStorage.getItem('sidebarState');
+var sidebarHelpState = sessionStorage.getItem('sidebarHelpState');
 
 windowWidth = $(window).width();
 
@@ -600,30 +594,29 @@ $(window).resize(function() {
   windowWidth = $(window).width();
 
   if( windowWidth < 992 ){ //992 is the value of $screen-md-min in boostrap variables.scss
-					$('#page-sidebar-inner').addClass('sidebar-collapsed').removeClass('sidebar-expanded');
-					$('#page-content').addClass('sb-collapsed').removeClass('sb-expanded');
-					$('#page-sidebar').addClass('sb-collapsed').removeClass('sb-expanded');
-    }
-    else{
-        if(sidebarState){
-					$('#page-sidebar-inner').addClass('sidebar-collapsed').removeClass('sidebar-expanded');
-					$('#page-content').addClass('sb-collapsed').removeClass('sb-expanded');
-					$('#page-sidebar').addClass('sb-collapsed').removeClass('sb-expanded');
-        }
-        else{
-    $('#page-sidebar-inner').addClass('sidebar-expanded').removeClass('sidebar-collapsed');
-    $('#page-content').addClass('sb-expanded').removeClass('sb-collapsed');
-    $('#page-sidebar').addClass('sb-expanded').removeClass('sb-collapsed');
-        }
-    }
+		$('#page-sidebar-inner').addClass('sidebar-collapsed').removeClass('sidebar-expanded');
+		$('#page-content').addClass('sb-collapsed').removeClass('sb-expanded');
+		$('#page-sidebar').addClass('sb-collapsed').removeClass('sb-expanded');
+  } else {
+    
+    if(sidebarState){
+			$('#page-sidebar-inner').addClass('sidebar-collapsed').removeClass('sidebar-expanded');
+			$('#page-content').addClass('sb-collapsed').removeClass('sb-expanded');
+			$('#page-sidebar').addClass('sb-collapsed').removeClass('sb-expanded');
+     } else {
+		 	$('#page-sidebar-inner').addClass('sidebar-expanded').removeClass('sidebar-collapsed');
+		 	$('#page-content').addClass('sb-expanded').removeClass('sb-collapsed');
+		 	$('#page-sidebar').addClass('sb-expanded').removeClass('sb-collapsed');
+     }
+  }  
 });
 
-function setSidebarState(value){
-    sessionStorage.setItem('sidebarState', value);
+function setSidebarState(item,value){
+    sessionStorage.setItem(item, value);
 }
 
-function clearSidebarState(){
-    sessionStorage.removeItem('sidebarState');
+function clearSidebarState(item){
+    sessionStorage.removeItem(item);
 }
 
 function collapseSidebar(){
@@ -641,6 +634,22 @@ function expandSidebar(){
     $('.caret_right').addClass('d-none');
     $('.caret_left').removeClass('d-none');
 }
+
+function collapseHelpSidebar(){
+    $('#page-sidebar-help-inner').addClass('sidebar-help-collapsed').removeClass('sidebar-help-expanded');
+    $('#page-content').addClass('sb-help-collapsed').removeClass('sb-help-expanded');
+    $('#page-sidebar-help').addClass('sb-help-collapsed').removeClass('sb-help-expanded');
+    setSidebarState('sidebarHelpState','collapsed');
+}
+
+function expandHelpSidebar(){
+    $('#page-sidebar-help-inner').addClass('sidebar-help-expanded').removeClass('sidebar-help-collapsed');
+    $('#page-content').addClass('sb-help-expanded').removeClass('sb-help-collapsed');
+    $('#page-sidebar-help').addClass('sb-help-expanded').removeClass('sb-help-collapsed');
+    setSidebarState('sidebarHelpState','expanded');
+}
+
+
 
 $(function(){
 
@@ -664,22 +673,45 @@ $(function(){
 					$('#page-content').addClass('sb-expanded').removeClass('sb-collapsed');
 					$('#page-sidebar').addClass('sb-expanded').removeClass('sb-collapsed');
 				  $('.caret_right').addClass('d-none');
-					$('.caret_left').removeClass('d-none');        }
+					$('.caret_left').removeClass('d-none');
+				}
       }  
     }
+       
+
+	  
+	  if(sidebarHelpState == "collapsed" || typeof sidebarHelpState==='undefined' || sidebarHelpState===null){
+			collapseHelpSidebar();
+	  } else {
+			expandHelpSidebar();
+	  }
 
 
     /** collapse the sidebar navigation **/    
     $('#toggleNav').click(function(){
         if(!($('#page-sidebar-inner').hasClass('sidebar-collapsed'))) { // if sidebar is not yet collapsed
           collapseSidebar();
-          setSidebarState('collapsed');
+          setSidebarState('sidebarState','collapsed');
         } else {
         	expandSidebar();
-          clearSidebarState();
+          clearSidebarState('sidebarState');
         }
         return false;
     })
+    
+    /** toggle the sidebar for help **/    
+    $('.toggle_sb_help').click(function(){
+        if(!($('#page-sidebar-help-inner').hasClass('sidebar-help-expanded'))) {
+          
+          expandHelpSidebar();
+        } else {
+        	collapseHelpSidebar();
+        }
+        return false;
+    })
+
+       
+    
 })
 
 //SIDEBAR
