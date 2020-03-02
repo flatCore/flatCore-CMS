@@ -3,6 +3,12 @@
 
 $doc_file = basename($_GET['tn']);
 
+if(isset($_GET['tn'])) {
+	$doc_file = basename($_GET['tn']);
+} else {
+	$doc_file = 'dashboard';
+}
+
 if(isset($_GET['sub'])) {
 	$doc_file .= '-'.basename($_GET['sub']);
 }
