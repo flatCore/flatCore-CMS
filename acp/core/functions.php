@@ -12,6 +12,71 @@ include_once 'functions_database.php';
 include_once 'functions_cache.php';
 include_once 'functions_index.php';
 
+
+/**
+ * get the core docs
+ * from acp/docs/$languagePack
+ */
+
+function fc_get_core_docs() {
+
+	global $languagePack;
+
+	$dir_core_docs = 'docs/'.$languagePack;
+	$get_core_docs = array_diff(scandir($dir_core_docs), array('..', '.','.DS_Store'));
+	foreach($get_core_docs as $docs) {
+		$core_docs[] = $dir_core_docs.'/'.$docs;
+	}
+	
+	return $core_docs;
+		
+}
+
+/**
+ * get the modules docs
+ * from modules/xxx.mod/docs/$languagePack
+ */
+
+function fc_get_modules_docs() {
+
+	global $languagePack;
+	$get_modules = get_all_moduls();
+	
+	foreach($get_modules as $k => $v) {
+		$mod_dir = '../modules/'.$get_modules[$k]['folder'].'/docs/'.$languagePack;
+		$get_modules_docs = array_diff(scandir($mod_dir), array('..', '.','.DS_Store'));
+		
+			foreach($get_modules_docs as $docs) {
+				$modules_docs[] = $mod_dir.'/'.$docs;
+			}
+	}
+	
+	return $modules_docs;	
+}
+
+/**
+ * get the themes docs
+ * from styles/theme/docs/$languagePack
+ */
+
+function fc_get_themes_docs() {
+
+	global $languagePack;
+	$get_themes = get_all_templates();
+	
+	foreach($get_themes as $theme) {
+		$theme_dir = '../styles/'.$theme.'/docs/'.$languagePack;
+		$get_theme_docs = array_diff(scandir($theme_dir), array('..', '.','.DS_Store'));
+		
+		foreach($get_theme_docs as $docs) {
+			$theme_docs[] = $theme_dir.'/'.$docs;
+		}
+	}
+	return $theme_docs;	
+}
+
+
+
 /**
  * get all installed language files
  * return as array
