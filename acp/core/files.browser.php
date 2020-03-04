@@ -192,8 +192,6 @@ if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
 	
 	$cnt_all_files = count($a_files);
 
-
-	$dbh = new PDO("sqlite:".CONTENT_DB);
 	
 	/* add missing entries to database */
 	foreach($a_files as $file) {
@@ -202,24 +200,23 @@ if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
 		$filename = $file;
 		
 		if(is_dir($filename)) { continue; }
-		
-		$sql = "SELECT media_file FROM fc_media WHERE media_file = :filename ";
-		$sth = $dbh->prepare($sql);
-		$sth->bindParam(':filename', $filename, PDO::PARAM_STR);
-		$sth->execute();
-	
-		$mediaData = $sth->fetch(PDO::FETCH_ASSOC);
-	
+
+		$mediaData = $db_content->get("fc_media", ["media_file"], [
+			"media_file" => "$filename"
+		]);
+				
 		if(!is_array($mediaData)) {
+			
 			$filesize = filesize($filename);
 			$filemtime = filemtime($filename);
-			$sql = "INSERT INTO fc_media ( media_id, media_file, media_lang, media_filesize, media_lastedit ) VALUES ( NULL, :media_file, :media_lang, :media_filesize, :media_lastedit) ";
-			$sth = $dbh->prepare($sql);
-			$sth->bindParam(':media_file', $filename, PDO::PARAM_STR);
-			$sth->bindParam(':media_lang', $languagePack, PDO::PARAM_STR);
-			$sth->bindParam(':media_filesize', $filesize, PDO::PARAM_STR);
-			$sth->bindParam(':media_lastedit', $filemtime, PDO::PARAM_STR);
-			$sth->execute();
+			
+			$db_content->insert("fc_media", [
+				"media_file" => "$filename",
+				"media_lang" => "$languagePack",
+				"media_filesize" => "$filesize",
+				"media_lastedit" => "$filemtime"
+			]);
+			
 			$cnt_files_rebuild++;
 		}
 	
@@ -229,17 +226,15 @@ if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
 		}
 	
 	}
-	
-	/* remove files from database if the file no longer exists */
-	$sql = "SELECT media_file FROM fc_media WHERE media_file like '%$disk%'";
-	$sth = $dbh->prepare($sql);
-	$sth->execute();
-	$storedFiles = $sth->fetchAll(PDO::FETCH_COLUMN);
 
 	
-	foreach($storedFiles as $f) {
-		if(!is_file($f)) {
-			fc_delete_media_data($f);
+	$storedFiles = $db_content->select("fc_media", ["media_file"], [
+		"media_file[~]" => "$disk"
+	]);
+	
+	foreach($storedFiles as $k) {
+		if(!is_file($k['media_file'])) {
+			fc_delete_media_data($k['media_file']);
 			$cnt_files_removed++;
 				if((time()-$rebuild_start) > 5) {
 					$incomplete = TRUE;
@@ -249,10 +244,12 @@ if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
 	}
 	
 	
-	/* complete file's informations - filesize and/or filemtime  */
-	$sql = "SELECT * FROM fc_media WHERE media_filesize IS NULL OR media_filesize = '' OR media_lastedit IS NULL OR media_lastedit = '' ";
-	$sth = $dbh->query($sql);
-	$missing_rows = $sth->fetchAll(PDO::FETCH_ASSOC);
+	$missing_rows = $db_content->select('fc_media', '*', [
+		"AND" => [
+			'OR' => ['media_filesize' => null,'OR #Empty' => ['media_filesize' => '']],
+			'OR' => ['media_lastedit' => null,'OR #Empty' => ['media_lastedit' => '']]
+		]	
+	]);
 	
 	if(count($missing_rows)>0) {
 		foreach($missing_rows as $row) {		
@@ -260,13 +257,14 @@ if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
 							
 				$filesize = filesize($row['media_file']);
 				$filemtime = filemtime($row['media_file']);
-						
-				$sql = "UPDATE fc_media SET media_filesize = :media_filesize, media_lastedit = :media_lastedit WHERE media_file = :media_file ";
-				$sth = $dbh->prepare($sql);
-				$sth->bindParam(':media_file', $row['media_file'], PDO::PARAM_STR);
-				$sth->bindParam(':media_filesize', $filesize, PDO::PARAM_STR);
-				$sth->bindParam(':media_lastedit', $filemtime, PDO::PARAM_STR);
-				$sth->execute();
+
+				$db_content->update("fc_media", [
+				"media_filesize" => $filesize,
+				"media_lastedit" => $filemtime
+				],[
+					"media_file" => $row['media_file']
+					]);
+				
 				$cnt_infos_completed++;
 			}
 		
@@ -277,8 +275,6 @@ if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
 		
 		}
 	}
-		
-	$dbh = null;
 	
 	echo '<div class="alert alert-info">Add '.$cnt_files_rebuild.' Files, removed '.$cnt_files_removed.' Files from Database. Completed '.$cnt_infos_completed.' File-Informations</div>';
 	
