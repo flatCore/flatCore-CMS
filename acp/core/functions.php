@@ -466,14 +466,14 @@ function print_sysmsg($msg) {
  */
 
 function get_page_impression($pid) {
+	
+	global $db_statistics;
 
-		$dbh = new PDO("sqlite:".STATS_DB);
-		$sql = $dbh->query("SELECT counter FROM hits WHERE page_id = '$pid' ");
-		$result = $sql->fetch(PDO::FETCH_ASSOC);
-		$dbh = null;
-
-		$counter = $result['counter'];
-		return($counter);
+	$counter = $db_statistics->get("hits", "counter", [
+		"page_id" => $pid
+	]);
+		
+	return $counter;
 }
 
 
@@ -484,14 +484,15 @@ function get_page_impression($pid) {
 function record_log($log_trigger = 'system', $log_entry, $log_priority = '0') {
 
 	$log_time = time();
-	$dbh = new PDO("sqlite:".STATS_DB);
-	$sql = "INSERT INTO log	(
-			log_id , log_time , log_trigger , log_entry , log_priority
-			) VALUES (
-			NULL, '$log_time', '$log_trigger', '$log_entry', '$log_priority' ) ";
-										
-	$cnt_changes = $dbh->exec($sql);	
-	$dbh = null;
+	
+	global $db_statistics;
+	
+	$db_statistics->insert("log", [
+		"log_time" => $log_time,
+		"log_trigger" => $log_trigger,
+		"log_entry" => $log_entry,
+		"log_priority" => $log_priority
+	]);
 
 }
 
@@ -503,21 +504,24 @@ function record_log($log_trigger = 'system', $log_entry, $log_priority = '0') {
  */
 
 function show_log($nbr) {
-
-	$dbh = new PDO("sqlite:".STATS_DB);
+	
+	global $db_statistics;
 	$interval = time() - (30 * 86400); // 30 days
-	$count = $dbh->exec("DELETE FROM log WHERE log_time < '$interval'");
+	
+	$del = $db_statistics->delete("log", [
+	"log_time[<]" => $interval
+	]);
 
+	$count = $del->rowCount();
+	
 	if($count > 0) {
-		echo"<div class='alert alert-info'>Logs removed ($count)</div>";
+		echo "<div class='alert alert-info'>Logs removed ($count)</div>";
 	}
 
-	$sql = "SELECT * FROM log ORDER BY log_id DESC";
+	$result = $db_statistics->select("log", "*", [
+		"ORDER" => ["log_id" => "DESC"]
+	]);
 
-   		foreach ($dbh->query($sql) as $row) {
-     		$result[] = $row;
-   		}
-   
 	$cnt_result = count($result);
 
 	for($i=0;$i<$cnt_result;$i++) {
@@ -531,13 +535,13 @@ function show_log($nbr) {
 		echo '<dd class="col-sm-9">'.$result[$i]['log_trigger'].' - '. $result[$i]['log_entry'] .'</dd>';
 		echo '</dl>';
 
-	} // eol $i
+	}
 	
 	if($cnt_result < 1) {
-		echo"<div class='alert alert-info'>No entries.</div>";
+		echo "<div class='alert alert-info'>No entries.</div>";
 	}
 
-} // eo func
+}
 
 
 /**
@@ -545,33 +549,31 @@ function show_log($nbr) {
  */
 
 function add_feed($title, $text, $url, $sub_id, $feed_name, $time = NULL) {
-
-	$dbh = new PDO("sqlite:".CONTENT_DB);
+	
+	global $db_content;
 	$interval = time() - (30 * 86400); // 30 days
-	$del_interval = $dbh->exec("DELETE FROM fc_feeds WHERE feed_time < '$interval'");
-	$del_dublicates = $dbh->exec("DELETE FROM fc_feeds WHERE feed_subid = '$sub_id'");
 
 	if(is_null($time)) {
 		$time = time();
 	}
-
-	$sql = "INSERT INTO fc_feeds	(
-			feed_id , feed_subid, feed_time , feed_name , feed_title , feed_text, feed_url
-			) VALUES (
-			NULL, :sub_id, :time, :feed_name, :title, :text, :url ) ";
-			
-	$sth = $dbh->prepare($sql);
+		
+	/* romove old entries */
+	$db_content->delete("fc_feeds", [
+	"feed_time[<]" => $interval
+	]);
+	/* remove duplicates */
+	$db_content->delete("fc_feeds", [
+	"feed_subid" => $sub_id
+	]);
 	
-	$sth->bindParam(':sub_id', $sub_id, PDO::PARAM_STR);
-	$sth->bindParam(':time', $time, PDO::PARAM_STR);
-	$sth->bindParam(':feed_name', $feed_name, PDO::PARAM_STR);
-	$sth->bindParam(':title', $title, PDO::PARAM_STR);
-	$sth->bindParam(':text', $text, PDO::PARAM_STR);
-	$sth->bindParam(':url', $url, PDO::PARAM_STR);
-
-	$cnt_changes = $sth->execute();
-
-	$dbh = null;
+	$db_content->insert("fc_feeds", [
+		"feed_subid" => "$sub_id",
+		"feed_time" => "$time",
+		"feed_name" => "$feed_name",
+		"feed_title" => "$title",
+		"feed_text" => "$text",
+		"feed_url" => "$url"
+	]);
 
 }
 
@@ -587,23 +589,23 @@ function generate_xml_sitemap() {
 
 	global $languagePack;
 	global $fc_base_url;
+	global $db_content;
 	
 	$file = "../sitemap.xml";
 	$tpl_sitemap = file_get_contents('templates/sitemap.tpl');
 	$tpl_sitemap_urlset = file_get_contents('templates/sitemap_urlset.tpl');
+
 	
-	$dbh = new PDO("sqlite:".CONTENT_DB);	
-	$sqlgp = "SELECT prefs_xml_sitemap FROM fc_preferences WHERE prefs_id = 1";
-	$prefs_xml_sitemap = $dbh->query($sqlgp)->fetchColumn(); // -> returns on|off
-	
-	
+	$prefs_xml_sitemap = $db_content->get("fc_preferences", "prefs_xml_sitemap", [
+	"prefs_id" => 1
+	]);
+		
 	if($prefs_xml_sitemap == "on") {
 	
-		$sql = "SELECT page_id, page_language, page_permalink, page_lastedit, page_status	FROM fc_pages
-				WHERE page_status = 'public' ORDER BY page_lastedit DESC ";
-		    
-		$results = $dbh->query($sql)->fetchAll();
-		$dbh = null;
+
+		$results = $db_content->select("fc_pages", "*", [
+			"ORDER" => ["page_lastedit" => "DESC"]
+		]);
 		
 		$cnt_results = count($results);
 		
@@ -640,14 +642,10 @@ function generate_xml_sitemap() {
 
 function get_custom_fields() {
 
+	global $db_content;
 	$customs_fields = array();
-
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = "SELECT * FROM fc_pages";
 	
-	$cf = $dbh->query($sql);
-	$cf = $cf->fetch(PDO::FETCH_ASSOC);
-	$dbh = null;
+	$cf = $db_content->query('SELECT * FROM fc_pages')->fetch(PDO::FETCH_ASSOC);
 	
 	$cf = array_keys($cf);
 	$cnt_cf = count($cf);
@@ -669,15 +667,11 @@ function get_custom_fields() {
 
 function get_custom_user_fields() {
 
+	global $db_user;
 	$customs_fields = array();
 
-	$dbh = new PDO("sqlite:".USER_DB);
-	$sql = "SELECT * FROM fc_user";
-	
-	$result = $dbh->query($sql);
-	$result = $result->fetch(PDO::FETCH_ASSOC);
-	$dbh = null;
-	
+	$result = $db_user->query('SELECT * FROM fc_user')->fetch(PDO::FETCH_ASSOC);
+		
 	$result = array_keys($result);
 	$cnt_result = count($result);
 	
