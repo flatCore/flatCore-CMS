@@ -17,25 +17,17 @@ function cache_lastedit($num = 5) {
 
 	$num = (int) $num;
 	
-	global $fc_db_content;
 	global $fc_mod_rewrite;
 	global $languagePack;
-	
-	
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	
-	$sql = "SELECT page_id, page_linkname, page_permalink, page_title, page_status, page_lastedit
-			FROM fc_pages
-			WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = '$languagePack'
-			ORDER BY page_lastedit DESC 
-			LIMIT 0 , $num
-			";
-	
-	   foreach ($dbh->query($sql) as $row) {
-	     $result[] = $row;
-	   }  
-	
-	$dbh = null;
+	global $db_content;
+
+	$result = $db_content->select("fc_pages", ["page_id","page_linkname","page_title","page_status","page_lastedit","page_permalink"], [
+		"page_status[!]" => "draft",
+		"page_status[!]" => "ghost",
+		"page_language" => "$languagePack",
+		"ORDER" => ["page_lastedit" => "DESC"],
+		"LIMIT" => [0,$num]
+	]);
 	
 	$count_result = count($result);
 	
@@ -76,23 +68,24 @@ function cache_lastedit($num = 5) {
 function cache_keywords() {
 
 	global $languagePack;
+	global $db_content;
 	
-	$dbh = new PDO("sqlite:".CONTENT_DB);
+	$keywords = $db_content->select("fc_pages", ["page_meta_keywords"], [
+		"page_status[!]" => "draft",
+		"page_status[!]" => "ghost",
+		"page_language" => "$languagePack"
+	]);
 	
-	$sql = "SELECT page_meta_keywords FROM fc_pages
-			WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = '$languagePack' ";
-	
-	foreach ($dbh->query($sql) as $row) {
-		$clean_key = $row['page_meta_keywords'];
+	foreach($keywords as $key) {
+		$clean_key = $key['page_meta_keywords'];
 		$clean_key = preg_replace("/ +/", " ", $clean_key);
 		$clean_key = trim($clean_key, " ");
 		$clean_key = strtolower($clean_key); 
 	  if($clean_key != "") {
 	  	$result .=  "$clean_key,";
-	  }
-	}  
+	  }		
+	}
 	
-	$dbh = null;
 	
 	$result = str_replace(", ",",",$result);
 	$result = substr("$result", 0, -1);
@@ -172,15 +165,9 @@ function fc_delete_smarty_cache($cache_id) {
 
 function cache_url_paths() {
 
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = "SELECT * FROM fc_pages";
+	global $db_content;
 	
-	foreach ($dbh->query($sql) as $row) {
-		$result[] = $row;
-	}  
-	
-	$dbh = null;
-	
+	$result = $db_content->select("fc_pages", "*");	
 	$count_result = count($result);
 	
 	$x = 0;
