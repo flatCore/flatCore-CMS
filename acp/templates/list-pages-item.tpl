@@ -4,7 +4,7 @@
 	
 		<div class="row">
 			<div class="col-lg-7">
-				<h4><a href="{frontend-link}" title="{frontend-link}">{item-linkname}</a> <small>{item-title}</small></h4>
+				<h4><a href="{frontend-link}" title="{frontend-link} [{item-pi}]">{item-linkname}</a> <small>{item-title}</small></h4>
 				<div class="small info-collapse info-show">{item-description}<p>
 						<i class="fas fa-link"></i> {item-permalink} <span class="text-primary">{item-redirect}</span><br>
 						<i class="fas fa-clock"></i> {item-lastedit}		
