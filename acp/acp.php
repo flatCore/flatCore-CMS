@@ -34,6 +34,10 @@ $db_user = new Medoo([
 	'database_file' => USER_DB
 ]);
 
+$db_statistics = new Medoo([
+	'database_type' => 'sqlite',
+	'database_file' => STATS_DB
+]);
 
 require 'core/access.php';
 include 'versions.php';
