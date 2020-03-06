@@ -252,10 +252,10 @@ div#page-sidebar-help {
   z-index: 1000;
   width: 0;
   padding-top: 25px;
-  color: #eee;
+  color: #ccc;
   background: #111;
+  box-shadow: inset 5px 0px 5px -5px #000000;
   height: 100%;
-  border-right: 1px solid #333;
 }
 div#page-sidebar-help #page-sidebar-help-inner {
   padding: 15px;

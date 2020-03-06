@@ -111,11 +111,10 @@ div#page-sidebar-help {
 	z-index: 1000;
 	width: 0;
 	padding-top: 25px;
-	color: @sidebar_color;
-	background: @sidebar_background;
+	color: @sidebar_help_color;
+	background: @sidebar_help_background;
+	box-shadow: inset 5px 0px 5px -5px darken(@sidebar_help_background,20);
 	height: 100%;
-	border-right: 1px solid @content_bg;
-	
 	#page-sidebar-help-inner {
 		padding: 15px;
 	}
