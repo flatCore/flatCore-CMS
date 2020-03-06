@@ -252,6 +252,7 @@ div#page-sidebar-help {
   z-index: 1000;
   width: 0;
   padding-top: 25px;
+  padding-bottom: 50px;
   color: #222;
   background: #eee;
   box-shadow: inset 5px 0px 5px -5px #bbbbbb;
@@ -561,7 +562,7 @@ div#bigHeader {
   bottom: 0;
   right: 0;
   padding: 10px;
-  z-index: 600;
+  z-index: 1005;
   background: rgba(238, 238, 238, 0.9);
   border-top-left-radius: 5px;
   border: 1px solid #c8c8c8;
