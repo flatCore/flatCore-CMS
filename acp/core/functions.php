@@ -642,10 +642,14 @@ function generate_xml_sitemap() {
 
 function get_custom_fields() {
 
-	global $db_content;
 	$customs_fields = array();
+
+	$dbh = new PDO("sqlite:".CONTENT_DB);
+	$sql = "SELECT * FROM fc_pages";
 	
-	$cf = $db_content->query('SELECT * FROM fc_pages')->fetch(PDO::FETCH_ASSOC);
+	$cf = $dbh->query($sql);
+	$cf = $cf->fetch(PDO::FETCH_ASSOC);
+	$dbh = null;
 	
 	$cf = array_keys($cf);
 	$cnt_cf = count($cf);
@@ -667,11 +671,15 @@ function get_custom_fields() {
 
 function get_custom_user_fields() {
 
-	global $db_user;
 	$customs_fields = array();
 
-	$result = $db_user->query('SELECT * FROM fc_user')->fetch(PDO::FETCH_ASSOC);
-		
+	$dbh = new PDO("sqlite:".USER_DB);
+	$sql = "SELECT * FROM fc_user";
+	
+	$result = $dbh->query($sql);
+	$result = $result->fetch(PDO::FETCH_ASSOC);
+	$dbh = null;
+	
 	$result = array_keys($result);
 	$cnt_result = count($result);
 	
