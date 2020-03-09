@@ -397,8 +397,8 @@ $sth->execute();
 $all_files = $sth->fetch();
 $nbr_of_files = $all_files['all'];
 
-$files_per_page = 24;
-$show_numbers = 6;
+$files_per_page = 36;
+$show_numbers = 9;
 $start = 0;
 $disable_next_start = '';
 $disable_prev_start = '';
