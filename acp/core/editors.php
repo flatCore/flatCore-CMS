@@ -14,7 +14,7 @@ if(isset($page_template)) {
 }
 
 if($editor_tpl_folder == 'use_standard') {
-	$prefs_template = $db_content->select("fc_preferences", "prefs_template", [
+	$prefs_template = $db_content->get("fc_preferences", "prefs_template", [
 		"prefs_id" => 1
 	]);
 	$editor_tpl_folder = $prefs_template;
@@ -32,5 +32,4 @@ if(!is_file($tinyMCE_config)) {
 }
 
 $tinyMCE_config_contents = file_get_contents($tinyMCE_config);
-
 ?>
