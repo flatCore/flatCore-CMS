@@ -1,5 +1,5 @@
 <?php
-
+//error_reporting(E_ALL ^E_NOTICE);
 //prohibit unauthorized access
 require 'core/access.php';
 $system_snippets_str = "'footer_text','extra_content_text','agreement_text','account_confirm','account_confirm_mail','no_access'";
@@ -88,65 +88,64 @@ if(isset($_POST['save_snippet'])) {
 		$string_labels = "";
 	}	
 
-
-	$sql_update = "UPDATE fc_textlib
-						SET textlib_content = :textlib_content, textlib_notes = :textlib_notes, textlib_groups = :textlib_groups,
-								textlib_name = :textlib_name, textlib_title = :textlib_title, textlib_keywords = :textlib_keywords,
-								textlib_lang = :textlib_lang, textlib_priority = :textlib_priority,
-								textlib_lastedit = :textlib_lastedit, textlib_lastedit_from = :textlib_lastedit_from,
-								textlib_template = :textlib_template, textlib_theme = :textlib_theme, textlib_images = :textlib_images,
-								textlib_labels = :textlib_labels, textlib_classes = :textlib_classes,
-								textlib_permalink = :textlib_permalink, textlib_permalink_title = :textlib_permalink_title, textlib_permalink_name = :textlib_permalink_name,
-								textlib_permalink_classes = :textlib_permalink_classes
-						WHERE textlib_id = :snip_id";
-	
-	$sql_insert = "INSERT INTO fc_textlib (
-							textlib_content, textlib_notes, textlib_groups, textlib_name, textlib_title, textlib_keywords, textlib_lang, textlib_priority,
-							textlib_lastedit, textlib_lastedit_from, textlib_template, textlib_theme, textlib_images, textlib_labels,
-							textlib_classes, textlib_permalink, textlib_permalink_name, textlib_permalink_title, textlib_permalink_classes
-						) VALUES (
-							:textlib_content, :textlib_notes, :textlib_groups, :textlib_name, :textlib_title, :textlib_keywords, :textlib_lang, :textlib_priority,
-							:textlib_lastedit, :textlib_lastedit_from, :textlib_template, :textlib_theme, :textlib_images, :textlib_labels,
-							:textlib_classes, :textlib_permalink, :textlib_permalink_name, :textlib_permalink_title, :textlib_permalink_classes
-						)";	
-						
 	
 	if($_POST['modus'] == 'update') {
 		
 		$snip_id = (int) $_POST['snip_id'];
-		$sth = $db->prepare($sql_update);
-		$sth->bindParam(':snip_id', $snip_id, PDO::PARAM_INT);
+		
+		$data = $db_content->update("fc_textlib", [
+			"textlib_content" =>  $_POST['textlib_content'],
+			"textlib_name" => $snippet_name,
+			"textlib_lang" => $_POST['sel_language'],
+			"textlib_notes" => $_POST['sel_language'],
+			"textlib_groups" => $_POST['snippet_groups'],
+			"textlib_title" => $_POST['snippet_title'],
+			"textlib_keywords" => $_POST['snippet_keywords'],
+			"textlib_priority" => $_POST['snippet_priority'],
+			"textlib_lastedit" => $timestamp,
+			"textlib_lastedit_from" => $_SESSION['user_nick'],
+			"textlib_template" => $snippet_template,
+			"textlib_theme" => $snippet_theme,
+			"textlib_images" => $snippet_thumbnail,
+			"textlib_labels" => $string_labels,
+			"textlib_classes" => $_POST['snippet_classes'],
+			"textlib_permalink" => $_POST['snippet_permalink'],
+			"textlib_permalink_title" => $_POST['snippet_permalink_title'],
+			"textlib_permalink_name" => $_POST['snippet_permalink_name'],
+			"textlib_permalink_classes" => $_POST['snippet_permalink_classes']
+		], [
+		"textlib_id" => $snip_id
+		]);
 	
 	} else {
 		
-		$sth = $db->prepare($sql_insert);
+		
+		$data = $db_content->insert("fc_textlib", [
+			"textlib_content" =>  $_POST['textlib_content'],
+			"textlib_name" => $snippet_name,
+			"textlib_lang" => $_POST['sel_language'],
+			"textlib_notes" => $_POST['sel_language'],
+			"textlib_groups" => $_POST['snippet_groups'],
+			"textlib_title" => $_POST['snippet_title'],
+			"textlib_keywords" => $_POST['snippet_keywords'],
+			"textlib_priority" => $_POST['snippet_priority'],
+			"textlib_lastedit" => $timestamp,
+			"textlib_lastedit_from" => $_SESSION['user_nick'],
+			"textlib_template" => $snippet_template,
+			"textlib_theme" => $snippet_theme,
+			"textlib_images" => $snippet_thumbnail,
+			"textlib_labels" => $string_labels,
+			"textlib_classes" => $_POST['snippet_classes'],
+			"textlib_permalink" => $_POST['snippet_permalink'],
+			"textlib_permalink_title" => $_POST['snippet_permalink_title'],
+			"textlib_permalink_name" => $_POST['snippet_permalink_name'],
+			"textlib_permalink_classes" => $_POST['snippet_permalink_classes']
+		]);
+		
 	}
 	
 	
-	$sth->bindParam(':textlib_content', $_POST['textlib_content'], PDO::PARAM_STR);
-	$sth->bindParam(':textlib_name', $snippet_name, PDO::PARAM_STR);
-	$sth->bindParam(':textlib_lang', $_POST['sel_language'], PDO::PARAM_STR);
-	$sth->bindParam(':textlib_notes', $_POST['textlib_notes'], PDO::PARAM_STR);
-	$sth->bindParam(':textlib_keywords', $_POST['snippet_keywords'], PDO::PARAM_STR);
-	$sth->bindParam(':textlib_title', $_POST['snippet_title'], PDO::PARAM_STR);
-	$sth->bindParam(':textlib_groups', $_POST['snippet_groups'], PDO::PARAM_STR);
-	$sth->bindParam(':textlib_classes', $_POST['snippet_classes'], PDO::PARAM_STR);
-	$sth->bindParam(':textlib_permalink', $_POST['snippet_permalink'], PDO::PARAM_STR);
-	$sth->bindParam(':textlib_permalink_title', $_POST['snippet_permalink_title'], PDO::PARAM_STR);
-	$sth->bindParam(':textlib_permalink_name', $_POST['snippet_permalink_name'], PDO::PARAM_STR);
-	$sth->bindParam(':textlib_permalink_classes', $_POST['snippet_permalink_classes'], PDO::PARAM_STR);
-	$sth->bindParam(':textlib_template', $snippet_template, PDO::PARAM_STR);
-	$sth->bindParam(':textlib_theme', $snippet_theme, PDO::PARAM_STR);
-	$sth->bindParam(':textlib_images', $snippet_thumbnail, PDO::PARAM_STR);
-	$sth->bindParam(':textlib_lastedit', $timestamp, PDO::PARAM_STR);
-	$sth->bindParam(':textlib_lastedit_from', $_SESSION['user_nick'], PDO::PARAM_STR);
-	$sth->bindParam(':textlib_labels', $string_labels, PDO::PARAM_STR);
-	$sth->bindParam(':textlib_priority', $_POST['snippet_priority'], PDO::PARAM_INT);
-	$cnt_changes = $sth->execute();
-	
-	$db = null;
-	
-	if($cnt_changes == TRUE) {
+	if($data->rowCount() > 0) {
 		$sys_message = '{OKAY} '.$lang['db_changed'];
 		record_log("$_SESSION[user_nick]","edit textlib <strong>$snippet_name</strong>","2");
 	} else {
