@@ -40,7 +40,7 @@ if($upload_type == 'images') {
 		$target = "$destination/$img_name";
 
 				
-		if($_REQUEST['unchanged'] == 'yes') {
+		if($_REQUEST['unchanged'] == 'yes' OR $suffix == 'svg') {
 			@move_uploaded_file($tmp_name, $target);
 		} else {
 			resize_image($tmp_name,$target, $max_w,$max_h,90);

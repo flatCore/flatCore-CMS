@@ -509,19 +509,17 @@ for($i=0;$i<$cnt_get_files;$i++) {
 	
 	
 	$tpl_list = $tpl_file;
-
-
-	$imgsize = getimagesize($filename);
 	
-	if($imgsize[0] > 0) {
+	$fileinfo = pathinfo($filename);
+	$suffix = $fileinfo['extension'];
+	$ext = array("jpeg","jpg","png","svg","gif");
+	
+	if(in_array($suffix,$ext) === true) {
 		$set_style = '';
 		$preview_img = "<img src='$filename' class='card-img-top'>";
 		$tpl_list = str_replace('{preview_link}', $filename, $tpl_list);
-	} else {
-		$set_style = "background-image: url(images/no-preview.gif); background-position: center; background-repeat: no-repeat;";
-		$preview_img = '';
-		$tpl_list = str_replace('{preview_link}', $filename, $tpl_list);
 	}
+
 	
 	if(is_dir($filename)) {
 		$set_style = '';
