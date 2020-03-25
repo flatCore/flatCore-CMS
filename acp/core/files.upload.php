@@ -18,7 +18,7 @@ $files_folder = basename($path_files);
 <div class="row">
 	<div class="col-md-9">
 		<label><?php echo $lang['upload_destination']; ?></label>
-		<select name="upload_destination" class="form-control">
+		<select name="upload_destination" class="form-control custom-select">
 			<optgroup label="<?php echo $lang['upload_target_images']; ?>">
 				<option value="<?php echo $path_img; ?>"><?php echo $img_folder; ?></option>
 				<?php
