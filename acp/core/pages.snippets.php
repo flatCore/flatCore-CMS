@@ -97,7 +97,7 @@ if(isset($_POST['save_snippet'])) {
 			"textlib_content" =>  $_POST['textlib_content'],
 			"textlib_name" => $snippet_name,
 			"textlib_lang" => $_POST['sel_language'],
-			"textlib_notes" => $_POST['sel_language'],
+			"textlib_notes" => $_POST['textlib_notes'],
 			"textlib_groups" => $_POST['snippet_groups'],
 			"textlib_title" => $_POST['snippet_title'],
 			"textlib_keywords" => $_POST['snippet_keywords'],
@@ -124,7 +124,7 @@ if(isset($_POST['save_snippet'])) {
 			"textlib_content" =>  $_POST['textlib_content'],
 			"textlib_name" => $snippet_name,
 			"textlib_lang" => $_POST['sel_language'],
-			"textlib_notes" => $_POST['sel_language'],
+			"textlib_notes" => $_POST['textlib_notes'],
 			"textlib_groups" => $_POST['snippet_groups'],
 			"textlib_title" => $_POST['snippet_title'],
 			"textlib_keywords" => $_POST['snippet_keywords'],
@@ -170,29 +170,28 @@ if(isset($_POST['snippet_filter']) && (trim($_POST['snippet_filter']) != '')) {
 
 /* remove keyword from filter list */
 if($_REQUEST['rm_keyword'] != "") {
-	$all_filter = explode(" ", $_SESSION['snippet_filter']);
+	$all_snippet_filter = explode(" ", $_SESSION['snippet_filter']);
 	unset($_SESSION['snippet_filter'],$f);
-	foreach($all_filter as $f) {
+	foreach($all_snippet_filter as $f) {
 		if($_REQUEST['rm_keyword'] == "$f") { continue; }
 		if($f == "") { continue; }
 		$_SESSION['snippet_filter'] .= "$f ";
 	}
-	unset($all_filter);
+	unset($all_snippet_filter);
 }
 
 if($_SESSION['snippet_filter'] != "") {
-	unset($all_filter);
-	$all_filter = explode(" ", $_SESSION['snippet_filter']);
-	foreach($all_filter as $f) {
+	unset($all_snippet_filter);
+	$btn_remove_keyword = '';
+	$all_snippet_filter = explode(" ", $_SESSION['snippet_filter']);
+	foreach($all_snippet_filter as $f) {
 		if($_REQUEST['rm_keyword'] == "$f") { continue; }
 		if($f == "") { continue; }
 		$btn_remove_keyword .= '<a class="btn btn-fc btn-sm" href="acp.php?tn=pages&sub=snippets&rm_keyword='.$f.'">'.$icon['times_circle'].' '.$f.'</a> ';
-		$set_keyword_filter .= "(textlib_name like '%$f%' OR textlib_title like '%$f%' OR textlib_keywords like '%$f%') AND";
+		$set_snippet_keyword_filter .= "(textlib_name like '%$f%' OR textlib_title like '%$f%' OR textlib_keywords like '%$f%') AND";
 	}
 }
-
-$set_keyword_filter = substr("$set_keyword_filter", 0, -4); // cut the last ' AND'
-
+$set_snippet_keyword_filter = substr("$set_snippet_keyword_filter", 0, -4); // cut the last ' AND'
 
 $snippet_lang_filter = "";
 for($i=0;$i<count($arr_lang);$i++) {
@@ -214,7 +213,6 @@ for($i=0;$i<count($fc_labels);$i++) {
 $snippet_label_filter = substr("$snippet_label_filter", 0, -3); // cut the last ' OR'
 
 
-
 $filter_string = "WHERE textlib_id IS NOT NULL";
 
 if($_SESSION['type'] == 'all') {
@@ -229,8 +227,8 @@ if($filter_type != "") {
 	$filter_string .= " AND ($filter_type) ";
 }
 
-if($set_keyword_filter != "") {
-	$filter_string .= " AND $set_keyword_filter";
+if($set_snippet_keyword_filter != "") {
+	$filter_string .= " AND $set_snippet_keyword_filter";
 }
 
 if($snippet_label_filter != "") {

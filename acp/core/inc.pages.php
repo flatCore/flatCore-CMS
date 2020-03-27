@@ -3,7 +3,6 @@
 //prohibit unauthorized access
 require 'core/access.php';
 
-
 switch ($sub) {
 
 	case "list":
