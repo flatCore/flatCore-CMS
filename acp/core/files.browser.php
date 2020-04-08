@@ -43,6 +43,10 @@ if((isset($_GET['sort_by'])) && ($_GET['sort_by'] == 'time')) {
 	$_SESSION['sort_by'] = 'media_lastedit';
 }
 
+if(!isset($_SESSION['sort_direction'])) {
+	$_SESSION['sort_direction'] = 'DESC';
+}
+
 if(isset($_GET['sort_direction'])) {
 	switch_sort();
 }
