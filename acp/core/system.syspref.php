@@ -8,38 +8,27 @@ require 'core/access.php';
  */
 
 foreach($_POST as $key => $val) {
-	$$key = @strip_tags($val); 
+	$$key = @htmlspecialchars($val, ENT_QUOTES); 
 }
 
 
 /* save contacts */
 if(isset($_POST['save_prefs_contacts'])) {
 	
-		$pdo_fields = array(
-		'prefs_mailer_adr' => 'STR',
-		'prefs_mailer_name' => 'STR',
-		'prefs_mailer_type' => 'STR',
-		'prefs_smtp_host' => 'STR',
-		'prefs_smtp_port' => 'STR',
-		'prefs_smtp_encryption' => 'STR',
-		'prefs_smtp_username' => 'STR',
-		'prefs_smtp_psw' => 'STR'
-		
-	);
 	
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = generate_sql_update_str($pdo_fields,"fc_preferences","WHERE prefs_id = 1");
-	$sth = $dbh->prepare($sql);
-	$sth->bindParam(':prefs_mailer_adr', $_POST['prefs_mailer_adr'], PDO::PARAM_STR);
-	$sth->bindParam(':prefs_mailer_name', $_POST['prefs_mailer_name'], PDO::PARAM_STR);
-	$sth->bindParam(':prefs_mailer_type', $_POST['prefs_mailer_type'], PDO::PARAM_STR);
-	$sth->bindParam(':prefs_smtp_host', $_POST['prefs_smtp_host'], PDO::PARAM_STR);
-	$sth->bindParam(':prefs_smtp_port', $_POST['prefs_smtp_port'], PDO::PARAM_STR);
-	$sth->bindParam(':prefs_smtp_encryption', $_POST['prefs_smtp_encryption'], PDO::PARAM_STR);
-	$sth->bindParam(':prefs_smtp_username', $_POST['prefs_smtp_username'], PDO::PARAM_STR);
-	$sth->bindParam(':prefs_smtp_psw', $_POST['prefs_smtp_psw'], PDO::PARAM_STR);
-	$cnt_changes = $sth->execute();
-	$dbh = null;
+	$data = $db_content->update("fc_preferences", [
+		"prefs_mailer_adr" =>  $prefs_mailer_adr,
+		"prefs_mailer_name" => $prefs_mailer_name,
+		"prefs_mailer_type" => $_POST['prefs_mailer_type'],
+		"prefs_smtp_host" => $_POST['prefs_smtp_host'],
+		"prefs_smtp_port" => $_POST['prefs_smtp_port'],
+		"prefs_smtp_encryption" => $_POST['prefs_smtp_encryption'],
+		"prefs_smtp_username" => $_POST['prefs_smtp_username'],
+		"prefs_smtp_psw" => $_POST['prefs_smtp_psw']
+	], [
+	"prefs_id" => 1
+	]);
+
 }
 
 /* save descriptions */
@@ -51,75 +40,51 @@ if(isset($_POST['save_prefs_descriptions'])) {
 		$prefs_publisher_mode = 'no';
 	}
 	
-	$pdo_fields = array(
-		'prefs_pagename' => 'STR',
-		'prefs_pagedescription' => 'STR',
-		'prefs_pagetitle' => 'STR',
-		'prefs_pagesubtitle' => 'STR',
-		'prefs_default_publisher' => 'STR',
-		'prefs_publisher_mode' => 'STR'
-	);
+	$data = $db_content->update("fc_preferences", [
+		"prefs_pagename" =>  $prefs_pagename,
+		"prefs_pagedescription" => $prefs_pagedescription,
+		"prefs_pagetitle" => $prefs_pagetitle,
+		"prefs_pagesubtitle" => $prefs_pagesubtitle,
+		"prefs_default_publisher" => $prefs_default_publisher,
+		"prefs_publisher_mode" => $prefs_publisher_mode
+	], [
+	"prefs_id" => 1
+	]);
 	
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = generate_sql_update_str($pdo_fields,"fc_preferences","WHERE prefs_id = 1");
-	$sth = $dbh->prepare($sql);
-	$sth->bindParam(':prefs_pagename', $_POST['prefs_pagename'], PDO::PARAM_STR);
-	$sth->bindParam(':prefs_pagedescription', $_POST['prefs_pagedescription'], PDO::PARAM_STR);
-	$sth->bindParam(':prefs_pagetitle', $_POST['prefs_pagetitle'], PDO::PARAM_STR);
-	$sth->bindParam(':prefs_pagesubtitle', $_POST['prefs_pagesubtitle'], PDO::PARAM_STR);
-	$sth->bindParam(':prefs_default_publisher', $_POST['prefs_default_publisher'], PDO::PARAM_STR);
-	$sth->bindParam(':prefs_publisher_mode', $prefs_publisher_mode, PDO::PARAM_STR);
-	$cnt_changes = $sth->execute();
-	$dbh = null;
 }
 
 /* save system settings */
 
 if(isset($_POST['save_system'])) {
-	
-	$pdo_fields = array(
-		'prefs_cms_domain' => 'STR',
-		'prefs_cms_ssl_domain' => 'STR',
-		'prefs_cms_base' => 'STR'
-	);
-	
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = generate_sql_update_str($pdo_fields,"fc_preferences","WHERE prefs_id = 1");
-	$sth = $dbh->prepare($sql);
-	$sth->bindParam(':prefs_cms_domain', $_POST['prefs_cms_domain'], PDO::PARAM_STR);
-	$sth->bindParam(':prefs_cms_ssl_domain', $_POST['prefs_cms_ssl_domain'], PDO::PARAM_STR);
-	$sth->bindParam(':prefs_cms_base', $_POST['prefs_cms_base'], PDO::PARAM_STR);
-	$cnt_changes = $sth->execute();
-	$dbh = null;	
-		
+
+	$data = $db_content->update("fc_preferences", [
+		"prefs_cms_domain" =>  $prefs_cms_domain,
+		"prefs_cms_ssl_domain" => $prefs_cms_ssl_domain,
+		"prefs_cms_base" => $prefs_cms_base
+	], [
+	"prefs_id" => 1
+	]);
+
 }
 
 /* save thumbnail */
 
 if(isset($_POST['save_prefs_thumbnail'])) {
+	
+	$data = $db_content->update("fc_preferences", [
+		"prefs_pagethumbnail" =>  $prefs_pagethumbnail,
+		"prefs_pagethumbnail_prefix" => $prefs_pagethumbnail_prefix,
+		"prefs_pagefavicon" => $prefs_pagefavicon
+	], [
+	"prefs_id" => 1
+	]);
 
-	$pdo_fields = array(
-		'prefs_pagethumbnail' => 'STR',
-		'prefs_pagethumbnail_prefix' => 'STR',
-		'prefs_pagefavicon' => 'STR'
-	);
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = generate_sql_update_str($pdo_fields,"fc_preferences","WHERE prefs_id = 1");
-	$sth = $dbh->prepare($sql);
-	generate_bindParam_str($pdo_fields,$sth);
-	$cnt_changes = $sth->execute();
-	$dbh = null;
 }
 
 
 
 /* save user preferences */
 if(isset($_POST['save_prefs_user'])) {
-	
-	$pdo_fields = array(
-		'prefs_userregistration' => 'STR',
-		'prefs_showloginform' => 'STR'
-	);
 	
 	if(isset($_POST['prefs_userregistration'])) {
 		$prefs_userregistration = 'yes';
@@ -132,30 +97,20 @@ if(isset($_POST['save_prefs_user'])) {
 	} else {
 		$prefs_showloginform = 'no';
 	}
+
+	$data = $db_content->update("fc_preferences", [
+		"prefs_userregistration" =>  $prefs_userregistration,
+		"prefs_showloginform" => $prefs_showloginform
+	], [
+	"prefs_id" => 1
+	]);
 	
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = generate_sql_update_str($pdo_fields,"fc_preferences","WHERE prefs_id = 1");
-	$sth = $dbh->prepare($sql);
-	$sth->bindParam(':prefs_userregistration', $prefs_userregistration, PDO::PARAM_STR);
-	$sth->bindParam(':prefs_showloginform', $prefs_showloginform, PDO::PARAM_STR);
-	$cnt_changes = $sth->execute();
-	$dbh = null;
 }
 
 
 /* save upload preferences */
 if(isset($_POST['save_prefs_upload'])) {
 	
-		$pdo_fields = array(
-		'prefs_imagesuffix' => 'STR',
-		'prefs_maximagewidth' => 'INT',
-		'prefs_maximageheight' => 'INT',
-		'prefs_filesuffix' => 'STR',
-		'prefs_maxfilesize' => 'INT',
-		'prefs_showfilesize' => 'STR',
-		'prefs_uploads_remain_unchanged' => 'STR'
-	);
-
 	if(isset($_POST['prefs_showfilesize'])) {
 		$prefs_showfilesize = 'yes';
 	} else {
@@ -166,16 +121,21 @@ if(isset($_POST['save_prefs_upload'])) {
 		$prefs_upload_unchanged = 'yes';
 	} else {
 		$prefs_upload_unchanged = 'no';
-	}	
+	}
 	
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = generate_sql_update_str($pdo_fields,"fc_preferences","WHERE prefs_id = 1");
-	$sth = $dbh->prepare($sql);
-	generate_bindParam_str($pdo_fields,$sth);
-	$sth->bindParam(':prefs_showfilesize', $prefs_showfilesize, PDO::PARAM_STR);
-	$sth->bindParam(':prefs_uploads_remain_unchanged', $prefs_upload_unchanged, PDO::PARAM_STR);
-	$cnt_changes = $sth->execute();
-	$dbh = null;
+	$data = $db_content->update("fc_preferences", [
+		"prefs_imagesuffix" =>  $prefs_imagesuffix,
+		"prefs_maximagewidth" => $prefs_maximagewidth,
+		"prefs_maximageheight" => $prefs_maximageheight,
+		"prefs_filesuffix" => $prefs_filesuffix,
+		"prefs_maxfilesize" => $prefs_maxfilesize,
+		"prefs_showfilesize" => $prefs_showfilesize,
+		"prefs_uploads_remain_unchanged" => $prefs_upload_unchanged
+	], [
+	"prefs_id" => 1
+	]);	
+	
+
 }
 
 /* save head preferences */
@@ -604,7 +564,7 @@ echo '<div id="uploads" class="pt-2"></div>';
 
 echo '<fieldset>';
 echo '<legend>'.$lang['f_prefs_uploads'].'</legend>';
-echo '<form action="acp.php?tn=system&sub=sys_pref" method="POST" class="form-horizontal">';
+echo '<form action="acp.php?tn=system&sub=sys_pref#uploads" method="POST" class="form-horizontal">';
 
 echo tpl_form_control_group('',$lang['f_prefs_imagesuffix'],"<input class='form-control' type='text' name='prefs_imagesuffix' value='$prefs_imagesuffix'>");
 
