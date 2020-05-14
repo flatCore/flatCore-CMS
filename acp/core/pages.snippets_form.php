@@ -209,6 +209,9 @@ echo '<label class="btn btn-sm btn-fc w-100"><input type="radio" name="optEditor
 echo '</div>';
 echo '</div>';
 
+if($textlib_lang == '' && $prefs_default_language != '') {
+	$textlib_lang = $prefs_default_language;
+}
 
 $select_textlib_language  = '<select name="sel_language" class="custom-select form-control">';
 for($i=0;$i<count($arr_lang);$i++) {

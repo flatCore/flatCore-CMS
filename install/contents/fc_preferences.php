@@ -17,6 +17,7 @@ $cols = array(
   "prefs_nbr_page_versions" => 'INTEGER',
   "prefs_template" => 'VARCHAR',
   "prefs_usertemplate" => 'VARCHAR',
+  "prefs_default_language" => 'VARCHAR',
   "prefs_imagesuffix" => 'VARCHAR',
   "prefs_maximagewidth" => 'VARCHAR',
   "prefs_maximageheight" => 'VARCHAR',

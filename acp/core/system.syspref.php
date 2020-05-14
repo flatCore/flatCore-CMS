@@ -67,6 +67,20 @@ if(isset($_POST['save_system'])) {
 
 }
 
+
+/* save default language */
+
+if(isset($_POST['save_prefs_language'])) {
+	
+	$data = $db_content->update("fc_preferences", [
+		"prefs_default_language" =>  $prefs_default_language
+	], [
+	"prefs_id" => 1
+	]);
+		
+}
+
+
 /* save thumbnail */
 
 if(isset($_POST['save_prefs_thumbnail'])) {
@@ -350,6 +364,35 @@ echo tpl_form_control_group('','',"<input type='submit' class='btn btn-save' nam
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
+
+/* default language */
+echo '<div id="language" class="pt-2"></div>';
+
+echo '<fieldset>';
+echo '<legend>'.$lang['f_page_language'].'</legend>';
+echo '<form action="acp.php?tn=system&sub=sys_pref#language" method="POST" class="form-horizontal">';
+
+$get_all_languages = get_all_languages();
+
+$select_default_language = '<select name="prefs_default_language" class="form-control custom-select">';
+foreach($get_all_languages as $langs) {
+	
+	$selected = "";
+	if($prefs_default_language == $langs['lang_folder']) {
+		$selected = "selected";
+	}
+	
+	$select_default_language .= '<option '.$selected.' value="'.$langs['lang_folder'].'">'.$langs['lang_desc'].'</option>';
+}
+$select_default_language .= '</select>';
+
+echo tpl_form_control_group('',$lang['system_default_language'],$select_default_language);
+
+echo '<input type="submit" class="btn btn-save" name="save_prefs_language" value="'.$lang['save'].'">';
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+echo '</form>';
+echo '</fieldset>';
+
 
 
 /* default Thumbnail */
@@ -776,6 +819,7 @@ echo '<div class="card mt-4">';
 echo '<div class="list-group list-group-flush">';
 
 echo '<a href="#descriptions" class="list-group-item list-group-item-ghost">'.$lang['f_prefs_descriptions'].'</a>';
+echo '<a href="#language" class="list-group-item list-group-item-ghost">'.$lang['f_page_language'].'</a>';
 echo '<a href="#thumbnail" class="list-group-item list-group-item-ghost">'.$lang['page_thumbnail_default'].'</a>';
 echo '<a href="#system" class="list-group-item list-group-item-ghost">System</a>';
 echo '<a href="#mails" class="list-group-item list-group-item-ghost">System E-Mail</a>';

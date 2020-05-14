@@ -428,6 +428,10 @@ echo '</div>';
 /* Select Language */
 $arr_lang = get_all_languages();
 
+if($page_language == '' && $prefs_default_language != '') {
+	$page_language = $prefs_default_language;
+}
+
 $select_page_language  = '<select name="page_language" class="custom-select form-control">';
 for($i=0;$i<count($arr_lang);$i++) {
 

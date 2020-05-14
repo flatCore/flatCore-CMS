@@ -78,6 +78,7 @@ $lang['system_modul_preferences'] = "Module preferences";
 $lang['system_backup'] = "Backup";
 $lang['system_update'] = "Update";
 $lang['system_misc'] = "Misc";
+$lang['system_default_language'] = 'Default Language';
 $lang['search_for_update'] = "Search for Update";
 $lang['system_statistics'] = "Statistics";
 $lang['activate_logfile'] = "Activate Logfile";
