@@ -771,8 +771,8 @@ $(function(){
                 if(maxlifetime == 15) {
 	                $('#expireDiv').addClass('expire-danger');
                 }
-                if(maxlifetime == 0) {
-	                //window.location.href = "/index.php?goto=logout";
+                if(maxlifetime < 0) {
+	                window.location.href = "/index.php?goto=logout";
                 }
                 --maxlifetime;
             }, 1000);
