@@ -46,6 +46,9 @@ function fc_crawler($id='') {
 	
 	$check_page = $fc_base_url.$url;
 	
+	if(isset($_POST['start_index']) && $_POST['start_index'] != '') {
+		$check_page = $_POST['start_index'];
+	}
 	
 	//echo '<div class="alert alert-info">checking: '.$check_page.'</div>';
 	

@@ -44,6 +44,11 @@ if(isset($_GET['a']) && $_GET['a'] == 'start') {
 	}	
 }
 
+if(isset($_POST['start_index']) && $_POST['start_index'] != '') {
+	fc_crawler($_POST['start_index']);
+}
+
+
 if(isset($_GET['a']) && $_GET['a'] == 'update') {
 	$fc_upi = fc_update_page_index($_GET['id']);
 	$status_msg = 'Script running '.$fc_upi['duration'].' seconds';
@@ -351,16 +356,19 @@ echo '<div class="scroll-box">';
 echo '<div class="p-3">';
 
 echo '<h5>Start</h5>';
+echo '<form action="acp.php?tn=pages&sub=index" method="POST">';
 echo '<div class="row">';
 echo '<div class="col-8">';
-echo '<pre>'.$fc_base_url.'</pre>';
+echo '<input type="text" class="form-control" name="start_index" value="'.$fc_base_url.'">';
 echo '</div>';
 echo '<div class="col-4">';
-echo '<a href="acp.php?tn=pages&sub=index&a=start" class="btn btn-save btn-block" title="'.$lang['btn_start_index'].'">'.$icon['sitemap'].'</a>';
+echo '<button type="submit" name="start" class="btn btn-save btn-block">'.$icon['sitemap'].'</button>';
+echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</div>';
 echo '</div>';
+echo '</form>';
 
-echo '<div class="btn-group d-flex" role="group">';
+echo '<div class="btn-group d-flex mt-3" role="group">';
 echo '<a href="acp.php?tn=pages&sub=index&a=index_bulk" class="btn btn-save">'.$icon['sitemap'].' '.$lang['btn_bulk_index'].'</a>';
 echo '<a href="acp.php?tn=pages&sub=index&a=update_bulk" class="btn btn-save">'.$icon['sync_alt'].' '.$lang['btn_bulk_update'].'</a>';
 echo '</div>';
