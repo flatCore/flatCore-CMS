@@ -133,12 +133,17 @@ if($p == "" OR $p == "portal") {
 
 /**
  * 404 page
- * if there is a page with permalink == 404, get the data
+ * if there is a page with type_of_use == 404, get the data
  * if not, we use the 404.tpl file
  */
 if($p == "404") {
-	list($page_contents,$fc_nav,$fc_prefs) = get_content('404','permalink');
+	list($page_contents,$fc_nav,$fc_prefs) = get_content('404','type_of_use');
 }
+
+if($page_contents['page_type_of_use'] == 'register') {
+	$p = 'register';
+}
+
 
 /* build absolute URL */
 if($fc_prefs['prefs_cms_ssl_domain'] != '') {
@@ -251,11 +256,9 @@ foreach($lang as $key => $val) {
 	$smarty->assign("lang_$key", $val);
 }
 
-if($languagePack == 'de') {
-	$smarty->assign("search_uri", '/suche/');
-} else {
-	$smarty->assign("search_uri", '/search/');
-}
+$tyo_search = fc_get_type_of_use_pages('search');
+$smarty->assign("search_uri", '/'.$tyo_search['page_permalink']);
+
 
 $smarty->assign('languagePack', $languagePack);
 

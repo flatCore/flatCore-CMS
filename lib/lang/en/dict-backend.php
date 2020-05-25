@@ -219,6 +219,15 @@ $lang['f_page_funnel_uri'] = "Funnel URI";
 $lang['f_page_title'] = "Page Title";
 $lang['f_page_status'] = "Status";
 
+$lang['f_page_type_of_use'] = "Type of Use";
+$lang['type_of_use_normal'] = "Normal Page";
+$lang['type_of_use_search'] = "Search";
+$lang['type_of_use_profile'] = "Profile";
+$lang['type_of_use_register'] = "Registration";
+$lang['type_of_use_password'] = "Reset Password";
+$lang['type_of_use_sitemap'] = "Sitemap";
+$lang['type_of_use_404'] = "404 (Page not found)";
+
 $lang['legend_structured_pages'] = "Ordered Pages";
 $lang['legend_unstructured_pages'] = "Single Pages";
 

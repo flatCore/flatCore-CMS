@@ -143,6 +143,31 @@ $(function() {
 });
 </script>
 <?php
+	
+
+echo '<div class="form-group">';
+echo '<label>'.$lang['f_page_type_of_use'].'</label>';
+$page_types = array('normal', 'register', 'profile', 'search', 'password', '404');
+$select_page_type_of_use  = '<select name="page_type_of_use" class="custom-select form-control">';
+
+foreach($page_types as $types) {
+	$str = 'type_of_use_'.$types;
+	$name = $lang[$str];
+	$sel_page_type = '';
+	if($page_type_of_use == $types) {
+		$sel_page_type = 'selected';
+	}
+	
+	$select_page_type_of_use .= '<option value="'.$types.'" '.$sel_page_type.'>'.$name.'</option>';
+}
+
+
+$select_page_type_of_use .= '</select>';
+
+echo $select_page_type_of_use;
+
+echo '</div>';
+	
 
 echo '<hr>';
 

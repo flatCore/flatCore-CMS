@@ -12,6 +12,10 @@ require 'core/access.php';
 $show_form = "true";
 $modus = "new";
 
+foreach($_POST as $key => $val) {
+	$$key = @htmlspecialchars($val, ENT_QUOTES); 
+}
+
 if(!empty($_REQUEST['editpage'])) {
 	$editpage = (int) $_REQUEST['editpage'];
 	$modus = "update";
@@ -34,6 +38,7 @@ $pdo_fields = array(
 	'page_permalink' => 'STR',
 	'page_permalink_short' => 'STR',
 	'page_hash' => 'STR',
+	'page_type_of_use' => 'STR',
 	'page_redirect' => 'STR',
 	'page_redirect_code' => 'STR',
 	'page_funnel_uri' => 'STR',
@@ -70,6 +75,7 @@ $pdo_fields_new = array(
 	'page_permalink' => 'STR',
 	'page_permalink_short' => 'STR',
 	'page_hash' => 'STR',
+	'page_type_of_use' => 'STR',
 	'page_redirect' => 'STR',
 	'page_redirect_code' => 'STR',
 	'page_funnel_uri' => 'STR',
@@ -107,6 +113,7 @@ $pdo_fields_cache = array(
 	'page_permalink' => 'STR',
 	'page_permalink_short' => 'STR',
 	'page_hash' => 'STR',
+	'page_type_of_use' => 'STR',
 	'page_redirect' => 'STR',
 	'page_redirect_code' => 'STR',
 	'page_funnel_uri' => 'STR',
@@ -197,7 +204,7 @@ if(isset($_POST['delete_the_page'])) {
  * Save, update or show preview
  */
 
-if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
+if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	
 	$page_lastedit = time();
 	$page_lastedit_from = $_SESSION['user_nick'];
@@ -305,7 +312,7 @@ if($_POST['save_the_page'] OR $_REQUEST['preview_the_page']) {
 		$sth->bindParam(':page_usergroup', $string_usergroup, PDO::PARAM_STR);
 		$sth->bindParam(':page_labels', $string_labels, PDO::PARAM_STR);
 		$sth->bindParam(':page_lastedit', $page_lastedit, PDO::PARAM_INT);
-		$sth->bindParam(':page_lastedit_from', $_SESSION[user_nick], PDO::PARAM_STR);
+		$sth->bindParam(':page_lastedit_from', $_SESSION['user_nick'], PDO::PARAM_STR);
 		$sth->bindParam(':page_template', $page_template, PDO::PARAM_STR);
 		$sth->bindParam(':page_template_layout', $page_template_layout, PDO::PARAM_STR);
 		$sth->bindParam(':page_authorized_users', $string_authorized_admins, PDO::PARAM_STR);

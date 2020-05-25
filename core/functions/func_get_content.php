@@ -21,6 +21,11 @@ function get_content($page, $mode = 'p') {
 		$page_contents_sql = "SELECT * FROM fc_pages WHERE page_permalink = :page";
 		$sth = $dbh->prepare($page_contents_sql);
 		$sth->bindParam(':page', $page, PDO::PARAM_STR);
+	} elseif ($mode == 'type_of_use') {
+		$page_contents_sql = "SELECT * FROM fc_pages WHERE page_type_of_use = :page AND page_language = :languagePack";
+		$sth = $dbh->prepare($page_contents_sql);
+		$sth->bindParam(':page', $page, PDO::PARAM_STR);
+		$sth->bindParam(':languagePack', $languagePack, PDO::PARAM_STR);
 	} elseif ($mode == 'page_sort') {
 		$page_contents_sql = "SELECT * FROM fc_pages WHERE page_sort = :page AND page_language = :languagePack";
 		$sth = $dbh->prepare($page_contents_sql);
@@ -137,9 +142,24 @@ function fc_check_funnel_uri($uri) {
 			}
 			
 		}
-	}
-	
-	
+	}	
 }
+
+
+function fc_get_type_of_use_pages($type) {
+	
+	global $fc_db_content;
+	global $languagePack;
+	
+	$dbh = new PDO("sqlite:$fc_db_content");
+	$sql = "SELECT * FROM fc_pages WHERE page_type_of_use = :type AND page_language = :languagePack";
+	$sth = $dbh->prepare($sql);
+	$sth->bindParam(':type', $type, PDO::PARAM_STR);
+	$sth->bindParam(':languagePack', $languagePack, PDO::PARAM_STR);
+	$sth->execute();
+	$page = $sth->fetch(PDO::FETCH_ASSOC);
+	return $page;
+}
+
 
 ?>

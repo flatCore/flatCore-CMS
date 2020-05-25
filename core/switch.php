@@ -294,15 +294,14 @@ if(($page_status == "draft") AND ($_SESSION['user_class'] != "administrator")){
 }
 
 
-/**
- * todo: we need a better solution for permalinks of $a_allowed_p
- * /search/ -> /suche/ /register/ -> /registrieren/
- */
-
 if($p == "register") {
 
-	$form_url = FC_INC_DIR . "/register/";
-	$smarty->assign("form_url",$form_url);
+	if($page_contents['page_permalink'] != '') {
+		$smarty->assign("form_url", '/'.$page_contents['page_permalink']);
+	} else {
+		$form_url = FC_INC_DIR . "/register/";
+		$smarty->assign("form_url","$form_url");
+	}
 
 	if($prefs_userregistration != "yes") {
 	
@@ -354,18 +353,18 @@ if($p == "account") {
 
 
 /* edit profile */
-if(($p == "profile") AND ($goto != "logout")) {
+if(($p == "profile" OR $page_type_of_use == 'profile') AND ($goto != "logout")) {
 	include 'user_updateprofile.php';
 }
 
 
 /* include search */
-if($p == 'search' OR $page_permalink == 'suche/' OR $page_permalink == 'search/') {
+if($p == 'search' OR $page_permalink == 'suche/' OR $page_permalink == 'search/' OR $page_type_of_use == 'search') {
 	include 'search.php';
 }
 
 /* forgotten password */
-if($p == "password") {
+if($p == "password" OR $page_type_of_use == 'password') {
 	include 'password.php';
 }
 

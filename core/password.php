@@ -159,12 +159,13 @@ if($_GET['token'] != "") {
 
 }
 
+if($page_contents['page_permalink'] != '') {
+	$smarty->assign("form_url", '/'.$page_contents['page_permalink']);
+} else {
+	$form_url = FC_INC_DIR . "/password/";
+	$smarty->assign("form_url","$form_url");
+}
 
-
-
-$form_url = FC_INC_DIR . "/password/";
-
-$smarty->assign("form_url","$form_url");
 $smarty->assign("forgotten_psw","$lang[forgotten_psw]");
 $smarty->assign("forgotten_psw_intro","$lang[forgotten_psw_intro]");
 $smarty->assign("label_mail","$lang[label_mail]");

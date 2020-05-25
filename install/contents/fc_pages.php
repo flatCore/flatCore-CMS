@@ -12,6 +12,7 @@ $cols = array(
 	"page_permalink" => 'VARCHAR',
 	"page_permalink_short" => 'VARCHAR',
 	"page_permalink_short_cnt" => 'VARCHAR',
+	"page_type_of_use" => 'VARCHAR',
 	"page_redirect" => 'VARCHAR',
 	"page_redirect_code" => 'VARCHAR',
 	"page_funnel_uri" => 'VARCHAR',

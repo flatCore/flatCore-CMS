@@ -44,9 +44,7 @@ $smarty->assign('headline_searchresults', $lang['headline_searchresults'], true)
 
 $smarty->assign('msg_searchresults', $search_msg, true);
 $smarty->assign('search_string', $s, true);
-
 $search_tpl = $smarty->fetch("search.tpl");
-
 $output = $smarty->fetch("searchresults.tpl");
 $smarty->assign('page_content', "$search_tpl $output", true);
 

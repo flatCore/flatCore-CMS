@@ -163,9 +163,7 @@ if($_SESSION['user_nick'] == "") {
 	
 	
 	
-	// show data in form
-	$form_url = FC_INC_DIR . "/profile/";
-	
+	// show data in form	
 	if(is_file("content/avatars/".md5($_SESSION['user_nick']) . ".png")){
 
 		$avatar_url = FC_INC_DIR . "/content/avatars/".md5($_SESSION['user_nick']) . ".png";
@@ -186,7 +184,13 @@ if($_SESSION['user_nick'] == "") {
 		}
 	}
 	
-	$smarty->assign('form_url', $form_url);
+	
+	if($page_contents['page_permalink'] != '') {
+		$smarty->assign("form_url", '/'.$page_contents['page_permalink']);
+	} else {
+		$form_url = FC_INC_DIR . "/profile/";
+		$smarty->assign('form_url', $form_url);
+	}
 	
 	
 	$get_my_userdata = get_my_userdata();
