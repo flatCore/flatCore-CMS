@@ -609,7 +609,7 @@ echo '<fieldset>';
 echo '<legend>'.$lang['f_prefs_uploads'].'</legend>';
 echo '<form action="acp.php?tn=system&sub=sys_pref#uploads" method="POST" class="form-horizontal">';
 
-echo tpl_form_control_group('',$lang['f_prefs_imagesuffix'],"<input class='form-control' type='text' name='prefs_imagesuffix' value='$prefs_imagesuffix'>");
+//echo tpl_form_control_group('',$lang['f_prefs_imagesuffix'],"<input class='form-control' type='text' name='prefs_imagesuffix' value='$prefs_imagesuffix'>");
 
 $prefs_maximage_input  = '<div class="row"><div class="col-md-3">';
 $prefs_maximage_input .= '<div class="input-group">';
@@ -624,7 +624,7 @@ $prefs_maximage_input .= '</div>';
 $prefs_maximage_input .= '</div></div>';
 
 echo tpl_form_control_group('',$lang['f_prefs_maximage'],"$prefs_maximage_input");
-echo tpl_form_control_group('',$lang['f_prefs_filesuffix'],"<input class='form-control' type='text' name='prefs_filesuffix' value='$prefs_filesuffix'>");
+//echo tpl_form_control_group('',$lang['f_prefs_filesuffix'],"<input class='form-control' type='text' name='prefs_filesuffix' value='$prefs_filesuffix'>");
 echo tpl_form_control_group('',$lang['f_prefs_maxfilesize'],"<input class='form-control' type='text' name='prefs_maxfilesize' value='$prefs_maxfilesize'>");
 
 

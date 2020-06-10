@@ -21,7 +21,12 @@ $fc_mod_rewrite = "permalink";
 /* time offset for rss feeds in seconds */
 $fc_rss_time_offset = '1800';
 
- 
+/* allow image uploads in acp */
+$fc_upload_img_types = array('gif','jpg','jpe','jpeg','png','svg','ico','webp');
+
+/* allow file uploads in acp */
+$fc_upload_file_types = array('pdf','doc','docx','ppt','pptx','xls','xlsx','mp3','mp4','m4a','wav','mpg','mov','avi','xml','epub','ogg');
+
 /* define Folder structure */
 define('FC_CONTENT_DIR',  "content");
 define('FC_ACP_DIR',  "acp");

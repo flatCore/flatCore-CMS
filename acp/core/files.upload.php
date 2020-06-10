@@ -63,10 +63,14 @@ $files_folder = basename($path_files);
 <hr>
 <p class="text-center">
 <?php
-$suffixes = $fc_preferences['prefs_imagesuffix']. ' ' .$fc_preferences['prefs_filesuffix'];
-$suffixes = explode(' ', $suffixes);
-foreach($suffixes as $s) {
-	echo '<span class="label label-default">'.$s.'</span> ' ;
+
+echo $icon['images'] . ' ';
+foreach($fc_upload_img_types as $s) {
+	echo '<span class="badge badge-secondary">'.$s.'</span> ' ;
+}
+echo '<br>'.$icon['folder_open'] . ' ';
+foreach($fc_upload_file_types as $s) {
+	echo '<span class="badge badge-secondary">'.$s.'</span> ' ;
 }
 ?>
 </p>

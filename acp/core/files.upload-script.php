@@ -38,19 +38,24 @@ if($upload_type == 'images') {
 		$prefix = basename($org_name,".$suffix");
 		$img_name = clean_filename($prefix,$suffix);
 		$target = "$destination/$img_name";
-
-				
-		if($_REQUEST['unchanged'] == 'yes' OR $suffix == 'svg') {
-			@move_uploaded_file($tmp_name, $target);
-		} else {
-			resize_image($tmp_name,$target, $max_w,$max_h,90);
-		}
-		$filetype = mime_content_type(realpath($target));
-		$filesize = filesize(realpath($target));
-		if($_POST['file_mode'] != 'overwrite') {
-			fc_write_media_data_name($target,$filesize,$time,$filetype);
-		}
 		
+		//$fc_upload_img_types from config.php
+		if(!in_array($suffix, $fc_upload_img_types)) {
+			exit;
+		} else {
+
+			if($_REQUEST['unchanged'] == 'yes' OR $suffix == 'svg') {
+				@move_uploaded_file($tmp_name, $target);
+			} else {
+				resize_image($tmp_name,$target, $max_w,$max_h,90);
+			}
+			$filetype = mime_content_type(realpath($target));
+			$filesize = filesize(realpath($target));
+			if($_POST['file_mode'] != 'overwrite') {
+				fc_write_media_data_name($target,$filesize,$time,$filetype);
+			}
+			
+		}
 
 	}
 }
@@ -66,13 +71,19 @@ if($upload_type == 'files') {
 	  $files_name = clean_filename($prefix,$suffix);
 	  $target = "$destination/$files_name";
 	  
-	  @move_uploaded_file($tmp_name, $target);
-
-		$filetype = mime_content_type(realpath($target));
-		$filesize = filesize(realpath($target));
-		if($_POST['file_mode'] != 'overwrite') {
-			fc_write_media_data_name($target,$filesize,$time,$filetype);
+	  $fc_upload_types = array_merge($fc_upload_img_types,$fc_upload_file_types);
+	  if(!in_array($suffix, $fc_upload_types)) {
+			exit;
+		} else {
+			@move_uploaded_file($tmp_name, $target);
+			$filetype = mime_content_type(realpath($target));
+			$filesize = filesize(realpath($target));
+			if($_POST['file_mode'] != 'overwrite') {
+				fc_write_media_data_name($target,$filesize,$time,$filetype);
+			}		
 		}
+	  
+
 
 	}
 }
