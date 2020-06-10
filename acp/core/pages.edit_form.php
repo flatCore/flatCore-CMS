@@ -2,7 +2,7 @@
 //prohibit unauthorized access
 require 'core/access.php';
 
-echo '<form id="editpage" action="acp.php?tn=pages&sub=edit&editpage='.$editpage.'" class="form-horizontal" method="POST">';
+echo '<form id="editpage" action="acp.php?tn=pages&sub=edit" class="form-horizontal" method="POST">';
 
 $custom_fields = get_custom_fields();
 sort($custom_fields);
@@ -679,6 +679,9 @@ echo '<div class="btn-group d-flex mt-2">';
 echo $previev_button.' '.$delete_button;
 echo '</div>';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+if(is_numeric($editpage)) {
+	echo '<input type="hidden" name="editpage" value="'.$editpage.'">';
+}
 echo '</div>';
 
 echo '</div>'; // panel-body

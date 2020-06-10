@@ -8,7 +8,10 @@
 	
 		{if $smarty.session.user_class == "administrator"}
 		<a href="{$link_acp}" class="list-group-item"><i class="icon-cog"></i>  {$lang_button_acp}</a>
-		<a href="{$link_edit_page}" class="list-group-item"><i class="icon-edit"></i>  {$lang_button_edit_page}</a>
+		<hr>
+		<form action="/acp/acp.php?tn=pages&sub=edit" method="POST">
+		<button name="editpage" value="{$page_id}" class="btn btn-secondary btn-block">{$lang_button_edit_page}</button>
+		</form>
 		{/if}
 		
 	</div>

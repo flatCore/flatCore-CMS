@@ -261,6 +261,7 @@ $smarty->assign("search_uri", '/'.$tyo_search['page_permalink']);
 
 
 $smarty->assign('languagePack', $languagePack);
+$smarty->assign("page_id", $page_contents['page_id']);
 
 require 'core/user_management.php';
 require 'core/switch.php';

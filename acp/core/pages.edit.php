@@ -16,18 +16,18 @@ foreach($_POST as $key => $val) {
 	$$key = @htmlspecialchars($val, ENT_QUOTES); 
 }
 
-if(!empty($_REQUEST['editpage'])) {
-	$editpage = (int) $_REQUEST['editpage'];
+if(!empty($_POST['editpage'])) {
+	$editpage = (int) $_POST['editpage'];
 	$modus = "update";
 }
 
-if((!empty($_REQUEST['duplicate'])) OR ($_REQUEST['modus'] == 'duplicate')) {
-	$editpage = (int) $_REQUEST['editpage'];
+if((!empty($_POST['duplicate'])) OR ($_POST['modus'] == 'duplicate')) {
+	$editpage = (int) $_POST['duplicate'];
 	$modus = "duplicate";
 }
 
-if(!empty($_REQUEST['preview_the_page'])) {
-	$editpage = (int) $_REQUEST['editpage'];
+if(!empty($_POST['preview_the_page'])) {
+	$editpage = (int) $_POST['editpage'];
 	$modus = "preview";
 }
 
@@ -573,7 +573,7 @@ if($show_form == "true") {
 
 /* Attach the preview */
 
-if(!empty($_REQUEST['preview_the_page'])) {
+if(!empty($_POST['preview_the_page'])) {
 
 	echo '<hr><div class="alert alert-info alert-block">';
 	echo '<iframe src="../index.php?preview='.$editpage.'" width="100%" height="600">';

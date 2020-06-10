@@ -21,11 +21,14 @@
 				</p>
 				
 				<div class="controls-container clearfix">
-					<div class="btn-group d-flex" role="group">
-						{edit-btn}
-						{duplicate-btn}
-						{comment-btn}
-					</div>
+					<form action="?tn=pages&sub=edit" method="POST" class="">
+						<div class="btn-group d-flex" role="group">
+							{edit-btn}
+							{duplicate-btn}
+							{comment-btn}
+						</div>
+					</form>
+					
 				</div>
 			</div>
 		</div>

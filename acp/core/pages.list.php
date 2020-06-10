@@ -166,8 +166,8 @@ for($i=0;$i<$cnt_result;$i++) {
 	/* check for display edit button */
 	
 	if($_SESSION['acp_editpages'] == "allowed"){
-		$edit_button = '<a class="btn btn-sm btn-fc w-100" href="acp.php?tn=pages&sub=edit&editpage='.$page_id.'" title="'.$lang['edit'].'">'.$icon['edit'].'</a>';
-		$duplicate_button = '<a class="btn btn-sm btn-fc w-100" href="acp.php?tn=pages&sub=edit&editpage='.$page_id.'&duplicate=1" title="'.$lang['duplicate'].'">'.$icon['copy'].'</a>';
+		$edit_button = '<button class="btn btn-sm btn-fc w-100" name="editpage" value="'.$page_id.'" title="'.$lang['edit'].'">'.$icon['edit'].'</button>';
+		$duplicate_button = '<button class="btn btn-sm btn-fc w-100" name="duplicate" value="'.$page_id.'" title="'.$lang['duplicate'].'">'.$icon['copy'].'</button>';
 	} else {
 		$edit_button = '';
 		$duplicate_button = '';
@@ -175,7 +175,7 @@ for($i=0;$i<$cnt_result;$i++) {
 	
 	$arr_checked_admins = explode(",",$page_authorized_users);
 	if(in_array("$_SESSION[user_nick]", $arr_checked_admins)) {
-		$edit_button = '<a class="btn btn-sm btn-fc w-100" href="acp.php?tn=pages&sub=edit&editpage='.$page_id.'" title="'.$lang['edit'].'">'.$icon['edit'].'</a>';
+		$edit_button = '<button class="btn btn-sm btn-fc w-100" name="editpage" value="'.$page_id.'" title="'.$lang['edit'].'">'.$icon['edit'].'</button>';
 	}
 	
 	$label = '';
@@ -345,8 +345,8 @@ for($i=0;$i<$cnt_result;$i++) {
 	/* check for display edit button */
 	
 	if($_SESSION['acp_editpages'] == "allowed"){
-		$edit_button = '<a class="btn btn-sm btn-fc w-100" href="acp.php?tn=pages&sub=edit&editpage='.$page_id.'" title="'.$lang['edit'].'">'.$icon['edit'].'</a>';
-		$duplicate_button = '<a class="btn btn-sm btn-fc w-100" href="acp.php?tn=pages&sub=edit&editpage='.$page_id.'&duplicate=1" title="'.$lang['duplicate'].'">'.$icon['copy'].'</a>';
+		$edit_button = '<button class="btn btn-sm btn-fc w-100" name="editpage" value="'.$page_id.'" title="'.$lang['edit'].'">'.$icon['edit'].'</button>';
+		$duplicate_button = '<button class="btn btn-sm btn-fc w-100" name="duplicate" value="'.$page_id.'" title="'.$lang['duplicate'].'">'.$icon['copy'].'</button>';
 	} else {
 		$edit_button = '';
 		$duplicate_button = '';
@@ -354,7 +354,7 @@ for($i=0;$i<$cnt_result;$i++) {
 	
 	$arr_checked_admins = explode(",",$page_authorized_users);
 	if(in_array("$_SESSION[user_nick]", $arr_checked_admins)) {
-		$edit_button = '<a class="btn btn-sm btn-fc w-100" href="acp.php?tn=pages&sub=edit&editpage='.$page_id.'" title="'.$lang['edit'].'">'.$icon['edit'].'</a>';
+		$edit_button = '<button class="btn btn-sm btn-fc w-100" name="editpage" value="'.$page_id.'" title="'.$lang['edit'].'">'.$icon['edit'].'</button>';
 	}
 	
 	$label = '';
