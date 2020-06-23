@@ -8,6 +8,7 @@ if($_SESSION['user_nick'] == "") {
 
 } else {
 
+	$get_my_userdata = get_my_userdata();
 
 	/* Write Data into the database */
 	if(isset($_POST['update_profile'])) {
@@ -19,18 +20,18 @@ if($_SESSION['user_nick'] == "") {
 		}
 		
 		
-		/* USER SEND NEW PSW */
-		$user_psw_hash = $_SESSION['user_psw'];
+		
+		$user_psw_hash = $get_my_userdata['user_psw_hash'];
 		
 		// check psw entries
 		$set_psw = "false";
 		
-		if($_POST['s_psw'] != "") {
+		if(isset($_POST['s_psw']) AND trim($_POST['s_psw']) != '') {
+			/* USER SEND NEW PSW */
 			if($_POST['s_psw'] == $_POST['s_psw_repeat']) {
 				$user_psw_hash = password_hash($_POST['s_psw'], PASSWORD_DEFAULT);
 			}
 		}
-		
 		
 		$dbh = new PDO("sqlite:$fc_db_user");
 		$sql = "UPDATE fc_user
