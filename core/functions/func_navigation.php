@@ -21,6 +21,7 @@ function show_mainmenu() {
 		
 		if($fc_nav[$i]['page_sort'] == 'portal') {
 			$menu['homepage_linkname'] = $fc_nav[$i]['page_linkname'];
+			$menu['homepage_title'] = $fc_nav[$i]['page_title'];
 		}
 	
 		if($fc_nav[$i]['page_sort'] == "" || $fc_nav[$i]['page_sort'] == 'portal') {

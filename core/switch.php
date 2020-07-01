@@ -39,6 +39,7 @@ $bcmenu = breadcrumbs_menu($current_page_sort);
 $fc_sitemap = show_sitemap();
 
 $smarty->assign('homepage_linkname', $mainmenu['homepage_linkname']);
+$smarty->assign('homepage_title', $mainmenu['homepage_title']);
 unset($mainmenu['homepage_linkname']);
 
 $arr_mainmenu = @array_values($mainmenu);
