@@ -521,8 +521,12 @@ for($i=0;$i<$cnt_get_files;$i++) {
 	if(in_array($suffix,$ext) === true) {
 		$set_style = '';
 		$preview_img = "<img src='$filename' class='card-img-top'>";
-		$tpl_list = str_replace('{preview_link}', $filename, $tpl_list);
+	} else {
+		$preview_img = "<img src='images/no-preview.gif' class='img-fluid'>";
+		$preview_img = '<p class="text-right p-0 m-0">'.$icon['file'].' <span class="badge badge-secondary">'.$suffix.'</span></p>';
 	}
+	
+	$tpl_list = str_replace('{preview_link}', $filename, $tpl_list);
 
 	
 	if(is_dir($filename)) {
