@@ -24,7 +24,7 @@ function show_mainmenu() {
 			$menu['homepage_title'] = $fc_nav[$i]['page_title'];
 		}
 	
-		if($fc_nav[$i]['page_sort'] == "" || $fc_nav[$i]['page_sort'] == 'portal') {
+		if($fc_nav[$i]['page_sort'] == "" || $fc_nav[$i]['page_permalink'] == "" || $fc_nav[$i]['page_sort'] == 'portal') {
 			continue; //no page_sort or portal -> no menu item
 		}
 		

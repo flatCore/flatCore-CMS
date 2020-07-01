@@ -40,7 +40,7 @@ $fc_sitemap = show_sitemap();
 
 $smarty->assign('homepage_linkname', $mainmenu['homepage_linkname']);
 $smarty->assign('homepage_title', $mainmenu['homepage_title']);
-unset($mainmenu['homepage_linkname']);
+unset($mainmenu['homepage_linkname'],$mainmenu['homepage_title']);
 
 $arr_mainmenu = @array_values($mainmenu);
 $arr_subnmenu = @array_values($submenu);
