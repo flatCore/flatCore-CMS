@@ -273,17 +273,18 @@ if($prefs_pagethumbnail_prefix != '') {
 	
 $arr_Images = fc_get_all_images_rec("$prefs_pagethumbnail_prefix",NULL);
 $page_thumbnail_array = explode("&lt;-&gt;", $page_thumbnail);
-
 echo '<input class="filter-images form-control" name="filter-images" placeholder="Filter ..." type="text">';
 
 echo '<div class="scroll-container">';
 echo '<select multiple="multiple" name="page_thumbnail[]" class="form-control image-picker">';
 
 /* if we have selected images, show them first */
-if(count($page_thumbnail_array) > 1) {
+if(count($page_thumbnail_array) > 0) {
 	echo '<optgroup label="SELECTED">';
 	foreach($page_thumbnail_array as $sel_images) {
-		echo '<option selected data-img-src="'.$sel_images.'" title="'.$sel_images.'" class="masonry-item" value="'.$sel_images.'">'.basename($sel_images).'</option>';		
+		if($sel_images != '') {
+			echo '<option selected data-img-src="'.$sel_images.'" title="'.$sel_images.'" class="masonry-item" value="'.$sel_images.'">'.basename($sel_images).'</option>';	
+		}
 	}
 	echo '</optgroup>'."\r\n";
 }
