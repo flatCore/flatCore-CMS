@@ -159,9 +159,9 @@ if(isset($set_acptheme)) {
 		
 		<?php
 		if($acptheme == 'dark') {
-			echo '<link rel="stylesheet" href="css/styles_dark.css?v=20200124" type="text/css" media="screen, projection">';
+			echo '<link rel="stylesheet" href="css/styles_dark.css?v=20200722" type="text/css" media="screen, projection">';
 		} else {
-			echo '<link rel="stylesheet" href="css/styles_light.css?v=20200124" type="text/css" media="screen, projection">';
+			echo '<link rel="stylesheet" href="css/styles_light.css?v=20200722" type="text/css" media="screen, projection">';
 		}
 		?>
 				
