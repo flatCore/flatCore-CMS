@@ -511,8 +511,8 @@ if(is_numeric($editpage)) {
 		$sql = "SELECT * FROM fc_pages WHERE page_id = $editpage";
 	}
 	
-	if(!empty($_REQUEST['restore_id'])) {
-		$restore_id = (int) $_REQUEST['restore_id'];
+	if(!empty($_POST['restore_id'])) {
+		$restore_id = (int) $_POST['restore_id'];
 		$sql = "SELECT * FROM fc_pages_cache WHERE page_id = $restore_id";
 		
 		$restore_page_version = $dbh->query("SELECT page_version FROM fc_pages WHERE page_id = $editpage")->fetch();
@@ -657,15 +657,23 @@ if($show_form == "true" AND $sub != "new") {
 		} else {
 			$setdate = $date;
 		}
+		
+		$edit_button = '<button class="btn btn-sm btn-fc w-100" name="editpage" value="'.$editpage.'" title="'.$lang['edit'].'">'.$icon['edit'].' '.$lang['edit'].'</button>';
 			
-		echo "<tr>
-					<td>" . $cache_result[$i]['page_version'] . "</td>
-					<td width='100'>$setdate</td>
-					<td width='100'>$time</td>
-					<td>" . $cache_result[$i]['page_title'] . "</td>
-					<td> " . $cache_result[$i]['page_lastedit_from'] . "</td>
-					<td width='100' align='right'><a class='btn btn-light btn-sm' href='acp.php?tn=pages&sub=edit&restore_id=$page_id&editpage=$editpage'>$lang[edit]</a></td>
-				</tr>";
+		echo '<tr>';
+		echo '<td>' . $cache_result[$i]['page_version'] . '</td>';
+		echo '<td width="100">'.$setdate.'</td>';
+		echo '<td width="100">'.$time.'</td>';
+		echo '<td>' . $cache_result[$i]['page_title'] . '</td>';
+		echo '<td>' . $cache_result[$i]['page_lastedit_from'] . '</td>';
+		echo '<td width="150" align="right">';
+		echo '<form action="?tn=pages&sub=edit" method="POST">';
+		echo $edit_button;
+		echo '<input type="hidden" name="restore_id" value="'.$page_id.'">';
+		echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+		echo '</form>';
+		echo '</td>';
+		echo '</tr>';
 	}
 	
 	$dbh = null;
