@@ -33,7 +33,13 @@ if($goto == 'logout') {
 
 
 if(isset($_POST['login'])) {
-	fc_user_login($_POST['login_name'],$_POST['login_psw']);
+	
+	$remember = false;
+	if(isset($_POST['remember_me'])) {
+		$remember = true;
+	}
+	
+	fc_user_login($_POST['login_name'],$_POST['login_psw'],$acp=FALSE,$remember);
 }
 
 

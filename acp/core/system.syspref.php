@@ -15,7 +15,6 @@ foreach($_POST as $key => $val) {
 /* save contacts */
 if(isset($_POST['save_prefs_contacts'])) {
 	
-	
 	$data = $db_content->update("fc_preferences", [
 		"prefs_mailer_adr" =>  $prefs_mailer_adr,
 		"prefs_mailer_name" => $prefs_mailer_name,
@@ -191,6 +190,7 @@ if(isset($_POST['save_prefs_misc'])) {
 		'prefs_anonymize_ip' => 'STR',
 		'prefs_xml_sitemap' => 'STR',
 		'prefs_rss_time_offset' => 'STR',
+		'prefs_acp_session_lifetime' => 'STR',
 		'prefs_nbr_page_versions' => 'INT',
 		'prefs_smarty_cache' => 'INT',
 		'prefs_smarty_cache_lifetime' => 'INT',
@@ -231,6 +231,7 @@ if(isset($_POST['save_prefs_misc'])) {
 	$sql = generate_sql_update_str($pdo_fields,"fc_preferences","WHERE prefs_id = 1");
 	$sth = $dbh->prepare($sql);
 	$sth->bindParam(':prefs_rss_time_offset', $_POST['prefs_rss_time_offset'], PDO::PARAM_STR);
+	$sth->bindParam(':prefs_acp_session_lifetime', $_POST['prefs_acp_session_lifetime'], PDO::PARAM_STR);
 	$sth->bindParam(':prefs_logfile', $prefs_logfile, PDO::PARAM_STR);
 	$sth->bindParam(':prefs_anonymize_ip', $prefs_anonymize_ip, PDO::PARAM_STR);
 	$sth->bindParam(':prefs_xml_sitemap', $prefs_xml_sitemap, PDO::PARAM_STR);
@@ -700,6 +701,8 @@ echo '</div>';
 
 
 echo tpl_form_control_group('',$lang['rss_offset'],"<input class='form-control' type='text' name='prefs_rss_time_offset' value='$prefs_rss_time_offset'>");
+echo tpl_form_control_group('',$lang['acp_session_lifetime'],"<input class='form-control' type='text' name='prefs_acp_session_lifetime' value='$prefs_acp_session_lifetime'>");
+
 
 echo tpl_form_control_group('',$lang['prefs_nbr_page_versions'],"<input class='form-control' type='text' name='prefs_nbr_page_versions' value='$prefs_nbr_page_versions'>");
 

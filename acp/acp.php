@@ -751,11 +751,20 @@ $(function(){
 
    
 	<?php
-		$maxlifetime = ini_get("session.gc_maxlifetime");
+		$gc_maxlifetime = ini_get("session.gc_maxlifetime");
+		if($prefs_acp_session_lifetime > $gc_maxlifetime) {
+			$maxlifetime = $prefs_acp_session_lifetime;
+		} else {
+			$maxlifetime = $gc_maxlifetime;
+		}
+		
+		if($_COOKIE['identifier'] != '') {
+			echo "var auto_logout = false;";
+		} else {
+			echo "var auto_logout = true;";
+		}
 		echo "var maxlifetime = '{$maxlifetime}';";
 	?>
-	
-	
  var countdown = {
         startInterval : function() {
             var currentId = setInterval(function(){
@@ -779,7 +788,10 @@ $(function(){
             countdown.intervalId = currentId;
         }
     };
-    countdown.startInterval();
+    if(auto_logout !== false) {
+	    countdown.startInterval();
+    }
+    
 
 </script>
 

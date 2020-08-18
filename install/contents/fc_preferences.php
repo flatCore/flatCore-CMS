@@ -50,7 +50,8 @@ $cols = array(
   "prefs_smarty_compile_check" => 'INTEGER',
   "prefs_deleted_resources" => 'VARCHAR',
   "prefs_default_publisher" => 'VARCHAR',
-  "prefs_publisher_mode" => 'VARCHAR'
+  "prefs_publisher_mode" => 'VARCHAR',
+  "prefs_acp_session_lifetime" => 'VARCHAR'
   );
 
 ?>

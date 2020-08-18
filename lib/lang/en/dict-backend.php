@@ -404,6 +404,8 @@ $lang['cache_lifetime'] = 'Cache Lifetime';
 $lang['compile_check'] = 'Compile Check';
 $lang['delete_cache'] = 'Clear Cache';
 
+$lang['acp_session_lifetime'] = 'ACP Session Lifetime (Seconds)';
+
 
 /* rights management */
 
