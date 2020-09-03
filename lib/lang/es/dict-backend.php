@@ -72,12 +72,16 @@ $lang['update_user'] = "Update User";
 $lang['delete_user'] = "Delete User";
 
 $lang['system_preferences'] = "Preferences";
+$lang['system_mail'] = "E-Mail";
+$lang['system_language'] = "Language";
+$lang['system_images'] = "Images/Uploads";
 $lang['system_textlib'] = "Text snippets";
 $lang['system_design'] = "Layout & Design";
 $lang['system_modul_preferences'] = "Module preferences";
 $lang['system_backup'] = "Backup";
 $lang['system_update'] = "Update";
 $lang['system_misc'] = "Misc";
+$lang['system_default_language'] = 'Default Language';
 $lang['search_for_update'] = "Search for Update";
 $lang['system_statistics'] = "Statistics";
 $lang['activate_logfile'] = "Activate Logfile";
@@ -217,6 +221,15 @@ $lang['legend_redirect'] = "Redirect";
 $lang['f_page_funnel_uri'] = "Funnel URI";
 $lang['f_page_title'] = "Page Title";
 $lang['f_page_status'] = "Status";
+
+$lang['f_page_type_of_use'] = "Type of Use";
+$lang['type_of_use_normal'] = "Normal Page";
+$lang['type_of_use_search'] = "Search";
+$lang['type_of_use_profile'] = "Profile";
+$lang['type_of_use_register'] = "Registration";
+$lang['type_of_use_password'] = "Reset Password";
+$lang['type_of_use_sitemap'] = "Sitemap";
+$lang['type_of_use_404'] = "404 (Page not found)";
 
 $lang['legend_structured_pages'] = "Ordered Pages";
 $lang['legend_unstructured_pages'] = "Single Pages";

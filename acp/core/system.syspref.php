@@ -12,23 +12,7 @@ foreach($_POST as $key => $val) {
 }
 
 
-/* save contacts */
-if(isset($_POST['save_prefs_contacts'])) {
-	
-	$data = $db_content->update("fc_preferences", [
-		"prefs_mailer_adr" =>  $prefs_mailer_adr,
-		"prefs_mailer_name" => $prefs_mailer_name,
-		"prefs_mailer_type" => $_POST['prefs_mailer_type'],
-		"prefs_smtp_host" => $_POST['prefs_smtp_host'],
-		"prefs_smtp_port" => $_POST['prefs_smtp_port'],
-		"prefs_smtp_encryption" => $_POST['prefs_smtp_encryption'],
-		"prefs_smtp_username" => $_POST['prefs_smtp_username'],
-		"prefs_smtp_psw" => $_POST['prefs_smtp_psw']
-	], [
-	"prefs_id" => 1
-	]);
 
-}
 
 /* save descriptions */
 if(isset($_POST['save_prefs_descriptions'])) {
@@ -67,33 +51,6 @@ if(isset($_POST['save_system'])) {
 }
 
 
-/* save default language */
-
-if(isset($_POST['save_prefs_language'])) {
-	
-	$data = $db_content->update("fc_preferences", [
-		"prefs_default_language" =>  $prefs_default_language
-	], [
-	"prefs_id" => 1
-	]);
-		
-}
-
-
-/* save thumbnail */
-
-if(isset($_POST['save_prefs_thumbnail'])) {
-	
-	$data = $db_content->update("fc_preferences", [
-		"prefs_pagethumbnail" =>  $prefs_pagethumbnail,
-		"prefs_pagethumbnail_prefix" => $prefs_pagethumbnail_prefix,
-		"prefs_pagefavicon" => $prefs_pagefavicon
-	], [
-	"prefs_id" => 1
-	]);
-
-}
-
 
 
 /* save user preferences */
@@ -121,35 +78,7 @@ if(isset($_POST['save_prefs_user'])) {
 }
 
 
-/* save upload preferences */
-if(isset($_POST['save_prefs_upload'])) {
-	
-	if(isset($_POST['prefs_showfilesize'])) {
-		$prefs_showfilesize = 'yes';
-	} else {
-		$prefs_showfilesize = 'no';
-	}
-	
-	if(isset($_POST['prefs_uploads_remain_unchanged'])) {
-		$prefs_upload_unchanged = 'yes';
-	} else {
-		$prefs_upload_unchanged = 'no';
-	}
-	
-	$data = $db_content->update("fc_preferences", [
-		"prefs_imagesuffix" =>  $prefs_imagesuffix,
-		"prefs_maximagewidth" => $prefs_maximagewidth,
-		"prefs_maximageheight" => $prefs_maximageheight,
-		"prefs_filesuffix" => $prefs_filesuffix,
-		"prefs_maxfilesize" => $prefs_maxfilesize,
-		"prefs_showfilesize" => $prefs_showfilesize,
-		"prefs_uploads_remain_unchanged" => $prefs_upload_unchanged
-	], [
-	"prefs_id" => 1
-	]);	
-	
 
-}
 
 /* save head preferences */
 if(isset($_POST['save_prefs_head'])) {
@@ -366,89 +295,7 @@ echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
 
-/* default language */
-echo '<div id="language" class="pt-2"></div>';
 
-echo '<fieldset>';
-echo '<legend>'.$lang['f_page_language'].'</legend>';
-echo '<form action="acp.php?tn=system&sub=sys_pref#language" method="POST" class="form-horizontal">';
-
-$get_all_languages = get_all_languages();
-
-$select_default_language = '<select name="prefs_default_language" class="form-control custom-select">';
-foreach($get_all_languages as $langs) {
-	
-	$selected = "";
-	if($prefs_default_language == $langs['lang_folder']) {
-		$selected = "selected";
-	}
-	
-	$select_default_language .= '<option '.$selected.' value="'.$langs['lang_folder'].'">'.$langs['lang_desc'].'</option>';
-}
-$select_default_language .= '</select>';
-
-echo tpl_form_control_group('',$lang['system_default_language'],$select_default_language);
-
-echo '<input type="submit" class="btn btn-save" name="save_prefs_language" value="'.$lang['save'].'">';
-echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
-echo '</form>';
-echo '</fieldset>';
-
-
-
-/* default Thumbnail */
-echo '<div id="thumbnail" class="pt-2"></div>';
-
-echo '<fieldset>';
-echo '<legend>'.$lang['page_thumbnail_default'].'</legend>';
-echo '<form action="acp.php?tn=system&sub=sys_pref" method="POST" class="form-horizontal">';
-
-$select_prefs_thumbnail  = '<select name="prefs_pagethumbnail" class="form-control custom-select">';
-$select_prefs_thumbnail .= '<option value="">'.$lang['page_thumbnail'].'</option>';
-$arr_Images = fc_get_all_images_rec();
-	foreach($arr_Images as $page_thumbnail) {
-		$selected = "";
-		if($prefs_pagethumbnail == "$page_thumbnail") {
-			$selected = "selected";
-		}
-		$show_page_thumbnail_filename = str_replace('../content/','/',$page_thumbnail);
-		$select_prefs_thumbnail .= '<option '.$selected.' value="'.$page_thumbnail.'">'.$show_page_thumbnail_filename.'</option>';
-}
-$select_prefs_thumbnail .= "</select>";
-
-echo tpl_form_control_group('',$lang['page_thumbnail'],$select_prefs_thumbnail);
-
-/* Thumbnail Prefix */
-$prefs_tmb_prefix_input = "<input class='form-control' type='text' name='prefs_pagethumbnail_prefix' value='$prefs_pagethumbnail_prefix'>";
-echo tpl_form_control_group('',$lang['page_thumbnail_prefix'],$prefs_tmb_prefix_input);
-
-/* Favicon */
-$select_prefs_favicon  = '<select name="prefs_pagefavicon" class="form-control custom-select">';
-$select_prefs_favicon .= '<option value="">'.$lang['page_favicon'].'</option>';
-$arr_Images = fc_get_all_images_rec();
-	foreach($arr_Images as $page_favicon) {
-		
-		if(substr($page_favicon, -4) != '.png') {
-			continue;
-		}
-		
-		$selected = "";
-		if($prefs_pagefavicon == "$page_favicon") {
-			$selected = "selected";
-		}
-		$show_page_favicon_filename = str_replace('../content/','/',$page_favicon);
-		$select_prefs_favicon .= '<option '.$selected.' value="'.$page_favicon.'">'.$show_page_favicon_filename.'</option>';
-}
-$select_prefs_favicon .= "</select>";
-
-echo tpl_form_control_group('',$lang['page_favicon'],$select_prefs_favicon);
-
-
-
-echo tpl_form_control_group('','',"<input type='submit' class='btn btn-save' name='save_prefs_thumbnail' value='$lang[save]'>");
-echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
-echo '</form>';
-echo '</fieldset>';
 
 /* system */
 echo '<div id="system" class="pt-2"></div>';
@@ -469,113 +316,6 @@ echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
 
-/* contacts */
-echo '<div id="mails" class="pt-2"></div>';
-
-echo '<fieldset>';
-echo '<legend>System E-Mail</legend>';
-echo '<form action="acp.php?tn=system&sub=sys_pref#mails" method="POST" class="form-horizontal">';
-
-if($prefs_mailer_type == '') {
-	$prefs_mailer_type = 'mail';
-}
-
-$prefs_mail_name_input = "<input class='form-control' type='text' name='prefs_mailer_name' value='$prefs_mailer_name'>";
-$prefs_mail_adr_input = "<input class='form-control' type='text' name='prefs_mailer_adr' value='$prefs_mailer_adr'>";
-$prefs_mail_smtp_host_input = "<input class='form-control' type='text' name='prefs_smtp_host' value='$prefs_smtp_host'>";
-$prefs_mail_smtp_port_input = "<input class='form-control' type='text' name='prefs_smtp_port' value='$prefs_smtp_port'>";
-$prefs_mail_smtp_encryption_input = "<input class='form-control' type='text' name='prefs_smtp_encryption' value='$prefs_smtp_encryption'>";
-$prefs_mail_smtp_username_input = "<input class='form-control' type='text' name='prefs_smtp_username' value='$prefs_smtp_username'>";
-$prefs_mail_smtp_psw_input = "<input class='form-control' type='password' name='prefs_smtp_psw' value='$prefs_smtp_psw'>";
-
-$prefs_mail_type_input = '<div class="form-check">';
-$prefs_mail_type_input .= '<input type="radio" class="form-check-input" id="mail" name="prefs_mailer_type" value="mail" '.($prefs_mailer_type == "mail" ? 'checked' :'').'>';
-$prefs_mail_type_input .= '<label class="form-check-label" for="mail">'.$lang['prefs_mail_type_mail'].'</label>';
-$prefs_mail_type_input .= '</div>';
-$prefs_mail_type_input .= '<div class="form-check">';
-$prefs_mail_type_input .= '<input type="radio" class="form-check-input" id="smtp" name="prefs_mailer_type" value="smtp" '.($prefs_mailer_type == "smtp" ? 'checked' :'').'>';
-$prefs_mail_type_input .= '<label class="form-check-label" for="smtp">'.$lang['prefs_mail_type_smtp'].'</label>';
-$prefs_mail_type_input .= '</div>';
-
-
-
-echo tpl_form_control_group('',$lang['prefs_mailer_name'],$prefs_mail_name_input);
-echo tpl_form_control_group('',$lang['prefs_mailer_adr'],$prefs_mail_adr_input);
-
-echo $prefs_mail_type_input;
-
-echo tpl_form_control_group('','','<p>SMTP</p>');
-
-echo '<div class="row">';
-echo '<div class="col-md-4">';
-echo tpl_form_control_group('',$lang['prefs_mailer_smtp_host'],$prefs_mail_smtp_host_input);
-echo '</div>';
-echo '<div class="col-md-4">';
-echo tpl_form_control_group('',$lang['prefs_mailer_smtp_port'],$prefs_mail_smtp_port_input);
-echo '</div>';
-echo '<div class="col-md-4">';
-echo tpl_form_control_group('',$lang['prefs_mailer_smtp_encryption'],$prefs_mail_smtp_encryption_input);
-echo '</div>';
-echo '</div>';
-echo '<div class="row">';
-echo '<div class="col-md-6">';
-echo tpl_form_control_group('',$lang['prefs_mailer_smtp_username'],$prefs_mail_smtp_username_input);
-echo '</div>';
-echo '<div class="col-md-6">';
-echo tpl_form_control_group('',$lang['prefs_mailer_smtp_password'],$prefs_mail_smtp_psw_input);
-echo '</div>';
-echo '</div>';
-
-echo '<input type="submit" class="btn btn-save" name="save_prefs_contacts" value="'.$lang['save'].'">';
-echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
-echo '</form>';
-
-echo '<div class="mt-3">';
-if($prefs_mailer_adr != '') {
-	echo '<a href="acp.php?tn=system&sub=sys_pref&sendtest=1#mails" class="btn btn-fc btn-sm">'.$lang['prefs_mailer_send_test'].' ('.$prefs_mailer_adr.')</a>';
-}
-
-
-if($_GET['sendtest'] == 1) {
-	require_once'../lib/Swift/lib/swift_required.php';
-	
-	if($prefs_mailer_type == 'smtp') {
-		
-		$trans = Swift_SmtpTransport::newInstance()
-            ->setUsername("$prefs_smtp_username")
-            ->setPassword("$prefs_smtp_psw")
-            ->setHost("$prefs_smtp_host")
-            ->setPort($prefs_smtp_port);
-			
-		if($prefs_mail_smtp_encryption_input != '') {
-			$trans->setEncryption($prefs_smtp_encryption);
-		}
-	} else {
-		$trans = Swift_MailTransport::newInstance();
-	}
-	
-
-	$mailer = Swift_Mailer::newInstance($trans);
-	$message = Swift_Message::newInstance('flatCore Test')
-			->setFrom(array($prefs_mailer_adr => $prefs_mailer_name))
-			->setTo(array($prefs_mailer_adr => $prefs_mailer_name))
-			->setBody("flatCore Test (via $prefs_mailer_type)");
-			
-	if(!$mailer->send($message, $failures)) {
-		echo '<div class="alert alert-danger mt-3">';
-	  echo 'Failures:<br>';
-	  print_r($failures);
-	  echo '</div>';
-	} else {
-		echo '<p class="alert alert-success mt-3">'.$icon['check'].' '.$lang['prefs_mailer_send_test_success'].'</p>';
-	}
-	
-}
-
-echo '</div>';
-
-
-echo '</fieldset>';
 
 
 /* User Preferences */
@@ -602,46 +342,6 @@ echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
 
-
-/* Upload Preferences */
-echo '<div id="uploads" class="pt-2"></div>';
-
-echo '<fieldset>';
-echo '<legend>'.$lang['f_prefs_uploads'].'</legend>';
-echo '<form action="acp.php?tn=system&sub=sys_pref#uploads" method="POST" class="form-horizontal">';
-
-//echo tpl_form_control_group('',$lang['f_prefs_imagesuffix'],"<input class='form-control' type='text' name='prefs_imagesuffix' value='$prefs_imagesuffix'>");
-
-$prefs_maximage_input  = '<div class="row"><div class="col-md-3">';
-$prefs_maximage_input .= '<div class="input-group">';
-$prefs_maximage_input .= '<input class="form-control" type="text" name="prefs_maximagewidth" value="'.$prefs_maximagewidth.'">';
-$prefs_maximage_input .= '<div class="input-group-append"><span class="input-group-text"><i class="fas fa-arrows-alt-h"></i></span></div>';
-$prefs_maximage_input .= '</div>';
-$prefs_maximage_input .= '</div><div class="col-md-3">';
-$prefs_maximage_input .= '<div class="input-group">';
-$prefs_maximage_input .= '<input class="form-control" type="text" name="prefs_maximageheight" value="'.$prefs_maximageheight.'">';
-$prefs_maximage_input .= '<div class="input-group-append"><span class="input-group-text"><i class="fas fa-arrows-alt-v"></i></span></div>';
-$prefs_maximage_input .= '</div>';
-$prefs_maximage_input .= '</div></div>';
-
-echo tpl_form_control_group('',$lang['f_prefs_maximage'],"$prefs_maximage_input");
-//echo tpl_form_control_group('',$lang['f_prefs_filesuffix'],"<input class='form-control' type='text' name='prefs_filesuffix' value='$prefs_filesuffix'>");
-echo tpl_form_control_group('',$lang['f_prefs_maxfilesize'],"<input class='form-control' type='text' name='prefs_maxfilesize' value='$prefs_maxfilesize'>");
-
-
-
-$toggle_btn_upload_unchanged  = '<div class="form-group form-check">';
-$toggle_btn_upload_unchanged .= '<input type="checkbox" class="form-check-input" id="checkUpload" name="prefs_uploads_remain_unchanged" '.($prefs_uploads_remain_unchanged == "yes" ? 'checked' :'').'>';
-$toggle_btn_upload_unchanged .= '<label class="form-check-label" for="checkUpload">'.$lang['f_prefs_uploads_remain_unchanged'].'</label>';
-$toggle_btn_upload_unchanged .= '</div>';
-
-echo $toggle_btn_upload_unchanged;
-
-
-echo tpl_form_control_group('','',"<input type='submit' class='btn btn-save' name='save_prefs_upload' value='$lang[save]'>");
-echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
-echo '</form>';
-echo '</fieldset>';
 
 
 /* global header enhancement */
@@ -822,12 +522,8 @@ echo '<div class="card mt-4">';
 echo '<div class="list-group list-group-flush">';
 
 echo '<a href="#descriptions" class="list-group-item list-group-item-ghost">'.$lang['f_prefs_descriptions'].'</a>';
-echo '<a href="#language" class="list-group-item list-group-item-ghost">'.$lang['f_page_language'].'</a>';
-echo '<a href="#thumbnail" class="list-group-item list-group-item-ghost">'.$lang['page_thumbnail_default'].'</a>';
 echo '<a href="#system" class="list-group-item list-group-item-ghost">System</a>';
-echo '<a href="#mails" class="list-group-item list-group-item-ghost">System E-Mail</a>';
 echo '<a href="#user" class="list-group-item list-group-item-ghost">'.$lang['f_prefs_user'].'</a>';
-echo '<a href="#uploads" class="list-group-item list-group-item-ghost">'.$lang['f_prefs_uploads'].'</a>';
 echo '<a href="#globalheader" class="list-group-item list-group-item-ghost">'.$lang['f_prefs_global_header'].'</a>';
 echo '<a href="#deletedresources" class="list-group-item list-group-item-ghost">'.$lang['label_deleted_resources'].'</a>';
 echo '<a href="#misc" class="list-group-item list-group-item-ghost">'.$lang['system_misc'].'</a>';

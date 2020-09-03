@@ -29,6 +29,18 @@ switch ($sub) {
 		$subinc = "system.update";
 		break;
 		
+	case "mail":
+		$subinc = "system.mail";
+		break;
+		
+	case "language":
+		$subinc = "system.language";
+		break;
+		
+	case "images":
+		$subinc = "system.images";
+		break;
+		
 	default:
 		$subinc = "system.syspref";
 		break;
