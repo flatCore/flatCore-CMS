@@ -541,12 +541,7 @@ div#bigHeader {
   overflow: hidden;
 }
 .subHeader {
-  padding: 10px 15px;
-  background: #eee;
   margin-bottom: 20px;
-  -webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
 }
 #expireDiv {
   text-align: center;
@@ -739,13 +734,29 @@ div#contentSwitch {
   color: #777;
   text-align: right;
 }
-/*
-div#contentSwitchContainer > div {
-	float: right;
-	padding: 5px;
-	min-width: 250px;
+.navbar-fc {
+  border: 1px solid #d5d5d5;
+  background: #eee;
+  padding: 0;
 }
-*/
+.navbar-fc .nav-link {
+  background: #c8c8c8;
+}
+.navbar-fc .nav-link:hover {
+  background: #dadada;
+}
+.navbar-fc .nav-link.active {
+  background: #dadada;
+}
+.navbar-fc .dropdown-menu {
+  background: #e1e1e1;
+}
+.navbar-fc .dropdown-menu .dropdown-item {
+  color: #222;
+}
+.navbar-fc .dropdown-menu .dropdown-item.active {
+  color: #fff;
+}
 #contentbox ul {
   margin-left: 15px;
 }

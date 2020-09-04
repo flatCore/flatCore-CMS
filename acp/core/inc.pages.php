@@ -73,6 +73,22 @@ if(isset($_GET['switchLang'])) {
 		$_SESSION['checked_lang_string'] = "$checked_lang_string";
 }
 
+
+/* count pages by type */
+$dbh = new PDO("sqlite:".CONTENT_DB);
+$sql_count_pages = "
+SELECT count(*) AS 'All',
+(SELECT count(*) FROM fc_pages WHERE page_status LIKE '%public%' ) AS 'public', 
+(SELECT count(*) FROM fc_pages WHERE page_status LIKE '%ghost%' ) AS 'ghost', 
+(SELECT count(*) FROM fc_pages WHERE page_status LIKE '%draft%' ) AS 'draft', 
+(SELECT count(*) FROM fc_pages WHERE page_status LIKE '%private%' ) AS 'private', 
+(SELECT count(*) FROM fc_pages WHERE page_redirect <> '' AND page_redirect IS NOT NULL ) AS 'redirect'
+FROM fc_pages
+";
+$count_pages = $dbh->query("$sql_count_pages")->fetch(PDO::FETCH_ASSOC);
+$dbh = null;
+
+
 /* build SQL query */
 $set_lang_filter = "";
 for($i=0;$i<count($arr_lang);$i++) {
@@ -92,16 +108,16 @@ if(!isset($_SESSION['checked_label_str'])) {
 
 $a_checked_labels = explode('-', $_SESSION['checked_label_str']);
 
-if(isset($_POST['check_label'])) {
+if(isset($_GET['switchLabel'])) {
 	
-		if(in_array($_POST['check_label'], $a_checked_labels)) {
+		if(in_array($_GET['switchLabel'], $a_checked_labels)) {
 			/* remove label*/
-			if(($key = array_search($_POST['check_label'], $a_checked_labels)) !== false) {
+			if(($key = array_search($_GET['switchLabel'], $a_checked_labels)) !== false) {
 				unset($a_checked_labels[$key]);
 			}
 		} else {
 			/* add label */
-			$a_checked_labels[] = $_POST['check_label'];
+			$a_checked_labels[] = $_GET['switchLabel'];
 		}
 
 		$_SESSION['checked_label_str'] = implode('-', $a_checked_labels);
@@ -265,27 +281,30 @@ $_SESSION['filter_string'] = $filter_string;
 
 if($sub == "list" OR $sub == "snippets") {
 	
-	
-	$label_btn  = '<form action="acp.php?tn=pages&sub='.$sub.'" method="POST" class="form-horizontal">';
+
+	$label_dropdown  = '<li class="nav-item dropdown mr-3">';
+	$label_dropdown .= '<a class="nav-link dropdown-toggle" href="#" id="navLabels" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Labels</a>';	
+	$label_dropdown .= '<div class="dropdown-menu" aria-labelledby="navLabels">';
 	$this_btn_status = '';
 	foreach($fc_labels as $label) {
 		
 		if(in_array($label['label_id'], $a_checked_labels)) {
-			$this_btn_status = 'btn-label-dot active';
+			$this_btn_status = 'active';
 		} else {
-			$this_btn_status = 'btn-label-dot';
+			$this_btn_status = '';
 		}		
-			
-		$label_btn .= '<button name="check_label" value="'.$label['label_id'].'" class="'.$this_btn_status.'">';
-		$label_btn .= '<span class="label-dot" style="background-color:'.$label['label_color'].';" title="'.$label['label_title'].'"></span>';
-		$label_btn .= '</button>';
+
+		$label_title = '<span class="label-dot" style="background-color:'.$label['label_color'].';"></span> '.$label['label_title'];
+		$label_dropdown .= '<a href="acp.php?tn=pages&sub='.$sub.'&switchLabel='.$label['label_id'].'" class="dropdown-item '.$this_btn_status.'">'.$label_title.'</a>';
 		
 	}
-	$label_btn .= '</form>';
-	
+	$label_dropdown .= '</div>';
+	$label_dropdown .= '</li>';
 
 	/* Filter Languages */
-	$lang_btn_group = '<div class="btn-group">';
+	$lang_dropdown = '<li class="nav-item dropdown">';
+	$lang_dropdown .= '<a class="nav-link dropdown-toggle" href="#" id="navLangs" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'.$lang['f_page_language'].'</a>';	
+	$lang_dropdown .= '<div class="dropdown-menu" aria-labelledby="navLangs">';
 
 	for($i=0;$i<count($arr_lang);$i++) {
 		$lang_desc = $arr_lang[$i]['lang_desc'];
@@ -293,32 +312,38 @@ if($sub == "list" OR $sub == "snippets") {
 		
 		$this_btn_status = '';
 		if(strpos("$_SESSION[checked_lang_string]", "$lang_folder") !== false) {
-			$this_btn_status = 'btn btn-fc btn-sm active';
+			$this_btn_status = 'active';
 		} else {
-			$this_btn_status = 'btn btn-fc btn-sm';
+			$this_btn_status = '';
 		}
 		
-		$lang_btn_group .= '<a href="acp.php?tn=pages&sub='.$sub.'&switchLang='.$lang_folder.'" class="'.$this_btn_status.'">'.$lang_folder.'</a>';
+		$lang_dropdown .= '<a href="acp.php?tn=pages&sub='.$sub.'&switchLang='.$lang_folder.'" class="dropdown-item '.$this_btn_status.'">'.$lang_folder.'</a>';
 	}
 	
-	$lang_btn_group .= '</div>';
+	$lang_dropdown .= '</div>';
+	$lang_dropdown .= '</li>';
 	
 	
 	
-	$status_btn_group  = '<div class="btn-group">';
-	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPuplic" class="btn btn-sm btn-fc text-public '.$btn_status_public.'">'.$dot_public.' '.$lang['f_page_status_puplic'].'</a>';
-	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusGhost" class="btn btn-sm btn-fc text-ghost '.$btn_status_ghost.'">'.$dot_ghost.' '.$lang['f_page_status_ghost'].'</a>';
-	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPrivate" class="btn btn-sm btn-fc text-private '.$btn_status_private.'">'.$dot_private.' '.$lang['f_page_status_private'].'</a>';
-	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusDraft" class="btn btn-sm btn-fc text-draft '.$btn_status_draft.'">'.$dot_draft.' '.$lang['f_page_status_draft'].'</a>';
-	$status_btn_group .= '</div> ';
+	$nav_btn_group  = '<ul class="navbar-nav">';
+	$nav_btn_group .= '<li class="nav-item"><a href="acp.php?tn=pages&sub=list&switch=statusPuplic" class="nav-link text-public '.$btn_status_public.'">'.$dot_public.' '.$lang['f_page_status_puplic'].' ('.$count_pages['public'].')</a></li>';
+	$nav_btn_group .= '<li class="nav-item"><a href="acp.php?tn=pages&sub=list&switch=statusGhost" class="nav-link text-ghost '.$btn_status_ghost.'">'.$dot_ghost.' '.$lang['f_page_status_ghost'].' ('.$count_pages['ghost'].')</a></li>';
+	$nav_btn_group .= '<li class="nav-item"><a href="acp.php?tn=pages&sub=list&switch=statusPrivate" class="nav-link text-private '.$btn_status_private.'">'.$dot_private.' '.$lang['f_page_status_private'].' ('.$count_pages['private'].')</a></li>';
+	$nav_btn_group .= '<li class="nav-item"><a href="acp.php?tn=pages&sub=list&switch=statusDraft" class="nav-link text-draft '.$btn_status_draft.'">'.$dot_draft.' '.$lang['f_page_status_draft'].' ('.$count_pages['draft'].')</a></li>';
+		
+	$nav_btn_group .= '<li class="nav-item mr-3"><a href="acp.php?tn=pages&sub=list&switch=statusRedirect" class="nav-link text-redirect '.$btn_status_redirect.'">'.$dot_redirect.' '.$lang['btn_redirect'].' ('.$count_pages['redirect'].')</a></li>';
 	
-	$status_btn_group .= '<div class="btn-group">';
-	$status_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusRedirect" class="btn btn-sm btn-fc text-redirect '.$btn_status_redirect.'">'.$dot_redirect.' '.$lang['btn_redirect'].'</a>';
-	$status_btn_group .= '</div>';
+	$nav_btn_group .= $lang_dropdown;
 
-	$kw_form  = '<form action="acp.php?tn=pages&sub=list" method="POST" class="form-horizontal">';
+	
+	$nav_btn_group .= $label_dropdown;
+
+	
+	$nav_btn_group .= '</ul> ';
+
+	$kw_form  = '<form action="acp.php?tn=pages&sub=list" method="POST" class="form-inline ml-auto">';
 	$kw_form .= '<div class="input-group">';
-	$kw_form .= '<span class="input-group-addon"><span class="glyphicon glyphicon-filter"></span></span>';
+	$kw_form .= '<div class="input-group-prepend"><span class="input-group-text">'.$icon['filter'].'</span></div>';
 	$kw_form .= '<input class="form-control" type="text" name="kw_filter" value="" placeholder="Filter">';
 	$kw_form .= '</div>';
 	$kw_form .= '</form>';

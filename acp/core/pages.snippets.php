@@ -336,27 +336,25 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	echo '<div class="app-container">';
 	echo '<h3>' . $lang['snippets'] . '</h3>';
 	
-	echo '<div class="well well-sm">';
+	echo '<nav class="navbar navbar-expand-sm navbar-fc">';
 	
-	echo '<div class="row">';
-	echo '<div class="col-lg-3 col-md-6">';
 	
-	echo '<fieldset class="mb-0">';
-	echo '<legend>'.$lang['label_type'].'</legend>';
-	echo '<div class="btn-group d-flex" role="group">';
-	echo '<a class="btn btn-sm btn-fc w-100 '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle ('.$cnt['cnt_all_snippets'].')</a>';
-	echo '<a class="btn btn-sm btn-fc w-100 '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System ('.$cnt['cnt_system_snippets'].')</a>';
-	echo '<a class="btn btn-sm btn-fc w-100 '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene ('.$cnt['cnt_custom_snippets'].')</a>';
-	echo '</div>';
-	echo '</fieldset>';
-	
-	echo '</div>';
-	echo '<div class="col-lg-3 col-md-6">';
-	
-	echo '<fieldset class="mb-0">';
-	echo '<legend>'.$lang['label_filter'].'</legend>';
 
-	echo '<form action="acp.php?tn=pages&sub=snippets" method="POST" class="dirtyignore">';
+	echo '<ul class="navbar-nav">';
+	echo '<li class="nav-item"><a class="nav-link '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle ('.$cnt['cnt_all_snippets'].')</a></li>';
+	echo '<li class="nav-item"><a class="nav-link '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System ('.$cnt['cnt_system_snippets'].')</a></li>';
+	echo '<li class="nav-item mr-3"><a class="nav-link '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene ('.$cnt['cnt_custom_snippets'].')</a></li>';
+	
+	echo $lang_dropdown;
+	echo $label_dropdown;
+	
+	echo '</ul>';
+
+	
+	echo '<a href="?tn=pages&sub=snippets&snip_id=n" class="nav-link text-success">'.$icon['plus'].' '.$lang['new'].'</a>';
+
+
+	echo '<form action="acp.php?tn=pages&sub=snippets" method="POST" class="form-inline ml-auto dirtyignore">';
 	echo '<div class="input-group">';
 	echo '<div class="input-group-prepend"><span class="input-group-text">'.$icon['filter'].'</span></div>';
 	echo '<input class="form-control" type="text" name="snippet_filter" value="" placeholder="Filter">';
@@ -364,59 +362,15 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	echo '</div>';
 	echo '</form>';
 	
-	if($btn_remove_keyword != '') {
-		echo '<hr>'.$btn_remove_keyword;
+
+	
+	echo '</nav>';
+	
+		if($btn_remove_keyword != '') {
+			echo '<div class="float-right">';
+		echo '<p style="padding-top:5px;">'.$btn_remove_keyword.'</p>';
+			echo '</div>';
 	}
-	
-	echo '</fieldset>';
-	
-	echo '</div>';
-	
-	echo '<div class="col-lg-2">';
-	echo '<fieldset class="mb-0">';
-	echo '<legend>'.$lang['f_page_language'].'</legend>';
-	echo $lang_btn_group;
-
-	echo '</fieldset>';
-	echo '</div>';
-	
-	echo '<div class="col-lg-2">';
-	echo '<fieldset class="mb-0">';
-	echo '<legend>Labels</legend>';
-
-	$label_btn  = '<form action="acp.php?tn=pages&sub=snippets" method="POST" class="form-horizontal">';
-	$this_btn_status = '';
-	foreach($fc_labels as $label) {
-		
-		if(in_array($label['label_id'], $a_checked_labels)) {
-			$this_btn_status = 'btn-label-dot active';
-		} else {
-			$this_btn_status = 'btn-label-dot';
-		}		
-			
-		$label_btn .= '<button name="check_label" value="'.$label['label_id'].'" class="'.$this_btn_status.'">';
-		$label_btn .= '<span class="label-dot" style="background-color:'.$label['label_color'].';" title="'.$label['label_title'].'"></span>';
-		$label_btn .= '</button>';
-		
-	}
-	$label_btn .= '</form>';
-	echo $label_btn;
-
-	echo '</fieldset>';
-	echo '</div>';
-
-	
-	echo '<div class="col-lg-2">';
-
-	echo '<fieldset class="mb-0">';
-	echo '<legend>'.$lang['snippets'].'</legend>';	
-	echo '<a href="?tn=pages&sub=snippets&snip_id=n" class="btn btn-fc text-success btn-block">'.$icon['plus'].' '.$lang['new'].'</a>';
-	echo '</fieldset>';
-	
-	echo '</div>';
-	echo '</div>';
-	
-	echo '</div>';
 		
 	echo '<div class="max-height-container">';
 	echo '<div class="scroll-box">';

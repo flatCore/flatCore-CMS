@@ -34,35 +34,21 @@ $result = fc_array_multisort($result, 'page_language', SORT_ASC, 'page_sort', SO
 echo '<div class="app-container">';
 
 echo '<div class="subHeader">';
-echo '<div class="row">';
-echo '<div class="col-md-3">';
-echo '<fieldset class="mb-0">';
-echo '<legend>Filter</legend>';
+echo '<nav class="navbar navbar-expand-sm navbar-fc">';
+
+echo $nav_btn_group;
 echo $kw_form;
+
+echo '</nav>';
+
 if($btn_remove_keyword != '') {
+	echo '<div class="float-right">';
 	echo '<p style="padding-top:5px;">' . $btn_remove_keyword . '</p>';
+	echo '</div>';
 }
-echo '</fieldset>';
-echo '</div>';
-echo '<div class="col-md-7">';
-echo '<fieldset class="mb-0">';
-echo '<legend>'.$lang['f_page_status'].'/'.$lang['f_page_language'].'</legend>';
-echo $status_btn_group . ' <div class="float-right">' . $lang_btn_group.'</div>';
-
-echo '</fieldset>';
-echo '</div>';
-
-echo '<div class="col-md-2">';
-echo '<fieldset class="mb-0">';
-echo '<legend>Labels</legend>';
-echo '<div class="float-right"><button id="toggleExpand" class="btn btn-link btn-sm">'.$icon['angle_down'].'</button></div>';
-echo $label_btn;
-
-echo '</fieldset>';
-echo '</div>';
-echo '</div>';
 
 echo '</div>';
+
 
 
 
@@ -74,11 +60,11 @@ echo '<div class="col-sm-6">';
  * list all pages where page_sort != empty
  */
 
-
+$btn_list_toggler = '<a id="toggleExpand" class="px-2">'.$icon['angle_down'].'</a>';
 
 
 echo '<fieldset>';
-echo '<legend>' . $lang['legend_structured_pages'] . '</legend>';
+echo '<legend>' . $lang['legend_structured_pages'] . ' '.$btn_list_toggler.'</legend>';
 echo '<div class="scroll-box">';
 echo '<div class="pages-list-container">';
 

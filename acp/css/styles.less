@@ -55,10 +55,7 @@ div#bigHeader {
 }
 
 .subHeader {
-	padding: 10px 15px;
-	background: @widget_background;
 	margin-bottom: 20px;
-	.box-shadow(0 3px 3px rgba(0,0,0,0.1));
 }
 
 
@@ -283,15 +280,34 @@ div#contentSwitch {
 	text-align: right;
 }
 
-/*
-div#contentSwitchContainer > div {
-	float: right;
-	padding: 5px;
-	min-width: 250px;
+.navbar-fc {
+	border: 1px solid darken(@widget_background,10);
+	background: @widget_background;
+	padding: 0;
+	.nav-item {
+
+	}
+	.nav-link {
+		background: darken(@widget_background,15);
+		&:hover {
+			background: darken(@widget_background,8);
+		}
+		&.active {
+			background: darken(@widget_background,8);
+		}
+	}
+	.dropdown-menu {
+		background: darken(@widget_background,5);
+		.dropdown-item {
+			color: @font_color;
+			&.active {
+				color: #fff;
+			}
+		}
+		
+	}
+
 }
-*/
-
-
 
 
 #contentbox ul {

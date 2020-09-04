@@ -155,14 +155,15 @@ if(isset($set_acptheme)) {
 		
 		<script type="text/javascript" src="../lib/js/jquery/jquery.textareaCounter.plugin.js"></script>
 
-		<link rel="stylesheet" href="css/bootstrap.min.css?v=4.3.1" type="text/css" media="screen, projection">
+		<link rel="stylesheet" href="css/bootstrap.min.css?v=4.5.2" type="text/css" media="screen, projection">
 		
 		<?php
 		if($acptheme == 'dark') {
-			echo '<link rel="stylesheet" href="css/styles_dark.css?v=20200722" type="text/css" media="screen, projection">';
-		} else {
-			echo '<link rel="stylesheet" href="css/styles_light.css?v=20200722" type="text/css" media="screen, projection">';
+			$style_file = 'css/styles_dark.css?v='.time();
+		} else {			
+			$style_file = 'css/styles_light.css?v='.time();
 		}
+		echo '<link rel="stylesheet" href="'.$style_file.'" type="text/css" media="screen, projection">';
 		?>
 				
 		<link href="fontawesome/css/all.min.css" rel="stylesheet">
