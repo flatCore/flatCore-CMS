@@ -56,8 +56,7 @@ if(count($submenu) >= 1) {
 	$smarty->assign('legend_toc', FC_TOC_HEADER);
 }
 
-
-if($p == "") {
+if($page_contents['page_sort'] == 'portal' OR $p == '') {
 	$smarty->assign('homelink_status', "$fc_defs[main_nav_class_active]");
 } else {
 	$smarty->assign('homelink_status', "$fc_defs[main_nav_class]");
