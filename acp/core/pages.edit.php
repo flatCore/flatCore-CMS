@@ -171,20 +171,22 @@ if(preg_match("/custom_/i", implode(",", array_keys($_POST))) ){
 
 if(isset($_POST['delete_the_page'])) {
 
-	$dbh = new PDO("sqlite:".CONTENT_DB);
 
 	if(is_numeric($editpage)){
 		$comment_id = 'p'.$editpage;
-		$sql_del_page = "DELETE FROM fc_pages WHERE page_id = $editpage";
-		$sql_del_page_cache = "DELETE FROM fc_pages_cache WHERE page_id_original LIKE '$editpage' ";
-		$sql_del_comments = "DELETE FROM fc_comments WHERE comment_parent LIKE '$comment_id' ";
+		
+		$db_content->delete("fc_pages", [
+			"page_id" => $editpage
+		]);
+		$db_content->delete("fc_pages_cache", [
+			"page_id_original" => $editpage
+		]);
+		$db_content->delete("fc_comments", [
+			"comment_parent" => $comment_id
+		]);
+
 	}
 
-	$cnt_del_pages = $dbh->exec($sql_del_page);
-	$cnt_del_pages_cache = $dbh->exec($sql_del_page_cache);
-	$cnt_del_comments = $dbh->exec($sql_del_comments);
-	
-	$dbh = null;
 
 	if($cnt_del_pages > 0) {
 		$success_message = "{OKAY} $lang[msg_page_deleted]";
