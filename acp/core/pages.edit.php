@@ -181,6 +181,9 @@ if(isset($_POST['delete_the_page'])) {
 		$db_content->delete("fc_pages_cache", [
 			"page_id_original" => $editpage
 		]);
+		$db_content->delete("fc_pages_cache", [
+			"page_id_original" => NULL
+		]);
 		$db_content->delete("fc_comments", [
 			"comment_parent" => $comment_id
 		]);
