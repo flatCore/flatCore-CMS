@@ -5,13 +5,12 @@ $table_name = "fc_feeds";
 
 $cols = array(
   "feed_id"  => 'INTEGER NOT NULL PRIMARY KEY',
-  "feed_subid"  => 'VARCHAR',
-  "feed_name"  => 'VARCHAR',
-  "feed_title" => 'VARCHAR',
-  "feed_text" => 'VARCHAR',
-  "feed_time" => 'VARCHAR',
-  "feed_url" => 'VARCHAR'
-  
-  );
+  "feed_subid"  => "VARCHAR(255) NOT NULL DEFAULT ''",
+  "feed_name"  => "VARCHAR(255) NOT NULL DEFAULT ''",
+  "feed_title" => "VARCHAR(255) NOT NULL DEFAULT ''",
+  "feed_text" => "VARCHAR(255) NOT NULL DEFAULT ''",
+  "feed_time" => "VARCHAR(255) NOT NULL DEFAULT ''",
+  "feed_url" => "VARCHAR(255) NOT NULL DEFAULT ''"
+	);
 
 ?>

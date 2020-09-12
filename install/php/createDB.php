@@ -24,9 +24,9 @@ $user_registerdate = time();
  * DATABASE USER
  */
 
-$sql_user_table = generate_sql_query("fc_user.php");
-$sql_groups_table = generate_sql_query("fc_groups.php");
-$sql_tokens_table = generate_sql_query("fc_tokens.php");
+$sql_user_table = fc_generate_sql_query("fc_user.php");
+$sql_groups_table = fc_generate_sql_query("fc_groups.php");
+$sql_tokens_table = fc_generate_sql_query("fc_tokens.php");
 
 $dbh = new PDO("sqlite:../$fc_db_user");
 
@@ -56,7 +56,7 @@ $dbh = null;
  * DATABASE CONTENT
  */
 
-$sql_feeds_table = generate_sql_query("fc_feeds.php");
+$sql_feeds_table = fc_generate_sql_query("fc_feeds.php");
 $portal_content = file_get_contents("contents/text_welcome.txt");
 $example_content = file_get_contents("contents/text_example.txt");
 $footer_content = file_get_contents("contents/text_footer.txt");
@@ -145,14 +145,14 @@ $sql_tl_no_access = "INSERT INTO fc_textlib (
 						NULL , 'no_access' , 'Zugriff verweigert...' , 'de' )";
 
 
-$sql_pages_table = generate_sql_query("fc_pages.php");
-$sql_pages_cache_table = generate_sql_query("fc_pages_cache.php");
-$sql_preferences_table = generate_sql_query("fc_preferences.php");
-$sql_textlib_table = generate_sql_query("fc_textlib.php");
-$sql_comments_table = generate_sql_query("fc_comments.php");
-$sql_media_table = generate_sql_query("fc_media.php");
-$sql_labels_table = generate_sql_query("fc_labels.php");
-$sql_addons_table = generate_sql_query("fc_addons.php");
+$sql_pages_table = fc_generate_sql_query("fc_pages.php");
+$sql_pages_cache_table = fc_generate_sql_query("fc_pages_cache.php");
+$sql_preferences_table = fc_generate_sql_query("fc_preferences.php");
+$sql_textlib_table = fc_generate_sql_query("fc_textlib.php");
+$sql_comments_table = fc_generate_sql_query("fc_comments.php");
+$sql_media_table = fc_generate_sql_query("fc_media.php");
+$sql_labels_table = fc_generate_sql_query("fc_labels.php");
+$sql_addons_table = fc_generate_sql_query("fc_addons.php");
 
 $dbh = new PDO("sqlite:../$fc_db_content");
 
@@ -188,8 +188,8 @@ $dbh = null;
 
 $dbh = new PDO("sqlite:../$fc_db_index");
 
-$sql_index_excludes_table = generate_sql_query("fc_index_excludes.php");
-$sql_index_items_table = generate_sql_query("fc_index_items.php");
+$sql_index_excludes_table = fc_generate_sql_query("fc_index_excludes.php");
+$sql_index_items_table = fc_generate_sql_query("fc_index_items.php");
 
 $dbh->query($sql_index_excludes_table);
 $dbh->query("SET NAMES 'utf-8'");
@@ -202,8 +202,8 @@ $dbh = null;
  * DATABASE TRACKER
  */
 
-$sql_hits_table = generate_sql_query("fc_hits.php");
-$sql_log_table = generate_sql_query("fc_log.php");
+$sql_hits_table = fc_generate_sql_query("fc_hits.php");
+$sql_log_table = fc_generate_sql_query("fc_log.php");
 
 $dbh = new PDO("sqlite:../$fc_db_stats");
 

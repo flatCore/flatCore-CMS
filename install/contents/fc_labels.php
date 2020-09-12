@@ -4,11 +4,12 @@ $database = "content";
 $table_name = "fc_labels";
 
 $cols = array(
-  "label_id"  => 'INTEGER NOT NULL PRIMARY KEY',
-  "label_hash"  => 'VARCHAR',
-  "label_color"  => 'VARCHAR',
-  "label_title" => 'VARCHAR',
-  "label_description" => 'VARCHAR'
+  "label_id"  => 'INTEGER(12) NOT NULL PRIMARY KEY AUTO_INCREMENT',
+  "label_hash"  => "VARCHAR(255) NOT NULL DEFAULT ''",
+  "label_color"  => "VARCHAR(255) NOT NULL DEFAULT ''",
+  "label_title" => "VARCHAR(255) NOT NULL DEFAULT ''",
+  "label_description" => "VARCHAR(255) NOT NULL DEFAULT ''"
+  
   );
 
 ?>

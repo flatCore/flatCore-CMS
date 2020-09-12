@@ -39,32 +39,69 @@ function table_exists($db,$table_name) {
 
 
 
-/* generate an sql query from templates (php files) */
-function generate_sql_query($file) {
+/**
+ * generate an sql query from templates (php files)
+ * distinction is made between SQLite and MySQL
+ * $db_type = 'sqlite' or 'mysql'
+ * Note:	in  SQLite we have only NULL, INTEGER, REAL, TEXT and BLOB
+ * 				we only need INTEGER and TEXT
+ */
 
-	include 'contents/'.$file;
-
-	foreach ($cols as $k => $v) {
-    	$string .= "$k $v,\r"; 
-	}
-
-	$string = substr(trim("$string"), 0,-1); // cut last commata and returns
+function fc_generate_sql_query($file,$db_type='sqlite') {
 	
-	if($table_type == 'virtual') {
+	include("contents/$file");
+	$string = '';
+	
+	if($db_type == 'sqlite') {
+		/* generate sqlite query */
+
+		foreach ($cols as $k => $v) {
+			
+			if(strpos($v,'INTEGER') !== false) {
+				$str = 'INTEGER';
+			} else if(strpos($v,'VARCHAR') !== false) {
+				$str = 'VARCHAR';
+			} else {
+				$str = 'TEXT';
+			}
+			
+			if(strpos($v,'PRIMARY') !== false) {
+				$str .= ' NOT NULL PRIMARY KEY';
+			}
+			
+    	$string .= "$k $str,\r";
+		}
 		
-		$sql_string = "CREATE VIRTUAL TABLE $table_name USING fts3($string,tokenize=porter)";
+		$string = substr(trim("$string"), 0,-1); // cut last commata and returns
+		
+		if($table_type == 'virtual') {
+			
+			$sql_string = "CREATE VIRTUAL TABLE $table_name USING fts3($string,tokenize=porter)";
+			
+		} else {
+			$sql_string = "
+				CREATE TABLE $table_name (
+				$string
+				)
+			";		
+		}
 		
 	} else {
+		/* generate mysql query */
+
+		foreach ($cols as $k => $v) {
+    	$string .= "$k $v,\r"; 
+		}
+		
+		$string = substr(trim("$string"), 0,-1); // cut last commata and returns
 		$sql_string = "
-			CREATE TABLE $table_name (
-			$string
-			)
-		";		
+		    CREATE TABLE $table_name (
+		    $string
+	        ) ENGINE=MyISAM DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_unicode_ci;
+	    ";
+		
 	}
 
-
-
-  /* return the sql string */
   return $sql_string;
 }
 

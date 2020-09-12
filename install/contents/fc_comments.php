@@ -14,11 +14,11 @@ $table_name = "fc_comments";
 
 $cols = array(
   "comment_id"  => 'INTEGER NOT NULL PRIMARY KEY',
-  "comment_hash"  => 'VARCHAR',
-  "comment_parent"  => 'VARCHAR',
-  "comment_time"  => 'VARCHAR',
-  "comment_author"  => 'VARCHAR',
-  "comment_text" => 'VARCHAR'  
+  "comment_hash"  => "VARCHAR(20) NOT NULL DEFAULT ''",
+  "comment_parent"  => "VARCHAR(20) NOT NULL DEFAULT ''",
+  "comment_time"  => "VARCHAR(20) NOT NULL DEFAULT ''",
+  "comment_author"  => "VARCHAR(20) NOT NULL DEFAULT ''",
+  "comment_text" => "VARCHAR(20) NOT NULL DEFAULT ''"
   );
 
 ?>
