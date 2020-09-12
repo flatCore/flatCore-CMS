@@ -101,14 +101,19 @@ for($i=0;$i<$cnt_pages;$i++) {
 		$page_linkname = $allPages[$i]['page_linkname'];
 		$page_title = first_words($allPages[$i]['page_title'],4);
 
+		//$allPages[$i]['page_id']
 		
-		$top5pages .= '<a href="acp.php?tn=pages&sub=edit&editpage='.$allPages[$i]['page_id'].'" class="list-group-item list-group-item-ghost list-group-item-action flex-column align-items-start">';
+		$top5pages .= '<div class="list-group-item list-group-item-ghost list-group-item-action flex-column align-items-start">';
 		$top5pages .= '<div class="d-flex w-100 justify-content-between">';
-		$top5pages .= '<h6 class="mb-1">'.$page_linkname.'</h6>';
-		$top5pages .= '<small>'.$last_edit.'</small>';
+		$top5pages .= '<h6 class="mb-0">'.$page_linkname.' ';
+		$top5pages .= '<small>('.$last_edit.')</small></h6>';
+		$top5pages .= '<form class="inline" action="?tn=pages&sub=edit" method="POST">';
+		$top5pages .= '<button class="btn btn-fc btn-sm" name="editpage" value="'.$allPages[$i]['page_id'].'">'.$icon['edit'].'</button>';
+		$top5pages .= '</form>';
 		$top5pages .= '</div>';
 		$top5pages .= '<small>'.$page_title.'</small>';
-		$top5pages .= '</a>'; 
+		$top5pages .= '</div>';
+		
 	}
 	
 } // eol $i
