@@ -5,7 +5,7 @@
  * Installer/Updater
  *
  * @package: install/
- * @author: Patrick Konstandin <support@flatcore.de>
+ * @author: Patrick Konstandin
  *
  */
 
