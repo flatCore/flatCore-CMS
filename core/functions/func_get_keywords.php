@@ -2,18 +2,17 @@
 
 function get_keywords() {
 
-	global $fc_db_content;
-	global $fc_mod_rewrite;
+	global $db_content;
 	global $languagePack;
 	
-	$dbh = new PDO("sqlite:$fc_db_content");
-	$sql = "SELECT page_meta_keywords FROM fc_pages
-			WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = :languagePack";
-	$sth = $dbh->prepare($sql);
-	$sth->bindParam(':languagePack', $languagePack, PDO::PARAM_STR);
-	$sth->execute();
-	$keys = $sth->fetchAll(PDO::FETCH_ASSOC);
-	$dbh = null;
+	$keys = $db_content->select("fc_pages", ["page_meta_keywords"], [
+		"AND" => [
+			"page_status[!]" => ["draft,ghost"],
+			"page_language" => "$languagePack"
+		]
+	]);
+	
+	
 
 	foreach ($keys as $key) {
 		$clean_key = $key['page_meta_keywords'];

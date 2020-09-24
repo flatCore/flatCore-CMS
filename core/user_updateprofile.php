@@ -33,33 +33,21 @@ if($_SESSION['user_nick'] == "") {
 			}
 		}
 		
-		$dbh = new PDO("sqlite:$fc_db_user");
-		$sql = "UPDATE fc_user
-				SET user_firstname = :s_firstname,
-					user_lastname = :s_lastname,
-					user_street = :s_street,
-					user_street_nbr = :s_nr,
-					user_zipcode = :s_zip,
-					user_city = :s_city,
-					user_public_profile = :about_you,
-					user_psw_hash = :user_psw_hash
-					WHERE user_id = $_SESSION[user_id]";
+		$count = $db_user->update("fc_user", [
+				"user_firstname" => "$s_firstname",
+				"user_lastname" => "$s_lastname",
+				"user_street" => "$s_street",
+				"user_street_nbr" => "$s_nr",
+				"user_zipcode" => "$s_zip",
+				"user_city" => "$s_city",
+				"user_public_profile" => "$about_you",
+				"user_psw_hash" => "$user_psw_hash"
+					], [
+				"user_id" => $_SESSION['user_id']
+			]);
 		
-		$sth = $dbh->prepare($sql);
 		
-		$sth->bindParam(':s_firstname', $s_firstname, PDO::PARAM_STR);
-		$sth->bindParam(':s_lastname', $s_lastname, PDO::PARAM_STR);
-		$sth->bindParam(':s_street', $s_street, PDO::PARAM_STR);
-		$sth->bindParam(':s_nr', $s_nr, PDO::PARAM_STR);
-		$sth->bindParam(':s_zip', $s_zip, PDO::PARAM_STR);
-		$sth->bindParam(':s_city', $s_city, PDO::PARAM_STR);
-		$sth->bindParam(':about_you', $about_you, PDO::PARAM_STR);
-		$sth->bindParam(':user_psw_hash', $user_psw_hash, PDO::PARAM_STR);
-		
-		$count = $sth->execute();
-		$dbh = null;
-		
-		if($count == TRUE){
+		if($count->rowCount() == 1){
 			$smarty->assign("msg_status","alert alert-success",true);
 			$smarty->assign("register_message",$lang['msg_update_profile'],true);
 		} else {
@@ -132,25 +120,27 @@ if($_SESSION['user_nick'] == "") {
 	if(isset($_POST['delete_my_account'])) {
 
 		$delete_id = (int) $_SESSION['user_id'];
-	
-		$dbh = new PDO("sqlite:$fc_db_user");
-		$sql = "UPDATE fc_user
-				SET user_firstname = '',
-					user_lastname = '',
-					user_street = '',
-					user_street_nbr = '',
-					user_zipcode = '',
-					user_city = '',
-					user_public_profile = '',
-					user_psw = '',
-					user_mail = '',
-					user_class = 'deleted'
-					WHERE user_id = $delete_id";
+			
+		$count = $db_user->update("fc_user", [
+				"user_firstname" => "",
+				"user_lastname" => "",
+				"user_street" => "",
+				"user_street_nbr" => "",
+				"user_zipcode" => "",
+				"user_city" => "",
+				"user_public_profile" => "",
+				"user_psw_hash" => "",
+				"user_psw" => "",
+				"user_mail" => "",
+				"user_registerdate" => "",
+				"user_drm" => "",
+				"user_verified" => "",
+				"user_class" => "deleted"
+					], [
+				"user_id" => $delete_id
+			]);
 		
-		$count = $dbh->exec($sql);
-		$dbh = null;
-		
-		if($count > 0){
+		if($count->rowCount() == 1) {
 			$smarty->assign("msg_status","alert alert-success",true);
 			$smarty->assign("register_message",$lang['msg_delete_account_success'],true);
 			session_destroy();

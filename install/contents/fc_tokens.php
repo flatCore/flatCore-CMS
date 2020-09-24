@@ -8,7 +8,7 @@ $cols = array(
   "user_id"  => 'INTEGER(12)',
   "identifier"  => "VARCHAR(255) NOT NULL DEFAULT ''",
   "securitytoken" => "VARCHAR(255) NOT NULL DEFAULT ''",
-  "time" => "VARCHAR(255) NOT NULL DEFAULT ''"
+  "time" => "VARCHAR(50) NOT NULL DEFAULT ''"
   );
 
 ?>

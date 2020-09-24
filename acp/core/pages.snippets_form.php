@@ -21,22 +21,14 @@ if((!empty($_REQUEST['duplicate'])) OR ($_REQUEST['modus'] == 'duplicate')) {
 if(!isset($snip_id)) {
 	$snip_id = (int) $_REQUEST['snip_id'];
 }
-  
-$dbh = new PDO("sqlite:".CONTENT_DB);
-$sql = "SELECT * FROM fc_textlib WHERE textlib_id = $snip_id ";
 
-$result = $dbh->query($sql);
-$result = $result->fetch(PDO::FETCH_ASSOC);
-
-$dbh = null;
+$result = $db_content->get("fc_textlib", "*", [ "textlib_id" => $snip_id ]);
 
 if(is_array($result)) {
 	foreach($result as $k => $v) {
 				$$k = htmlspecialchars(stripslashes($v));
 	}
 }
-
-
 
 
 

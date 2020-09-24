@@ -10,6 +10,9 @@ if(!defined('INSTALLER')) {
 	die("PERMISSION DENIED!");
 }
 
+require '../lib/Medoo.php';
+use Medoo\Medoo;
+
 $username = $_POST['username'];
 $mail = $_POST['mail'];
 $psw = $_POST['psw'];
@@ -20,43 +23,127 @@ $user_verified = "verified";
 $user_registerdate = time();
 
 
+
+
+if((isset($prefs_database_host) && ($prefs_database_host != ''))) {
+	/* we use MySQL */
+	$db_type = 'mysql';
+	 
+	$database = new Medoo([
+
+		'database_type' => 'mysql',
+		'database_name' => "$prefs_database_name",
+		'server' => "$prefs_database_host",
+		'username' => "$prefs_database_username",
+		'password' => "$prefs_database_psw",
+	 
+		'charset' => 'utf8',
+		'port' => $prefs_database_port,
+	 
+		'prefix' => "$prefs_database_prefix"
+	]);
+	
+	
+  $config_db_content = "<?php\n";
+  $config_db_content .= "$"."database_host = "."\"".$prefs_database_host."\";\n";
+  $config_db_content .= "$"."database_user = "."\"".$prefs_database_username."\";\n";
+  $config_db_content .= "$"."database_psw = "."\"".$prefs_database_psw."\";\n";
+  $config_db_content .= "$"."database_name = "."\"".$prefs_database_name."\";\n";
+  $config_db_content .= "$"."database_port = "."\"".$prefs_database_port."\";\n";
+  $config_db_content .= "define("."\""."DB_PREFIX"."\"".", "."\"".$prefs_database_prefix."\");\n";
+  $config_db_content .= "?>";
+	
+	$config_db_file = "../config_database.php";
+	file_put_contents($config_db_file, $config_db_content);
+	  
+	
+} else {
+	$db_type = 'sqlite';
+	
+	define("CONTENT_DB", "../$fc_db_content");
+	define("USER_DB", "../$fc_db_user");
+	define("STATS_DB", "../$fc_db_stats");
+	
+	
+	$db_content = new Medoo([
+		'database_type' => 'sqlite',
+		'database_file' => CONTENT_DB
+	]);
+	
+	$db_user = new Medoo([
+		'database_type' => 'sqlite',
+		'database_file' => USER_DB
+	]);
+	
+	$db_statistics = new Medoo([
+		'database_type' => 'sqlite',
+		'database_file' => STATS_DB
+	]);
+
+}
+
+
+echo $db_type. ' Database<hr>';
+
+
+/* Queries for new tables */
+
+$sql_user_table = fc_generate_sql_query("fc_user.php",$db_type);
+$sql_groups_table = fc_generate_sql_query("fc_groups.php",$db_type);
+$sql_tokens_table = fc_generate_sql_query("fc_tokens.php",$db_type);
+
+$sql_feeds_table = fc_generate_sql_query("fc_feeds.php",$db_type);
+$sql_pages_table = fc_generate_sql_query("fc_pages.php",$db_type);
+$sql_pages_cache_table = fc_generate_sql_query("fc_pages_cache.php",$db_type);
+$sql_preferences_table = fc_generate_sql_query("fc_preferences.php",$db_type);
+$sql_textlib_table = fc_generate_sql_query("fc_textlib.php",$db_type);
+$sql_comments_table = fc_generate_sql_query("fc_comments.php",$db_type);
+$sql_media_table = fc_generate_sql_query("fc_media.php",$db_type);
+$sql_labels_table = fc_generate_sql_query("fc_labels.php",$db_type);
+$sql_addons_table = fc_generate_sql_query("fc_addons.php",$db_type);
+
+$sql_hits_table = fc_generate_sql_query("fc_hits.php",$db_type);
+$sql_log_table = fc_generate_sql_query("fc_log.php",$db_type);
+
+$sql_index_excludes_table = fc_generate_sql_query("fc_index_excludes.php",$db_type);
+$sql_index_items_table = fc_generate_sql_query("fc_index_items.php",$db_type);
+
+
+if($db_type == 'mysql') {
+	
+	$dbh_user = $database;
+	$dbh_content = $database;
+	$dbh_statistics = $database;
+	
+} else {
+	
+	$dbh_user = $db_user;
+	$dbh_content = $db_content;
+	$dbh_statistics = $db_statistics;
+	
+}
+
+$dbh_user->query($sql_user_table);
+$dbh_user->query($sql_tokens_table);
+$dbh_user->query($sql_groups_table);
+
+$dbh_user->insert("fc_user", [
+	"user_class" => "administrator",
+	"user_nick" => "$username",
+	"user_verified" => "verified",
+	"user_registerdate" => "$user_registerdate",
+	"user_drm" => "$drm_string",
+	"user_mail" => "$mail",
+	"user_psw_hash" => "$user_psw_hash"
+]);
+
+
+
 /**
- * DATABASE USER
+ * get basic contents
  */
 
-$sql_user_table = fc_generate_sql_query("fc_user.php");
-$sql_groups_table = fc_generate_sql_query("fc_groups.php");
-$sql_tokens_table = fc_generate_sql_query("fc_tokens.php");
 
-$dbh = new PDO("sqlite:../$fc_db_user");
-
-$dbh->query($sql_user_table);
-$dbh->query($sql_groups_table);
-$dbh->query($sql_tokens_table);
-
-$sql_insert_admin = "INSERT INTO fc_user (
-		user_id, user_class, user_nick, user_verified, user_registerdate, user_drm, user_mail, user_psw_hash
-	) VALUES (
-		NULL, 'administrator', :username, 'verified', :user_registerdate, :drm_string, :mail, :user_psw_hash
-	)";
-
-$sth = $dbh->prepare($sql_insert_admin);
-$sth->bindParam(':username', $username, PDO::PARAM_STR);
-$sth->bindParam(':user_registerdate', $user_registerdate, PDO::PARAM_STR);
-$sth->bindParam(':drm_string', $drm_string, PDO::PARAM_STR);
-$sth->bindParam(':mail', $mail, PDO::PARAM_STR);
-$sth->bindParam(':user_psw_hash', $user_psw_hash, PDO::PARAM_STR);
-$sth->execute();
-
-$dbh = null;
-
-
-
-/**
- * DATABASE CONTENT
- */
-
-$sql_feeds_table = fc_generate_sql_query("fc_feeds.php");
 $portal_content = file_get_contents("contents/text_welcome.txt");
 $example_content = file_get_contents("contents/text_example.txt");
 $footer_content = file_get_contents("contents/text_footer.txt");
@@ -65,131 +152,133 @@ $email_confirm_content = file_get_contents("contents/text_email_confirm.txt");
 $page_lastedit = time();
 
 
-$sql_portal_site = "INSERT INTO fc_pages (
-							page_id , page_language , page_linkname ,
-							page_title , page_status , page_content ,
-							page_lastedit ,	page_lastedit_from , page_template ,
-							page_template_layout , page_sort , page_meta_author ,
-							page_meta_date , page_meta_keywords , page_meta_description ,
-							page_meta_robots , page_meta_enhanced , page_head_styles ,
-							page_head_enhanced , page_modul, page_authorized_users
-						) VALUES (
-							NULL, '$languagePack', 'Startseite', 'Home',
-							'public', '$portal_content', '$page_lastedit',
-							'Installer', 'default', 'layout_portal.tpl',
-							'portal', 'Installer', '$page_lastedit',
-							'Lorem, ipsum, dolor, sit', 'Testseite',
-							'all', '', '',
-							'',	'',	'' )
-							";
+$dbh_content->query($sql_pages_table);
+$dbh_content->query($sql_pages_cache_table);
+$dbh_content->query($sql_preferences_table);
+$dbh_content->query($sql_textlib_table);
+$dbh_content->query($sql_comments_table);
+$dbh_content->query($sql_media_table);
+$dbh_content->query($sql_feeds_table);
+$dbh_content->query($sql_labels_table);
+$dbh_content->query($sql_addons_table);
+
+/* insert two example pages */
+
+$dbh_content->insert("fc_pages", [
+	"page_language" => "$languagePack",
+	"page_linkname" => "Home",
+	"page_title" => "Homepage",
+	"page_status" => "public",
+	"page_content" => "$portal_content",
+	"page_lastedit" => "$page_lastedit",
+	"page_lastedit_from" => "$username",
+	"page_template" => "default",
+	"page_template_layout" => "layout_portal.tpl",
+	"page_sort" => "portal",
+	"page_meta_author" => "$username",
+	"page_meta_date" => "$page_lastedit",
+	"page_meta_keywords" => "Lorem,ipsum,dolor,sit",
+	"page_meta_description" => "Test Meta Description",
+	"page_meta_robots" => "all"
+]);
+
+$dbh_content->insert("fc_pages", [
+	"page_language" => "$languagePack",
+	"page_linkname" => "Testseite",
+	"page_permalink" => "test/",
+	"page_title" => "Testseite",
+	"page_status" => "public",
+	"page_content" => "$example_content",
+	"page_lastedit" => "$page_lastedit",
+	"page_lastedit_from" => "$username",
+	"page_template" => "default",
+	"page_template_layout" => "layout_portal.tpl",
+	"page_sort" => "100",
+	"page_meta_author" => "$username",
+	"page_meta_date" => "$page_lastedit",
+	"page_meta_keywords" => "Lorem,ipsum,dolor,sit",
+	"page_meta_description" => "Testseite Meta Description",
+	"page_meta_robots" => "all"
+]);
+
+/* insert preferences */
+
+$dbh_content->insert("fc_preferences", [
+	"prefs_status" => "active",
+	"prefs_pagetitle" => "flatCore",
+	"prefs_pagesubtitle" => "Content Management System",
+	"prefs_template" => "default",
+	"prefs_template_layout" => "layout_default.tpl",
+	"prefs_showloginform" => "yes",
+	"prefs_xml_sitemap" => "off",
+	"prefs_logfile" => "off",
+	"prefs_rss_time_offset" => 216000,
+	"prefs_cms_domain" => "$prefs_cms_domain",
+	"prefs_cms_ssl_domain" => "$prefs_cms_ssl_domain",
+	"prefs_cms_base" => "$prefs_cms_base",
+	"prefs_default_language" => "$languagePack"
+]);
 
 
 
-$sql_first_site = "INSERT INTO fc_pages (
-						page_id , page_language , page_linkname ,
-						page_title , page_status , page_permalink,
-						page_content , page_lastedit , page_lastedit_from ,
-						page_template ,	page_sort ,	page_meta_author ,
-						page_meta_date , page_meta_keywords , page_meta_description ,
-						page_meta_robots , page_meta_enhanced ,	page_head_styles ,
-						page_head_enhanced , page_modul, page_authorized_users 
-						) VALUES (
-						NULL, '$languagePack', 'Testseite',
-						'flatCore',	'public', 'flatcore/',
-						'$example_content', '$page_lastedit', 'Installer',
-						'use_standard', '100', 'Installer',
-						'$page_lastedit', 'Lorem, ipsum, dolor, sit', 'Testseite',
-						'all', '', '',
-						'', '', '' ) ";
+/* insert snippets */
+
+$dbh_content->insert("fc_textlib", [
+	[
+		"textlib_name" => "footer_text",
+		"textlib_content" => "$footer_content",
+		"textlib_lang" => "$languagePack"
+		
+	],[
+		
+		"textlib_name" => "extra_content_text",
+		"textlib_content" => "",
+		"textlib_lang" => "$languagePack"
+			
+	],[
+	
+		"textlib_name" => "agreement_text",
+		"textlib_content" => "$agreement_content",
+		"textlib_lang" => "$languagePack"	
+		
+	],[
+	
+		"textlib_name" => "account_confirm",
+		"textlib_content" => "<p>Dein Account wurde erfolgreich freigeschaltet.</p>",
+		"textlib_lang" => "$languagePack"		
+		
+	],[
+		
+		"textlib_name" => "account_confirm_mail",
+		"textlib_content" => "$email_confirm_content",
+		"textlib_lang" => "$languagePack"	
+		
+	],[
+		
+		"textlib_name" => "no_access",
+		"textlib_content" => "Zugriff verweigert...",
+		"textlib_lang" => "$languagePack"	
+		
+	]
+]);
 
 
-$sql_insert_prefs = "INSERT INTO fc_preferences (
-		prefs_id, prefs_status, prefs_pagetitle,
-		prefs_pagesubtitle, prefs_template, prefs_showloginform, prefs_xml_sitemap,
-		prefs_imagesuffix, prefs_maximagewidth, prefs_maximageheight, prefs_maxfilesize,
-		prefs_logfile, prefs_template_layout, prefs_rss_time_offset, prefs_cms_domain, prefs_cms_ssl_domain, prefs_cms_base
-		) VALUES (
-		NULL, 'active', 'Diese Homepage',
-		'rockt mit SQLite und PHP5', 'default', 'yes', 'off',
-		'jpg jpeg gif png', '600', '500', '2800',
-		'on', 'layout_default.tpl', '216000', '$prefs_cms_domain', '$prefs_cms_ssl_domain', '$prefs_cms_base' )";
-
-$sql_tl_footer_text = "INSERT INTO fc_textlib ( 
-						textlib_id , textlib_name , textlib_content , textlib_lang 
-						) VALUES (
-						NULL , 'footer_text' , '$footer_content' , 'de' )";
-
-$sql_tl_extra_content_text = "INSERT INTO fc_textlib ( 
-								textlib_id , textlib_name , textlib_content , textlib_lang
-								) VALUES (
-								NULL , 'extra_content_text' , '' , 'de' )";
-
-$sql_tl_agreement_text = "INSERT INTO fc_textlib ( 
-							textlib_id , textlib_name , textlib_content , textlib_lang
-							) VALUES (
-							NULL , 'agreement_text' , '$agreement_content' , 'de' )";
-
-$sql_tl_account_confirm = "INSERT INTO fc_textlib ( 
-							textlib_id , textlib_name , textlib_content , textlib_lang 
-							) VALUES (
-							NULL , 'account_confirm' , '<p>Dein Account wurde erfolgreich freigeschaltet.</p>' , 'de' )";
-
-$sql_tl_account_confirm_mail = "INSERT INTO fc_textlib ( 
-								textlib_id , textlib_name , textlib_content , textlib_lang 
-								) VALUES ( 
-								NULL , 'account_confirm_mail' , '$email_confirm_content' , 'de' )";
-
-$sql_tl_no_access = "INSERT INTO fc_textlib ( 
-						textlib_id , textlib_name , textlib_content , textlib_lang 
-						) VALUES (
-						NULL , 'no_access' , 'Zugriff verweigert...' , 'de' )";
 
 
-$sql_pages_table = fc_generate_sql_query("fc_pages.php");
-$sql_pages_cache_table = fc_generate_sql_query("fc_pages_cache.php");
-$sql_preferences_table = fc_generate_sql_query("fc_preferences.php");
-$sql_textlib_table = fc_generate_sql_query("fc_textlib.php");
-$sql_comments_table = fc_generate_sql_query("fc_comments.php");
-$sql_media_table = fc_generate_sql_query("fc_media.php");
-$sql_labels_table = fc_generate_sql_query("fc_labels.php");
-$sql_addons_table = fc_generate_sql_query("fc_addons.php");
+/**
+ * Logfiles and Klicks
+ */
 
-$dbh = new PDO("sqlite:../$fc_db_content");
 
-	$dbh->query($sql_pages_table);
-	$dbh->query($sql_pages_cache_table);
-	$dbh->query($sql_preferences_table);
-	$dbh->query($sql_textlib_table);
-	$dbh->query($sql_comments_table);
-	$dbh->query($sql_media_table);
-	$dbh->query($sql_feeds_table);
-	$dbh->query($sql_portal_site);
-	$dbh->query($sql_first_site);
-	$dbh->query($sql_tl_footer_text);
-	$dbh->query($sql_tl_extra_content_text);
-	$dbh->query($sql_tl_agreement_text);
-	$dbh->query($sql_tl_account_confirm);
-	$dbh->query($sql_tl_account_confirm_mail);
-	$dbh->query($sql_tl_no_access);
-	$dbh->query($sql_labels_table);
-	$dbh->query($sql_addons_table);
-
-	$dbh->query($sql_insert_prefs);
-
-$dbh = null;
+$dbh_statistics->query($sql_hits_table);
+$dbh_statistics->query($sql_log_table);
 
 
 /**
  * DATABASE INDEX
  */
- 
- 
-
 
 $dbh = new PDO("sqlite:../$fc_db_index");
-
-$sql_index_excludes_table = fc_generate_sql_query("fc_index_excludes.php");
-$sql_index_items_table = fc_generate_sql_query("fc_index_items.php");
 
 $dbh->query($sql_index_excludes_table);
 $dbh->query("SET NAMES 'utf-8'");
@@ -198,19 +287,8 @@ $dbh->query($sql_index_items_table);
 $dbh = null;
   
 
-/**
- * DATABASE TRACKER
- */
 
-$sql_hits_table = fc_generate_sql_query("fc_hits.php");
-$sql_log_table = fc_generate_sql_query("fc_log.php");
 
-$dbh = new PDO("sqlite:../$fc_db_stats");
-
-$dbh->query($sql_hits_table);
-$dbh->query($sql_log_table);
-
-$dbh = null;
 
 
 echo '<div class="alert alert-success">'.$lang['installed'].' | Admin: '.$username.'</div>';

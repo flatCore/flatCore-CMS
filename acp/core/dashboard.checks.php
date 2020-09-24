@@ -28,7 +28,8 @@ $writable_items = array(
 	'../'.FC_CONTENT_DIR.'/SQLite/',
 	'../'.FC_CONTENT_DIR.'/SQLite/content.sqlite3',
 	'../'.FC_CONTENT_DIR.'/SQLite/flatTracker.sqlite3',
-	'../'.FC_CONTENT_DIR.'/SQLite/user.sqlite3'
+	'../'.FC_CONTENT_DIR.'/SQLite/user.sqlite3',
+	'../'.FC_CONTENT_DIR.'/SQLite/index.sqlite3'
 );
 
 foreach($writable_items as $f) {
@@ -36,6 +37,19 @@ foreach($writable_items as $f) {
 	if(($f == '../sitemap.xml') AND ($fc_preferences['prefs_xml_sitemap'] == 'off')) {
 		continue;
 	}
+	
+	if($db_type !== 'sqlite') {
+		if($f == '../'.FC_CONTENT_DIR.'/SQLite/content.sqlite3') {
+			continue;
+		}
+		if($f == '../'.FC_CONTENT_DIR.'/SQLite/flatTracker.sqlite3') {
+			continue;
+		}
+		if($f == '../'.FC_CONTENT_DIR.'/SQLite/user.sqlite3') {
+			continue;
+		}	
+	}
+	
 	
 	if(!is_writable($f)) {
 		echo '<div class="alert alert-danger">'.$lang['alert_not_writable'].' <strong>'.$f.'</strong></div>';

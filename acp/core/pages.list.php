@@ -3,7 +3,7 @@
 //prohibit unauthorized access
 require 'core/access.php';
 
-$dbh = new PDO("sqlite:".CONTENT_DB);
+//$dbh = new PDO("sqlite:".CONTENT_DB);
 
 unset($result);
 /* $_SESSION[filter_string] was defined in inc.pages.php */
@@ -12,20 +12,18 @@ $sql = "SELECT page_id, page_language, page_linkname, page_title, page_meta_desc
 		$_SESSION[filter_string]
 		ORDER BY page_language ASC, page_sort ASC, page_linkname ASC";
 
-$sth = $dbh->prepare($sql);
-$sth->execute();
-$result = $sth->fetchAll(PDO::FETCH_ASSOC);
+$result = $db_content->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
 $x=0;
 foreach($result as $p) {
 	$this_page_id = 'p'.$p['page_id'];
-	$count_comments = $dbh->query("Select Count(*) FROM fc_comments WHERE comment_parent LIKE '$this_page_id' ")->fetch();
+	$count_comments = $db_content->query("Select Count(*) FROM fc_comments WHERE comment_parent LIKE '$this_page_id' ")->fetch();
 	$result[$x]['cnt_comments'] = $count_comments[0];
 	$x++;
 }
 
 	
-$dbh = null;
+//$dbh = null;
    
 $cnt_result = count($result);
 $result = fc_array_multisort($result, 'page_language', SORT_ASC, 'page_sort', SORT_ASC, SORT_NATURAL);

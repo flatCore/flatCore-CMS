@@ -35,12 +35,17 @@ ${'active_'.$_SESSION['type']} = 'active';
 if(isset($_POST['delete_snippet'])) {
 
 	$delete_snip_id = (int) $_POST['snip_id'];
-
+	/*
 	$dbh = new PDO("sqlite:".CONTENT_DB);
 	$sql = "DELETE FROM fc_textlib WHERE textlib_id = $delete_snip_id";
 	$cnt_changes = $dbh->exec($sql);
+	*/
+	
+	$cnt_changes=$db_content->delete("fc_textlib",[
+			"textlib_id" => $delete_snip_id
+		]);
 
-	if($cnt_changes > 0){
+	if(($cnt_changes->rowCount()) > 0){
 		$sys_message = '{OKAY} '. $lang['db_changed'];
 		record_log($_SESSION['user_nick'],"deleted snippet id: $delete_snip_id","10");
 		$modus = 'new';
@@ -57,7 +62,7 @@ if(isset($_POST['delete_snippet'])) {
 if(isset($_POST['save_snippet'])) {
 
 	// connect to database
-	$db = new PDO("sqlite:".CONTENT_DB);
+	//$db = new PDO("sqlite:".CONTENT_DB);
 	
 	$snippet_name = clean_filename($_POST['snippet_name']);
 	$timestamp =  time();
@@ -239,7 +244,7 @@ if($snippet_lang_filter != "") {
 	$filter_string .= " AND ($snippet_lang_filter)";
 }
 
-$dbh = new PDO("sqlite:".CONTENT_DB);
+//$dbh = new PDO("sqlite:".CONTENT_DB);
 
 $sql_cnt = "SELECT count(*) AS 'cnt_all_snippets',
 (SELECT count(*) FROM fc_textlib WHERE textlib_name IN($system_snippets_str) ) AS 'cnt_system_snippets',
@@ -247,7 +252,8 @@ $sql_cnt = "SELECT count(*) AS 'cnt_all_snippets',
 (SELECT count(*) FROM fc_textlib $filter_string ) AS 'cnt_filter_snippets'
 FROM fc_textlib";
 
-$cnt = $dbh->query("$sql_cnt")->fetch(PDO::FETCH_ASSOC);
+//$cnt = $dbh->query("$sql_cnt")->fetch(PDO::FETCH_ASSOC);
+$cnt = $db_content->query($sql_cnt)->fetch(PDO::FETCH_ASSOC);
 
 $files_per_page = 50;
 $show_numbers = 6;
@@ -281,12 +287,15 @@ $sql = "SELECT * FROM fc_textlib $filter_string ORDER BY textlib_name ASC LIMIT 
 foreach($system_snippets as $snippet) {
 	$snippet_exception[] = " textlib_name != '$snippet' ";
 }
-
+/*
 foreach ($dbh->query($sql) as $row) {
 	$snippets_list[] = $row;
 }
+*/
 
-$dbh = null;
+$snippets_list = $db_content->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+
+//$dbh = null;
 
 $cnt_pages = ceil($cnt['cnt_filter_snippets']/$files_per_page);
 

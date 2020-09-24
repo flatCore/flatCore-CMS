@@ -10,7 +10,10 @@
 
 ini_set("url_rewriter.tags", '');
 session_start();
-error_reporting(0);
+error_reporting(E_ALL ^E_NOTICE);
+
+require 'lib/Medoo.php';
+use Medoo\Medoo;
 
 $fc_start_time = microtime(true);
 
@@ -24,7 +27,57 @@ foreach($_REQUEST as $key => $val) {
 
 require 'config.php';
 
-if(is_file(FC_CORE_DIR . "/maintance.html") OR (is_file($fc_db_content) == false)) {
+if(is_file('config_database.php')) {
+	include 'config_database.php';
+	
+	$db_type = 'mysql';
+	 
+	$database = new Medoo([
+
+		'database_type' => 'mysql',
+		'database_name' => "$database_name",
+		'server' => "$database_host",
+		'username' => "$database_user",
+		'password' => "$database_psw",
+	 
+		'charset' => 'utf8',
+		'port' => $database_port,
+	 
+		'prefix' => DB_PREFIX
+	]);
+	
+	$db_content = $database;
+	$db_user = $database;
+	$db_statistics = $database;
+	
+} else {
+	
+	$db_type = 'sqlite';
+	
+	define("CONTENT_DB", "$fc_db_content");
+	define("USER_DB", "$fc_db_user");
+	define("STATS_DB", "$fc_db_stats");
+	define("INDEX_DB", "$fc_db_index");
+	
+	$db_content = new Medoo([
+		'database_type' => 'sqlite',
+		'database_file' => CONTENT_DB
+	]);
+	
+	$db_user = new Medoo([
+		'database_type' => 'sqlite',
+		'database_file' => USER_DB
+	]);
+	
+	$db_statistics = new Medoo([
+		'database_type' => 'sqlite',
+		'database_file' => STATS_DB
+	]);
+	
+}
+
+
+if(is_file(FC_CORE_DIR . "/maintance.html")) {
 	header("location:" . FC_INC_DIR . "/maintance.html");
 	die("We'll be back soon.");
 }
@@ -139,6 +192,7 @@ if($p == "" OR $p == "portal") {
 if($p == "404") {
 	list($page_contents,$fc_nav,$fc_prefs) = get_content('404','type_of_use');
 }
+
 
 if($page_contents['page_type_of_use'] == 'register') {
 	$p = 'register';

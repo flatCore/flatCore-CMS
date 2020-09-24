@@ -9,10 +9,12 @@ unset($status_msg);
 if($goto == 'logout') {
 	if(is_numeric($_SESSION['user_id'])) {
 		// delete data from fc_tokens
-		$dbh = new PDO("sqlite:$fc_db_user");
-		$stmt = $dbh->prepare("DELETE FROM fc_tokens WHERE user_id = :user_id");
-		$stmt->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
-		$stmt->execute();	
+		$db_user->delete("fc_tokens",[
+			"AND" => [
+			"user_id" => $_SESSION['user_id']
+			]
+		]);
+		
 		unset($_COOKIE['identifier']);
 		unset($_COOKIE['securitytoken']);
 		unset($_COOKIE['permit_cookies']);

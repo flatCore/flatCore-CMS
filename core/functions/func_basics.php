@@ -7,18 +7,12 @@
 
 function is_user_in_group($user_id,$user_group) {
 
-	global $fc_db_user;
-
-	$dbh = new PDO("sqlite:$fc_db_user");
-
-	$sql = "SELECT group_name, group_user FROM fc_groups
-					WHERE group_name = :user_group";
-	$stmt = $dbh->prepare($sql);
-	$stmt->bindValue(':user_group', $user_group, PDO::PARAM_STR);
-	$stmt->execute();
-	$result = $stmt->fetch(PDO::FETCH_ASSOC);
-	$dbh = null;
-   
+	global $db_user;
+	
+	$result = $db_user->get("fc_groups", ["group_name","group_user"], [
+			"group_name" => $user_group
+	]);
+	  
 	$arr_users = explode(" ", $result['group_user']);
 
 	if(in_array($_SESSION['user_id'],$arr_users)) {
@@ -60,7 +54,7 @@ function buffer_script($script,$parameters=NULL) {
 
 function fc_get_images_data($image,$parameters=NULL) {
 
-	global $fc_db_content;
+	global $db_content;
 	global $fc_template;
 	global $languagePack;
 	
@@ -68,14 +62,12 @@ function fc_get_images_data($image,$parameters=NULL) {
 		$parameter = parse_str(html_entity_decode($parameters));
 	}
 	
-	$dbh = new PDO("sqlite:$fc_db_content");
-	$sql = "SELECT * FROM fc_media WHERE media_file LIKE :filename AND (media_lang = :lang OR media_lang = '' OR media_lang is null)";
-	$sth = $dbh->prepare($sql);
-	$sth->bindValue(':filename', "%$image%", PDO::PARAM_STR);
-	$sth->bindValue(':lang', "$languagePack", PDO::PARAM_STR);
-	$sth->execute();
-	$imageData = $sth->fetch(PDO::FETCH_ASSOC);
-	$dbh = null;
+	$imageData = $db_content->get("fc_media", "*", [
+			"AND" => [
+			"media_file[~]" => "%$image",
+			"media_lang" => "$languagePack"
+			]
+	]);	
 	
 	$img_src = str_replace('../content/images/', '/content/images/', $imageData['media_file']);
 	$tpl = file_get_contents('./styles/'.$fc_template.'/templates/image.tpl');
@@ -95,7 +87,7 @@ function fc_get_images_data($image,$parameters=NULL) {
 
 function fc_get_files_data($file,$parameters=NULL) {
 
-	global $fc_db_content;
+	global $db_content;
 	global $fc_template;
 	global $languagePack;
 	
@@ -103,14 +95,12 @@ function fc_get_files_data($file,$parameters=NULL) {
 		$parameter = parse_str(html_entity_decode($parameters));
 	}
 	
-	$dbh = new PDO("sqlite:$fc_db_content");
-	$sql = "SELECT * FROM fc_media WHERE media_file LIKE :filename AND (media_lang = :lang OR media_lang = '' OR media_lang is null)";
-	$sth = $dbh->prepare($sql);
-	$sth->bindValue(':filename', "%$file%", PDO::PARAM_STR);
-	$sth->bindValue(':lang', "$languagePack", PDO::PARAM_STR);
-	$sth->execute();
-	$fileData = $sth->fetch(PDO::FETCH_ASSOC);
-	$dbh = null;
+	$fileData = $db_content->get("fc_media", "*", [
+			"AND" => [
+			"media_file[~]" => "%$file",
+			"media_lang" => "$languagePack"
+			]
+	]);
 	
 	$file_src = str_replace('../content/files/', '/content/files/', $fileData['media_file']);
 	$tpl = file_get_contents('./styles/'.$fc_template.'/templates/download.tpl');
@@ -459,21 +449,16 @@ function mailto_admin($subject,$message) {
 
 function record_log($log_trigger = 'system', $log_entry, $log_priority = '0') {
 
-	global $fc_db_stats;
+	global $db_statistics;
 	
 	$log_time = time();
 	
-	$dbh = new PDO("sqlite:$fc_db_stats");
-	
-	
-	$sql = "INSERT INTO log
-			(	log_id , log_time , log_trigger , log_entry , log_priority
-			) VALUES (
-			NULL, '$log_time', '$log_trigger', '$log_entry', '$log_priority' ) ";
-											
-	$cnt_changes = $dbh->exec($sql);
-	
-	$dbh = null;
+	$db_statistics->insert("log", [
+		"log_time" => "$log_time",
+		"log_trigger" => "$log_trigger",
+		"log_entry" => "$log_entry",
+		"log_priority" => $log_priority
+	]);
 
 }
 

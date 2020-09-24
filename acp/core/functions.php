@@ -6,7 +6,6 @@ if(basename(__FILE__) == basename($_SERVER['PHP_SELF'])){
 	die ('<h2>Direct File Access Prohibited</h2>');
 }
 
-
 include_once 'functions_addons.php';
 include_once 'functions_database.php';
 include_once 'functions_cache.php';
@@ -641,15 +640,12 @@ function generate_xml_sitemap() {
  */
 
 function get_custom_fields() {
+	
+	global $db_content;
 
 	$customs_fields = array();
-
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = "SELECT * FROM fc_pages";
 	
-	$cf = $dbh->query($sql);
-	$cf = $cf->fetch(PDO::FETCH_ASSOC);
-	$dbh = null;
+	$cf = $db_content->get("fc_pages", "*");
 	
 	$cf = array_keys($cf);
 	$cnt_cf = count($cf);
@@ -670,22 +666,19 @@ function get_custom_fields() {
  */
 
 function get_custom_user_fields() {
+	
+	global $db_user;
 
 	$customs_fields = array();
+	
+	$cf = $db_user->get("fc_user", "*");
 
-	$dbh = new PDO("sqlite:".USER_DB);
-	$sql = "SELECT * FROM fc_user";
+	$cf = array_keys($cf);
+	$cnt_cf = count($cf);
 	
-	$result = $dbh->query($sql);
-	$result = $result->fetch(PDO::FETCH_ASSOC);
-	$dbh = null;
-	
-	$result = array_keys($result);
-	$cnt_result = count($result);
-	
-	for($i=0;$i<$cnt_result;$i++) {
-		if(substr($result[$i],0,7) == "custom_") {
-			$customs_fields[] = $result[$i];
+	for($i=0;$i<$cnt_cf;$i++) {
+		if(substr($cf[$i],0,7) == "custom_") {
+			$customs_fields[] = $cf[$i];
 		}
 	}
 	
@@ -1000,8 +993,7 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 		
 		return $error;
 	}
-	
-	
+
 }
 
 
@@ -1037,14 +1029,12 @@ function fc_array_multisort(){
 
 function fc_get_labels() {
 
-	$dbh = new PDO("sqlite:".CONTENT_DB);	
-	$sql = "SELECT * FROM fc_labels";
+	global $db_content;
+
+	$customs_fields = array();
+	$labels = $db_content->select("fc_labels", "*");
 	
-	foreach ($dbh->query($sql) as $row) {
-		$result[] = $row;
-	}
-	
-	return($result);
+	return $labels;
 }
 
 
