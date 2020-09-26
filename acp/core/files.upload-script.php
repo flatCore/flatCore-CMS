@@ -2,13 +2,62 @@
 session_start();
 error_reporting(0);
 
-require '../../config.php';
-define("CONTENT_DB", "../../$fc_db_content");
+require '../../lib/Medoo.php';
+use Medoo\Medoo;
 
 if($_SESSION['user_class'] != "administrator"){
 	header("location:../index.php");
 	die("PERMISSION DENIED!");
 }
+
+require '../../config.php';
+if(is_file('../../'.FC_CONTENT_DIR.'/config.php')) {
+	include '../../'.FC_CONTENT_DIR.'/config.php';
+}
+
+if(is_file('../../config_database.php')) {
+	include '../../config_database.php';
+	$db_type = 'mysql';
+	
+	$database = new Medoo([
+
+		'database_type' => 'mysql',
+		'database_name' => "$database_name",
+		'server' => "$database_host",
+		'username' => "$database_user",
+		'password' => "$database_psw",
+	 
+		'charset' => 'utf8',
+		'port' => $database_port,
+	 
+		'prefix' => DB_PREFIX
+	]);
+	
+	$db_content = $database;
+	$db_user = $database;
+	$db_statistics = $database;	
+	
+	
+	
+} else {
+	$db_type = 'sqlite';
+	
+	if(isset($fc_content_files) && is_array($fc_content_files)) {
+		/* switch database file $fc_db_content */
+		include 'core/contentSwitch.php';
+	}
+	
+	
+	define("CONTENT_DB", "../../$fc_db_content");
+
+	$db_content = new Medoo([
+		'database_type' => 'sqlite',
+		'database_file' => CONTENT_DB
+	]);
+}
+
+
+
 
 if($_POST['csrf_token'] !== $_SESSION['token']) {
 	die('Error: CSRF Token is invalid');
@@ -247,16 +296,24 @@ function clean_filename($prefix,$suffix) {
 
 
 function fc_write_media_data_name($filename,$filesize,$time,$mediatype) {
+	
+	global $db_content;
+	global $languagePack;
+	
 	$filename = substr($filename, 3,strlen($filename));
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = "INSERT INTO fc_media ( media_id, media_file, media_filesize, media_lastedit, media_type ) VALUES ( NULL, :media_file, :media_filesize, :media_lastedit, :media_type ) ";
-	$sth = $dbh->prepare($sql);
-	$sth->bindParam(':media_file', $filename, PDO::PARAM_STR);
-	$sth->bindParam(':media_filesize', $filesize, PDO::PARAM_STR);
-	$sth->bindParam(':media_lastedit', $time, PDO::PARAM_STR);
-	$sth->bindParam(':media_type', $mediatype, PDO::PARAM_STR);
-	$cnt_changes = $sth->execute();
-	$dbh = null;
+	
+	$columns = [
+		"media_file" => "$filename",
+		"media_filesize" => "$filesize",
+		"media_lastedit" => "$time",
+		"media_type" => "$mediatype",
+		"media_lang" => "$languagePack"	
+	];
+	
+	$cnt_changes = $db_content->insert("fc_media", $columns);
+	
+	
+
 }
 
 ?>

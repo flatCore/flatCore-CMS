@@ -393,13 +393,16 @@ if(is_array($all_filter)) {
 	$_SESSION['media_filter_string'] = $add_keyword_filter;
 }
 
-$dbh = new PDO("sqlite:".CONTENT_DB);
+//$dbh = new PDO("sqlite:".CONTENT_DB);
 
 $sql_cnt = "SELECT count(*) AS 'all' FROM fc_media WHERE media_file LIKE '%$disk%' AND (media_lang LIKE '$languagePack' OR media_lang IS NULL) ".$_SESSION['media_filter_string'];
-$sth = $dbh->prepare($sql_cnt);
-$sth->execute();
-$all_files = $sth->fetch();
+//$sth = $dbh->prepare($sql_cnt);
+//$sth->execute();
+//$all_files = $sth->fetch();
+$all_files = $db_content->query($sql_cnt)->fetch();
 $nbr_of_files = $all_files['all'];
+
+
 
 $files_per_page = 36;
 $show_numbers = 9;
@@ -433,20 +436,14 @@ $where_sql = 'WHERE media_id IS NOT NULL AND ';
 $where_sql .= " (media_file like '%$disk%')";
 $where_sql .= " AND (media_lang LIKE '$languagePack' OR media_lang IS NULL)";
 
-$limit_sql = "LIMIT '$start','$files_per_page' ";
+$limit_sql = "LIMIT $start,$files_per_page ";
 
 
 $sql = "SELECT * FROM fc_media $where_sql ".$_SESSION['media_filter_string']." $order_sql $limit_sql";
-$sth = $dbh->prepare($sql);
-$sth->execute();
-$get_files = $sth->fetchAll(PDO::FETCH_ASSOC);
-
-$dbh = null;
+$get_files = $db_content->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
 $cnt_pages = ceil($nbr_of_files/$files_per_page);
-
 $cnt_get_files = count($get_files);
-
 
 $pag_backlink = '<a class="btn btn-fc '.$disable_prev_start.'" href="acp.php?tn=filebrowser&start='.$prev_start.'">'.$icon['angle_double_left'].'</a>';
 $pag_forwardlink = '<a class="btn btn-fc '.$disable_next_start.'" href="acp.php?tn=filebrowser&start='.$next_start.'">'.$icon['angle_double_right'].'</a>';

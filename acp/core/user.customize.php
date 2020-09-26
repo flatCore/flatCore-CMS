@@ -18,14 +18,18 @@ require("core/access.php");
  */
  
 if($_POST['delete_field']) {
-	$del_field = strip_tags($_POST[del_field]);
+	$del_field = strip_tags($_POST['del_field']);
 	
 	if(substr($del_field,0,7) == "custom_") {
-				
+		/*
 		$dbh = new PDO("sqlite:".CONTENT_DB);
 		$sql = "ALTER TABLE fc_user DROP COLUMN $del_field";
 		$cnt_changes = $dbh->exec($sql);
 		$dbh = null;
+		*/
+		
+		$sql = "ALTER TABLE fc_user DROP COLUMN $del_field";
+		$cnt_changes = $db_user->query($sql);
 		
 		if($cnt_changes > 0) {
 			$sys_message = "{OKAY} $lang[db_changed]";
@@ -67,16 +71,19 @@ if($_POST['add_field']) {
 	
 	$new_col = "custom_" . $type . "_" . $col;
 	
-	$dbh = new PDO("sqlite:".USER_DB);
-	$sql = "SELECT * FROM fc_user";
-	$result = $dbh->query($sql)->fetch(PDO::FETCH_ASSOC);
+	//$dbh = new PDO("sqlite:".USER_DB);
+	//$sql = "SELECT * FROM fc_user";
+	//$result = $dbh->query($sql)->fetch(PDO::FETCH_ASSOC);
+	
+	$result = $db_user->select("fc_user", "*");
 	
 	/* if not exists, create column */
 	if(!array_key_exists("$new_col", $result)) {
-	   	$sql = "ALTER TABLE fc_user ADD $new_col TEXT";
-	   	$dbh->exec($sql);
+
+	   	$sql = "ALTER TABLE fc_user ADD $new_col LONGTEXT";
+	   	$db_user->query($sql);
 	   	
-	   	record_log("$_SESSION[user_nick]","add custom column @fc_user <i>$new_col</i>","0");
+	   	record_log($_SESSION['user_nick'],"add custom column @fc_user <i>$new_col</i>","0");
 	   	print_sysmsg("{OKAY} $lang[db_changed]"); 	
    }
 	

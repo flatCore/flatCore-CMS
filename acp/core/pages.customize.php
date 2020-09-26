@@ -93,7 +93,7 @@ if($_POST['add_field']) {
 	   	print_sysmsg("{OKAY} $lang[db_changed]"); 	
    }
 	
-	$dbh = null;
+	//$dbh = null;
 }
 
 

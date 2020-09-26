@@ -5,7 +5,7 @@ require("core/access.php");
 
 echo '<h3>RSS <small>Feed</small></h3>';
 
-$dbh = new PDO("sqlite:".CONTENT_DB);
+//$dbh = new PDO("sqlite:".CONTENT_DB);
 
 
 if($_REQUEST['delete'] != "") {
@@ -16,8 +16,9 @@ if($_REQUEST['delete'] != "") {
 
 
 $sql = "SELECT * FROM fc_feeds ORDER BY feed_time DESC";
-$sql_prefs = "SELECT * FROM fc_preferences WHERE prefs_id = 1";
+//$sql_prefs = "SELECT * FROM fc_preferences WHERE prefs_id = 1";
 
+/*
 if($dbh) {
    foreach($dbh->query($sql) as $row) {
      $rssItems[] = $row;
@@ -26,7 +27,15 @@ if($dbh) {
    	$prefs = $dbh->query($sql_prefs);
 	 	$prefs = $prefs->fetch(PDO::FETCH_ASSOC);
 }
+*/
 
+$prefs = get_preferences();
+
+$rssItems = $db_content->select("fc_feeds", "*", [
+	"ORDER" => [
+		"feed_time" => "DESC"
+	]
+]);
 
 $cnt_rssItems = count($rssItems);
 

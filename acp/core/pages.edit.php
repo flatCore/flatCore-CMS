@@ -340,7 +340,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_addon_string" => "$page_addon_string",
 			"page_authorized_users" => "$page_authorized_users",
 			"page_version" => $page_version,
-			"page_labels" => "$page_labels",
+			"page_labels" => "$string_labels",
 			"page_psw" => "$page_psw"		
 		];
 		
@@ -406,7 +406,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_addon_string" => "$page_addon_string",
 			"page_authorized_users" => "$page_authorized_users",
 			"page_version" => $page_version,
-			"page_labels" => "$page_labels",
+			"page_labels" => "$string_labels",
 			"page_psw" => "$page_psw"
 		];
 		
@@ -427,29 +427,6 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	 */							
 	
 	if($modus == "new" || $modus == 'duplicate') {
-	
-		/*
-		$page_id = null;
-		$sql = generate_sql_insert_str($pdo_fields_new,"fc_pages");
-		$sth = $dbh->prepare($sql);
-		generate_bindParam_str($pdo_fields,$sth);
-		
-		$sth->bindParam(':page_usergroup', $string_usergroup, PDO::PARAM_STR);
-		$sth->bindParam(':page_labels', $string_labels, PDO::PARAM_STR);
-		$sth->bindParam(':page_lastedit', $page_lastedit, PDO::PARAM_INT);
-		$sth->bindParam(':page_lastedit_from', $_SESSION[user_nick], PDO::PARAM_STR);
-		$sth->bindParam(':page_template', $page_template, PDO::PARAM_STR);
-		$sth->bindParam(':page_template_layout', $page_template_layout, PDO::PARAM_STR);
-		$sth->bindParam(':page_sort', $page_sort, PDO::PARAM_STR);
-		$sth->bindParam(':page_authorized_users', $string_authorized_admins, PDO::PARAM_STR);
-		$sth->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
-		$sth->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
-		$sth->bindParam(':page_thumbnail', $page_thumbnail, PDO::PARAM_STR);
-		$sth->bindParam(':page_psw', $page_psw, PDO::PARAM_STR);
-		
-		$cnt_changes = $sth->execute();
-		$editpage = $dbh->lastInsertId();
-		*/
 		
 		$columns_new = [
 			"page_sort" => "$page_sort",
@@ -483,7 +460,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_addon_string" => "$page_addon_string",
 			"page_authorized_users" => "$page_authorized_users",
 			"page_version" => $page_version,
-			"page_labels" => "$page_labels",
+			"page_labels" => "$string_labels",
 			"page_psw" => "$page_psw"
 		];
 		
@@ -515,31 +492,6 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 		$page_id_original = "$editpage";
 		$page_cache_type = "history";
 		
-		/*
-		$sql = generate_sql_insert_str($pdo_fields_cache,"fc_pages_cache");					
-		$std = $dbh->prepare($sql);
-		
-		generate_bindParam_str($pdo_fields_cache,$std);
-		
-		$std->bindParam(':page_sort', $page_sort, PDO::PARAM_STR);
-		$std->bindParam(':page_usergroup', $string_usergroup, PDO::PARAM_STR);
-		$sth->bindParam(':page_labels', $string_labels, PDO::PARAM_STR);
-		$std->bindParam(':page_lastedit', $page_lastedit, PDO::PARAM_INT);
-		$std->bindParam(':page_lastedit_from', $_SESSION[user_nick], PDO::PARAM_STR);
-		$std->bindParam(':page_template', $page_template, PDO::PARAM_STR);
-		$std->bindParam(':page_template_layout', $page_template_layout, PDO::PARAM_STR);
-		$std->bindParam(':page_authorized_users', $string_authorized_admins, PDO::PARAM_STR);
-		$std->bindParam(':page_cache_type', $page_cache_type, PDO::PARAM_STR);
-		$std->bindParam(':page_version', $page_version, PDO::PARAM_INT);
-		$sth->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
-		$sth->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
-		$sth->bindParam(':page_thumbnail', $page_thumbnail, PDO::PARAM_STR);
-		$sth->bindParam(':page_psw', $page_psw, PDO::PARAM_STR);
-		
-		$cnt_changes_c = $std->execute();
-		*/
-
-
 		$columns_cache = [
 			"page_id_original" => "$page_id_original",
 			"page_cache_type" => "$page_cache_type",
@@ -575,7 +527,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_addon_string" => "$page_addon_string",
 			"page_authorized_users" => "$page_authorized_users",
 			"page_version" => $page_version,
-			"page_labels" => "$page_labels",
+			"page_labels" => "$string_labels",
 			"page_psw" => "$page_psw"
 		];
 		
@@ -599,28 +551,6 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 		
 		$page_id_original = $editpage;
 		$page_cache_type = "preview";
-				
-		/*
-		$sql = generate_sql_insert_str($pdo_fields_cache,"fc_pages_cache");					
-		$std = $dbh->prepare($sql);
-		
-		generate_bindParam_str($pdo_fields_cache,$std);
-		
-		$std->bindParam(':page_id_original', $page_id_original, PDO::PARAM_STR);
-		$std->bindParam(':page_sort', $page_sort, PDO::PARAM_STR);
-		$std->bindParam(':page_usergroup', $string_usergroup, PDO::PARAM_STR);
-		$std->bindParam(':page_labels', $string_labels, PDO::PARAM_STR);
-		$std->bindParam(':page_lastedit', $page_lastedit, PDO::PARAM_INT);
-		$std->bindParam(':page_lastedit_from', $_SESSION['user_nick'], PDO::PARAM_STR);
-		$std->bindParam(':page_template', $page_template, PDO::PARAM_STR);
-		$std->bindParam(':page_template_layout', $page_template_layout, PDO::PARAM_STR);
-		$std->bindParam(':page_authorized_users', $string_authorized_admins, PDO::PARAM_STR);
-		$std->bindParam(':page_version', $page_version, PDO::PARAM_INT);
-		$std->bindParam(':page_cache_type', $page_cache_type, PDO::PARAM_STR);
-		$std->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
-		
-		$cnt_changes_c = $std->execute();
-		*/
 		
 		$columns_preview = [
 			"page_id_original" => "$page_id_original",
@@ -657,7 +587,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_addon_string" => "$page_addon_string",
 			"page_authorized_users" => "$page_authorized_users",
 			"page_version" => $page_version,
-			"page_labels" => "$page_labels",
+			"page_labels" => "$string_labels",
 			"page_psw" => "$page_psw"
 		];
 		
@@ -796,7 +726,6 @@ if(!empty($_POST['preview_the_page'])) {
 
 if($show_form == "true" AND $sub != "new") {
 
-	//$dbh = new PDO("sqlite:".CONTENT_DB);
 	
 	$max = 25;
 	if($prefs_nbr_page_versions != '') {
@@ -804,20 +733,9 @@ if($show_form == "true" AND $sub != "new") {
 	}
 	
 	$cnt_all_sql = "SELECT COUNT(*) AS 'nbr' FROM fc_pages_cache WHERE page_id_original = $editpage AND page_cache_type = 'history' ";
-	//$cnt_all = $dbh->query("$cnt_all_sql")->fetch(PDO::FETCH_ASSOC);
 	$cnt_all = $db_content->query($cnt_all_sql)->fetch(PDO::FETCH_ASSOC);
 	$delete_nbr = $cnt_all['nbr']-$max;
-	
-	/*
-	$sql = "SELECT page_id, page_linkname, page_title, page_lastedit, page_lastedit_from, page_version
-					FROM fc_pages_cache
-					WHERE page_id_original = $editpage AND page_cache_type = 'history'
-					ORDER BY page_id DESC";
-	
-	foreach ($dbh->query($sql) as $row) {
-		$cache_result[] = $row;
-	}
-	*/
+
 	
 	$cache_result = $db_content->select("fc_pages_cache",
 		[
