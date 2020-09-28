@@ -357,6 +357,7 @@ function update_database($dbfile) {
 		
 		include $all_tables[$i]; // returns $cols and $table_name
 		
+		/*
 		if($database == "content") {
 			$db_path = "../$dbfile";
 		} elseif($database == "user") {
@@ -376,22 +377,22 @@ function update_database($dbfile) {
 			$_SESSION['errors_cnt']++;
 			continue;
 		}
+		*/
 	
-	
-		$is_table = table_exists("$db_path","$table_name");
+		$is_table = table_exists("$database","$table_name");
 	
 		if($is_table < 1) {
 			if($table_type == 'virtual') {
-				add_virtual_table("$db_path","$table_name",$cols);
+				add_virtual_table("$database","$table_name",$cols);
 			} else {
-				add_table("$db_path","$table_name",$cols);
+				add_table("$database","$table_name",$cols);
 			}			
 
 			$_SESSION['protocol'] .= '<b class="text-success">new table:</b> '.$table_name.' in '.$database.'<|>';
 		}
 	
 	
-		$existing_cols = get_collumns("$db_path","$table_name");
+		$existing_cols = get_collumns("$database","$table_name");
 	
 	
 		foreach ($cols as $k => $v) {
@@ -405,7 +406,7 @@ function update_database($dbfile) {
 		} // eo foreach
 	
 		/* updates are done, check all columns again */	
-		$existing_cols = get_collumns("$db_path","$table_name");
+		$existing_cols = get_collumns("$database","$table_name");
 
 	}	
 }
