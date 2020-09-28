@@ -40,10 +40,14 @@ function fc_get_modules_docs() {
 
 	global $languagePack;
 	$get_modules = get_all_moduls();
+	$get_modules_docs = array();
 	
 	foreach($get_modules as $k => $v) {
 		$mod_dir = '../modules/'.$get_modules[$k]['folder'].'/docs/'.$languagePack;
-		$get_modules_docs = array_diff(scandir($mod_dir), array('..', '.','.DS_Store'));
+		if(is_dir($mod_dir)) {
+			$get_modules_docs = array_diff(scandir($mod_dir), array('..', '.','.DS_Store'));
+		}
+		
 		
 			foreach($get_modules_docs as $docs) {
 				$modules_docs[] = $mod_dir.'/'.$docs;
@@ -62,11 +66,13 @@ function fc_get_themes_docs() {
 
 	global $languagePack;
 	$get_themes = get_all_templates();
+	$get_theme_docs = array();
 	
 	foreach($get_themes as $theme) {
 		$theme_dir = '../styles/'.$theme.'/docs/'.$languagePack;
-		$get_theme_docs = array_diff(scandir($theme_dir), array('..', '.','.DS_Store'));
-		
+		if(is_dir($theme_dir)) {
+			$get_theme_docs = array_diff(scandir($theme_dir), array('..', '.','.DS_Store'));
+		}
 		foreach($get_theme_docs as $docs) {
 			$theme_docs[] = $theme_dir.'/'.$docs;
 		}
