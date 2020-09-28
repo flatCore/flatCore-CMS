@@ -82,6 +82,12 @@ if((isset($prefs_database_host) && ($prefs_database_host != ''))) {
 
 }
 
+define("INDEX_DB", "../$fc_db_index");
+$db_index = new Medoo([
+	'database_type' => 'sqlite',
+	'database_file' => INDEX_DB
+]);
+
 
 echo $db_type. ' Database<hr>';
 
@@ -105,8 +111,8 @@ $sql_addons_table = fc_generate_sql_query("fc_addons.php",$db_type);
 $sql_hits_table = fc_generate_sql_query("fc_hits.php",$db_type);
 $sql_log_table = fc_generate_sql_query("fc_log.php",$db_type);
 
-$sql_index_excludes_table = fc_generate_sql_query("fc_index_excludes.php",$db_type);
-$sql_index_items_table = fc_generate_sql_query("fc_index_items.php",$db_type);
+$sql_index_excludes_table = fc_generate_sql_query("fc_index_excludes.php",'sqlite');
+$sql_index_items_table = fc_generate_sql_query("fc_index_items.php",'sqlite');
 
 
 if($db_type == 'mysql') {
@@ -278,17 +284,9 @@ $dbh_statistics->query($sql_log_table);
  * DATABASE INDEX
  */
 
-$dbh = new PDO("sqlite:../$fc_db_index");
-
-$dbh->query($sql_index_excludes_table);
-$dbh->query("SET NAMES 'utf-8'");
-$dbh->query($sql_index_items_table);
-
-$dbh = null;
-  
-
-
-
+$db_index->query($sql_index_excludes_table);
+$db_index->query("SET NAMES 'utf-8'");
+$db_index->query($sql_index_items_table);
 
 
 echo '<div class="alert alert-success">'.$lang['installed'].' | Admin: '.$username.'</div>';

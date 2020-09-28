@@ -5,32 +5,78 @@ if(!defined('INSTALLER')) {
 	die("PERMISSION DENIED!");
 }
 
-/* returns all cols and types of a existung database/table */
-function get_collumns($db,$table_name) {
+/* returns all cols of a existung database/table */
+function get_collumns($database,$table_name) {
+	
+	global $db_content;
+	global $db_user;
+	global $db_statistics;
+	global $db_index;
+	global $db_type;
+	global $database_name;
 
-	$dbh = new PDO("sqlite:$db");
-
-	$result = $dbh->query("PRAGMA table_info(" . $table_name . ")");
-	$result->setFetchMode(PDO::FETCH_ASSOC);
+	if($db_type == "mysql") {
+		$query = "SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '$database_name' AND TABLE_NAME = '$table_name'";
+	} else {
+		$query = "PRAGMA table_info(" . $table_name . ")";
+	}	
+	
+	if($database == "content") {
+		$data = $db_content->query($query)->fetchAll(PDO::FETCH_ASSOC);
+	} else if($database == "user") {
+		$data = $db_user->query($query)->fetchAll(PDO::FETCH_ASSOC);
+	} else if($database == "tracker") {
+		$data = $db_statistics->query($query)->fetchAll(PDO::FETCH_ASSOC);
+	}
+	
+	/* index is a sqlite file */
+	if($database == "index") {
+		$query = "PRAGMA table_info(" . $table_name . ")";
+		$data = $db_index->query($query)->fetchAll(PDO::FETCH_ASSOC);
+	}
+	
+	
+	
 	$meta = array();
-	foreach ($result as $row) {
-		$meta[$row['name']] = $row['type'];
+	foreach ($data as $row) {
+		$meta[$row['COLUMN_NAME']] = $row['DATA_TYPE']; /* mysql schema */
+		$meta[$row['name']] = $row['type']; /* sqlite schema */
 	}
 
-return $meta;
 
+	return $meta;
 }
 
 
 
 /*  check if table exists - returns the number of existing tables */
-function table_exists($db,$table_name) {
-
-	$dbh = new PDO("sqlite:$db");
-
-  $result = $dbh->query("SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='$table_name'")->fetch();
-	$cnt_tables = $result[0];
+function table_exists($database,$table_name) {
 	
+	global $db_content;
+	global $db_user;
+	global $db_statistics;
+	global $db_type;
+	global $database_name;
+	global $db_index;
+	
+	if($db_type == "mysql") {
+		$query = "SELECT count(*) FROM information_schema.TABLES WHERE (TABLE_SCHEMA = '$database_name') AND (TABLE_NAME = '$table_name')";
+	} else {
+		$query = "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='$table_name'";
+	}
+	
+	if($database == "content") {
+		$cnt_tables = $db_content->query($query)->fetch();
+	} else if($database == "user") {
+		$cnt_tables = $db_user->query($query)->fetch();
+	} else if($database == "tracker") {
+		$cnt_tables = $db_statistics->query($query)->fetch();
+	} else if($database == "index") {
+		$query = "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='$table_name'";
+		$cnt_tables = $db_index->query($query)->fetch();
+	}
+	
+	$cnt_tables = $cnt_tables[0];
   return $cnt_tables;
 }
 
@@ -107,16 +153,28 @@ function fc_generate_sql_query($file,$db_type='sqlite') {
 
 
 
-function update_table($col_name,$type,$table_name,$db) {
 
-$dbh = new PDO("sqlite:$db");
 
+function update_table($col_name,$type,$table_name,$database) {
+	
+	
+	global $db_content;
+	global $db_user;
+	global $db_statistics;
+	global $db_type;
+	global $database_name;
+	
+		
 	$sql = "ALTER TABLE $table_name ADD $col_name $type";
-	$dbh->exec($sql);
-
-$dbh = null;
-
-
+	
+	if($database == "content") {
+		$db_content->query($sql);
+	} else if($database == "user") {
+		$db_user->query($sql);
+	} else if($database == "tracker") {
+		$db_statistics->query($sql);
+	}
+	
 }
 
 /*
@@ -131,31 +189,41 @@ column_name3 data_type,
 
 */
 
-function add_table($db,$table_name,$cols) {
+function add_table($database,$table_name,$cols) {
 
 
+
+	global $db_content;
+	global $db_user;
+	global $db_statistics;
+	global $db_type;
+	global $db_index;
+	global $database_name;
+	
 	foreach ($cols as $k => $v) {
 		$cols_string .= "$k $cols[$k],\r";
 	}
 	
-	$cols_string = substr(trim("$cols_string"), 0,-1); // cut last commata and returns
+		
+	$sql = "CREATE TABLE $table_name ( $cols_string )";
 	
-	$dbh = new PDO("sqlite:$db");
-	
-		$sql = "CREATE TABLE $table_name 
-							(
-							$cols_string
-							)";
-		$dbh->exec($sql);
-	
-	$dbh = null;
-
+	if($database == "content") {
+		$db_content->query($sql);
+	} else if($database == "user") {
+		$db_user->query($sql);
+	} else if($database == "tracker") {
+		$db_statistics->query($sql);
+	} else if($database == "index") {
+		$db_index->query($sql);
+	}
 
 }
 
 // create virtual table
 
 function add_virtual_table($db,$table_name,$cols) {
+	
+	global $db_index;
 
 	foreach ($cols as $k => $v) {
 		$cols_string .= "$k $cols[$k],";
@@ -163,11 +231,10 @@ function add_virtual_table($db,$table_name,$cols) {
 	
 	$cols_string = substr(trim("$cols_string"), 0,-1); // cut last commata and returns
 	
-	$dbh = new PDO("sqlite:$db");
-	$dbh->query("SET NAMES 'utf-8'");
-	$sql = "CREATE VIRTUAL TABLE $table_name USING fts3($cols_string,tokenize=porter)";
-	$dbh->exec($sql);
-	$dbh = null;
+
+	$db_index->query("SET NAMES 'utf-8'");
+	$db_index->query("CREATE VIRTUAL TABLE $table_name USING fts3($cols_string,tokenize=porter)");
+
 		
 }
 

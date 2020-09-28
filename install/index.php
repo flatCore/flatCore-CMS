@@ -33,24 +33,30 @@ require 'php/functions.php';
 include '../lib/lang/'.$l.'/dict-install.php';
 
 
-
-if(is_file("../$fc_db_content") && $modus != 'choose_lang'){
+if(is_file("../$fc_db_content")) {
 	$modus = "update";
-} elseif($modus != 'choose_lang') {
+	$db_type = 'sqlite';
+} else if(is_file("../config_database.php")) {
+	$modus = "update";
+	$db_type = 'mysql';
+} else if($modus != 'choose_lang') {
 	$modus = "install";
 }
+
+if($_SESSION['user_class'] == "administrator") {
+	$modus = "update";
+}
+
+
 
 if($modus == "update") {
 	/* updates for admins only */
 	if($_SESSION['user_class'] != "administrator"){
 		//move to login or die
-		header("location:login.php");
+		header("location:/acp/");
 		die("PERMISSION DENIED!");
 	}
 }
-
-
-
 
 
 
