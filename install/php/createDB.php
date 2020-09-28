@@ -25,9 +25,16 @@ $user_registerdate = time();
 
 
 
-if((isset($prefs_database_host) && ($prefs_database_host != ''))) {
+if((isset($_POST['set_db']) && ($_POST['set_db'] == 'mysql'))) {
 	/* we use MySQL */
 	$db_type = 'mysql';
+	
+	if ($prefs_database_name == '' || $prefs_database_username == '' || $prefs_database_psw == '') {
+		echo '<p><a href="javascript:history.back()" class="btn btn-default">'.$lang['pagination_backward'].'</a></p>';
+		die('MISSING MYSQL INFORMATION');		
+	}
+	
+	
 	
 	try {
 		$database = new Medoo([

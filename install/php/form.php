@@ -70,10 +70,18 @@ $prefs_cms_base = dirname(dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOT
 		<legend>Database</legend>
 		
 		
-		
-
+		<div class="nav nav-tabs" role="tablist">
+			<div class="p-2">
+				<input id="checkSQLite" checked name="set_db" value="sqlite" type="radio" data-target="#sqlite">
+				<label for="checkSQLite">SQLite</label>
+			</div>
+			<div class="p-2">
+				<input id="checkMySQL" name="set_db" value="mysql" type="radio" data-target="#mysql">
+				<label for="checkMySQL">MySQL</label>
+			</div>
+		</div>
 			
-		<ul class="nav nav-pills mb-3" id="myTab" role="tablist">
+		<ul class="nav nav-pills mb-3 d-none" id="myTab" role="tablist">
 		    <li class="nav-item" role="presentation">
 		    	<a class="nav-link active" data-toggle="pill" id="sqlite-tab" href="#sqlite">SQLite</a>
 		    </li>
@@ -148,3 +156,12 @@ $prefs_cms_base = dirname(dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOT
 
 
 </form>
+
+<script>
+$(document).ready(function () {
+  $('input[name="set_db"]').click(function () {
+      $(this).tab('show');
+      $(this).removeClass('active');
+  });
+})
+</script>
