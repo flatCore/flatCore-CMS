@@ -22,4 +22,20 @@ $lang['start_install'] = 'Installation starten';
 $lang['installed'] = 'Installation erfolgt';
 $lang['link_home'] = 'Zur Startseite';
 $lang['link_admin'] = 'Zur Administration';
+
+$lang['db_host'] = 'Datenbank Host';
+$lang['db_host_help'] = 'In den meisten Fällen ist das localhost. Falls nicht, frage bei Deinem Webhoster nach.';
+$lang['db_port'] = 'Datenbank Port';
+$lang['db_port_help'] = '';
+$lang['db_name'] = 'Datenbank Name';
+$lang['db_name_help'] = '';
+$lang['db_username'] = 'Benutzername';
+$lang['db_username_help'] = 'Eventuell ist das <i>root</i>. Oder ein Benutzername welcher Dir von Deinem Webhoster zugeteilt wurde.';
+$lang['db_psw'] = 'Passwort';
+$lang['db_psw_help'] = 'Das Passwort für Deine Datenbank';
+$lang['db_prefix'] = 'Prefix';
+$lang['db_prefix_help'] = 'Falls Du noch weitere Installationen in dieser Datenbank installieren möchtest - oder hast. <strong>Achte darauf, dass Du ein Prefix nur einmal vergeben kannst.</strong>';
+
+$lang['db_sqlite_help'] = 'Falls Du SQLite als Datenbank nutzen möchtest, brauchst Du keine weiteren Angaben mehr machen.';
+
 ?>

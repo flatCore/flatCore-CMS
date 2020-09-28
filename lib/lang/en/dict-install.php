@@ -22,4 +22,19 @@ $lang['start_install'] = 'Start Installation';
 $lang['installed'] = 'Installation was successfully';
 $lang['link_home'] = 'Homepage';
 $lang['link_admin'] = 'Administration';
+
+$lang['db_host'] = 'Database Host';
+$lang['db_host_help'] = 'In most cases this is localhost. If not, ask your hosting provider.';
+$lang['db_port'] = 'Database Port';
+$lang['db_port_help'] = '';
+$lang['db_name'] = 'Database Name';
+$lang['db_name_help'] = '';
+$lang['db_username'] = 'Username';
+$lang['db_username_help'] = 'Possibly this is <i>root</i>. Or a username that was assigned to you by your webhosting provider.';
+$lang['db_psw'] = 'Password';
+$lang['db_psw_help'] = 'The password for your database';
+$lang['db_prefix'] = 'Prefix';
+$lang['db_psw_help'] = 'If you want to - or have - other installations in this database. <strong>Make sure that you can only assign a prefix once.</strong>';
+
+$lang['db_sqlite_help'] = 'If you want to use SQLite, you do not need to provide any further information.';
 ?>

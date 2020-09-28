@@ -84,49 +84,54 @@ $prefs_cms_base = dirname(dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOT
 			
 			<div class="tab-content" id="pills-tabContent">
 				<div class="tab-pane fade show active" id="sqlite" role="tabpanel">
-					<p class="alert alert-info">No more settings needed</p>
+					<p class="alert alert-info"><?php echo $lang['db_sqlite_help']; ?></p>
 				</div>
 				<div class="tab-pane fade" id="mysql" role="tabpanel">
 		
 					<div class="form-group row">
-						<label class="col-sm-3 control-label text-right">Host</label>
+						<label class="col-sm-3 control-label text-right"><?php echo $lang['db_host']; ?></label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" name="prefs_database_host" placeholder="localhost" value="<?php echo"$prefs_database_host"; ?>">
+							<small class="form-text text-muted"><?php echo $lang['db_host_help']; ?></small>
 						</div>
 					</div>
 					
 					<div class="form-group row">
-						<label class="col-sm-3 control-label text-right">Port</label>
+						<label class="col-sm-3 control-label text-right"><?php echo $lang['db_port']; ?></label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" name="prefs_database_port" placeholder="localhost" value="<?php echo"$prefs_database_port"; ?>">
+							<input type="text" class="form-control" name="prefs_database_port" value="<?php echo"$prefs_database_port"; ?>">
+							<small class="form-text text-muted"><?php echo $lang['db_port_help']; ?></small>
 						</div>
 					</div>
 					
 					<div class="form-group row">
-						<label class="col-sm-3 control-label text-right">Name</label>
+						<label class="col-sm-3 control-label text-right"><?php echo $lang['db_name']; ?></label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" name="prefs_database_name" value="<?php echo"$prefs_database_name"; ?>">
 						</div>
 					</div>
 					
 					<div class="form-group row">
-						<label class="col-sm-3 control-label text-right">Username</label>
+						<label class="col-sm-3 control-label text-right"><?php echo $lang['db_username']; ?></label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" name="prefs_database_username" value="<?php echo"$prefs_database_username"; ?>">
+							<small class="form-text text-muted"><?php echo $lang['db_username_help']; ?></small>
 						</div>
 					</div>
 					
 					<div class="form-group row">
-						<label class="col-sm-3 control-label text-right">Password</label>
+						<label class="col-sm-3 control-label text-right"><?php echo $lang['db_psw']; ?></label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" name="prefs_database_psw" value="<?php echo"$prefs_database_psw"; ?>">
+							<small class="form-text text-muted"><?php echo $lang['db_psw_help']; ?></small>
 						</div>
 					</div>
 					
 					<div class="form-group row">
-						<label class="col-sm-3 control-label text-right">Table Prefix</label>
+						<label class="col-sm-3 control-label text-right"><?php echo $lang['db_prefix']; ?></label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control" name="prefs_database_prefix" placeholder="fcdb_" value="<?php echo"$prefs_database_prefix"; ?>">
+							<small class="form-text text-muted"><?php echo $lang['db_prefix_help']; ?></small>
 						</div>
 					</div>
 				</div>
