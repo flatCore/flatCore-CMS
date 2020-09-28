@@ -140,8 +140,9 @@ function fc_generate_sql_query($file,$db_type='sqlite') {
 		}
 		
 		$string = substr(trim("$string"), 0,-1); // cut last commata and returns
+		$table = FC_PREFIX.$table_name;
 		$sql_string = "
-		    CREATE TABLE $table_name (
+		    CREATE TABLE $table (
 		    $string
 	        ) ENGINE=MyISAM DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_unicode_ci;
 	    ";

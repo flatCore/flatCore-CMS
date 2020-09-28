@@ -55,6 +55,8 @@ if((isset($prefs_database_host) && ($prefs_database_host != ''))) {
 	
 	$config_db_file = "../config_database.php";
 	file_put_contents($config_db_file, $config_db_content);
+	
+	define("FC_PREFIX","$prefs_database_prefix");
 	  
 	
 } else {
