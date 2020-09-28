@@ -28,21 +28,27 @@ $user_registerdate = time();
 if((isset($prefs_database_host) && ($prefs_database_host != ''))) {
 	/* we use MySQL */
 	$db_type = 'mysql';
-	 
-	$database = new Medoo([
-
-		'database_type' => 'mysql',
-		'database_name' => "$prefs_database_name",
-		'server' => "$prefs_database_host",
-		'username' => "$prefs_database_username",
-		'password' => "$prefs_database_psw",
-	 
-		'charset' => 'utf8',
-		'port' => $prefs_database_port,
-	 
-		'prefix' => "$prefs_database_prefix"
-	]);
 	
+	try {
+		$database = new Medoo([
+	
+			'database_type' => 'mysql',
+			'database_name' => "$prefs_database_name",
+			'server' => "$prefs_database_host",
+			'username' => "$prefs_database_username",
+			'password' => "$prefs_database_psw",
+		 
+			'charset' => 'utf8',
+			'port' => $prefs_database_port,
+		 
+			'prefix' => "$prefs_database_prefix"
+		]);
+	
+	} catch (Exception $e) {
+		echo '<p><a href="javascript:history.back()" class="btn btn-default">'.$lang['pagination_backward'].'</a></p>';
+		die('CONNECTION ERROR');
+	}  
+
 	
   $config_db_content = "<?php\n";
   $config_db_content .= "$"."database_host = "."\"".$prefs_database_host."\";\n";
@@ -57,7 +63,7 @@ if((isset($prefs_database_host) && ($prefs_database_host != ''))) {
 	file_put_contents($config_db_file, $config_db_content);
 	
 	define("FC_PREFIX","$prefs_database_prefix");
-	  
+
 	
 } else {
 	$db_type = 'sqlite';
