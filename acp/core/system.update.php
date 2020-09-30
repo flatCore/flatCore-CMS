@@ -28,11 +28,18 @@ if(isset($_GET['alpha']) && $_GET['alpha'] > 0) {
 	$remote_versions_file = file_get_contents("https://flatCore.org/_updates/versions-alpha.txt");
 }
 
-if(isset($_GET['github']) && $_GET['github'] > 0) {
+if(isset($_GET['github']) && $_GET['github'] == 'master') {
 	$remote_versions[0] = '';
 	$remote_versions[1] = 'GitHub';
 	$remote_versions[2] = 'master';
 	$remote_versions[3] = 'flatCore-CMS-master.zip';
+}
+
+if(isset($_GET['github']) && $_GET['github'] == 'develop') {
+	$remote_versions[0] = '';
+	$remote_versions[1] = 'GitHub';
+	$remote_versions[2] = 'develop';
+	$remote_versions[3] = 'flatCore-CMS-develop.zip';
 }
 
 echo '<fieldset>';
@@ -62,7 +69,7 @@ if(isset($_GET['a']) && $_GET['a'] == 'start') {
 	
 /**
  * start the update
- * 1. load the zip file from "http://updates.flatCore.de/zip/...
+ * 1. load the zip file from flatcore.org...
  * 2. mkdir acp/update and acp/update/extract 
  * 		copy the zip file into /acp/update and extract the files
  * 3. copy the file maintance.html to the root (starts the update modus in frontend)
@@ -83,6 +90,8 @@ function start_update() {
 	
 	if($remote_versions[3] == 'flatCore-CMS-master.zip') {
 		$source_file = 'https://github.com/flatCore/flatCore-CMS/archive/master.zip';
+	} else if($remote_versions[3] == 'flatCore-CMS-develop.zip') {
+		$source_file = 'https://github.com/flatCore/flatCore-CMS/archive/develop.zip';
 	} else {
 		$source_file = 'https://flatcore.org/_updates/zip/'.$get_file;
 	}
@@ -237,12 +246,14 @@ function compare_versions() {
 	echo '<tr>
 					<th>'.$icon['database'].'  '. $_SERVER['SERVER_NAME'] .'</th>
 					<th>'.$icon['server'].' flatCore.org</th>
+					<th width="33%">'.$icon['github'].' GitHub (preview)</th>
 				</tr>';
 	echo '</thead>';
 	
 	echo '<tr>';
 	echo "<td>$fc_version_name (Build $fc_version_build)</td>";
 	echo "<td>$remote_versions[1] (Build $remote_versions[2])</td>";
+	echo '<td><span class="badge badge-danger">Attention!</span> You should not perform this function in a real environment. Load latest from  <a href="?tn=system&sub=update&github=master">branch master</a> or load latest from <a href="?tn=system&sub=update&github=develop">branch develop</a></td>';
 	echo '</tr>';
 	echo '</table>';
 	
@@ -255,14 +266,18 @@ function compare_versions() {
 		if(isset($_GET['beta']) && $_GET['beta'] > 0) {
 			$start_dl .= '&beta=1';
 		}
-	} elseif ($remote_versions[2] == 'master') {
-		$start_dl  = 'acp.php?tn=system&sub=update&a=start&github=1';
+	}
+	if($remote_versions[2] == 'master') {
+		$start_dl  = 'acp.php?tn=system&sub=update&a=start&github=master';
+	}
+	if($remote_versions[2] == 'develop') {
+		$start_dl  = 'acp.php?tn=system&sub=update&a=start&github=develop';
 	}
 	
 	if($start_dl != '') {
 		echo '<div class="alert alert-info"><p>' . $lang['msg_update_available'] . '</p><hr>';
 		echo '<p>';
-		echo '<a href="'.$start_dl.'" class="btn btn-success"><span class="glyphicon glyphicon-cloud-download"></span> Update</a>';
+		echo '<a href="'.$start_dl.'" class="btn btn-success">'.$icon['sync_alt'].' Update</a>';
 		echo '</p>';
 		echo '</div>';		
 	} else {
