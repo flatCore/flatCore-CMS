@@ -9,6 +9,14 @@ foreach($_POST as $key => $val) {
 	$$key = strip_tags($val); 
 }
 
+if($prefs_database_host == '') {
+	$prefs_database_host = 'localhost';
+}
+
+if($prefs_database_port == '') {
+	$prefs_database_port = '3306';
+}
+
 if(isset($_POST['step3'])) {
 	if(strlen($_POST['psw']) < 8) {
 		echo '<div class="alert alert-danger">';

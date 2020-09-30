@@ -1,29 +1,21 @@
 <?php
 
-
-
 function get_most_clicked($num = 5) {
 
 	$num = (int) $num;
 
-	global $fc_db_stats;
-	global $fc_mod_rewrite;
-	global $fc_db_content;
+	global $db_statistics;
+	global $db_content;
 	global $languagePack;
 
-	/* complete $fc_db_content into array */
-	$dbh = new PDO("sqlite:$fc_db_content");
+
+	$contents = $db_content->select("fc_pages", ["page_id","page_language","page_linkname","page_permalink","page_title","page_status"], [
+		"AND" => [
+			"page_status[!]" => ["draft,ghost"],
+			"page_language" => "$languagePack"
+		]
+	]);	
 	
-	$sql = "SELECT page_id,	page_language, page_linkname, page_permalink, page_title, page_status FROM fc_pages
-			WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = :languagePack
-			ORDER BY page_sort ASC";
-	
-	$sth = $dbh->prepare($sql);
-	$sth->bindParam(':languagePack', $languagePack, PDO::PARAM_STR);
-	$sth->execute();
-	
-	$contents = $sth->fetchAll(PDO::FETCH_ASSOC);
-	$dbh = null;
 	
 	$cnt_contents = count($contents);
 
@@ -38,10 +30,15 @@ function get_most_clicked($num = 5) {
 		$cont_permalink[$contents[$i]['page_id']] = $contents[$i]['page_permalink'];
 	}
 	
-	$dbh = new PDO("sqlite:$fc_db_stats");
-	$statement = $dbh->query("SELECT * FROM hits WHERE page_id != '' ORDER BY counter DESC ");
-	$result = $statement->fetchAll();
-	$dbh = null;
+	$result = $db_statistics->select("hits", "*", [
+		"AND" => [
+			"page_id[!]" => ""
+		],
+		"ORDER" => [
+			"counter" => "ASC"
+		]
+	]);	
+	
 	
 	/**
 	 * add missing data | linkname and title
@@ -92,25 +89,21 @@ function cache_most_clicked($num = 5) {
 
 	$max_entries = (int) $num;
 	
-	global $fc_db_stats;
-	global $fc_mod_rewrite;
-	global $fc_db_content;
+	global $db_statistics;
+	global $db_content;
 	global $languagePack;
 	
 	
-	/* complete $fc_db_content into array */
-	$dbh = new PDO("sqlite:$fc_db_content");
+	$contents = $db_content->select("fc_pages", ["page_id",	"page_language", "page_linkname", "page_permalink", "page_title", "page_status"], [
+		"AND" => [
+			"page_status[!]" => ["draft,ghost"],
+			"page_language" => "$languagePack"
+		],
+		"ORDER" => [
+			"page_sort" => "ASC"
+		]
+	]);
 	
-	$sql = "SELECT page_id,	page_language, page_linkname, page_permalink, page_title, page_status FROM fc_pages
-			WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = :languagePack
-			ORDER BY page_sort ASC";
-
-	$sth = $dbh->prepare($sql);
-	$sth->bindParam(':languagePack', $languagePack, PDO::PARAM_STR);
-	$sth->execute();
-		
-	$contents = $sth->fetchAll(PDO::FETCH_ASSOC);
-	$dbh = null;
 	
 	$cnt_contents = count($contents);
 	
@@ -125,12 +118,16 @@ function cache_most_clicked($num = 5) {
 		$cont_linkname[$contents[$i]['page_id']] = $contents[$i]['page_linkname'];
 		$cont_permalink[$contents[$i]['page_id']] = $contents[$i]['page_permalink'];
 	}
+		
+	$result = $db_statistics->select("hits", "*", [
+		"AND" => [
+			"page_id[!]" => ""
+		],
+		"ORDER" => [
+			"counter" => "DESC"
+		]
+	]);	
 	
-	
-	$dbh = new PDO("sqlite:$fc_db_stats");
-	$statement = $dbh->query("SELECT * FROM hits WHERE page_id != '' ORDER BY counter DESC ");
-	$result = $statement->fetchAll();
-	$dbh = null;
 	
 	/* add missing data -> linkname and title */
 	$cnt_result = count($result);
@@ -165,15 +162,8 @@ function cache_most_clicked($num = 5) {
 	$string = "<?php\n";
 	
 	for($i=0;$i<$count_result;$i++) {
-	
-		if($fc_mod_rewrite == "auto") {
-			$set_title = str_replace(" ","_",$mostclicked[$i]['pagetitle']);
-			$mostclicked[$i]['link'] = FC_INC_DIR . "/" . $mostclicked[$i]['linkname'] ."/". $mostclicked[$i]['page_id'] ."/". $set_title;
-		} elseif ($fc_mod_rewrite == "off") {
-			$mostclicked[$i]['link'] = "index.php?p=" . $mostclicked[$i]['page_id'];
-		} elseif ($fc_mod_rewrite == "permalink") {
-			$mostclicked[$i]['link'] = FC_INC_DIR . "/" . $mostclicked[$i]['page_permalink'];
-		}
+		
+		$mostclicked[$i]['link'] = FC_INC_DIR . "/" . $mostclicked[$i]['page_permalink'];
 		
 		$string .= "\$arr_mostclicked[$i]['page_id'] = \"" . $mostclicked[$i]['page_id'] . "\";\n";
 		$string .= "\$arr_mostclicked[$i]['link'] = \"" . $mostclicked[$i]['link'] . "\";\n";

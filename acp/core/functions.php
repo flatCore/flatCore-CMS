@@ -6,7 +6,6 @@ if(basename(__FILE__) == basename($_SERVER['PHP_SELF'])){
 	die ('<h2>Direct File Access Prohibited</h2>');
 }
 
-
 include_once 'functions_addons.php';
 include_once 'functions_database.php';
 include_once 'functions_cache.php';
@@ -41,10 +40,14 @@ function fc_get_modules_docs() {
 
 	global $languagePack;
 	$get_modules = get_all_moduls();
+	$get_modules_docs = array();
 	
 	foreach($get_modules as $k => $v) {
 		$mod_dir = '../modules/'.$get_modules[$k]['folder'].'/docs/'.$languagePack;
-		$get_modules_docs = array_diff(scandir($mod_dir), array('..', '.','.DS_Store'));
+		if(is_dir($mod_dir)) {
+			$get_modules_docs = array_diff(scandir($mod_dir), array('..', '.','.DS_Store'));
+		}
+		
 		
 			foreach($get_modules_docs as $docs) {
 				$modules_docs[] = $mod_dir.'/'.$docs;
@@ -63,11 +66,13 @@ function fc_get_themes_docs() {
 
 	global $languagePack;
 	$get_themes = get_all_templates();
+	$get_theme_docs = array();
 	
 	foreach($get_themes as $theme) {
 		$theme_dir = '../styles/'.$theme.'/docs/'.$languagePack;
-		$get_theme_docs = array_diff(scandir($theme_dir), array('..', '.','.DS_Store'));
-		
+		if(is_dir($theme_dir)) {
+			$get_theme_docs = array_diff(scandir($theme_dir), array('..', '.','.DS_Store'));
+		}
 		foreach($get_theme_docs as $docs) {
 			$theme_docs[] = $theme_dir.'/'.$docs;
 		}
@@ -641,15 +646,12 @@ function generate_xml_sitemap() {
  */
 
 function get_custom_fields() {
+	
+	global $db_content;
 
 	$customs_fields = array();
-
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = "SELECT * FROM fc_pages";
 	
-	$cf = $dbh->query($sql);
-	$cf = $cf->fetch(PDO::FETCH_ASSOC);
-	$dbh = null;
+	$cf = $db_content->get("fc_pages", "*");
 	
 	$cf = array_keys($cf);
 	$cnt_cf = count($cf);
@@ -670,22 +672,19 @@ function get_custom_fields() {
  */
 
 function get_custom_user_fields() {
+	
+	global $db_user;
 
 	$customs_fields = array();
+	
+	$cf = $db_user->get("fc_user", "*");
 
-	$dbh = new PDO("sqlite:".USER_DB);
-	$sql = "SELECT * FROM fc_user";
+	$cf = array_keys($cf);
+	$cnt_cf = count($cf);
 	
-	$result = $dbh->query($sql);
-	$result = $result->fetch(PDO::FETCH_ASSOC);
-	$dbh = null;
-	
-	$result = array_keys($result);
-	$cnt_result = count($result);
-	
-	for($i=0;$i<$cnt_result;$i++) {
-		if(substr($result[$i],0,7) == "custom_") {
-			$customs_fields[] = $result[$i];
+	for($i=0;$i<$cnt_cf;$i++) {
+		if(substr($cf[$i],0,7) == "custom_") {
+			$customs_fields[] = $cf[$i];
 		}
 	}
 	
@@ -864,17 +863,18 @@ function fc_write_comment($author, $message, $parent, $id = NULL) {
  */
 
 function fc_get_media_data($filename,$lang=NULL) {
-
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = "SELECT * FROM fc_media WHERE media_file = :media_file AND (media_lang = :lang OR media_lang = '' OR media_lang is null)";
-	$sth = $dbh->prepare($sql);
-	$sth->bindParam(':media_file', $filename, PDO::PARAM_STR);
-	$sth->bindParam(':lang', $lang, PDO::PARAM_STR);
-	$sth->execute();
-	$result = $sth->fetch(PDO::FETCH_ASSOC);
-	$dbh = null;
 	
-	return($result);
+	global $db_content;
+	
+	$media_data = $db_content->get("fc_media","*",[
+
+		"AND" => [
+			"media_file[~]" => "$filename",
+			"media_lang[~]" => "$lang"
+		]
+	]);
+	
+	return $media_data;
 }
 
 /**
@@ -885,12 +885,13 @@ function fc_get_media_data($filename,$lang=NULL) {
 
 function fc_delete_media_data($filename) {
 	
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$query = "DELETE FROM fc_media WHERE media_file = :filename";
-	$sth = $dbh -> prepare($query);
-	$sth -> bindParam(':filename', $filename, PDO::PARAM_STR);
-	$sth->execute();
-	$dbh = null;
+	global $db_content;
+	
+	$db_content->delete("fc_media", [
+		"AND" => [
+		"media_file" => "$filename"
+		]
+	]);
 	
 	$record_msg = 'delete media data: <strong>'.basename($filename).'</strong>';
 	record_log($_SESSION['user_nick'],$record_msg,"2");
@@ -906,71 +907,73 @@ function fc_delete_media_data($filename) {
 
 function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$text=NULL,$url=NULL,$alt=NULL,$lang=NULL,$credit=NULL,$priority=NULL,$license=NULL,$lastedit=NULL,$filesize=NULL,$version=NULL) {
 
+	global $db_content;
 	global $languagePack;
 	
 	if($lang === NULL) {
 		$lang = $languagePack;
 	}
-	
-	$pdo_fields_update = array(
-		'media_title' => 'STR',
-		'media_notes' => 'STR',
-		'media_keywords' => 'STR',
-		'media_text' => 'STR',
-		'media_alt' => 'STR',
-		'media_url' => 'STR',
-		'media_lang' => 'STR',
-		'media_priority' => 'STR',
-		'media_credit' => 'STR',
-		'media_license' => 'STR',
-		'media_version' => 'STR',
-		'media_filesize' => 'STR',
-		'media_lastedit' => 'STR',
-		'media_type' => 'STR'
-	);
 		
-	$pdo_fields_new = array(
-		'media_id' => 'INT',
-		'media_file' => 'STR',
-		'media_title' => 'STR',
-		'media_notes' => 'STR',
-		'media_keywords' => 'STR',
-		'media_text' => 'STR',
-		'media_alt' => 'STR',
-		'media_url' => 'STR',
-		'media_lang' => 'STR',
-		'media_priority' => 'STR',
-		'media_credit' => 'STR',
-		'media_license' => 'STR',
-		'media_version' => 'STR',
-		'media_filesize' => 'STR',
-		'media_lastedit' => 'STR',
-		'media_type' => 'STR'
-	);
-	
 	$filetype = mime_content_type("../$filename");
-	$dbh = new PDO("sqlite:".CONTENT_DB);
 	
-	$sql_cnt = "SELECT count(*) FROM fc_media WHERE media_file = :media_file AND (media_lang = :media_lang OR media_lang = '' OR media_lang is null)";
-	$sth = $dbh->prepare($sql_cnt);
-	$sth->bindParam(':media_file', $filename, PDO::PARAM_STR);
-	$sth->bindParam(':media_lang', $lang, PDO::PARAM_STR);
-	$sth->execute();
-	$cnt = $sth->fetch(PDO::FETCH_NUM);
+	$cnt = $db_content->count("fc_media", [
+		"AND" => [
+		"media_file" => "$filename",
+		"media_lang" => "$lang"
+		]
+	]);
 	
-	if($cnt[0] > 0) {
+	$columns = [
+		"media_title" => "$title",
+		"media_notes" => "$notes",
+		"media_keywords" => "$keywords",
+		"media_text" => "$text",
+		"media_alt" => "$alt",
+		"media_url" => "$url",
+		"media_lang" => "$lang",
+		"media_priority" => "$priority",
+		"media_credit" => "$credit",
+		"media_license" => "$license",
+		"media_version" => "$version",
+		"media_filesize" => "$filesize",
+		"media_lastedit" => "$lastedit",
+		"media_type" => "$type"		
+	];
+	
+	if($cnt > 0) {
 		$modus = 'update';
-		$sql_update = generate_sql_update_str($pdo_fields_update,"fc_media","WHERE media_file = :media_file AND (media_lang = :media_lang OR media_lang = '' OR media_lang is null)");
-		$sth = $dbh->prepare($sql_update);
-		generate_bindParam_str($pdo_fields_update,$sth);
+		//$sql_update = generate_sql_update_str($pdo_fields_update,"fc_media","WHERE media_file = :media_file AND (media_lang = :media_lang OR media_lang = '' OR media_lang is null)");
+		//$sth = $dbh->prepare($sql_update);
+		//generate_bindParam_str($pdo_fields_update,$sth);
+		
+		$cnt_changes = $db_content->update("fc_media", $columns, [
+			"AND" => [
+				"media_file" => "$filename",
+				"media_lang" => "$lang"
+			]
+		]);
 		
 	} else {
 		$modus = 'new';
-		$sql_new = generate_sql_insert_str($pdo_fields_new,"fc_media");
-		$sth = $dbh->prepare($sql_new);
-		generate_bindParam_str($pdo_fields_new,$sth);
+		//$sql_new = generate_sql_insert_str($pdo_fields_new,"fc_media");
+		//$sth = $dbh->prepare($sql_new);
+		//generate_bindParam_str($pdo_fields_new,$sth);
+		
+			$columns["media_file"] = "$filename";
+			
+		$cnt_changes = $db_content->insert("fc_media", $columns, [
+			"AND" => [
+				"media_file" => "$filename",
+				"media_lang" => "$lang"
+			]
+		]);
+		
+		$lastId = $db_content->id();
+		
 	}
 	
+
+	/*
 	$sth->bindParam(':media_file', $filename, PDO::PARAM_STR);
 	$sth->bindParam(':media_title', $title, PDO::PARAM_STR);
 	$sth->bindParam(':media_notes', $notes, PDO::PARAM_STR);
@@ -988,20 +991,20 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 	$sth->bindParam(':media_type', $filetype, PDO::PARAM_STR);
 
 	$cnt_changes = $sth->execute();
+	*/
 	
-	$error = print_r($dbh->errorInfo(),true);
-	$lastId = $dbh->lastInsertId();
+	//$error = print_r($dbh->errorInfo(),true);
+	//$lastId = $dbh->lastInsertId();
 	//debug_to_console($modus);
-	$dbh = null;
+	//$dbh = null;
 	
-	if($cnt_changes == true) {
+	if($cnt_changes->rowCount() > 0) {
 		return 'success';
 	} else {
 		
 		return $error;
 	}
-	
-	
+
 }
 
 
@@ -1037,14 +1040,12 @@ function fc_array_multisort(){
 
 function fc_get_labels() {
 
-	$dbh = new PDO("sqlite:".CONTENT_DB);	
-	$sql = "SELECT * FROM fc_labels";
+	global $db_content;
+
+	$customs_fields = array();
+	$labels = $db_content->select("fc_labels", "*");
 	
-	foreach ($dbh->query($sql) as $row) {
-		$result[] = $row;
-	}
-	
-	return($result);
+	return $labels;
 }
 
 

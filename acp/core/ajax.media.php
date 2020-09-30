@@ -2,12 +2,65 @@
 session_start();
 error_reporting(0);
 
+require '../../lib/Medoo.php';
+use Medoo\Medoo;
+
 require '../../config.php';
 
-define("CONTENT_DB", "../../$fc_db_content");
+
+if(is_file('../../config_database.php')) {
+	include '../../config_database.php';
+	$db_type = 'mysql';
+	
+	$database = new Medoo([
+
+		'database_type' => 'mysql',
+		'database_name' => "$database_name",
+		'server' => "$database_host",
+		'username' => "$database_user",
+		'password' => "$database_psw",
+	 
+		'charset' => 'utf8',
+		'port' => $database_port,
+	 
+		'prefix' => DB_PREFIX
+	]);
+	
+	$db_content = $database;
+	$db_user = $database;
+	$db_statistics = $database;	
+	
+	
+	
+} else {
+	$db_type = 'sqlite';
+	
+	if(isset($fc_content_files) && is_array($fc_content_files)) {
+		/* switch database file $fc_db_content */
+		include 'core/contentSwitch.php';
+	}
+	
+	
+	define("CONTENT_DB", "../../$fc_db_content");
+
+	$db_content = new Medoo([
+		'database_type' => 'sqlite',
+		'database_file' => CONTENT_DB
+	]);
+	
+	
+}
+
+
+
+
+
 define("FC_ROOT", str_replace("/acp","",FC_INC_DIR));
 define("IMAGES_FOLDER", "../$img_path");
 define("FILES_FOLDER", "../$files_path");
+define("FC_SOURCE", "backend");
+
+
 
 require_once 'access.php';
 require_once 'functions.php';
@@ -66,7 +119,6 @@ $langSwitch .= '</div>';
 
 
 $media_data = fc_get_media_data($realpath,$set_lang);
-
 
 $form_tpl = str_replace('{form_action}', "#", $form_tpl);
 $form_tpl = str_replace('{filename}', $media_filename, $form_tpl);

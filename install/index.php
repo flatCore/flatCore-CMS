@@ -11,9 +11,11 @@
 
 session_start();
 error_reporting(0);
-$modus = '';
-define('INSTALLER', TRUE);
 
+require '../config.php';
+
+$modus = 'install';
+define('INSTALLER', TRUE);
 
 if(isset($_GET['l']) && is_dir('../lib/lang/'.basename($_GET['l']).'/')) {
 	$_SESSION['lang'] = basename($_GET['l']);
@@ -26,29 +28,31 @@ if(!isset($_SESSION['lang']) || $_SESSION['lang'] == '') {
 	$l = $_SESSION['lang'];
 }
 
-require '../config.php';
-require 'php/functions.php';
+
+include 'php/functions.php';
 include '../lib/lang/'.$l.'/dict-install.php';
 
 
-
-if(is_file("../$fc_db_content") && $modus != 'choose_lang'){
+if(is_file("../$fc_db_content")) {
 	$modus = "update";
-} elseif($modus != 'choose_lang') {
+	$db_type = 'sqlite';
+} else if(is_file("../config_database.php")) {
+	$modus = "update";
+	$db_type = 'mysql';
+} else if($modus == 'choose_lang') {
 	$modus = "install";
+}
+
+if($_SESSION['user_class'] == "administrator") {
+	$modus = "update";
 }
 
 if($modus == "update") {
 	/* updates for admins only */
 	if($_SESSION['user_class'] != "administrator"){
-		//move to login or die
-		header("location:login.php");
 		die("PERMISSION DENIED!");
 	}
 }
-
-
-
 
 
 
@@ -59,14 +63,16 @@ if($modus == "update") {
 <head>
 	<meta charset="utf-8">
 	<title><?php echo"$modus"; ?> flatCore | Content Management System</title>
-	<link media="screen" rel="stylesheet" type="text/css" href="../lib/css/bootstrap.min.css" />
+	<script src="../lib/js/jquery/jquery-3.4.1.min.js"></script>
+	<script src="../acp/js/bootstrap.bundle.min.js"></script>
+	<link media="screen" rel="stylesheet" type="text/css" href="../acp/css/bootstrap.min.css" />
 	<link media="screen" rel="stylesheet" type="text/css" href="css/styles.css" />
 </head>
 <body>
 <div id="inst-frame">
 	<div id="inst-background">
 		<div id="inst-header">
-			<div style="float:right;margin-top:-28px;"><span class="label label-info"><?php echo"$modus" ?></span></div>
+			<div style="float:right;margin-top:-38px;"><span class="badge badge-info p-2"><?php echo"$modus" ?></span></div>
 			<h1>flatCore <small>Installation & Setup</small></h1>
 		</div>
 		<div id="inst-body">
@@ -90,7 +96,7 @@ if($modus == "update") {
 			?>
 		</div>
 		<div id="inst-footer">
-			<a href="http://www.flatcore.de">
+			<a href="http://www.flatcore.org">
 			<img src="images/logo.png" alt="flatCore Logo">
 			<h3>flatCore<br><small>Content Management System</small></h3>
 			</a>

@@ -23,10 +23,15 @@ if($_POST['delete_field']) {
 	
 	if(substr($del_field,0,7) == "custom_") {
 				
-		$dbh = new PDO("sqlite:".CONTENT_DB);
+		//$dbh = new PDO("sqlite:".CONTENT_DB);
 		$sql = "ALTER TABLE fc_pages DROP COLUMN $del_field";
-		$cnt_changes = $dbh->exec($sql);
-		$dbh = null;
+		$db_content->query($sql);
+
+		$sql = "ALTER TABLE fc_pages_cache DROP COLUMN $del_field";
+		$db_content->query($sql);		
+		
+		//$cnt_changes = $dbh->exec($sql);
+		//$dbh = null;
 		
 		if($cnt_changes > 0) {
 			$sys_message = "{OKAY} $lang[db_changed]";
@@ -68,23 +73,27 @@ if($_POST['add_field']) {
 	
 	$new_col = "custom_" . $type . "_" . $col;
 	
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = "SELECT * FROM fc_pages";
-	$result = $dbh->query($sql)->fetch(PDO::FETCH_ASSOC);
+	//$dbh = new PDO("sqlite:".CONTENT_DB);
+	//$sql = "SELECT * FROM fc_pages";
+	//$result = $dbh->query($sql)->fetch(PDO::FETCH_ASSOC);
+	//$result = $db_content->query($sql)->fetch(PDO::FETCH_ASSOC);
+	$result = $db_content->select("fc_pages", "*");
 	
 	/* if not exists, create column */
 	if(!array_key_exists("$new_col", $result)) {
-	   	$sql = "ALTER TABLE fc_pages ADD $new_col TEXT";
-	   	$dbh->exec($sql);
+	   	$sql = "ALTER TABLE fc_pages ADD $new_col LONGTEXT";
+	   	//$dbh->exec($sql);
+	   	$db_content->query($sql);
 	   	
-	   	$sql = "ALTER TABLE fc_pages_cache ADD $new_col TEXT";
-	   	$dbh->exec($sql);
+	   	$sql = "ALTER TABLE fc_pages_cache ADD $new_col LONGTEXT";
+	   	//$dbh->exec($sql);
+	   	$db_content->query($sql);
 	   	
 	   	record_log("$_SESSION[user_nick]","add custom column <i>$new_col</i>","0");
 	   	print_sysmsg("{OKAY} $lang[db_changed]"); 	
    }
 	
-	$dbh = null;
+	//$dbh = null;
 }
 
 

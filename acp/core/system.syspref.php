@@ -78,53 +78,30 @@ if(isset($_POST['save_prefs_user'])) {
 }
 
 
-
-
 /* save head preferences */
 if(isset($_POST['save_prefs_head'])) {
+		
+	$data = $db_content->update("fc_preferences", [
+		"prefs_pagesglobalhead" =>  $_POST['prefs_pagesglobalhead']
+	], [
+	"prefs_id" => 1
+	]);	
 	
-		$pdo_fields = array(
-			'prefs_pagesglobalhead' => 'STR'
-	);
-
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = generate_sql_update_str($pdo_fields,"fc_preferences","WHERE prefs_id = 1");
-	$sth = $dbh->prepare($sql);
-	$sth->bindParam(':prefs_pagesglobalhead', $_POST['prefs_pagesglobalhead'], PDO::PARAM_STR);
-	$cnt_changes = $sth->execute();
-	$dbh = null;
 }
 
 /* save deleted resources */
 if(isset($_POST['save_deleted_resources'])) {
-	
-		$pdo_fields = array(
-			'prefs_deleted_resources' => 'STR'
-	);
-
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = generate_sql_update_str($pdo_fields,"fc_preferences","WHERE prefs_id = 1");
-	$sth = $dbh->prepare($sql);
-	$sth->bindParam(':prefs_deleted_resources', $_POST['prefs_deleted_resources'], PDO::PARAM_STR);
-	$cnt_changes = $sth->execute();
-	$dbh = null;
+		
+	$data = $db_content->update("fc_preferences", [
+			"prefs_deleted_resources" =>  $_POST['prefs_deleted_resources']
+		], [
+		"prefs_id" => 1
+		]);
 }
 
 
 /* save misc preferences */
 if(isset($_POST['save_prefs_misc'])) {
-	
-	$pdo_fields = array(
-		'prefs_logfile' => 'STR',
-		'prefs_anonymize_ip' => 'STR',
-		'prefs_xml_sitemap' => 'STR',
-		'prefs_rss_time_offset' => 'STR',
-		'prefs_acp_session_lifetime' => 'STR',
-		'prefs_nbr_page_versions' => 'INT',
-		'prefs_smarty_cache' => 'INT',
-		'prefs_smarty_cache_lifetime' => 'INT',
-		'prefs_smarty_compile_check' => 'INT'
-	);
 	
 	if(isset($_POST['prefs_logfile'])) {
 		$prefs_logfile = 'on';
@@ -155,21 +132,21 @@ if(isset($_POST['save_prefs_misc'])) {
 	} else {
 		$prefs_smarty_compile_check = 0;
 	}
-
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = generate_sql_update_str($pdo_fields,"fc_preferences","WHERE prefs_id = 1");
-	$sth = $dbh->prepare($sql);
-	$sth->bindParam(':prefs_rss_time_offset', $_POST['prefs_rss_time_offset'], PDO::PARAM_STR);
-	$sth->bindParam(':prefs_acp_session_lifetime', $_POST['prefs_acp_session_lifetime'], PDO::PARAM_STR);
-	$sth->bindParam(':prefs_logfile', $prefs_logfile, PDO::PARAM_STR);
-	$sth->bindParam(':prefs_anonymize_ip', $prefs_anonymize_ip, PDO::PARAM_STR);
-	$sth->bindParam(':prefs_xml_sitemap', $prefs_xml_sitemap, PDO::PARAM_STR);
-	$sth->bindParam(':prefs_nbr_page_versions', $prefs_nbr_page_versions, PDO::PARAM_INT);
-	$sth->bindParam(':prefs_smarty_cache', $prefs_smarty_cache, PDO::PARAM_INT);
-	$sth->bindParam(':prefs_smarty_cache_lifetime', $_POST['prefs_smarty_cache_lifetime'], PDO::PARAM_INT);
-	$sth->bindParam(':prefs_smarty_compile_check', $prefs_smarty_compile_check, PDO::PARAM_INT);
-	$cnt_changes = $sth->execute();
-	$dbh = null;
+	
+	$data = $db_content->update("fc_preferences", [
+			"prefs_rss_time_offset" =>  $_POST['prefs_rss_time_offset'],
+			"prefs_acp_session_lifetime" =>  $_POST['prefs_acp_session_lifetime'],
+			"prefs_logfile" =>  $prefs_logfile,
+			"prefs_anonymize_ip" =>  $prefs_anonymize_ip,
+			"prefs_xml_sitemap" =>  $prefs_xml_sitemap,
+			"prefs_nbr_page_versions" =>  $prefs_nbr_page_versions,
+			"prefs_smarty_cache" =>  $prefs_smarty_cache,
+			"prefs_smarty_cache_lifetime" =>  $_POST['prefs_smarty_cache_lifetime'],
+			"prefs_smarty_compile_check" =>  $prefs_smarty_compile_check
+		], [
+		"prefs_id" => 1
+		]);
+	
 }
 
 /* delete smarty cache files */
@@ -183,20 +160,13 @@ if(isset($_POST['delete_smarty_cache'])) {
 
 if(isset($_POST['update_label'])) {
 	
-	$pdo_fields = array(
-		'label_color' => 'STR',
-		'label_title' => 'STR',
-		'label_description' => 'STR'
-	);
-	
-	$label_id = (int) $_POST['label_id'];
-
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = generate_sql_update_str($pdo_fields,"fc_labels","WHERE label_id = $label_id");
-	$sth = $dbh->prepare($sql);
-	generate_bindParam_str($pdo_fields,$sth);
-	$cnt_changes = $sth->execute();
-	$dbh = null;
+	$data = $db_content->update("fc_labels", [
+			"label_color" =>  $label_color,
+			"label_title" =>  $label_title,
+			"label_description" =>  $label_description
+		], [
+		"label_id" => $label_id
+		]);
 	
 }
 
@@ -205,18 +175,11 @@ if(isset($_POST['update_label'])) {
 
 if(isset($_POST['new_label'])) {
 	
-	$pdo_fields = array(
-		'label_color' => 'STR',
-		'label_title' => 'STR',
-		'label_description' => 'STR'
-	);
-
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = generate_sql_insert_str($pdo_fields,"fc_labels");
-	$sth = $dbh->prepare($sql);
-	generate_bindParam_str($pdo_fields,$sth);
-	$cnt_changes = $sth->execute();
-	$dbh = null;
+	$data = $db_content->insert("fc_labels", [
+			"label_color" =>  $label_color,
+			"label_title" =>  $label_title,
+			"label_description" =>  $label_description
+		]);
 	
 }
 
@@ -226,10 +189,9 @@ if(isset($_POST['delete_label'])) {
 
 	$label_id = (int) $_POST['label_id'];
 
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = "DELETE FROM fc_labels WHERE label_id = $label_id";
-	$dbh->exec($sql);
-	$dbh = null;
+	$data = $db_content->delete("fc_labels", [
+		"label_id" => $label_id
+		]);
 	
 }
 
@@ -349,7 +311,7 @@ echo '<div id="globalheader" class="pt-2"></div>';
 
 echo '<fieldset>';
 echo '<legend>'.$lang['f_prefs_global_header'].'</legend>';
-echo '<form action="acp.php?tn=system&sub=sys_pref" method="POST" class="form-horizontal">';
+echo '<form action="acp.php?tn=system&sub=sys_pref#globalheader" method="POST" class="form-horizontal">';
 
 $ta_pagesglobalhead = '<textarea name="prefs_pagesglobalhead" class="aceEditor_html form-control">'.$prefs_pagesglobalhead.'</textarea>';
 $ta_pagesglobalhead .= '<div id="HTMLeditor"></div>';
@@ -361,9 +323,10 @@ echo '</fieldset>';
 
 /* deleted resources */
 echo '<div id="deletedresources" class="pt-2"></div>';
+
 echo '<fieldset>';
 echo '<legend>'.$lang['label_deleted_resources'].'</legend>';
-echo '<form action="acp.php?tn=system&sub=sys_pref" method="POST" class="form-horizontal">';
+echo '<form action="acp.php?tn=system&sub=sys_pref#deletedresources" method="POST" class="form-horizontal">';
 
 
 echo tpl_form_control_group('','410 GONE','<textarea name="prefs_deleted_resources" rows="10" class="form-control">'.$prefs_deleted_resources.'</textarea>');

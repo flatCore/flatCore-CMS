@@ -125,6 +125,7 @@ echo '</div>'; // #deleted resources
 echo '<div class="tab-pane fade" id="config">';
 echo '<table class="table table-sm">';
 echo '<tr><td>Server:</td><td>' . $_SERVER['SERVER_NAME'] . ' (PHP '.phpversion().')</td></tr>';
+echo '<tr><td>Database:</td><td>'.$db_type.'</td></tr>';
 echo '<tr><td>'.$lang['prefs_cms_domain'].'</td><td>' . $prefs_cms_domain . '</td></tr>';
 echo '<tr><td>'.$lang['prefs_cms_ssl_domain'].'</td><td>' . $prefs_cms_ssl_domain . '</td></tr>';
 echo '<tr><td>'.$lang['prefs_cms_base'].'</td><td>' . $prefs_cms_base . '</td></tr>';

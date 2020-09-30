@@ -33,6 +33,8 @@ function generate_sql_update_str($fields,$table,$where) {
 }
 
 
+
+
 /**
  * Generate SQL INSERT query with prepared statements
  * Example: "INSERT INTO myTable ( name, age ) VALUES ( :name, :age )

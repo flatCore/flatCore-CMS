@@ -67,9 +67,9 @@ $check_this[] = "../" . FC_CONTENT_DIR . "/";
 $check_this[] = "../$img_path";
 $check_this[] = "../$files_path";
 $check_this[] = "../" . FC_CONTENT_DIR . "/avatars";
-$check_this[] = "../" . FC_CONTENT_DIR . "/files";
 $check_this[] = "../" . FC_CONTENT_DIR . "/plugins";
-
+$check_this[] = "../" . FC_CONTENT_DIR . "/SQLite";
+sort($check_this,SORT_NATURAL | SORT_FLAG_CASE);
 
 $check_is_dir[] = "../modules/";
 $check_is_dir[] = "../lib/";
@@ -80,9 +80,9 @@ $check_is_dir[] = "../acp/";
 /* minimum php version */
 
 $needed_phpversion = "5.5";
+$loaded_extensions = get_loaded_extensions();
 
-
-echo"<h3>$lang[files_and_folders]</h3>";
+echo '<h3>'.$lang['files_and_folders'].'</h3>';
 
 foreach($check_this as $filepath){
 	checkwritable("$filepath");

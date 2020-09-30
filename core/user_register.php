@@ -78,7 +78,7 @@ foreach ($all_usermail_array as $entry) {
     }  
 }
 
-
+echo '<hr>FOOOOOOO:'.$prefs_mailer_adr.'<hr>';
 
 //yeah, create the new account
 if($send_data == 'true') {
@@ -92,43 +92,26 @@ if($send_data == 'true') {
 	$user_activationkey = random_text('alnum',32);
 	$activation_url = $fc_base_url."?p=account&user=$username&al=$user_activationkey";
 	$user_activationlink = '<a href="'.$activation_url.'">'.$activation_url.'</a>';
-	
-	$dbh = new PDO("sqlite:$fc_db_user");
-	
-	$sql = "INSERT INTO fc_user (
-			user_id, user_nick, user_registerdate, user_verified, user_groups,
-			user_drm, user_firstname, user_lastname, user_company,
-			user_street, user_street_nbr, user_zipcode, user_city, user_public_profile,
-			user_mail, user_newsletter, user_psw_hash, user_activationkey
-			) VALUES (
-			NULL,
-			:username, :user_registerdate, :user_verified, :user_groups,
-			:drm_string, :firstname, :name, :user_company,
-			:street, :nr, :zip, :city, :about_you,
-			:mail, :user_newsletter, :user_psw_hash, :user_activationkey )";
-	
-	$sth = $dbh->prepare($sql);
-	
-	$sth->bindParam(':username', $username, PDO::PARAM_STR);
-	$sth->bindParam(':user_registerdate', $user_registerdate, PDO::PARAM_STR);
-	$sth->bindParam(':user_verified', $user_verified, PDO::PARAM_STR);
-	$sth->bindParam(':user_groups', $user_groups, PDO::PARAM_STR);
-	$sth->bindParam(':drm_string', $drm_string, PDO::PARAM_STR);
-	$sth->bindParam(':firstname', $firstname, PDO::PARAM_STR);
-	$sth->bindParam(':name', $name, PDO::PARAM_STR);
-	$sth->bindParam(':user_company', $user_company, PDO::PARAM_STR);
-	$sth->bindParam(':street', $street, PDO::PARAM_STR);
-	$sth->bindParam(':nr', $nr, PDO::PARAM_STR);
-	$sth->bindParam(':zip', $zip, PDO::PARAM_STR);
-	$sth->bindParam(':city', $city, PDO::PARAM_STR);
-	$sth->bindParam(':about_you', $about_you, PDO::PARAM_STR);
-	$sth->bindParam(':mail', $mail, PDO::PARAM_STR);
-	$sth->bindParam(':user_newsletter', $user_newsletter, PDO::PARAM_STR);
-	$sth->bindParam(':user_psw_hash', $user_psw_hash, PDO::PARAM_STR);
-	$sth->bindParam(':user_activationkey', $user_activationkey, PDO::PARAM_STR);
-	
-	$count = $sth->execute();
-	$dbh = null;
+
+	$db_user->insert("fc_user", [
+		"user_nick" => "$username",
+		"user_registerdate" => "$user_registerdate",
+		"user_verified" => "$user_verified",
+		"user_groups" => "$user_groups",
+		"user_drm" => "$drm_string",
+		"user_firstname" => "$firstname",
+		"user_lastname" => "$name",
+		"user_company" => "$user_company",
+		"user_street" => "$street",
+		"user_street_nbr" => "$nr",
+		"user_zipcode" => "$zip",
+		"user_city" => "$city",
+		"user_public_profile" => "$about_you",
+		"user_mail" => "$mail",
+		"user_newsletter" => "$user_newsletter",
+		"user_psw_hash" => "$user_psw_hash",
+		"user_activationkey" => "$user_activationkey"
+	]);	
 	
 	/* generate the message */
 	$email_msg = get_textlib("account_confirm_mail","$languagePack");
@@ -138,24 +121,25 @@ if($send_data == 'true') {
 	
 	/* send register mail to the new user */
 	require_once("lib/Swift/lib/swift_required.php");
-	if($prefs_mailer_type == 'smtp') {
-		$transport = Swift_SmtpTransport::newInstance("$prefs_smtp_host", "$prefs_smtp_port")
-			->setUsername("$prefs_smtp_username")
-			->setPassword("$prefs_smtp_psw");
+		
+	$transport = Swift_SmtpTransport::newInstance()
+      ->setUsername("$prefs_smtp_username")
+      ->setPassword("$prefs_smtp_psw")
+      ->setHost("$prefs_smtp_host")
+      ->setPort($prefs_smtp_port);
 			
-		if($prefs_mail_smtp_encryption_input != '') {
-			$transport ->setEncryption($pb_prefs['prefs_smtp_encryption']);
-		}
-	} else {
-		$transport = Swift_MailTransport::newInstance();
+	if($prefs_mail_smtp_encryption_input != '') {
+		$transport->setEncryption($prefs_smtp_encryption);
 	}
+
 	$mailer = Swift_Mailer::newInstance($transport);
 	$message = Swift_Message::newInstance()
-			->setSubject("Registrierungsdaten | $prefs_pagetitle")
-  		->setFrom(array("$prefs_mailer_adr" => "$prefs_mailer_name"))
-  		->setTo(array("$mail" => "$username"))
+			->setSubject("Account | $prefs_pagetitle")
+  		->setFrom(array($prefs_mailer_adr => $prefs_mailer_name))
+  		->setTo(array($mail => $username))
   		->setBody("$email_msg", 'text/html');
-  $result = $mailer->send($message);
+
+  $send_message = $mailer->send($message, $failures);
 	
 	$smarty->assign("msg_status","alert alert-success",true);
 	$smarty->assign("register_message",$lang['msg_register_success'],true);

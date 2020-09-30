@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL ^E_NOTICE);
+//error_reporting(E_ALL ^E_NOTICE);
 //prohibit unauthorized access
 require 'core/access.php';
 
@@ -13,7 +13,7 @@ if($_REQUEST['edituser'] != "") {
 	unset($edituser);
 }
 
-
+/*
 $pdo_fields = array(
 	'user_mail' => 'STR',
 	'user_verified' => 'STR',
@@ -48,6 +48,7 @@ $pdo_fields_new = array(
 	'user_city' => 'STR',
 	'user_newsletter' => 'STR'
 );
+*/
 
 /**
  * if we have custom fields
@@ -61,9 +62,7 @@ if(preg_match("/custom_/i", implode(",", array_keys($_POST))) ){
   for($i=0;$i<$cnt_result;$i++) {
   	if(substr($custom_fields[$i],0,7) == "custom_") {
   		$cf = $custom_fields[$i];
-  		$pdo_fields[$cf] = 'STR';
-  		$pdo_fields_new[$cf] = 'STR';
-  		$pdo_fields_cache[$cf] = 'STR';
+  		$custom_fields[] = $cf;
   	}
   }      
 }
@@ -77,6 +76,7 @@ if(preg_match("/custom_/i", implode(",", array_keys($_POST))) ){
 if($_POST['delete_the_user']) {
 
 	// connect to database
+	/*
 	$dbh = new PDO("sqlite:".USER_DB);
 	
 	$sql = "UPDATE fc_user
@@ -96,10 +96,35 @@ if($_POST['delete_the_user']) {
 				user_city = '',
 				user_newsletter = ''
 			WHERE user_id = $edituser";
+			*/
+			
+		$columns_update = [
+			"user_psw_hash" => "",
+			"user_mail" => "",
+			"user_verified" => "",
+			"user_registerdate" => "",
+			"user_drm" => "",
+			"user_class" => "deleted",
+			"user_firstname" => "",
+			"user_lastname" => "",
+			"user_company" => "",
+			"user_street" => "",
+			"user_street_nbr" => "",
+			"user_zipcode" => "",
+			"user_city" => "",
+			"user_newsletter" => ""
+		];
+		
+		/* add the custom fields */
+		foreach($custom_fields as $f) {
+			$columns_update[$f] = "";
+		}
 										
-	$cnt_changes = $dbh->exec($sql);
+		$cnt_changes = $db_user->update("fc_user",$columns_update, [
+			"user_id" => $edituser
+		]);
 	
-	if($cnt_changes > 0){
+	if($cnt_changes->rowCount() > 0) {
 		$success_message = "$lang[msg_user_deleted]<br />";
 		$show_form = "false";
 		record_log($_SESSION['user_nick'],"deleted user id: $edituser","0");
@@ -146,21 +171,37 @@ if($_POST['save_the_user']) {
 	
 	// modus update
 	if(is_numeric($edituser)) {
-
-		$dbh = new PDO("sqlite:".USER_DB);
-		$sql_u = generate_sql_update_str($pdo_fields,"fc_user","WHERE user_id = $edituser");							
-		$sth = $dbh->prepare($sql_u);
-		generate_bindParam_str($pdo_fields,$sth);
+		
+		$columns_update = [
+			"user_nick" => "$user_nick",
+			"user_mail" => "$user_mail",
+			"user_verified" => "$user_verified",
+			"user_registerdate" => "$user_registerdate",
+			"user_drm" => "$drm_string",
+			"user_class" => "$drm_acp_class",
+			"user_firstname" => "$user_firstname",
+			"user_lastname" => "$user_lastname",
+			"user_company" => "$user_company",
+			"user_street" => "$user_street",
+			"user_street_nbr" => "$user_street_nbr",
+			"user_zipcode" => "$user_zipcode",
+			"user_city" => "$user_city",
+			"user_newsletter" => "$user_newsletter"
+		];
 		
 		if($set_psw == "true") {
-			$sth->bindParam(':user_psw_hash', $user_psw, PDO::PARAM_STR);
-		} else {
-			$sth->bindParam(':user_psw_hash', $user_psw_hash, PDO::PARAM_STR);
+			$columns_update['user_psw_hash'] = "$user_psw_hash";
 		}
 		
-		$sth->bindParam(':user_drm', $drm_string, PDO::PARAM_STR);
-		$sth->bindParam(':user_class', $drm_acp_class, PDO::PARAM_STR);
-		$cnt_changes = $sth->execute();
+		/* add the custom fields */
+		foreach($custom_fields as $f) {
+			$columns_update[$f] = "${$f}";
+		}
+		
+		
+		$cnt_changes = $db_user->update("fc_user",$columns_update, [
+			"user_id" => $edituser
+		]);
 		
 		if($_POST['deleteAvatar'] == 'on') {
 			$user_avatar_path = '../'. FC_CONTENT_DIR . '/avatars/' . md5($user_nick) . '.png';
@@ -169,7 +210,7 @@ if($_POST['save_the_user']) {
 			}
 		}
 									
-		if($cnt_changes == TRUE) {
+		if($cnt_changes->rowCount() > 0) {
 			$success_message .= $lang['msg_user_updated'].'<br>';
 			record_log($_SESSION['user_nick'],"update user id: $edituser via acp","5");
 		}
@@ -182,18 +223,21 @@ if($_POST['save_the_user']) {
 		$user_registerdate = time();
 		
 		/* unique check for user_nick and e-mail */
+				
+		$check_user = $db_user->get("fc_user", "user_nick", [
+			"user_nick" => "$user_nick"
+		]);
 		
-		$dbh = new PDO("sqlite:".USER_DB);
-		$result = $dbh->query("SELECT user_nick FROM fc_user WHERE user_nick = '$user_nick' ")->fetchAll();
-		
-		if(count($result) > 0) {
+		if(count($check_user) > 0) {
 			$error_message .= $lang['msg_user_exists'].'<br>';
 			$db_status = "locked";
 		}
 		
-		$result = $dbh->query("SELECT user_mail FROM fc_user WHERE user_mail = '$user_mail' ")->fetchAll();
+		$check_mail = $db_user->get("fc_user", "user_mail", [
+			"user_mail" => "$user_mail"
+		]);
 		
-		if(count($result) > 0) {
+		if(count($check_mail) > 0) {
 			$error_message .= $lang['msg_usermail_exists'].'<br>';
 			$db_status = "locked";
 		}
@@ -204,7 +248,31 @@ if($_POST['save_the_user']) {
 		}
 		
 		if($db_status == "unlocked") {
-		
+			
+			$columns_new = [
+				"user_nick" => "$user_nick",
+				"user_mail" => "$user_mail",
+				"user_verified" => "$user_verified",
+				"user_registerdate" => "$user_registerdate",
+				"user_psw_hash" => "$user_psw",
+				"user_drm" => "$drm_string",
+				"user_class" => "$drm_acp_class",
+				"user_firstname" => "$user_firstname",
+				"user_lastname" => "$user_lastname",
+				"user_company" => "$user_company",
+				"user_street" => "$user_street",
+				"user_street_nbr" => "$user_street_nbr",
+				"user_zipcode" => "$user_zipcode",
+				"user_city" => "$user_city",
+				"user_newsletter" => "$user_newsletter"
+			];
+			
+			/* add the custom fields */
+			foreach($custom_fields as $f) {
+				$columns_new[$f] = "${$f}";
+			}
+			
+			/*
 			$user_id = null;
 			$sql = generate_sql_insert_str($pdo_fields_new,"fc_user");
 			$sth = $dbh->prepare($sql);
@@ -216,8 +284,14 @@ if($_POST['save_the_user']) {
 			$sth->bindParam(':user_class', $drm_acp_class, PDO::PARAM_STR);
 											
 			$cnt_changes = $sth->execute();
+			*/
 			
-			if($cnt_changes == TRUE) {
+		$cnt_changes = $db_user->insert("fc_user",$columns_new);
+		
+		$edituser = $db_user->id();
+		
+		
+		if($cnt_changes->rowCount() > 0) {
 				$success_message .= $lang['msg_new_user_saved'].'<br>';
 				record_log($_SESSION['user_nick'],"new user <i>$user_nick</i>","5");
 			} else {
@@ -241,7 +315,7 @@ if($_POST['save_the_user']) {
 		if($edituser != "") {
 			$enter_user_id = $edituser;
 		} else {
-			$enter_user_id = $dbh->lastInsertId();
+			$enter_user_id = $db_user->id();
 		}
 		
 		$user_groups = $_POST['user_groups'];
@@ -258,6 +332,7 @@ if($_POST['save_the_user']) {
 				$sign_out = "false";
 			}
 			
+			/*
 			$group_data = $dbh->query("SELECT * FROM fc_groups WHERE group_id = $user_groups[$i] ");
 			$group_data = $group_data->fetch(PDO::FETCH_ASSOC);
 			
@@ -272,7 +347,7 @@ if($_POST['save_the_user']) {
 			
 			$existing_users = preg_replace("/ +/", ' ', $existing_users);     // delete multiple spaces	
 			$group_data = $dbh->query("UPDATE fc_groups SET group_user = '$existing_users' WHERE group_id = $user_groups[$i]");
-		
+			*/
 		}
 	}
 	
@@ -299,14 +374,12 @@ if($error_message != ""){
 
 if(is_numeric($edituser)){
 	// modus update user
+		
+	$get_user = $db_user->get("fc_user", "*", [
+		"user_id" => "$edituser"
+	]);
 	
-	$dbh = new PDO("sqlite:".USER_DB);
-	$sql = "SELECT * FROM fc_user WHERE user_id = $edituser";
-	$result = $dbh->query($sql);
-	$result= $result->fetch(PDO::FETCH_ASSOC);
-	$dbh = null;
-	
-	foreach($result as $k => $v) {
+	foreach($get_user as $k => $v) {
 	   $$k = stripslashes($v);
 	}
 	

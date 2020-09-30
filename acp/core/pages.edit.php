@@ -13,7 +13,7 @@ $show_form = "true";
 $modus = "new";
 
 foreach($_POST as $key => $val) {
-	$$key = @htmlspecialchars($val, ENT_QUOTES); 
+	$$key = $val; 
 }
 
 if(!empty($_POST['editpage'])) {
@@ -30,7 +30,7 @@ if(!empty($_POST['preview_the_page'])) {
 	$editpage = (int) $_POST['editpage'];
 	$modus = "preview";
 }
-
+/*
 $pdo_fields = array(
 	'page_sort' => 'STR',
 	'page_language' => 'STR',
@@ -66,6 +66,7 @@ $pdo_fields = array(
 	'page_labels' => 'STR',
 	'page_psw' => 'STR'
 );
+
 
 $pdo_fields_new = array(
 	'page_id' => 'NULL',
@@ -142,6 +143,7 @@ $pdo_fields_cache = array(
 	'page_labels' => 'STR',
 	'page_psw' => 'STR'
 );
+*/
 
 
 /**
@@ -155,14 +157,11 @@ if(preg_match("/custom_/i", implode(",", array_keys($_POST))) ){
   
   for($i=0;$i<$cnt_result;$i++) {
   	if(substr($custom_fields[$i],0,7) == "custom_") {
-  		$cf = $custom_fields[$i];
-  		$pdo_fields[$cf] = 'STR';
-  		$pdo_fields_new[$cf] = 'STR';
-  		$pdo_fields_cache[$cf] = 'STR';
+  		$cf = $custom_fields[$i]; 		
+  		$custom_fields[] = $cf;
   	}
   }      
 }
-
 
 
 /**
@@ -298,7 +297,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	}
 
 	// connect to database
-	$dbh = new PDO("sqlite:".CONTENT_DB);
+	//$dbh = new PDO("sqlite:".CONTENT_DB);
 
 
 	/**
@@ -309,29 +308,52 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	
 		$page_version = $_POST['page_version']+1;
 		
-		$sql_u = generate_sql_update_str($pdo_fields,"fc_pages","WHERE page_id = $editpage");							
-		$sth = $dbh->prepare($sql_u);
-		generate_bindParam_str($pdo_fields,$sth);
+		$columns = [
+			"page_sort" => "$page_sort",
+			"page_language" => "$page_language",
+			"page_linkname" => "$page_linkname",
+			"page_permalink" => "$page_permalink",
+			"page_permalink_short" => "$page_permalink_short",
+			"page_hash" => "$page_hash",
+			"page_type_of_use" => "$page_type_of_use",
+			"page_redirect" => "$page_redirect",
+			"page_redirect_code" => "$page_redirect_code",
+			"page_funnel_uri" => "$page_funnel_uri",
+			"page_title" => "$page_title",
+			"page_status" => "$page_status",
+			"page_usergroup" => "$page_usergroup",
+			"page_content" => "$page_content",
+			"page_extracontent" => "$page_extracontent",
+			"page_lastedit" => $page_lastedit,
+			"page_lastedit_from" => $_SESSION['user_nick'],
+			"page_template" => "$page_template",
+			"page_template_layout" => "$page_template_layout",
+			"page_meta_author" => "$page_meta_author",
+			"page_meta_keywords" => "$page_meta_keywords",
+			"page_meta_description" => "$page_meta_description",
+			"page_meta_robots" => "$page_meta_robots",
+			"page_head_styles" => "$page_head_styles",
+			"page_head_enhanced" => "$page_head_enhanced",
+			"page_thumbnail" => "$page_thumbnail",
+			"page_modul" => "$page_modul",
+			"page_modul_query" => "$page_modul_query",
+			"page_addon_string" => "$page_addon_string",
+			"page_authorized_users" => "$page_authorized_users",
+			"page_version" => $page_version,
+			"page_labels" => "$string_labels",
+			"page_psw" => "$page_psw"		
+		];
 		
-		$sth->bindParam(':page_sort', $page_sort, PDO::PARAM_STR);
-		$sth->bindParam(':page_usergroup', $string_usergroup, PDO::PARAM_STR);
-		$sth->bindParam(':page_labels', $string_labels, PDO::PARAM_STR);
-		$sth->bindParam(':page_lastedit', $page_lastedit, PDO::PARAM_INT);
-		$sth->bindParam(':page_lastedit_from', $_SESSION['user_nick'], PDO::PARAM_STR);
-		$sth->bindParam(':page_template', $page_template, PDO::PARAM_STR);
-		$sth->bindParam(':page_template_layout', $page_template_layout, PDO::PARAM_STR);
-		$sth->bindParam(':page_authorized_users', $string_authorized_admins, PDO::PARAM_STR);
-		$sth->bindParam(':page_version', $page_version, PDO::PARAM_INT);
-		$sth->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
-		$sth->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
-		$sth->bindParam(':page_thumbnail', $page_thumbnail, PDO::PARAM_STR);
-		$sth->bindParam(':page_psw', $page_psw, PDO::PARAM_STR);
-		$sth->bindParam(':page_addon_string', $page_addon_string, PDO::PARAM_STR);
-		
-		
-		$cnt_changes = $sth->execute();
+		/* add the custom fields */
+		foreach($custom_fields as $f) {
+			$columns[$f] = "${$f}";
+		}
+				
+		$cnt_changes = $db_content->update("fc_pages", $columns, [
+			"page_id" => $editpage
+		]);
 	
-		if($cnt_changes == TRUE) {
+		if($cnt_changes->rowCount() > 0) {
 			$sys_message = "{OKAY} $lang[msg_page_updated]";
 			record_log("$_SESSION[user_nick]","page update <b>$page_linkname</b> &raquo;$page_title&laquo;","5");
 			generate_xml_sitemap();
@@ -348,28 +370,53 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 		$page_id_original = "$editpage";
 		$page_cache_type = "history";
 		
-		$sql = generate_sql_insert_str($pdo_fields_cache,"fc_pages_cache");	
-		$std = $dbh->prepare($sql);
-		generate_bindParam_str($pdo_fields_cache,$std);
 		
-		$std->bindParam(':page_sort', $page_sort, PDO::PARAM_STR);
-		$std->bindParam(':page_usergroup', $string_usergroup, PDO::PARAM_STR);
-		$std->bindParam(':page_labels', $string_labels, PDO::PARAM_STR);
-		$std->bindParam(':page_lastedit', $page_lastedit, PDO::PARAM_INT);
-		$std->bindParam(':page_lastedit_from', $_SESSION[user_nick], PDO::PARAM_STR);
-		$std->bindParam(':page_template', $page_template, PDO::PARAM_STR);
-		$std->bindParam(':page_template_layout', $page_template_layout, PDO::PARAM_STR);
-		$std->bindParam(':page_authorized_users', $string_authorized_admins, PDO::PARAM_STR);
-		$std->bindParam(':page_version', $page_version, PDO::PARAM_INT);
-		$std->bindParam(':page_id_original', $page_id_original, PDO::PARAM_STR);
-		$std->bindParam(':page_cache_type', $page_cache_type, PDO::PARAM_STR);
-		$std->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
-		$sth->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
-		$sth->bindParam(':page_thumbnail', $page_thumbnail, PDO::PARAM_STR);
-		$sth->bindParam(':page_psw', $page_psw, PDO::PARAM_STR);
-		$sth->bindParam(':page_addon_string', $page_addon_string, PDO::PARAM_STR);
+		$columns_cache = [
+			"page_id_original" => "$page_id_original",
+			"page_cache_type" => "$page_cache_type",
+			
+			"page_sort" => "$page_sort",
+			"page_language" => "$page_language",
+			"page_linkname" => "$page_linkname",
+			"page_permalink" => "$page_permalink",
+			"page_permalink_short" => "$page_permalink_short",
+			"page_hash" => "$page_hash",
+			"page_type_of_use" => "$page_type_of_use",
+			"page_redirect" => "$page_redirect",
+			"page_redirect_code" => "$page_redirect_code",
+			"page_funnel_uri" => "$page_funnel_uri",
+			"page_title" => "$page_title",
+			"page_status" => "$page_status",
+			"page_usergroup" => "$page_usergroup",
+			"page_content" => "$page_content",
+			"page_extracontent" => "$page_extracontent",
+			"page_lastedit" => $page_lastedit,
+			"page_lastedit_from" => $_SESSION['user_nick'],
+			"page_template" => "$page_template",
+			"page_template_layout" => "$page_template_layout",
+			"page_meta_author" => "$page_meta_author",
+			"page_meta_keywords" => "$page_meta_keywords",
+			"page_meta_description" => "$page_meta_description",
+			"page_meta_robots" => "$page_meta_robots",
+			"page_head_styles" => "$page_head_styles",
+			"page_head_enhanced" => "$page_head_enhanced",
+			"page_thumbnail" => "$page_thumbnail",
+			"page_modul" => "$page_modul",
+			"page_modul_query" => "$page_modul_query",
+			"page_addon_string" => "$page_addon_string",
+			"page_authorized_users" => "$page_authorized_users",
+			"page_version" => $page_version,
+			"page_labels" => "$string_labels",
+			"page_psw" => "$page_psw"
+		];
 		
-		$cnt_changes_c = $std->execute();
+		/* add the custom fields */
+		foreach($custom_fields as $f) {
+			$columns_cache[$f] = "${$f}";
+		}
+
+		$cnt_changes_c = $db_content->insert("fc_pages_cache", $columns_cache);	
+		
 	
 	} // eo modus update
 
@@ -380,29 +427,54 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	 */							
 	
 	if($modus == "new" || $modus == 'duplicate') {
-	
-		$page_id = null;
-		$sql = generate_sql_insert_str($pdo_fields_new,"fc_pages");
-		$sth = $dbh->prepare($sql);
-		generate_bindParam_str($pdo_fields,$sth);
 		
-		$sth->bindParam(':page_usergroup', $string_usergroup, PDO::PARAM_STR);
-		$sth->bindParam(':page_labels', $string_labels, PDO::PARAM_STR);
-		$sth->bindParam(':page_lastedit', $page_lastedit, PDO::PARAM_INT);
-		$sth->bindParam(':page_lastedit_from', $_SESSION[user_nick], PDO::PARAM_STR);
-		$sth->bindParam(':page_template', $page_template, PDO::PARAM_STR);
-		$sth->bindParam(':page_template_layout', $page_template_layout, PDO::PARAM_STR);
-		$sth->bindParam(':page_sort', $page_sort, PDO::PARAM_STR);
-		$sth->bindParam(':page_authorized_users', $string_authorized_admins, PDO::PARAM_STR);
-		$sth->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
-		$sth->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
-		$sth->bindParam(':page_thumbnail', $page_thumbnail, PDO::PARAM_STR);
-		$sth->bindParam(':page_psw', $page_psw, PDO::PARAM_STR);
+		$columns_new = [
+			"page_sort" => "$page_sort",
+			"page_language" => "$page_language",
+			"page_linkname" => "$page_linkname",
+			"page_permalink" => "$page_permalink",
+			"page_permalink_short" => "$page_permalink_short",
+			"page_hash" => "$page_hash",
+			"page_type_of_use" => "$page_type_of_use",
+			"page_redirect" => "$page_redirect",
+			"page_redirect_code" => "$page_redirect_code",
+			"page_funnel_uri" => "$page_funnel_uri",
+			"page_title" => "$page_title",
+			"page_status" => "$page_status",
+			"page_usergroup" => "$page_usergroup",
+			"page_content" => "$page_content",
+			"page_extracontent" => "$page_extracontent",
+			"page_lastedit" => $page_lastedit,
+			"page_lastedit_from" => $_SESSION['user_nick'],
+			"page_template" => "$page_template",
+			"page_template_layout" => "$page_template_layout",
+			"page_meta_author" => "$page_meta_author",
+			"page_meta_keywords" => "$page_meta_keywords",
+			"page_meta_description" => "$page_meta_description",
+			"page_meta_robots" => "$page_meta_robots",
+			"page_head_styles" => "$page_head_styles",
+			"page_head_enhanced" => "$page_head_enhanced",
+			"page_thumbnail" => "$page_thumbnail",
+			"page_modul" => "$page_modul",
+			"page_modul_query" => "$page_modul_query",
+			"page_addon_string" => "$page_addon_string",
+			"page_authorized_users" => "$page_authorized_users",
+			"page_version" => $page_version,
+			"page_labels" => "$string_labels",
+			"page_psw" => "$page_psw"
+		];
 		
-		$cnt_changes = $sth->execute();
-		$editpage = $dbh->lastInsertId();
+		/* add the custom fields */
+		foreach($custom_fields as $f) {
+			$columns_new[$f] = "${$f}";
+		}
 		
-		if($cnt_changes == TRUE) {
+		$cnt_changes = $db_content->insert("fc_pages",$columns_new);
+		
+		$editpage = $db_content->id();
+		
+		
+		if($cnt_changes->rowCount() > 0) {
 			$sys_message = "{OKAY} $lang[msg_page_saved]";
 			record_log("$_SESSION[user_nick]","new Page <i>$page_title</i>","5");
 			generate_xml_sitemap();
@@ -420,27 +492,52 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 		$page_id_original = "$editpage";
 		$page_cache_type = "history";
 		
-		$sql = generate_sql_insert_str($pdo_fields_cache,"fc_pages_cache");					
-		$std = $dbh->prepare($sql);
+		$columns_cache = [
+			"page_id_original" => "$page_id_original",
+			"page_cache_type" => "$page_cache_type",
+			
+			"page_sort" => "$page_sort",
+			"page_language" => "$page_language",
+			"page_linkname" => "$page_linkname",
+			"page_permalink" => "$page_language",
+			"page_permalink_short" => "$page_permalink_short",
+			"page_hash" => "$page_hash",
+			"page_type_of_use" => "$page_type_of_use",
+			"page_redirect" => "$page_redirect",
+			"page_redirect_code" => "$page_redirect_code",
+			"page_funnel_uri" => "$page_funnel_uri",
+			"page_title" => "$page_title",
+			"page_status" => "$page_status",
+			"page_usergroup" => "$page_usergroup",
+			"page_content" => "$page_content",
+			"page_extracontent" => "$page_extracontent",
+			"page_lastedit" => $page_lastedit,
+			"page_lastedit_from" => $_SESSION['user_nick'],
+			"page_template" => "$page_template",
+			"page_template_layout" => "$page_template_layout",
+			"page_meta_author" => "$page_meta_author",
+			"page_meta_keywords" => "$page_meta_keywords",
+			"page_meta_description" => "$page_meta_description",
+			"page_meta_robots" => "$page_meta_robots",
+			"page_head_styles" => "$page_head_styles",
+			"page_head_enhanced" => "$page_head_enhanced",
+			"page_thumbnail" => "$page_thumbnail",
+			"page_modul" => "$page_modul",
+			"page_modul_query" => "$page_modul_query",
+			"page_addon_string" => "$page_addon_string",
+			"page_authorized_users" => "$page_authorized_users",
+			"page_version" => $page_version,
+			"page_labels" => "$string_labels",
+			"page_psw" => "$page_psw"
+		];
 		
-		generate_bindParam_str($pdo_fields_cache,$std);
+		/* add the custom fields */
+		foreach($custom_fields as $f) {
+			$columns_cache[$f] = "${$f}";
+		}
+
+		$cnt_changes_c = $db_content->insert("fc_pages_cache",$columns_cache);	
 		
-		$std->bindParam(':page_sort', $page_sort, PDO::PARAM_STR);
-		$std->bindParam(':page_usergroup', $string_usergroup, PDO::PARAM_STR);
-		$sth->bindParam(':page_labels', $string_labels, PDO::PARAM_STR);
-		$std->bindParam(':page_lastedit', $page_lastedit, PDO::PARAM_INT);
-		$std->bindParam(':page_lastedit_from', $_SESSION[user_nick], PDO::PARAM_STR);
-		$std->bindParam(':page_template', $page_template, PDO::PARAM_STR);
-		$std->bindParam(':page_template_layout', $page_template_layout, PDO::PARAM_STR);
-		$std->bindParam(':page_authorized_users', $string_authorized_admins, PDO::PARAM_STR);
-		$std->bindParam(':page_cache_type', $page_cache_type, PDO::PARAM_STR);
-		$std->bindParam(':page_version', $page_version, PDO::PARAM_INT);
-		$sth->bindParam(':page_hash', $page_hash, PDO::PARAM_STR);
-		$sth->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
-		$sth->bindParam(':page_thumbnail', $page_thumbnail, PDO::PARAM_STR);
-		$sth->bindParam(':page_psw', $page_psw, PDO::PARAM_STR);
-		
-		$cnt_changes_c = $std->execute();
 	
 	} // eo modus new
 
@@ -454,30 +551,65 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 		
 		$page_id_original = $editpage;
 		$page_cache_type = "preview";
-				
-		$sql = generate_sql_insert_str($pdo_fields_cache,"fc_pages_cache");					
-		$std = $dbh->prepare($sql);
 		
-		generate_bindParam_str($pdo_fields_cache,$std);
+		$columns_preview = [
+			"page_id_original" => "$page_id_original",
+			"page_cache_type" => "$page_cache_type",
+			
+			"page_sort" => "$page_sort",
+			"page_language" => "$page_language",
+			"page_linkname" => "$page_linkname",
+			"page_permalink" => "$page_language",
+			"page_permalink_short" => "$page_permalink_short",
+			"page_hash" => "$page_hash",
+			"page_type_of_use" => "$page_type_of_use",
+			"page_redirect" => "$page_redirect",
+			"page_redirect_code" => "$page_redirect_code",
+			"page_funnel_uri" => "$page_funnel_uri",
+			"page_title" => "$page_title",
+			"page_status" => "$page_status",
+			"page_usergroup" => "$page_usergroup",
+			"page_content" => "$page_content",
+			"page_extracontent" => "$page_extracontent",
+			"page_lastedit" => $page_lastedit,
+			"page_lastedit_from" => $_SESSION['user_nick'],
+			"page_template" => "$page_template",
+			"page_template_layout" => "$page_template_layout",
+			"page_meta_author" => "$page_meta_author",
+			"page_meta_keywords" => "$page_meta_keywords",
+			"page_meta_description" => "$page_meta_description",
+			"page_meta_robots" => "$page_meta_robots",
+			"page_head_styles" => "$page_head_styles",
+			"page_head_enhanced" => "$page_head_enhanced",
+			"page_thumbnail" => "$page_thumbnail",
+			"page_modul" => "$page_modul",
+			"page_modul_query" => "$page_modul_query",
+			"page_addon_string" => "$page_addon_string",
+			"page_authorized_users" => "$page_authorized_users",
+			"page_version" => $page_version,
+			"page_labels" => "$string_labels",
+			"page_psw" => "$page_psw"
+		];
 		
-		$std->bindParam(':page_id_original', $page_id_original, PDO::PARAM_STR);
-		$std->bindParam(':page_sort', $page_sort, PDO::PARAM_STR);
-		$std->bindParam(':page_usergroup', $string_usergroup, PDO::PARAM_STR);
-		$std->bindParam(':page_labels', $string_labels, PDO::PARAM_STR);
-		$std->bindParam(':page_lastedit', $page_lastedit, PDO::PARAM_INT);
-		$std->bindParam(':page_lastedit_from', $_SESSION['user_nick'], PDO::PARAM_STR);
-		$std->bindParam(':page_template', $page_template, PDO::PARAM_STR);
-		$std->bindParam(':page_template_layout', $page_template_layout, PDO::PARAM_STR);
-		$std->bindParam(':page_authorized_users', $string_authorized_admins, PDO::PARAM_STR);
-		$std->bindParam(':page_version', $page_version, PDO::PARAM_INT);
-		$std->bindParam(':page_cache_type', $page_cache_type, PDO::PARAM_STR);
-		$std->bindParam(':page_meta_robots', $page_meta_robots, PDO::PARAM_STR);
+		/* add the custom fields */
+		foreach($custom_fields as $f) {
+			$columns_preview[$f] = "${$f}";
+		}
 		
-		$cnt_changes_c = $std->execute();
+		$cnt_changes_c = $db_content->insert("fc_pages_cache",$columns_preview);	
+		
 		
 		/* delete older entries from fc_pages_cache */
 		$interval = time() - 86400; // now - 24h
-		$count = $dbh->exec("DELETE FROM fc_pages_cache WHERE page_cache_type = 'preview' AND page_lastedit < '$interval'");
+		//$count = $dbh->exec("DELETE FROM fc_pages_cache WHERE page_cache_type = 'preview' AND page_lastedit < '$interval'");
+		
+		$db_content->delete("fc_pages_cache", [
+			"AND" => [
+				"page_cache_type" => "preview",
+				"page_lastedit[<]" => $interval
+			]
+		]);
+		
 		
 	} // eo modus preview
 
@@ -508,25 +640,25 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 /* get the data to fill the form (again) */
 if(is_numeric($editpage)) {
 
-	$dbh = new PDO("sqlite:".CONTENT_DB);
 	
 	if($modus == "preview") {
-		$sql = "SELECT * FROM fc_pages_cache WHERE page_id_original = $editpage ORDER BY page_id DESC";
+		//$sql = "SELECT * FROM fc_pages_cache WHERE page_id_original = $editpage ORDER BY page_id DESC";
+		$page_data = $db_content->get("fc_pages_cache","*",[ "page_id_original" => $editpage ],["ORDER" => ["page_id" => "DESC"]]);
 	} else {
-		$sql = "SELECT * FROM fc_pages WHERE page_id = $editpage";
+		//$sql = "SELECT * FROM fc_pages WHERE page_id = $editpage";
+		$page_data = $db_content->get("fc_pages","*",[ "page_id" => $editpage ]);
 	}
 	
 	if(!empty($_POST['restore_id'])) {
 		$restore_id = (int) $_POST['restore_id'];
-		$sql = "SELECT * FROM fc_pages_cache WHERE page_id = $restore_id";
-		
-		$restore_page_version = $dbh->query("SELECT page_version FROM fc_pages WHERE page_id = $editpage")->fetch();
+		//$sql = "SELECT * FROM fc_pages_cache WHERE page_id = $restore_id";
+		$page_data = $db_content->get("fc_pages_cache","*",[ "page_id" => $restore_id ]);	
+		$restore_page_version = $db_content->query("SELECT page_version FROM fc_pages WHERE page_id = $editpage")->fetch();
 	}
 	
-	$result = $dbh->query($sql);
-	$result = $result->fetch(PDO::FETCH_ASSOC);
+	//$result = $db_content->query($sql)->fetch(PDO::FETCH_ASSOC);
 	
-	foreach($result as $k => $v) {
+	foreach($page_data as $k => $v) {
 	   $$k = htmlentities(stripslashes($v), ENT_QUOTES, "UTF-8");
 	}
 	
@@ -594,24 +726,27 @@ if(!empty($_POST['preview_the_page'])) {
 
 if($show_form == "true" AND $sub != "new") {
 
-	$dbh = new PDO("sqlite:".CONTENT_DB);
 	
 	$max = 25;
 	if($prefs_nbr_page_versions != '') {
 		$max = $prefs_nbr_page_versions;
 	}
+	
 	$cnt_all_sql = "SELECT COUNT(*) AS 'nbr' FROM fc_pages_cache WHERE page_id_original = $editpage AND page_cache_type = 'history' ";
-	$cnt_all = $dbh->query("$cnt_all_sql")->fetch(PDO::FETCH_ASSOC);
+	$cnt_all = $db_content->query($cnt_all_sql)->fetch(PDO::FETCH_ASSOC);
 	$delete_nbr = $cnt_all['nbr']-$max;
+
 	
-	$sql = "SELECT page_id, page_linkname, page_title, page_lastedit, page_lastedit_from, page_version
-					FROM fc_pages_cache
-					WHERE page_id_original = $editpage AND page_cache_type = 'history'
-					ORDER BY page_id DESC";
-	
-	foreach ($dbh->query($sql) as $row) {
-		$cache_result[] = $row;
-	}
+	$cache_result = $db_content->select("fc_pages_cache",
+		[
+		"page_id", "page_linkname", "page_title", "page_lastedit", "page_lastedit_from", "page_version"
+		],[ 
+		"AND" => [
+			"page_id_original" => $editpage,
+			"page_cache_type" => "history"
+			],
+		"ORDER" => ["page_id" => "DESC"]
+	 ]);	
 	
 	$cnt_result = count($cache_result);
 	
@@ -644,8 +779,10 @@ if($show_form == "true" AND $sub != "new") {
 										ORDER BY page_lastedit ASC
 										LIMIT 1)";
 			
-			$cnt_changes = $dbh->exec($del_sql);
+			//$cnt_changes = $dbh->exec($del_sql);
+			$db_content->query("$del_sql");
 			continue;
+
 		}
 		
 		
@@ -681,7 +818,7 @@ if($show_form == "true" AND $sub != "new") {
 		echo '</tr>';
 	}
 	
-	$dbh = null;
+	//$dbh = null;
 	
 	echo '</div>';
 	echo '</table>';

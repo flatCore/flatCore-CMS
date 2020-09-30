@@ -75,7 +75,6 @@ if(isset($_GET['switchLang'])) {
 
 
 /* count pages by type */
-$dbh = new PDO("sqlite:".CONTENT_DB);
 $sql_count_pages = "
 SELECT count(*) AS 'All',
 (SELECT count(*) FROM fc_pages WHERE page_status LIKE '%public%' ) AS 'public', 
@@ -83,11 +82,9 @@ SELECT count(*) AS 'All',
 (SELECT count(*) FROM fc_pages WHERE page_status LIKE '%draft%' ) AS 'draft', 
 (SELECT count(*) FROM fc_pages WHERE page_status LIKE '%private%' ) AS 'private', 
 (SELECT count(*) FROM fc_pages WHERE page_redirect <> '' AND page_redirect IS NOT NULL ) AS 'redirect'
-FROM fc_pages
-";
-$count_pages = $dbh->query("$sql_count_pages")->fetch(PDO::FETCH_ASSOC);
-$dbh = null;
+FROM fc_pages";
 
+$count_pages = $db_content->query($sql_count_pages)->fetch(PDO::FETCH_ASSOC);
 
 /* build SQL query */
 $set_lang_filter = "";

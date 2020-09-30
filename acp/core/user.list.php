@@ -71,7 +71,7 @@ if($_GET['switch'] == 'statusDeleted' && $_SESSION['checked_deleted'] == 'checke
 	$_SESSION['checked_deleted'] = "checked";
 }
 
-$set_status_filter = "user_verified = 'foobar' ";
+$set_status_filter = "user_id != NULL ";
 
 if($_SESSION['checked_waiting'] == "checked") {
 	$set_status_filter .= "OR user_verified = 'waiting' ";
@@ -107,7 +107,7 @@ $whereString = "WHERE user_nick != '' ";
 
 if(!empty($_POST['findUser'])) {
 	$find_user = "%".strip_tags($_POST['findUser'])."%";
-	$search_user = "user_nick LIKE :find_user ";
+	$search_user = "user_nick LIKE '$find_user' ";
 }
 
 
@@ -122,25 +122,15 @@ if($search_user != "") {
 
 unset($result);
 
-$dbh = new PDO("sqlite:".USER_DB);
-
 $sql = "SELECT user_id, user_nick, user_class, user_firstname, user_lastname, user_registerdate, user_verified, user_mail
     		FROM fc_user
     		$whereString
     		ORDER BY $order_by $way";
-$sth = $dbh->prepare($sql);
-if($search_user != "") {
-	$sth->bindParam(':find_user', $find_user, PDO::PARAM_STR);
-}
-$sth->execute();
+    		
 
-foreach ($sth->fetchAll(PDO::FETCH_ASSOC) as $row) {
-	$result[] = $row;
-}
+$result = $db_user->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
 $cnt_result = count($result);
-
-$dbh = null;
 
 // number to show
 $loop = 20;
@@ -194,7 +184,7 @@ for($x=0;$x<$cnt_pages;$x++) {
 	}
 
 	$pag_string .= "<a class='$aclass' href='acp.php?tn=user&sub=list&start=$page_start'>$page_nbr</a> ";
-} //eol for $x
+}
 
 
 $pag_forwardlink = "<a class='btn btn-fc' href='acp.php?tn=user&sub=list&start=$next_start&sort=$sort'>$lang[pagination_forward]</a>";
