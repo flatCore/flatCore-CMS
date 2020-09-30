@@ -14,7 +14,7 @@ error_reporting(0);
 
 require '../config.php';
 
-$modus = '';
+$modus = 'install';
 define('INSTALLER', TRUE);
 
 if(isset($_GET['l']) && is_dir('../lib/lang/'.basename($_GET['l']).'/')) {
@@ -29,7 +29,7 @@ if(!isset($_SESSION['lang']) || $_SESSION['lang'] == '') {
 }
 
 
-require 'php/functions.php';
+include 'php/functions.php';
 include '../lib/lang/'.$l.'/dict-install.php';
 
 
@@ -39,7 +39,7 @@ if(is_file("../$fc_db_content")) {
 } else if(is_file("../config_database.php")) {
 	$modus = "update";
 	$db_type = 'mysql';
-} else if($modus != 'choose_lang') {
+} else if($modus == 'choose_lang') {
 	$modus = "install";
 }
 
@@ -47,13 +47,9 @@ if($_SESSION['user_class'] == "administrator") {
 	$modus = "update";
 }
 
-
-
 if($modus == "update") {
 	/* updates for admins only */
 	if($_SESSION['user_class'] != "administrator"){
-		//move to login or die
-		header("location:/acp/");
 		die("PERMISSION DENIED!");
 	}
 }
@@ -100,7 +96,7 @@ if($modus == "update") {
 			?>
 		</div>
 		<div id="inst-footer">
-			<a href="http://www.flatcore.de">
+			<a href="http://www.flatcore.org">
 			<img src="images/logo.png" alt="flatCore Logo">
 			<h3>flatCore<br><small>Content Management System</small></h3>
 			</a>
