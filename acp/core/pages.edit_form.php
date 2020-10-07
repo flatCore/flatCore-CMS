@@ -35,14 +35,11 @@ echo '<div class="tab-content">';
 /* tab_info */
 echo'<div class="tab-pane fade show active" id="info">';
 
-//$dbh = new PDO("sqlite:".CONTENT_DB);
 $sql = "SELECT page_linkname, page_sort, page_title, page_language FROM fc_pages
 		    WHERE page_sort != 'portal'
 		    ORDER BY page_language ASC, page_sort ASC	";
-//$all_pages = $dbh->query($sql)->fetchAll();
-$all_pages = $db_content->query($sql)->fetchAll();
 
-//$dbh = null;
+$all_pages = $db_content->query($sql)->fetchAll();
 
 $all_pages = fc_array_multisort($all_pages, 'page_language', SORT_ASC, 'page_sort', SORT_ASC, SORT_NATURAL);
 
@@ -64,10 +61,14 @@ if(ctype_digit($page_sort)) {
 }
 
 $select_page_position .= '<optgroup label="'.$lang['f_subpage'].'">';
+
 for($i=0;$i<count($all_pages);$i++) {
 
+	$selected = '';
+	$disabled = '';
+	
 	if($all_pages[$i]['page_sort'] == $page_sort) {
-		continue;
+		$disabled = 'disabled';
 	}
 	
 	if($all_pages[$i]['page_sort'] == "") {
@@ -78,16 +79,15 @@ for($i=0;$i<count($all_pages);$i++) {
 		$string = substr($page_sort,0,$pos);
 	}
 		 
-		 $parent_string = $all_pages[$i]['page_sort'];
-		 
-		 unset($selected);
-		 if($parent_string != "" && $parent_string == "$string") {
-		 	$selected = "selected";
-		 }
+	$parent_string = $all_pages[$i]['page_sort'];
+	
+	if($parent_string != "" && $parent_string == "$string") {
+	 	$selected = "selected";
+	}
 		 
 	$short_title = first_words($all_pages[$i]['page_title'], 6);
 	$indent = str_repeat("-",substr_count($parent_string,'.'));
-	$select_page_position .= "<option value='$parent_string' $selected> $indent " . $all_pages[$i]['page_sort'] . ' - ' .$all_pages[$i]['page_linkname'] . ' - ' . $short_title ."</option>";
+	$select_page_position .= "<option value='$parent_string' $selected $disabled> $indent " . $all_pages[$i]['page_sort'] . ' | ' .$all_pages[$i]['page_linkname'] . ' - ' . $short_title ."</option>";
 	
 }
 $select_page_position .= '</optgroup>';
