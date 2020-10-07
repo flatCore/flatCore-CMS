@@ -226,7 +226,7 @@ $lang['type_of_use_404'] = "404 (Page not found)";
 
 
 $lang['legend_structured_pages'] = "geordnete Seiten";
-$lang['legend_unstructured_pages'] = "ungeordnete Seiten";
+$lang['legend_unstructured_pages'] = "einzelne Seiten";
 
 $lang['f_page_status_puplic'] = "Öffentlich";
 $lang['f_page_status_private'] = "Privat";
