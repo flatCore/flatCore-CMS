@@ -41,6 +41,10 @@ switch ($sub) {
 		$subinc = "system.images";
 		break;
 		
+	case "labels":
+		$subinc = "system.labels";
+		break;
+		
 	default:
 		$subinc = "system.syspref";
 		break;
