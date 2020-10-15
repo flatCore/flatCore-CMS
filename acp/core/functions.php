@@ -972,32 +972,6 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 		
 	}
 	
-
-	/*
-	$sth->bindParam(':media_file', $filename, PDO::PARAM_STR);
-	$sth->bindParam(':media_title', $title, PDO::PARAM_STR);
-	$sth->bindParam(':media_notes', $notes, PDO::PARAM_STR);
-	$sth->bindParam(':media_keywords', $keywords, PDO::PARAM_STR);
-	$sth->bindParam(':media_text', $text, PDO::PARAM_STR);
-	$sth->bindParam(':media_url', $url, PDO::PARAM_STR);
-	$sth->bindParam(':media_alt', $alt, PDO::PARAM_STR);
-	$sth->bindParam(':media_lang', $lang, PDO::PARAM_STR);
-	$sth->bindParam(':media_priority', $priority, PDO::PARAM_STR);
-	$sth->bindParam(':media_license', $license, PDO::PARAM_STR);
-	$sth->bindParam(':media_credit', $credit, PDO::PARAM_STR);
-	$sth->bindParam(':media_version', $version, PDO::PARAM_STR);
-	$sth->bindParam(':media_filesize', $filesize, PDO::PARAM_STR);
-	$sth->bindParam(':media_lastedit', $lastedit, PDO::PARAM_STR);
-	$sth->bindParam(':media_type', $filetype, PDO::PARAM_STR);
-
-	$cnt_changes = $sth->execute();
-	*/
-	
-	//$error = print_r($dbh->errorInfo(),true);
-	//$lastId = $dbh->lastInsertId();
-	//debug_to_console($modus);
-	//$dbh = null;
-	
 	if($cnt_changes->rowCount() > 0) {
 		return 'success';
 	} else {
@@ -1046,6 +1020,17 @@ function fc_get_labels() {
 	$labels = $db_content->select("fc_labels", "*");
 	
 	return $labels;
+}
+
+/**
+ * get all categories
+ *
+ */
+
+function fc_get_categories() {
+	global $db_content;
+	$categories = $db_content->select("fc_categories", "*");	
+	return $categories;
 }
 
 

@@ -389,6 +389,14 @@ $lang['yes'] = "Ja";
 $lang['no'] = "Nein";
 
 $lang['labels'] = 'Labels';
+$lang['categories'] = 'Rubriken';
+
+$lang['category_name'] = 'Name';
+$lang['category_priority'] = 'Priorität';
+$lang['category_thumbnail'] = 'Thumbnail';
+$lang['category_description'] = 'Beschreibung';
+
+$lang['no_image'] = 'Kein Bild';
 
 $lang['prefs_cms_domain'] = 'CMS Domain';
 $lang['prefs_cms_ssl_domain'] = 'SSL Domain';

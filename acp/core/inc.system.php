@@ -45,6 +45,10 @@ switch ($sub) {
 		$subinc = "system.labels";
 		break;
 		
+	case "categories":
+		$subinc = "system.categories";
+		break;
+		
 	default:
 		$subinc = "system.syspref";
 		break;
