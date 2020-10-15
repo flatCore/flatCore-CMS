@@ -58,6 +58,7 @@ function table_exists($database,$table_name) {
 	global $db_type;
 	global $database_name;
 	global $db_index;
+	global $db_type;
 	
 	if($db_type == "mysql") {
 		$query = "SELECT count(*) FROM information_schema.TABLES WHERE (TABLE_SCHEMA = '$database_name') AND (TABLE_NAME = '$table_name')";
@@ -192,19 +193,41 @@ column_name3 data_type,
 
 function add_table($database,$table_name,$cols) {
 
-
-
 	global $db_content;
 	global $db_user;
 	global $db_statistics;
 	global $db_type;
 	global $db_index;
 	global $database_name;
+
+
+	if($db_type == 'sqlite') {
+
+		foreach ($cols as $k => $v) {
+			if(strpos($v,'INTEGER') !== false) {
+				$str = 'INTEGER';
+			} else if(strpos($v,'VARCHAR') !== false) {
+				$str = 'VARCHAR';
+			} else {
+				$str = 'TEXT';
+			}
+			
+			if(strpos($v,'PRIMARY') !== false) {
+				$str .= ' NOT NULL PRIMARY KEY';
+			}
+			
+    	$string .= "$k $str,\r";			
+		}
+		
+		$cols_string = substr(trim("$string"), 0,-1); // cut last commata and returns
 	
-	foreach ($cols as $k => $v) {
-		$cols_string .= "$k $cols[$k],\r";
+	} else {
+
+		foreach ($cols as $k => $v) {
+			$cols_string .= "$k $cols[$k],\r";
+		}
+		
 	}
-	
 		
 	$sql = "CREATE TABLE $table_name ( $cols_string )";
 	
