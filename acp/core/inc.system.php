@@ -49,6 +49,14 @@ switch ($sub) {
 		$subinc = "system.categories";
 		break;
 		
+	case "customize":
+		$subinc = "system.customize";
+		break;
+		
+	case "migrate":
+		$subinc = "system.migrate";
+		break;
+		
 	default:
 		$subinc = "system.syspref";
 		break;

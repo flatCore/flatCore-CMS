@@ -390,6 +390,8 @@ $lang['prefs_mailer_send_test_success'] = "Die E-Mail wurde versendet";
 
 $lang['prefs_nbr_page_versions'] = "Number of Page-Versions";
 
+$lang['customize_database'] = 'Customize database';
+$lang['migrate_database'] = 'Migrate database';
 
 $lang['yes'] = "Yes";
 $lang['no'] = "No";

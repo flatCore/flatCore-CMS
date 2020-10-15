@@ -18,7 +18,6 @@ if($sub == "edit") {
 echo '<li><a class="sidebar-nav '.($sub == "snippets" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=pages&sub=snippets">'.$icon['clipboard'].' '.$lang['snippets'].'</a></li>';
 echo '<li><a class="sidebar-nav '.($sub == "index" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=pages&sub=index">'.$icon['database'].' '.$lang['page_index'].'</a></li>';
 echo '<li><a class="sidebar-nav '.($sub == "rss" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=pages&sub=rss">'.$icon['rss'].' RSS</a></li>';
-echo '<li><a class="sidebar-nav '.($sub == "customize" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=pages&sub=customize">'.$icon['cogs'].' '.$lang['page_customize'].'</a></li>';
 
 echo '</ul>';
 

@@ -17,7 +17,6 @@ if($sub == "edit") {
 	echo '<li><a href="#"><span class="sidebar-nav sidebar-nav-disabled">'.$icon['user_edit'].' '.$lang['edit_user'].'</span></a></li>';
 }
 
-echo '<li><a class="sidebar-nav '.($sub == "customize" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=user&sub=customize">'.$icon['user_cog'].' '.$lang['customize_user'].'</a></li>';
 echo '<li><a class="sidebar-nav '.($sub == "groups" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=user&sub=groups">'.$icon['user_friends'].' '.$lang['edit_groups'].'</a></li>';
 
 echo '</ul>';

@@ -57,6 +57,7 @@ $icon['folder_open'] = '<i class="fas fa-folder-open"></i>';
 
 $icon['github'] = '<i class="fab fa-github"></i>';
 
+$icon['handshake'] = '<i class="fas fa-handshake"></i>';
 $icon['home'] = '<i class="fas fa-home"></i>';
 
 $icon['info_circle'] = '<i class="far fa-info-circle"></i>';
@@ -92,6 +93,7 @@ $icon['star_outline'] = '<i class="far fa-star"></i>';
 $icon['store'] = '<i class="fas fa-store"></i>';
 $icon['sync_alt'] = '<i class="fas fa-sync-alt"></i>';
 
+$icon['table'] = '<i class="fas fa-table"></i>';
 $icon['tags'] = '<i class="fas fa-tags"></i>';
 $icon['tasks'] = '<i class="fas fa-tasks"></i>';
 $icon['trash_alt'] = '<i class="far fa-trash-alt"></i>';
