@@ -76,6 +76,7 @@ $icon['map_marker_alt'] = '<i class="fas fa-map-marker-alt"></i>';
 $icon['paper_clip'] = '<i class="fas fa-paperclip"></i>';
 $icon['paper_plane'] = '<i class="fas fa-paper-plane"></i>';
 $icon['paste'] = '<i class="fas fa-paste"></i>';
+$icon['pencil_ruler'] = '<i class="fas fa-pencil-ruler"></i>';
 $icon['plus'] = '<i class="fas fa-plus"></i>';
 
 $icon['question'] = '<i class="fas fa-question"></i>';
