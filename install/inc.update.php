@@ -48,8 +48,8 @@ if(is_file('../config_database.php')) {
 	
 	$db_content = $database;
 	$db_user = $database;
-	$db_statistics = $database;	
-	
+	$db_statistics = $database;
+	$db_posts = $database;
 	
 	
 } else {
@@ -64,6 +64,7 @@ if(is_file('../config_database.php')) {
 	define("CONTENT_DB", "../$fc_db_content");
 	define("USER_DB", "../$fc_db_user");
 	define("STATS_DB", "../$fc_db_stats");
+	define("POSTS_DB", "../$fc_db_posts");
 
 	$db_content = new Medoo([
 		'database_type' => 'sqlite',
@@ -78,7 +79,12 @@ if(is_file('../config_database.php')) {
 	$db_statistics = new Medoo([
 		'database_type' => 'sqlite',
 		'database_file' => STATS_DB
-	]);	
+	]);
+
+	$db_posts = new Medoo([
+		'database_type' => 'sqlite',
+		'database_file' => POSTS_DB
+	]);
 	
 }
 
@@ -101,24 +107,7 @@ for($i=0;$i<count($all_tables);$i++) {
 
 	unset($db_path,$table_name,$table_type);
 	include $all_tables[$i]; // returns $cols and $table_name
-	
-	/*
-	if($database == "content") {
-		$db_path = "../$fc_db_content";
-	}
 
-	if($database == "user") {
-		$db_path = "../$fc_db_user";
-	}
-
-	if($database == "tracker") {
-		$db_path = "../$fc_db_stats";
-	}
-	
-	if($database == "index") {
-		$db_path = "../$fc_db_index";
-	}
-	*/
 	
 	$is_table = table_exists("$database","$table_name");
 	

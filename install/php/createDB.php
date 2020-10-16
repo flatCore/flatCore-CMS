@@ -78,6 +78,7 @@ if((isset($_POST['set_db']) && ($_POST['set_db'] == 'mysql'))) {
 	define("CONTENT_DB", "../$fc_db_content");
 	define("USER_DB", "../$fc_db_user");
 	define("STATS_DB", "../$fc_db_stats");
+	define("POSTS_DB", "../$fc_db_posts");
 	
 	
 	$db_content = new Medoo([
@@ -93,6 +94,11 @@ if((isset($_POST['set_db']) && ($_POST['set_db'] == 'mysql'))) {
 	$db_statistics = new Medoo([
 		'database_type' => 'sqlite',
 		'database_file' => STATS_DB
+	]);
+	
+	$db_posts = new Medoo([
+		'database_type' => 'sqlite',
+		'database_file' => POSTS_DB
 	]);
 
 }
@@ -123,6 +129,8 @@ $sql_media_table = fc_generate_sql_query("fc_media.php",$db_type);
 $sql_labels_table = fc_generate_sql_query("fc_labels.php",$db_type);
 $sql_addons_table = fc_generate_sql_query("fc_addons.php",$db_type);
 
+$sql_posts_table = fc_generate_sql_query("fc_posts.php",$db_type);
+
 $sql_hits_table = fc_generate_sql_query("fc_hits.php",$db_type);
 $sql_log_table = fc_generate_sql_query("fc_log.php",$db_type);
 
@@ -135,12 +143,14 @@ if($db_type == 'mysql') {
 	$dbh_user = $database;
 	$dbh_content = $database;
 	$dbh_statistics = $database;
+	$dbh_posts = $database;
 	
 } else {
 	
 	$dbh_user = $db_user;
 	$dbh_content = $db_content;
 	$dbh_statistics = $db_statistics;
+	$dbh_posts = $db_posts;
 	
 }
 
@@ -294,6 +304,10 @@ $dbh_content->insert("fc_textlib", [
 $dbh_statistics->query($sql_hits_table);
 $dbh_statistics->query($sql_log_table);
 
+
+/* posts table */
+
+$dbh_posts->query($sql_posts_table);
 
 /**
  * DATABASE INDEX

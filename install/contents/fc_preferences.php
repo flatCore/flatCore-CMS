@@ -51,7 +51,20 @@ $cols = array(
   "prefs_deleted_resources" => "VARCHAR(500) NOT NULL DEFAULT ''",
   "prefs_default_publisher" => "VARCHAR(100) NOT NULL DEFAULT ''",
   "prefs_publisher_mode" => "VARCHAR(20) NOT NULL DEFAULT ''",
-  "prefs_acp_session_lifetime" => "VARCHAR(20) NOT NULL DEFAULT ''"
+  "prefs_acp_session_lifetime" => "VARCHAR(20) NOT NULL DEFAULT ''",
+  
+  /* posts */
+  
+	"prefs_posts_url_pattern" => "VARCHAR(100) NOT NULL DEFAULT ''",
+	"prefs_posts_images_prefix" => "VARCHAR(20) NOT NULL DEFAULT ''",
+	"prefs_posts_default_banner" => "VARCHAR(100) NOT NULL DEFAULT ''",
+	"prefs_posts_entries_per_page" => 'INTEGER(12)',
+	"prefs_posts_products_default_tax" => 'INTEGER(12)',
+	"prefs_posts_products_tax_alt1" => 'INTEGER(12)',
+	"prefs_posts_products_tax_alt2" => 'INTEGER(12)',
+	"prefs_posts_products_default_currency" => "VARCHAR(100) NOT NULL DEFAULT ''",
+	"prefs_posts_event_time_offset" => "VARCHAR(100) NOT NULL DEFAULT ''"
+  
   );
 
 ?>
