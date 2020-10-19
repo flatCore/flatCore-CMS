@@ -271,41 +271,27 @@ echo '<label>'.$lang['page_thumbnail'].'</label>';
 if($prefs_pagethumbnail_prefix != '') {
 	echo '<p>Prefix: '.$prefs_pagethumbnail_prefix.'</p>';
 }
-	
-$arr_Images = fc_get_all_images_rec("$prefs_pagethumbnail_prefix",NULL);
+
+$images = fc_get_all_images_rec($prefs_pagethumbnail_prefix,'../'.IMAGES_FOLDER.'');
 $page_thumbnail_array = explode("&lt;-&gt;", $page_thumbnail);
-echo '<input class="filter-images form-control" name="filter-images" placeholder="Filter ..." type="text">';
 
-echo '<div class="scroll-container">';
-echo '<select multiple="multiple" name="page_thumbnail[]" class="form-control image-picker">';
-
-/* if we have selected images, show them first */
-if(count($page_thumbnail_array) > 0) {
-	echo '<optgroup label="SELECTED">';
-	foreach($page_thumbnail_array as $sel_images) {
-		if($sel_images != '') {
-			echo '<option selected data-img-src="'.$sel_images.'" title="'.$sel_images.'" class="masonry-item" value="'.$sel_images.'">'.basename($sel_images).'</option>';	
-		}
-	}
-	echo '</optgroup>'."\r\n";
+foreach($images as $img) {
+	$filemtime = date ("Y", filemtime("$img"));
+	$all_images[] = array('name' => $img, 'dateY' => $filemtime);
 }
 
-echo '<optgroup label="NO SELECTED">';
-echo '<option value="">'.$lang['page_thumbnail'].'</option>';
-	foreach($arr_Images as $page_thumbnails) {
-		$selected = "";
-		$page_thumbnails = str_replace('../', '/', $page_thumbnails);
-		if(strpos($page_thumbnail, $page_thumbnails) !== false) {
-			$selected = "selected";
-		}
-		if(!in_array($page_thumbnails, $page_thumbnail_array)) {
-			echo '<option '.$selected.' data-img-src="'.$page_thumbnails.'" title="'.$page_thumbnails.'" class="masonry-item" value="'.$page_thumbnails.'">'.basename($page_thumbnails).'</option>';
-		}
+foreach ($all_images as $key => $row) {
+	$img_date[$key]  = $row['dateY'];
+  $img_name[$key] = $row['name'];
 }
-echo '</optgroup>'."\r\n";
-echo '</select>';
 
-echo '</div>';
+/* we sort the images from new to old and from a to z */
+array_multisort($img_date, SORT_DESC, $img_name, SORT_ASC, $all_images);
+$array_images = explode("<->", $post_data['post_images']);
+$choose_images = fc_select_img_widget($all_images,$page_thumbnail_array,$prefs_pagethumbnail_prefix,1);
+// picker1_images[]
+echo $choose_images;
+
 echo '</div>';
 
 echo '</div>';

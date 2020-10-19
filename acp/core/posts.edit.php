@@ -70,7 +70,7 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 	$post_lang = @implode("<->", $_POST['post_languages']);
 	$post_categories = @implode("<->", $_POST['post_categories']);
 	
-	$post_images_string = @implode("<->", $_POST['post_images']);
+	$post_images_string = @implode("<->", $_POST['picker1_images']);
 	$post_images_string = "<->$post_images_string<->";
 	$post_images = $post_images_string;
 	
@@ -208,8 +208,7 @@ $checkbox_fixed .= '</div>';
 
 
 /* image widget */
-
-$images = fc_scandir_rec('../'.FC_CONTENT_DIR.'/images');
+$images = fc_get_all_images_rec($prefs_posts_images_prefix,'../'.IMAGES_FOLDER.'');
 
 foreach($images as $img) {
 	$filemtime = date ("Y", filemtime("$img"));
@@ -224,7 +223,7 @@ foreach ($all_images as $key => $row) {
 /* we sort the images from new to old and from a to z */
 array_multisort($date, SORT_DESC, $name, SORT_ASC, $all_images);
 $array_images = explode("<->", $post_data['post_images']);
-$choose_images = fc_select_img_widget($all_images,$array_images,$prefs_posts_images_prefix);
+$choose_images = fc_select_img_widget($all_images,$array_images,$prefs_posts_images_prefix,1);
 
 /* status | draft or published */
 if($post_data['post_status'] == "draft") {

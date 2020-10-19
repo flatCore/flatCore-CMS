@@ -231,10 +231,10 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	}
 	
 	/* page thumbnails */
-	if(count($_POST['page_thumbnail']) > 1) {
-		$page_thumbnail = implode("<->", $_POST['page_thumbnail']);
+	if(count($_POST['picker1_images']) > 1) {
+		$page_thumbnail = implode("<->", $_POST['picker1_images']);
 	} else {
-		$pt = $_POST['page_thumbnail'];
+		$pt = $_POST['picker1_images'];
 		$page_thumbnail = $pt[0];
 	}
 	

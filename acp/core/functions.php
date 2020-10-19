@@ -1029,9 +1029,10 @@ function fc_get_labels() {
  * $images array()
  * $selected array()
  * return html string
+ * post name => picker$id_images[]
  */
 
-function fc_select_img_widget($images,$seleced_img,$prefix='') {
+function fc_select_img_widget($images,$seleced_img,$prefix='',$id=1) {
 	
 	global $lang;
 	
@@ -1039,7 +1040,8 @@ function fc_select_img_widget($images,$seleced_img,$prefix='') {
 		$seleced_img = array();
 	}
 
-	$choose_images = '<select multiple="multiple" class="image-picker show-html" name="post_images[]">';
+	$choose_images  = '<div class="scroll-container">';
+	$choose_images .= '<select multiple="multiple" class="image-picker show-html" name="picker'.$id.'_images[]">';
 	
 	/* if we have selected images, show them first */
 	if(count($seleced_img)>0) {
@@ -1080,6 +1082,7 @@ function fc_select_img_widget($images,$seleced_img,$prefix='') {
 	}
 	$choose_images .= '</optgroup>'."\r\n";
 	$choose_images .= '</select>'."\r\n";
+	$choose_images .= '</div>';
 	
 	return $choose_images;
 	
