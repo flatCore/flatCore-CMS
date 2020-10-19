@@ -57,6 +57,10 @@ switch ($sub) {
 		$subinc = "system.migrate";
 		break;
 		
+	case "posts":
+		$subinc = "system.posts";
+		break;
+		
 	default:
 		$subinc = "system.syspref";
 		break;

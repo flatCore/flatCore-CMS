@@ -14,6 +14,8 @@ echo '<li><a class="sidebar-nav '.($sub == "images" ? 'sidebar-nav-active' :'').
 echo '<li class="mt-2"><a class="sidebar-nav '.($sub == "labels" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=system&sub=labels">'.$icon['tags'].' '.$lang['labels'].'</a></li>';
 echo '<li><a class="sidebar-nav '.($sub == "categories" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=system&sub=categories">'.$icon['bookmark'].' '.$lang['categories'].'</a></li>';
 
+echo '<li class="mt-2"><a class="sidebar-nav '.($sub == "posts" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=system&sub=posts">'.$icon['pencil_ruler'].' '.$lang['tn_posts'].'</a></li>';
+
 echo '<li class="mt-2"><a class="sidebar-nav '.($sub == "customize" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=system&sub=customize">'.$icon['table'].' '.$lang['customize_database'].'</a></li>';
 echo '<li><a class="sidebar-nav '.($sub == "migrate" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=system&sub=migrate">'.$icon['handshake'].' '.$lang['migrate_database'].'</a></li>';
 

@@ -504,6 +504,137 @@ li.sidebar-sub-end {
   padding: 0.25em 0.4em;
   font-size: 75%;
 }
+.show-thumb {
+  width: 60px;
+  height: 60px;
+  background-size: cover;
+  background-position: center center;
+  border-radius: 50%;
+}
+.label-type {
+  padding: 2px 5px;
+  border-radius: 3px;
+  display: block;
+  text-align: center;
+  font-size: 12px;
+}
+.color-m,
+.color-message {
+  color: #aaa;
+}
+.label-m,
+.label-message {
+  background: #aaa;
+  color: #222;
+}
+.color-v,
+.color-video {
+  color: #ff8500;
+}
+.label-v,
+.label-video {
+  background: #ff8500;
+  color: #222;
+}
+.color-i,
+.color-image {
+  color: #ba1a85;
+}
+.label-i,
+.label-image {
+  background: #ba1a85;
+  color: #222;
+}
+.color-g,
+.color-gallery {
+  color: #88085e;
+}
+.label-g,
+.label-gallery {
+  background: #88085e;
+}
+.color-l,
+.color-link {
+  color: #36c;
+}
+.label-l,
+.label-link {
+  background: #36c;
+}
+.color-e,
+.color-event {
+  color: #04d9b9;
+}
+.label-e,
+.label-event {
+  background: #04d9b9;
+  color: #222;
+}
+.color-p,
+.color-product {
+  color: #1aba30;
+}
+.label-p,
+.label-product {
+  background: #1aba30;
+  color: #222;
+}
+tr.item_is_draft,
+tr.item_is_draft:hover {
+  opacity: 0.5;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.2));
+  background-size: 100% 5px;
+}
+span.categories-list {
+  padding: 1px 4px;
+  background-color: #ddd;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  white-space: nowrap;
+  line-height: 25px;
+}
+span.categories-list:hover {
+  border: 1px solid #bbb;
+}
+span.categories-list input[type="checkbox"] {
+  margin-top: 0px;
+  line-height: normal;
+}
+.btn-categories {
+  display: block;
+  margin: 4px 0 0 0;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  color: #666;
+}
+.btn-categories:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+.filter-images {
+  margin-bottom: 15px;
+}
+/* thumbnail sorting */
+.tmb {
+  display: inline-block;
+  position: relative;
+  width: 180px;
+  height: 180px;
+  float: left;
+  margin: 5px;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+.tmb-actions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.2);
+}
 ::selection {
   background-color: #3396ed;
   color: #ccc;

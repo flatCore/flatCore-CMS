@@ -1,4 +1,6 @@
 <?php
+	
+include 'dict-posts.php';
 
 /* tn_ = topNav */
 
@@ -8,6 +10,8 @@ $lang['tn_moduls'] = "Addons";
 $lang['tn_moduls_desc'] = "Auf installierte Module und Themes zugreifen";
 $lang['tn_pages'] = "Seiten";
 $lang['tn_pages_desc'] = "Inhalte bearbeiten, Seiten anlegen/löschen ...";
+$lang['tn_posts'] = "Beiträge";
+$lang['tn_posts_desc'] = "Erstelle und verwalte Beiträge, Events, Galerien ...";
 $lang['tn_filebrowser'] = "Dateien";
 $lang['tn_filebrowser_desc'] = "Bilder, Grafiken, Dateien hochladen und verwalten";
 $lang['tn_usermanagement'] = "Benutzer";
@@ -326,6 +330,7 @@ $lang['label_missing_meta_description'] = 'Fehlende Meta Description';
 
 $lang['label_active_theme'] = 'Aktives Theme';
 $lang['label_installed_themes'] = 'Installierte Themes';
+$lang['label_image_selected'] = 'ausgewählte Bilder';
 
 /* Preferences */
 

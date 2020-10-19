@@ -31,7 +31,8 @@ if(is_file('../config_database.php')) {
 	
 	$db_content = $database;
 	$db_user = $database;
-	$db_statistics = $database;	
+	$db_statistics = $database;
+	$db_posts = $database;
 	
 	
 	
@@ -46,7 +47,8 @@ if(is_file('../config_database.php')) {
 	
 	define("CONTENT_DB", "../$fc_db_content");
 	define("USER_DB", "../$fc_db_user");
-	define("STATS_DB", "../$fc_db_stats");	
+	define("STATS_DB", "../$fc_db_stats");
+	define("POSTS_DB", "../$fc_db_posts");
 
 	$db_content = new Medoo([
 		'database_type' => 'sqlite',
@@ -61,7 +63,12 @@ if(is_file('../config_database.php')) {
 	$db_statistics = new Medoo([
 		'database_type' => 'sqlite',
 		'database_file' => STATS_DB
-	]);	
+	]);
+
+	$db_posts = new Medoo([
+		'database_type' => 'sqlite',
+		'database_file' => POSTS_DB
+	]);
 	
 }
 
@@ -131,6 +138,7 @@ if(isset($_SESSION['lang'])) {
 
 require '../lib/lang/index.php';
 require 'core/functions.php';
+require '../global/functions.php';
 require 'core/switch.php';
 
 $all_mods = get_all_moduls();
@@ -236,7 +244,97 @@ if(isset($set_acptheme)) {
 		
 		<!-- image picker -->
 		<script type="text/javascript" src="../lib/js/jquery/image-picker.min.js"></script>
-	
+		
+		<!-- date/time picker -->
+		<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" type="text/css" media="screen, projection">
+		<script type="text/javascript" src="js/moment.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+		
+		<script type="text/javascript" src="js/accounting.min.js"></script>
+
+		<script type="text/javascript">
+			
+			$.extend(true, $.fn.datetimepicker.defaults, {
+		    icons: {
+		      time: 'far fa-clock',
+		      date: 'far fa-calendar',
+		      up: 'fas fa-arrow-up',
+		      down: 'fas fa-arrow-down',
+		      previous: 'fas fa-chevron-left',
+		      next: 'fas fa-chevron-right',
+		      today: 'fas fa-calendar-check',
+		      clear: 'far fa-trash-alt',
+		      close: 'far fa-times-circle'
+		    }
+		  });
+		  
+			$(function(){
+				
+				$('.dp').datetimepicker({
+					timeZone: 'UTC',
+		    	format: 'YYYY-MM-DD HH:mm'
+		  	});
+		
+				if($("#price").val()) {
+					
+					get_netto = $("#price").val();
+					
+					var e = document.getElementById("tax");
+					var get_tax = e.options[e.selectedIndex].text;
+					get_tax = parseInt(get_tax);
+					get_netto_calc = get_netto.replace(/\./g, '');
+					get_netto_calc = get_netto_calc.replace(",",".");
+					current_brutto = get_netto_calc*(get_tax+100)/100;
+					current_brutto = accounting.formatNumber(current_brutto,4,".",",");
+					$('#price_total').val(current_brutto);	
+			
+					$('#price').keyup(function(){
+						get_netto = $('#price').val();
+						//get_tax = parseInt($('#tax').val());
+						get_netto_calc = get_netto.replace(/\./g, '');
+						get_netto_calc = get_netto_calc.replace(",",".");
+						current_brutto = get_netto_calc*(get_tax+100)/100;
+						current_brutto = accounting.formatNumber(current_brutto,4,".",",");
+						$('#price_total').val(current_brutto);
+					});			
+					
+					$('#price_total').keyup(function(){
+						get_brutto = $('#price_total').val();
+						//get_tax = parseInt($('#tax').val());
+						get_brutto_calc = get_brutto.replace(/\./g, '');
+						get_brutto_calc = get_brutto_calc.replace(",",".");
+						current_netto = get_brutto_calc*100/(get_tax+100);
+						current_netto = accounting.formatNumber(current_netto,4,".",",");
+						$('#price').val(current_netto);
+					});
+					
+					$('#tax').bind("change keyup", function(){
+						
+						var e = document.getElementById("tax");
+						var get_tax = e.options[e.selectedIndex].text;
+						get_tax = parseInt(get_tax);
+						
+						get_netto = $('#price').val();
+						get_netto_calc = get_netto.replace(",",".");
+		
+						current_brutto = get_netto_calc*(get_tax+100)/100;
+						current_brutto = accounting.formatNumber(current_brutto,4,".",",");
+		
+						get_brutto_calc = current_brutto.replace(",",".");
+						current_netto = get_brutto_calc*100/(get_tax+100);
+						current_netto = accounting.formatNumber(current_netto,4,".",",");
+		
+						$('#price_total').val(current_brutto);
+						$('#price').val(current_netto);
+					});
+				
+				}
+			
+			
+			});
+			
+		</script>
+
 		
 		<?php
 

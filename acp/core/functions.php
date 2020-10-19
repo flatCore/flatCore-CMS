@@ -1022,15 +1022,139 @@ function fc_get_labels() {
 	return $labels;
 }
 
+
+
 /**
- * get all categories
- *
+ * generate an select-image widget
+ * $images array()
+ * $selected array()
+ * return html string
  */
 
-function fc_get_categories() {
-	global $db_content;
-	$categories = $db_content->select("fc_categories", "*");	
-	return $categories;
+function fc_select_img_widget($images,$seleced_img,$prefix='') {
+	
+	global $lang;
+	
+	if(!array($seleced_img)) {
+		$seleced_img = array();
+	}
+
+	$choose_images = '<select multiple="multiple" class="image-picker show-html" name="post_images[]">';
+	
+	/* if we have selected images, show them first */
+	if(count($seleced_img)>0) {
+		$choose_images .= '<optgroup label="'.$lang['label_image_selected'].'">';
+		foreach($seleced_img as $sel_images) {
+			if(is_file("$sel_images")) {
+				$choose_images .= '<option data-img-src="'.$sel_images.'" value="'.$sel_images.'" selected>'.basename($sel_images).'</option>'."\r\n";
+			}
+		}
+		$choose_images .= '</optgroup>'."\r\n";
+	}
+	
+	for($i=0;$i<count($images);$i++) {
+		
+		$img_filename = basename($images[$i]['name']);
+		$image_name = $images[$i]['name'];
+		$imgsrc = "../$img_path/$images[$i][name]";	
+		$filemtime = $images[$i]['dateY'];
+		
+		if($prefix != '') {
+			if((strpos($image_name, $prefix)) === false) {
+				continue;
+			}
+		}
+		/* new label for each year */
+		if($images[$i-1]['dateY'] != $filemtime) {	
+			if($i == 0) {
+				$choose_images .= '<optgroup label="'.$filemtime.'">'."\r\n";
+			} else {
+				$choose_images .= '</optgroup><optgroup label="'.$filemtime.'">'."\r\n";
+			}
+		}
+		
+		if(!in_array($image_name, $seleced_img)) {
+			$choose_images .= '<option data-img-src="'.$image_name.'" value="'.$image_name.'">'.$img_filename.'</option>'."\r\n";
+		}
+		
+	}
+	$choose_images .= '</optgroup>'."\r\n";
+	$choose_images .= '</select>'."\r\n";
+	
+	return $choose_images;
+	
+}
+
+
+function fc_list_gallery_thumbs($gid) {
+	
+	global $db_posts;
+	global $icon;
+	$gid = (int) $gid;
+	
+	
+	$date = $db_posts->get("fc_posts","post_date", [
+	"post_id" => $gid
+	]);
+	
+	$filepath = '../content/galleries/'.date('Y',$date).'/gallery'.$gid.'/*_tmb.jpg';
+	$thumbs_array = glob("$filepath");
+	arsort($thumbs_array);
+
+	$thumbs = '';
+	foreach($thumbs_array as $tmb) {
+		$thumbs .= '<div class="tmb">';
+		$thumbs .= '<div class="tmb-preview"><img src="'.$tmb.'" class="img-fluid"></div>';
+		$thumbs .= '<div class="tmb-actions d-flex btn-group">';
+		$thumbs .= '<button type="submit" name="sort_tmb" value="'.$tmb.'" class="btn btn-sm btn-fc w-100">'.$icon['angle_up'].'</button>';
+		$thumbs .= '<button type="submit" name="del_tmb" value="'.$tmb.'" class="btn btn-sm btn-danger w-50">'.$icon['trash_alt'].'</button>';
+		$thumbs .= '</div>';
+		$thumbs .= '</div>';
+	}
+	
+	
+	$str = '';
+	$str .= $thumbs;
+	
+	
+	return $str;
+		
+}
+
+
+
+function fc_rename_gallery_image($thumb) {
+	
+	$timestring = microtime(true);
+	
+	$path_parts = pathinfo($thumb);
+	$dir = $path_parts['dirname'].'/';
+	$tmb = $dir.$path_parts['basename'];
+	$img = str_replace("_tmb", "_img", $tmb);
+	
+	$new_tmb = $dir.$timestring.'_tmb.jpg';
+	$new_img = $dir.$timestring.'_img.jpg';
+
+	
+	rename("$tmb", "$new_tmb");
+	rename("$img", "$new_img");
+	
+}
+
+
+
+function fc_remove_gallery($id,$dir) {
+
+	$fp = '../content/galleries/'.$dir.'/gallery'.$id.'/';
+	$files = glob("$fp*jpg");
+
+	foreach($files as $file) {
+		unlink($file);
+	}
+	
+	rmdir($fp);
+	
+	
 }
 
 

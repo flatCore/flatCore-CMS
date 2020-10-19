@@ -40,10 +40,11 @@ $cols = array(
 	/* events */
 	"post_event_startdate"  => "VARCHAR(50) NOT NULL DEFAULT ''",
 	"post_event_enddate" => "VARCHAR(50) NOT NULL DEFAULT ''",
-	"post_event_event_zip" => "VARCHAR(50) NOT NULL DEFAULT ''",
+	"post_event_zip" => "VARCHAR(50) NOT NULL DEFAULT ''",
 	"post_event_city" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"post_event_street" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"post_event_street_nbr" => "VARCHAR(100) NOT NULL DEFAULT ''",
+	"post_event_price_note" => "LONGTEXT NOT NULL DEFAULT ''",
 	/* products */
 	"post_product_number" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"post_product_manufacturer" => "VARCHAR(100) NOT NULL DEFAULT ''",
