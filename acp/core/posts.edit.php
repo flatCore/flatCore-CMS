@@ -118,6 +118,30 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 
 
 
+
+
+
+
+if($modus != 'update' && !isset($_GET['new'])) {
+	echo '<fieldset class="mt-3">';
+	echo '<legend>'.$lang['select_post_type'].'</legend>';
+	echo '<div class="btn-group d-flex" role="group">';
+	echo '<a href="acp.php?tn=posts&sub=edit&new=m" class="btn btn-fc w-100">'.$lang['post_type_message'].'</a>';
+	echo '<a href="acp.php?tn=posts&sub=edit&new=e" class="btn btn-fc w-100">'.$lang['post_type_event'].'</a>';
+	echo '<a href="acp.php?tn=posts&sub=edit&new=i" class="btn btn-fc w-100">'.$lang['post_type_image'].'</a>';
+	echo '<a href="acp.php?tn=posts&sub=edit&new=g" class="btn btn-fc w-100">'.$lang['post_type_gallery'].'</a>';
+	echo '<a href="acp.php?tn=posts&sub=edit&new=v" class="btn btn-fc w-100">'.$lang['post_type_video'].'</a>';
+	echo '<a href="acp.php?tn=posts&sub=edit&new=l" class="btn btn-fc w-100">'.$lang['post_type_link'].'</a>';
+	echo '<a href="acp.php?tn=posts&sub=edit&new=p" class="btn btn-fc w-100">'.$lang['post_type_product'].'</a>';
+	echo '</div>';
+	echo '</fieldset>';
+}
+
+
+
+
+
+
 /* language */
 $arr_lang = get_all_languages();
 for($i=0;$i<count($arr_lang);$i++) {

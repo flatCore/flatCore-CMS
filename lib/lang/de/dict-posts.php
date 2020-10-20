@@ -4,7 +4,9 @@
 
 $lang['post_list'] = 'Übersicht';
 $lang['post_edit'] = 'Bearbeiten';
-$lang['post_new'] = 'Bearbeiten';
+$lang['post_new_edit'] = 'Neu/Bearbeiten';
+
+$lang['select_post_type'] = 'Vorlage auswählen';
 
 $lang['post_type_message'] = 'Nachricht';
 $lang['post_type_event'] = 'Event';
