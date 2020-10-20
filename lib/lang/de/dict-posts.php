@@ -64,18 +64,8 @@ $lang['label_street'] = 'Straße';
 $lang['label_street_nbr'] = 'Nr';
 $lang['label_zip'] = 'PLZ';
 $lang['label_city'] = 'Ort';
-$lang['label_event_hotline'] = 'Hotline';
 $lang['label_price_note'] = 'Hinweise zu den Preisen';
-
 $lang['label_event_prices'] = 'Preise';
-$lang['label_price'] = 'Preis';
-$lang['label_price_desc1'] = 'Preis Kategorie 1';
-$lang['label_price_desc2'] = 'Preis Kategorie 2';
-$lang['label_price_desc3'] = 'Preis Kategorie 3';
-$lang['label_price_desc4'] = 'Preis Kategorie 4';
-$lang['label_price_desc5'] = 'Preis Kategorie 5';
-$lang['label_price_desc6'] = 'Preis Kategorie 6';
-
 
 $lang['label_product_number'] = 'Produktnummer';
 $lang['label_product_manufacturer'] = 'Hersteller';
@@ -86,10 +76,8 @@ $lang['label_product_tax_alt2'] = 'Steuersatz 3';
 $lang['products_default_tax'] = 'Standard Steuer (%)';
 $lang['products_default_currency'] = 'Standard Währung';
 $lang['label_product_currency'] = 'Währung';
-$lang['label_quantity_discount'] = 'Staffelpreise';
 $lang['label_product_price_net'] = 'Preis (netto)';
 $lang['label_product_price_gross'] = 'Preis (brutto)';
-$lang['label_product_quantity_prices'] = 'Staffelpreise';
 $lang['label_product_amount'] = 'Menge';
 $lang['label_product_price_label'] = 'Label';
 $lang['label_product_unit'] = 'Einheit';
@@ -99,11 +87,6 @@ $lang['product_no_snippet'] = 'Kein Snippet';
 
 $lang['dont_use_an_image'] = 'Kein Bild verwenden';
 $lang['btn_all_categories'] = 'Alle Rubriken';
-
-$lang['label_design'] = 'Design';
-$lang['label_template'] = 'Template';
-$lang['label_page_template'] = 'Seiten Template';
-$lang['page_template_text'] = 'Überschreibe das Seiten-Theme wenn ein Post angezeigt wird';
 
 $lang['url_by_date'] = 'Einträge mit Datum versehen<br><small>Beispiel: .../news/20XX/XX/XX/post_title/</small>';
 $lang['url_by_title'] = 'Nur Titel verwenden<br><small>Beispiel: ../news/post_title-id.html</small>';

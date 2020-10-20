@@ -1,8 +1,6 @@
 <?php
 
-/**
- * acp - english language file
- */
+include 'dict-posts.php';
 
 /* tn_ = topNav */
 
