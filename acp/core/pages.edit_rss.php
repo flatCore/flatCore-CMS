@@ -9,25 +9,11 @@ echo '<h3>RSS <small>Feed</small></h3>';
 
 
 if($_REQUEST['delete'] != "") {
-	$delete = (int) $_REQUEST['delete'];
-	$sql = "DELETE FROM fc_feeds WHERE feed_id = $delete";
-	$cnt_changes = $dbh->exec($sql);
+	$delete = (int) $_REQUEST['delete'];	
+	$db_content->delete("fc_feeds", [
+		"feed_id" => $delete
+	]);
 }
-
-
-$sql = "SELECT * FROM fc_feeds ORDER BY feed_time DESC";
-//$sql_prefs = "SELECT * FROM fc_preferences WHERE prefs_id = 1";
-
-/*
-if($dbh) {
-   foreach($dbh->query($sql) as $row) {
-     $rssItems[] = $row;
-   }
-   
-   	$prefs = $dbh->query($sql_prefs);
-	 	$prefs = $prefs->fetch(PDO::FETCH_ASSOC);
-}
-*/
 
 $prefs = get_preferences();
 
