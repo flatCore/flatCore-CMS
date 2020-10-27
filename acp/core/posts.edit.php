@@ -89,9 +89,6 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 		fc_rename_gallery_image($_POST['sort_tmb']);
 	}
 	
-	/* todo: we have to build the rss url */
-	
-
 	/* save or update data */
 	
 	/* get all $cols */
@@ -112,6 +109,31 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 		$modus = 'update';
 		$submit_btn = '<input type="submit" class="btn btn-save btn-block" name="save_post" value="'.$lang['update'].'">';
 	}
+	
+	/* update the rss url */
+	
+	// get the posting-page by 'type_of_use' and $languagePack
+	$target_page = $db_content->select("fc_pages", "page_permalink", [
+		"AND" => [
+			"page_type_of_use" => "display_post",
+			"page_language" => $post_lang
+		]
+	]);
+	
+	$rss_url = $fc_base_url.$target_page[0].$clean_title.'-'.$post_id.'.html';
+	$db_posts->update("fc_posts", [
+		"post_rss_url" => $rss_url
+	], [
+		"post_id" => $post_id
+	]);
+	
+	/* send to rss feed */
+	if($_POST['post_rss'] == 'on') {
+		add_feed("$post_title",$_POST['post_teaser'],"$rss_url","post_$id","",$post_releasedate);
+	}
+	
+	
+	/* re load the posts data */
 	$post_data = fc_get_post_data($post_id);
 }
 
