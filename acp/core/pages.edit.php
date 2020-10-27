@@ -30,120 +30,6 @@ if(!empty($_POST['preview_the_page'])) {
 	$editpage = (int) $_POST['editpage'];
 	$modus = "preview";
 }
-/*
-$pdo_fields = array(
-	'page_sort' => 'STR',
-	'page_language' => 'STR',
-	'page_linkname' => 'STR',
-	'page_permalink' => 'STR',
-	'page_permalink_short' => 'STR',
-	'page_hash' => 'STR',
-	'page_type_of_use' => 'STR',
-	'page_redirect' => 'STR',
-	'page_redirect_code' => 'STR',
-	'page_funnel_uri' => 'STR',
-	'page_title' => 'STR',
-	'page_status' => 'STR',
-	'page_usergroup' => 'STR',
-	'page_content' => 'STR',
-	'page_lastedit' => 'STR',
-	'page_lastedit_from' => 'STR',
-	'page_extracontent' => 'STR',
-	'page_template' => 'STR',
-	'page_template_layout' => 'STR',
-	'page_meta_author' => 'STR',
-	'page_meta_keywords' => 'STR',
-	'page_meta_description' => 'STR',
-	'page_meta_robots' => 'STR',
-	'page_head_styles' => 'STR',
-	'page_head_enhanced' => 'STR',
-	'page_thumbnail' => 'STR',
-	'page_modul' => 'STR',
-	'page_modul_query' => 'STR',
-	'page_addon_string' => 'STR',
-	'page_authorized_users' => 'STR',
-	'page_version' => 'STR',
-	'page_labels' => 'STR',
-	'page_psw' => 'STR'
-);
-
-
-$pdo_fields_new = array(
-	'page_id' => 'NULL',
-	'page_sort' => 'STR',
-	'page_language' => 'STR',
-	'page_linkname' => 'STR',
-	'page_permalink' => 'STR',
-	'page_permalink_short' => 'STR',
-	'page_hash' => 'STR',
-	'page_type_of_use' => 'STR',
-	'page_redirect' => 'STR',
-	'page_redirect_code' => 'STR',
-	'page_funnel_uri' => 'STR',
-	'page_title' => 'STR',
-	'page_status' => 'STR',
-	'page_usergroup' => 'STR',
-	'page_content' => 'STR',
-	'page_lastedit' => 'STR',
-	'page_lastedit_from' => 'STR',
-	'page_extracontent' => 'STR',
-	'page_template' => 'STR',
-	'page_template_layout' => 'STR',
-	'page_meta_author' => 'STR',
-	'page_meta_keywords' => 'STR',
-	'page_meta_description' => 'STR',
-	'page_meta_robots' => 'STR',
-	'page_head_styles' => 'STR',
-	'page_head_enhanced' => 'STR',
-	'page_thumbnail' => 'STR',
-	'page_modul' => 'STR',
-	'page_modul_query' => 'STR',
-	'page_addon_string' => 'STR',
-	'page_authorized_users' => 'STR',
-	'page_version' => 'STR',
-	'page_labels' => 'STR',
-	'page_psw' => 'STR'
-);
-	
-$pdo_fields_cache = array(
-	'page_id' => 'NULL',
-	'page_id_original' => 'STR',
-	'page_sort' => 'STR',
-	'page_language' => 'STR',
-	'page_linkname' => 'STR',
-	'page_permalink' => 'STR',
-	'page_permalink_short' => 'STR',
-	'page_hash' => 'STR',
-	'page_type_of_use' => 'STR',
-	'page_redirect' => 'STR',
-	'page_redirect_code' => 'STR',
-	'page_funnel_uri' => 'STR',
-	'page_title' => 'STR',
-	'page_status' => 'STR',
-	'page_usergroup' => 'STR',
-	'page_content' => 'STR',
-	'page_lastedit' => 'STR',
-	'page_lastedit_from' => 'STR',
-	'page_extracontent' => 'STR',
-	'page_template' => 'STR',
-	'page_template_layout' => 'STR',
-	'page_meta_author' => 'STR',
-	'page_meta_keywords' => 'STR',
-	'page_meta_description' => 'STR',
-	'page_meta_robots' => 'STR',
-	'page_head_styles' => 'STR',
-	'page_head_enhanced' => 'STR',
-	'page_thumbnail' => 'STR',
-	'page_modul' => 'STR',
-	'page_modul_query' => 'STR',
-	'page_addon_string' => 'STR',
-	'page_authorized_users' => 'STR',
-	'page_cache_type' => 'STR',
-	'page_version' => 'STR',
-	'page_labels' => 'STR',
-	'page_psw' => 'STR'
-);
-*/
 
 
 /**
@@ -280,7 +166,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 		$string_labels = implode(",", $arr_labels);
 	} else {
 		$string_labels = "";
-	}	
+	}
 	
 	// template
 	$select_template = explode("<|-|>", $_POST['select_template']);
@@ -295,10 +181,20 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	if(is_array($_POST['addon'])) {
 		$page_addon_string = json_encode($_POST['addon'],JSON_UNESCAPED_UNICODE);
 	}
-
-	// connect to database
-	//$dbh = new PDO("sqlite:".CONTENT_DB);
-
+	
+	/* posts categories */
+	if(is_array($_POST['page_post_categories'])) {
+		$string_categories = implode(",", $_POST['page_post_categories']);
+	} else {
+		$string_categories = "";
+	}
+	
+	/* posts types */
+	if(is_array($_POST['page_post_types'])) {
+		$string_types = implode("-", $_POST['page_post_types']);
+	} else {
+		$string_types = "";
+	}
 
 	/**
 	 * modus update
@@ -338,6 +234,8 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_modul" => "$page_modul",
 			"page_modul_query" => "$page_modul_query",
 			"page_addon_string" => "$page_addon_string",
+			"page_posts_categories" => "$string_categories",
+			"page_posts_types" => "$string_types",
 			"page_authorized_users" => "$page_authorized_users",
 			"page_version" => $page_version,
 			"page_labels" => "$string_labels",
@@ -404,6 +302,8 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_modul" => "$page_modul",
 			"page_modul_query" => "$page_modul_query",
 			"page_addon_string" => "$page_addon_string",
+			"page_posts_categories" => "$string_categories",
+			"page_posts_types" => "$string_types",
 			"page_authorized_users" => "$page_authorized_users",
 			"page_version" => $page_version,
 			"page_labels" => "$string_labels",
@@ -458,6 +358,8 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_modul" => "$page_modul",
 			"page_modul_query" => "$page_modul_query",
 			"page_addon_string" => "$page_addon_string",
+			"page_posts_categories" => "$string_categories",
+			"page_posts_types" => "$string_types",
 			"page_authorized_users" => "$page_authorized_users",
 			"page_version" => $page_version,
 			"page_labels" => "$string_labels",
@@ -525,6 +427,8 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_modul" => "$page_modul",
 			"page_modul_query" => "$page_modul_query",
 			"page_addon_string" => "$page_addon_string",
+			"page_posts_categories" => "$string_categories",
+			"page_posts_types" => "$string_types",
 			"page_authorized_users" => "$page_authorized_users",
 			"page_version" => $page_version,
 			"page_labels" => "$string_labels",
@@ -585,6 +489,8 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_modul" => "$page_modul",
 			"page_modul_query" => "$page_modul_query",
 			"page_addon_string" => "$page_addon_string",
+			"page_posts_categories" => "$string_categories",
+			"page_posts_types" => "$string_types",
 			"page_authorized_users" => "$page_authorized_users",
 			"page_version" => $page_version,
 			"page_labels" => "$string_labels",

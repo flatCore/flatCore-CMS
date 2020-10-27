@@ -20,11 +20,16 @@ echo '<li class="nav-item"><a class="nav-link active" href="#info" data-toggle="
 echo '<li class="nav-item"><a class="nav-link" href="#content" data-toggle="tab">'.$lang['tab_content'].'</a></li>';
 echo '<li class="nav-item"><a class="nav-link" href="#extracontent" data-toggle="tab">'.$lang['tab_extracontent'].'</a></li>';
 echo '<li class="nav-item"><a class="nav-link" href="#meta" data-toggle="tab">'.$lang['tab_meta'].'</a></li>';
-echo '<li class="nav-item"><a class="nav-link" href="#head" data-toggle="tab">'.$lang['tab_head'].'</a></li>';
-echo '<li class="nav-item"><a class="nav-link" href="#addons" data-toggle="tab">'.$lang['tab_addons'].'</a></li>';
+
+echo '<li class="nav-item ml-auto"><a class="nav-link" href="#posts" data-toggle="tab" title="'.$lang['tab_posts'].'">'.$icon['clipboard_list'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#addons" data-toggle="tab" title="'.$lang['tab_addons'].'">'.$icon['cogs'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#head" data-toggle="tab" title="'.$lang['tab_head'].'">'.$icon['code'].'</a></li>';
 if($cnt_custom_fields > 0) {
-	echo '<li class="nav-item"><a class="nav-link" href="#custom" data-toggle="tab">'.$lang['legend_custom_fields'].'</a></li>';
+	echo '<li class="nav-item"><a class="nav-link" href="#custom" data-toggle="tab" title="'.$lang['legend_custom_fields'].'">'.$icon['th_list'].'</a></li>';
 }
+
+
+
 echo '</ul>';
 
 echo '</div>';
@@ -148,7 +153,7 @@ $(function() {
 
 echo '<div class="form-group">';
 echo '<label>'.$lang['f_page_type_of_use'].'</label>';
-$page_types = array('normal', 'register', 'profile', 'search', 'password', '404');
+$page_types = array('normal', 'register', 'profile', 'search', 'password', '404','display_post');
 $select_page_type_of_use  = '<select name="page_type_of_use" class="custom-select form-control">';
 
 foreach($page_types as $types) {
@@ -389,6 +394,88 @@ if($page_modul != '') {
 echo '</div>'; /* EOL tab addons */
 
 
+echo '<div class="tab-pane fade" id="posts">';
+
+
+echo '<fieldset>';
+echo '<legend>'.$lang['categories'].'</legend>';
+
+$categories = fc_get_categories();
+$page_cats_array = explode(',', $page_posts_categories);
+for($i=0;$i<count($categories);$i++) {
+	
+	$checked_cat = '';
+	if(in_array($categories[$i]['cat_id'], $page_cats_array)) {
+		$checked_cat = 'checked';
+	}
+	
+	echo '<div class="form-check">';
+	echo '<input type="checkbox" class="form-check-input" id="cat'.$i.'" name="page_post_categories[]" value="'.$categories[$i]['cat_id'].'" '.$checked_cat.'>';
+	echo '<label class="form-check-label" for="cat'.$i.'">'.$categories[$i]['cat_name'].'</label>';
+	echo '</div>';
+}
+
+echo '</fieldset>';
+
+echo '<fieldset>';
+echo '<legend>'.$lang['select_post_type'].'</legend>';
+
+	if(strpos($page_posts_types, 'm') !== FALSE) {
+		$check_m = 'checked';
+	}
+	if(strpos($page_posts_types, 'i') !== FALSE) {
+		$check_i = 'checked';
+	}
+	if(strpos($page_posts_types, 'p') !== FALSE) {
+		$check_p = 'checked';
+	}
+	if(strpos($page_posts_types, 'g') !== FALSE) {
+		$check_g = 'checked';
+	}
+	if(strpos($page_posts_types, 'v') !== FALSE) {
+		$check_v = 'checked';
+	}
+	if(strpos($page_posts_types, 'e') !== FALSE) {
+		$check_e = 'checked';
+	}
+
+	echo '<div class="form-check">';
+	echo '<input type="checkbox" class="form-check-input" id="type_m" name="page_post_types[]" value="m" '.$check_m.'>';
+	echo '<label class="form-check-label" for="type_m">'.$lang['post_type_message'].'</label>';
+	echo '</div>';
+	
+	echo '<div class="form-check">';
+	echo '<input type="checkbox" class="form-check-input" id="type_i" name="page_post_types[]" value="i" '.$check_i.'>';
+	echo '<label class="form-check-label" for="type_i">'.$lang['post_type_image'].'</label>';
+	echo '</div>';
+	
+	echo '<div class="form-check">';
+	echo '<input type="checkbox" class="form-check-input" id="type_g" name="page_post_types[]" value="g" '.$check_g.'>';
+	echo '<label class="form-check-label" for="type_g">'.$lang['post_type_gallery'].'</label>';
+	echo '</div>';
+	
+	echo '<div class="form-check">';
+	echo '<input type="checkbox" class="form-check-input" id="type_v" name="page_post_types[]" value="v" '.$check_v.'>';
+	echo '<label class="form-check-label" for="type_v">'.$lang['post_type_video'].'</label>';
+	echo '</div>';
+	
+	echo '<div class="form-check">';
+	echo '<input type="checkbox" class="form-check-input" id="type_p" name="page_post_types[]" value="p" '.$check_p.'>';
+	echo '<label class="form-check-label" for="type_p">'.$lang['post_type_product'].'</label>';
+	echo '</div>';
+	
+	echo '<hr>';
+
+	echo '<div class="form-check">';
+	echo '<input type="checkbox" class="form-check-input" id="type_e" name="page_post_types[]" value="e" '.$check_e.'>';
+	echo '<label class="form-check-label" for="type_e">'.$lang['post_type_event'].'</label>';
+	echo '</div>';
+
+
+echo '</fieldset>';
+
+echo '</div>'; /* EOL tab posts */
+
 if($cnt_custom_fields > 0) {
 
 /* tab custom fields */
@@ -414,7 +501,7 @@ echo '</div>'; /* EOL tab custom fields */
 
 }
 
-echo '</div>'; // EOL fancytabs
+echo '</div>';
 
 echo '</div>';
 echo '</div>';
