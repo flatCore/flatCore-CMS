@@ -5,7 +5,9 @@
 			<a class="post-headline-link" href="{post_href}"><h3>{post_title}</h3></a>
 			<div class="well well-sm">
 				<div class="post-thumbnails clearfix">
-					{post_thumbnails}
+					<section data-featherlight-gallery data-featherlight-filter="a">
+						{post_thumbnails}
+					</section>
 				</div>
 				{post_teaser}
 				<p><a class="btn btn-primary {read_more_class}" href="{post_href}">{read_more_text}</a></p>

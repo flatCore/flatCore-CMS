@@ -49,6 +49,7 @@ if(is_file('config_database.php')) {
 	$db_content = $database;
 	$db_user = $database;
 	$db_statistics = $database;
+	$db_posts = $database;
 	
 } else {
 	
@@ -58,6 +59,7 @@ if(is_file('config_database.php')) {
 	define("USER_DB", "$fc_db_user");
 	define("STATS_DB", "$fc_db_stats");
 	define("INDEX_DB", "$fc_db_index");
+	define("POSTS_DB", "$fc_db_posts");
 	
 	$db_content = new Medoo([
 		'database_type' => 'sqlite',
@@ -73,6 +75,10 @@ if(is_file('config_database.php')) {
 		'database_type' => 'sqlite',
 		'database_file' => STATS_DB
 	]);
+	$db_posts = new Medoo([
+		'database_type' => 'sqlite',
+		'database_file' => POSTS_DB
+	]);
 	
 }
 
@@ -84,11 +90,11 @@ if(is_file(FC_CORE_DIR . "/maintance.html")) {
 
 
 
-require FC_CORE_DIR . '/core/functions.php';
-
+require_once FC_CORE_DIR . '/core/functions.php';
+require_once FC_CORE_DIR . '/global/functions.php';
 
 /* reserved $_GET['p'] parameters */
-$a_allowed_p = array('register', 'account', 'profile', 'search', 'sitemap', 'logout', 'password');
+$a_allowed_p = array('register', 'account', 'profile', 'search', 'sitemap', 'logout', 'password','display_post');
 
 /*
  * mod_rewrite
@@ -132,6 +138,8 @@ for($i=0;$i<$cnt_active_mods;$i++) {
 		}
 	}	
 }
+
+
 
 if($query == '/') {
 	list($page_contents,$fc_nav,$fc_prefs) = get_content('portal','page_sort');
@@ -244,6 +252,15 @@ foreach($fc_prefs as $key => $val) {
 if(!empty($page_contents['page_modul'])) {
 	include 'modules/'.$page_contents['page_modul'].'/index.php';
 }
+
+if(!empty($page_contents['page_posts_categories'])) {
+	include 'core/posts.php';
+}
+
+if($page_contents['page_type_of_use'] == 'display_post') {
+	include 'core/posts.php';
+}
+
 
 /* START SMARTY */
 require_once('lib/Smarty/Smarty.class.php');

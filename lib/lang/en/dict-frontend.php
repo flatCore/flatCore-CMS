@@ -33,22 +33,25 @@ $lang['msg_404'] 					= "Sorry, the page does not exist";
 $lang['menu'] = 'Menu';
 
 /* Labels */
-$lang['label_login']			= "Login";
-$lang['label_psw']				= "Password";
-$lang['label_psw_repeat']		= "Confirm Password";
+$lang['label_login'] = "Login";
+$lang['label_psw'] = "Password";
+$lang['label_psw_repeat'] = "Confirm Password";
 $lang['label_psw_protected_page'] = "Password protected Page";
-$lang['label_username'] 		= "Username";
-$lang['label_lastname']			= "Lastname";
-$lang['label_firstname'] 		= "Firstname";
-$lang['label_mail'] 			= "E-Mail";
-$lang['label_mailrepeat']		= "Confirm E-Mail";
-$lang['label_street'] 			= "Street";
-$lang['label_nr'] 				= "Nbr.";
-$lang['label_zip'] 				= "Zip/Code";
-$lang['label_town'] 			= "City";
-$lang['label_tel'] 				= "Telephone";
-$lang['label_fax'] 				= "Fax";
-$lang['label_about_you'] 		= "About You (public)";
+$lang['label_username'] = "Username";
+$lang['label_lastname'] = "Lastname";
+$lang['label_firstname'] = "Firstname";
+$lang['label_mail'] = "E-Mail";
+$lang['label_mailrepeat'] = "Confirm E-Mail";
+$lang['label_street'] = "Street";
+$lang['label_nr'] = "Nbr.";
+$lang['label_zip'] = "Zip/Code";
+$lang['label_town'] = "City";
+$lang['label_tel'] = "Telephone";
+$lang['label_fax'] = "Fax";
+$lang['label_about_you'] = "About You (public)";
+
+$lang['label_entries'] = 'Entries';
+$lang['label_entries_total'] = 'Total';
 
 /* Buttons, Links */
 $lang['button_login'] 			= "Login";
@@ -66,7 +69,7 @@ $lang['button_acp'] 			= "Administration";
 $lang['button_acp_edit_page'] = "Edit Page";
 $lang['link_delete_avatar']		= "Delete Avatar";
 $lang['link_register'] 			= "Register now ...";
-
+$lang['btn_read_more'] = "read more";
 
 
 /* Messages */
@@ -131,5 +134,28 @@ $lang['forgotten_psw_mail_info']    = "Hello {USERNAME},<br />You want to reset 
 
 $lang['forgotten_psw_mail_update']    = "<p>Hello {USERNAME},<br />Your password has been reset.</p> <p>Your new password is:<br />{temp_psw}</p>";
 
+/* Dates */
+$lang['m01'] = "January";
+$lang['m02'] = "February";
+$lang['m03'] = "March";
+$lang['m04'] = "April";
+$lang['m05'] = "May";
+$lang['m06'] = "June";
+$lang['m07'] = "July";
+$lang['m08'] = "August";
+$lang['m09'] = "September";
+$lang['m10'] = "October";
+$lang['m11'] = "November";
+$lang['m12'] = "December";
 
+$lang['d01'] = "Monday";
+$lang['d02'] = "Tuesday";
+$lang['d03'] = "Wednesday";
+$lang['d04'] = "Thursday";
+$lang['d05'] = "Friday";
+$lang['d06'] = "Saturday";
+$lang['d07'] = "Sunday";
+
+$lang['date_today'] = "Today";
+$lang['date_yesterday'] = "Yesterday";
 ?>

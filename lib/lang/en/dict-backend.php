@@ -174,6 +174,8 @@ $lang['tab_addons'] = "Addons";
 $lang['tab_page_preferences'] = "Preferences";
 $lang['tab_page_preferences_description'] = "Templates, Rights Management ...";
 
+$lang['tab_posts'] = 'Posts';
+
 $lang['lastedit'] = "Last Edit";
 $lang['filesize'] = "Filesize";
 $lang['date_of_change'] = "Date of Change";
@@ -230,6 +232,7 @@ $lang['type_of_use_register'] = "Registration";
 $lang['type_of_use_password'] = "Reset Password";
 $lang['type_of_use_sitemap'] = "Sitemap";
 $lang['type_of_use_404'] = "404 (Page not found)";
+$lang['type_of_use_display_post'] = "Display Post";
 
 $lang['legend_structured_pages'] = "Ordered Pages";
 $lang['legend_unstructured_pages'] = "Single Pages";
@@ -513,33 +516,5 @@ $lang['add_custom_field'] = "New Custom Field";
 $lang['delete_custom_field'] = "Delete Fields";
 $lang['delete_custom_field_desc'] = "If you remove a field, its data will be lost.";
 $lang['no_custom_fields'] = "There are no Custom Fields, so far";
-
-/* Dates */
-$lang['m01'] = "January";
-$lang['m02'] = "February";
-$lang['m03'] = "March";
-$lang['m04'] = "April";
-$lang['m05'] = "May";
-$lang['m06'] = "June";
-$lang['m07'] = "July";
-$lang['m08'] = "August";
-$lang['m09'] = "September";
-$lang['m10'] = "October";
-$lang['m11'] = "November";
-$lang['m12'] = "December";
-
-
-$lang['d01'] = "Monday";
-$lang['d02'] = "Tuesday";
-$lang['d03'] = "Wednesday";
-$lang['d04'] = "Thursday";
-$lang['d05'] = "Friday";
-$lang['d06'] = "Saturday";
-$lang['d07'] = "Sunday";
-
-
-$lang['date_today'] = "Today";
-$lang['date_yesterday'] = "Yesterday";
-
 
 ?>

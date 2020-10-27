@@ -4,7 +4,9 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="post-thumbnails clearfix">
-				{post_thumbnails}
+				<section data-featherlight-gallery data-featherlight-filter="a">
+					{post_thumbnails}
+				</section>
 			</div>
 			{post_teaser}
 	

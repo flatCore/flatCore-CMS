@@ -6,7 +6,7 @@
  * 
  */
 
-include 'functions.posts.php';
+include_once 'functions.posts.php';
 
 
 /**

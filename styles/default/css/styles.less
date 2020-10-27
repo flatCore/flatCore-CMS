@@ -6,6 +6,8 @@
  */
 
 @import (inline) "bootstrap.min.css";
+@import (inline) "featherlight.css";
+@import (inline) "featherlight.gallery.css";
 
 #pageHeader {
 	background: #222;
@@ -46,4 +48,121 @@ footer div.tags a:hover {
 	background: rgba(255,255,255,0.85);
 	padding: 15px;
 	border-top: 1px solid #ddd;
+}
+
+
+
+/* posts */
+
+a.post-headline-link:hover {
+	text-decoration: none;
+}
+
+.post-footer {
+	padding-top: 15px;
+}
+
+
+.event-date {
+	background: rgba(0,0,0,0.1);
+	padding: 2px;
+	text-align: center;
+}
+
+.event-date-header {
+	background: rgba(0,0,0,0.2);
+	padding: 3px;
+	margin: -2px -2px 0 -2px;
+	font-size: 14px;
+}
+
+.event-start-year {
+	display: block;
+	font-size: 35px;
+	line-height: 35px;
+	opacity: .5;
+}
+
+.event-end-date {
+	font-size: 12px;
+	line-height: 14px;
+	opacity: .3;
+}
+
+.price-tag {
+	width: 175px;
+	float: right;
+	background: rgba(0,0,0,0.1);
+	padding: 5px;
+	margin-top: -20px;
+	margin-right: -20px;
+	text-align: center;
+	border-top-right-radius: 0.25em;
+	border-bottom-left-radius: 0.5em;
+}
+
+.price-predecimal {
+	font-size: 22px;
+}
+
+.price-decimal {
+	vertical-align:super;
+	font-size: 12px;
+	text-decoration: underline;
+}
+
+.product-unit,
+.product-amount {
+	font-size: 11px;
+	opacity: .5;
+}
+
+.product-amount::before {
+    content: " / ";
+    font-size: 11px;
+    opacity: .5;
+}
+
+.price-tag-label:not(:empty) {
+	font-size: 11px;
+	opacity: .5;
+	background: rgba(0,0,0,0.1);
+	float: left;
+	padding: 3px;
+	margin-top: -5px;
+	margin-left: -5px;
+}
+
+
+
+.post-list-message,
+.post-list-event,
+.post-list-link,
+.post-list-video,
+.post-list-image,
+.post-list-gallery,
+.post-list-product {
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 15px;
+}
+
+.post-thumbnail {
+	background: rgba(0,0,0,0.1);
+	background-position: center center;
+	background-repeat: no-repeat;
+	padding: 5px;
+	margin: 5px;
+	float: left;
+	width: 155px;
+	height: 155px;
+	border-radius: 5px;
+}
+
+.post-thumbnail:hover {
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+}
+
+.post-author,
+.post-releasedate {
+	font-size: smaller;
 }

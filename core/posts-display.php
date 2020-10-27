@@ -1,0 +1,164 @@
+<?php
+//error_reporting(E_ALL ^E_NOTICE);
+
+
+
+$post_data = fc_get_post_data($get_post_id);
+
+$post_images = explode("<->", $post_data['post_images']);
+
+
+$post_releasedate = date('Y-m-d H:i',$post_data['post_releasedate']);
+$post_releasedate_year = date('Y',$post_data['post_releasedate']);
+$post_releasedate_month = date('m',$post_data['post_releasedate']);
+$post_releasedate_day = date('d',$post_data['post_releasedate']);
+$post_releasedate_time = date('H:i:s',$post_data['post_releasedate']);
+
+$post_lastedit = date('Y-m-d H:i',$post_data['lastedit']);
+$post_lastedit_from = $post_data['post_lastedit_from'];
+
+
+/* event dates */
+
+$event_start_day = date('d',$post_data['post_event_startdate']);
+$event_start_month = date('m',$post_data['post_event_startdate']);
+$event_start_month_text = $lang["m$event_start_month"];
+$event_start_year = date('Y',$post_data['post_event_startdate']);
+$event_end_day = date('d',$post_data['post_event_enddate']);
+$event_end_month = date('m',$post_data['post_event_enddate']);
+$event_end_year = date('Y',$post_data['post_event_enddate']);
+
+/* entry date */
+$entrydate_year = date('Y',$post_data['post_date']);
+
+
+/* images */
+
+if($post_images[1] != "") {
+	$first_post_image = '/' . $img_path . '/' . str_replace('../content/images/','',$post_images[1]);
+} elseif($fc_prefs['posts_default_banner'] == "" OR $fc_prefs['posts_default_banner'] == "use_standard") {
+	$first_post_image = FC_INC_DIR ."/modules/publisher.mod/$pub_tpl_dir/images/no-image.png";
+} else {
+	$first_post_image = "/$img_path/" . $fc_prefs['default_banner'];
+}
+
+$hits = (int) $post_data['hits'];
+$hits++;
+
+
+
+if($post_data['post_type'] == 'm') {
+	if($first_post_image != "") {
+		$this_entry = file_get_contents("styles/$prefs_template/templates/posts/post-display-m.tpl");
+	} else {
+		$this_entry = file_get_contents("styles/$prefs_template/templates/posts/post-display-m-wo.tpl");
+	}
+} else if($post_data['post_type'] == 'i') {
+	$this_entry = file_get_contents("styles/$prefs_template/templates/posts/post-display-i.tpl");
+} else if($post_data['post_type'] == 'g') {
+	$this_entry = file_get_contents("styles/$prefs_template/templates/posts/post-display-g.tpl");
+	
+	$gallery_dir = 'content/galleries/'.$entrydate_year.'/gallery'.$post_data['post_id'].'/';
+	$fp = $gallery_dir.'*_tmb.jpg';
+	$tmb_tpl = file_get_contents("styles/$prefs_template/templates/posts/thumbnail.tpl");
+	$thumbs_array = glob("$fp");
+	arsort($thumbs_array);
+	$cnt_thumbs_array = count($thumbs_array);
+	if($cnt_thumbs_array > 0) {
+		
+		$first_post_image = "/" . str_replace('_tmb','_img',$thumbs_array[0]);
+		
+		$thumbnails_str = '';
+		$x = 0;
+		foreach($thumbs_array as $tmb) {
+			$x++;
+			$tmb_str = $tmb_tpl;
+			$tmb_src = '/'.$tmb;
+			$img_src = str_replace('_tmb','_img',$tmb_src);
+			$tmb_str = str_replace('{tmb_src}', $tmb_src, $tmb_str);
+			$tmb_str = str_replace('{img_src}', $img_src, $tmb_str);
+			$thumbnails_str .= $tmb_str;
+		}
+	}
+
+	
+} else if($post_data['post_type'] == 'v') {
+	$this_entry = file_get_contents("styles/$prefs_template/templates/posts/post-display-v.tpl");
+	$vURL = parse_url($post_data['post_video_url']);
+	parse_str($vURL['query'],$video); //$video['v'] -> youtube video id
+} else if($post_data['post_type'] == 'e') {
+	$this_entry = file_get_contents("styles/$prefs_template/templates/posts/post-display-e.tpl");
+} else if($post_data['post_type'] == 'l') {
+	$this_entry = file_get_contents("styles/$prefs_template/templates/posts/post-display-l.tpl");
+} else if($post_data['post_type'] == 'p') {
+	$this_entry = file_get_contents("styles/$prefs_template/templates/posts/post-display-p.tpl");
+}
+
+$post_teaser = htmlspecialchars_decode($post_data['post_teaser']);
+$post_text = htmlspecialchars_decode($post_data['post_text']);
+
+$this_entry = str_replace("{post_author}", $post_data['author'], $this_entry);
+$this_entry = str_replace('{post_title}', $post_data['post_title'], $this_entry);
+$this_entry = str_replace('{post_teaser}', $post_teaser, $this_entry);
+$this_entry = str_replace('{post_text}', $post_text, $this_entry);
+$this_entry = str_replace("{post_type}", $post_data['type'], $this_entry);
+$this_entry = str_replace('{post_img_src}', $first_post_image, $this_entry);
+
+$this_entry = str_replace("{post_releasedate_ts}", $post_data['releasedate'], $this_entry); /* timestring */
+$this_entry = str_replace("{post_releasedate}", $post_releasedate, $this_entry);
+$this_entry = str_replace("{post_releasedate_year}", $post_releasedate_year, $this_entry);
+$this_entry = str_replace("{post_releasedate_month}", $post_releasedate_month, $this_entry);
+$this_entry = str_replace("{post_releasedate_day}", $post_releasedate_day, $this_entry);
+$this_entry = str_replace("{post_releasedate_time}", $post_releasedate_time, $this_entry);
+
+$this_entry = str_replace("{post_lastedit}", $post_lastedit, $this_entry);
+$this_entry = str_replace("{post_lastedit_from}", $post_lastedit_from, $this_entry);
+$this_entry = str_replace("{event_start_day}", $event_start_day, $this_entry);
+$this_entry = str_replace("{event_start_month}", $event_start_month, $this_entry);
+$this_entry = str_replace("{event_start_month_text}", $event_start_month_text, $this_entry);
+$this_entry = str_replace("{event_start_year}", $event_start_year, $this_entry);
+$this_entry = str_replace("{event_end_day}", $event_end_day, $this_entry);
+$this_entry = str_replace("{event_end_month}", $event_end_month, $this_entry);
+$this_entry = str_replace("{event_end_year}", $event_end_year, $this_entry);
+$this_entry = str_replace("{post_tpl_event_hotline}", $tpl_hotline, $this_entry);
+$this_entry = str_replace("{post_event_hotline}", $post_data['event_hotline'], $this_entry);
+$this_entry = str_replace("{post_event_price_note}", $post_data['event_price_note'], $this_entry);
+$this_entry = str_replace("{post_tpl_event_prices}", $price_list, $this_entry);
+
+$this_entry = str_replace("{video_id}", $video['v'], $this_entry);
+$this_entry = str_replace("{post_external_link}", $post_data['link'], $this_entry);
+$this_entry = str_replace("{post_cats}", $cat_links_string, $this_entry);
+$this_entry = str_replace("{back_to_overview}", $lang['back_to_overview'], $this_entry);
+$this_entry = str_replace("{back_link}", "/$fct_slug", $this_entry);
+
+$this_entry = str_replace("{post_price_gross}", $post_price_gross, $this_entry);
+$this_entry = str_replace("{post_currency}", $post_data['product_currency'], $this_entry);
+$this_entry = str_replace("{post_product_unit}", $post_data['product_unit'], $this_entry);
+$this_entry = str_replace("{post_product_amount}", $post_data['product_amount'], $this_entry);
+$this_entry = str_replace("{post_product_price_label}", $post_data['product_price_label'], $this_entry);
+
+if($post_data['posts_product_textlib_content'] != 'no_snippet') {
+	$textlib_content = get_textlib($post_data['posts_product_textlib_content'],$languagePack);
+	$this_entry = str_replace("{post_snippet_text}", $textlib_content, $this_entry);
+} else {
+	$this_entry = str_replace("{post_snippet_text}", '', $this_entry);
+}
+
+if($post_data['posts_product_textlib_price'] != 'no_snippet') {
+	$textlib_price = get_textlib($post_data['posts_product_textlib_price'],$languagePack);
+	$this_entry = str_replace("{post_snippet_price}", $textlib_price, $this_entry);
+} else {
+	$this_entry = str_replace("{post_snippet_price}", '', $this_entry);
+}
+
+$this_entry = str_replace("{post_thumbnails}", $thumbnails_str, $this_entry);
+
+
+$page_contents['page_title'] = $post_data['post_title'];
+$page_contents['page_meta_description'] = substr(strip_tags($post_teaser),0,160);
+$page_contents['page_meta_keywords'] = $post_data['post_tags'];
+$page_contents['page_thumbnail'] = '/'.$img_path.'/'.basename($first_post_image);
+
+$modul_content = $this_entry.$debug_string;
+
+?>

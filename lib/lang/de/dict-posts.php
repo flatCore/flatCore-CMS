@@ -103,4 +103,6 @@ $lang['gallery_upload_help_text'] = 'Du musst die Galerie speichern, bevor Du Bi
 
 
 
+
+
 ?>

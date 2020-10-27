@@ -72,15 +72,19 @@ function fc_get_post_entries($start=0,$limit=10,$filter) {
 	}
 	$sql_status_filter = substr("$sql_status_filter", 0, -3); // cut the last ' OR'
 	
-	if(FC_SOURCE == 'frontend') {
-		$sql_status_filter = "post_status LIKE 'published' ";
-	}
 	
 	/* category filter */
-	if($filter['categories'] == 'all') {
+	if($filter['categories'] == 'all' OR $filter['categories'] == '') {
 		$sql_cat_filter = '';
 	} else {
-		$sql_cat_filter = "post_categories LIKE '%".$filter['categories']."%'";
+		
+		$cats = explode(',', $filter['categories']);
+		foreach($cats as $c) {
+			if($c != '') {
+				$sql_cat_filter .= '(post_categories LIKE "%'.$c.'%") OR ';
+			}		
+		}
+		$sql_cat_filter = substr("$sql_cat_filter", 0, -3); // cut the last ' OR'
 	}
 
 
@@ -122,7 +126,6 @@ function fc_get_post_entries($start=0,$limit=10,$filter) {
 	
 	$sql_cnt = "SELECT count(*) AS 'A', (SELECT count(*) FROM fc_posts $sql_filter) AS 'F'";
 	$stat = $db_posts->query("$sql_cnt")->fetch(PDO::FETCH_ASSOC);
-
 		
 	/* number of posts that match the filter */
 	$entries[0]['cnt_posts'] = $stat['F'];
@@ -187,6 +190,33 @@ function fc_post_print_currency($number) {
 		
 	return $article_price_string;
 
+}
+
+
+
+
+
+function fc_set_pagination_query($display_mode,$start) {
+	
+	global $fct_slug;
+	global $pb_posts_filter;
+	global $pub_preferences;
+	global $array_mod_slug;
+	
+	if($display_mode == 'list_posts_by_category') {
+		$pagination_link = "/$fct_slug".$pub_preferences['url_separator_categories'].'/'.$pb_posts_filter['categories'].'/'.$pub_preferences['url_separator_pages'].'/'."$start/";
+	} else if($display_mode == 'list_archive_year') {
+		$pagination_link = "/$fct_slug".$array_mod_slug[0].'/'.$pub_preferences['url_separator_pages'].'/'."$start/";
+	} else if($display_mode == 'list_archive_month') {
+		$pagination_link = "/$fct_slug".$array_mod_slug[0].'/'.$array_mod_slug[1].'/'.$pub_preferences['url_separator_pages'].'/'."$start/";
+	} else if($display_mode == 'list_archive_day') {
+		$pagination_link = "/$fct_slug".$array_mod_slug[0].'/'.$array_mod_slug[1].'/'.$array_mod_slug[2].'/'.$pub_preferences['url_separator_pages'].'/'."$start/";
+	} else {
+		$pagination_link = "/$fct_slug".'p/'."$start/";
+	}
+
+	
+	return $pagination_link;
 }
 
 

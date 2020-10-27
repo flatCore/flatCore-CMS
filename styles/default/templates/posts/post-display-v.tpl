@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="well well-sm">
-				<iframe id="video-player" type="text/html" width="100%" height="350px"
+				<iframe id="video-player" type="text/html" width="100%" height="450px"
 	    src="https://www.youtube.com/embed/{video_id}?rel=0&showinfo=0&color=white&iv_load_policy=3" frameborder="0" allowfullscreen></iframe>
 				{post_teaser}
 			</div>

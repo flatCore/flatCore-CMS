@@ -1,4 +1,4 @@
-<div class="post-list-product">
+<div class="post-product">
 	<h1>{post_title}</h1>
 	
 	<div class="card">

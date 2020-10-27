@@ -30,6 +30,7 @@ $cols = array(
 	"post_source" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"post_status" => 'INTEGER(12)',
 	"post_rss" => 'INTEGER(12)',
+	"post_rss_url" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"post_lang" => "VARCHAR(50) NOT NULL DEFAULT ''",
 	"post_slug" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"post_priority" => 'INTEGER(12)',

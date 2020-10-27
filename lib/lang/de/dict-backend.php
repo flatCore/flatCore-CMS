@@ -171,6 +171,8 @@ $lang['tab_addons'] = "Addons";
 $lang['tab_page_preferences'] = "Einstellungen";
 $lang['tab_page_preferences_description'] = "Templates....";
 
+$lang['tab_posts'] = 'Beiträge';
+
 $lang['lastedit'] = "Zuletzt aktualisiert";
 $lang['filesize'] = "Dateigröße";
 $lang['date_of_change'] = "Änderungsdatum";
@@ -227,7 +229,7 @@ $lang['type_of_use_register'] = "Registration";
 $lang['type_of_use_password'] = "Passwort zurücksetzen";
 $lang['type_of_use_sitemap'] = "Sitemap";
 $lang['type_of_use_404'] = "404 (Page not found)";
-
+$lang['type_of_use_display_post'] = "Beitrag anzeigen";
 
 $lang['legend_structured_pages'] = "geordnete Seiten";
 $lang['legend_unstructured_pages'] = "einzelne Seiten";
@@ -516,32 +518,7 @@ $lang['delete_custom_field_desc'] = "Wenn Du ein Feld löschst, gehen die darin 
 $lang['no_custom_fields'] = "Es sind noch keine eigenen Felder vorhanden";
 
 
-/* Dates */
 
-$lang['m01'] = "Januar";
-$lang['m02'] = "Februar";
-$lang['m03'] = "März";
-$lang['m04'] = "April";
-$lang['m05'] = "Mai";
-$lang['m06'] = "Juni";
-$lang['m07'] = "Juli";
-$lang['m08'] = "August";
-$lang['m09'] = "September";
-$lang['m10'] = "Oktober";
-$lang['m11'] = "November";
-$lang['m12'] = "Dezember";
-
-
-$lang['d01'] = "Montag";
-$lang['d02'] = "Dienstag";
-$lang['d03'] = "Mittwoch";
-$lang['d04'] = "Donnerstag";
-$lang['d05'] = "Freitag";
-$lang['d06'] = "Samstag";
-$lang['d07'] = "Sonntag";
-
-$lang['date_today'] = "Heute";
-$lang['date_yesterday'] = "Gestern";
 
 
 ?>
