@@ -85,7 +85,7 @@ $posts_order = 'id';
 $posts_direction = 'DESC';
 $posts_filter = array();
 
-$arr_status = array('draft','published');
+$arr_status = array('2','1');
 $arr_types = array('m','i','v','l','e','g','p');
 $arr_lang = get_all_languages();
 $arr_categories = fc_get_categories();
@@ -260,7 +260,7 @@ if($cnt_filter_posts > 0) {
 		
 		/* trim teaser to $trim chars */
 		$trim = 150;
-		$teaser = strip_tags($get_posts[$i]['post_teaser']);
+		$teaser = strip_tags(htmlspecialchars_decode($get_posts[$i]['post_teaser']));
 		if(strlen($teaser) > $trim) {
 			$ellipses = ' <small><i>(...)</i></small>';
 		  $last_space = strrpos(substr($teaser, 0, $trim), ' ');
