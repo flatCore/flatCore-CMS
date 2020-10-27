@@ -238,18 +238,23 @@ $dbh_content->insert("fc_pages", [
 
 $dbh_content->insert("fc_preferences", [
 	"prefs_status" => "active",
-	"prefs_pagetitle" => "flatCore",
+	"prefs_pagename" => "flatCore",
+	"prefs_pagetitle" => "flatCore CMS",
 	"prefs_pagesubtitle" => "Content Management System",
 	"prefs_template" => "default",
 	"prefs_template_layout" => "layout_default.tpl",
 	"prefs_showloginform" => "yes",
 	"prefs_xml_sitemap" => "off",
 	"prefs_logfile" => "off",
-	"prefs_rss_time_offset" => 216000,
+	"prefs_rss_time_offset" => 86400,
 	"prefs_cms_domain" => "$prefs_cms_domain",
 	"prefs_cms_ssl_domain" => "$prefs_cms_ssl_domain",
 	"prefs_cms_base" => "$prefs_cms_base",
-	"prefs_default_language" => "$languagePack"
+	"prefs_default_language" => "$languagePack",
+	"prefs_nbr_page_versions" => 25,
+	"prefs_acp_session_lifetime" => 86400,
+	"prefs_posts_entries_per_page" => 10,
+	"prefs_posts_event_time_offset" => 86400
 ]);
 
 
