@@ -1,11 +1,16 @@
+<h2>Welcome to your new flatCore page</h2>
+<p class="lead">This content management system is based on PHP and uses MySQL or SQLite3. It is as minimalistic as possible, but can easily be expanded thanks to the modular structure.</p>
+
+<p>You can edit this page in the <a href="/acp/">ACP</a>. You can also add other pages here.</p>
+
+<p>You can find more information on addons, plugins and themes at <a href="https://flatcore.org">flatCore.org</a></p>
+
+<hr>
+
 <h2>Willkommen <small>auf Deiner neuen flatCore Seite</small></h2>
 
-<p class="lead">Dieses Content Management System basiert auf PHP und nutzt als Datenbank SQLite3. Die Standardinstallation ist so minimalistisch wie m&ouml;glich, kann jedoch durch den modularen Aufbau einfach erweitert werden.</p>
+<p class="lead">Dieses Content Management System basiert auf PHP und nutzt als Datenbank MySQL oder SQLite3. Die Standardinstallation ist so minimalistisch wie m&ouml;glich, kann jedoch durch den modularen Aufbau einfach erweitert werden.</p>
 
 <p>Du kannst diese Seite im <a href="/acp/">ACP</a> bearbeiten. Hier kannst Du auch weitere Seiten hinzuf&uuml;gen.</p>
 
-<hr class="shadow">
-
-<p>Der bewusst minimalistisch gehaltene Kern von flatCore bedeutet nicht, dass es f&uuml;r umfangreichere Projekte bzw. Aufgaben nicht geeignet w&auml;re. Eben, um den Kern des Systems so einfach wie nur m&ouml;glich zu halten, wurde von Beginn an auf eine leicht zu bedienende Schnittstelle f&uuml;r Module und Plugins gesorgt.</p>
-
-<p>Weiere Informationen zu Modulen, Plugins und Themes findest du auf <a href="https://www.flatcore.org">flatCore.de</a></p>
+<p>Weiere Informationen zu Modulen, Plugins und Themes findest du auf <a href="https://flatcore.org/de/">flatCore.org/de/</a></p>
