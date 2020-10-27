@@ -78,8 +78,6 @@ foreach ($all_usermail_array as $entry) {
     }  
 }
 
-echo '<hr>FOOOOOOO:'.$prefs_mailer_adr.'<hr>';
-
 //yeah, create the new account
 if($send_data == 'true') {
 
