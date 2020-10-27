@@ -104,8 +104,8 @@ function get_all_templates() {
 
 
 /**
- * check in active modules
- * generate array from pages containing a module
+ * check in active modules and pages with posts
+ * generate array from pages containing a module or post categories
  * and from addon_dir -> content.sqlite3
  * store in ... cache/active_mods.php
  */
@@ -127,15 +127,23 @@ function mods_check_in() {
 		$m[]['page_permalink'] = 'NULL';
 	}
 		
-	$pages = $db_content->select("fc_pages", ["page_modul","page_permalink"]);
-	
+	$pages = $db_content->select("fc_pages", ["page_modul","page_permalink","page_posts_categories","page_type_of_use"]);	
 	$items = array_merge($pages, $m);
 	
 	$cnt_items = count($items);
 	$x = 0;
 	for($i=0;$i<$cnt_items;$i++) {
 	
-		if($items[$i]['page_modul'] != "") {
+		if($items[$i]['page_modul'] != "" OR $items[$i]['page_posts_categories'] != "" OR $items[$i]['page_type_of_use'] == "display_post") {
+			
+			if($items[$i]['page_posts_categories'] != '') {
+				$items[$i]['page_modul'] = 'fc_post';
+			}
+			
+			if($items[$i]['page_type_of_use'] == 'display_post') {
+				$items[$i]['page_modul'] = 'fc_post';
+			}
+			
 			$string .= "\$active_mods[$x]['page_modul'] = \"" . $items[$i]['page_modul'] . "\";\n";
 			$string .= "\$active_mods[$x]['page_permalink'] = \"" . $items[$i]['page_permalink'] . "\";\n";			
 			$x++;
