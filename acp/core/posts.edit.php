@@ -36,7 +36,7 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 	$post_priority = (int) $_POST['post_priority'];
 	
 	if($_POST['post_date'] == "") {
-		$_POST['post_date'] = time();
+		$post_date = time();
 	}
 		
 	if($_POST['post_releasedate'] != "") {
@@ -96,7 +96,8 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 	// build sql string -> f.e. "post_releasedate" => $post_releasedate,
 	foreach($cols as $k => $v) {
 		if($k == 'post_id') {continue;}
-  	$inputs[$k] = $$k;
+		$value = $$k;
+  	$inputs[$k] = "$value";
 	}
 	
 	if($modus == "update")	{
@@ -105,6 +106,7 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 		]);
 	} else {
 		$db_posts->insert("fc_posts", $inputs);
+		var_dump( $db_posts->error() );
 		$post_id = $db_posts->id();
 		$modus = 'update';
 		$submit_btn = '<input type="submit" class="btn btn-save btn-block" name="save_post" value="'.$lang['update'].'">';
@@ -119,6 +121,7 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 			"page_language" => $post_lang
 		]
 	]);
+	
 	
 	$rss_url = $fc_base_url.$target_page[0].$clean_title.'-'.$post_id.'.html';
 	$db_posts->update("fc_posts", [

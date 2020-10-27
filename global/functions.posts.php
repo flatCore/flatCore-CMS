@@ -5,6 +5,7 @@
 function fc_get_post_entries($start=0,$limit=10,$filter) {
 	
 	global $db_posts;
+	global $db_type;
 	global $time_string_start;
 	global $time_string_end;
 	global $time_string_now;
@@ -24,7 +25,7 @@ function fc_get_post_entries($start=0,$limit=10,$filter) {
 	 * we ignore $order and $direction
 	 */
 
-	$order = 'ORDER BY post_fixed DESC, sortdate DESC, post_priority DESC, post_id DESC';
+	$order = "ORDER BY post_fixed DESC, sortdate DESC, post_priority DESC, post_id DESC";
 	
 	if(FC_SOURCE == 'frontend') {
 		if($filter['types'] == '-event') {
@@ -42,32 +43,32 @@ function fc_get_post_entries($start=0,$limit=10,$filter) {
 	$sql_filter_start = 'WHERE post_id IS NOT NULL ';
 	
 	/* language filter */
-	$sql_lang_filter = "post_lang ISNULL OR ";
+	$sql_lang_filter = "post_lang IS NULL OR ";
 	$lang = explode('-', $filter['languages']);
 	foreach($lang as $l) {
 		if($l != '') {
-			$sql_lang_filter .= '(post_lang LIKE "%'.$l.'%") OR ';
+			$sql_lang_filter .= "(post_lang LIKE '%$l%') OR ";
 		}		
 	}
 	$sql_lang_filter = substr("$sql_lang_filter", 0, -3); // cut the last ' OR'
 	
 	
 	/* type filter */
-	$sql_types_filter = "post_type ISNULL OR ";
+	$sql_types_filter = "post_type IS NULL OR ";
 	$types = explode('-', $filter['types']);
 	foreach($types as $t) {
 		if($t != '') {
-			$sql_types_filter .= '(post_type LIKE "%'.$t.'%") OR ';
+			$sql_types_filter .= "(post_type LIKE '%$t%') OR ";
 		}		
 	}
 	$sql_types_filter = substr("$sql_types_filter", 0, -3); // cut the last ' OR'
 
 	/* status filter */
-	$sql_status_filter = "post_status ISNULL OR ";
+	$sql_status_filter = "post_status IS NULL OR ";
 	$status = explode('-', $filter['status']);
 	foreach($status as $s) {
 		if($s != '') {
-			$sql_status_filter .= '(post_status LIKE "%'.$s.'%") OR ';
+			$sql_status_filter .= "(post_status LIKE '%$s%') OR ";
 		}		
 	}
 	$sql_status_filter = substr("$sql_status_filter", 0, -3); // cut the last ' OR'
@@ -81,7 +82,7 @@ function fc_get_post_entries($start=0,$limit=10,$filter) {
 		$cats = explode(',', $filter['categories']);
 		foreach($cats as $c) {
 			if($c != '') {
-				$sql_cat_filter .= '(post_categories LIKE "%'.$c.'%") OR ';
+				$sql_cat_filter .= "(post_categories LIKE '%$c%') OR ";
 			}		
 		}
 		$sql_cat_filter = substr("$sql_cat_filter", 0, -3); // cut the last ' OR'
@@ -120,10 +121,16 @@ function fc_get_post_entries($start=0,$limit=10,$filter) {
 		$sql_filter .= "AND post_releasedate >= '$time_string_start' AND post_releasedate <= '$time_string_end' AND post_releasedate < '$time_string_now' ";
 	}
 	
-
-	$sql = "SELECT *, strftime('%Y-%m-%d',datetime(post_releasedate, 'unixepoch')) as 'sortdate', strftime('%Y-%m-%d',datetime(post_event_startdate, 'unixepoch')) as 'sortdate_events' FROM fc_posts $sql_filter $order $limit_str";
-	$entries = $db_posts->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+	if($db_type == 'sqlite') {
+		$sql = "SELECT *, strftime('%Y-%m-%d',datetime(post_releasedate, 'unixepoch')) as 'sortdate', strftime('%Y-%m-%d',datetime(post_event_startdate, 'unixepoch')) as 'sortdate_events' FROM fc_posts $sql_filter $order $limit_str";
+	} else {
+		$sql = "SELECT *, UNIX_TIMESTAMP(post_releasedate) as 'sortdate', UNIX_TIMESTAMP(post_event_startdate) as 'sortdate_events' FROM fc_posts $sql_filter $order $limit_str";
+	}
 	
+	
+	
+	$entries = $db_posts->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+		
 	$sql_cnt = "SELECT count(*) AS 'A', (SELECT count(*) FROM fc_posts $sql_filter) AS 'F'";
 	$stat = $db_posts->query("$sql_cnt")->fetch(PDO::FETCH_ASSOC);
 		
