@@ -43,6 +43,8 @@ if(is_file("../$fc_db_content")) {
 	$modus = "install";
 }
 
+
+
 if($_SESSION['user_class'] == "administrator") {
 	$modus = "update";
 }

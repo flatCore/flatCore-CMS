@@ -127,6 +127,7 @@ $sql_textlib_table = fc_generate_sql_query("fc_textlib.php",$db_type);
 $sql_comments_table = fc_generate_sql_query("fc_comments.php",$db_type);
 $sql_media_table = fc_generate_sql_query("fc_media.php",$db_type);
 $sql_labels_table = fc_generate_sql_query("fc_labels.php",$db_type);
+$sql_categories_table = fc_generate_sql_query("fc_categories.php",$db_type);
 $sql_addons_table = fc_generate_sql_query("fc_addons.php",$db_type);
 
 $sql_posts_table = fc_generate_sql_query("fc_posts.php",$db_type);
@@ -191,6 +192,7 @@ $dbh_content->query($sql_comments_table);
 $dbh_content->query($sql_media_table);
 $dbh_content->query($sql_feeds_table);
 $dbh_content->query($sql_labels_table);
+$dbh_content->query($sql_categories_table);
 $dbh_content->query($sql_addons_table);
 
 /* insert two example pages */

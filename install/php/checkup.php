@@ -69,6 +69,7 @@ $check_this[] = "../$files_path";
 $check_this[] = "../" . FC_CONTENT_DIR . "/avatars";
 $check_this[] = "../" . FC_CONTENT_DIR . "/plugins";
 $check_this[] = "../" . FC_CONTENT_DIR . "/SQLite";
+$check_this[] = "../" . FC_CONTENT_DIR . "/galleries";
 sort($check_this,SORT_NATURAL | SORT_FLAG_CASE);
 
 $check_is_dir[] = "../modules/";
@@ -92,7 +93,7 @@ foreach($check_is_dir as $dir){
 	checkexistingdir("$dir");
 }
 
-echo"<h3>$lang[system_requirements]</h3>";
+echo '<h3>'.$lang['system_requirements'].'</h3>';
 
 $version = phpversion();
 
@@ -143,7 +144,7 @@ if(!in_array("false",$goto_install)) {
 	echo '</div>';
 	echo '</div>';
 	
-	echo"</form>";
+	echo '</form>';
 
 }
 
