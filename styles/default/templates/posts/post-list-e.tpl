@@ -28,10 +28,12 @@
 			
 		</div>
 	</div>
+	
 	<div class="row">
-		<div class="col-md-8 offset-md-2">
-			<p class="text-right">{post_cats}</p>
-			<p><a class="btn btn-primary btn-sm {read_more_class}" href="{post_href}">{read_more_text}</a></p>
+		<div class="col-md-8 offset-md-4 text-right">
+			<p class="m-0 post-categories">{post_cats}</p>
+			<p><a class="btn btn-primary {read_more_class}" href="{post_href}">{read_more_text}</a></p>
 		</div>
 	</div>
+	
 </div>
