@@ -161,6 +161,8 @@ foreach($all_categories as $cats) {
 	
 	if($cats['cat_thumbnail'] != '') {
 		echo '<img src="'.$cats['cat_thumbnail'].'" class="card-img">';
+	} else {
+		echo '<img src="images/no-image.png" class="card-img">';
 	}
 	echo '</div>';
 	echo '<div class="col-md-9">';
