@@ -36,10 +36,10 @@ $entrydate_year = date('Y',$post_data['post_date']);
 
 if($post_images[1] != "") {
 	$first_post_image = '/' . $img_path . '/' . str_replace('../content/images/','',$post_images[1]);
-} elseif($fc_prefs['posts_default_banner'] == "" OR $fc_prefs['posts_default_banner'] == "use_standard") {
-	$first_post_image = FC_INC_DIR ."/modules/publisher.mod/$pub_tpl_dir/images/no-image.png";
+} else if($fc_prefs['prefs_posts_default_banner'] == "without_image") {
+	$first_post_image = '';
 } else {
-	$first_post_image = "/$img_path/" . $fc_prefs['default_banner'];
+	$first_post_image = "/$img_path/" . $fc_prefs['prefs_posts_default_banner'];
 }
 
 $hits = (int) $post_data['hits'];

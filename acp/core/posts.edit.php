@@ -67,7 +67,7 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 		$post_slug = "$post_date_year/$post_date_month/$post_date_day/$clean_title/";
 	}
 
-	$post_lang = @implode("<->", $_POST['post_languages']);
+	//$post_lang = @implode("<->", $_POST['post_languages']);
 	$post_categories = @implode("<->", $_POST['post_categories']);
 	
 	$post_images_string = @implode("<->", $_POST['picker1_images']);
@@ -168,24 +168,24 @@ if($modus != 'update' && !isset($_GET['new'])) {
 
 /* language */
 $arr_lang = get_all_languages();
+$select_lang = '<select name="post_lang" class="form-control custom-select">';
 for($i=0;$i<count($arr_lang);$i++) {
 	$lang_folder = $arr_lang[$i]['lang_folder'];
 	
 	if(strpos($post_data['post_lang'], "$lang_folder") !== false) {
-		$checked_lang = "checked";
+		$selected = 'selected';
 	} else {
-		$checked_lang = "";
+		$selected = '';
 	}
 	
 	if($post_data['post_lang'] == "" AND $lang_folder == "$_SESSION[lang]") {
-		$checked_lang = "checked";
+		$selected = 'selected';
 	}
+
+	$select_lang .= '<option value="'.$lang_folder.'" '.$selected.'>'.$lang_folder.'</option>';
 	
-	$checkboxes_lang .= '<div class="form-check form-check-inline">';
-	$checkboxes_lang .= '<input class="form-check-input" id="'.$lang_folder.'" type="checkbox" name="post_languages[]" value="'.$lang_folder.'" '.$checked_lang.'>';
-	$checkboxes_lang .= '<label class="form-check-label" for="'.$lang_folder.'">'.$lang_folder.'</label>';
-	$checkboxes_lang .= '</div>';
 }
+$select_lang .= '</select>';
 
 /* categories */
 
@@ -421,7 +421,7 @@ $form_tpl = str_replace('{post_rss_url}', $post_data['post_rss_url'], $form_tpl)
 $form_tpl = str_replace('{select_rss}', $select_rss, $form_tpl);
 $form_tpl = str_replace('{select_status}', $select_status, $form_tpl);
 
-$form_tpl = str_replace('{checkboxes_lang}', $checkboxes_lang, $form_tpl);
+$form_tpl = str_replace('{checkboxes_lang}', $select_lang, $form_tpl);
 $form_tpl = str_replace('{checkbox_categories}', $checkboxes_cat, $form_tpl);
 $form_tpl = str_replace('{post_releasedate}', $post_releasedate, $form_tpl);
 $form_tpl = str_replace('{widget_images}', $choose_images, $form_tpl);
