@@ -106,7 +106,6 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 		]);
 	} else {
 		$db_posts->insert("fc_posts", $inputs);
-		var_dump( $db_posts->error() );
 		$post_id = $db_posts->id();
 		$modus = 'update';
 		$submit_btn = '<input type="submit" class="btn btn-save btn-block" name="save_post" value="'.$lang['update'].'">';
@@ -313,19 +312,19 @@ $select_rss .=	'</select>';
 $get_tax = 0;
 if($post_data['post_product_tax'] == '1') {
 	$sel_tax_1 = 'selected';
-	$get_tax = $fc_preferences['posts_products_default_tax'];
+	$get_tax = $fc_preferences['prefs_posts_products_default_tax'];
 } else if($post_data['post_product_tax'] == '2') {
 	$sel_tax_2 = 'selected';
-	$get_tax = $fc_preferences['posts_products_tax_alt1'];
+	$get_tax = $fc_preferences['prefs_posts_products_tax_alt1'];
 } else if($post_data['post_product_tax'] == '3') {
 	$sel_tax_3 = 'selected';
-	$get_tax = $fc_preferences['posts_products_tax_alt2'];
+	$get_tax = $fc_preferences['prefs_posts_products_tax_alt2'];
 }
 
 $select_tax = "<select name='post_product_tax' class='form-control custom-select' id='tax'>";
-$select_tax .= '<option value="1" '.$sel_tax_1.'>'.$fc_preferences['posts_products_default_tax'].'</option>';
-$select_tax .= '<option value="2" '.$sel_tax_2.'>'.$fc_preferences['posts_products_tax_alt1'].'</option>';
-$select_tax .= '<option value="3" '.$sel_tax_3.'>'.$fc_preferences['posts_products_tax_alt2'].'</option>';
+$select_tax .= '<option value="1" '.$sel_tax_1.'>'.$fc_preferences['prefs_posts_products_default_tax'].'</option>';
+$select_tax .= '<option value="2" '.$sel_tax_2.'>'.$fc_preferences['prefs_posts_products_tax_alt1'].'</option>';
+$select_tax .= '<option value="3" '.$sel_tax_3.'>'.$fc_preferences['prefs_posts_products_tax_alt2'].'</option>';
 $select_tax .= '</select>';
 
 /* add text snippet to prices */
