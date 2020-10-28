@@ -48,6 +48,24 @@ if($array_mod_slug[0] == 'p' && is_numeric($array_mod_slug[1])) {
 	$posts_start = $array_mod_slug[1];
 }
 
+if($page_contents['page_type_of_use'] == 'display_post' AND $get_post_id == '') {
+	/* we are on the post display page but we have no post id
+	 * get a blog page and redirect
+	 */
+	
+	$target_page = $db_content->get("fc_pages", "page_permalink", [
+		"AND" => [
+			"page_posts_categories[!]" => "",
+			"page_language" => $page_contents['page_language']
+		]
+	]);
+
+	
+	header("HTTP/1.1 301 Moved Permanently");
+	header("Location: /$target_page");
+	header("Connection: close");
+}
+
 
 switch ($display_mode) {
     case "list_posts":
