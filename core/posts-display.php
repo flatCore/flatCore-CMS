@@ -2,7 +2,6 @@
 //error_reporting(E_ALL ^E_NOTICE);
 
 
-
 $post_data = fc_get_post_data($get_post_id);
 
 $post_images = explode("<->", $post_data['post_images']);
@@ -97,14 +96,14 @@ if($post_data['post_type'] == 'm') {
 $post_teaser = htmlspecialchars_decode($post_data['post_teaser']);
 $post_text = htmlspecialchars_decode($post_data['post_text']);
 
-$this_entry = str_replace("{post_author}", $post_data['author'], $this_entry);
+$this_entry = str_replace("{post_author}", $post_data['post_author'], $this_entry);
 $this_entry = str_replace('{post_title}', $post_data['post_title'], $this_entry);
 $this_entry = str_replace('{post_teaser}', $post_teaser, $this_entry);
 $this_entry = str_replace('{post_text}', $post_text, $this_entry);
-$this_entry = str_replace("{post_type}", $post_data['type'], $this_entry);
+$this_entry = str_replace("{post_type}", $post_data['post_type'], $this_entry);
 $this_entry = str_replace('{post_img_src}', $first_post_image, $this_entry);
 
-$this_entry = str_replace("{post_releasedate_ts}", $post_data['releasedate'], $this_entry); /* timestring */
+$this_entry = str_replace("{post_releasedate_ts}", $post_data['post_releasedate'], $this_entry); /* timestring */
 $this_entry = str_replace("{post_releasedate}", $post_releasedate, $this_entry);
 $this_entry = str_replace("{post_releasedate_year}", $post_releasedate_year, $this_entry);
 $this_entry = str_replace("{post_releasedate_month}", $post_releasedate_month, $this_entry);
@@ -121,12 +120,12 @@ $this_entry = str_replace("{event_end_day}", $event_end_day, $this_entry);
 $this_entry = str_replace("{event_end_month}", $event_end_month, $this_entry);
 $this_entry = str_replace("{event_end_year}", $event_end_year, $this_entry);
 $this_entry = str_replace("{post_tpl_event_hotline}", $tpl_hotline, $this_entry);
-$this_entry = str_replace("{post_event_hotline}", $post_data['event_hotline'], $this_entry);
-$this_entry = str_replace("{post_event_price_note}", $post_data['event_price_note'], $this_entry);
+$this_entry = str_replace("{post_event_hotline}", $post_data['post_event_hotline'], $this_entry);
+$this_entry = str_replace("{post_event_price_note}", $post_data['post_event_price_note'], $this_entry);
 $this_entry = str_replace("{post_tpl_event_prices}", $price_list, $this_entry);
 
 $this_entry = str_replace("{video_id}", $video['v'], $this_entry);
-$this_entry = str_replace("{post_external_link}", $post_data['link'], $this_entry);
+$this_entry = str_replace("{post_external_link}", $post_data['post_link'], $this_entry);
 $this_entry = str_replace("{post_cats}", $cat_links_string, $this_entry);
 $this_entry = str_replace("{back_to_overview}", $lang['back_to_overview'], $this_entry);
 $this_entry = str_replace("{back_link}", "/$fct_slug", $this_entry);

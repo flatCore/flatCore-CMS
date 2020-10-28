@@ -113,8 +113,7 @@ if($show_end > $cnt_filter_posts) {
 
 $posts_list = '';
 foreach($get_posts as $k => $post) {
-	
-	
+		
 	$post_releasedate = date('Y-m-d',$get_posts[$k]['post_releasedate']);
 	$post_releasedate_year = date('Y',$get_posts[$k]['post_releasedate']);
 	$post_releasedate_month = date('m',$get_posts[$k]['post_releasedate']);
