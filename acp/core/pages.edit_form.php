@@ -438,6 +438,9 @@ echo '<legend>'.$lang['select_post_type'].'</legend>';
 	if(strpos($page_posts_types, 'e') !== FALSE) {
 		$check_e = 'checked';
 	}
+	if(strpos($page_posts_types, 'l') !== FALSE) {
+		$check_l = 'checked';
+	}
 
 	echo '<div class="form-check">';
 	echo '<input type="checkbox" class="form-check-input" id="type_m" name="page_post_types[]" value="m" '.$check_m.'>';
@@ -462,6 +465,11 @@ echo '<legend>'.$lang['select_post_type'].'</legend>';
 	echo '<div class="form-check">';
 	echo '<input type="checkbox" class="form-check-input" id="type_p" name="page_post_types[]" value="p" '.$check_p.'>';
 	echo '<label class="form-check-label" for="type_p">'.$lang['post_type_product'].'</label>';
+	echo '</div>';
+	
+	echo '<div class="form-check">';
+	echo '<input type="checkbox" class="form-check-input" id="type_l" name="page_post_types[]" value="l" '.$check_l.'>';
+	echo '<label class="form-check-label" for="type_l">'.$lang['post_type_link'].'</label>';
 	echo '</div>';
 	
 	echo '<hr>';

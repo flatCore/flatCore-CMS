@@ -263,6 +263,8 @@ foreach($get_posts as $k => $post) {
 	$this_entry = str_replace("{post_product_unit}", $get_posts[$k]['post_product_unit'], $this_entry);
 	$this_entry = str_replace("{post_product_price_label}", $get_posts[$k]['post_product_price_label'], $this_entry);
 	
+	/* links */
+	$this_entry = str_replace("{post_external_link}", $get_posts[$k]['post_link'], $this_entry);
 	
 	$this_entry = str_replace("{post_thumbnails}", $thumbnails_str, $this_entry);
 	
