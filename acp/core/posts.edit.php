@@ -67,7 +67,6 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 		$post_slug = "$post_date_year/$post_date_month/$post_date_day/$clean_title/";
 	}
 
-	//$post_lang = @implode("<->", $_POST['post_languages']);
 	$post_categories = @implode("<->", $_POST['post_categories']);
 	
 	$post_images_string = @implode("<->", $_POST['picker1_images']);
@@ -76,6 +75,14 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 	
 	$product_price_net = str_replace('.', '', $_POST['post_product_price_net']);
 	$product_price_net = str_replace(',', '.', $product_price_net);
+	
+	/* fix on top */
+	
+	if($_POST['post_fixed'] == 'fixed') {
+		$post_fixed = 1;
+	} else {
+		$post_fixed = 2;
+	}
 	
 	/* gallery thumbnails */
 	if($_POST['del_tmb'] != '') {
@@ -246,7 +253,7 @@ $select_priority .= '</select>';
 
 
 /* fix post on top */
-if($post_data['post_fixed'] == 'fixed') {
+if($post_data['post_fixed'] == '1') {
 	$checked_fixed = 'checked';
 }
 $checkbox_fixed  = '<div class="form-check">';

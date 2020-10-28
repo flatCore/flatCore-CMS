@@ -248,7 +248,7 @@ if($cnt_filter_posts > 0) {
 		$icon_fixed = '';
 		$draft_class = '';
 		
-		if($get_posts[$i]['post_fixed'] == 'fixed') {
+		if($get_posts[$i]['post_fixed'] == '1') {
 			$icon_fixed = '<a href="acp.php?tn=posts&a=start&rfixed='.$get_posts[$i]['post_id'].'">'.$icon['star'].'</a>';
 		} else {
 			$icon_fixed = '<a href="acp.php?tn=posts&a=start&sfixed='.$get_posts[$i]['post_id'].'">'.$icon['star_outline'].'</a>';
