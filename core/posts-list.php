@@ -140,14 +140,11 @@ foreach($get_posts as $k => $post) {
 	$post_images = explode("<->", $get_posts[$k]['post_images']);
 	if($post_images[1] != "") {
 		$first_post_image = '/' . $img_path . '/' . str_replace('../content/images/','',$post_images[1]);
-	} else if($fc_prefs['default_banner'] == "" OR $fc_prefs['default_banner'] == "use_standard") {
-		$first_post_image = FC_INC_DIR ."/modules/publisher.mod/$pub_tpl_dir/images/no-image.png";
-	} else if($fc_prefs['default_banner'] == "without_image") {
-		$this_entry = $tpl_list_m_wo;
+	} else if($fc_prefs['prefs_posts_default_banner'] == "without_image") {
+		$first_post_image = '';
 	} else {
-		$first_post_image = "/$img_path/" . $pub_preferences['default_banner'];
+		$first_post_image = "/$img_path/" . $fc_prefs['prefs_posts_default_banner'];
 	}
-	
 	
 	
 	
@@ -158,6 +155,7 @@ foreach($get_posts as $k => $post) {
 			$this_entry = $tpl_list_m_wo;
 		}
 	}
+	
 	if($get_posts[$k]['post_type'] == 'i') {
 		$this_entry = $tpl_list_i;
 	}
