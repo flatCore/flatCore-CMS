@@ -131,11 +131,14 @@ $this_entry = str_replace("{post_cats}", $cat_links_string, $this_entry);
 $this_entry = str_replace("{back_to_overview}", $lang['back_to_overview'], $this_entry);
 $this_entry = str_replace("{back_link}", "/$fct_slug", $this_entry);
 
+/* products */
+$post_price_gross = $post_data['post_product_price_net']*($post_data['post_product_tax']+100)/100;;
+$post_price_gross = fc_post_print_currency($post_price_gross);
 $this_entry = str_replace("{post_price_gross}", $post_price_gross, $this_entry);
-$this_entry = str_replace("{post_currency}", $post_data['product_currency'], $this_entry);
-$this_entry = str_replace("{post_product_unit}", $post_data['product_unit'], $this_entry);
-$this_entry = str_replace("{post_product_amount}", $post_data['product_amount'], $this_entry);
-$this_entry = str_replace("{post_product_price_label}", $post_data['product_price_label'], $this_entry);
+$this_entry = str_replace("{post_currency}", $post_data['post_product_currency'], $this_entry);
+$this_entry = str_replace("{post_product_unit}", $post_data['post_product_unit'], $this_entry);
+$this_entry = str_replace("{post_product_amount}", $post_data['post_product_amount'], $this_entry);
+$this_entry = str_replace("{post_product_price_label}", $post_data['post_product_price_label'], $this_entry);
 
 if($post_data['posts_product_textlib_content'] != 'no_snippet') {
 	$textlib_content = get_textlib($post_data['posts_product_textlib_content'],$languagePack);

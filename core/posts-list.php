@@ -230,17 +230,19 @@ foreach($get_posts as $k => $post) {
 	$this_entry = str_replace('{post_title}', $get_posts[$k]['post_title'], $this_entry);
 	$this_entry = str_replace('{post_teaser}', $post_teaser, $this_entry);
 	$this_entry = str_replace('{post_img_src}', $first_post_image, $this_entry);
-	
-	$this_entry = str_replace("{video_id}", $video['v'], $this_entry);
-	
-	$this_entry = str_replace('{post_releasedate}', $post_releasedate, $this_entry);
 	$this_entry = str_replace("{post_cats}", $cat_str, $this_entry);
 	
+	/* video */
+	$this_entry = str_replace("{video_id}", $video['v'], $this_entry);
+	
+	/* dates */
+	$this_entry = str_replace('{post_releasedate}', $post_releasedate, $this_entry);
 	$this_entry = str_replace("{post_releasedate_ts}", $get_posts[$k]['post_releasedate'], $this_entry); /* timestring */
 	$this_entry = str_replace("{post_releasedate}", $post_releasedate, $this_entry);
-
 	$this_entry = str_replace("{post_lastedit}", $post_lastedit, $this_entry);
 	$this_entry = str_replace("{post_lastedit_from}", $post_lastedit_from, $this_entry);
+	
+	/* events */
 	$this_entry = str_replace("{event_start_day}", $event_start_day, $this_entry);
 	$this_entry = str_replace("{event_start_month}", $event_start_month, $this_entry);
 	$this_entry = str_replace("{event_start_month_text}", $event_start_month_text, $this_entry);
@@ -249,9 +251,19 @@ foreach($get_posts as $k => $post) {
 	$this_entry = str_replace("{event_end_month}", $event_end_month, $this_entry);
 	$this_entry = str_replace("{event_end_year}", $event_end_year, $this_entry);
 	$this_entry = str_replace("{post_tpl_event_hotline}", $tpl_hotline, $this_entry);
-	$this_entry = str_replace("{post_event_hotline}", $post_data['event_hotline'], $this_entry);
-	$this_entry = str_replace("{post_event_price_note}", $post_data['event_price_note'], $this_entry);
-	$this_entry = str_replace("{post_tpl_event_prices}", $price_list, $this_entry);	
+	$this_entry = str_replace("{post_event_hotline}", $get_posts[$k]['post_event_hotline'], $this_entry);
+	$this_entry = str_replace("{post_event_price_note}", $get_posts[$k]['post_event_price_note'], $this_entry);
+	$this_entry = str_replace("{post_tpl_event_prices}", $price_list, $this_entry);
+	
+	/* products */
+	$post_price_gross = $get_posts[$k]['post_product_price_net']*($get_posts[$k]['post_product_tax']+100)/100;;
+	$post_price_gross = fc_post_print_currency($post_price_gross);
+	
+	$this_entry = str_replace("{post_price_gross}", $post_price_gross, $this_entry);
+	$this_entry = str_replace("{post_currency}", $get_posts[$k]['post_product_currency'], $this_entry);
+	$this_entry = str_replace("{post_product_unit}", $get_posts[$k]['post_product_unit'], $this_entry);
+	$this_entry = str_replace("{post_product_price_label}", $get_posts[$k]['post_product_price_label'], $this_entry);
+	
 	
 	$this_entry = str_replace("{post_thumbnails}", $thumbnails_str, $this_entry);
 	

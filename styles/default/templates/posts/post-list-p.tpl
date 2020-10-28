@@ -6,6 +6,16 @@
 			</div>
 		</div>
 		<div class="col-md-8">
+			
+			<div class="price-tag">
+				<div class="clearfix">
+					<div class="price-tag-label">{post_product_price_label}</div>
+				</div>
+				<div class="price-tag-inner">
+				{post_currency} {post_price_gross} <span class="product-unit">{post_product_unit}</span>
+				</div>
+			</div>
+			
 			<span class="post-author">{post_author}</span> <span class="post-releasedate">{post_releasedate}</span>
 			<a class="post-headline-link" href="{post_href}"><h3>{post_title}</h3></a>
 			{post_teaser}
