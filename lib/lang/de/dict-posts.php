@@ -46,6 +46,7 @@ $lang['label_default_image'] = 'Standard Bild';
 $lang['label_image_selected'] = 'Ausgewählte Bilder';
 $lang['label_language'] = 'Sprache';
 $lang['label_categories'] = 'Rubriken';
+$lang['label_all_categories'] = 'Alle Rubriken';
 $lang['label_priority'] = 'Priorität';
 $lang['label_author'] = 'Autor';
 $lang['label_source'] = 'Quelle';

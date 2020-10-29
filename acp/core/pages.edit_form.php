@@ -391,6 +391,18 @@ echo '<legend>'.$lang['categories'].'</legend>';
 
 $categories = fc_get_categories();
 $page_cats_array = explode(',', $page_posts_categories);
+
+$checked_cat_all = '';
+if(in_array('all', $page_cats_array)) {
+	$checked_cat_all = 'checked';
+}
+	
+echo '<div class="form-check">';
+echo '<input type="checkbox" class="form-check-input" id="cat_all" name="page_post_categories[]" value="all" '.$checked_cat_all.'>';
+echo '<label class="form-check-label" for="cat_all">'.$lang['label_all_categories'].'</label>';
+echo '</div><hr>';
+
+
 for($i=0;$i<count($categories);$i++) {
 	
 	$checked_cat = '';
