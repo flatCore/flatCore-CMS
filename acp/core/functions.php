@@ -961,7 +961,7 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 		"media_version" => "$version",
 		"media_filesize" => "$filesize",
 		"media_lastedit" => "$lastedit",
-		"media_type" => "$type"		
+		"media_type" => "$filetype"		
 	];
 	
 	if($cnt > 0) {
@@ -1063,10 +1063,6 @@ function fc_select_img_widget($images,$seleced_img,$prefix='',$id=1) {
 	if(!array($seleced_img)) {
 		$seleced_img = array();
 	}
-	
-	echo '<pre>';
-	//print_r($images);
-	echo '</pre>';
 	
 	$choose_images  = '<div class="scroll-container">';
 	$choose_images .= '<select multiple="multiple" class="image-picker show-html" name="picker'.$id.'_images[]">';
