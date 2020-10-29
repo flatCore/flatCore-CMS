@@ -45,6 +45,7 @@ $fc_db_index 	= FC_CONTENT_DIR . "/SQLite/index.sqlite3";
  */
  
 $img_path 	= FC_CONTENT_DIR . "/images";
+$img_tmb_path 	= FC_CONTENT_DIR . "/images_tmb";
 $files_path = FC_CONTENT_DIR . "/files";
 
 define('FC_CORE_DIR', dirname(__FILE__) . DIRECTORY_SEPARATOR);
