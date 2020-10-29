@@ -144,7 +144,7 @@ if($upload_type == 'files') {
 			$filetype = mime_content_type(realpath($target));
 			$filesize = filesize(realpath($target));
 			if($_POST['file_mode'] != 'overwrite') {
-				fc_write_media_data_name($target,$filesize,$time,$filetype);
+				fc_write_media_data_name($target,'',$filesize,$time,$filetype);
 			}		
 		}
 	  
@@ -317,12 +317,17 @@ function fc_write_media_data_name($filename,$store_tmb_name,$filesize,$time,$med
 	global $languagePack;
 	
 	$filename = substr($filename, 3,strlen($filename));
+	$store_tmb_name = substr($store_tmb_name, 3,strlen($store_tmb_name));
+	
+	$uploader = $_SESSION['user_nick'];
 	
 	$columns = [
 		"media_file" => "$filename",
 		"media_thumb" => "$store_tmb_name",
 		"media_filesize" => "$filesize",
 		"media_lastedit" => "$time",
+		"media_upload_time" => "$time",
+		"media_upload_from" => "$uploader",
 		"media_type" => "$mediatype",
 		"media_lang" => "$languagePack"	
 	];

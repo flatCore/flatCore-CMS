@@ -263,22 +263,10 @@ $checkbox_fixed .= '</div>';
 
 
 /* image widget */
-$images = fc_get_all_images_rec($prefs_posts_images_prefix,'../'.IMAGES_FOLDER.'');
+$images = fc_get_all_media_data('image');
 
-foreach($images as $img) {
-	$filemtime = date ("Y", filemtime("$img"));
-	$all_images[] = array('name' => $img, 'dateY' => $filemtime);
-}
-
-foreach ($all_images as $key => $row) {
-	$date[$key]  = $row['dateY'];
-  $name[$key] = $row['name'];
-}
-
-/* we sort the images from new to old and from a to z */
-array_multisort($date, SORT_DESC, $name, SORT_ASC, $all_images);
 $array_images = explode("<->", $post_data['post_images']);
-$choose_images = fc_select_img_widget($all_images,$array_images,$prefs_posts_images_prefix,1);
+$choose_images = fc_select_img_widget($images,$array_images,$prefs_posts_images_prefix,1);
 
 /* status | draft or published */
 if($post_data['post_status'] == "draft") {

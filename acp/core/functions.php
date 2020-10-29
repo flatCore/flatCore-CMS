@@ -855,6 +855,30 @@ function fc_write_comment($author, $message, $parent, $id = NULL) {
 }
 
 
+/**
+ * get data from fc_media
+ * all files bei type f.e. 'image'
+ */
+ 
+ function fc_get_all_media_data($type) {
+	 
+	global $db_content;
+	
+	$media_data = $db_content->select("fc_media","*",[
+
+		"AND" => [
+			"media_type[~]" => "$type"
+		],
+		"ORDER" => [
+			"media_upload_time" => "DESC"
+			]
+	]);
+	
+	return $media_data;
+	 
+	 
+ }
+ 
 
 /**
  * get data from fc_media
@@ -1039,7 +1063,11 @@ function fc_select_img_widget($images,$seleced_img,$prefix='',$id=1) {
 	if(!array($seleced_img)) {
 		$seleced_img = array();
 	}
-
+	
+	echo '<pre>';
+	//print_r($images);
+	echo '</pre>';
+	
 	$choose_images  = '<div class="scroll-container">';
 	$choose_images .= '<select multiple="multiple" class="image-picker show-html" name="picker'.$id.'_images[]">';
 	
@@ -1056,18 +1084,28 @@ function fc_select_img_widget($images,$seleced_img,$prefix='',$id=1) {
 	
 	for($i=0;$i<count($images);$i++) {
 		
-		$img_filename = basename($images[$i]['name']);
-		$image_name = $images[$i]['name'];
-		$imgsrc = "../$img_path/$images[$i][name]";	
-		$filemtime = $images[$i]['dateY'];
+		$img_filename = basename($images[$i]['media_file']);
+		$image_name = $images[$i]['media_file'];
+		$image_tmb_name = $images[$i]['media_thumb'];
+		$imgsrc = "../$img_path/$images[$i][media_file]";
+		$lastedit = $images[$i]['media_lastedit'];
+		$lastedit_year = date('Y',$lastedit);
+		$filemtime = $lastedit_year;
 		
 		if($prefix != '') {
 			if((strpos($image_name, $prefix)) === false) {
 				continue;
 			}
 		}
+		
+		if(file_exists($image_tmb_name)) {
+			$preview = $image_tmb_name;
+		} else {
+			$preview = $image_name;
+		}
+		
 		/* new label for each year */
-		if($images[$i-1]['dateY'] != $filemtime) {	
+		if(date('Y',$images[$i-1]['media_lastedit']) != $lastedit_year) {	
 			if($i == 0) {
 				$choose_images .= '<optgroup label="'.$filemtime.'">'."\r\n";
 			} else {
@@ -1076,7 +1114,7 @@ function fc_select_img_widget($images,$seleced_img,$prefix='',$id=1) {
 		}
 		
 		if(!in_array($image_name, $seleced_img)) {
-			$choose_images .= '<option data-img-src="'.$image_name.'" value="'.$image_name.'">'.$img_filename.'</option>'."\r\n";
+			$choose_images .= '<option data-img-src="'.$preview.'" value="'.$image_name.'">'.$img_filename.'</option>'."\r\n";
 		}
 		
 	}
@@ -1159,6 +1197,60 @@ function fc_remove_gallery($id,$dir) {
 	
 	
 }
+
+
+
+
+function fc_create_tmb($img_src, $tmb_name, $tmb_width, $tmb_height, $tmb_quality) {
+	
+	global $img_tmb_path;
+	
+	/* thumbnail directories */
+	$tmb_dir = '../'.$img_tmb_path;
+	$tmb_dir_year = $tmb_dir.'/'.date('Y',time());
+	$tmb_destination = $tmb_dir_year.'/'.date('m',time());
+	if(!is_dir($tmb_dir_year)) {
+		mkdir($tmb_dir_year);
+	}
+	if(!is_dir($tmb_destination)) {
+		mkdir($tmb_destination);
+	}
+	
+	$arr_image_details	= GetImageSize("$img_src");
+	$original_width		= $arr_image_details[0];
+	$original_height	= $arr_image_details[1];
+	$a = $tmb_width / $tmb_height;
+  $b = $original_width / $original_height;
+	
+	
+	if ($a<$b) {
+     $new_width = $tmb_width;
+     $new_height	= intval($original_height*$new_width/$original_width);
+  } else {
+     $new_height = $tmb_height;
+     $new_width	= intval($original_width*$new_height/$original_height);
+  }
+	
+	if(($original_width <= $tmb_width) AND ($original_height <= $tmb_height)) {
+	  $new_width = $original_width;
+	  $new_height = $original_height;
+  }
+  
+	if($arr_image_details[2]==1) { $imgt = "imagegif"; $imgcreatefrom = "imagecreatefromgif";  }
+	if($arr_image_details[2]==2) { $imgt = "imagejpeg"; $imgcreatefrom = "imagecreatefromjpeg";  }
+	if($arr_image_details[2]==3) { $imgt = "imagepng"; $imgcreatefrom = "imagecreatefrompng";  }
+	
+	
+	if($imgt) { 
+		$old_image	= $imgcreatefrom("$img_src");
+		$new_image	= imagecreatetruecolor($new_width, $new_height);
+		imagecopyresampled($new_image,$old_image,0,0,0,0,$new_width,$new_height,$original_width,$original_height);
+		imagejpeg($new_image,"$tmb_destination/$tmb_name",$tmb_quality);
+		imagedestroy($new_image);
+	}
+	
+}
+
 
 
 

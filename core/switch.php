@@ -160,7 +160,7 @@ if($page_thumbnail == "") {
 	$page_thumbnail_array = explode("<->", $page_thumbnail);
 	$page_thumbnail = $page_thumbnail_array[0];
 	if(count($page_thumbnail_array > 0)) {
-		$page_thumbnail = '..'.array_shift($page_thumbnail_array);
+		$page_thumbnail = array_shift($page_thumbnail_array);
 		foreach($page_thumbnail_array as $t) {
 			$t = str_replace('/content/', $fc_base_url.'content/', $t);
 			$thumb[] = $t;
@@ -168,7 +168,6 @@ if($page_thumbnail == "") {
 		$smarty->assign('page_thumbnails', $thumb);
 	}
 }
-
 
 /* fix path to thumbnails and favicon */
 $page_thumbnail = str_replace('../content/', $fc_base_url.'content/', $page_thumbnail);

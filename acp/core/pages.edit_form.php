@@ -277,23 +277,12 @@ if($prefs_pagethumbnail_prefix != '') {
 	echo '<p>Prefix: '.$prefs_pagethumbnail_prefix.'</p>';
 }
 
-$images = fc_get_all_images_rec($prefs_pagethumbnail_prefix,'../'.IMAGES_FOLDER.'');
+$images = fc_get_all_media_data('image');
+
 $page_thumbnail_array = explode("&lt;-&gt;", $page_thumbnail);
-
-foreach($images as $img) {
-	$filemtime = date ("Y", filemtime("$img"));
-	$all_images[] = array('name' => $img, 'dateY' => $filemtime);
-}
-
-foreach ($all_images as $key => $row) {
-	$img_date[$key]  = $row['dateY'];
-  $img_name[$key] = $row['name'];
-}
-
-/* we sort the images from new to old and from a to z */
-array_multisort($img_date, SORT_DESC, $img_name, SORT_ASC, $all_images);
 $array_images = explode("<->", $post_data['post_images']);
-$choose_images = fc_select_img_widget($all_images,$page_thumbnail_array,$prefs_pagethumbnail_prefix,1);
+
+$choose_images = fc_select_img_widget($images,$page_thumbnail_array,$prefs_pagethumbnail_prefix,1);
 // picker1_images[]
 echo $choose_images;
 
