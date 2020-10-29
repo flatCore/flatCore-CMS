@@ -29,6 +29,7 @@ This branch will be merged into master, as soon as a new stable version is ready
 + Bootstrap - http://getbootstrap.com/
 + jQuery - https://jquery.com/
 + fancyBox - http://fancyapps.com/fancybox/3/
++ featherlight - https://github.com/noelboss/featherlight/
 + Masonry - http://masonry.desandro.com
 + DropzoneJS - http://www.dropzonejs.com
 + jquery.dirtyforms - https://github.com/snikch/jquery.dirtyforms
