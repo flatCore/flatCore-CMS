@@ -72,11 +72,11 @@ if(isset($_POST['save_snippet'])) {
 	$snippet_theme = $snippet_themes[0];
 	$snippet_template = $snippet_themes[1];
 	
-	if(count($_POST['snippet_thumbnail']) > 1) {
+	if(count($_POST['picker1_images']) > 1) {
 		
-		$snippet_thumbnail = implode("<->", array_unique($_POST['snippet_thumbnail']));
+		$snippet_thumbnail = implode("<->", array_unique($_POST['picker1_images']));
 	} else {
-		$st = $_POST['snippet_thumbnail'];
+		$st = $_POST['picker1_images'];
 		$snippet_thumbnail = $st[0].'<->';
 	}
 	
@@ -466,7 +466,6 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 		
 		$snippet_images = explode('<->',$get_snip_images);
 		
-		
 		echo '<tr>';
 		echo '<td>'.$lang_thumb.'</td>';
 		echo '<td nowrap>'.$show_snip_name.'</td>';
@@ -477,7 +476,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 		if(count($snippet_images) > 1) {
 			$x=0;
 			foreach($snippet_images as $img) {
-				if(is_file("../$img")) {
+				if(is_file("$img")) {
 					$x++;
 					echo '<a data-toggle="popover" data-trigger="hover" data-html="true" data-content="<img src=\''.$img.'\'>">'.$icon['images'].'</a> ';
 				}
