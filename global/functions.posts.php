@@ -25,7 +25,7 @@ function fc_get_post_entries($start=0,$limit=10,$filter) {
 	 * we ignore $order and $direction
 	 */
 
-	$order = "ORDER BY post_fixed DESC, sortdate DESC, post_priority DESC, post_id DESC";
+	$order = "ORDER BY post_fixed ASC, sortdate DESC, post_priority DESC, post_id DESC";
 	
 	if(FC_SOURCE == 'frontend') {
 		if($filter['types'] == '-event') {
@@ -124,16 +124,14 @@ function fc_get_post_entries($start=0,$limit=10,$filter) {
 	if($db_type == 'sqlite') {
 		$sql = "SELECT *, strftime('%Y-%m-%d',datetime(post_releasedate, 'unixepoch')) as 'sortdate', strftime('%Y-%m-%d',datetime(post_event_startdate, 'unixepoch')) as 'sortdate_events' FROM fc_posts $sql_filter $order $limit_str";
 	} else {
-		$sql = "SELECT *, UNIX_TIMESTAMP(post_releasedate) as 'sortdate', UNIX_TIMESTAMP(post_event_startdate) as 'sortdate_events' FROM fc_posts $sql_filter $order $limit_str";
+		$sql = "SELECT *, FROM_UNIXTIME(post_releasedate,'%Y-%m-%d') as 'sortdate', FROM_UNIXTIME(post_event_startdate,'%Y-%m-%d') as 'sortdate_events' FROM fc_posts $sql_filter $order $limit_str";
 	}
-	
-	
-	
-	$entries = $db_posts->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 		
+	$entries = $db_posts->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+			
 	$sql_cnt = "SELECT count(*) AS 'A', (SELECT count(*) FROM fc_posts $sql_filter) AS 'F'";
 	$stat = $db_posts->query("$sql_cnt")->fetch(PDO::FETCH_ASSOC);
-		
+
 	/* number of posts that match the filter */
 	$entries[0]['cnt_posts'] = $stat['F'];
 	return $entries;

@@ -39,7 +39,7 @@ if(is_numeric($_REQUEST['rfixed'])) {
 
 	$change_id = (int) $_REQUEST['rfixed'];	
 	$db_posts->update("fc_posts", [
-		"post_fixed" => ""
+		"post_fixed" => "2"
 	],[
 		"post_id" => $change_id
 	]);	
@@ -51,7 +51,7 @@ if(is_numeric($_REQUEST['sfixed'])) {
 
 	$change_id = (int) $_REQUEST['sfixed'];
 	$db_posts->update("fc_posts", [
-		"post_fixed" => "fixed"
+		"post_fixed" => "1"
 	],[
 		"post_id" => $change_id
 	]);	
