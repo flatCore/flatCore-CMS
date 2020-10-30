@@ -52,6 +52,7 @@ $cols = array(
   "prefs_default_publisher" => "VARCHAR(100) NOT NULL DEFAULT ''",
   "prefs_publisher_mode" => "VARCHAR(20) NOT NULL DEFAULT ''",
   "prefs_acp_session_lifetime" => "VARCHAR(20) NOT NULL DEFAULT ''",
+  "prefs_pagesort_minlength" => "VARCHAR(20) NOT NULL DEFAULT ''",
   
   /* posts */
   

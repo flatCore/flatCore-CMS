@@ -140,6 +140,7 @@ if(isset($_POST['save_prefs_misc'])) {
 			"prefs_anonymize_ip" =>  $prefs_anonymize_ip,
 			"prefs_xml_sitemap" =>  $prefs_xml_sitemap,
 			"prefs_nbr_page_versions" =>  $prefs_nbr_page_versions,
+			"prefs_pagesort_minlength" => $prefs_pagesort_minlength,
 			"prefs_smarty_cache" =>  $prefs_smarty_cache,
 			"prefs_smarty_cache_lifetime" =>  $_POST['prefs_smarty_cache_lifetime'],
 			"prefs_smarty_compile_check" =>  $prefs_smarty_compile_check
@@ -331,6 +332,8 @@ echo tpl_form_control_group('',$lang['acp_session_lifetime'],"<input class='form
 
 
 echo tpl_form_control_group('',$lang['prefs_nbr_page_versions'],"<input class='form-control' type='text' name='prefs_nbr_page_versions' value='$prefs_nbr_page_versions'>");
+
+echo tpl_form_control_group('',$lang['prefs_pagesort_minlength'],"<input class='form-control' type='text' name='prefs_pagesort_minlength' value='$prefs_pagesort_minlength'>");
 
 echo '<hr>';
 

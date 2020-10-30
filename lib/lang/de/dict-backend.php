@@ -397,6 +397,7 @@ $lang['prefs_mailer_send_test'] = "Test E-Mail versenden";
 $lang['prefs_mailer_send_test_success'] = "The email has been sent";
 
 $lang['prefs_nbr_page_versions'] = "Anzahl Seiten-Versionen";
+$lang['prefs_pagesort_minlength'] = "Mindestlänge der Zeichenkette &quot;Reihenfolge&quot; ";
 
 $lang['customize_database'] = 'Datenbank anpassen';
 $lang['migrate_database'] = 'Datenbank migrieren';
