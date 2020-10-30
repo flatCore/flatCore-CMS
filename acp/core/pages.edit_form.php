@@ -16,9 +16,9 @@ echo '<div class="card">';
 echo '<div class="card-header">';
 
 echo '<ul class="nav nav-tabs card-header-tabs" id="bsTabs" role="tablist">';
+echo '<li class="nav-item"><a class="nav-link" href="#position" data-toggle="tab">Position</a></li>';
 echo '<li class="nav-item"><a class="nav-link active" href="#info" data-toggle="tab">'.$lang['tab_info'].'</a></li>';
 echo '<li class="nav-item"><a class="nav-link" href="#content" data-toggle="tab">'.$lang['tab_content'].'</a></li>';
-echo '<li class="nav-item"><a class="nav-link" href="#extracontent" data-toggle="tab">'.$lang['tab_extracontent'].'</a></li>';
 echo '<li class="nav-item"><a class="nav-link" href="#meta" data-toggle="tab">'.$lang['tab_meta'].'</a></li>';
 
 echo '<li class="nav-item ml-auto"><a class="nav-link" href="#posts" data-toggle="tab" title="'.$lang['tab_posts'].'">'.$icon['clipboard_list'].'</a></li>';
@@ -35,87 +35,172 @@ echo '</ul>';
 echo '</div>';
 echo '<div class="card-body">';
 
+?>
+
+<script>
+	
+$(function() {
+	
+	var url = window.location.href;
+	var setTab = url.substring(url.indexOf("#") + 1);
+	$('a[href="#'+ setTab +'"]').tab('show');
+	
+	if(setTab == 'position') {
+		window.localStorage.removeItem("activeTab");
+	}
+	
+  $('a[data-toggle="tab"]').on('click', function(e) {
+      window.localStorage.setItem('activeTab', $(e.target).attr('href'));
+  });
+  var activeTab = window.localStorage.getItem('activeTab');
+  if (activeTab) {
+      $('#bsTabs a[href="' + activeTab + '"]').tab('show');
+      window.localStorage.removeItem("activeTab");
+  }
+});
+	
+</script>
+
+<?php
+
 echo '<div class="tab-content">';
 
-/* tab_info */
-echo'<div class="tab-pane fade show active" id="info">';
-
-$sql = "SELECT page_linkname, page_sort, page_title, page_language FROM fc_pages
+$sql = "SELECT page_linkname, page_sort, page_title, page_language, page_status FROM fc_pages
 		    WHERE page_sort != 'portal'
 		    ORDER BY page_language ASC, page_sort ASC	";
 
 $all_pages = $db_content->query($sql)->fetchAll();
-
 $all_pages = fc_array_multisort($all_pages, 'page_language', SORT_ASC, 'page_sort', SORT_ASC, SORT_NATURAL);
 
+/* tab position */
+echo'<div class="tab-pane fade" id="position">';
 
-$select_page_position  = '<select name="page_position" class="custom-select form-control">';
-$select_page_position .= '<option value="null">' . $lang['legend_unstructured_pages'] . '</option>';
+$cnt_all_pages = count($all_pages);
+$sm_string .= '<ul class="page-list">';
 
-
-if($page_sort == "portal") {
-	$select_page_position .= '<option value="portal" selected>' . $lang['f_homepage'] . '</option>';
-} else {
-	$select_page_position .= '<option value="portal">' . $lang['f_homepage'] . '</option>';
-}
-
-if(ctype_digit($page_sort)) {
-	$select_page_position .= '<option value="mainpage" selected>'.$lang['f_mainpage'].'</option>';
-} else {
-	$select_page_position .= '<option value="mainpage">'.$lang['f_mainpage'].'</option>';
-}
-
-$select_page_position .= '<optgroup label="'.$lang['f_subpage'].'">';
-
-for($i=0;$i<count($all_pages);$i++) {
-
-	$selected = '';
-	$disabled = '';
+for($i=0;$i<$cnt_all_pages;$i++) {
 	
-	if($all_pages[$i]['page_sort'] == $page_sort) {
-		$disabled = 'disabled';
+	$sm_page_id = $all_pages[$i]['page_id'];
+	$sm_page_sort = $all_pages[$i]['page_sort'];
+	$sm_page_linkname = $all_pages[$i]['page_linkname'];
+	$sm_page_title = $all_pages[$i]['page_title'];
+	$sm_page_status = $all_pages[$i]['page_status'];
+	$sm_page_permalink = $all_pages[$i]['page_permalink'];
+	$sm_page_lang = $all_pages[$i]['page_language'];
+	
+	$flag = '<img src="../../lib/lang/'.$sm_page_lang.'/flag.png" alt="'.$sm_page_lang.'" width="15">';
+	$short_title = first_words($all_pages[$i]['page_title'], 6);
+	
+	if($sm_page_sort == '') { continue; }
+	
+	$points_of_item[$i] = substr_count($sm_page_sort, '.');
+	
+	// new level
+	$start_ul = '';
+	if($points_of_item[$i] > $points_of_item[$i-1]) {
+		$start_ul = '<ul>';
+		$sm_string = substr(trim($sm_string), 0, -5);
 	}
 	
-	if($all_pages[$i]['page_sort'] == "") {
-		continue;
+	// end this level </ul>
+	$end_ul = '';
+	if($points_of_item[$i] < $points_of_item[$i-1]) {
+		$div_level = abs($points_of_item[$i] - $points_of_item[$i-1]);
+		$end_ul = str_repeat("</ul>", $div_level);
+		$end_ul .= '</li>';		
 	}
 	
+	$start_li = '<li>';
+	$end_li = '</li>';
+
+
 	if($pos = strripos($page_sort,".")) {
 		$string = substr($page_sort,0,$pos);
 	}
-		 
-	$parent_string = $all_pages[$i]['page_sort'];
-	
-	if($parent_string != "" && $parent_string == "$string") {
-	 	$selected = "selected";
+		
+	$checked = '';
+	if($sm_page_sort != "" && $sm_page_sort == "$string" && $page_language == $sm_page_lang) {
+		$checked = 'checked';
 	}
-		 
-	$short_title = first_words($all_pages[$i]['page_title'], 6);
-	$indent = str_repeat("-",substr_count($parent_string,'.'));
-	$select_page_position .= "<option value='$parent_string' $selected $disabled> $indent " . $all_pages[$i]['page_sort'] . ' | ' .$all_pages[$i]['page_linkname'] . ' - ' . $short_title ."</option>";
+	
+	$disabled = '';	
+	if($sm_page_sort == $page_sort) {
+		$disabled = 'disabled';
+	}
+	
+	$sm_string .= "$start_ul";
+	$sm_string .= "$end_ul";
+	$sm_string .= $start_li;
+	$sm_string .= '<label class="page-container" for="radio'.$i.'">';
+	$sm_string .= '<code>'.$sm_page_sort.'</code> - <strong>'.$sm_page_linkname.'</strong> '.$short_title.' '.$flag.'';
+	$sm_string .= '<span class="page-toggler"><input type="radio" id="radio'.$i.'" name="page_position" value="'.$sm_page_sort.'" '.$checked.' '.$disabled.'></span>';
+	$sm_string .= '</label>';
+	$sm_string .= $end_li;
+	
+	
 	
 }
-$select_page_position .= '</optgroup>';
-$select_page_position .= '</select>';
+
+$sm_string .= '</ul>';
 
 
+echo '<div class="row">';
+echo '<div class="col-md-9">';
+
+echo $lang['label_position_top'];
+
+echo '<ul class="page-list-top">';
+
+if($page_sort == "portal") {
+	$sel_page_sort_portal = 'checked';
+} else if(ctype_digit($page_sort)) {
+	$sel_page_sort_mainpage = 'checked';
+} else {
+	$sel_page_sort_default = 'checked';
+}
+
+echo '<li><label class="page-container">';
+echo $lang['label_single_page'];
+echo '<span class="page-toggler"><input type="radio" name="page_position" value="null" '.$sel_page_sort_default.'></span>';
+echo '</label></li>';
+
+echo '<li><label class="page-container">';
+echo $lang['label_portal_page'];
+echo '<span class="page-toggler"><input type="radio" name="page_position" value="portal" '.$sel_page_sort_portal.'></span>';
+echo '</label></li>';
+
+echo '<li><label class="page-container">';
+echo $lang['label_mainnav_page'];
+echo '<span class="page-toggler"><input type="radio" name="page_position" value="mainpage" '.$sel_page_sort_mainpage.'></span>';
+echo '</label></li>';
+
+echo '</ul>';
+
+// print the generated sitemap
+echo $lang['label_position_sub'];
+
+echo '<div class="scroll-container">';
+echo $sm_string;
+echo '</div>';
+
+echo '</div>';
+echo '<div class="col-md-3">';
 
 $page_order = substr (strrchr ($page_sort, "."), 1);
 if(ctype_digit($page_sort)) {
 	$page_order = $page_sort;
 }
-	
-echo '<div class="row">';
-echo '<div class="col-md-9">';
-echo tpl_form_control_group('',$lang['f_page_position'],$select_page_position);
-echo '</div>';
-echo '<div class="col-md-3">';
+
 echo tpl_form_control_group('',$lang['f_page_order'],"<input class='form-control' type='text' name='page_order' value='$page_order'>");
+
 echo '</div>';
 echo '</div>';
 
-echo '<hr>';
+echo '</div>'; // end tab position
 
+/* tab_info */
+echo'<div class="tab-pane fade show active" id="info">';
+	
 echo '<div class="row">';
 echo '<div class="col-md-9">';
 echo tpl_form_control_group('',$lang['f_page_linkname'],'<input class="form-control" type="text" name="page_linkname" value="'.$page_linkname.'">');
@@ -227,19 +312,31 @@ echo '</div>'; /* EOL tab_info */
 /* tab_content */
 echo '<div class="tab-pane fade" id="content">';
 
+echo '<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">';
+echo '<li class="nav-item nav-item-fc" role="presentation">';
+echo '<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-main" role="tab" aria-controls="pills-home" aria-selected="true">'.$lang['tab_content'].'</a>';
+echo '</li>';
+echo '<li class="nav-item nav-item-fc" role="presentation">';
+echo '<a class="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-sub" role="tab" aria-controls="pills-home" aria-selected="false">'.$lang['tab_extracontent'].'</a>';
+echo '</li>';
+echo '</ul>';
+
+echo '<div class="tab-content" id="pills-tabContent">';
+
+echo '<div class="tab-pane fade show active" id="pills-main" role="tabpanel" aria-labelledby="pills-main">';
 echo '<textarea name="page_content" class="form-control mceEditor textEditor switchEditor" id="textEditor">'.$page_content.'</textarea>';
+echo '</div>';
+echo '<div class="tab-pane fade" id="pills-sub" role="tabpanel" aria-labelledby="pills-sub">';
+echo '<textarea name="page_extracontent" class="form-control mceEditor textEditor switchEditor" id="textEditor2">'.$page_extracontent.'</textarea>';
+echo '</div>';
+
+echo '</div>';
+
+
 
 echo"</div>";
 /* EOL tab_content */
 
-
-/* tab_extracontent */
-
-echo '<div class="tab-pane fade" id="extracontent">';
-
-echo '<textarea name="page_extracontent" class="form-control mceEditor textEditor switchEditor" id="textEditor2">'.$page_extracontent.'</textarea>';
-
-echo '</div>'; /* EOL tab_extracontent */
 
 
 
@@ -251,16 +348,16 @@ echo '<div class="col-md-6">';
 
 echo tpl_form_control_group('',$lang['f_page_title'],'<input class="form-control" type="text" name="page_title" value="'.$page_title.'">');
 
-if($prefs_publisher_mode == 'overwrite') {
-	$page_meta_author = $prefs_default_publisher;
+if($page_meta_author == '') {
+	$page_meta_author = $_SESSION['user_firstname'] .' '. $_SESSION['user_lastname'];
 }
 
 if($page_meta_author == "" && $prefs_default_publisher != '') {
 	$page_meta_author = $prefs_default_publisher;
 }
 
-if($page_meta_author == "") {
-	$page_meta_author = $_SESSION['user_firstname'] .' '. $_SESSION['user_lastname'];
+if($prefs_publisher_mode == 'overwrite') {
+	$page_meta_author = $prefs_default_publisher;
 }
 
 echo tpl_form_control_group('',$lang['f_meta_author'],'<input class="form-control" type="text" name="page_meta_author" value="'.$page_meta_author.'">');
@@ -321,17 +418,27 @@ echo '</div>'; /* EOL tab_meta */
 /* tab_head */
 echo '<div class="tab-pane fade" id="head">';
 
-echo $lang['f_head_styles'];
-echo '<span class="silent"> &lt;style type=&quot;text/css&quot;&gt;</span> ... <span class="silent">&lt;/styles&gt;</span>';
+
+echo '<ul class="nav nav-pills mb-3" id="pills-tab-head" role="tablist">';
+echo '<li class="nav-item nav-item-fc" role="presentation">';
+echo '<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-head-styles" role="tab" aria-controls="pills-home" aria-selected="true">'.$lang['f_head_styles'].'</a>';
+echo '</li>';
+echo '<li class="nav-item nav-item-fc" role="presentation">';
+echo '<a class="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-head-code" role="tab" aria-controls="pills-home" aria-selected="false">'.$lang['f_head_enhanced'].'</a>';
+echo '</li>';
+echo '</ul>';
+
+echo '<div class="tab-content" id="pills-tab-head">';
+
+echo '<div class="tab-pane fade show active" id="pills-head-styles" role="tabpanel" aria-labelledby="pills-main">';
 echo '<textarea name="page_head_styles" class="form-control aceEditor_css" rows="12">'.$page_head_styles.'</textarea>';
 echo '<div id="CSSeditor"></div>';
-
-echo '<hr>';
-
-echo $lang['f_head_enhanced'];
-echo '<span class="silent"> &lt;head&gt;</span> ... <span class="silent">&lt;/head&gt;</span>';
+echo '</div>';
+echo '<div class="tab-pane fade" id="pills-head-code" role="tabpanel" aria-labelledby="pills-sub">';
 echo '<textarea name="page_head_enhanced" class="form-control aceEditor_html" rows="12">'.$page_head_enhanced.'</textarea>';
 echo '<div id="HTMLeditor"></div>';
+echo '</div>';
+echo '</div>';
 
 echo '</div>'; /* EOL tab_head */
 

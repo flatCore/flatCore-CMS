@@ -294,6 +294,12 @@ $lang['f_user_select_paused'] = "Locked temporarily";
 $lang['f_user_select_deleted'] = "Deleted";
 $lang['f_administrators'] = "Administrators";
 
+$lang['label_position_top'] = "This Page is a ...";
+$lang['label_single_page'] = "... single Page";
+$lang['label_portal_page'] = "... the Home Page";
+$lang['label_mainnav_page'] = "... Part of the main navigation";
+$lang['label_position_sub'] = "This Page is a Subpage of ...";
+
 $lang['label_title'] = "Title";
 $lang['label_description'] = "Description";
 $lang['label_keywords'] = "Keywords";

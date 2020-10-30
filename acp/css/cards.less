@@ -4,10 +4,11 @@
 	
 	.card-header {
 		background: darken(@widget_background,4);
+		border-bottom: 1px solid @widget_background;
 	}
 
 	.card-header-tabs {
-		border-bottom: 1px solid darken(@widget_background,20);
+		border-bottom: 1px solid @widget_background;
 		li {
 			.nav-link {
 				color: @brand_color;
@@ -19,8 +20,8 @@
 			}
 			.active,
 			.active:hover {
-				background: darken(@widget_background,20);
-				border-color: darken(@widget_background,20);
+				background: @widget_background;
+				border-color: @widget_background;
 				color: @font_color;
 			}
 		}

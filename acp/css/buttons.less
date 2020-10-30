@@ -134,3 +134,27 @@
 	padding: .25em .4em;
 	font-size: 75%;
 }
+
+
+.nav-item-fc {
+	.nav-link {
+		background: @btn_fc_background;
+		color: @btn_fc_color;
+			&:hover,
+			&:focus,
+			&.focus {
+		   	color: @btn_fc_color;
+				background: lighten(@btn_fc_background,10);
+		  }
+		
+			&:active,
+			&.active {
+		    background: @btn_fc_background_active;
+			 	.box-shadow(inset 0 0 2px rgba(0,0,0,.125));
+			 	color: @btn_fc_color_active;
+			 	&:hover {
+					color: @btn_fc_color;
+		   	}
+		  }
+	}	
+}

@@ -41,9 +41,10 @@ h6 small,
 }
 .card .card-header {
   background: #0f0f0f;
+  border-bottom: 1px solid #191919;
 }
 .card .card-header-tabs {
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid #191919;
 }
 .card .card-header-tabs li .nav-link {
   color: #40a4fb;
@@ -55,8 +56,8 @@ h6 small,
 }
 .card .card-header-tabs li .active,
 .card .card-header-tabs li .active:hover {
-  background: #000000;
-  border-color: #000000;
+  background: #191919;
+  border-color: #191919;
   color: #ccc;
 }
 @media (min-width: 992px) {
@@ -503,6 +504,28 @@ li.sidebar-sub-end {
 .btn-xs {
   padding: 0.25em 0.4em;
   font-size: 75%;
+}
+.nav-item-fc .nav-link {
+  background: #222;
+  color: #fff;
+}
+.nav-item-fc .nav-link:hover,
+.nav-item-fc .nav-link:focus,
+.nav-item-fc .nav-link.focus {
+  color: #fff;
+  background: #3c3c3c;
+}
+.nav-item-fc .nav-link:active,
+.nav-item-fc .nav-link.active {
+  background: #151515;
+  -webkit-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.125);
+  -moz-box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.125);
+  color: #40a4fb;
+}
+.nav-item-fc .nav-link:active:hover,
+.nav-item-fc .nav-link.active:hover {
+  color: #fff;
 }
 .show-thumb {
   width: 60px;
@@ -1602,4 +1625,116 @@ ul.image_picker_selector li .thumbnail.selected {
 ul.image_picker_selector li .thumbnail.selected > p {
   background: #40a4fb;
   border: 1px solid #40a4fb;
+}
+/* choose page position */
+ul.page-list-top {
+  list-style-position: inside;
+}
+ul.page-list-top li {
+  display: block;
+  list-style: none;
+  padding-top: 10px;
+  position: relative;
+  padding-left: 0;
+  margin-left: 0;
+}
+ul.page-list-top li span.page-toggler {
+  display: inline-block;
+  float: right;
+}
+ul.page-list-top label.page-container {
+  display: block;
+  min-height: 40px;
+  padding: 10px;
+  margin-bottom: 0;
+  background: #0c0c0c;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  border: 1px solid #0c0c0c;
+}
+ul.page-list-top label.page-container:hover {
+  background: #0f0f0f;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+  border: 1px solid #070707;
+}
+ul.page-list {
+  list-style-position: inside;
+}
+ul.page-list ul {
+  padding-left: 10px;
+}
+ul.page-list li {
+  display: block;
+  list-style: none;
+  padding-top: 10px;
+  position: relative;
+  padding-left: 10px;
+  margin-left: 10px;
+  border-left: 1px #40a4fb solid;
+}
+ul.page-list li span.page-toggler {
+  display: inline-block;
+  float: right;
+}
+ul.page-list li:before {
+  top: 0;
+  left: -1px;
+  width: 11px;
+  height: 31px;
+  border-bottom: 1px #40a4fb solid;
+  border-left: 1px #40a4fb solid;
+}
+ul.page-list li:after {
+  width: 10px;
+  height: 10px;
+  background-color: #40a4fb;
+  top: 26px;
+  left: -5px;
+  transform: rotateZ(45deg);
+  border: 1px #0c0c0c solid;
+  border-radius: 50%;
+}
+ul.page-list li:last-of-type {
+  border-left-color: transparent;
+}
+ul.page-list label.page-container {
+  display: block;
+  min-height: 40px;
+  padding: 10px;
+  margin-bottom: 0;
+  background: #0c0c0c;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  border: 1px solid #0c0c0c;
+}
+ul.page-list label.page-container:hover {
+  background: #0f0f0f;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+  border: 1px solid #070707;
+}
+ul.page-list ul li label.page-container {
+  background: rgba(12, 12, 12, 0.8);
+}
+ul.page-list ul ul li label.page-container {
+  background: rgba(12, 12, 12, 0.6);
+}
+ul.page-list ul ul ul li label.page-container {
+  background: rgba(12, 12, 12, 0.4);
+}
+ul.page-list:first-child {
+  min-width: 400px;
+  max-width: 100%;
+}
+ul.page-list:first-child > li:first-child {
+  padding-top: 0;
+}
+ul.page-list li:before,
+ul.page-list li:after {
+  content: '';
+  display: block;
+  position: absolute;
+}
+ul.page-list:first-child > li:first-child:before {
+  height: 21px;
+}
+ul.page-list:first-child > li:first-child:after {
+  top: 18px;
 }
