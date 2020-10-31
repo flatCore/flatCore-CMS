@@ -10,19 +10,26 @@ $target_page = $db_content->select("fc_pages", "page_permalink", [
 	]
 ]);
 
-// template files
-$tpl_list_index = file_get_contents("styles/$prefs_template/templates/posts/post-list-index.tpl");
-$tpl_list_m = file_get_contents("styles/$prefs_template/templates/posts/post-list-m.tpl");
-$tpl_list_m_wo = file_get_contents("styles/$prefs_template/templates/posts/post-list-m-wo.tpl");
-$tpl_list_i = file_get_contents("styles/$prefs_template/templates/posts/post-list-i.tpl");
-$tpl_list_g = file_get_contents("styles/$prefs_template/templates/posts/post-list-g.tpl");
-$tpl_list_v = file_get_contents("styles/$prefs_template/templates/posts/post-list-v.tpl");
-$tpl_list_e = file_get_contents("styles/$prefs_template/templates/posts/post-list-e.tpl");
-$tpl_list_l = file_get_contents("styles/$prefs_template/templates/posts/post-list-l.tpl");
-$tpl_list_p = file_get_contents("styles/$prefs_template/templates/posts/post-list-p.tpl");
+/**
+ * template files
+ * check if the page template $fc_template hast the posts tpl files
+ * if not, load files from the default directory
+ */
 
-$tpl_pagination = file_get_contents("styles/$prefs_template/templates/posts/pagination.tpl");
-$tpl_pagagination_list = file_get_contents("styles/$prefs_template/templates/posts/pagination_list.tpl");
+
+$tpl_list_index = fc_load_posts_tpl($fc_template,'post-list-index.tpl');
+$tpl_list_m = fc_load_posts_tpl($fc_template,'post-list-m.tpl');
+$tpl_list_m_wo = fc_load_posts_tpl($fc_template,'post-list-m-wo.tpl');
+$tpl_list_i = fc_load_posts_tpl($fc_template,'post-list-i.tpl');
+$tpl_list_g = fc_load_posts_tpl($fc_template,'post-list-g.tpl');
+$tpl_list_v = fc_load_posts_tpl($fc_template,'post-list-v.tpl');
+$tpl_list_e = fc_load_posts_tpl($fc_template,'post-list-e.tpl');
+$tpl_list_l = fc_load_posts_tpl($fc_template,'post-list-l.tpl');
+$tpl_list_p = fc_load_posts_tpl($fc_template,'post-list-p.tpl');
+
+
+$tpl_pagination = fc_load_posts_tpl($fc_template,'pagination.tpl');
+$tpl_pagagination_list = fc_load_posts_tpl($fc_template,'pagination_list.tpl');
 
 
 
@@ -162,7 +169,7 @@ foreach($get_posts as $k => $post) {
 		$this_entry = $tpl_list_g;
 		$gallery_dir = 'content/galleries/'.$entrydate_year.'/gallery'.$get_posts[$k]['post_id'].'/';
 		$fp = $gallery_dir.'*_tmb.jpg';
-		$tmb_tpl = file_get_contents("styles/$prefs_template/templates/posts/thumbnail.tpl");
+		$tmb_tpl = fc_load_posts_tpl($fc_template,'thumbnail.tpl');
 		$thumbs_array = glob("$fp");
 		arsort($thumbs_array);
 		$cnt_thumbs_array = count($thumbs_array);

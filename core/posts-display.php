@@ -48,18 +48,18 @@ $hits++;
 
 if($post_data['post_type'] == 'm') {
 	if($first_post_image != "") {
-		$this_entry = file_get_contents("styles/$prefs_template/templates/posts/post-display-m.tpl");
+		$this_entry = fc_load_posts_tpl($fc_template,'post-display-m.tpl');
 	} else {
-		$this_entry = file_get_contents("styles/$prefs_template/templates/posts/post-display-m-wo.tpl");
+		$this_entry = fc_load_posts_tpl($fc_template,'post-display-m-wo.tpl');
 	}
 } else if($post_data['post_type'] == 'i') {
-	$this_entry = file_get_contents("styles/$prefs_template/templates/posts/post-display-i.tpl");
+	$this_entry = fc_load_posts_tpl($fc_template,'post-display-i.tpl');
 } else if($post_data['post_type'] == 'g') {
-	$this_entry = file_get_contents("styles/$prefs_template/templates/posts/post-display-g.tpl");
+	$this_entry = fc_load_posts_tpl($fc_template,'post-display-g.tpl');
 	
 	$gallery_dir = 'content/galleries/'.$entrydate_year.'/gallery'.$post_data['post_id'].'/';
 	$fp = $gallery_dir.'*_tmb.jpg';
-	$tmb_tpl = file_get_contents("styles/$prefs_template/templates/posts/thumbnail.tpl");
+	$tmb_tpl = fc_load_posts_tpl($fc_template,'thumbnail.tpl');
 	$thumbs_array = glob("$fp");
 	arsort($thumbs_array);
 	$cnt_thumbs_array = count($thumbs_array);
@@ -80,17 +80,16 @@ if($post_data['post_type'] == 'm') {
 		}
 	}
 
-	
 } else if($post_data['post_type'] == 'v') {
-	$this_entry = file_get_contents("styles/$prefs_template/templates/posts/post-display-v.tpl");
+	$this_entry = fc_load_posts_tpl($fc_template,'post-display-v.tpl');
 	$vURL = parse_url($post_data['post_video_url']);
 	parse_str($vURL['query'],$video); //$video['v'] -> youtube video id
 } else if($post_data['post_type'] == 'e') {
-	$this_entry = file_get_contents("styles/$prefs_template/templates/posts/post-display-e.tpl");
+	$this_entry = fc_load_posts_tpl($fc_template,'post-display-e.tpl');
 } else if($post_data['post_type'] == 'l') {
-	$this_entry = file_get_contents("styles/$prefs_template/templates/posts/post-display-l.tpl");
+	$this_entry = fc_load_posts_tpl($fc_template,'post-display-l.tpl');
 } else if($post_data['post_type'] == 'p') {
-	$this_entry = file_get_contents("styles/$prefs_template/templates/posts/post-display-p.tpl");
+	$this_entry = fc_load_posts_tpl($fc_template,'post-display-p.tpl');
 }
 
 $post_teaser = htmlspecialchars_decode($post_data['post_teaser']);

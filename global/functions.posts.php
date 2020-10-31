@@ -224,5 +224,25 @@ function fc_set_pagination_query($display_mode,$start) {
 	return $pagination_link;
 }
 
+/**
+ * check if the template $tpl_dir has the posts tpl file
+ * if not, load files from the /default/ directory
+ * return tpl file contents (string)
+ */
+
+function fc_load_posts_tpl($tpl_dir,$tpl_file) {
+	
+	$check_template = 'styles/'.basename($tpl_dir).'/templates/posts/'.$tpl_file;
+	
+	if(is_file($check_template)) {
+		$contents = file_get_contents($check_template);
+	} else {
+		$fallback_tpl = 'styles/default/templates/posts/'.$tpl_file;
+		$contents = file_get_contents($fallback_tpl);
+	}
+	
+	return $contents;
+}
+
 
 ?>
