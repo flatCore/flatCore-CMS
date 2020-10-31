@@ -128,17 +128,28 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 		]
 	]);
 	
+	// if we have no target page - find a blog page
+	if($target_page[0] == '') {
+		$target_page = $db_content->select("fc_pages", "page_permalink", [
+			"AND" => [
+				"page_posts_categories[!]" => "",
+				"page_language" => $post_lang
+			]
+		]);		
+	}
 	
-	$rss_url = $fc_base_url.$target_page[0].$clean_title.'-'.$post_id.'.html';
-	$db_posts->update("fc_posts", [
-		"post_rss_url" => $rss_url
-	], [
-		"post_id" => $post_id
-	]);
-	
-	/* send to rss feed */
-	if($_POST['post_rss'] == 'on') {
-		add_feed("$post_title",$_POST['post_teaser'],"$rss_url","post_$id","",$post_releasedate);
+	if($target_page[0] != '') {
+		$rss_url = $fc_base_url.$target_page[0].$clean_title.'-'.$post_id.'.html';
+		$db_posts->update("fc_posts", [
+			"post_rss_url" => $rss_url
+		], [
+			"post_id" => $post_id
+		]);
+		
+		/* send to rss feed */
+		if($_POST['post_rss'] == 'on') {
+			add_feed("$post_title",$_POST['post_teaser'],"$rss_url","post_$id","",$post_releasedate);
+		}
 	}
 	
 	
@@ -285,6 +296,19 @@ if($_SESSION['drm_can_publish'] == "true") {
 $select_status .= '</select>';
 
 
+/* autor */
+
+if($post_data['post_author'] == '') {
+	$post_data['post_author'] = $_SESSION['user_firstname'] .' '. $_SESSION['user_lastname'];
+}
+
+if($post_data['post_author'] == "" && $prefs_default_publisher != '') {
+	$post_data['post_author'] = $prefs_default_publisher;
+}
+
+if($prefs_publisher_mode == 'overwrite') {
+	$post_data['post_author'] = $prefs_default_publisher;
+}
 
 
 /* RSS */
