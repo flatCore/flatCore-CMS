@@ -107,32 +107,33 @@ $lang['msg_register_intro_disabled'] 	= "There are no registrations possible.";
 $lang['msg_register_outro'] 	= "Please confirm here that you have read our terms of use and accept it.";
 
 
-$lang['msg_update_profile']   		 = "The user data have been updated";
-$lang['msg_update_profile_error']    = "The user data could not be updated";
-$lang['msg_upload_avatar_success']   = "The Avatar has been updated";
-$lang['msg_upload_avatar_filesize']  = "The Avatar is too big";
-$lang['msg_upload_avatar_filetype']  = "The image must be of type PNG";
-$lang['msg_signed_out']				 = "Signed out with success";
+$lang['msg_update_profile'] = "The user data have been updated";
+$lang['msg_update_profile_error'] = "The user data could not be updated";
+$lang['msg_upload_avatar_success'] = "The Avatar has been updated";
+$lang['msg_upload_avatar_filesize'] = "The Avatar is too big";
+$lang['msg_upload_avatar_filetype'] = "The image must be of type PNG";
+$lang['msg_signed_out'] = "Signed out with success";
 
 
-$lang['msg_search_undersized']    = "The query must be at least 3 letters long.";
-$lang['msg_search_results']    = "The query returned %d matches:";
-$lang['msg_search_no_results']    = "Your search returned no results";
+$lang['msg_search_undersized'] = "The query must be at least 3 letters long.";
+$lang['msg_search_results'] = "The query returned %d matches:";
+$lang['msg_search_no_results'] = "Your search returned no results";
 
 
-$lang['forgotten_psw']    = "Forgot your password?";
-$lang['forgotten_psw_mail_subject']    = "Your access data";
+$lang['forgotten_psw'] = "Forgot your password?";
+$lang['forgotten_psw_mail_subject'] = "Your access data";
 
-$lang['msg_forgotten_psw_step1']    = "You can now reset your password. The required activation key was sent to Your e-mail address.";
-$lang['msg_forgotten_psw_step2']    = "Your new password has been sent to your e-mail address.";
+$lang['msg_forgotten_psw_step1'] = "You can now reset your password. The required activation key was sent to Your e-mail address.";
+$lang['msg_forgotten_psw_step2'] = "Your new password has been sent to your e-mail address.";
 
-$lang['legend_ask_for_psw']			= "Reset Password";
-$lang['forgotten_psw_intro']    = "Please enter in the following field the email address of your user account. You will receive an email with the necessary information on how to reset your password.";
+$lang['legend_ask_for_psw'] = "Reset Password";
+$lang['forgotten_psw_intro'] = "Please enter in the following field the email address of your user account. You will receive an email with the necessary information on how to reset your password.";
 
-$lang['forgotten_psw_mail_info']    = "Hello {USERNAME},<br />You want to reset your password? Just click on the link below.<br />Please ignore this e-mail if the request to reset your password, is not by you.<br /><br />Reset your Password:<br />{RESET_LINK}";
+$lang['forgotten_psw_mail_info'] = "Hello {USERNAME},<br />You want to reset your password? Just click on the link below.<br />Please ignore this e-mail if the request to reset your password, is not by you.<br><br>Reset your Password:<br />{RESET_LINK}";
 
 
 $lang['forgotten_psw_mail_update']    = "<p>Hello {USERNAME},<br />Your password has been reset.</p> <p>Your new password is:<br />{temp_psw}</p>";
+$lang['posts_category_filter'] = 'Entries from Category <strong>{categorie}</strong>.';
 
 /* Dates */
 $lang['m01'] = "January";

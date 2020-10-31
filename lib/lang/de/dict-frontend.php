@@ -118,6 +118,8 @@ $lang['forgotten_psw_intro'] = "Bitte geben Sie in das folgende Eingabefeld die 
 $lang['forgotten_psw_mail_info'] = "Hallo {USERNAME},<br />Sie möchten Ihr Passwort zurücksetzen? Klicken Sie einfach auf den unten stehenden Link um ein neues Passwort zu erhalten.<br />Ignorieren Sie diese E-Mail, wenn die Anforderung zum Zurücksetzen Ihres Kennworts nicht von Ihnen stammt.<br /><br />Passwort zurücksetzen:<br />{RESET_LINK}";
 $lang['forgotten_psw_mail_update']  = "<p>Hallo {USERNAME},<br />Ihr Passwort wurde zurückgesetzt.</p> <p>Ihr neues Passwort lautet:<br />{temp_psw}</p>";
 
+$lang['posts_category_filter'] = 'Es werden nur Beiträge aus der Kategorie <strong>{categorie}</strong> angezeigt.';
+
 /* Dates */
 
 $lang['m01'] = "Januar";

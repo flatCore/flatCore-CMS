@@ -10,12 +10,15 @@ $target_page = $db_content->select("fc_pages", "page_permalink", [
 	]
 ]);
 
+if($target_page[0] == '') {
+	$target_page[0] = $fct_slug;
+}
+
 /**
  * template files
  * check if the page template $fc_template hast the posts tpl files
  * if not, load files from the default directory
  */
-
 
 $tpl_list_index = fc_load_posts_tpl($fc_template,'post-list-index.tpl');
 $tpl_list_m = fc_load_posts_tpl($fc_template,'post-list-m.tpl');
@@ -32,14 +35,10 @@ $tpl_pagination = fc_load_posts_tpl($fc_template,'pagination.tpl');
 $tpl_pagagination_list = fc_load_posts_tpl($fc_template,'pagination_list.tpl');
 
 
-
 $sql_start = ($posts_start*$posts_limit)-$posts_limit;
 if($sql_start < 0) {
 	$sql_start = 0;
 }
-
-
-
 
 
 $get_posts = fc_get_post_entries($sql_start,$posts_limit,$posts_filter);
@@ -50,64 +49,69 @@ $nextPage = $posts_start+$posts_limit;
 $prevPage = $posts_start-$posts_limit;
 $cnt_pages = ceil($cnt_filter_posts / $posts_limit);
 
-
-$pag_list = '';
-$arr_pag = array();
-
-for($i=0;$i<$cnt_pages;$i++) {
+if($cnt_pages > 1) {
+	$pag_list = '';
+	$arr_pag = array();
 	
-	$active_class = '';
-	$set_start = $i+1;
-	
-	if($i == 0 && $posts_start < 1) {
-		$set_start = 1;
-		$active_class = 'active';
+	for($i=0;$i<$cnt_pages;$i++) {
+		
+		$active_class = '';
+		$set_start = $i+1;
+		
+		if($i == 0 && $posts_start < 1) {
+			$set_start = 1;
+			$active_class = 'active';
+		}
+		
+		
+		if($set_start == $posts_start) {
+			$active_class = 'active';
+			$current_page = $set_start;
+		}
+		
+		$pagination_link = fc_set_pagination_query($display_mode,$set_start);
+		
+		$pag_list_item = $tpl_pagagination_list;
+		$pag_list_item = str_replace("{pag_href}", $pagination_link, $pag_list_item);
+		$pag_list_item = str_replace("{pag_nbr}", $set_start, $pag_list_item);
+		$pag_list_item = str_replace("{pag_active_class}", $active_class, $pag_list_item);
+		$arr_pag[] = $pag_list_item;
+		
 	}
 	
+	$pag_start = $current_page-4;
 	
-	if($set_start == $posts_start) {
-		$active_class = 'active';
-		$current_page = $set_start;
+	if($pag_start < 0) { $pag_start = 0; }
+	$arr_pag = array_slice($arr_pag, $pag_start, 5);
+	
+	foreach($arr_pag as $pag) {
+		$pag_list .= $pag;
 	}
 	
-	$pagination_link = fc_set_pagination_query($display_mode,$set_start);
+	$nextstart = $posts_start+1;
+	$prevstart = $posts_start-1;
 	
-	$pag_list_item = $tpl_pagagination_list;
-	$pag_list_item = str_replace("{pag_href}", $pagination_link, $pag_list_item);
-	$pag_list_item = str_replace("{pag_nbr}", $set_start, $pag_list_item);
-	$pag_list_item = str_replace("{pag_active_class}", $active_class, $pag_list_item);
-	$arr_pag[] = $pag_list_item;
+	$older_link_query = fc_set_pagination_query($display_mode,$nextstart);
+	$newer_link_query = fc_set_pagination_query($display_mode,$prevstart);
 	
-}
+	if($prevstart < 1) {
+		$prevstart = 1;
+		$newer_link_query = '#';
+	}
+	
+	if($nextstart > $cnt_pages) {
+		$older_link_query = '#';
+	}
 
-$pag_start = $current_page-4;
 
-if($pag_start < 0) { $pag_start = 0; }
-$arr_pag = array_slice($arr_pag, $pag_start, 5);
-
-foreach($arr_pag as $pag) {
-	$pag_list .= $pag;
-}
-
-$nextstart = $posts_start+1;
-$prevstart = $posts_start-1;
-
-$older_link_query = fc_set_pagination_query($display_mode,$nextstart);
-$newer_link_query = fc_set_pagination_query($display_mode,$prevstart);
-
-if($prevstart < 1) {
-	$prevstart = 1;
-	$newer_link_query = '#';
-}
-
-if($nextstart > $cnt_pages) {
-	$older_link_query = '#';
+	$tpl_pagination = str_replace("{pag_prev_href}", $newer_link_query, $tpl_pagination);
+	$tpl_pagination = str_replace("{pag_next_href}", $older_link_query, $tpl_pagination);
+	$tpl_pagination = str_replace("{pagination_list}", $pag_list, $tpl_pagination);
+} else {
+	$tpl_pagination = '';
 }
 
 
-$tpl_pagination = str_replace("{pag_prev_href}", $newer_link_query, $tpl_pagination);
-$tpl_pagination = str_replace("{pag_next_href}", $older_link_query, $tpl_pagination);
-$tpl_pagination = str_replace("{pagination_list}", $pag_list, $tpl_pagination);
 
 $show_start = $sql_start+1;
 $show_end = $show_start+($posts_limit-1);
@@ -288,6 +292,13 @@ $page_content = str_replace("{lang_entries}", $lang['label_entries'], $page_cont
 $page_content = str_replace("{lang_entries_total}", $lang['label_entries_total'], $page_content);
 $page_content = str_replace("{post_start_nbr}", $show_start, $page_content);
 $page_content = str_replace("{post_end_nbr}", $show_end, $page_content);
+
+if($display_mode == 'list_posts_category') {
+	$category_message = str_replace('{categorie}', $show_category_title, $lang['posts_category_filter']);
+	$page_content = str_replace("{category_filter}", $category_message, $page_content);
+} else {
+	$page_content = str_replace("{category_filter}", '', $page_content);
+}
 
 
 $modul_content = $page_content.$debug_string;

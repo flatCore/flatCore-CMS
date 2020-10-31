@@ -35,17 +35,32 @@ foreach($all_categories as $cats) {
 	if($cats['cat_name_clean'] == $array_mod_slug[0]) {
 		// show only posts from this category
 		$posts_filter['categories'] = $cats['cat_id'];
+		$display_mode = 'list_posts_category';
+		$show_category_title = $cats['cat_name'];
 		
-		if($array_mod_slug[1] == 'p' && is_numeric($array_mod_slug[2])) {
-			$posts_start = $array_mod_slug[2];
+		if($array_mod_slug[1] == 'p') {
+			
+			if(is_numeric($array_mod_slug[2])) {
+				$posts_start = $array_mod_slug[2];
+			} else {
+				header("HTTP/1.1 301 Moved Permanently");
+				header("Location: /$fct_slug");
+				header("Connection: close");
+			}				
 		}
-		
 	}
 }
 
+
 /* pagination f.e. /p/2/ or /p/3/ .... */
-if($array_mod_slug[0] == 'p' && is_numeric($array_mod_slug[1])) {
-	$posts_start = $array_mod_slug[1];
+if($array_mod_slug[0] == 'p') {
+	
+	if(is_numeric($array_mod_slug[1])) {
+		$posts_start = $array_mod_slug[1];
+	} else {
+		header("HTTP/1.1 301 Moved Permanently");
+		header("Location: /$fct_slug");
+		header("Connection: close");	}
 }
 
 if($page_contents['page_type_of_use'] == 'display_post' AND $get_post_id == '') {
@@ -73,6 +88,9 @@ switch ($display_mode) {
         break;
     case "show_post":
         include 'posts-display.php';
+        break;
+    case "list_posts_category":
+        include 'posts-list.php';
         break;
    default:
         include 'posts-list.php';

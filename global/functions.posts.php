@@ -1,6 +1,8 @@
 <?php
 	
-	
+/**
+ * get posts
+ */
 	
 function fc_get_post_entries($start=0,$limit=10,$filter) {
 	
@@ -208,14 +210,14 @@ function fc_set_pagination_query($display_mode,$start) {
 	global $pub_preferences;
 	global $array_mod_slug;
 	
-	if($display_mode == 'list_posts_by_category') {
-		$pagination_link = "/$fct_slug".$pub_preferences['url_separator_categories'].'/'.$pb_posts_filter['categories'].'/'.$pub_preferences['url_separator_pages'].'/'."$start/";
+	if($display_mode == 'list_posts_category') {
+		$pagination_link = "/$fct_slug".$array_mod_slug[0].'/p/'."$start/";
 	} else if($display_mode == 'list_archive_year') {
-		$pagination_link = "/$fct_slug".$array_mod_slug[0].'/'.$pub_preferences['url_separator_pages'].'/'."$start/";
+		$pagination_link = "/$fct_slug".$array_mod_slug[0].'/p/'."$start/";
 	} else if($display_mode == 'list_archive_month') {
-		$pagination_link = "/$fct_slug".$array_mod_slug[0].'/'.$array_mod_slug[1].'/'.$pub_preferences['url_separator_pages'].'/'."$start/";
+		$pagination_link = "/$fct_slug".$array_mod_slug[0].'/'.$array_mod_slug[1].'/p/'."$start/";
 	} else if($display_mode == 'list_archive_day') {
-		$pagination_link = "/$fct_slug".$array_mod_slug[0].'/'.$array_mod_slug[1].'/'.$array_mod_slug[2].'/'.$pub_preferences['url_separator_pages'].'/'."$start/";
+		$pagination_link = "/$fct_slug".$array_mod_slug[0].'/'.$array_mod_slug[1].'/'.$array_mod_slug[2].'/p/'."$start/";
 	} else {
 		$pagination_link = "/$fct_slug".'p/'."$start/";
 	}
