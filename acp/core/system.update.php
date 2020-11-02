@@ -358,6 +358,7 @@ function copy_recursive($source, $target) {
 
 function update_database($dbfile) {
 	
+	global $fc_db_content;
 	global $fc_db_user;
 	global $fc_db_stats;
 	global $fc_db_index;
@@ -371,29 +372,7 @@ function update_database($dbfile) {
 		unset($db_path,$table_name,$database);
 		
 		include $all_tables[$i]; // returns $cols and $table_name
-		
-		/*
-		if($database == "content") {
-			$db_path = "../$dbfile";
-		} elseif($database == "user") {
-			$db_path = "../$fc_db_user";
-		} elseif($database == "tracker") {
-			$db_path = "../$fc_db_stats";
-		} elseif($database == "index") {
-			$db_path = "../$fc_db_index";
-		} else {
-			$_SESSION['protocol'] .= '<b class="text-danger">DATABASE UNKNOWN:</b> '.$database.'<|>';
-			$_SESSION['errors_cnt']++;
-			continue;
-		}
-		
-		if(!is_file($db_path)) {
-			$_SESSION['protocol'] .= '<b class="text-danger">DATABASE NOT FOUND:</b> '.$db_path.'<|>';
-			$_SESSION['errors_cnt']++;
-			continue;
-		}
-		*/
-	
+			
 		$is_table = table_exists("$database","$table_name");
 	
 		if($is_table < 1) {

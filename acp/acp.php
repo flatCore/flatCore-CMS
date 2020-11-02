@@ -72,14 +72,17 @@ if(is_file('../config_database.php')) {
 	
 }
 
-
-
-
 define("INDEX_DB", "../$fc_db_index");
 define("FC_ROOT", str_replace("/acp","",FC_INC_DIR));
 define("IMAGES_FOLDER", "$img_path");
 define("FILES_FOLDER", "$files_path");
 define("FC_SOURCE", "backend");
+
+
+$db_index = new Medoo([
+	'database_type' => 'sqlite',
+	'database_file' => INDEX_DB
+]);	
 
 
 
