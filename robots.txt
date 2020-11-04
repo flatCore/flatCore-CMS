@@ -1,4 +1,4 @@
-# robots.txt flatCore
+# robots.txt
 User-agent: *
 Disallow: /acp/
 Disallow: /core/
