@@ -13,19 +13,22 @@ if(!defined('INSTALLER')) {
 require '../lib/Medoo.php';
 use Medoo\Medoo;
 
-$username = $_POST['username'];
-$mail = $_POST['mail'];
-$psw = $_POST['psw'];
+$username = $_SESSION['temp_username'];
+$mail = $_SESSION['temp_usermail'];
+$psw = $_SESSION['temp_userpsw'];
 
 $user_psw_hash = password_hash($psw, PASSWORD_DEFAULT);
 $drm_string = "drm_acp_pages|drm_acp_files|drm_acp_user|drm_acp_system|drm_acp_editpages|drm_acp_editownpages|drm_moderator|drm_can_publish";
 $user_verified = "verified";
 $user_registerdate = time();
 
+$prefs_cms_domain = $_SESSION['temp_prefs_cms_domain'];
+$prefs_cms_ssl_domain = $_SESSION['temp_prefs_cms_ssl_domain'];
+$prefs_cms_base = $_SESSION['temp_prefs_cms_base'];
 
 
 
-if((isset($_POST['set_db']) && ($_POST['set_db'] == 'mysql'))) {
+if(isset($_POST['install_mysql'])) {
 	/* we use MySQL */
 	$db_type = 'mysql';
 	
@@ -326,7 +329,7 @@ $db_index->query($sql_index_items_table);
 
 
 echo '<div class="alert alert-success">'.$lang['installed'].' | Admin: '.$username.'</div>';
-echo '<hr><a class="btn" href="../acp/index.php">'.$lang['link_admin'].'</a><hr>';
+echo '<hr><a class="btn btn-success" href="../acp/index.php">'.$lang['link_admin'].'</a><hr>';
 
 
 

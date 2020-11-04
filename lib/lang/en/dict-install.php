@@ -4,6 +4,19 @@ include 'dict-backend.php';
 
 $lang['progress'] = 'Progress';
 $lang['step'] = 'Step';
+$lang['next_step'] = 'next step';
+$lang['prev_step'] = 'back';
+$lang['btn_check_system'] = 'System-Check';
+$lang['btn_enter_user'] = 'User Account';
+$lang['btn_enter_page_infos'] = 'Basic Page Infos';
+$lang['btn_enter_database'] = 'Database';
+
+$lang['label_add_user'] = 'Benutzerdaten angeben';
+$lang['description_add_user'] = 'Gib die gewünschten Daten für einen ersten Benutzeraccount ein. Merke Dir diese Daten gut - mit diesen Daten kannst Du Dich später im ACP anmelden.';
+
+$lang['label_add_page_data'] = 'Information about your new site';
+$lang['description_add_page_data'] = 'Enter some information about your site. Of course, you can change or add this all later in the ACP.';
+
 $lang['permission_false'] = 'File or Folder needs writing permissions';
 $lang['permission_true'] = 'Permissions correct';
 $lang['missing_folder'] = 'Missing Folder';
@@ -16,7 +29,7 @@ $lang['pdo_false'] = 'PDO/SQLite needs to be activated';
 $lang['username'] = 'Username';
 $lang['email'] = 'E-Mail';
 $lang['password'] = 'Password';
-$lang['password_too_short'] = 'The Password is too short (at least 8 characters)';
+$lang['password_help_text'] = 'The password must contain at least 8 characters';
 $lang['msg_form'] = 'To start the installation flatCore needs an Username and a Password for an administrator.<br><strong>Pay attention</strong> to the correctness of the entries<br>Note: All information can later be complemented or changed.';
 $lang['start_install'] = 'Start Installation';
 $lang['installed'] = 'Installation was successfully';
@@ -37,4 +50,6 @@ $lang['db_prefix'] = 'Prefix';
 $lang['db_psw_help'] = 'If you want to - or have - other installations in this database. <strong>Make sure that you can only assign a prefix once.</strong>';
 
 $lang['db_sqlite_help'] = 'If you want to use SQLite, you do not need to provide any further information.';
+
+$lang['check_connection'] = 'Check Connection';
 ?>

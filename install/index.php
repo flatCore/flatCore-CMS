@@ -10,7 +10,7 @@
  */
 
 session_start();
-error_reporting(0);
+error_reporting(E_ALL ^E_NOTICE);
 
 require '../config.php';
 
@@ -31,7 +31,7 @@ if(!isset($_SESSION['lang']) || $_SESSION['lang'] == '') {
 
 include 'php/functions.php';
 include '../lib/lang/'.$l.'/dict-install.php';
-
+include '../acp/core/icons.php';
 
 if(is_file("../$fc_db_content")) {
 	$modus = "update";
@@ -43,6 +43,11 @@ if(is_file("../$fc_db_content")) {
 	$modus = "install";
 }
 
+
+if(isset($_POST['check_database'])) {
+	include 'php/check_connection.php';
+}
+					
 
 
 if($_SESSION['user_class'] == "administrator") {
@@ -56,8 +61,6 @@ if($modus == "update") {
 	}
 }
 
-
-
 ?>
 
 <!DOCTYPE html>
@@ -69,9 +72,10 @@ if($modus == "update") {
 	<script src="../acp/js/bootstrap.bundle.min.js"></script>
 	<link media="screen" rel="stylesheet" type="text/css" href="../acp/css/bootstrap.min.css" />
 	<link media="screen" rel="stylesheet" type="text/css" href="css/styles.css" />
+	<link href="../acp/fontawesome/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-<div id="inst-frame">
+<div class="container">
 	<div id="inst-background">
 		<div id="inst-header">
 			<div style="float:right;margin-top:-38px;"><span class="badge badge-info p-2"><?php echo"$modus" ?></span></div>
@@ -104,6 +108,7 @@ if($modus == "update") {
 			</a>
 		</div>
 	</div>
+	<p class="text-center"><?php echo date("Y/m/d H:i:s",time());  ?></p>
 </div>
 </body>
 </html>
