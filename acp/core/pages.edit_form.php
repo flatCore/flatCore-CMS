@@ -312,6 +312,14 @@ echo '</div>'; /* EOL tab_info */
 /* tab_content */
 echo '<div class="tab-pane fade" id="content">';
 
+echo '<div class="form-group">';
+echo '<div class="btn-group btn-group-toggle float-right" data-toggle="buttons" role="flex">';
+echo '<label class="btn btn-sm btn-fc"><input type="radio" name="optEditor" value="optE1"> WYSIWYG</label>';
+echo '<label class="btn btn-sm btn-fc"><input type="radio" name="optEditor" value="optE2"> Text</label>';
+echo '<label class="btn btn-sm btn-fc"><input type="radio" name="optEditor" value="optE3"> Code</label>';
+echo '</div>';
+echo '</div>';
+
 echo '<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">';
 echo '<li class="nav-item nav-item-fc" role="presentation">';
 echo '<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-main" role="tab" aria-controls="pills-home" aria-selected="true">'.$lang['tab_content'].'</a>';
@@ -320,6 +328,8 @@ echo '<li class="nav-item nav-item-fc" role="presentation">';
 echo '<a class="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-sub" role="tab" aria-controls="pills-home" aria-selected="false">'.$lang['tab_extracontent'].'</a>';
 echo '</li>';
 echo '</ul>';
+
+
 
 echo '<div class="tab-content" id="pills-tabContent">';
 
@@ -632,15 +642,6 @@ echo '<div class="card-header">'.$lang['tab_page_preferences'].'</div>';
 echo '<div class="card-body" style="padding-left:30px;padding-right:30px;">';
 
 
-echo '<div class="form-group">';
-echo '<div class="btn-group btn-group-toggle d-flex" data-toggle="buttons" role="flex">';
-echo '<label class="btn btn-sm btn-fc w-100"><input type="radio" name="optEditor" value="optE1"> WYSIWYG</label>';
-echo '<label class="btn btn-sm btn-fc w-100"><input type="radio" name="optEditor" value="optE2"> Text</label>';
-echo '<label class="btn btn-sm btn-fc w-100"><input type="radio" name="optEditor" value="optE3"> Code</label>';
-echo '</div>';
-echo '</div>';
-
-
 /* Select Language */
 $arr_lang = get_all_languages();
 
@@ -764,6 +765,24 @@ echo '</label></div>';
 
 echo '</div>';
 
+/* comments yes/no */
+
+if($page_comments == 1) {
+	$sel_comments_yes = 'selected';
+	$sel_comments_no = '';
+} else {
+	$sel_comments_no = 'selected';
+	$sel_comments_yes = '';
+}
+
+echo '<div class="form-group">';
+echo '<label>'.$lang['label_comments'].'</label>';
+echo '<select id="select_comments" name="page_comments"  class="custom-select form-control">';
+echo '<option value="1" '.$sel_comments_yes.'>'.$lang['yes'].'</option>';
+echo '<option value="2" '.$sel_comments_no.'>'.$lang['no'].'</option>';
+echo '</select>';
+echo '</div>';
+
 
 /* Select Usergroups */
 
@@ -857,8 +876,35 @@ echo $checkbox_set_labels;
 echo '</div>';
 echo '</div>';
 
-echo '</div>'; // form-group
 
+/* select categories */
+$all_categories = fc_get_categories();
+$cnt_categories = count($all_categories);
+$arr_checked_categories = explode(",", $page_categories);
+
+foreach($all_categories as $cats) {
+
+	$checked_cat = '';
+  if(in_array($cats['cat_id'], $arr_checked_categories)) {
+		$checked_cat = "checked";
+	} else {
+		$checked_cat = "";
+	}
+
+	$checkbox_set_cat .= '<div class="checkbox"><label>';
+ 	$checkbox_set_cat .= '<input type="checkbox" '.$checked_cat.' name="set_page_categories[]" value="'.$cats['cat_id'].'"> '. $cats['cat_name'];
+ 	$checkbox_set_cat .= '</label></div>';	
+	
+}
+
+echo '<div class="well well-sm">';
+echo '<a href="#categories" data-toggle="collapse" data-target="#categories">'.$lang['label_categories'].'</a>';
+echo '<div id="categories" class="collapse p-3">';
+echo $checkbox_set_cat;
+echo '</div>';
+echo '</div>';
+
+echo '</div>'; // form-group
 
 
 echo '<input type="hidden" name="page_version" value="'.$page_version.'">';

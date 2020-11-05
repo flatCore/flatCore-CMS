@@ -408,9 +408,10 @@ $lang['prefs_comments_auth_1'] = 'Only registered users can comment';
 $lang['prefs_comments_auth_2'] = 'User have to fill out Name and E-Mail';
 $lang['prefs_comments_auth_3'] = 'Accept all anonymous inputs (not recommended)';
 $lang['prefs_comments_autoclose_time'] = 'Close the comment function after X seconds';
-$lang['label_comment_auto'] = 'Kommentare - automated';
-$lang['label_comment_auth'] = 'Kommentare - authorization';
-$lang['label_comment_mode'] = 'Kommentare - mode';
+$lang['label_comment_auto'] = 'Comments - automated';
+$lang['label_comment_auth'] = 'Comments - authorization';
+$lang['label_comment_mode'] = 'Comments - mode';
+$lang['label_comments'] = 'Comments';
 
 $lang['customize_database'] = 'Customize database';
 $lang['migrate_database'] = 'Migrate database';

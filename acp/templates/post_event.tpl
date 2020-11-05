@@ -153,6 +153,9 @@
 				<fieldset>
 					<legend>{label_status}</legend> {select_status}
 				</fieldset>
+				<fieldset>
+					<legend>{label_comments}</legend> {select_comments}
+				</fieldset>
 				<input name="post_type" type="hidden" value="{post_type}">
 				<input name="modus" type="hidden" value="{modus}">
 				<input name="post_id" type="hidden" value="{post_id}">

@@ -175,6 +175,15 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	} else {
 		$string_labels = "";
 	}
+
+	/* categories */
+	$arr_categories = $_POST['set_page_categories'];
+	if(is_array($arr_categories)) {
+		sort($arr_categories);
+		$string_page_categories = implode(",", $arr_categories);
+	} else {
+		$string_page_categories = "";
+	}	
 	
 	// template
 	$select_template = explode("<|-|>", $_POST['select_template']);
@@ -247,6 +256,8 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_authorized_users" => "$page_authorized_users",
 			"page_version" => $page_version,
 			"page_labels" => "$string_labels",
+			"page_categories" => "$string_page_categories",
+			"page_comments" => "$page_comments",
 			"page_psw" => "$page_psw"		
 		];
 		
@@ -315,6 +326,8 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_authorized_users" => "$page_authorized_users",
 			"page_version" => $page_version,
 			"page_labels" => "$string_labels",
+			"page_categories" => "$string_page_categories",
+			"page_comments" => "$page_comments",
 			"page_psw" => "$page_psw"
 		];
 		
@@ -371,6 +384,8 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_authorized_users" => "$page_authorized_users",
 			"page_version" => $page_version,
 			"page_labels" => "$string_labels",
+			"page_categories" => "$string_page_categories",
+			"page_comments" => "$page_comments",
 			"page_psw" => "$page_psw"
 		];
 		
@@ -440,6 +455,8 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_authorized_users" => "$page_authorized_users",
 			"page_version" => $page_version,
 			"page_labels" => "$string_labels",
+			"page_categories" => "$string_page_categories",
+			"page_comments" => "$page_comments",
 			"page_psw" => "$page_psw"
 		];
 		
@@ -502,6 +519,8 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_authorized_users" => "$page_authorized_users",
 			"page_version" => $page_version,
 			"page_labels" => "$string_labels",
+			"page_categories" => "$string_page_categories",
+			"page_comments" => "$page_comments",
 			"page_psw" => "$page_psw"
 		];
 		

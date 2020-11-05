@@ -410,6 +410,7 @@ $lang['prefs_comments_autoclose_time'] = 'Die Kommentarfunktion nach X Sekunden 
 $lang['label_comment_auto'] = 'Kommentare - automatisiert';
 $lang['label_comment_auth'] = 'Kommentare - Berechtigung';
 $lang['label_comment_mode'] = 'Kommentare - Modus';
+$lang['label_comments'] = 'Kommentare';
 
 
 $lang['customize_database'] = 'Datenbank anpassen';

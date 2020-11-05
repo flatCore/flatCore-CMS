@@ -295,6 +295,23 @@ if($_SESSION['drm_can_publish'] == "true") {
 }
 $select_status .= '</select>';
 
+/* comments yes/no */
+
+if($post_comments == 1) {
+	$sel_comments_yes = 'selected';
+	$sel_comments_no = '';
+} else {
+	$sel_comments_no = 'selected';
+	$sel_comments_yes = '';
+}
+
+
+$select_comments  = '<select id="select_comments" name="post_comments"  class="custom-select form-control">';
+$select_comments .= '<option value="1" '.$sel_comments_yes.'>'.$lang['yes'].'</option>';
+$select_comments .= '<option value="2" '.$sel_comments_no.'>'.$lang['no'].'</option>';
+$select_comments .= '</select>';
+
+
 
 /* autor */
 
@@ -449,6 +466,8 @@ $form_tpl = str_replace('{widget_images}', $choose_images, $form_tpl);
 $form_tpl = str_replace('{select_priority}', $select_priority, $form_tpl);
 $form_tpl = str_replace('{checkbox_fixed}', $checkbox_fixed, $form_tpl);
 $form_tpl = str_replace('{select_status}', $select_status, $form_tpl);
+$form_tpl = str_replace('{select_comments}', $select_comments, $form_tpl);
+
 
 /* video */
 $form_tpl = str_replace('{post_video_url}', $post_data['post_video_url'], $form_tpl);

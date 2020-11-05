@@ -46,7 +46,9 @@ $cols = array(
 	"page_authorized_users" => "VARCHAR(255) NOT NULL DEFAULT ''",
 	"page_version" => 'INTEGER(50)',
 	"page_version_date" => "VARCHAR(50) NOT NULL DEFAULT ''",
-  "page_labels" => "VARCHAR(100) NOT NULL DEFAULT ''"
+  "page_labels" => "VARCHAR(100) NOT NULL DEFAULT ''",
+  "page_categories" => "VARCHAR(100) NOT NULL DEFAULT ''",
+  "page_comments" => 'INTEGER(12)'
   );
 
 ?>
