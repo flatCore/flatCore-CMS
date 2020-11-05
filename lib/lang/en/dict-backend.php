@@ -20,6 +20,7 @@ $lang['tn_system'] = "System";
 $lang['tn_system_desc'] = "Preferences, Snippets and Backup";
 $lang['tn_contents'] = "Contents";
 $lang['tn_contents_desc'] = "Pages, Snippets, RSS Feeds create/edit/delete ...";
+$lang['tn_comments'] = 'Comments';
 
 /* Links and Buttons */
 $lang['back_to_page'] = "back to Homepage";
@@ -399,6 +400,17 @@ $lang['prefs_mailer_send_test_success'] = "Die E-Mail wurde versendet";
 
 $lang['prefs_nbr_page_versions'] = "Number of Page-Versions";
 $lang['prefs_pagesort_minlength'] = "Minimum length of the character string &quot;Page Order&quot; ";
+
+$lang['prefs_comments_mode_1'] = "All Comments must be activated by an Admin";
+$lang['prefs_comments_mode_2'] = "All Comments will be public immediately";
+$lang['prefs_comments_mode_3'] = "Comments are deactivated";
+$lang['prefs_comments_auth_1'] = 'Only registered users can comment';
+$lang['prefs_comments_auth_2'] = 'User have to fill out Name and E-Mail';
+$lang['prefs_comments_auth_3'] = 'Accept all anonymous inputs (not recommended)';
+$lang['prefs_comments_autoclose_time'] = 'Close the comment function after X seconds';
+$lang['label_comment_auto'] = 'Kommentare - automated';
+$lang['label_comment_auth'] = 'Kommentare - authorization';
+$lang['label_comment_mode'] = 'Kommentare - mode';
 
 $lang['customize_database'] = 'Customize database';
 $lang['migrate_database'] = 'Migrate database';

@@ -61,6 +61,10 @@ switch ($sub) {
 		$subinc = "system.posts";
 		break;
 		
+	case "comments":
+		$subinc = "system.comments";
+		break;
+		
 	default:
 		$subinc = "system.syspref";
 		break;

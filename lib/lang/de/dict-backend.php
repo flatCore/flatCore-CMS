@@ -20,6 +20,7 @@ $lang['tn_system'] = "System";
 $lang['tn_system_desc'] = "Einstellungen, Textbausteine und Datensicherung";
 $lang['tn_contents'] = "Inhalte";
 $lang['tn_contents_desc'] = "Seiten, Textvorlagen, RSS Feeds erstellen/bearbeiten/löschen ...";
+$lang['tn_comments'] = 'Kommentare';
 
 /* Links and Buttons */
 
@@ -398,6 +399,18 @@ $lang['prefs_mailer_send_test_success'] = "The email has been sent";
 
 $lang['prefs_nbr_page_versions'] = "Anzahl Seiten-Versionen";
 $lang['prefs_pagesort_minlength'] = "Mindestlänge der Zeichenkette &quot;Reihenfolge&quot; ";
+
+$lang['prefs_comments_mode_1'] = "Alle Kommentare müssen von einem Admin freigeschaltet werden";
+$lang['prefs_comments_mode_2'] = "Kommentare erscheinen sofort";
+$lang['prefs_comments_mode_3'] = "Die Kommentarfunktion deaktivieren";
+$lang['prefs_comments_auth_1'] = 'Nur registrierte Benutzer dürfen kommentieren';
+$lang['prefs_comments_auth_2'] = 'Benutzer müssen Name und E-Mail angeben';
+$lang['prefs_comments_auth_3'] = 'Alle Kommentare erlauben (nicht empfohlen)';
+$lang['prefs_comments_autoclose_time'] = 'Die Kommentarfunktion nach X Sekunden schließen';
+$lang['label_comment_auto'] = 'Kommentare - automatisiert';
+$lang['label_comment_auth'] = 'Kommentare - Berechtigung';
+$lang['label_comment_mode'] = 'Kommentare - Modus';
+
 
 $lang['customize_database'] = 'Datenbank anpassen';
 $lang['migrate_database'] = 'Datenbank migrieren';

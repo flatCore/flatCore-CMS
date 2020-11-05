@@ -24,8 +24,13 @@ foreach($_REQUEST as $key => $val) {
 	$$key = strip_tags($val); 
 }
 
-
 require 'config.php';
+
+if(!is_file('config_database.php') && !is_file("$fc_db_content")) {
+	header("location: /install/");
+	die();
+}
+
 
 if(is_file('config_database.php')) {
 	include 'config_database.php';
