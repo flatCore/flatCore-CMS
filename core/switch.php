@@ -293,6 +293,24 @@ if(($page_status == "draft") AND ($_SESSION['user_class'] != "administrator")){
 }
 
 
+/* comments */
+
+if(($page_comments == 1 OR $post_data['post_comments'] == 1) && $prefs_comments_mode != 3) {
+	/* comments are activated for this page */
+
+	$smarty->assign("label_name",$lang['label_name']);
+	$smarty->assign("label_mail",$lang['label_mail']);
+	$smarty->assign("label_comment",$lang['label_comment']);
+	$smarty->assign("btn_send_comment",$lang['btn_send_comment']);
+	$smarty->assign("post_id",$post_data['post_id']);
+	
+	$comments_form = $smarty->fetch("comments/comment_form.tpl",$cache_id);
+	$smarty->assign('comment_form', $comments_form, true);
+	$smarty->assign('show_page_comments', 'true', true);
+	
+		
+}
+
 if($p == "register") {
 
 	if($page_contents['page_permalink'] != '') {

@@ -135,6 +135,12 @@ $lang['forgotten_psw_mail_info'] = "Hello {USERNAME},<br />You want to reset you
 $lang['forgotten_psw_mail_update']    = "<p>Hello {USERNAME},<br />Your password has been reset.</p> <p>Your new password is:<br />{temp_psw}</p>";
 $lang['posts_category_filter'] = 'Entries from Category <strong>{categorie}</strong>.';
 
+/* comment */
+$lang['label_name'] = "Name";
+$lang['label_mail'] = "E-Mail";
+$lang['label_comment'] = "Comment";
+$lang['btn_send_comment'] = 'Save Comment';
+
 /* Dates */
 $lang['m01'] = "January";
 $lang['m02'] = "February";

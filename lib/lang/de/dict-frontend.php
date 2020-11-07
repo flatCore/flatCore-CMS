@@ -120,6 +120,12 @@ $lang['forgotten_psw_mail_update']  = "<p>Hallo {USERNAME},<br />Ihr Passwort wu
 
 $lang['posts_category_filter'] = 'Es werden nur Beiträge aus der Kategorie <strong>{categorie}</strong> angezeigt.';
 
+/* comment */
+$lang['label_name'] = "Name";
+$lang['label_mail'] = "E-Mail";
+$lang['label_comment'] = "Kommentar";
+$lang['btn_send_comment'] = 'Kommentar eintragen';
+
 /* Dates */
 
 $lang['m01'] = "Januar";
