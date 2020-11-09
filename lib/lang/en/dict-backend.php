@@ -1,6 +1,7 @@
 <?php
 
 include 'dict-posts.php';
+include 'dict-frontend.php';
 
 /* tn_ = topNav */
 
@@ -412,6 +413,12 @@ $lang['label_comment_auto'] = 'Comments - automated';
 $lang['label_comment_auth'] = 'Comments - authorization';
 $lang['label_comment_mode'] = 'Comments - mode';
 $lang['label_comments'] = 'Comments';
+$lang['label_filter_by_status'] = 'Filter by Status';
+$lang['label_filter_comments_by_page'] = 'Comments from Pages';
+$lang['label_filter_comments_by_posts'] = 'Comments from Posts';
+$lang['label_all_comments'] = 'All Comments';
+$lang['label_comments_status1'] = 'Wait for approval';
+$lang['label_comments_status2'] = 'Public Comments';
 
 $lang['customize_database'] = 'Customize database';
 $lang['migrate_database'] = 'Migrate database';
@@ -481,6 +488,7 @@ $lang['backup_description'] = "Download the databases on your local computer.";
 
 $lang['msg_file_delete'] = "The file was deleted.";
 $lang['msg_file_delete_error'] = "Error while deleting";
+$lang['msg_entry_delete'] = "The entry was deleted";
 
 $lang['msg_page_saved'] = "Page has been saved";
 $lang['msg_page_saved_error'] = "An Error has occurred";

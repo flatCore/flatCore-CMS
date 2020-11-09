@@ -31,6 +31,7 @@ $active[3] = "topnav";
 $active[4] = "topnav";
 $active[5] = "topnav";
 $active[6] = "topnav";
+$active[7] = "topnav";
 
 switch ($tn) {
 
@@ -87,6 +88,12 @@ switch ($tn) {
 		$active[6] = "topnav_selected";
 		$maininc = "inc.posts";
 		$navinc = "nav.posts";
+		break;
+
+	case "comments":
+		$active[7] = "topnav_selected";
+		$maininc = "inc.comments";
+		$navinc = "nav.comments";
 		break;	
 		
 	default:

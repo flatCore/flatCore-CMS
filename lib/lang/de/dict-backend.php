@@ -1,6 +1,7 @@
 <?php
 	
 include 'dict-posts.php';
+include 'dict-frontend.php';
 
 /* tn_ = topNav */
 
@@ -411,7 +412,12 @@ $lang['label_comment_auto'] = 'Kommentare - automatisiert';
 $lang['label_comment_auth'] = 'Kommentare - Berechtigung';
 $lang['label_comment_mode'] = 'Kommentare - Modus';
 $lang['label_comments'] = 'Kommentare';
-
+$lang['label_filter_by_status'] = 'Nach Status filtern';
+$lang['label_filter_comments_by_page'] = 'Kommentare von Seiten';
+$lang['label_filter_comments_by_posts'] = 'Kommentare von Einträgen';
+$lang['label_all_comments'] = 'Alle Kommentare';
+$lang['label_comments_status1'] = 'Noch nicht freigegeben';
+$lang['label_comments_status2'] = 'Öffentliche Kommentare';
 
 $lang['customize_database'] = 'Datenbank anpassen';
 $lang['migrate_database'] = 'Datenbank migrieren';
@@ -481,6 +487,7 @@ $lang['backup_description'] = "Hier können Sie die Datenbanken auf Ihren lokale
 
 $lang['msg_file_delete'] = "Die Datei wurde gelöscht.";
 $lang['msg_file_delete_error'] = "Die Datei konnte nicht gelöscht werden.";
+$lang['msg_entry_delete'] = "Der Eintrag wurde gelöscht.";
 
 $lang['msg_page_saved'] = "Die Seite wurde gespeichert";
 $lang['msg_page_saved_error'] = "Beim Speichern der Seite ist ein Fehler aufgetreten";
