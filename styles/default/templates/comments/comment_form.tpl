@@ -3,12 +3,12 @@
 	
 	<div class="form-group">
     <label for="input_mail">{$label_name}</label>
-    <input type="text" class="form-control" id="input_name" name="input_name">
+    <input type="text" class="form-control" id="input_name" name="input_name" value="{$input_name}" {$comment_name_readonly}>
   </div>
   
 	<div class="form-group">
     <label for="input_mail">{$label_mail}</label>
-    <input type="email" class="form-control" id="input_mail" aria-describedby="mail_help" name="input_mail">
+    <input type="email" class="form-control" id="input_mail" aria-describedby="mail_help" name="input_mail" value="{$input_mail}" {$comment_mail_readonly}>
     <small id="mail_help" class="form-text text-muted">{$mail_help}</small>
   </div>
   

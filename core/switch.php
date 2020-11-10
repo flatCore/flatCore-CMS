@@ -297,15 +297,40 @@ if(($page_status == "draft") AND ($_SESSION['user_class'] != "administrator")){
 
 if(($page_comments == 1 OR $post_data['post_comments'] == 1) && $prefs_comments_mode != 3) {
 	/* comments are activated for this page */
-
-	$smarty->assign("label_name",$lang['label_name']);
-	$smarty->assign("label_mail",$lang['label_mail']);
-	$smarty->assign("label_comment",$lang['label_comment']);
-	$smarty->assign("btn_send_comment",$lang['btn_send_comment']);
-	$smarty->assign("post_id",$post_data['post_id']);
 	
-	$comments_form = $smarty->fetch("comments/comment_form.tpl",$cache_id);
-	$smarty->assign('comment_form', $comments_form, true);
+	$show_comments_form = FALSE;
+	
+	if($prefs_comments_authorization == 1 && $_SESSION['user_nick'] != '') {
+		// comments allowed for registered users
+		$show_comments_form = TRUE;
+		$smarty->assign("comment_name_readonly","readonly");
+		$smarty->assign("input_name",$_SESSION['user_nick']);
+		$smarty->assign("comment_mail_readonly","readonly");
+		$smarty->assign("input_mail",$_SESSION['user_mail']);
+	}
+	
+	if($prefs_comments_authorization == 3) {
+		// comments allowed for all
+		$show_comments_form = TRUE;
+	}
+	
+	if($prefs_comments_authorization == 2) {
+		// comments allowed for all - name and E-Mail are mandatory
+		$show_comments_form = TRUE;
+	}
+
+	if($show_comments_form === TRUE) {
+		$smarty->assign("label_name",$lang['label_name']);
+		$smarty->assign("label_mail",$lang['label_mail']);
+		$smarty->assign("label_comment",$lang['label_comment']);
+		$smarty->assign("btn_send_comment",$lang['btn_send_comment']);
+		$smarty->assign("post_id",$post_data['post_id']);
+	
+		$comments_form = $smarty->fetch("comments/comment_form.tpl",$cache_id);
+		$smarty->assign('comment_form', $comments_form, true);
+		$smarty->assign('comment_send_success', $fc_snippet_comment_send_success, true);
+	}
+	
 	$smarty->assign('show_page_comments', 'true', true);
 	
 		
