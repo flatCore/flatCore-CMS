@@ -1,9 +1,7 @@
 <?php
-
 session_start();
 
 use Medoo\Medoo;
-
 
 define("FC_SOURCE", "frontend");
 require '../config.php';
@@ -13,6 +11,10 @@ require FC_CORE_DIR.'/database.php';
 $prefs_comments_mode = $db_content->get("fc_preferences", "prefs_comments_mode", [
 	"prefs_status" => "active"
 ]);
+
+include '../lib/lang/index.php';
+
+
 
 if($_POST['input_name'] != '' && $_POST['input_mail'] != '' && $_POST['input_comment'] != '') {
 	
@@ -68,9 +70,9 @@ if($_POST['input_name'] != '' && $_POST['input_mail'] != '' && $_POST['input_com
 	$insert_id=$db_content->id();
 	
 	if($insert_id > 0) {
-		echo '<div class="alert alert-success">{msg_comment_save}</div>';
+		echo '<div class="alert alert-success">'.$lang['comment_msg_sucess'].'</div>';
 	} else {
-		echo '<div class="alert alert-danger">{msg_comment_error}</div>';
+		echo '<div class="alert alert-danger">'.$lang['comment_msg_fail'].'</div>';
 	}
 
 	

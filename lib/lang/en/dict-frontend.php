@@ -139,7 +139,9 @@ $lang['posts_category_filter'] = 'Entries from Category <strong>{categorie}</str
 $lang['label_name'] = "Name";
 $lang['label_mail'] = "E-Mail";
 $lang['label_comment'] = "Comment";
-$lang['btn_send_comment'] = 'Save Comment';
+$lang['btn_send_comment'] = 'Send Comment';
+$lang['comment_msg_sucess'] = 'Thanks for your comment';
+$lang['comment_msg_fail'] = 'An error has occurred. Please try again later.';
 
 /* Dates */
 $lang['m01'] = "January";

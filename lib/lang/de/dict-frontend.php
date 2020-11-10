@@ -125,6 +125,8 @@ $lang['label_name'] = "Name";
 $lang['label_mail'] = "E-Mail";
 $lang['label_comment'] = "Kommentar";
 $lang['btn_send_comment'] = 'Kommentar eintragen';
+$lang['comment_msg_sucess'] = 'Vielen Dank für Deinen Kommentar';
+$lang['comment_msg_fail'] = 'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.';
 
 /* Dates */
 
