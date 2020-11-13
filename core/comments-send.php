@@ -15,7 +15,6 @@ $prefs_comments_mode = $db_content->get("fc_preferences", "prefs_comments_mode",
 include '../lib/lang/index.php';
 
 
-
 if($_POST['input_name'] != '' && $_POST['input_mail'] != '' && $_POST['input_comment'] != '') {
 	
 	foreach($_REQUEST as $key => $val) {
@@ -53,6 +52,10 @@ if($_POST['input_name'] != '' && $_POST['input_mail'] != '' && $_POST['input_com
 		$input_comment = substr($input_comment, 0,500);
 	}
 	
+	if(is_numeric($_POST['parent_id'])) {
+		$parent_id = (int) $_POST['parent_id'];
+	}
+	
 	
 	$input_comment = nl2br($input_comment);
 	
@@ -60,6 +63,7 @@ if($_POST['input_name'] != '' && $_POST['input_mail'] != '' && $_POST['input_com
 	$db_content->insert("fc_comments", [
 		"comment_type" =>  $type,
 		"comment_relation_id" =>  $relation_id,
+		"comment_parent_id" =>  $parent_id,
 		"comment_status" =>  $comment_status,
 		"comment_time" =>  $comment_time,
 		"comment_author" =>  $input_name,

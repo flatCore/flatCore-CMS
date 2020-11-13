@@ -1,3 +1,7 @@
+<div class="form-container">
+	
+	<p class="h3">{$comment_form_title}</p>
+	<p>{$comment_form_intro}</p>
 <form id="comment-form" action="/core/comments-send.php" method="POST">
 
 	
@@ -9,7 +13,7 @@
 	<div class="form-group">
     <label for="input_mail">{$label_mail}</label>
     <input type="email" class="form-control" id="input_mail" aria-describedby="mail_help" name="input_mail" value="{$input_mail}" {$comment_mail_readonly}>
-    <small id="mail_help" class="form-text text-muted">{$mail_help}</small>
+    <small id="mail_help" class="form-text text-muted">{$label_mail_helptext}</small>
   </div>
   
   <div class="form-group">
@@ -21,7 +25,9 @@
   
   <input type="hidden" name="page_id" value="{$page_id}">
   <input type="hidden" name="post_id" value="{$post_id}">
-	
+	<input type="hidden" name="parent_id" value="{$parent_id}">
 </form>
+
+</div>
 
 <div id="form-response"></div>

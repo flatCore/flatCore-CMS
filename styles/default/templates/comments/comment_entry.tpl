@@ -8,8 +8,12 @@
 	      <span class="entry-nbr">#{comment_id}</span>
         <h5 class="card-title">{comment_author}</h5>
         <p class="card-text">{comment_text}</p>
-        <p class="card-text"><small class="text-muted">{comment_time}</small></p>
+
       </div>
     </div>
   </div>
+  <div class="card-footer text-muted">
+		{comment_time}
+		<a href="{url_answer_comment}" class="btn btn-sm btn-outline-primary float-right">Antworten</a>
+	</div>
 </div>

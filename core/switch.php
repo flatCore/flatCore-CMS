@@ -307,6 +307,7 @@ if(($page_comments == 1 OR $post_data['post_comments'] == 1) && $prefs_comments_
 		$smarty->assign("input_name",$_SESSION['user_nick']);
 		$smarty->assign("comment_mail_readonly","readonly");
 		$smarty->assign("input_mail",$_SESSION['user_mail']);
+		
 	}
 	
 	if($prefs_comments_authorization == 3) {
@@ -317,18 +318,29 @@ if(($page_comments == 1 OR $post_data['post_comments'] == 1) && $prefs_comments_
 	if($prefs_comments_authorization == 2) {
 		// comments allowed for all - name and E-Mail are mandatory
 		$show_comments_form = TRUE;
+		$comment_form_intro = $lang['comment_msg_auth2'];
 	}
 
 	if($show_comments_form === TRUE) {
 		$smarty->assign("label_name",$lang['label_name']);
 		$smarty->assign("label_mail",$lang['label_mail']);
-		$smarty->assign("label_comment",$lang['label_comment']);
+		$smarty->assign("label_mail_helptext",$lang['label_mail_helptext']);
 		$smarty->assign("btn_send_comment",$lang['btn_send_comment']);
 		$smarty->assign("post_id",$post_data['post_id']);
+		
+		$smarty->assign("label_comment",$lang['label_comment']);
+		if(isset($_GET['cid']) && is_numeric($_GET['cid'])) {
+			$cid = (int) $_GET['cid'];
+			$smarty->assign("label_comment",$lang['label_comment_answer'].' #'.$cid);
+			$smarty->assign("parent_id",$cid);
+		}
 	
+		$smarty->assign("comment_form_title",$lang['comment_form_title']);
+		$smarty->assign("comment_form_intro",$comment_form_intro);
 		$comments_form = $smarty->fetch("comments/comment_form.tpl",$cache_id);
 		$smarty->assign('comment_form', $comments_form, true);
 		$smarty->assign('comment_send_success', $fc_snippet_comment_send_success, true);
+		
 	}
 	
 	$smarty->assign('show_page_comments', 'true', true);

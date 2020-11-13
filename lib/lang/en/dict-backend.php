@@ -419,6 +419,8 @@ $lang['label_filter_comments_by_posts'] = 'Comments from Posts';
 $lang['label_all_comments'] = 'All Comments';
 $lang['label_comments_status1'] = 'Wait for approval';
 $lang['label_comments_status2'] = 'Public Comments';
+$lang['label_comments_max_entries'] = 'Maximum number of posts per thread';
+$lang['label_comments_max_level'] = 'Maximum depth of a thread';
 
 $lang['customize_database'] = 'Customize database';
 $lang['migrate_database'] = 'Migrate database';

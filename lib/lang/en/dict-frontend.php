@@ -138,10 +138,17 @@ $lang['posts_category_filter'] = 'Entries from Category <strong>{categorie}</str
 /* comment */
 $lang['label_name'] = "Name";
 $lang['label_mail'] = "E-Mail";
+$lang['label_mail_helptext'] = "Your email address will not be published";
 $lang['label_comment'] = "Comment";
+$lang['label_comment_answer'] = "Your answer to";
 $lang['btn_send_comment'] = 'Send Comment';
 $lang['comment_msg_sucess'] = 'Thanks for your comment';
 $lang['comment_msg_fail'] = 'An error has occurred. Please try again later.';
+
+$lang['comment_form_title'] = 'Write a comment';
+$lang['comment_msg_auth1'] = 'You have to log in to write comments.';
+$lang['comment_msg_auth2'] = 'You have to enter your name and your email address.';
+$lang['comments_title'] = 'Comments ({cnt_comments})';
 
 /* Dates */
 $lang['m01'] = "January";

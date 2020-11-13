@@ -123,10 +123,17 @@ $lang['posts_category_filter'] = 'Es werden nur Beiträge aus der Kategorie <str
 /* comment */
 $lang['label_name'] = "Name";
 $lang['label_mail'] = "E-Mail";
+$lang['label_mail_helptext'] = "Deine E-Mail Adresse wird hier nicht veröffentlicht";
 $lang['label_comment'] = "Kommentar";
+$lang['label_comment_answer'] = "Antwort an";
 $lang['btn_send_comment'] = 'Kommentar eintragen';
 $lang['comment_msg_sucess'] = 'Vielen Dank für Deinen Kommentar';
 $lang['comment_msg_fail'] = 'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.';
+
+$lang['comment_form_title'] = 'Schreibe einen Kommentar';
+$lang['comment_msg_auth1'] = 'Du musst Dich einloggen um Kommentare zu schreiben.';
+$lang['comment_msg_auth2'] = 'Du musst Deinen Namen und Deine E-Mail Adresse angeben.';
+$lang['comments_title'] = 'Kommentare ({cnt_comments})';
 
 /* Dates */
 

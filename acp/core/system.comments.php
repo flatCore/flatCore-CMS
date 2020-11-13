@@ -14,7 +14,9 @@ if(isset($_POST['update_comments'])) {
 	$data = $db_content->update("fc_preferences", [
 		"prefs_comments_mode" =>  $prefs_comments_mode,
 		"prefs_comments_autoclose" =>  $prefs_comments_autoclose,
-		"prefs_comments_authorization" =>  $prefs_comments_authorization
+		"prefs_comments_authorization" =>  $prefs_comments_authorization,
+		"prefs_comments_max_entries" => $prefs_comments_max_entries,
+		"prefs_comments_max_level" => $prefs_comments_max_level
 	], [
 	"prefs_id" => 1
 	]);	
@@ -95,11 +97,23 @@ echo '</fieldset>';
 
 
 echo'<fieldset>';
+
 echo'<legend>'.$lang['label_comment_auto'].'</legend>';
 echo '<div class="form-group">';
 echo '<label>'.$lang['prefs_comments_autoclose_time'].'</label>';
 echo '<input type="text" class="form-control" name="prefs_comments_autoclose" value="'.$prefs_comments_autoclose.'">';
 echo '</div>';
+
+echo '<div class="form-group">';
+echo '<label>'.$lang['label_comments_max_entries'].'</label>';
+echo '<input type="text" class="form-control" name="prefs_comments_max_entries" value="'.$prefs_comments_max_entries.'">';
+echo '</div>';
+
+echo '<div class="form-group">';
+echo '<label>'.$lang['label_comments_max_level'].'</label>';
+echo '<input type="text" class="form-control" name="prefs_comments_max_level" value="'.$prefs_comments_max_level.'">';
+echo '</div>';
+
 echo '</fieldset>';
 
 

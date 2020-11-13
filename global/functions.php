@@ -31,7 +31,7 @@ function fc_get_categories() {
  * $filter['status'] -> all|1|2
  */
 
-function fc_get_comments($start=0,$limit=10,$filter) {
+function fc_get_comments($start=0,$limit=100,$filter) {
 	
 	global $db_content;
 	
@@ -79,5 +79,6 @@ function fc_get_comments($start=0,$limit=10,$filter) {
 	
 	return $comments;
 }
+
 
 ?>

@@ -12,7 +12,10 @@
  *
  * prefs_comments_authorization - 1 -> only registered users
  *                              - 2 -> user have to fill out name and e-mail
- *                              - 3 -> accept all anonymous inputs  
+ *                              - 3 -> accept all anonymous inputs
+ *
+ * prefs_comments_max_entries -> maximum number of entries per thread
+ * prefs_comments_max_level -> maximum depth of a thread
  *
  */
 
@@ -90,7 +93,9 @@ $cols = array(
   
   "prefs_comments_mode" => 'INTEGER(12)',
   "prefs_comments_autoclose" => 'INTEGER(12)',
-  "prefs_comments_authorization" => 'INTEGER(12)'
+  "prefs_comments_authorization" => 'INTEGER(12)',
+  "prefs_comments_max_entries" => 'INTEGER(12)',
+  "prefs_comments_max_level" => 'INTEGER(12)'
   
   );
 
