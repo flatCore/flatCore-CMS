@@ -1,6 +1,9 @@
 <?php
-
+error_reporting(0);
+define("FC_SOURCE", "frontend");
 require 'config.php';
+require FC_CORE_DIR.'/database.php';
+use Medoo\Medoo;
 
 switch ($_REQUEST['type']) {
 	case 'rss':
@@ -16,23 +19,20 @@ switch ($_REQUEST['type']) {
 
 $ts_now = time();
 
-$dbh = new PDO("sqlite:$fc_db_content");
-$sql = "SELECT * FROM fc_feeds ORDER BY feed_time DESC";
+$rssItems = $db_content->select("fc_feeds", "*",[
+	"ORDER" => [
+		"feed_time" => "DESC"
+	]
+]);
 
-foreach ($dbh->query($sql) as $row) {
-	$rssItems[] = $row;
-}
-
-$sql_prefs = "SELECT * FROM fc_preferences WHERE prefs_id = 1";
-$prefs = $dbh->query($sql_prefs);
-$prefs = $prefs->fetch(PDO::FETCH_ASSOC);
+$prefs = $db_content->get("fc_preferences", "*",[
+	"prefs_id" => "1"
+]);
 
 $cms_domain = $prefs['prefs_cms_ssl_domain'];
 if($cms_domain == '') {
 	$cms_domain = $prefs['prefs_cms_domain'];
 }
-
-$dbh = null;
 
 $cnt_rssItems = count($rssItems);
 
@@ -47,7 +47,6 @@ $header_rss_tpl .= '<atom:link href="'.$cms_domain.'/rss.php" rel="self" type="a
 
 $header_atom_tpl  = '<?xml version="1.0" encoding="utf-8" ?>';
 $header_atom_tpl .= '<feed xmlns="http://www.w3.org/2005/Atom">';
-//$header_atom_tpl .= '<id>tag:'.$cms_domain.',2013-11-14:'. urlencode($prefs['prefs_pagetitle']) .'</id>';
 $header_atom_tpl .= '<link rel="self" type="application/atom+xml" href="'.$cms_domain.'/rss.php?type=atom" />';
 $header_atom_tpl .= '<title>'.$prefs['prefs_pagetitle'].'</title>';
 $header_atom_tpl .= '<author><name>'.$cms_domain.'</name></author>';
