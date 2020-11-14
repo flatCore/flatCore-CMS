@@ -213,13 +213,15 @@ if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
 			
 			$filesize = filesize($filename);
 			$filemtime = filemtime($filename);
+			$filetype = mime_content_type(realpath($filename));
 			
 			$db_content->insert("fc_media", [
 				"media_file" => "$filename",
 				"media_lang" => "$languagePack",
 				"media_filesize" => "$filesize",
 				"media_lastedit" => "$filemtime",
-				"media_upload_time" => "$filemtime"
+				"media_upload_time" => "$filemtime",
+				"media_type" => "$filetype"
 			]);
 			
 			$cnt_files_rebuild++;
@@ -308,7 +310,8 @@ if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
 		"AND" => [
 			'OR' => ['media_filesize' => null,'OR #Empty' => ['media_filesize' => '']],
 			'OR' => ['media_lastedit' => null,'OR #Empty' => ['media_lastedit' => '']],
-			'OR' => ['media_upload_time' => null,'OR #Empty' => ['media_upload_time' => '']]
+			'OR' => ['media_upload_time' => null,'OR #Empty' => ['media_upload_time' => '']],
+			'OR' => ['media_type' => null,'OR #Empty' => ['media_type' => '']]
 		]	
 	]);
 	
@@ -318,11 +321,13 @@ if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
 							
 				$filesize = filesize($row['media_file']);
 				$filemtime = filemtime($row['media_file']);
+				$filetype = mime_content_type(realpath($row['media_file']));
 
 				$db_content->update("fc_media", [
 				"media_filesize" => $filesize,
 				"media_lastedit" => $filemtime,
-				"media_upload_time" => $filemtime
+				"media_upload_time" => $filemtime,
+				"media_type" => $filetype
 				],[
 					"media_file" => $row['media_file']
 					]);
