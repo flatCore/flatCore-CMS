@@ -807,9 +807,11 @@ for($i=0;$i<count($arr_groups);$i++) {
 
 echo '<div class="form-group">';
 echo '<div class="well well-sm">';
-echo '<a href="#usergroups" data-toggle="collapse" data-target="#usergroups">'.$lang['legend_choose_group'].'</a>';
-echo '<div id="usergroups" class="collapse p-3">';
+echo '<a href="#" data-toggle="collapse" data-target="#usergroups">'.$lang['legend_choose_group'].'</a>';
+echo '<div id="usergroups" class="collapse">';
+echo '<div class="p-3">';
 echo $checkbox_usergroup;
+echo '</div>';
 echo '</div>';
 echo '</div>';
 
@@ -837,9 +839,11 @@ for($i=0;$i<$cnt_admins;$i++) {
 
 
 echo '<div class="well well-sm">';
-echo '<a href="#admins" data-toggle="collapse" data-target="#admins">'.$lang['f_page_authorized_admins'].'</a>';
-echo '<div id="admins" class="collapse p-3">';
+echo '<a href="#" data-toggle="collapse" data-target="#admins">'.$lang['f_page_authorized_admins'].'</a>';
+echo '<div id="admins" class="collapse">';
+echo '<div class="p-3">';
 echo $checkbox_set_authorized_admins;
+echo '</div>';
 echo '</div>';
 echo '</div>';
 
@@ -870,9 +874,11 @@ for($i=0;$i<$cnt_labels;$i++) {
 
 
 echo '<div class="well well-sm">';
-echo '<a href="#labels" data-toggle="collapse" data-target="#labels">'.$lang['labels'].'</a>';
-echo '<div id="labels" class="collapse p-3">';
+echo '<a href="#" data-toggle="collapse" data-target="#labels">'.$lang['labels'].'</a>';
+echo '<div id="labels" class="collapse">';
+echo '<div class="p-3">';
 echo $checkbox_set_labels;
+echo '</div>';
 echo '</div>';
 echo '</div>';
 
@@ -898,9 +904,11 @@ foreach($all_categories as $cats) {
 }
 
 echo '<div class="well well-sm">';
-echo '<a href="#categories" data-toggle="collapse" data-target="#categories">'.$lang['label_categories'].'</a>';
-echo '<div id="categories" class="collapse p-3">';
+echo '<a href="#" data-toggle="collapse" data-target="#categories">'.$lang['label_categories'].'</a>';
+echo '<div id="categories" class="collapse">';
+echo '<div class="p-3">';
 echo $checkbox_set_cat;
+echo '</div>';
 echo '</div>';
 echo '</div>';
 
