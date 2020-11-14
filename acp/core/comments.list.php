@@ -97,7 +97,7 @@ $blog_comments = $db_content->select("fc_comments", "comment_relation_id",[
 ]);
 
 $blog_comment_ids = array_values(array_unique($blog_comments));
-$all_posts = $db_content->select("fc_posts", ["post_id","post_title"],);
+$all_posts = $db_content->select("fc_posts", ["post_id","post_title"]);
 
 foreach($blog_comment_ids as $id) {	
 	$key = array_search($id, array_column($all_posts, 'post_id'));
