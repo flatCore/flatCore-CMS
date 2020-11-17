@@ -25,6 +25,7 @@ $icon['bars'] = '<i class="fas fa-bars"></i>';
 $icon['bookmark'] = '<i class="fas fa-bookmark"></i>';
 
 $icon['check'] = '<i class="far fa-check"></i>';
+$icon['circle_alt'] = '<i class="far fa-circle"></i>';
 $icon['check_circle'] = '<i class="fas fa-check-circle"></i>';
 $icon['caret_left'] = '<i class="fas fa-caret-left"></i>';
 $icon['caret_right'] = '<i class="fas fa-caret-right"></i>';

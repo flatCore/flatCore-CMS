@@ -173,20 +173,24 @@ if($_GET['cat']) {
 }
 
 $cat_all_active = '';
+$icon_all_toggle = $icon['circle_alt'];
 if($_SESSION['checked_cat_string'] == 'all') {
 	$cat_all_active = 'active';
+	$icon_all_toggle = $icon['check_circle'];
 }
 
 $cat_btn_group = '<div class="card">';
 $cat_btn_group .= '<div class="list-group list-group-flush">';
-$cat_btn_group .= '<a href="acp.php?tn=posts&cat=all" class="list-group-item list-group-item-ghost p-1 px-2 '.$cat_all_active.'">'.$lang['btn_all_categories'].'</a>';
+$cat_btn_group .= '<a href="acp.php?tn=posts&cat=all" class="list-group-item list-group-item-ghost p-1 px-2 '.$cat_all_active.'">'.$icon_all_toggle.' '.$lang['btn_all_categories'].'</a>';
 foreach($arr_categories as $c) {
 	$cat_active = '';
+	$icon_toggle = $icon['circle_alt'];
 	if(strpos($_SESSION['checked_cat_string'], $c['cat_id']) !== false) {
+		$icon_toggle = $icon['check_circle'];
 		$cat_active = 'active';
 	}
 	
-	$cat_btn_group .= '<a href="acp.php?tn=posts&cat='.$c['cat_id'].'" class="list-group-item list-group-item-ghost p-1 px-2 '.$cat_active.'">'.$c['cat_name'].'</a>';
+	$cat_btn_group .= '<a href="acp.php?tn=posts&cat='.$c['cat_id'].'" class="list-group-item list-group-item-ghost p-1 px-2 '.$cat_active.'">'.$icon_toggle.' '.$c['cat_name'].'</a>';
 }
 
 $cat_btn_group .= '</div>';
@@ -452,60 +456,60 @@ echo '<div class="card-header p-1 px-2">'.$lang['label_post_type'].'</div>';
 echo '<div class="list-group list-group-flush">';
 if(strpos("$_SESSION[checked_type_string]", "m") !== false) {
 	$class = 'list-group-item list-group-item-ghost p-1 px-2 active';
-	$icon_toggle = $icon['toggle_on'];
+	$icon_toggle = $icon['check_circle'];
 } else {
 	$class = 'list-group-item list-group-item-ghost p-1 px-2';
-	$icon_toggle = $icon['toggle_off'];
+	$icon_toggle = $icon['circle_alt'];
 }
 
 echo '<a href="acp.php?tn=posts&type=m" class="'.$class.'">'.$icon_toggle.' '.$lang['post_type_message'].'</a>';
 
 if(strpos("$_SESSION[checked_type_string]", "e") !== false) {
 	$class = 'list-group-item list-group-item-ghost p-1 px-2 active';
-	$icon_toggle = $icon['toggle_on'];
+	$icon_toggle = $icon['check_circle'];
 } else {
 	$class = 'list-group-item list-group-item-ghost p-1 px-2';
-	$icon_toggle = $icon['toggle_off'];
+	$icon_toggle = $icon['circle_alt'];
 }
 
 echo '<a href="acp.php?tn=posts&type=e" class="'.$class.'">'.$icon_toggle.' '.$lang['post_type_event'].'</a>';
 
 if(strpos("$_SESSION[checked_type_string]", "i") !== false) {
 	$class = 'list-group-item list-group-item-ghost p-1 px-2 active';
-	$icon_toggle = $icon['toggle_on'];
+	$icon_toggle = $icon['check_circle'];
 } else {
 	$class = 'list-group-item list-group-item-ghost p-1 px-2';
-	$icon_toggle = $icon['toggle_off'];
+	$icon_toggle = $icon['circle_alt'];
 }
 
 echo '<a href="acp.php?tn=posts&type=i" class="'.$class.'">'.$icon_toggle.' '.$lang['post_type_image'].'</a>';
 
 if(strpos("$_SESSION[checked_type_string]", "g") !== false) {
 	$class = 'list-group-item list-group-item-ghost p-1 px-2 active';
-	$icon_toggle = $icon['toggle_on'];
+	$icon_toggle = $icon['check_circle'];
 } else {
 	$class = 'list-group-item list-group-item-ghost p-1 px-2';
-	$icon_toggle = $icon['toggle_off'];
+	$icon_toggle = $icon['circle_alt'];
 }
 
 echo '<a href="acp.php?tn=posts&type=g" class="'.$class.'">'.$icon_toggle.' '.$lang['post_type_gallery'].'</a>';
 
 if(strpos("$_SESSION[checked_type_string]", "v") !== false) {
 	$class = 'list-group-item list-group-item-ghost p-1 px-2 active';
-	$icon_toggle = $icon['toggle_on'];
+	$icon_toggle = $icon['check_circle'];
 } else {
 	$class = 'list-group-item list-group-item-ghost p-1 px-2';
-	$icon_toggle = $icon['toggle_off'];
+	$icon_toggle = $icon['circle_alt'];
 }
 
 echo '<a href="acp.php?tn=posts&type=v" class="'.$class.'">'.$icon_toggle.' '.$lang['post_type_video'].'</a>';
 
 if(strpos("$_SESSION[checked_type_string]", "l") !== false) {
 	$class = 'list-group-item list-group-item-ghost p-1 px-2 active';
-	$icon_toggle = $icon['toggle_on'];
+	$icon_toggle = $icon['check_circle'];
 } else {
 	$class = 'list-group-item list-group-item-ghost p-1 px-2';
-	$icon_toggle = $icon['toggle_off'];
+	$icon_toggle = $icon['circle_alt'];
 }
 
 echo '<a href="acp.php?tn=posts&type=l" class="'.$class.'">'.$icon_toggle.' '.$lang['post_type_link'].'</a>';
@@ -513,10 +517,10 @@ echo '<a href="acp.php?tn=posts&type=l" class="'.$class.'">'.$icon_toggle.' '.$l
 
 if(strpos("$_SESSION[checked_type_string]", "p") !== false) {
 	$class = 'list-group-item list-group-item-ghost p-1 px-2 active';
-	$icon_toggle = $icon['toggle_on'];
+	$icon_toggle = $icon['check_circle'];
 } else {
 	$class = 'list-group-item list-group-item-ghost p-1 px-2';
-	$icon_toggle = $icon['toggle_off'];
+	$icon_toggle = $icon['circle_alt'];
 }
 
 echo '<a href="acp.php?tn=posts&type=p" class="'.$class.'">'.$icon_toggle.' '.$lang['post_type_product'].'</a>';
@@ -530,14 +534,18 @@ echo '<div class="card-header p-1 px-2">'.$lang['label_status'].'</div>';
 /* status filter */
 echo '<div class="btn-group d-flex">';
 if(strpos("$_SESSION[checked_status_string]", "2") !== false) {
-	echo '<a href="acp.php?tn=posts&status=2" class="btn btn-sm btn-fc active w-100">'.$lang['status_draft'].'</a>';
+	$icon_toggle = $icon['check_circle'];
+	echo '<a href="acp.php?tn=posts&status=2" class="btn btn-sm btn-fc active w-100">'.$icon_toggle.' '.$lang['status_draft'].'</a>';
 } else {
-	echo '<a href="acp.php?tn=posts&status=2" class="btn btn-sm btn-fc w-100">'.$lang['status_draft'].'</a>';
+	$icon_toggle = $icon['circle_alt'];
+	echo '<a href="acp.php?tn=posts&status=2" class="btn btn-sm btn-fc w-100">'.$icon_toggle.' '.$lang['status_draft'].'</a>';
 }
 if(strpos("$_SESSION[checked_status_string]", "1") !== false) {
-	echo '<a href="acp.php?tn=posts&status=1" class="btn btn-sm btn-fc active w-100">'.$lang['status_public'].'</a>';
+	$icon_toggle = $icon['check_circle'];
+	echo '<a href="acp.php?tn=posts&status=1" class="btn btn-sm btn-fc active w-100">'.$icon_toggle.' '.$lang['status_public'].'</a>';
 } else {
-	echo '<a href="acp.php?tn=posts&status=1" class="btn btn-sm btn-fc w-100">'.$lang['status_public'].'</a>';
+	$icon_toggle = $icon['circle_alt'];
+	echo '<a href="acp.php?tn=posts&status=1" class="btn btn-sm btn-fc w-100">'.$icon_toggle.' '.$lang['status_public'].'</a>';
 }
 echo '</div>';
 
