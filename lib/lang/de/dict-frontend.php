@@ -127,6 +127,7 @@ $lang['label_mail_helptext'] = "Deine E-Mail Adresse wird hier nicht veröffentl
 $lang['label_comment'] = "Kommentar";
 $lang['label_comment_answer'] = "Antwort an";
 $lang['btn_send_comment'] = 'Kommentar eintragen';
+$lang['btn_send_answer'] = 'Antworten';
 $lang['comment_msg_sucess'] = 'Vielen Dank für Deinen Kommentar';
 $lang['comment_msg_fail'] = 'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.';
 

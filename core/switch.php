@@ -307,7 +307,6 @@ if(($page_comments == 1 OR $post_data['post_comments'] == 1) && $prefs_comments_
 		$smarty->assign("input_name",$_SESSION['user_nick']);
 		$smarty->assign("comment_mail_readonly","readonly");
 		$smarty->assign("input_mail",$_SESSION['user_mail']);
-		
 	}
 	
 	if($prefs_comments_authorization == 3) {
@@ -321,12 +320,28 @@ if(($page_comments == 1 OR $post_data['post_comments'] == 1) && $prefs_comments_
 		$comment_form_intro = $lang['comment_msg_auth2'];
 	}
 
+	if(isset($_POST['send_user_comment'])) {
+		$save_comment = fc_write_comment($_POST);
+
+		if($save_comment > 0) {
+			$form_response = '<div class="alert alert-success">'.$lang['comment_msg_sucess'].'</div>';
+		} else {
+			$form_response = '<div class="alert alert-danger">'.$lang['comment_msg_fail'].'</div>';
+		}
+		
+		$smarty->assign("form_response",$form_response);
+	}
+	
+
 	if($show_comments_form === TRUE) {
 		$smarty->assign("label_name",$lang['label_name']);
 		$smarty->assign("label_mail",$lang['label_mail']);
 		$smarty->assign("label_mail_helptext",$lang['label_mail_helptext']);
 		$smarty->assign("btn_send_comment",$lang['btn_send_comment']);
 		$smarty->assign("post_id",$post_data['post_id']);
+		
+		$form_action = '/'.$fct_slug.$mod_slug;
+		$smarty->assign("form_action",$form_action);
 		
 		$smarty->assign("label_comment",$lang['label_comment']);
 		if(isset($_GET['cid']) && is_numeric($_GET['cid'])) {
@@ -343,10 +358,47 @@ if(($page_comments == 1 OR $post_data['post_comments'] == 1) && $prefs_comments_
 		
 	}
 	
-	$smarty->assign('show_page_comments', 'true', true);
+	/* show stored comments */
 	
-		
+	if(is_numeric($page_contents['page_id'])) {
+		$filter['relation_id'] = (int) $page_contents['page_id'];
+		$filter['type'] = 'p';
+	}
+	
+	if(is_numeric($post_data['post_id'])) {
+		$filter['relation_id'] = (int) $post_data['post_id'];
+		$filter['type'] = 'b';
+	}
+	
+	if(is_file(FC_CORE_DIR.'/styles/'.$fc_template.'/templates/comments/comment_entry.tpl')){
+		$comment_tpl = file_get_contents(FC_CORE_DIR.'/styles/'.$fc_template.'/templates/comments/comment_entry.tpl');
+	} else {
+		$comment_tpl = file_get_contents(FC_CORE_DIR.'/styles/default/templates/comments/comment_entry.tpl');
+	}
+	
+	$comments = fc_get_comments(0,100,$filter);
+	$cnt_comment = count($comments);
+	
+	$sorting = [];
+	foreach ($comments as $comment_key => $comment) {
+		if($comment['comment_parent_id'] == '') {
+			$comment['comment_parent_id'] = 0;
+		}
+	  $sorting[$comment['comment_parent_id']][$comment_key] = $comment['comment_id'];
+	}
+
+	$thread = fc_list_comments_thread($comments, $sorting, $comment_tpl, 0);
+
+	$smarty->assign('show_page_comments', 'true', true);
+	$smarty->assign('comments_thread', $thread);
+	$comments_title = str_replace('{cnt_comments}', $cnt_comment, $lang['comments_title']);
+	$smarty->assign('comments_intro', "<p>$comments_title</p>");
+
 }
+
+
+
+/* register */
 
 if($p == "register") {
 

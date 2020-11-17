@@ -14,6 +14,6 @@
   </div>
   <div class="card-footer text-muted">
 		{comment_time}
-		<a href="{url_answer_comment}" class="btn btn-sm btn-outline-primary float-right">Antworten</a>
+		<a href="{url_answer_comment}" class="btn btn-sm btn-outline-primary float-right">{lang_answer}</a>
 	</div>
 </div>

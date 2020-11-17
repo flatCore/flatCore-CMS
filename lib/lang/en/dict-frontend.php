@@ -142,6 +142,7 @@ $lang['label_mail_helptext'] = "Your email address will not be published";
 $lang['label_comment'] = "Comment";
 $lang['label_comment_answer'] = "Your answer to";
 $lang['btn_send_comment'] = 'Send Comment';
+$lang['btn_send_answer'] = 'Answer';
 $lang['comment_msg_sucess'] = 'Thanks for your comment';
 $lang['comment_msg_fail'] = 'An error has occurred. Please try again later.';
 
