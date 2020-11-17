@@ -28,4 +28,4 @@ To save space, older statistics databases (<code>logfile***. Sqlite3</code>) can
 
 #### Auto Update
 
-Once an update is available, you see a message in the Backend -> System. Clicking on __Update__ starts the script. This function updates __all__ necessary directories and files. Also "blucent" and the default template will be completely replaced.
+Once an update is available, you see a message in the Backend -> System. Clicking on __Update__ starts the script. This function updates __all__ necessary directories and files. Also the default theme will be completely replaced.
