@@ -68,6 +68,8 @@ function get_content($page, $mode = 'p') {
 
 	if($page_contents['page_language'] == '') {
 		$page_contents['page_language'] = $languagePack;
+	} else {
+		$languagePack = $page_contents['page_language'];
 	}
 
 	$nav_sql_filter = "WHERE page_language = '$languagePack' ";
