@@ -1,5 +1,5 @@
 <?php
-
+//error_reporting(E_ALL ^E_NOTICE);
 /**
  * prohibit unauthorized access
  */
@@ -88,7 +88,7 @@ if($send_data == 'true') {
 	$psw_string = md5("$psw$username");
 	$user_psw_hash = password_hash($psw, PASSWORD_DEFAULT);
 	$user_activationkey = random_text('alnum',32);
-	$activation_url = $fc_base_url."?p=account&user=$username&al=$user_activationkey";
+	$activation_url = $fc_base_url."account/?user=$username&al=$user_activationkey";
 	$user_activationlink = '<a href="'.$activation_url.'">'.$activation_url.'</a>';
 
 	$db_user->insert("fc_user", [
@@ -117,38 +117,24 @@ if($send_data == 'true') {
 	$email_msg = str_replace("{SITENAME}","$prefs_pagetitle",$email_msg);
 	$email_msg = str_replace("{ACTIVATIONLINK}","$user_activationlink",$email_msg);
 	
-	/* send register mail to the new user */
-	require_once("lib/Swift/lib/swift_required.php");
-		
-	$transport = Swift_SmtpTransport::newInstance()
-      ->setUsername("$prefs_smtp_username")
-      ->setPassword("$prefs_smtp_psw")
-      ->setHost("$prefs_smtp_host")
-      ->setPort($prefs_smtp_port);
-			
-	if($prefs_mail_smtp_encryption_input != '') {
-		$transport->setEncryption($prefs_smtp_encryption);
-	}
-
-	$mailer = Swift_Mailer::newInstance($transport);
-	$message = Swift_Message::newInstance()
-			->setSubject("Account | $prefs_pagetitle")
-  		->setFrom(array($prefs_mailer_adr => $prefs_mailer_name))
-  		->setTo(array($mail => $username))
-  		->setBody("$email_msg", 'text/html');
-
-  $send_message = $mailer->send($message, $failures);
+  
+	$subject = "Account | $prefs_pagetitle";
+	$message = "$email_msg";
+	$recipient = array('name' => $username, 'mail' => $mail);
+	$testmail = fc_send_mail($recipient,$subject,$message);
 	
 	$smarty->assign("msg_status","alert alert-success",true);
 	$smarty->assign("register_message",$lang['msg_register_success'],true);
 	
 	record_log("user_register","new user $username","6");
 	
+	/* send notification to admin */
 	$admin_notification_text  = $lang['msg_register_admin_notification_text'].'<hr>';
 	$admin_notification_text .= 'Username: <b>'.$username.'</b><br>';
 	$admin_notification_text .= 'E-Mail: '.$mail.'<br>';
-	$admin_notification_text .= 'Server: '.$_SERVER['SERVER_NAME'].'<br>';
-	mailto_admin("$lang[msg_register_admin_notification_subject]","$admin_notification_text");
+	$admin_notification_text .= 'Server: '.$prefs_pagetitle.'<br>';
+	$admin_mail = array('name' => $prefs_mailer_name, 'mail' => $prefs_mailer_adr);
+	$copymail = fc_send_mail($admin_mail,$lang['msg_register_admin_notification_subject'],$admin_notification_text);
 
 } else {
 	//oh no, don't create an new account

@@ -200,4 +200,56 @@ function fc_write_comment($data) {
 
 
 
+
+/**
+ * sending e-mails
+ * $recipient -> array() 'name' and 'mail'
+ * $subject -> string()
+ * $message -> string()
+ */
+
+
+function fc_send_mail($recipient,$subject,$message) {
+
+	global $prefs_mailer_adr, $prefs_mailer_name, $prefs_mailer_type, $prefs_mailer_return_path, $prefs_smtp_host, $prefs_smtp_port, $prefs_smtp_encryption, $prefs_smtp_authentication, $prefs_smtp_username, $prefs_smtp_psw;
+	
+	$subject = preg_replace( "/(content-type:|bcc:|cc:|to:|from:)/im", "", $subject );
+	$message = preg_replace( "/(content-type:|bcc:|cc:|to:|from:)/im", "", $message );
+
+	require_once FC_CORE_DIR.'lib/Swift/lib/swift_required.php';
+	
+	if($prefs_mailer_type == 'smtp') {
+		
+		$trans = Swift_SmtpTransport::newInstance()
+            ->setUsername("$prefs_smtp_username")
+            ->setPassword("$prefs_smtp_psw")
+            ->setHost("$prefs_smtp_host")
+            ->setPort($prefs_smtp_port);
+			
+		if($prefs_smtp_encryption != '') {
+			$trans->setEncryption($prefs_smtp_encryption);
+		}
+		
+	} else {
+		$trans = Swift_MailTransport::newInstance();
+	}
+	
+	$mailer = Swift_Mailer::newInstance($trans);
+	$message = Swift_Message::newInstance("$subject")
+			->setFrom(array($prefs_mailer_adr => $prefs_mailer_name))
+			->setTo(array($recipient['mail'] => $recipient['name']))
+			->setBody("$message","text/html");
+			
+	if(!$mailer->send($message, $failures)) {
+	  $fail = print_r($failures,true);
+		$return = $fail;
+	} else {
+		$return = 1;
+	}
+	
+	return $return;
+}
+
+
+
 ?>

@@ -1,14 +1,11 @@
 <?php
-
+//error_reporting(E_ALL ^E_NOTICE);
 //prohibit unauthorized access
 require 'core/access.php';
-
-
 
 foreach($_POST as $key => $val) {
 	$$key = @htmlspecialchars($val, ENT_QUOTES); 
 }
-
 
 if(isset($_POST['save_prefs_contacts'])) {
 	
@@ -104,37 +101,16 @@ if($prefs_mailer_adr != '') {
 
 
 if($_GET['sendtest'] == 1) {
-	require_once'../lib/Swift/lib/swift_required.php';
 	
-	if($prefs_mailer_type == 'smtp') {
-		
-		$trans = Swift_SmtpTransport::newInstance()
-            ->setUsername("$prefs_smtp_username")
-            ->setPassword("$prefs_smtp_psw")
-            ->setHost("$prefs_smtp_host")
-            ->setPort($prefs_smtp_port);
-			
-		if($prefs_mail_smtp_encryption_input != '') {
-			$trans->setEncryption($prefs_smtp_encryption);
-		}
-	} else {
-		$trans = Swift_MailTransport::newInstance();
-	}
+	$subject = 'flatCore Mail Test';
+	$message = "flatCore Test (via $prefs_mailer_type)";
+	$recipient = array('name' => $prefs_mailer_name, 'mail' => $prefs_mailer_adr);
+	$testmail = fc_send_mail($recipient,$subject,$message);
 	
-
-	$mailer = Swift_Mailer::newInstance($trans);
-	$message = Swift_Message::newInstance('flatCore Test')
-			->setFrom(array($prefs_mailer_adr => $prefs_mailer_name))
-			->setTo(array($prefs_mailer_adr => $prefs_mailer_name))
-			->setBody("flatCore Test (via $prefs_mailer_type)");
-			
-	if(!$mailer->send($message, $failures)) {
-		echo '<div class="alert alert-danger mt-3">';
-	  echo 'Failures:<br>';
-	  print_r($failures);
-	  echo '</div>';
-	} else {
+	if($testmail == 1) {
 		echo '<p class="alert alert-success mt-3">'.$icon['check'].' '.$lang['prefs_mailer_send_test_success'].'</p>';
+	} else {
+		echo '<div class="alert alert-danger mt-3">'.$testmail.'</div>';;
 	}
 	
 }
