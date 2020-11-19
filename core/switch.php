@@ -436,15 +436,17 @@ if($p == "register") {
 /* confirm new account */
 if($p == "account") {
 	
-	$dbh = new PDO("sqlite:$fc_db_user");					
-	$sql = "UPDATE fc_user SET user_verified = 'verified' WHERE user_nick = :user AND user_activationkey = :al";
-	$stmt = $dbh->prepare($sql);
-	$stmt->bindValue(':user', $user, PDO::PARAM_STR);
-	$stmt->bindValue(':al', $al, PDO::PARAM_STR);
-	$stmt->execute();	
+	$verify = $db_content->update("fc_user", [
+		"user_verified" => 'verified'
+		], [
+			"AND" => [
+			"user_nick" => $user,
+			"user_activationkey" => $al
+		]
+	]);
 	
-	$cnt_changes = $stmt->rowCount();
-	$dbh = null;
+	$cnt_changes = $verify->rowCount();
+	
 	
 	if($cnt_changes > 0){
 		$account_msg = get_textlib("account_confirm", $languagePack);
