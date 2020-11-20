@@ -34,45 +34,25 @@ if($_POST['ask_for_psw']) {
 		
 		/* unique token user_registerdate + user_mail */
 		$reset_token = random_text('alnum',32);
-		$reset_link = $fc_base_url."?p=password&token=$reset_token";
+		$reset_link = $fc_base_url."password/?token=$reset_token";
+		
 		/* input token */
-		$dbh = new PDO("sqlite:$fc_db_user");
-		$sql = "UPDATE fc_user SET user_reset_psw = :reset_token WHERE user_mail = :mail";
-		$sth = $dbh->prepare($sql);
-		$sth->bindParam(':reset_token', $reset_token, PDO::PARAM_STR);
-		$sth->bindParam(':mail', $mail, PDO::PARAM_STR);
-		$sth->execute();
-		$dbh = null;
+		$db_user->update("fc_user", [
+				"user_reset_psw" => "$reset_token"
+					], [
+				"user_mail" => $mail
+			]);
 		
 		/* generate the message */
 		$email_msg = str_replace("{USERNAME}","$user_nick",$lang['forgotten_psw_mail_info']);
 		$email_msg = str_replace("{RESET_LINK}","$reset_link",$email_msg);
 		
 		/* send register mail to the new user */
-		require_once 'lib/Swift/lib/swift_required.php';
-		
-		if($prefs_mailer_type == 'smtp') {
-			$trans = Swift_SmtpTransport::newInstance()
-            ->setUsername("$prefs_smtp_username")
-            ->setPassword("$prefs_smtp_psw")
-            ->setHost("$prefs_smtp_host")
-            ->setPort($prefs_smtp_port);
-				
-			if($prefs_mail_smtp_encryption_input != '') {
-				$trans->setEncryption($prefs_smtp_encryption);
-			}
-		} else {
-			$trans = Swift_MailTransport::newInstance();
-		}
 
-		$mailer_psw1 = Swift_Mailer::newInstance($trans);
-		$subj = $lang['forgotten_psw_mail_subject']. ' '.$prefs_pagetitle;
-		$message = Swift_Message::newInstance("$subj")
-	  	->setFrom(array($prefs_mailer_adr => $prefs_mailer_name))
-	  	->setTo(array($mail => $user_nick))
-	  	->setBody("$email_msg", "text/html");
-	  
-	  $res = $mailer_psw1->send($message);
+		$subject = $lang['forgotten_psw_mail_subject'].' '.$prefs_pagetitle;
+		$message = "$email_msg";
+		$recipient = array('name' => $user_nick, 'mail' => $mail);
+		$send_reset_mail = fc_send_mail($recipient,$subject,$message);
 		
 		$psw_message = $lang['msg_forgotten_psw_step1'];
 	
@@ -111,43 +91,24 @@ if($_GET['token'] != "") {
 	
 	$update_user_psw = password_hash($temp_psw, PASSWORD_DEFAULT);
 	
-	/* update db - send information to user_mail */
 	
-	$dbh = new PDO("sqlite:$fc_db_user");
-	$sql = "UPDATE fc_user SET user_psw_hash = :update_user_psw, user_reset_psw = '' WHERE user_id = :user_id ";
-	$sth = $dbh->prepare($sql);
-	$sth->bindParam(':update_user_psw', $update_user_psw, PDO::PARAM_STR);
-	$sth->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-	
-	$cnt = $sth->execute();
-	$dbh = null;
+	$db_user->update("fc_user", [
+		"user_psw_hash" => "$update_user_psw",
+		"user_reset_psw" => ""
+	], [
+		"user_id" => $user_id
+	]);
 	
 	$email_msg = $lang['forgotten_psw_mail_update'];
 	$email_msg = str_replace("{USERNAME}","$user_nick",$email_msg);
 	$email_msg = str_replace("{temp_psw}","$temp_psw",$email_msg);
 
 	/* send register mail to the new user */
-	require_once 'lib/Swift/lib/swift_required.php';
-	if($prefs_mailer_type == 'smtp') {
-		$transport = Swift_SmtpTransport::newInstance()
-            ->setUsername("$prefs_smtp_username")
-            ->setPassword("$prefs_smtp_psw")
-            ->setHost("$prefs_smtp_host")
-            ->setPort($prefs_smtp_port);
-			
-		if($prefs_mail_smtp_encryption_input != '') {
-			$transport ->setEncryption($prefs_smtp_encryption);
-		}
-	} else {
-		$transport = Swift_MailTransport::newInstance();
-	}
-	$mailer = Swift_Mailer::newInstance($transport);
-	$message = Swift_Message::newInstance()
-		->setSubject("$lang[forgotten_psw_mail_subject] | $prefs_pagetitle")
-  	->setFrom(array($prefs_mailer_adr => $prefs_mailer_name))
-  	->setTo(array("$user_mail" => "$user_nick"))
-  	->setBody("$email_msg", 'text/html');
-  $result = $mailer->send($message);
+  
+	$subject = $lang['forgotten_psw_mail_subject'].' '.$prefs_pagetitle;
+	$message = "$email_msg";
+	$recipient = array('name' => $user_nick, 'mail' => $user_mail);
+	$send_reset_mail = fc_send_mail($recipient,$subject,$message);
 	
 	$psw_message = $lang['msg_forgotten_psw_step2'];
 	
