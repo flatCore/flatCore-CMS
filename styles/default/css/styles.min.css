@@ -1,7 +1,7 @@
 /**
  *
  * default flatCore Style
- * copyright © 2019, flatCore.org
+ * copyright © 2020, flatCore.org
  *
  */
 /*!
@@ -327,6 +327,12 @@ footer div.tags a:hover {
   background: rgba(255, 255, 255, 0.85);
   padding: 15px;
   border-top: 1px solid #ddd;
+}
+.scrollBox {
+  max-height: 250px;
+  overflow: auto;
+  background: rgba(0, 0, 0, 0.1);
+  padding: 15px;
 }
 /* posts */
 a.post-headline-link:hover {
