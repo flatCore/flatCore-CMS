@@ -1,16 +1,19 @@
-/**
- *
- * default flatCore Style
- * copyright © 2020, flatCore.org
- *
+/*
+ * default | flatCore Theme
+ * Copyright 2020 flatCore CMS
  */
 
-@import (inline) "bootstrap.min.css";
-@import (inline) "featherlight.css";
-@import (inline) "featherlight.gallery.css";
+// Theme Core
+@import 'variables';
+
+// Bootstrap Core
+@import 'bootstrap/scss/bootstrap';
+
+@import '../css/featherlight';
+@import '../css/featherlight.gallery';
 
 #pageHeader {
-	background: #222;
+	background: $gray-900;
 	p.h1, p.h2 {
 		color: #fff;
 		font-weight: 200;
@@ -19,7 +22,7 @@
 
 #pageFooter {
 	padding-bottom: 100px;
-	background: #343a40;
+	background: $gray-800;
 	color: #eee;
 }
 
@@ -29,15 +32,14 @@ footer div.tags a {
 	padding: 2px 5px;
 	margin: 1px;
 	border-radius: 3px;
-	background-color: #222;
-	border: 1px solid #111;
+	background-color: $gray-900;
+	border: 1px solid $gray-900;
+	
+	&:hover {
+		border-color: $black;
+		text-decoration: none;
+	}
 }
-
-footer div.tags a:hover {
-	background-color: #111;
-	text-decoration: none;
-}
-
 
 
 .privacy_policy {
