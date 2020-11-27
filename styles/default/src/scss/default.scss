@@ -7,10 +7,10 @@
 @import 'variables';
 
 // Bootstrap Core
-@import 'bootstrap/scss/bootstrap';
+@import '../../../../lib/src/scss/bootstrap/scss/bootstrap';
 
-@import '../css/featherlight';
-@import '../css/featherlight.gallery';
+@import '../../../../lib/src/css/featherlight';
+@import '../../../../lib/src/css/featherlight.gallery';
 
 #pageHeader {
 	background: $gray-900;

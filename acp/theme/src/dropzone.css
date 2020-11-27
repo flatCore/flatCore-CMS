@@ -241,7 +241,7 @@
   -o-transition: opacity 0.4s ease-in-out;
   -ms-transition: opacity 0.4s ease-in-out;
   transition: opacity 0.4s ease-in-out;
-  background-image: url("filedrop-status.png");
+  background-image: url("../../images/filedrop-status.png");
   background-repeat: no-repeat;
 }
 

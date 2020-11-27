@@ -14,10 +14,10 @@ div#page-sidebar {
 	z-index: 1000;
 	width: 55px;
 	padding-top: 25px;
-	color: @sidebar_color;
-	background: @sidebar_background;
+	color: $sidebar_color;
+	background: $sidebar_background;
 	height: 100%;
-	border-right: 1px solid @content_bg;
+	border-right: 1px solid $content_bg;
 	
 	overflow: hidden;
 	overflow-y: auto;
@@ -43,7 +43,7 @@ div#page-sidebar {
 		display: block;
 		width: 100%;
 		height: 70px;
-		background: transparent url(../images/fc-logo.png) top left no-repeat;
+		background: transparent url(../../images/fc-logo.png) top left no-repeat;
 	}
 	
 	.sidebar-collapsed {
@@ -95,7 +95,7 @@ div#page-sidebar {
 		padding-top: 10px;
 		a {
 			display: block;
-			color: @sidebar_color;
+			color: $sidebar_color;
 		}
 	}	
 }
@@ -112,9 +112,9 @@ div#page-sidebar-help {
 	width: 0;
 	padding-top: 25px;
 	padding-bottom: 50px;
-	color: @sidebar_help_color;
-	background: @sidebar_help_background;
-	box-shadow: inset 5px 0px 5px -5px darken(@sidebar_help_background,20);
+	color: $sidebar_help_color;
+	background: $sidebar_help_background;
+	box-shadow: inset 5px 0px 5px -5px darken($sidebar_help_background,20);
 	height: 100%;
 	#page-sidebar-help-inner {
 		padding: 15px;
@@ -178,24 +178,24 @@ a.sidebar-sub,
 a.sidebar-sub-active {
 	display: block;
 	width: 100%;
-	color: @sidebar_color;
-	background: @sidebar_link_background;
+	color: $sidebar_color;
+	background: $sidebar_link_background;
 	padding: 3px 2px 3px 0;
 	border-bottom: 1px solid #111;
 }
 
 a.sidebar-sub:hover {
-	color: darken(@sidebar_color,5);
-	background: darken(@sidebar_link_background,5);
+	color: darken($sidebar_color,5);
+	background: darken($sidebar_link_background,5);
 }
 
 
 a.sidebar-sub-active {
-	color: @font_color;
-	background: @content_bg;
-	background: linear-gradient(to right, @widget_background 0%,@content_bg 100%);
+	color: $font_color;
+	background: $content_bg;
+	background: linear-gradient(to right, $widget_background 0%,$content_bg 100%);
 	i {
-		color: @brand_color;
+		color: $brand_color;
 	}
 }
 
@@ -236,8 +236,8 @@ li.sidebar-sub-end {
 .sidebar-nav-active:hover,
 .dashboard-toggle.active,
 .dashboard-toggle.active:hover {
-	background: @content_bg;
-	color: @brand_color;
+	background: $content_bg;
+	color: $brand_color;
 }
 
 .sidebar-nav-active span.tri-left,
@@ -250,6 +250,6 @@ li.sidebar-sub-end {
 	height: 0;
 	margin-right: -6px;
 	border-top: 10px solid transparent;
-	border-right: 7px solid @page_bg;
+	border-right: 7px solid $page_bg;
 	border-bottom: 10px solid transparent;
 }

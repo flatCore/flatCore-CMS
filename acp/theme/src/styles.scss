@@ -2,6 +2,12 @@
  * flatCore ACP
  */
 
+@import 'dropzone';
+@import 'bootstrap-datetimepicker.min';
+@import 'jquery.fancybox.min';
+
+// Bootstrap Core
+@import '../../../lib/src/scss/bootstrap/scss/bootstrap';
 
 @import "cards";
 @import "table";
@@ -11,7 +17,7 @@
 @import "posts";
 
 ::selection {
-	background-color: @brand_color;
+	background-color: $brand_color;
 	color: #ccc;
 }
 
@@ -21,7 +27,7 @@ a, a:hover {
 
 html, body {
 	text-align: left;
-	color: @font_color;
+	color: $font_color;
 	font-weight: 400;
 	background: #000;
 	height: 100%;
@@ -42,7 +48,7 @@ a#dashboard {
 }
 
 div#page-content {
-	background: @content_bg;
+	background: $content_bg;
 	min-height: 100%;
 	height: auto !important;
 	overflow: hidden !important;
@@ -62,7 +68,7 @@ div#bigHeader {
 
 #expireDiv {
 	text-align: center;
-	.transition(all 0.3s linear);
+	transition: all 0.3s linear;
 }
 
 .expire-hidden {
@@ -93,9 +99,9 @@ div#bigHeader {
 	right:0;
 	padding:10px;
 	z-index:1005;
-	background: fade(@widget_background,90);
+	background: fade($widget_background,90);
 	border-top-left-radius: 5px;
-	border: 1px solid darken(@widget_background,15);
+	border: 1px solid darken($widget_background,15);
 }
 
 
@@ -111,7 +117,7 @@ div#wrapper{
   margin-bottom: 10px;
   padding: 8px;
   background: rgba(255,255,255,0.5);
-  .border-radius(9px);
+	border-radius: 9px;
   min-height: 500px;
 }
 
@@ -142,7 +148,7 @@ hr.shadow:after {
   display: block;
   width: 90%;
   height: 20px;
-  box-shadow: 0px 20px 10px darken(@widget_background,5);
+  box-shadow: 0px 20px 10px darken($widget_background,5);
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
@@ -157,7 +163,7 @@ div#footer {
 	padding: 15px 0 5px 0;
 	text-align: center;
 	color: #555;
-	background: @widget_background;
+	background: $widget_background;
 	border-radius: 5px;
 	-moz-border-radius: 9px;
 	overflow: hidden;
@@ -185,7 +191,7 @@ hr {
 	border : 0;
   height : 1px;
   margin : 1em 0;
-  border-bottom: 1px solid darken(@widget_background,20);
+  border-bottom: 1px solid darken($widget_background,20);
 }
 
 hr.spacer {
@@ -234,15 +240,15 @@ a.topnav_selected:visited {
 	line-height: 40px;
 	font-weight: normal;
 	background: #111;
-	color: @brand_color;
+	color: $brand_color;
 	height: 40px;
-	.transition(background 0.3s linear, color 0.3s linear);
+	transition: background 0.3s linear, color 0.3s linear;
 	margin-right: 1px;
 }
 
 a.topnav:hover {
 	background: #222;
-	color: lighten(@brand_color,15%);
+	color: lighten($brand_color,15%);
 }
 
 a.topnav:active,
@@ -254,7 +260,7 @@ a.topnav:focus {
 
 a.topnav_selected,
 a.topnav_selected:visited {
-	background-color: @brand_color;
+	background-color: $brand_color;
 	color: #111;
 }
 
@@ -267,7 +273,7 @@ a.topnav_selected span.mm {
 	height: 0; 
 	border-left: 6px solid transparent;
 	border-right: 6px solid transparent;
-	border-bottom: 4px solid @content_bg;
+	border-bottom: 4px solid $content_bg;
 	margin-left: -6px;
 }
 
@@ -275,32 +281,32 @@ a.topnav_selected span.mm {
 div#contentSwitch {
 	background: #111;
 	padding: 2px 20px 2px 10px;
-	border-bottom: 1px solid @dark_brand;
+	border-bottom: 1px solid $dark_brand;
 	font-size: 12px;
 	color: #777;
 	text-align: right;
 }
 
 .navbar-fc {
-	border: 1px solid darken(@widget_background,10);
-	background: @widget_background;
+	border: 1px solid darken($widget_background,10);
+	background: $widget_background;
 	padding: 0;
 	.nav-item {
 
 	}
 	.nav-link {
-		background: darken(@widget_background,15);
+		background: darken($widget_background,15);
 		&:hover {
-			background: darken(@widget_background,8);
+			background: darken($widget_background,8);
 		}
 		&.active {
-			background: darken(@widget_background,8);
+			background: darken($widget_background,8);
 		}
 	}
 	.dropdown-menu {
-		background: darken(@widget_background,5);
+		background: darken($widget_background,5);
 		.dropdown-item {
-			color: @font_color;
+			color: $font_color;
 			&.active {
 				color: #fff;
 			}
@@ -328,51 +334,51 @@ a:focus {
 }
 
 .modal-content {
-	background: @widget_background;
+	background: $widget_background;
 	.modal-header {
-		border-bottom: 1px solid darken(@widget_background,10);
+		border-bottom: 1px solid darken($widget_background,10);
 		.close {
-			color: @brand_color;
+			color: $brand_color;
 			opacity: 1;
 			text-shadow: none;
 		}
 	}
 	.modal-footer {
-		border-top: 1px solid darken(@widget_background,10);
+		border-top: 1px solid darken($widget_background,10);
 	}
 }
 
 
 
 .list-group-item-ghost {
-	color: @font_color;
+	color: $font_color;
 	background: transparent;
-	background-color: @btn_fc_background;
+	background-color: $btn_fc_background;
 	&.active {
-		background-color: @btn_fc_background_active;
-		border-color: darken(@btn_fc_background_active,10);
-		color: @btn_fc_color_active;
+		background-color: $btn_fc_background_active;
+		border-color: darken($btn_fc_background_active,10);
+		color: $btn_fc_color_active;
 		&:hover {
-			color: @btn_fc_color_active;
+			color: $btn_fc_color_active;
 		}
 	}
 	&:hover {
-		background: darken(@widget_background,10);
-		color: @font_color;
+		background: darken($widget_background,10);
+		color: $font_color;
 	}
 }
 
 
 .popover {
-	background: darken(@widget_background,1);
+	background: darken($widget_background,1);
 
 	.popover-header {
-		background: darken(@widget_background,5);
-		border-bottom: 1px solid darken(@widget_background,5);
+		background: darken($widget_background,5);
+		border-bottom: 1px solid darken($widget_background,5);
 	}
 
 	.popover-body {
-		color: @font_color;
+		color: $font_color;
 	}
 
 	img {
@@ -380,24 +386,24 @@ a:focus {
 		height: auto;
 	}
 	.arrow::after {
-		border-right-color: darken(@widget_background,1);
+		border-right-color: darken($widget_background,1);
 	}
 }
 
 .badge-secondary {
-	color: @font_color;
-	background-color: darken(@widget_background,5);
+	color: $font_color;
+	background-color: darken($widget_background,5);
 }
 
 
 
 .progress {
-	background: lighten(@widget_background,10);
+	background: lighten($widget_background,10);
 	padding: 2px;
 	height: 1.5rem;
 	.progress-bar {
-		background: @brand_color;
-		color: @widget_background;
+		background: $brand_color;
+		color: $widget_background;
 		border-radius: .15rem;
 	}
 }
@@ -407,7 +413,7 @@ a:focus {
 
 }
 .fancybox-slide>* {
-	background: @widget_background;
+	background: $widget_background;
 	border-radius: 0.75rem;
 }
 
@@ -502,8 +508,8 @@ div.header-bc span:first-child {
 
 .pages-list-container {
 	padding: 5px 15px 0 0;
-	background-color: @widget_background;
-	background-image: linear-gradient(90deg, darken(@widget_background,25) 1px, transparent 1px);
+	background-color: $widget_background;
+	background-image: linear-gradient(90deg, darken($widget_background,25) 1px, transparent 1px);
 	background-size: 10px;
 	background-position: 0;
 }
@@ -513,7 +519,7 @@ div.header-bc span:first-child {
 	position: relative;
 	margin-bottom: 10px;
 	padding: 5px 5px 0 5px;
-	background: @pages_list_items_background;
+	background: $pages_list_items_background;
 	border: 1px solid rgba(0,0,0,0.2);
 	z-index: 555;
 	h4 {
@@ -521,10 +527,10 @@ div.header-bc span:first-child {
 		margin-bottom: 5px;
 		font-size: 15px;
 		a {
-			color: @brand_color;
+			color: $brand_color;
 		}
 		small {
-			color: @font_color;
+			color: $font_color;
 		}
 	}
 	&:hover {
@@ -535,31 +541,31 @@ div.header-bc span:first-child {
 
 .page-list-item-public {
 	&:hover {
-		border-color: fade(@color_public,50);
+		border-color: fade($color_public,50);
 	}
 }
 
 .page-list-item-private {
 	&:hover {
-		border-color: fade(@color_private,50);
+		border-color: fade($color_private,50);
 	}
 }
 
 .page-list-item-ghost {
 	&:hover {
-		border-color: fade(@color_ghost,50);
+		border-color: fade($color_ghost,50);
 	}
 }
 
 .page-list-item-draft {
 	&:hover {
-		border-color: fade(@color_draft,50);
+		border-color: fade($color_draft,50);
 	}
 }
 
 .page-list-item-redirect {
 	&:hover {
-		border-color: fade(@color_redirect,50);
+		border-color: fade($color_redirect,50);
 	}
 }
 
@@ -587,7 +593,7 @@ div.header-bc span:first-child {
 	&.active {
 		span.label-dot {
 			border: 1px solid rgba(10,10,10,0.7);
-			.box-shadow(inset 0 1px 3px rgba(10,10,10,0.7));
+			box-shadow: inset 0 1px 3px rgba(10,10,10,0.7);
 		}
 	}
 }
@@ -610,39 +616,39 @@ div.header-bc span:first-child {
 
 
 .page-list-item-public .label-page-status {
-	border-color: transparent @color_public transparent transparent;
+	border-color: transparent $color_public transparent transparent;
 }
 
 .page-list-item-private .label-page-status {
-	border-color: transparent @color_private transparent transparent;
+	border-color: transparent $color_private transparent transparent;
 }
 
 .page-list-item-ghost .label-page-status {
-	border-color: transparent fade(@color_public,25%) transparent transparent;
+	border-color: transparent fade($color_public,25%) transparent transparent;
 }
 
 .page-list-item-draft .label-page-status {
-	border-color: transparent @color_draft transparent transparent;
+	border-color: transparent $color_draft transparent transparent;
 }
 
 .text-public, .text-public.active {
-	color: @color_public !important;
+	color: $color_public !important;
 }
 
 .text-ghost,  .text-ghost.active {
-	color: @color_ghost !important;
+	color: $color_ghost !important;
 }
 
 .text-draft, .text-draft.active {
-	color: @color_draft !important;
+	color: $color_draft !important;
 }
 
 .text-private, .text-private.active {
-	color: @color_private !important;
+	color: $color_private !important;
 }
 
 .text-redirect, .text-redirect.active {
-	color: @color_redirect !important;
+	color: $color_redirect !important;
 }
 
 
@@ -650,7 +656,6 @@ div.header-bc span:first-child {
 .info-collapse.info-show-this {
 	max-height: 100px;
 	transition: max-height 0.3s ease-in;
-	-webkit-transition: max-height 0.3s ease-in;
 }
 
 .info-collapse.info-show.info-hide,
@@ -660,7 +665,6 @@ div.header-bc span:first-child {
 	margin: 0;
 	overflow: hidden;
 	transition: max-height 0.1s ease-out;
-	-webkit-transition: max-height 0.1s ease-out;
 }
 
 .bg-bright {
@@ -678,7 +682,7 @@ div.header-bc span:first-child {
 
 .controls-container {
 	padding: 5px;
-	background: darken(@widget_background,5);
+	background: darken($widget_background,5);
 }
 
 
@@ -707,7 +711,7 @@ div.header-bc span:first-child {
 	height:350px;
 	overflow:auto;
 	padding:5px;
-	background: darken(@widget_background,2);
+	background: darken($widget_background,2);
 	border-radius:5px;
 }
 
@@ -726,12 +730,12 @@ div.header-bc span:first-child {
 .dl-logfile {
 	margin: 0;
 	padding: 2px 5px;
-	border-bottom: 1px solid darken(@dark_brand,2);
-	background-color: @widget_background;
+	border-bottom: 1px solid darken($dark_brand,2);
+	background-color: $widget_background;
 }
 
 .dl-logfile:nth-child(even) {
-	background-color: lighten(@widget_background,5);
+	background-color: lighten($widget_background,5);
 }
 
 .dl-logfile dt {
@@ -838,13 +842,13 @@ textarea#textEditor2,
 }
 
 .files-list {
-	border-top:1px solid @widget_background;
-	background: darken(@widget_background,1);
+	border-top:1px solid $widget_background;
+	background: darken($widget_background,1);
 	padding: 1px 0;
 }
 
 .files-list:nth-child(even) {
-	background: darken(@widget_background,3);
+	background: darken($widget_background,3);
 }
 
 
@@ -884,12 +888,12 @@ code {
 .modules-list-item {
 	padding: 15px;
 	margin-bottom: 15px;
-	background: @widget_background;
-	border: 1px solid @widget_background;
+	background: $widget_background;
+	border: 1px solid $widget_background;
 }
 
 .modules-list-item:hover {
-	border: 1px solid lighten(@widget_background,2);
+	border: 1px solid lighten($widget_background,2);
 }
 
 .modules-list-item:before,
@@ -897,7 +901,7 @@ code {
   content:"";
     position:absolute; 
     z-index:-1;
-    .box-shadow(0 0 30px rgba(0,0,0,0.8));
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
     top:50%;
     bottom:0;
     left:20px;
@@ -907,8 +911,8 @@ code {
 
 pre {
 	padding: 15px;
-	background: @widget_background;
-	color: @font_color;
+	background: $widget_background;
+	color: $font_color;
 }
 
 
@@ -918,8 +922,8 @@ pre {
 	font-weight: 300;
 	font-size: 15px;
 	line-height: 15px;
-	color: @brand_color;
-	background: @widget_background;
+	color: $brand_color;
+	background: $widget_background;
 	padding: 5px 15px;
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
@@ -934,14 +938,14 @@ pre {
 
 .modul_list_items {
 	padding: 4px;
-	background: @widget_background;
+	background: $widget_background;
 	margin: 8px 0;
 }
 
 
 
 .well {
-	background: fade(darken(@widget_background,15),85);
+	background: fade(darken($widget_background,15),85);
 	padding: 15px;
 	border-radius: 3px;
 	margin-bottom: 5px;
@@ -952,8 +956,8 @@ pre {
 }
 
 img.avatar {
-	border: 1px solid @widget_background;
-	box-shadow: 0px 1px 5px @dark_brand;
+	border: 1px solid $widget_background;
+	box-shadow: 0px 1px 5px $dark_brand;
 }
 
 
@@ -964,15 +968,15 @@ img.avatar {
 		display: table-cell;
 		min-width: 100px;
 		text-align: center;
-		background: darken(@widget_background,5);
-		border: 1px solid @widget_background;
-		color: @font_color;
+		background: darken($widget_background,5);
+		border: 1px solid $widget_background;
+		color: $font_color;
 	}
 }
 
 
 .bootstrap-tagsinput {
-  /*background-color: @brand_color;*/
+  /*background-color: $brand_color;*/
   /*border: 1px solid #ccc;*/
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   display: inline-block;
@@ -984,7 +988,7 @@ img.avatar {
   cursor: text;
   width: 100%;
   span {
-	  background-color: @brand_color;
+	  background-color: $brand_color;
   }
 }
 .bootstrap-tagsinput input {
@@ -996,7 +1000,7 @@ img.avatar {
   margin: 0;
   width: auto;
   max-width: inherit;
-  color: @input_color;
+  color: $input_color;
 }
 .bootstrap-tagsinput.form-control input::-moz-placeholder {
   color: #777;
@@ -1061,20 +1065,20 @@ form.dropzone-default {
 	border: 1px dashed #999;
 
 	.dz-default.dz-message {
-		background: transparent url(../images/filedrop.png) no-repeat center center;
+		background: transparent url(../../images/filedrop.png) no-repeat center center;
 	}
 }
 
 form.dropzone-plugin .dz-default.dz-message {
-	background: transparent url(../images/filedrop-plugin.png) no-repeat center center;
+	background: transparent url(../../images/filedrop-plugin.png) no-repeat center center;
 }
 
 form.dropzone-module .dz-default.dz-message {
-	background: transparent url(../images/filedrop-module.png) no-repeat center center;
+	background: transparent url(../../images/filedrop-module.png) no-repeat center center;
 }
 
 form.dropzone-theme .dz-default.dz-message {
-	background: transparent url(../images/filedrop-theme.png) no-repeat center center;
+	background: transparent url(../../images/filedrop-theme.png) no-repeat center center;
 }
 
 
@@ -1082,7 +1086,7 @@ form.dropzone-theme .dz-default.dz-message {
 
 .images-name {
 	font-size: 10px;
-	background: darken(@widget_background,10);
+	background: darken($widget_background,10);
 	overflow:hidden;
 	margin: -3px -3px 3px -3px;
 	padding: 3px 1px;
@@ -1122,9 +1126,9 @@ ul.image_picker_selector li p {
 	position: absolute;
 	bottom: 0;
 	left: 0;
-	background: darken(@widget_background,5);
-	border: 1px solid darken(@widget_background,35);
-	color: @font_color;
+	background: darken($widget_background,5);
+	border: 1px solid darken($widget_background,35);
+	color: $font_color;
 	width: 100%;
 	padding: 2px 0;
 	margin: 0;
@@ -1149,12 +1153,12 @@ ul.image_picker_selector li.has-child {
 
 ul.image_picker_selector li.group_title {
 	width: 100%;
-	background: darken(@widget_background,5);
+	background: darken($widget_background,5);
 	padding: 3px 5px;
 }
 
 ul.image_picker_selector li .thumbnail {
-	border: 1px solid darken(@widget_background,35);
+	border: 1px solid darken($widget_background,35);
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -1165,13 +1169,13 @@ ul.image_picker_selector li .thumbnail {
 }
 
 ul.image_picker_selector li .thumbnail.selected {
-	background: darken(@widget_background,25);
-	border: 1px solid @brand_color;
+	background: darken($widget_background,25);
+	border: 1px solid $brand_color;
 }
 
 ul.image_picker_selector li .thumbnail.selected > p {
-	background: @brand_color;
-	border: 1px solid @brand_color;
+	background: $brand_color;
+	border: 1px solid $brand_color;
 }
 
 
@@ -1202,13 +1206,13 @@ ul.page-list-top {
 		min-height: 40px;
 		padding: 10px;
 		margin-bottom: 0;
-		background: @pages_list_items_background;
+		background: $pages_list_items_background;
 		box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
-		border: 1px solid @pages_list_items_background;
+		border: 1px solid $pages_list_items_background;
 		&:hover  {
-			background: lighten(@pages_list_items_background,1);
+			background: lighten($pages_list_items_background,1);
 			box-shadow: 0 2px 5px rgba(0, 0, 0, .35);
-			border: 1px solid darken(@pages_list_items_background,2);
+			border: 1px solid darken($pages_list_items_background,2);
 		}
 	}
 	
@@ -1230,7 +1234,7 @@ ul.page-list {
 		
 		padding-left: 10px;
 		margin-left: 10px;
-		border-left: 1px @brand_color solid;
+		border-left: 1px $brand_color solid;
 		
 		span.page-toggler {
 			display: inline-block;
@@ -1245,18 +1249,18 @@ ul.page-list {
 		left: -1px;
 		width: 11px;
 		height: 31px;
-		border-bottom: 1px @brand_color solid;
-		border-left: 1px @brand_color solid;
+		border-bottom: 1px $brand_color solid;
+		border-left: 1px $brand_color solid;
 	}
 	
 	li:after {
 		width: 10px;
 		height: 10px;
-		background-color: @brand_color;
+		background-color: $brand_color;
 		top: 26px;
 		left: -5px;
 		transform: rotateZ(45deg);
-		border: 1px @pages_list_items_background solid;
+		border: 1px $pages_list_items_background solid;
 		border-radius: 50%;
 	}
 	
@@ -1271,27 +1275,27 @@ ul.page-list {
 		min-height: 40px;
 		padding: 10px;
 		margin-bottom: 0;
-		background: @pages_list_items_background;
+		background: $pages_list_items_background;
 		box-shadow: 0 2px 5px rgba(0, 0, 0, .15);
-		border: 1px solid @pages_list_items_background;
+		border: 1px solid $pages_list_items_background;
 		&:hover  {
-			background: lighten(@pages_list_items_background,1);
+			background: lighten($pages_list_items_background,1);
 			box-shadow: 0 2px 5px rgba(0, 0, 0, .35);
-			border: 1px solid darken(@pages_list_items_background,2);
+			border: 1px solid darken($pages_list_items_background,2);
 		}
 	}
 
 
 	ul li label.page-container {
-		background: fade(@pages_list_items_background,80);
+		background: fade($pages_list_items_background,80);
 	}
 		
 	ul ul li label.page-container {
-		background: fade(@pages_list_items_background,60);
+		background: fade($pages_list_items_background,60);
 	}
 	
 	ul ul ul li label.page-container {
-		background: fade(@pages_list_items_background,40);
+		background: fade($pages_list_items_background,40);
 	}
 	
 	

@@ -198,18 +198,15 @@ if(isset($set_acptheme)) {
     <script language="javascript" type="text/javascript" src="../lib/js/tinymce/jquery.tinymce.min.js"></script>
 
 		<!-- Add fancyBox -->
-		<link rel="stylesheet" href="./css/jquery.fancybox.min.css?v=2.1.5" type="text/css" media="screen" />
 		<script type="text/javascript" src="./js/jquery.fancybox.min.js?v=2.1.5"></script>
 		
 		<script type="text/javascript" src="../lib/js/jquery/jquery.textareaCounter.plugin.js"></script>
-
-		<link rel="stylesheet" href="css/bootstrap.min.css?v=4.5.2" type="text/css" media="screen, projection">
 		
 		<?php
 		if($acptheme == 'dark') {
-			$style_file = 'css/styles_dark.css?v='.time();
+			$style_file = 'theme/css/styles_dark.css?v='.time();
 		} else {			
-			$style_file = 'css/styles_light.css?v='.time();
+			$style_file = 'theme/css/styles_light.css?v='.time();
 		}
 		echo '<link rel="stylesheet" href="'.$style_file.'" type="text/css" media="screen, projection">';
 		?>
@@ -233,7 +230,6 @@ if(isset($set_acptheme)) {
 				
 		<!-- uploader -->
 		<script src="../lib/js/dropzone.js"></script>
-		<link rel="stylesheet" href="../lib/css/dropzone.css" type="text/css" media="screen, projection">
 		
 		<!-- ACE Editor -->
 		<script src="../lib/js/ace/ace.js" data-ace-base="../lib/js/ace" type="text/javascript" charset="utf-8"></script>
@@ -249,7 +245,6 @@ if(isset($set_acptheme)) {
 		<script type="text/javascript" src="../lib/js/jquery/image-picker.min.js"></script>
 		
 		<!-- date/time picker -->
-		<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" type="text/css" media="screen, projection">
 		<script type="text/javascript" src="js/moment.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
 		
