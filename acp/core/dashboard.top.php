@@ -3,6 +3,7 @@
 //prohibit unauthorized access
 require 'core/access.php';
 
+$tpl_file = file_get_contents('templates/dashboard_top.tpl');
 
 /* get latest infos from user database */
 
@@ -118,99 +119,146 @@ for($i=0;$i<$cnt_pages;$i++) {
 	
 } // eol $i
 
+
 $top5pages = '<div class="list-group list-group-flush">'.$top5pages.'</div>';
+
 
 $cnt_public_per = round($cnt_public*100/$cnt_pages);
 $cnt_draft_per = round($cnt_draft*100/$cnt_pages);
 $cnt_ghost_per = round($cnt_ghost*100/$cnt_pages);
 $cnt_private_per = round($cnt_private*100/$cnt_pages);
 
-echo'<div class="card-deck mb-1">';
 
-echo '<div class="card">';
-echo '<div class="card-header">'.$lang['db_user'].' <span class="badge badge-light float-right">'.$cnt_user.'</span></div>';
-echo '<div class="card-body">';
-echo '<div class="row">';
-echo '<div class="col-lg-12">';
 
-echo '<p class="mb-0">'.$lang['f_user_select_verified'].'</p>';
-echo '<div class="progress mb-2">';
-echo '<div class="progress-bar" role="progressbar" style="width: '.$cnt_verified_per.'%;" aria-valuenow="'.$cnt_verified_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_verified.'</div>';
-echo '</div>';
 
-echo '<p class="mb-0">'.$lang['f_user_select_waiting'].'</p>';
-echo '<div class="progress mb-2">';
-echo '<div class="progress-bar" role="progressbar" style="width: '.$cnt_waiting_per.'%;" aria-valuenow="'.$cnt_waiting_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_waiting.'</div>';
-echo '</div>';
+/* posts */
 
-echo '<p class="mb-0">'.$lang['f_user_select_paused'].'</p>';
-echo '<div class="progress mb-2">';
-echo '<div class="progress-bar" role="progressbar" style="width: '.$cnt_paused_per.'%;" aria-valuenow="'.$cnt_paused_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_paused.'</div>';
-echo '</div>';
+$allPosts = $db_posts->select("fc_posts", ["post_id", "post_title", "post_teaser", "post_type"], [
+	"ORDER" => ["post_releasedate" => "DESC"]
+]);
 
-echo '<p class="mb-0">'.$lang['f_user_select_deleted'].'</p>';
-echo '<div class="progress mb-2">';
-echo '<div class="progress-bar" role="progressbar" style="width: '.$cnt_deleted_per.'%;" aria-valuenow="'.$cnt_deleted_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_deleted.'</div>';
-echo '</div>';
+$cnt_posts = count($allPosts);
+
+
+for($i=0;$i<$cnt_posts;$i++) {
+	
+	
+	if($i < 5) {
+		
+		$last_edit = @date("d.m.Y",$allPosts[$i]['post_lastedit']);
+		$post_teaser = first_words(strip_tags(html_entity_decode($allPosts[$i]['post_teaser'])),4);
+		
+		$top5posts .= '<div class="list-group-item list-group-item-ghost list-group-item-action flex-column align-items-start">';
+		$top5posts .= '<div class="d-flex w-100 justify-content-between">';
+		$top5posts .= '<h6 class="mb-0">'.$allPosts[$i]['post_title'].' ';
+		$top5posts .= '<small>('.$last_edit.')</small></h6>';
+		$top5posts .= '<form class="inline" action="?tn=posts&sub=edit" method="POST">';
+		$top5posts .= '<button class="btn btn-fc btn-sm" name="post_id" value="'.$allPosts[$i]['post_id'].'">'.$icon['edit'].'</button>';
+		$top5posts .= '</form>';
+		$top5posts .= '</div>';
+		$top5posts .= '<small>'.$post_teaser.'</small>';
+		$top5posts .= '</div>';		
+	}
+	
+}
+
+
+/* comments */
+
+$allComments = $db_content->select("fc_comments", ["comment_id", "comment_author", "comment_text", "comment_lastedit"], [
+	"ORDER" => ["comment_lastedit" => "DESC"]
+]);
+
+$cnt_comments = count($allComments);
+
+for($i=0;$i<$cnt_comments;$i++) {
+	
+	if($i < 5) {
+
+		$last_edit = @date("d.m.Y",$allComments[$i]['comment_lastedit']);
+		$comment_text = first_words(strip_tags(html_entity_decode($allComments[$i]['comment_text'])),4);
+		
+		$top5comments .= '<div class="list-group-item list-group-item-ghost list-group-item-action flex-column align-items-start">';
+		$top5comments .= '<div class="d-flex w-100 justify-content-between">';
+		$top5comments .= '<h6 class="mb-0">'.$allComments[$i]['comment_author'].' ';
+		$top5comments .= '<small>('.$last_edit.')</small></h6>';
+		$top5comments .= '<form class="inline" action="?tn=comments&sub=list#comid'.$allComments[$i]['comment_id'].'" method="POST">';
+		$top5comments .= '<button class="btn btn-fc btn-sm" name="editid" value="'.$allComments[$i]['comment_id'].'">'.$icon['edit'].'</button>';
+		$top5comments .= '</form>';
+		$top5comments .= '</div>';
+		$top5comments .= '<small>'.$comment_text.'</small>';
+		$top5comments .= '</div>';		
+		
+	}
+	
+}
+
+
+
+
+$user_stats .= '<p class="mb-0 text-muted small">'.$lang['f_user_select_verified'].'</p>';
+$user_stats .= '<div class="progress mb-2">';
+$user_stats .= '<div class="progress-bar" role="progressbar" style="width: '.$cnt_verified_per.'%;" aria-valuenow="'.$cnt_verified_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_verified.'</div>';
+$user_stats .= '</div>';
+
+$user_stats .= '<p class="mb-0 text-muted small">'.$lang['f_user_select_waiting'].'</p>';
+$user_stats .= '<div class="progress mb-2">';
+$user_stats .= '<div class="progress-bar" role="progressbar" style="width: '.$cnt_waiting_per.'%;" aria-valuenow="'.$cnt_waiting_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_waiting.'</div>';
+$user_stats .= '</div>';
+
+$user_stats .= '<p class="mb-0 text-muted small">'.$lang['f_user_select_paused'].'</p>';
+$user_stats .= '<div class="progress mb-2">';
+$user_stats .= '<div class="progress-bar" role="progressbar" style="width: '.$cnt_paused_per.'%;" aria-valuenow="'.$cnt_paused_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_paused.'</div>';
+$user_stats .= '</div>';
+
+$user_stats .= '<p class="mb-0 text-muted small">'.$lang['f_user_select_deleted'].'</p>';
+$user_stats .= '<div class="progress mb-2">';
+$user_stats .= '<div class="progress-bar" role="progressbar" style="width: '.$cnt_deleted_per.'%;" aria-valuenow="'.$cnt_deleted_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_deleted.'</div>';
+$user_stats .= '</div>';
     
 
 
+$pages_stats .= '<p class="mb-0 text-muted small">'.$lang['f_page_status_puplic'].'</p>';
+$pages_stats .=  '<div class="progress mb-2">';
+$pages_stats .=  '<div class="progress-bar" role="progressbar" style="width: '.$cnt_public_per.'%;" aria-valuenow="'.$cnt_public_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_public.'</div>';
+$pages_stats .=  '</div>';
 
-echo '</div>';
+$pages_stats .=  '<p class="mb-0 text-muted small">'.$lang['f_page_status_ghost'].'</p>';
+$pages_stats .=  '<div class="progress mb-2">';
+$pages_stats .=  '<div class="progress-bar" role="progressbar" style="width: '.$cnt_ghost_per.'%;" aria-valuenow="'.$cnt_ghost_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_ghost.'</div>';
+$pages_stats .=  '</div>';
 
-echo '</div>'; // row
-echo '</div>';
-echo '</div>';
+$pages_stats .=  '<p class="mb-0 text-muted small">'.$lang['f_page_status_private'].'</p>';
+$pages_stats .=  '<div class="progress mb-2">';
+$pages_stats .=  '<div class="progress-bar" role="progressbar" style="width: '.$cnt_private_per.'%;" aria-valuenow="'.$cnt_private_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_private.'</div>';
+$pages_stats .=  '</div>';
 
-echo '<div class="card">';
-echo '<div class="card-header">'.$lang['h_latest_user'].'</div>';
-echo $user_latest5;
-echo '</div>';
-
-
-echo '<div class="card">';
-echo '<div class="card-header">'.$lang['tn_pages'].' <span class="badge badge-light float-right">'.$cnt_pages.'</span></div>';
-echo '<div class="card-body equal" data-mh="panel-body-group">';
-echo '<div class="row">';
-
-
-echo '<div class="col-lg-12">';
-
-echo '<p class="mb-0">'.$lang['f_page_status_puplic'].'</p>';
-echo '<div class="progress mb-2">';
-echo '<div class="progress-bar" role="progressbar" style="width: '.$cnt_public_per.'%;" aria-valuenow="'.$cnt_public_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_public.'</div>';
-echo '</div>';
-
-echo '<p class="mb-0">'.$lang['f_page_status_ghost'].'</p>';
-echo '<div class="progress mb-2">';
-echo '<div class="progress-bar" role="progressbar" style="width: '.$cnt_ghost_per.'%;" aria-valuenow="'.$cnt_ghost_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_ghost.'</div>';
-echo '</div>';
-
-echo '<p class="mb-0">'.$lang['f_page_status_private'].'</p>';
-echo '<div class="progress mb-2">';
-echo '<div class="progress-bar" role="progressbar" style="width: '.$cnt_private_per.'%;" aria-valuenow="'.$cnt_private_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_private.'</div>';
-echo '</div>';
-
-echo '<p class="mb-0">'.$lang['f_page_status_draft'].'</p>';
-echo '<div class="progress mb-2">';
-echo '<div class="progress-bar" role="progressbar" style="width: '.$cnt_draft_per.'%;" aria-valuenow="'.$cnt_draft_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_draft.'</div>';
-echo '</div>';
+$pages_stats .=  '<p class="mb-0 text-muted small">'.$lang['f_page_status_draft'].'</p>';
+$pages_stats .=  '<div class="progress mb-2">';
+$pages_stats .=  '<div class="progress-bar" role="progressbar" style="width: '.$cnt_draft_per.'%;" aria-valuenow="'.$cnt_draft_per.'" aria-valuemin="0" aria-valuemax="100">'.$cnt_draft.'</div>';
+$pages_stats .=  '</div>';
 
 
-echo '</div>';
-
-echo '</div>'; // row
-echo '</div>';
-echo '</div>';
 
 
-echo '<div class="card">';
-echo '<div class="card-header">'.$lang['h_last_edit'].'</div>';
-echo $top5pages;
-echo '</div>';
+$tpl_file = str_replace('{pages_list}', $top5pages, $tpl_file);
+$tpl_file = str_replace('{posts_list}', $top5posts, $tpl_file);
+$tpl_file = str_replace('{comments_list}', $top5comments, $tpl_file);
+$tpl_file = str_replace('{user_list}', $user_latest5, $tpl_file);
+$tpl_file = str_replace('{pages_stats}', $pages_stats, $tpl_file);
+$tpl_file = str_replace('{user_stats}', $user_stats, $tpl_file);
+
+$tpl_file = str_replace('{tab_pages}', $lang['tn_pages'], $tpl_file);
+$tpl_file = str_replace('{tab_pages_stats}', $lang['h_status'], $tpl_file);
+
+$tpl_file = str_replace('{tab_posts}', $lang['tn_posts'], $tpl_file);
+$tpl_file = str_replace('{tab_comments}', $lang['tn_comments'], $tpl_file);
+
+$tpl_file = str_replace('{tab_user}', $lang['tn_usermanagement'], $tpl_file);
+$tpl_file = str_replace('{tab_user_stats}', $lang['h_status'], $tpl_file);
 
 
-echo'</div>'; // row
+echo $tpl_file;
 
 
 ?>
