@@ -198,15 +198,6 @@ if(!empty($page_contents['page_modul'])) {
 	include 'modules/'.$page_contents['page_modul'].'/index.php';
 }
 
-if(!empty($page_contents['page_posts_categories'])) {
-	include 'core/posts.php';
-}
-
-if($page_contents['page_type_of_use'] == 'display_post') {
-	include 'core/posts.php';
-}
-
-
 /* START SMARTY */
 require_once('lib/Smarty/Smarty.class.php');
 $smarty = new Smarty;
@@ -271,6 +262,16 @@ $smarty->template_dir = 'styles/'.$fc_template.'/templates/';
 foreach($lang as $key => $val) {
 	$smarty->assign("lang_$key", $val);
 }
+
+
+if(!empty($page_contents['page_posts_categories'])) {
+	include 'core/posts.php';
+}
+
+if($page_contents['page_type_of_use'] == 'display_post') {
+	include 'core/posts.php';
+}
+
 
 $tyo_search = fc_get_type_of_use_pages('search');
 $smarty->assign("search_uri", '/'.$tyo_search['page_permalink']);
