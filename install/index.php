@@ -68,9 +68,9 @@ if($modus == "update") {
 <head>
 	<meta charset="utf-8">
 	<title><?php echo"$modus"; ?> flatCore | Content Management System</title>
-	<script src="../lib/js/jquery/jquery-3.4.1.min.js"></script>
-	<script src="../acp/js/bootstrap.bundle.min.js"></script>
-	<link media="screen" rel="stylesheet" type="text/css" href="../acp/css/bootstrap.min.css" />
+	<script src="../styles/default/js/jquery.min.js"></script>
+	<script src="../styles/default/js/bootstrap.bundle.min.js"></script>
+	<link media="screen" rel="stylesheet" type="text/css" href="../styles/default/css/styles.min.css" />
 	<link media="screen" rel="stylesheet" type="text/css" href="css/styles.css" />
 	<link href="../acp/fontawesome/css/all.min.css" rel="stylesheet">
 </head>

@@ -90,7 +90,7 @@ if(isset($_POST['check']) && ($_POST['check'] == "Login")) {
 	<meta charset="utf-8">
 	<title>Login <?php echo $_SERVER['SERVER_NAME']; ?></title>
 	<meta name="robots" content="noindex">
-	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="theme/css/styles_dark.css" type="text/css" media="screen, projection">
 
 	<style type="text/css">
 		#center {
@@ -101,12 +101,6 @@ if(isset($_POST['check']) && ($_POST['check'] == "Login")) {
 			height: 250px;
 			margin-top: -125px;
 			margin-left: -250px;
-		}
-		
-		form {
-			padding: 25px;
-			background-color: #f5f5f5;
-			border-radius: 9px;
 		}
 	</style>
 </head>
