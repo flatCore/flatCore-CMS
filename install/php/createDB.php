@@ -257,7 +257,13 @@ $dbh_content->insert("fc_preferences", [
 	"prefs_nbr_page_versions" => 25,
 	"prefs_acp_session_lifetime" => 86400,
 	"prefs_posts_entries_per_page" => 10,
-	"prefs_posts_event_time_offset" => 86400
+	"prefs_posts_event_time_offset" => 86400,
+	"prefs_default_language" => "$l",
+	"prefs_comments_mode" => 3,
+	"prefs_comments_authorization" => 1,
+	"prefs_comments_max_entries" => 100,
+	"prefs_comments_max_level" => 3,
+	"prefs_pagesort_minlength" => 3
 ]);
 
 
