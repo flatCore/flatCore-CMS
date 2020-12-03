@@ -263,7 +263,10 @@ $dbh_content->insert("fc_preferences", [
 	"prefs_comments_authorization" => 1,
 	"prefs_comments_max_entries" => 100,
 	"prefs_comments_max_level" => 3,
-	"prefs_pagesort_minlength" => 3
+	"prefs_pagesort_minlength" => 3,
+	"prefs_maximagewidth" => 1024,
+	"prefs_maximageheight" => 1024,
+	"prefs_maxfilesize" => 2500
 ]);
 
 

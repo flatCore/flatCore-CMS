@@ -104,3 +104,9 @@ fieldset {
 	background: #28a745;
 	color: white;
 }
+
+#progress li.active-shine:before {
+	background: #28a745;
+	color: white;
+	box-shadow: 0px 0px 7px 5px #D8FFD7;
+}

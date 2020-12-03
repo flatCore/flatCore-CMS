@@ -44,6 +44,10 @@ if(isset($_POST['step4']) OR isset($_POST['check_connection'])) {
 
 if(isset($_POST['install_mysql']) OR isset($_POST['install_sqlite'])) {
 	$inc = 'php/createDB.php';
+	$active1 = 'active active-shine';
+	$active2 = 'active active-shine';
+	$active3 = 'active active-shine';
+	$active4 = 'active active-shine';
 }
 
 
