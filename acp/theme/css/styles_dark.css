@@ -10467,13 +10467,13 @@ li.sidebar-sub-end {
 
 .color-v,
 .color-video {
-  color: #ff8500;
+  color: #ff1600;
 }
 
 .label-v,
 .label-video {
-  background: #ff8500;
-  color: #222;
+  background: #ff1600;
+  color: #fff;
 }
 
 .color-i,
@@ -10499,22 +10499,23 @@ li.sidebar-sub-end {
 
 .color-l,
 .color-link {
-  color: #36c;
+  color: #8eb4ff;
 }
 
 .label-l,
 .label-link {
-  background: #36c;
+  background: #8eb4ff;
+  color: #222;
 }
 
 .color-e,
 .color-event {
-  color: #04d9b9;
+  color: #ffe600;
 }
 
 .label-e,
 .label-event {
-  background: #04d9b9;
+  background: #ffe600;
   color: #222;
 }
 
@@ -10526,6 +10527,17 @@ li.sidebar-sub-end {
 .label-p,
 .label-product {
   background: #1aba30;
+  color: #222;
+}
+
+.color-f,
+.color-file {
+  color: #9eff0b;
+}
+
+.label-f,
+.label-file {
+  background: #9eff0b;
   color: #222;
 }
 
