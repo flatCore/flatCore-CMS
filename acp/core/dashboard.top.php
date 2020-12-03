@@ -139,7 +139,6 @@ $allPosts = $db_posts->select("fc_posts", ["post_id", "post_title", "post_teaser
 
 $cnt_posts = count($allPosts);
 
-
 for($i=0;$i<$cnt_posts;$i++) {
 	
 	
@@ -161,6 +160,11 @@ for($i=0;$i<$cnt_posts;$i++) {
 	}
 	
 }
+
+if($cnt_posts < 1) {
+	$top5posts = '<p class="p-3">'.$lang['msg_no_entries_so_far'].'</p>';
+}
+
 
 
 /* comments */
@@ -193,7 +197,9 @@ for($i=0;$i<$cnt_comments;$i++) {
 	
 }
 
-
+if($cnt_comments < 1) {
+	$top5comments = '<p class="p-3">'.$lang['msg_no_entries_so_far'].'</p>';
+}
 
 
 $user_stats .= '<p class="mb-0 text-muted small">'.$lang['f_user_select_verified'].'</p>';

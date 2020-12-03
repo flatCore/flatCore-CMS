@@ -511,6 +511,7 @@ function record_log($log_trigger = 'system', $log_entry, $log_priority = '0') {
 function show_log($nbr) {
 	
 	global $db_statistics;
+	global $lang;
 	$interval = time() - (30 * 86400); // 30 days
 	
 	$del = $db_statistics->delete("log", [
@@ -543,7 +544,7 @@ function show_log($nbr) {
 	}
 	
 	if($cnt_result < 1) {
-		echo "<div class='alert alert-info'>No entries.</div>";
+		echo '<div class="alert alert-secondary">'.$lang['msg_no_entries_so_far'].'</div>';
 	}
 
 }

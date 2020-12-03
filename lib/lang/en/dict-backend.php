@@ -515,6 +515,7 @@ $lang['section_is_beta'] = '<strong>Please note:</strong><br>This area is in a b
 $lang['msg_nothing_to_install'] = 'There are currently no addons been uploaded for installation.';
 
 $lang['msg_no_help_doc'] = 'Sorry, there are no instructions yet';
+$lang['msg_no_entries_so_far'] = 'So far there are no entries here';
 
 /* System */
 
