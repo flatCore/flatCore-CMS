@@ -11,8 +11,8 @@ $lang['btn_enter_user'] = 'User Account';
 $lang['btn_enter_page_infos'] = 'Basic Page Infos';
 $lang['btn_enter_database'] = 'Database';
 
-$lang['label_add_user'] = 'Benutzerdaten angeben';
-$lang['description_add_user'] = 'Gib die gewünschten Daten für einen ersten Benutzeraccount ein. Merke Dir diese Daten gut - mit diesen Daten kannst Du Dich später im ACP anmelden.';
+$lang['label_add_user'] = 'Enter user data';
+$lang['description_add_user'] = 'Enter the data for a first user account. Make a note of this data - you will have to use this data to log into the ACP later.';
 
 $lang['label_add_page_data'] = 'Information about your new site';
 $lang['description_add_page_data'] = 'Enter some information about your site. Of course, you can change or add this all later in the ACP.';

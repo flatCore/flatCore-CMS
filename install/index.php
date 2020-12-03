@@ -3,10 +3,6 @@
 /**
  * flatCore Content Management System
  * Installer/Updater
- *
- * @package: install/
- * @author: Patrick Konstandin
- *
  */
 
 session_start();
@@ -36,19 +32,16 @@ include '../acp/core/icons.php';
 if(is_file("../$fc_db_content")) {
 	$modus = "update";
 	$db_type = 'sqlite';
-} else if(is_file("../config_database.php")) {
-	$modus = "update";
-	$db_type = 'mysql';
-} else if($modus == 'choose_lang') {
-	$modus = "install";
 }
 
+if(is_file("../config_database.php")) {
+	$modus = "update";
+	$db_type = 'mysql';
+}
 
 if(isset($_POST['check_database'])) {
 	include 'php/check_connection.php';
 }
-					
-
 
 if($_SESSION['user_class'] == "administrator") {
 	$modus = "update";
@@ -85,7 +78,7 @@ if($modus == "update") {
 			<?php
 			if($modus == "install") {
 				include("inc.install.php");
-			} elseif($modus == "update") {
+			} else if($modus == "update") {
 				include("inc.update.php");
 			} else {
 				echo '<h3 class="text-center">Choose your Language ...</h3><hr>';
