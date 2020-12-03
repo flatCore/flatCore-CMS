@@ -1,7 +1,7 @@
 <?php
 	
 /**
- * post_type -> m = message, i = image, g = gallery, e = event, v = video, l = link
+ * post_type -> m = message, i = image, f = file, g = gallery, e = event, v = video, l = link
  * post_status -> 1 = public, 2 = draft
  * post_rss -> 1 = yes, 2 = no
  * post_fixed -> 1 = yes, 2 = no
@@ -57,7 +57,13 @@ $cols = array(
 	"post_product_textlib_content" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"post_product_currency" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"post_product_unit" => "VARCHAR(100) NOT NULL DEFAULT ''",
-	"post_product_amount" => "VARCHAR(100) NOT NULL DEFAULT ''"
+	"post_product_amount" => "VARCHAR(100) NOT NULL DEFAULT ''",
+	/* files */
+	"post_file_attachment" => "VARCHAR(100) NOT NULL DEFAULT ''",
+	"post_file_attachment_external" => "VARCHAR(100) NOT NULL DEFAULT ''",
+	"post_file_license" => "VARCHAR(100) NOT NULL DEFAULT ''",
+	"post_file_version" => "VARCHAR(100) NOT NULL DEFAULT ''"
+	
 );
 
 

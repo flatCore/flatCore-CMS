@@ -157,7 +157,8 @@ function fc_cnt_post_entries() {
 		(SELECT count(*) FROM fc_posts WHERE post_type LIKE '%v%' ) AS 'Video',
 		(SELECT count(*) FROM fc_posts WHERE post_type LIKE '%i%' ) AS 'Image',
 		(SELECT count(*) FROM fc_posts WHERE post_type LIKE '%e%' ) AS 'Event',
-		(SELECT count(*) FROM fc_posts WHERE post_type LIKE '%p%' ) AS 'Product'
+		(SELECT count(*) FROM fc_posts WHERE post_type LIKE '%p%' ) AS 'Product',
+		(SELECT count(*) FROM fc_posts WHERE post_type LIKE '%f%' ) AS 'File'
 	FROM fc_posts
 	";
 	

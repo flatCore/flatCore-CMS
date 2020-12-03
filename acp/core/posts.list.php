@@ -349,6 +349,8 @@ if($cnt_filter_posts > 0) {
 			$show_type = '<span class="'.$type_class.'">'.$lang['post_type_link'].'</span>';
 		} else if($get_posts[$i]['post_type'] == 'p') {
 			$show_type = '<span class="'.$type_class.'">'.$lang['post_type_product'].'</span>';
+		} else if($get_posts[$i]['post_type'] == 'f') {
+			$show_type = '<span class="'.$type_class.'">'.$lang['post_type_file'].'</span>';
 		}
 		
 		
@@ -395,6 +397,7 @@ echo '<div class="list-group-item list-group-item-ghost"><a href="?tn=posts&sub=
 echo '<div class="list-group-item list-group-item-ghost"><a href="?tn=posts&sub=edit&new=v"><span class="color-video">'.$icon['plus'].'</span> '.$lang['post_type_video'].'</a></div>';
 echo '<div class="list-group-item list-group-item-ghost"><a href="?tn=posts&sub=edit&new=l"><span class="color-link">'.$icon['plus'].'</span> '.$lang['post_type_link'].'</a></div>';
 echo '<div class="list-group-item list-group-item-ghost"><a href="?tn=posts&sub=edit&new=p"><span class="color-product">'.$icon['plus'].'</span> '.$lang['post_type_product'].'</a></div>';
+echo '<div class="list-group-item list-group-item-ghost"><a href="?tn=posts&sub=edit&new=f"><span class="color-file">'.$icon['plus'].'</span> '.$lang['post_type_file'].'</a></div>';
 echo '</div>';
 echo '</div>';
 
@@ -519,6 +522,16 @@ if(strpos("$_SESSION[checked_type_string]", "p") !== false) {
 }
 
 echo '<a href="acp.php?tn=posts&type=p" class="'.$class.'">'.$icon_toggle.' '.$lang['post_type_product'].'</a>';
+
+if(strpos("$_SESSION[checked_type_string]", "f") !== false) {
+	$class = 'list-group-item list-group-item-ghost p-1 px-2 active';
+	$icon_toggle = $icon['check_circle'];
+} else {
+	$class = 'list-group-item list-group-item-ghost p-1 px-2';
+	$icon_toggle = $icon['circle_alt'];
+}
+
+echo '<a href="acp.php?tn=posts&type=f" class="'.$class.'">'.$icon_toggle.' '.$lang['post_type_file'].'</a>';
 
 echo '</div>';
 echo '</div>';

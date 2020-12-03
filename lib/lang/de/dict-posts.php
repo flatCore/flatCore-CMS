@@ -15,6 +15,7 @@ $lang['post_type_gallery'] = 'Galerie';
 $lang['post_type_video'] = 'Video';
 $lang['post_type_link'] = 'Link';
 $lang['post_type_product'] = 'Produkt';
+$lang['post_type_file'] = 'Download';
 
 $lang['post_tab_intro'] = 'Teaser';
 $lang['post_tab_content'] = 'Inhalt';
@@ -23,6 +24,7 @@ $lang['post_tab_preferences'] = 'Einstellungen';
 $lang['post_tab_product'] = 'Produkt';
 $lang['post_tab_info'] = 'Informationen';
 $lang['post_tab_prices'] = 'Preise';
+$lang['post_tab_file'] = 'Datei';
 
 $lang['msg_post_deleted'] = 'Der Eintrag wurde gelöscht';
 $lang['msg_no_posts_to_show'] = 'Es gibt hier im Moment keine Einträge.';
@@ -67,6 +69,11 @@ $lang['label_zip'] = 'PLZ';
 $lang['label_city'] = 'Ort';
 $lang['label_price_note'] = 'Hinweise zu den Preisen';
 $lang['label_event_prices'] = 'Preise';
+
+$lang['label_file_select'] = 'Choose file';
+$lang['label_file_select_no_file'] = 'Do not use a file from here';
+$lang['label_file_version'] = 'Version';
+$lang['label_external_file'] = 'External File (URL)';
 
 $lang['label_product_number'] = 'Produktnummer';
 $lang['label_product_manufacturer'] = 'Hersteller';

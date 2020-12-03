@@ -90,6 +90,8 @@ if($post_data['post_type'] == 'm') {
 	$this_entry = fc_load_posts_tpl($fc_template,'post-display-l.tpl');
 } else if($post_data['post_type'] == 'p') {
 	$this_entry = fc_load_posts_tpl($fc_template,'post-display-p.tpl');
+} else if($post_data['post_type'] == 'f') {
+	$this_entry = fc_load_posts_tpl($fc_template,'post-display-f.tpl');
 }
 
 $post_teaser = htmlspecialchars_decode($post_data['post_teaser']);
@@ -128,6 +130,13 @@ $this_entry = str_replace("{post_external_link}", $post_data['post_link'], $this
 $this_entry = str_replace("{post_cats}", $cat_links_string, $this_entry);
 $this_entry = str_replace("{back_to_overview}", $lang['back_to_overview'], $this_entry);
 $this_entry = str_replace("{back_link}", "/$fct_slug", $this_entry);
+
+/* file */
+$this_entry = str_replace("{lang_download}", $lang['btn_download'], $this_entry);
+$this_entry = str_replace("{post_file_version}", $post_data['post_file_version'], $this_entry);
+$this_entry = str_replace("{post_file_license}", $post_data['post_file_license'], $this_entry);
+$filepath = str_replace('../','/',$post_data['post_file_attachment']);
+$this_entry = str_replace("{post_file_attachment}", $filepath, $this_entry);
 
 /* products */
 $post_price_gross = $post_data['post_product_price_net']*($post_data['post_product_tax']+100)/100;;

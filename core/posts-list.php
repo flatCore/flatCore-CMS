@@ -29,6 +29,7 @@ $tpl_list_v = fc_load_posts_tpl($fc_template,'post-list-v.tpl');
 $tpl_list_e = fc_load_posts_tpl($fc_template,'post-list-e.tpl');
 $tpl_list_l = fc_load_posts_tpl($fc_template,'post-list-l.tpl');
 $tpl_list_p = fc_load_posts_tpl($fc_template,'post-list-p.tpl');
+$tpl_list_f = fc_load_posts_tpl($fc_template,'post-list-f.tpl');
 
 
 $tpl_pagination = fc_load_posts_tpl($fc_template,'pagination.tpl');
@@ -39,7 +40,6 @@ $sql_start = ($posts_start*$posts_limit)-$posts_limit;
 if($sql_start < 0) {
 	$sql_start = 0;
 }
-
 
 $get_posts = fc_get_post_entries($sql_start,$posts_limit,$posts_filter);
 $cnt_filter_posts = $get_posts[0]['cnt_posts'];
@@ -213,6 +213,9 @@ foreach($get_posts as $k => $post) {
 	}
 	if($get_posts[$k]['post_type'] == 'p') {
 		$this_entry = $tpl_list_p;
+	}
+	if($get_posts[$k]['post_type'] == 'f') {
+		$this_entry = $tpl_list_f;
 	}
 	
 	$post_filename = basename($get_posts[$k]['post_slug']);

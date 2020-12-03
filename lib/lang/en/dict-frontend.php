@@ -70,6 +70,7 @@ $lang['button_acp_edit_page'] = "Edit Page";
 $lang['link_delete_avatar']		= "Delete Avatar";
 $lang['link_register'] 			= "Register now ...";
 $lang['btn_read_more'] = "read more";
+$lang['btn_download'] = "Download";
 
 
 /* Messages */

@@ -168,13 +168,14 @@ if($modus != 'update' && !isset($_GET['new'])) {
 	echo '<fieldset class="mt-3">';
 	echo '<legend>'.$lang['select_post_type'].'</legend>';
 	echo '<div class="btn-group d-flex" role="group">';
-	echo '<a href="acp.php?tn=posts&sub=edit&new=m" class="btn btn-fc w-100">'.$lang['post_type_message'].'</a>';
-	echo '<a href="acp.php?tn=posts&sub=edit&new=e" class="btn btn-fc w-100">'.$lang['post_type_event'].'</a>';
-	echo '<a href="acp.php?tn=posts&sub=edit&new=i" class="btn btn-fc w-100">'.$lang['post_type_image'].'</a>';
-	echo '<a href="acp.php?tn=posts&sub=edit&new=g" class="btn btn-fc w-100">'.$lang['post_type_gallery'].'</a>';
-	echo '<a href="acp.php?tn=posts&sub=edit&new=v" class="btn btn-fc w-100">'.$lang['post_type_video'].'</a>';
-	echo '<a href="acp.php?tn=posts&sub=edit&new=l" class="btn btn-fc w-100">'.$lang['post_type_link'].'</a>';
-	echo '<a href="acp.php?tn=posts&sub=edit&new=p" class="btn btn-fc w-100">'.$lang['post_type_product'].'</a>';
+	echo '<a href="acp.php?tn=posts&sub=edit&new=m" class="btn btn-fc w-100"><span class="color-message">'.$icon['plus'].'</span> '.$lang['post_type_message'].'</a>';
+	echo '<a href="acp.php?tn=posts&sub=edit&new=e" class="btn btn-fc w-100"><span class="color-event">'.$icon['plus'].'</span> '.$lang['post_type_event'].'</a>';
+	echo '<a href="acp.php?tn=posts&sub=edit&new=i" class="btn btn-fc w-100"><span class="color-image">'.$icon['plus'].'</span> '.$lang['post_type_image'].'</a>';
+	echo '<a href="acp.php?tn=posts&sub=edit&new=g" class="btn btn-fc w-100"><span class="color-gallery">'.$icon['plus'].'</span> '.$lang['post_type_gallery'].'</a>';
+	echo '<a href="acp.php?tn=posts&sub=edit&new=v" class="btn btn-fc w-100"><span class="color-video">'.$icon['plus'].'</span> '.$lang['post_type_video'].'</a>';
+	echo '<a href="acp.php?tn=posts&sub=edit&new=l" class="btn btn-fc w-100"><span class="color-link">'.$icon['plus'].'</span> '.$lang['post_type_link'].'</a>';
+	echo '<a href="acp.php?tn=posts&sub=edit&new=p" class="btn btn-fc w-100"><span class="color-product">'.$icon['plus'].'</span> '.$lang['post_type_product'].'</a>';
+	echo '<a href="acp.php?tn=posts&sub=edit&new=f" class="btn btn-fc w-100"><span class="color-file">'.$icon['plus'].'</span> '.$lang['post_type_file'].'</a>';
 	echo '</div>';
 	echo '</fieldset>';
 }
@@ -399,6 +400,27 @@ foreach($snippets_text_list as $snippet) {
 $snippet_select_text .= '</select>';
 
 
+/* select file from /content/files/ */
+
+$select_file = '<select class="form-control custom-select" name="post_file_attachment">';
+$select_file .= '<option value="">-- '.$lang['label_file_select_no_file'].' --</option>';
+$files_directory = '../'.FC_CONTENT_DIR.'/files';
+$all_files = fc_scandir_rec($files_directory);
+
+foreach($all_files as $file) {
+	//$fc_upload_file_types is set in config.php
+	$file_info = pathinfo($file);
+	if(in_array($file_info['extension'],$fc_upload_file_types)) {
+		
+		$selected = "";
+		if($post_data['post_file_attachment'] == $file) {
+			$selected = 'selected';
+		}
+		
+		$select_file .= '<option '.$selected.' value='.$file.'>'.basename($file).'</option>';
+	}
+}
+$select_file .= '</select>';
 
 
 
@@ -422,6 +444,9 @@ if($_GET['new'] == 'm' OR $post_data['post_type'] == 'm') {
 } else if ($_GET['new'] == 'p' OR $post_data['post_type'] == 'p') {
 	$form_tpl = file_get_contents('templates/post_product.tpl');
 	$post_data['post_type'] = 'p';
+} else if ($_GET['new'] == 'f' OR $post_data['post_type'] == 'f') {
+	$form_tpl = file_get_contents('templates/post_file.tpl');
+	$post_data['post_type'] = 'f';
 } else if ($_GET['new'] == 'g' OR $post_data['post_type'] == 'g') {
 	$form_tpl = file_get_contents('templates/post_gallery.tpl');
 	
@@ -474,6 +499,12 @@ $form_tpl = str_replace('{post_video_url}', $post_data['post_video_url'], $form_
 
 /* links */
 $form_tpl = str_replace('{post_link}', $post_data['post_link'], $form_tpl);
+
+/* files */
+$form_tpl = str_replace('{post_file_attachment_external}', $post_data['post_file_attachment_external'], $form_tpl);
+$form_tpl = str_replace('{post_file_license}', $post_data['post_file_license'], $form_tpl);
+$form_tpl = str_replace('{post_file_version}', $post_data['post_file_version'], $form_tpl);
+$form_tpl = str_replace('{select_file}', $select_file, $form_tpl);
 
 /* events */
 $form_tpl = str_replace('{event_start}', $post_event_startdate, $form_tpl);

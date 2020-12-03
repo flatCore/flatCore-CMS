@@ -71,6 +71,7 @@ $lang['button_acp_edit_page'] = "Seite bearbeiten";
 $lang['link_delete_avatar'] = "Benutzerbild löschen";
 $lang['link_register'] = "Jetzt registrieren ...";
 $lang['btn_read_more'] = "weiter lesen";
+$lang['btn_download'] = "Download";
 
 /* Messages */
 $lang['msg_missingfield'] = "Alle Felder müssen ausgefüllt werden";
