@@ -197,15 +197,12 @@ $cat_btn_group .= '</div>';
 $cat_btn_group .= '</div>';
 
 
-
-
-
-if((isset($_GET['pb_posts_start'])) && is_numeric($_GET['pb_posts_start'])) {
-	$pb_posts_start = (int) $_GET['pb_posts_start'];
+if((isset($_GET['posts_start'])) && is_numeric($_GET['posts_start'])) {
+	$posts_start = (int) $_GET['posts_start'];
 }
 
 if((isset($_POST['setPage'])) && is_numeric($_POST['setPage'])) {
-	$pb_posts_start = (int) $_POST['setPage'];
+	$posts_start = (int) $_POST['setPage'];
 }
 
 
@@ -213,8 +210,6 @@ $posts_filter['languages'] = $_SESSION['checked_lang_string'];
 $posts_filter['types'] = $_SESSION['checked_type_string'];
 $posts_filter['status'] = $_SESSION['checked_status_string'];
 $posts_filter['categories'] = $_SESSION['checked_cat_string'];
-
-
 
 
 $get_posts = fc_get_post_entries($posts_start,$posts_limit,$posts_filter);
