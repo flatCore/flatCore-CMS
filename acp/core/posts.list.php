@@ -224,7 +224,7 @@ $cnt_pages = ceil($cnt_filter_posts / $posts_limit);
 echo '<div class="row">';
 echo '<div class="col-md-9">';
 
-echo '<h4>'.$cnt_filter_posts.'/'.$cnt_posts['All'].'</h4>';
+echo '<h4>' . sprintf($lang['label_show_entries'], $cnt_filter_posts, $cnt_posts['All']) .'</h4>';
 
 if($cnt_filter_posts > 0) {
 

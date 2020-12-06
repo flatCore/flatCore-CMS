@@ -159,6 +159,11 @@ if(isset($_POST['editid'])) {
 echo '<div class="row">';
 echo '<div class="col-md-9">';
 
+if($cnt_comments < 1) {
+	echo '<div class="alert alert-info">'.$lang['msg_no_entries_so_far'].'</div>';
+}
+
+
 for($i=0;$i<$cnt_comments;$i++) {
 	
 	$comment_time = date('d.m.Y H:i:s', $get_comments[$i]['comment_time']);

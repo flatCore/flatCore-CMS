@@ -343,6 +343,8 @@ $lang['label_missing_meta_description'] = 'Missing Meta Description';
 $lang['label_active_theme'] = 'Active Theme';
 $lang['label_installed_themes'] = 'Installed Themes';
 
+$lang['label_show_entries'] = '%s of %s Entries are displayed';
+
 /* Preferences */
 
 $lang['f_prefs_descriptions'] = "Descriptions";

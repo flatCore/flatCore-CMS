@@ -342,6 +342,8 @@ $lang['label_active_theme'] = 'Aktives Theme';
 $lang['label_installed_themes'] = 'Installierte Themes';
 $lang['label_image_selected'] = 'ausgewählte Bilder';
 
+$lang['label_show_entries'] = 'Es werden %s von %s Beiträgen angezeigt';
+
 /* Preferences */
 
 $lang['f_prefs_descriptions'] = "Beschreibungen";
