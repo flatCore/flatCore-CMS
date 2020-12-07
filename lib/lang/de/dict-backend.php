@@ -474,6 +474,7 @@ $lang['msg_user_exists'] = "Dieser Benutzername existiert bereits";
 $lang['msg_user_mandatory'] = "Der Benutzername ist ein Pflichtfeld";
 $lang['msg_usermail_exists'] = "Es existiert bereits ein Benutzer mit dieser E-Mail Adresse";
 $lang['db_changed'] = "Datenbank wurde aktualisiert";
+$lang['db_record_changed'] = "Der Datensatz wurde aktualisiert";
 $lang['db_not_changed'] = "Datenbank wurde nicht aktualisiert";
 $lang['msg_user_updated'] = "Benutzer wurde aktualisiert";
 $lang['msg_new_user_saved'] = "Neuer Benutzer wurde gespeichert";

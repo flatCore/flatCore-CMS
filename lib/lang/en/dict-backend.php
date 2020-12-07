@@ -475,6 +475,7 @@ $lang['msg_user_exists'] = "User already exists";
 $lang['msg_user_mandatory'] = "Username is mandatory";
 $lang['msg_usermail_exists'] = "E-Mail Address already exists";
 $lang['db_changed'] = "Database updated";
+$lang['db_record_changed'] = "The record was updated";
 $lang['db_not_changed'] = "Error on updating";
 $lang['msg_user_updated'] = "User updated";
 $lang['msg_new_user_saved'] = "New user was stored";

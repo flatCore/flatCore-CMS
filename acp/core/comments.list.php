@@ -22,7 +22,7 @@ if(isset($_POST['update_comment'])) {
 		"comment_id" => $update_id
 	]);
 	
-	$update_msg = '<div class="alert alert-success">'.$update_id.'</div>';
+	$update_msg = '<div class="alert alert-success">'.$lang['db_record_changed'].'</div>';
 	
 	$editid = $update_id;
 	
