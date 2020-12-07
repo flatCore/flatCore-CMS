@@ -498,6 +498,7 @@ $lang['msg_page_saved'] = "Die Seite wurde gespeichert";
 $lang['msg_page_saved_error'] = "Beim Speichern der Seite ist ein Fehler aufgetreten";
 $lang['msg_page_deleted'] = "Die Seite wurde gelöscht";
 $lang['msg_page_updated'] = "Die Seite wurde aktualisiert";
+$lang['msg_error_deleting_sub_pages'] = 'Du kannst keine Seiten mit Unterseiten löschen. Dazu musst Du zuerst alle enthaltenen Unterseiten löschen.';
 
 $lang['msg_update_available'] = "<b>Es ist ein Update verfügbar!</b><br>Bitte denke daran, vor einer Installation ist ein Backup immer eine gute Idee.";
 $lang['msg_no_update_available'] = "Die installierte Version ist auf dem neusten Stand.";

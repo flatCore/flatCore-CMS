@@ -499,6 +499,7 @@ $lang['msg_page_saved'] = "Page has been saved";
 $lang['msg_page_saved_error'] = "An Error has occurred";
 $lang['msg_page_deleted'] = "Page has been deleted";
 $lang['msg_page_updated'] = "Page has been updated";
+$lang['msg_error_deleting_sub_pages'] = 'You cannot delete pages with subpages. To do this, you must first delete all subpages contained.';
 
 $lang['msg_update_available'] = "<b>There is a newer version available!</b><br>Please remember, a backup before the installation is always a good idea.";
 $lang['msg_no_update_available'] = "The installed version is up to date.";

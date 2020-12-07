@@ -57,33 +57,67 @@ if(preg_match("/custom_/i", implode(",", array_keys($_POST))) ){
 if(isset($_POST['delete_the_page'])) {
 
 
-	if(is_numeric($editpage)){
+	if(is_numeric($editpage)) {
 		$comment_id = 'p'.$editpage;
 		
-		$db_content->delete("fc_pages", [
+		/**
+		 * we check, if this page has subpages
+		 * if there are subpages, we can not delete the page
+		 */
+
+		$delete_page = $db_content->get("fc_pages", ["page_sort","page_language"],[
 			"page_id" => $editpage
 		]);
-		$db_content->delete("fc_pages_cache", [
-			"page_id_original" => $editpage
+		
+		$delpage_sort = $delete_page['page_sort'];
+		$delpage_lang = $delete_page['page_language'];
+		
+		$subpages = $db_content->select("fc_pages", ["page_sort","page_title"],[
+			"AND" => [
+				"page_sort[~]" => "$delpage_sort%",
+				"page_language" => $delpage_lang
+			]
 		]);
-		$db_content->delete("fc_pages_cache", [
-			"page_id_original" => NULL
-		]);
-		$db_content->delete("fc_comments", [
-			"comment_parent" => $comment_id
-		]);
+		
+		if(count($subpages) > 1) {
+			echo '<div class="alert alert-danger">';
+			echo $lang['msg_error_deleting_sub_pages'];
+			
+			echo '<ol>';
+			foreach($subpages as $pages) {
+				echo '<li>'.$pages['page_title'].'</li>';
+			}
+			echo '</ol>';
+			
+			echo '</div>';
+		} else {
 
+			$del_page = $db_content->delete("fc_pages", [
+				"page_id" => $editpage
+			]);
+			$db_content->delete("fc_pages_cache", [
+				"page_id_original" => $editpage
+			]);
+			$db_content->delete("fc_pages_cache", [
+				"page_id_original" => NULL
+			]);
+			$db_content->delete("fc_comments", [
+				"comment_parent" => $comment_id
+			]);
+			
+			if($del_page->rowCount() > 0) {
+				$success_message = '{OKAY} '. $lang['msg_page_deleted'];
+				record_log($_SESSION['user_nick'],"deleted page id: $editpage","10");
+				generate_xml_sitemap();
+				delete_cache_file();
+				unset($editpage);
+				print_sysmsg("$success_message");
+			}
+		}
 	}
 
 
-	if($cnt_del_pages > 0) {
-		$success_message = "{OKAY} $lang[msg_page_deleted]";
-		record_log("$_SESSION[user_nick]","deleted page id: $editpage","10");
-		generate_xml_sitemap();
-		delete_cache_file();
-		unset($editpage);
-		print_sysmsg("$success_message");
-	}
+
 
 	$show_form = "false";
 }
