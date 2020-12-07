@@ -151,20 +151,6 @@ echo'</fieldset>';
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 echo '<input type="submit" class="btn btn-save" name="update_posts" value="'.$lang['update'].'">';
 echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 

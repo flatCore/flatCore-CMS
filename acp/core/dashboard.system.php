@@ -103,7 +103,6 @@ echo'</div>'; // #log
 
 echo '<div class="tab-pane fade" id="sitemap">';
 $sitemap = file_get_contents('../sitemap.xml');
-//echo '<pre class="form-control" style="height:400px;overflow:auto;">'.htmlentities($sitemap,ENT_QUOTES,"UTF-8").'</pre>';
 echo '<textarea name="my-xml-editor" data-editor="xml" rows="15">'.htmlentities($sitemap,ENT_QUOTES,"UTF-8").'</textarea>';
 echo '</div>'; // #sitemap
 

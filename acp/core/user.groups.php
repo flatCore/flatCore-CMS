@@ -284,7 +284,6 @@ for($i=0;$i<count($result);$i++) {
 	echo '<tr>';
 	echo '<td>';
 	echo tpl_checkbox('incUser[]',$user_id,"check_$user_nick",$user_nick,$checked);
-	//echo '<label><input type="checkbox" '.$checked.' name="incUser[]" value="'.$user_id.'"> '.$user_nick.' </label></td>';
 	echo '</td>';
 	echo '<td>'.$user_firstname.' '.$user_lastname.'</td>';
 	echo '</tr>';

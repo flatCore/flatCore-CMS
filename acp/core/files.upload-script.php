@@ -342,8 +342,6 @@ function fc_create_tmb($img_src, $tmb_name, $tmb_width, $tmb_height, $tmb_qualit
 	
 	global $tmb_destination;
 	
-	//$tmb_name = $tmb_name.'.jpg';
-	
 	$arr_image_details	= GetImageSize("$img_src");
 	$original_width		= $arr_image_details[0];
 	$original_height	= $arr_image_details[1];

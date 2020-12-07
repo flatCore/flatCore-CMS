@@ -23,7 +23,6 @@ foreach($result as $p) {
 }
 
 $cnt_result = count($result);
-//$result = fc_array_multisort($result, 'page_language', SORT_ASC, 'page_sort', SORT_ASC | SORT_NATURAL);
 
 
 echo '<div class="app-container">';

@@ -89,7 +89,6 @@ function fc_get_themes_docs() {
 
 function get_all_languages($d='../lib/lang') {
 
-	//$mdir = "../lib/lang";
 	$cntLangs = 0;
 	$scanned_directory = array_diff(scandir($d), array('..', '.','.DS_Store'));
 	
@@ -862,9 +861,6 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 	
 	if($cnt > 0) {
 		$modus = 'update';
-		//$sql_update = generate_sql_update_str($pdo_fields_update,"fc_media","WHERE media_file = :media_file AND (media_lang = :media_lang OR media_lang = '' OR media_lang is null)");
-		//$sth = $dbh->prepare($sql_update);
-		//generate_bindParam_str($pdo_fields_update,$sth);
 		
 		$cnt_changes = $db_content->update("fc_media", $columns, [
 			"AND" => [
@@ -875,11 +871,8 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 		
 	} else {
 		$modus = 'new';
-		//$sql_new = generate_sql_insert_str($pdo_fields_new,"fc_media");
-		//$sth = $dbh->prepare($sql_new);
-		//generate_bindParam_str($pdo_fields_new,$sth);
 		
-			$columns["media_file"] = "$filename";
+		$columns["media_file"] = "$filename";
 			
 		$cnt_changes = $db_content->insert("fc_media", $columns, [
 			"AND" => [

@@ -101,8 +101,6 @@ for($i=0;$i<$cnt_pages;$i++) {
 		$last_edit = @date("d.m.Y",$allPages[$i]['page_lastedit']);
 		$page_linkname = $allPages[$i]['page_linkname'];
 		$page_title = first_words($allPages[$i]['page_title'],4);
-
-		//$allPages[$i]['page_id']
 		
 		$top5pages .= '<div class="list-group-item list-group-item-ghost list-group-item-action flex-column align-items-start">';
 		$top5pages .= '<div class="d-flex w-100 justify-content-between">';

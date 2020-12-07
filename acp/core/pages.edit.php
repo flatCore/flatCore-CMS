@@ -575,21 +575,17 @@ if(is_numeric($editpage)) {
 
 	
 	if($modus == "preview") {
-		//$sql = "SELECT * FROM fc_pages_cache WHERE page_id_original = $editpage ORDER BY page_id DESC";
 		$page_data = $db_content->get("fc_pages_cache","*",[ "page_id_original" => $editpage ],["ORDER" => ["page_id" => "DESC"]]);
 	} else {
-		//$sql = "SELECT * FROM fc_pages WHERE page_id = $editpage";
 		$page_data = $db_content->get("fc_pages","*",[ "page_id" => $editpage ]);
 	}
 	
 	if(!empty($_POST['restore_id'])) {
 		$restore_id = (int) $_POST['restore_id'];
-		//$sql = "SELECT * FROM fc_pages_cache WHERE page_id = $restore_id";
 		$page_data = $db_content->get("fc_pages_cache","*",[ "page_id" => $restore_id ]);	
 		$restore_page_version = $db_content->query("SELECT page_version FROM fc_pages WHERE page_id = $editpage")->fetch();
 	}
-	
-	//$result = $db_content->query($sql)->fetch(PDO::FETCH_ASSOC);
+
 	
 	foreach($page_data as $k => $v) {
 	   $$k = htmlentities(stripslashes($v), ENT_QUOTES, "UTF-8");
@@ -712,7 +708,6 @@ if($show_form == "true" AND $sub != "new") {
 										ORDER BY page_lastedit ASC
 										LIMIT 1)";
 			
-			//$cnt_changes = $dbh->exec($del_sql);
 			$db_content->query("$del_sql");
 			continue;
 
@@ -750,8 +745,6 @@ if($show_form == "true" AND $sub != "new") {
 		echo '</td>';
 		echo '</tr>';
 	}
-	
-	//$dbh = null;
 	
 	echo '</div>';
 	echo '</table>';

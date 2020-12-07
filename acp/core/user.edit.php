@@ -13,42 +13,6 @@ if($_REQUEST['edituser'] != "") {
 	unset($edituser);
 }
 
-/*
-$pdo_fields = array(
-	'user_mail' => 'STR',
-	'user_verified' => 'STR',
-	'user_psw_hash' => 'STR',
-	'user_drm' => 'STR',
-	'user_class' => 'STR',
-	'user_firstname' => 'STR',
-	'user_lastname' => 'STR',
-	'user_company' => 'STR',
-	'user_street' => 'STR',
-	'user_street_nbr' => 'STR',
-	'user_zipcode' => 'STR',
-	'user_city' => 'STR',
-	'user_newsletter' => 'STR'
-);
-
-$pdo_fields_new = array(
-	'user_id' => 'NULL',
-	'user_nick' => 'STR',
-	'user_mail' => 'STR',
-	'user_verified' => 'STR',
-	'user_registerdate' => 'STR',
-	'user_psw_hash' => 'STR',
-	'user_drm' => 'STR',
-	'user_class' => 'STR',
-	'user_firstname' => 'STR',
-	'user_lastname' => 'STR',
-	'user_company' => 'STR',
-	'user_street' => 'STR',
-	'user_street_nbr' => 'STR',
-	'user_zipcode' => 'STR',
-	'user_city' => 'STR',
-	'user_newsletter' => 'STR'
-);
-*/
 
 /**
  * if we have custom fields
@@ -74,30 +38,7 @@ if(preg_match("/custom_/i", implode(",", array_keys($_POST))) ){
  */
 
 if($_POST['delete_the_user']) {
-
-	// connect to database
-	/*
-	$dbh = new PDO("sqlite:".USER_DB);
-	
-	$sql = "UPDATE fc_user
-			SET user_mail = '',
-				user_verified = '',
-				user_psw = '',
-				user_psw_hash = '',
-				user_drm = '',
-				user_class = 'deleted',
-				user_mail = '',
-				user_firstname = '',
-				user_lastname = '',
-				user_company = '',
-				user_street = '',
-				user_street_nbr = '',
-				user_zipcode = '',
-				user_city = '',
-				user_newsletter = ''
-			WHERE user_id = $edituser";
-			*/
-			
+		
 		$columns_update = [
 			"user_psw_hash" => "",
 			"user_mail" => "",
@@ -272,26 +213,12 @@ if($_POST['save_the_user']) {
 				$columns_new[$f] = "${$f}";
 			}
 			
-			/*
-			$user_id = null;
-			$sql = generate_sql_insert_str($pdo_fields_new,"fc_user");
-			$sth = $dbh->prepare($sql);
-			generate_bindParam_str($pdo_fields_new,$sth);
-			
-			$sth->bindParam(':user_psw_hash', $user_psw, PDO::PARAM_STR);
-			$sth->bindParam(':user_drm', $drm_string, PDO::PARAM_STR);
-			$sth->bindParam(':user_registerdate', $user_registerdate, PDO::PARAM_STR);
-			$sth->bindParam(':user_class', $drm_acp_class, PDO::PARAM_STR);
-											
-			$cnt_changes = $sth->execute();
-			*/
-			
-		$cnt_changes = $db_user->insert("fc_user",$columns_new);
+			$cnt_changes = $db_user->insert("fc_user",$columns_new);
 		
-		$edituser = $db_user->id();
+			$edituser = $db_user->id();
 		
 		
-		if($cnt_changes->rowCount() > 0) {
+			if($cnt_changes->rowCount() > 0) {
 				$success_message .= $lang['msg_new_user_saved'].'<br>';
 				record_log($_SESSION['user_nick'],"new user <i>$user_nick</i>","5");
 			} else {
@@ -331,23 +258,7 @@ if($_POST['save_the_user']) {
 			} else {
 				$sign_out = "false";
 			}
-			
-			/*
-			$group_data = $dbh->query("SELECT * FROM fc_groups WHERE group_id = $user_groups[$i] ");
-			$group_data = $group_data->fetch(PDO::FETCH_ASSOC);
-			
-			$array_existing_users = explode(" ", $group_data['group_user']);   // userlist - to array
-			array_push($array_existing_users, "$enter_user_id");               // add the user
-			$array_existing_users = array_unique($array_existing_users);       // delete doubles
-			$existing_users = implode(" ", $array_existing_users);             // generate the new userlist - back to a string
-			
-			if($sign_out == "true") {
-				$existing_users = str_replace("$enter_user_id","",$existing_users);
-			}
-			
-			$existing_users = preg_replace("/ +/", ' ', $existing_users);     // delete multiple spaces	
-			$group_data = $dbh->query("UPDATE fc_groups SET group_user = '$existing_users' WHERE group_id = $user_groups[$i]");
-			*/
+
 		}
 	}
 	
