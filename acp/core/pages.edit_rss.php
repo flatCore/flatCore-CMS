@@ -1,12 +1,9 @@
 <?php
 
 //prohibit unauthorized access
-require("core/access.php");
+require 'core/access.php';
 
 echo '<h3>RSS <small>Feed</small></h3>';
-
-//$dbh = new PDO("sqlite:".CONTENT_DB);
-
 
 if($_REQUEST['delete'] != "") {
 	$delete = (int) $_REQUEST['delete'];	
@@ -80,9 +77,9 @@ for($i=0;$i<$cnt_rssItems;$i++) {
 
 
 if($cnt_rssItems < 1) {
-	echo"<div class='alert alert-info'>";
-	echo"<p>No entries</p>";
-	echo"</div>";
+	echo '<div class="alert alert-info">';
+	echo $lang['msg_no_entries_so_far'];
+	echo '</div>';
 }
 
 
