@@ -17,7 +17,7 @@ $result = $db_content->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 $x=0;
 foreach($result as $p) {
 	$this_page_id = 'p'.$p['page_id'];
-	$count_comments = $db_content->query("Select Count(*) FROM fc_comments WHERE comment_parent LIKE '$this_page_id' ")->fetch();
+	$count_comments = $db_content->query("Select Count(*) FROM fc_comments WHERE comment_parent_id LIKE '$this_page_id' ")->fetch();
 	$result[$x]['cnt_comments'] = $count_comments[0];
 	$x++;
 }
