@@ -7,9 +7,9 @@ require 'core/access.php';
 
 /* set modus */
 
-if((isset($_REQUEST['post_id'])) && is_numeric($_REQUEST['post_id'])) {
+if((isset($_POST['post_id'])) && is_numeric($_POST['post_id'])) {
 	
-	$post_id = (int) $_REQUEST['post_id'];
+	$post_id = (int) $_POST['post_id'];
 	$modus = 'update';
 	$post_data = fc_get_post_data($post_id);
 	$submit_btn = '<input type="submit" class="btn btn-save btn-block" name="save_post" value="'.$lang['update'].'">';

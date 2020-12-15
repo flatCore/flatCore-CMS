@@ -368,7 +368,7 @@ if($cnt_filter_posts > 0) {
 		echo '<td>'.$show_events_date.$show_items_price.'<h5 class="mb-0">'.$get_posts[$i]['post_title'].'</h5><small>'.$trimmed_teaser.'</small></td>';
 		echo '<td style="min-width: 150px;">';
 		echo '<nav class="nav justify-content-end">';
-		echo '<a class="btn btn-fc btn-sm text-success mx-1" href="acp.php?tn=posts&sub=edit&post_id='.$get_posts[$i]['post_id'].'">'.$lang['edit'].'</a>';
+		echo '<form class="form-inline mr-1" action="?tn=posts&sub=edit" method="POST"><button class="btn btn-fc btn-sm text-success" type="submit" name="post_id" value="'.$get_posts[$i]['post_id'].'">'.$lang['edit'].'</button></form> ';
 		echo '<form class="form-inline" action="acp.php?tn=posts" method="POST"><button class="btn btn-danger btn-sm" type="submit" name="delete_id" value="'.$get_posts[$i]['post_id'].'">'.$icon['trash_alt'].'</button></form>';
 		echo '</nav>';
 		echo '</td>';
