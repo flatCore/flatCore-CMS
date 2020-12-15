@@ -35,9 +35,9 @@ if((isset($_POST['delete_id'])) && is_numeric($_POST['delete_id'])) {
 
 /* remove fixed */
 
-if(is_numeric($_REQUEST['rfixed'])) {
+if(is_numeric($_POST['rfixed'])) {
 
-	$change_id = (int) $_REQUEST['rfixed'];	
+	$change_id = (int) $_POST['rfixed'];	
 	$db_posts->update("fc_posts", [
 		"post_fixed" => "2"
 	],[
@@ -47,9 +47,9 @@ if(is_numeric($_REQUEST['rfixed'])) {
 
 /* set fixed */
 
-if(is_numeric($_REQUEST['sfixed'])) {
+if(is_numeric($_POST['sfixed'])) {
 
-	$change_id = (int) $_REQUEST['sfixed'];
+	$change_id = (int) $_POST['sfixed'];
 	$db_posts->update("fc_posts", [
 		"post_fixed" => "1"
 	],[
@@ -247,11 +247,14 @@ if($cnt_filter_posts > 0) {
 		$icon_fixed = '';
 		$draft_class = '';
 		
+		$icon_fixed_form = '<form action="?tn=posts" method="POST" class="form-inline">';
 		if($get_posts[$i]['post_fixed'] == '1') {
-			$icon_fixed = '<a href="acp.php?tn=posts&a=start&rfixed='.$get_posts[$i]['post_id'].'">'.$icon['star'].'</a>';
+			$icon_fixed_form .= '<button type="submit" class="btn btn-link" name="rfixed" value="'.$get_posts[$i]['post_id'].'">'.$icon['star'].'</button>';			
 		} else {
-			$icon_fixed = '<a href="acp.php?tn=posts&a=start&sfixed='.$get_posts[$i]['post_id'].'">'.$icon['star_outline'].'</a>';
+			$icon_fixed_form .= '<button type="submit" class="btn btn-link" name="sfixed" value="'.$get_posts[$i]['post_id'].'">'.$icon['star_outline'].'</button>';
 		}
+		$icon_fixed_form .= '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+		$icon_fixed_form .= '</form>';
 		
 		if($get_posts[$i]['status'] == 'draft') {
 			$draft_class = 'item_is_draft';
@@ -357,7 +360,7 @@ if($cnt_filter_posts > 0) {
 		
 		echo '<tr class="'.$draft_class.'">';
 		echo '<td>'.$get_posts[$i]['post_id'].'</td>';
-		echo '<td>'.$icon_fixed.'</td>';
+		echo '<td>'.$icon_fixed_form.'</td>';
 		echo '<td>'.$prio_form.'</td>';
 		echo '<td nowrap><small>'.$published_date.'<br>'.$release_date.'<br>'.$lastedit_date.'</small></td>';
 		echo '<td>'.$show_type.'</td>';
