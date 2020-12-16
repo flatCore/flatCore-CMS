@@ -455,11 +455,14 @@ $lang['acp_session_lifetime'] = 'ACP Session Lifetime (Sekunden)';
 
 /* Rights Management */
 
+$lang['drm_description'] = "Der Benutzer darf folgende Aktionen durchführen";
 $lang['drm_administrator'] = "Benutzer ist Administrator";
+$lang['drm_administrator_desc'] = "<strong>Achtung!</strong> Diese Option ermöglicht dem Benutzer den Zugang zum ACP (also dem Administrations-Bereich)";
 $lang['drm_pages'] = "Seiten erstellen";
 $lang['drm_editpages'] = "Alle Seiten bearbeiten";
 $lang['drm_editownpages'] = "Nur eigene Seiten bearbeiten";
 $lang['drm_user'] = "Benutzer verwalten";
+$lang['drm_user_desc'] = "<strong>Achtung!</strong> Ist diese Option aktiviert, kann der Benutzer sämtliche Berechtigungen ändern. Dies gilt natürlich auch für seine eigenen Benutzerrechte.";
 $lang['drm_system'] = "Einstellungen vornehmen";
 $lang['drm_files'] = "Dateien hochladen";
 $lang['drm_no_access'] = "Du hast nicht die nötigen Zugriffsrechte um diese Datensätze zu bearbeiten";

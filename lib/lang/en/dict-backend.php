@@ -456,13 +456,16 @@ $lang['acp_session_lifetime'] = 'ACP Session Lifetime (Seconds)';
 
 /* rights management */
 
-$lang['drm_administrator'] = "User is Administrator";
-$lang['drm_pages'] = "Edit Pages";
-$lang['drm_editpages'] = "Edit All Pages";
-$lang['drm_editownpages'] = "Only own Pages";
+$lang['drm_description'] = "The user can perform the following actions";
+$lang['drm_administrator'] = "The user is an administrator";
+$lang['drm_administrator_desc'] = "<strong>Attention!</strong> This option enables access to the ACP (Backend)";
+$lang['drm_pages'] = "Create new Pages";
+$lang['drm_editpages'] = "Edit all Pages";
+$lang['drm_editownpages'] = "Edit only own Pages";
 $lang['drm_user'] = "Manage User";
+$lang['drm_user_desc'] = "<strong>Attention!</strong> If this option is activated, the user can change all authorizations. Of course, this also applies to his own user rights.";
 $lang['drm_system'] = "Edit Preferences";
-$lang['drm_files'] = "Dateien hochladen";
+$lang['drm_files'] = "Upload files";
 $lang['drm_no_access'] = "You do not have the required access rights for this action";
 $lang['drm_moderator'] = "Moderator";
 $lang['drm_user_can_publish'] = "User can publish";

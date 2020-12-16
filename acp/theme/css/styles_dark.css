@@ -9995,7 +9995,7 @@ h3 {
 /* fieldset */
 fieldset {
   padding: 30px 10px 10px 10px;
-  margin: 15px 0 25px 0;
+  margin: 18px 0 25px 0;
   border: 1px solid black;
   background: #191919;
   border-radius: 4px;
@@ -10004,8 +10004,8 @@ fieldset {
 
 fieldset legend {
   position: absolute;
-  left: 5px;
-  top: 10px;
+  left: 10px;
+  top: 5px;
   width: auto;
   padding: 7px 15px;
   margin: -25px 10px 0 10px;
@@ -10016,6 +10016,14 @@ fieldset legend {
   border-radius: 3px;
   border-left: 1px solid black;
   border-right: 1px solid black;
+}
+
+fieldset.fieldset-danger {
+  border-color: #dc3545;
+}
+fieldset.fieldset-danger legend {
+  border-color: #dc3545;
+  color: #dc3545;
 }
 
 textarea.form-control,
