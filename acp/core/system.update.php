@@ -35,6 +35,13 @@ if(isset($_GET['github']) && $_GET['github'] == 'master') {
 	$remote_versions[3] = 'flatCore-CMS-master.zip';
 }
 
+if(isset($_GET['github']) && $_GET['github'] == 'main') {
+	$remote_versions[0] = '';
+	$remote_versions[1] = 'GitHub';
+	$remote_versions[2] = 'main';
+	$remote_versions[3] = 'flatCore-CMS-main.zip';
+}
+
 if(isset($_GET['github']) && $_GET['github'] == 'develop') {
 	$remote_versions[0] = '';
 	$remote_versions[1] = 'GitHub';
@@ -90,6 +97,8 @@ function start_update() {
 	
 	if($remote_versions[3] == 'flatCore-CMS-master.zip') {
 		$source_file = 'https://github.com/flatCore/flatCore-CMS/archive/master.zip';
+	} else if($remote_versions[3] == 'flatCore-CMS-main.zip') {
+		$source_file = 'https://github.com/flatCore/flatCore-CMS/archive/main.zip';
 	} else if($remote_versions[3] == 'flatCore-CMS-develop.zip') {
 		$source_file = 'https://github.com/flatCore/flatCore-CMS/archive/develop.zip';
 	} else {
@@ -269,6 +278,9 @@ function compare_versions() {
 	}
 	if($remote_versions[2] == 'master') {
 		$start_dl  = 'acp.php?tn=system&sub=update&a=start&github=master';
+	}
+	if($remote_versions[2] == 'main') {
+		$start_dl  = 'acp.php?tn=system&sub=update&a=start&github=main';
 	}
 	if($remote_versions[2] == 'develop') {
 		$start_dl  = 'acp.php?tn=system&sub=update&a=start&github=develop';
