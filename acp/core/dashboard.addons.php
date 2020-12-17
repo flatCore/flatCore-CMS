@@ -36,7 +36,7 @@ if($cnt_mods > 0) {
 			$mod_id = 'id_'.clean_filename($mod['name']);
 			
 			echo '<div class="col mb-4">';	
-			echo '<div class="card">';
+			echo '<div class="card" style="max-width:450px;">';
 			echo '<div class="card-header p-1"><strong>'.$mod['name'].'</strong> <span class="badge badge-dark float-right">v'.$mod['version'].'</span></div>';
 			echo $poster_img;
 			echo '<div class="card-img-overlay fade-menu">';
