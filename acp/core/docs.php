@@ -1,20 +1,28 @@
 <?php
 
+require 'access.php';
 
 $core_docs = fc_get_core_docs();
 $modules_docs = fc_get_modules_docs();
 $themes_docs = fc_get_themes_docs();
+
+$all_docs = $core_docs;
+if(is_array($modules_docs)) {
+	$all_docs = array_merge($all_docs, $modules_docs);
+}
+
+if(is_array($themes_docs)) {
+	$all_docs = array_merge($all_docs, $themes_docs);
+}
+
 $docs_file = '';
 
 if(isset($_POST['docs_file'])) {
-	$docs_file = $_POST['docs_file'];
-	if(is_file($docs_file)) {
-		$_SESSION['docs_file'] = $docs_file;
+	$docs_file_id = (int) $_POST['docs_file'];
+	if(is_file($all_docs[$docs_file_id])) {
+		$_SESSION['docs_file'] = $all_docs[$docs_file_id];
 	}
-	
 }
-
-
 
 
 echo '<form action="#" method="post" id="setHelp">';
@@ -23,34 +31,51 @@ echo '<div class="col-md-9">';
 echo '<select name="docs_file" class="form-control custom-select" onchange="this.form.submit()">';
 
 echo '<optgroup label="flatCore">';
-foreach($core_docs as $d) {
+foreach($all_docs as $k => $v) {
+	
+	if(substr($v, 0, 4) != 'docs') {
+		continue;
+	}
+	
 	$sel = '';
-	if($_SESSION['docs_file'] == $d) {
+	if($_SESSION['docs_file'] == $v) {
 		$sel = 'selected';
 	}
-	echo '<option value="'.$d.'" '.$sel.'>'.basename($d).'</option>';
+	echo '<option value="'.$k.'" '.$sel.'>'.basename($v).'</option>';
 }
 echo '</optgroup>';
 
 echo '<optgroup label="Modules">';
-foreach($modules_docs as $d) {
+foreach($all_docs as $k => $v) {
+	
+	if(substr($v, 0, 11) != '../modules/') {
+		continue;
+	}
+	
 	$sel = '';
-	if($_SESSION['docs_file'] == $d) {
+	if($_SESSION['docs_file'] == $v) {
 		$sel = 'selected';
 	}
-	$path = explode('/', $d);
-	echo '<option value="'.$d.'" '.$sel.'>'.$path[2].' > '.basename($d).'</option>';
+	
+	$path = explode('/', $v);	
+	echo '<option value="'.$k.'" '.$sel.'>'.$path[2].' > '.basename($v).'</option>';
 }
 echo '</optgroup>';
 
 echo '<optgroup label="Themes">';
-foreach($themes_docs as $d) {
+foreach($all_docs as $k => $v) {
+	
+	if(substr($v, 0, 10) != '../styles/') {
+		continue;
+	}
+	
 	$sel = '';
-	if($_SESSION['docs_file'] == $d) {
+	if($_SESSION['docs_file'] == $v) {
 		$sel = 'selected';
 	}
-	$path = explode('/', $d);
-	echo '<option value="'.$d.'" '.$sel.'>'.$path[2].' > '.basename($d).'</option>';
+	
+	$path = explode('/', $v);	
+	echo '<option value="'.$k.'" '.$sel.'>'.$path[2].' > '.basename($v).'</option>';
 }
 echo '</optgroup>';
 
@@ -67,7 +92,6 @@ echo '</form>';
 
 
 if(isset($_SESSION['docs_file'])) {
-	
 	$help_text = file_get_contents($_SESSION['docs_file']);
 	$Parsedown = new Parsedown();
 	$help_text_html = $Parsedown->text($help_text);
