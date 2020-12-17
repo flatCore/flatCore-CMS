@@ -369,7 +369,15 @@ function clean_filename($str) {
 	$str = preg_replace('/[^a-z0-9_-]/isU', '', $str); // only a-z 0-9
 	$str = trim($str); 
 	return $str; 
-}  
+}
+
+function fc_filter_filepath($str) {
+	$str = strip_tags($str);
+	$remove_chars = array('<','>','\\','=','@','(',')',' ',',','%','');
+	$str = preg_replace('/\s/s', '_', $str);
+	$str = str_replace($remove_chars, "", $str);
+	return $str; 
+}
 
 
 /**

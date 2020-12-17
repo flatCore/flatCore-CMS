@@ -17,7 +17,7 @@ $files_folder = basename($path_files);
 
 
 if(isset($_REQUEST['selected_folder'])) {
-	$_SESSION['disk'] = $_REQUEST['selected_folder'];
+	$_SESSION['disk'] = fc_filter_filepath($_REQUEST['selected_folder']);
 }
 
 if(isset($_SESSION['disk'])) {
