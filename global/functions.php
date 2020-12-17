@@ -1,4 +1,8 @@
 <?php
+	
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
 /**
  * global functions
@@ -218,37 +222,45 @@ function fc_send_mail($recipient,$subject,$message) {
 	$subject = preg_replace( "/(content-type:|bcc:|cc:|to:|from:)/im", "", $subject );
 	$message = preg_replace( "/(content-type:|bcc:|cc:|to:|from:)/im", "", $message );
 
-	require_once FC_CORE_DIR.'lib/Swift/lib/swift_required.php';
+	
+	require FC_CORE_DIR.'lib/PHPMailer/src/Exception.php';
+	require FC_CORE_DIR.'lib/PHPMailer/src/PHPMailer.php';
+	require FC_CORE_DIR.'lib/PHPMailer/src/SMTP.php';
+	
+	$mail = new PHPMailer(true);
 	
 	if($prefs_mailer_type == 'smtp') {
-		
-		$trans = Swift_SmtpTransport::newInstance()
-            ->setUsername("$smtp_username")
-            ->setPassword("$smtp_psw")
-            ->setHost("$smtp_host")
-            ->setPort($smtp_port);
-			
-		if($smtp_encryption != '') {
-			$trans->setEncryption($smtp_encryption);
-		}
-		
-	} else {
-		$trans = Swift_MailTransport::newInstance();
-	}
-	
-	$mailer = Swift_Mailer::newInstance($trans);
-	$message = Swift_Message::newInstance("$subject")
-			->setFrom(array($prefs_mailer_adr => $prefs_mailer_name))
-			->setTo(array($recipient['mail'] => $recipient['name']))
-			->setBody("$message","text/html");
-			
-	if(!$mailer->send($message, $failures)) {
-	  $fail = print_r($failures,true);
-		$return = $fail;
-	} else {
-		$return = 1;
-	}
+		/* sending via smtp */
 
+	  $mail->isSMTP();
+	  $mail->Host = "$smtp_host";
+	  $mail->SMTPAuth = true;
+	  $mail->Username   = "$smtp_username";
+	  $mail->Password   = "$smtp_psw";
+	  if($smtp_encryption != '') {
+	  	$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+	  }
+	  $mail->Port = $smtp_port;
+	
+	  $mail->setFrom("$prefs_mailer_adr", "$prefs_mailer_name");
+	  $mail->addAddress($recipient['mail'], $recipient['name']);
+  }
+
+	$mail->setFrom("$prefs_mailer_adr", "$prefs_mailer_name");
+	$mail->addAddress($recipient['mail'], $recipient['name']);
+	   
+  $mail->isHTML(true);
+  $mail->CharSet = 'utf-8';
+	$mail->Subject = "$subject";
+	$mail->Body = "$message";
+	  
+	  
+	if(!$mail->send()) {
+    $fail = 'Mailer Error: ' . $mail->ErrorInfo;
+    $return = $fail;
+	} else {
+     $return = 1;
+	}
 	return $return;
 }
 
