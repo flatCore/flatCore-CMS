@@ -355,7 +355,8 @@ if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
 
 /* expand filter */
 if(isset($_POST['media_filter']) && (trim($_POST['media_filter']) != '')) {
-	$_SESSION['media_filter'] = $_SESSION['media_filter'] . ' ' . $_POST['media_filter'];
+	$add_media_filter = clean_filename(filter_var($_POST['media_filter'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH));
+	$_SESSION['media_filter'] = $_SESSION['media_filter'] . ' ' . $add_media_filter;
 }
 
 /* remove keyword from filter list */
