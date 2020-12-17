@@ -400,6 +400,7 @@ $lang['prefs_mailer_smtp_username'] = "Username";
 $lang['prefs_mailer_smtp_password'] = "Password";
 $lang['prefs_mailer_send_test'] = "Send E-mail for testing";
 $lang['prefs_mailer_send_test_success'] = "Die E-Mail wurde versendet";
+$lang['prefs_mail_type_smtp_desc'] = 'To use SMTP, you have to create a <code>config_imap.php</code> file in the <code>/content/</code> folder.';
 
 $lang['prefs_nbr_page_versions'] = "Number of Page-Versions";
 $lang['prefs_pagesort_minlength'] = "Minimum length of the character string &quot;Page Order&quot; ";

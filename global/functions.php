@@ -206,12 +206,14 @@ function fc_write_comment($data) {
  * $recipient -> array() 'name' and 'mail'
  * $subject -> string()
  * $message -> string()
+ *
+ * store your smtp settings in /content/config_smtp.php
  */
 
 
 function fc_send_mail($recipient,$subject,$message) {
 
-	global $prefs_mailer_adr, $prefs_mailer_name, $prefs_mailer_type, $prefs_mailer_return_path, $prefs_smtp_host, $prefs_smtp_port, $prefs_smtp_encryption, $prefs_smtp_authentication, $prefs_smtp_username, $prefs_smtp_psw;
+	global $prefs_mailer_adr, $prefs_mailer_name, $prefs_mailer_type, $smtp_host, $smtp_port, $smtp_encryption, $smtp_username, $smtp_psw;
 	
 	$subject = preg_replace( "/(content-type:|bcc:|cc:|to:|from:)/im", "", $subject );
 	$message = preg_replace( "/(content-type:|bcc:|cc:|to:|from:)/im", "", $message );
@@ -221,13 +223,13 @@ function fc_send_mail($recipient,$subject,$message) {
 	if($prefs_mailer_type == 'smtp') {
 		
 		$trans = Swift_SmtpTransport::newInstance()
-            ->setUsername("$prefs_smtp_username")
-            ->setPassword("$prefs_smtp_psw")
-            ->setHost("$prefs_smtp_host")
-            ->setPort($prefs_smtp_port);
+            ->setUsername("$smtp_username")
+            ->setPassword("$smtp_psw")
+            ->setHost("$smtp_host")
+            ->setPort($smtp_port);
 			
-		if($prefs_smtp_encryption != '') {
-			$trans->setEncryption($prefs_smtp_encryption);
+		if($smtp_encryption != '') {
+			$trans->setEncryption($smtp_encryption);
 		}
 		
 	} else {
@@ -246,7 +248,7 @@ function fc_send_mail($recipient,$subject,$message) {
 	} else {
 		$return = 1;
 	}
-	
+
 	return $return;
 }
 
