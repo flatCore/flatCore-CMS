@@ -131,7 +131,7 @@ if($_POST['save_the_user']) {
 		];
 		
 		if($set_psw == "true") {
-			$columns_update['user_psw_hash'] = "$user_psw_hash";
+			$columns_update['user_psw_hash'] = "$user_psw";
 		}
 		
 		/* add the custom fields */
