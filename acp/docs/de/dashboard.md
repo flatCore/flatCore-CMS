@@ -1,3 +1,9 @@
+---
+navigation: Das Dashboard
+title: Das Dashboard
+description: Eine Übersicht des Dashboards.
+---
+
 ### Dashboard ###
 
 Hier findest Du alle wichtigen Informationen zu Deinem Projekt. Wie z.B. eine kurze Auswertung zu den registrierten Benutzern und gespeicherten Seiten.

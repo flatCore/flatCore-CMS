@@ -5,6 +5,8 @@ error_reporting(0);
 require '../lib/Medoo.php';
 use Medoo\Medoo;
 
+require '../lib/Spyc/spyc.php';
+
 require '../config.php';
 if(is_file('../'.FC_CONTENT_DIR.'/config.php')) {
 	include '../'.FC_CONTENT_DIR.'/config.php';

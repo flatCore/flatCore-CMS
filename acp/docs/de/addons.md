@@ -1,3 +1,9 @@
+---
+navigation: Addons
+title: Module, Plugins und Themes
+description:
+---
+
 ### Addons ###
 
 Hier werden alle installierten Module, Plugins und Themes aufgelistet.

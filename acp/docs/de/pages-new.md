@@ -1,3 +1,9 @@
+---
+navigation: Neue Seiten anlegen
+title: 
+description:
+---
+
 ### Neue Seiten erstellen ###
 
 Du kannst beliebig viele Seiten zu deiner Webseite hinzufügen.

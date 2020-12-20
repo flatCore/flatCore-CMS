@@ -1,3 +1,9 @@
+---
+navigation: Pages
+title: 
+description:
+---
+
 ### Manage your Contents ###
 
 #### Pages overview

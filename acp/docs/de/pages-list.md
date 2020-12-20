@@ -1,3 +1,9 @@
+---
+navigation: Inhalte (Seiten)
+title: 
+description:
+---
+
 ### Liste filtern ###
 
 Über das Eingabefeld kannst Du die Inhalte der gespeicherten Seiten durchsuchen. Außerdem kannst Du über den *Status*, die *Sprache* und die *Labels* Seiten ein- und ausblenden. Die Labels kannst Du übrigens in den [Einstellungen](acp.php?tn=system) selbst erweitern und ändern.

@@ -1,3 +1,9 @@
+---
+navigation: Preferences
+title: 
+description:
+---
+
 ### Preferences ###
 
 Here you can specify the settings for the entire page. Nearly all the entries are self-explanatory.

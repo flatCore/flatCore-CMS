@@ -35,3 +35,5 @@ This branch will be merged into main branch, as soon as a new stable version is 
 + matchHeight - http://brm.io/jquery-match-height/
 + bootstrap-tagsinput - https://github.com/bootstrap-tagsinput/bootstrap-tagsinput
 + image-picker - https://github.com/rvera/image-picker
++ Spyc - https://github.com/mustangostang/spyc/
++ Parsedown - https://parsedown.org

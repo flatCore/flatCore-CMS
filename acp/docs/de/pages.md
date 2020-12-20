@@ -1,3 +1,9 @@
+---
+navigation: Inhalte
+title: 
+description:
+---
+
 ### Seiten und Inhalte ###
 
 Als geordnete Seiten werden die Seiten aufgeführt, welche eine Sortierungsnummer enthalten. Diese Seiten werden automatisch in der Navigation aufgeführt. Die ungeordneten Seiten sind nicht in die Navigation eingegliedert - werden aber dennoch in der Sitemap bzw. den Suchergebnissen berücksichtigt.

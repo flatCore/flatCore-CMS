@@ -10179,6 +10179,31 @@ div#page-sidebar-help #page-sidebar-help-inner {
   padding: 15px;
 }
 
+#page-sidebar-help-inner p, #page-sidebar-help-inner ul, #page-sidebar-help-inner li {
+  font-size: 12px;
+}
+#page-sidebar-help-inner h6 {
+  font-size: 12px;
+}
+#page-sidebar-help-inner h5 {
+  font-size: 13px;
+}
+#page-sidebar-help-inner h4 {
+  font-size: 14px;
+}
+#page-sidebar-help-inner h4 {
+  font-size: 15px;
+}
+#page-sidebar-help-inner h3 {
+  font-size: 16px;
+}
+#page-sidebar-help-inner h2 {
+  font-size: 17px;
+}
+#page-sidebar-help-inner h1 {
+  font-size: 12px;
+}
+
 div#page-sidebar-help.sb-help-expanded {
   width: 380px;
   overflow: hidden;
