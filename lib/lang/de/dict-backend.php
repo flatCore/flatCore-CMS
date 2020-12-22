@@ -399,7 +399,7 @@ $lang['prefs_mailer_smtp_username'] = "Username";
 $lang['prefs_mailer_smtp_password'] = "Passwort";
 $lang['prefs_mailer_send_test'] = "Test E-Mail versenden";
 $lang['prefs_mailer_send_test_success'] = "The email has been sent";
-$lang['prefs_mail_type_smtp_desc'] = 'Um SMTP zu verwenden, musst Du eine Datei <code>config_imap.php</code> im Ordner <code>/content/</code> anlegen.';
+$lang['prefs_mail_type_smtp_desc'] = 'Um SMTP zu verwenden, musst Du eine Datei <code>config_smtp.php</code> im Ordner <code>/content/</code> anlegen.';
 
 $lang['prefs_nbr_page_versions'] = "Anzahl Seiten-Versionen";
 $lang['prefs_pagesort_minlength'] = "Mindestlänge der Zeichenkette &quot;Reihenfolge&quot; ";
