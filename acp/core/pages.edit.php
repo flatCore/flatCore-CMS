@@ -156,9 +156,11 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	
 	if($page_position == "portal") {
 		$page_sort = "portal";
-	} elseif ($page_position == "mainpage") {
+	}
+	if($page_position == "mainpage") {
 		$page_sort = (int) $page_order;
-	} elseif ($page_position == "null") {
+	}
+	if($page_position == "null") {
 		$page_sort = "";
 	}
 	
@@ -571,9 +573,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 		
 		
 		/* delete older entries from fc_pages_cache */
-		$interval = time() - 86400; // now - 24h
-		//$count = $dbh->exec("DELETE FROM fc_pages_cache WHERE page_cache_type = 'preview' AND page_lastedit < '$interval'");
-		
+		$interval = time() - 86400; // now - 24h		
 		$db_content->delete("fc_pages_cache", [
 			"AND" => [
 				"page_cache_type" => "preview",
@@ -598,7 +598,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	fc_get_hook('page_updated',$_POST);	
 	fc_delete_smarty_cache(md5($_POST['page_permalink']));
 	
-	if($_POST['page_sort'] == 'ghost' OR $_POST['page_status'] == 'public') {
+	if($_POST['page_status'] == 'ghost' OR $_POST['page_status'] == 'public') {
 		fc_update_or_insert_index($_POST['page_permalink']);
 	}
 	
@@ -606,14 +606,17 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 }
 
 
-
-
 /* get the data to fill the form (again) */
 if(is_numeric($editpage)) {
 
-	
-	if($modus == "preview") {
-		$page_data = $db_content->get("fc_pages_cache","*",[ "page_id_original" => $editpage ],["ORDER" => ["page_id" => "DESC"]]);
+	if($modus == "preview") {		
+		$page_data = $db_content->get("fc_pages_cache","*",[
+			"AND" => [
+			"page_id_original" => $editpage
+		],
+			"ORDER" => ["page_id" => "DESC"]
+		]);
+		
 	} else {
 		$page_data = $db_content->get("fc_pages","*",[ "page_id" => $editpage ]);
 	}

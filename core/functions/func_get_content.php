@@ -46,11 +46,9 @@ function get_content($page, $mode = 'p') {
 				"AND" => [
 				"page_id_original" => "$page",
 				"page_language" => "$languagePack"
-				],
-				[
-					"ORDER" => "page_id"
-				]
-		]);			
+			],
+				"ORDER" => ["page_id" => "DESC"]
+			]);			
 	
 	} else {
 		
