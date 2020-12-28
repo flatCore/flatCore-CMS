@@ -72,14 +72,18 @@ if(isset($_POST['delete_the_page'])) {
 		$delpage_sort = $delete_page['page_sort'];
 		$delpage_lang = $delete_page['page_language'];
 		
-		$subpages = $db_content->select("fc_pages", ["page_sort","page_title"],[
-			"AND" => [
-				"page_sort[~]" => "$delpage_sort%",
-				"page_language" => $delpage_lang
-			]
-		]);
+		if($delpage_sort != '') {
+			$subpages = $db_content->select("fc_pages", ["page_sort","page_title"],[
+				"AND" => [
+					"page_sort[~]" => "$delpage_sort%",
+					"page_language" => $delpage_lang
+				]
+			]);
+		} else {
+			$subpages = '';
+		}
 		
-		if(count($subpages) > 1) {
+		if(is_array($subpages)) {
 			echo '<div class="alert alert-danger">';
 			echo $lang['msg_error_deleting_sub_pages'];
 			
