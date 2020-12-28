@@ -131,7 +131,7 @@ $cnt_private_per = round($cnt_private*100/$cnt_pages);
 
 /* posts */
 
-$allPosts = $db_posts->select("fc_posts", ["post_id", "post_title", "post_teaser", "post_type"], [
+$allPosts = $db_posts->select("fc_posts", ["post_id", "post_title", "post_teaser", "post_type", "post_lastedit"], [
 	"ORDER" => ["post_releasedate" => "DESC"]
 ]);
 
