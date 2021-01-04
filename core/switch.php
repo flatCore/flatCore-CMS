@@ -160,7 +160,7 @@ if($page_thumbnail == "") {
 	$page_thumbnail_array = explode("<->", $page_thumbnail);
 	$page_thumbnail = $page_thumbnail_array[0];
 	if(count($page_thumbnail_array > 0)) {
-		$page_thumbnail = '..'.array_shift($page_thumbnail_array);
+		$page_thumbnail = array_shift($page_thumbnail_array);
 		foreach($page_thumbnail_array as $t) {
 			$t = str_replace('/content/', $fc_base_url.'content/', $t);
 			$thumb[] = $t;
@@ -168,7 +168,6 @@ if($page_thumbnail == "") {
 		$smarty->assign('page_thumbnails', $thumb);
 	}
 }
-
 
 /* fix path to thumbnails and favicon */
 $page_thumbnail = str_replace('../content/', $fc_base_url.'content/', $page_thumbnail);
@@ -294,6 +293,113 @@ if(($page_status == "draft") AND ($_SESSION['user_class'] != "administrator")){
 }
 
 
+/* comments */
+
+if(($page_comments == 1 OR $post_data['post_comments'] == 1) && $prefs_comments_mode != 3) {
+	/* comments are activated for this page */
+	
+	$show_comments_form = FALSE;
+	
+	if($prefs_comments_authorization == 1 && $_SESSION['user_nick'] != '') {
+		// comments allowed for registered users
+		$show_comments_form = TRUE;
+		$smarty->assign("comment_name_readonly","readonly");
+		$smarty->assign("input_name",$_SESSION['user_nick']);
+		$smarty->assign("comment_mail_readonly","readonly");
+		$smarty->assign("input_mail",$_SESSION['user_mail']);
+	}
+	
+	if($prefs_comments_authorization == 3) {
+		// comments allowed for all
+		$show_comments_form = TRUE;
+	}
+	
+	if($prefs_comments_authorization == 2) {
+		// comments allowed for all - name and E-Mail are mandatory
+		$show_comments_form = TRUE;
+		$comment_form_intro = $lang['comment_msg_auth2'];
+	}
+
+	if(isset($_POST['send_user_comment'])) {
+		$save_comment = fc_write_comment($_POST);
+
+		if($save_comment > 0) {
+			$form_response = '<div class="alert alert-success">'.$lang['comment_msg_sucess'].'</div>';
+		} else {
+			$form_response = '<div class="alert alert-danger">'.$lang['comment_msg_fail'].'</div>';
+		}
+		
+		$smarty->assign("form_response",$form_response);
+	}
+	
+
+	if($show_comments_form === TRUE) {
+		$smarty->assign("label_name",$lang['label_name']);
+		$smarty->assign("label_mail",$lang['label_mail']);
+		$smarty->assign("label_mail_helptext",$lang['label_mail_helptext']);
+		$smarty->assign("btn_send_comment",$lang['btn_send_comment']);
+		$smarty->assign("post_id",$post_data['post_id']);
+		
+		$form_action = '/'.$fct_slug.$mod_slug;
+		$smarty->assign("form_action",$form_action);
+		
+		$smarty->assign("label_comment",$lang['label_comment']);
+		if(isset($_GET['cid']) && is_numeric($_GET['cid'])) {
+			$cid = (int) $_GET['cid'];
+			$smarty->assign("label_comment",$lang['label_comment_answer'].' #'.$cid);
+			$smarty->assign("parent_id",$cid);
+		}
+	
+		$smarty->assign("comment_form_title",$lang['comment_form_title']);
+		$smarty->assign("comment_form_intro",$comment_form_intro);
+		$comments_form = $smarty->fetch("comments/comment_form.tpl",$cache_id);
+		$smarty->assign('comment_form', $comments_form, true);
+		$smarty->assign('comment_send_success', $fc_snippet_comment_send_success, true);
+		
+	}
+	
+	/* show stored comments */
+	
+	if(is_numeric($page_contents['page_id'])) {
+		$filter['relation_id'] = (int) $page_contents['page_id'];
+		$filter['type'] = 'p';
+	}
+	
+	if(is_numeric($post_data['post_id'])) {
+		$filter['relation_id'] = (int) $post_data['post_id'];
+		$filter['type'] = 'b';
+	}
+	
+	if(is_file(FC_CORE_DIR.'/styles/'.$fc_template.'/templates/comments/comment_entry.tpl')){
+		$comment_tpl = file_get_contents(FC_CORE_DIR.'/styles/'.$fc_template.'/templates/comments/comment_entry.tpl');
+	} else {
+		$comment_tpl = file_get_contents(FC_CORE_DIR.'/styles/default/templates/comments/comment_entry.tpl');
+	}
+	
+	$comments = fc_get_comments(0,100,$filter);
+	$cnt_comment = count($comments);
+	
+	$sorting = [];
+	foreach ($comments as $comment_key => $comment) {
+		if($comment['comment_parent_id'] == '') {
+			$comment['comment_parent_id'] = 0;
+		}
+	  $sorting[$comment['comment_parent_id']][$comment_key] = $comment['comment_id'];
+	}
+
+	$thread = fc_list_comments_thread($comments, $sorting, $comment_tpl, 0);
+
+	$smarty->assign('show_page_comments', 'true', true);
+	$smarty->assign('comments_thread', $thread);
+	$comments_title = str_replace('{cnt_comments}', $cnt_comment, $lang['comments_title']);
+	$smarty->assign('comments_intro', "<p>$comments_title</p>");
+
+}
+
+
+
+/* register */
+
 if($p == "register") {
 
 	if($page_contents['page_permalink'] != '') {
@@ -330,15 +436,17 @@ if($p == "register") {
 /* confirm new account */
 if($p == "account") {
 	
-	$dbh = new PDO("sqlite:$fc_db_user");					
-	$sql = "UPDATE fc_user SET user_verified = 'verified' WHERE user_nick = :user AND user_activationkey = :al";
-	$stmt = $dbh->prepare($sql);
-	$stmt->bindValue(':user', $user, PDO::PARAM_STR);
-	$stmt->bindValue(':al', $al, PDO::PARAM_STR);
-	$stmt->execute();	
+	$verify = $db_content->update("fc_user", [
+		"user_verified" => 'verified'
+		], [
+			"AND" => [
+			"user_nick" => $user,
+			"user_activationkey" => $al
+		]
+	]);
 	
-	$cnt_changes = $stmt->rowCount();
-	$dbh = null;
+	$cnt_changes = $verify->rowCount();
+	
 	
 	if($cnt_changes > 0){
 		$account_msg = get_textlib("account_confirm", $languagePack);

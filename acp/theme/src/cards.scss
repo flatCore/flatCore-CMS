@@ -1,0 +1,68 @@
+.card {
+	background: $widget_background;
+	color: $font_color;
+	
+	.card-header {
+		background: darken($widget_background,4);
+		border-bottom: 1px solid $widget_background;
+	}
+
+	.card-header-tabs {
+		border-bottom: 1px solid $widget_background;
+		li {
+			.nav-link {
+				color: $brand_color;
+				&:hover {
+					border-color: darken($widget_background,10);
+					border-bottom-color: darken($widget_background,10);
+					background: darken($widget_background,10);
+				}
+			}
+			.active,
+			.active:hover {
+				background: $widget_background;
+				border-color: $widget_background;
+				color: $font_color;
+			}
+		}
+	}
+
+}
+
+@media (min-width: 992px) {
+    .custom-columns {
+        column-count: 4;
+    }
+}
+@media (min-width: 1200px) {
+    .custom-columns {
+        column-count: 5;
+    }
+}
+
+@media (min-width: 1500px) {
+    .custom-columns {
+        column-count: 7;
+    }
+}
+
+
+.card:hover {
+	.card-img-overlay.d-none {
+		visibility: visible;
+	}
+}
+
+.card .fade-menu {
+    visibility: hidden;
+    opacity: 0;
+    height: 0;
+    padding: 0;
+}
+
+.card:hover .fade-menu {
+    height: auto;
+    visibility: visible;
+    opacity: 10;
+    transition: opacity .5s ease;
+}

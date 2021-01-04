@@ -1,7 +1,7 @@
 <?php
 
 //prohibit unauthorized access
-require("core/access.php");
+require 'core/access.php';
 
 $array_group_user = array();
 
@@ -14,7 +14,6 @@ $delete_button = '';
  */
 
 if($_POST['updateGroup']) {
-
 	
 	$arr_update_incUser = $_POST['incUser'];
 	@sort($arr_update_incUser);
@@ -22,32 +21,20 @@ if($_POST['updateGroup']) {
 	
 	$group_name = filter_var($_POST['group_name'], FILTER_SANITIZE_STRING);
 	
-	$dbh = new PDO("sqlite:".USER_DB);
+	$update_group = $db_user->update("fc_groups", [
+		"group_name" => $group_name,
+		"group_description" => $_POST['group_description'],
+		"group_user" => $update_incUser
+	],[
+		"group_id" => $_POST['editgroup']
+	]);
 	
-	$sql = "UPDATE fc_groups
-			SET group_name = :update_group_name,
-				group_description = :update_group_description,
-				group_user = :update_incUser
-			WHERE group_id = :editgroup ";
-			
-	$sth = $dbh->prepare($sql);
-	
-	$sth->bindParam(':update_group_name', $group_name, PDO::PARAM_STR);
-	$sth->bindParam(':update_group_description', $_POST['group_description'], PDO::PARAM_STR);
-	$sth->bindParam(':update_incUser', $update_incUser, PDO::PARAM_STR);
-	$sth->bindParam(':editgroup', $_POST['editgroup'], PDO::PARAM_INT);
-			
-	$cnt_changes = $sth->execute();
-	
-	$dbh = null;
-	
-	if($cnt_changes == TRUE) {
+	if(($update_group->rowCount()) > 0) {
 		$success_message = $lang['db_changed'];
 		record_log($_SESSION['user_nick'],"updated usergroup: $group_name","10");
 	} else {
 		$error_message = $lang['db_not_changed'];
 	}
-
 
 }
 
@@ -58,7 +45,6 @@ if($_POST['updateGroup']) {
 
 if($_POST['saveGroup']) {
 
-	
 	$arr_new_incUser = $_POST['incUser'];
 	
 	if(is_array($arr_new_incUser)) {
@@ -69,26 +55,16 @@ if($_POST['saveGroup']) {
 	}
 	
 	$group_name = filter_var($_POST['group_name'], FILTER_SANITIZE_STRING);
+		
+	$db_user->insert("fc_groups", [
+		"group_name" => $group_name,
+		"group_description" => $_POST['group_description'],
+		"group_user" => $new_incUser
+	]);
 	
+	$group_id = $db_user->id();
 	
-	$dbh = new PDO("sqlite:".USER_DB);
-	
-	$sql = "INSERT INTO fc_groups (
-				group_id , group_name , group_description , group_user
-			) VALUES (
-				NULL, :new_group_name, :new_group_description, :new_incUser ) ";
-				
-	$sth = $dbh->prepare($sql);
-	
-	$sth->bindParam(':new_group_name', $group_name, PDO::PARAM_STR);
-	$sth->bindParam(':new_group_description', $_POST['group_description'], PDO::PARAM_STR);
-	$sth->bindParam(':new_incUser', $new_incUser, PDO::PARAM_STR);	
-	
-	$cnt_changes = $sth->execute();
-	
-	$dbh = null;
-	
-	if($cnt_changes == TRUE) {
+	if($group_id > 0) {
 		$success_message = $lang['db_changed'];
 		record_log($_SESSION['user_nick'],"created usergroup: $group_name","10");
 	} else {
@@ -103,18 +79,15 @@ if($_POST['saveGroup']) {
  * delete the selected group
  */
 
-
 if($_POST['deleteGroup']) {
-
-	$editgroup = (int) $_POST['editgroup'];
 	
-	$dbh = new PDO("sqlite:".USER_DB);
-	$sql = "DELETE FROM fc_groups WHERE group_id = $editgroup";
-	$cnt_changes = $dbh->exec($sql);
+	$delete_group = $db_user->delete("fc_groups",[
+		"group_id" => $_POST['editgroup']
+	]);
 	
 	$show_data = false;
 	
-	if($cnt_changes > 0) {
+	if(($delete_group->rowCount()) > 0) {
 		$success_message = $lang['db_changed'];
 		record_log($_SESSION['user_nick'],"deleted usergroup id: $editgroup","10");
 	} else {
@@ -122,9 +95,6 @@ if($_POST['deleteGroup']) {
 	}
 
 }
-
-
-
 
 
 
@@ -140,21 +110,13 @@ if($error_message != ""){
 
 
 
-
-
-
 /**
  * choose the group
  * <select>
  */
 
-
-$dbh = new PDO("sqlite:".USER_DB);
-$sql = "SELECT * FROM fc_groups ORDER BY group_id ASC";
-
-$result = $dbh->query($sql);
-$result= $result->fetchAll(PDO::FETCH_ASSOC);
-
+$user_groups = $db_user->select("fc_groups","*");
+$cnt_user_groups = count($user_groups);
 
 $editgroup = (int) $_POST['editgroup'];
 
@@ -169,10 +131,10 @@ echo '<div class="col-md-5">';
 echo '<div class="form-group">';
 echo '<select name="editgroup" class="form-control custom-select">';
 
-for($i=0;$i<count($result);$i++) {
+for($i=0;$i<$cnt_user_groups;$i++) {
 
-	$group_id = $result[$i]['group_id'];
-	$group_name = $result[$i]['group_name'];
+	$group_id = $user_groups[$i]['group_id'];
+	$group_name = $user_groups[$i]['group_name'];
 	
 	if($editgroup == $group_id) { $sel[$i] = "selected"; }
 	
@@ -198,27 +160,21 @@ echo '</fieldset>';
 
 if(($editgroup) && ($show_data !== false)) {
 
+	$user_group = $db_user->get("fc_groups","*",["group_id" => $editgroup]);
+		
+	foreach($user_group as $k => $v) {
+	  $$k = stripslashes($v);
+	}
 
-$dbh = new PDO("sqlite:".USER_DB);
+	$array_group_user = explode(" ", $group_user);
 
-$sql =  "SELECT * FROM fc_groups WHERE group_id = $editgroup ";
-
-$result = $dbh->query($sql);
-$result= $result->fetch(PDO::FETCH_ASSOC);
-
-foreach($result as $k => $v) {
-   $$k = stripslashes($v);
-}
-
-$array_group_user = explode(" ", $group_user);
-
-$submit_button = '<input type="submit" class="btn btn-fc text-success" name="updateGroup" value="'.$lang['update'].'">';
-$delete_button = '<input type="submit" class="btn btn-fc text-danger" name="deleteGroup" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_file'].'\')">';
-$hidden_field = '<input type="hidden" name="editgroup" value="'.$editgroup.'">';
+	$submit_button = '<input type="submit" class="btn btn-fc text-success" name="updateGroup" value="'.$lang['update'].'">';
+	$delete_button = '<input type="submit" class="btn btn-fc text-danger" name="deleteGroup" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_file'].'\')">';
+	$hidden_field = '<input type="hidden" name="editgroup" value="'.$editgroup.'">';
 
 } else {
-// no group is selected
-unset($group_name,$group_description,$hidden_field);
+	// no group is selected
+	unset($group_name,$group_description,$hidden_field);
 }
 
 
@@ -251,28 +207,21 @@ echo '<div id="userlist">';
 echo '<div class="scroll-container">';
 
 
-$dbh = new PDO("sqlite:".USER_DB);
-
-$sql = "SELECT * FROM fc_user ORDER BY user_nick ASC";
-
-unset($result);
-   foreach ($dbh->query($sql) as $row) {
-     $result[] = $row;
-   }
-
+$user = $db_user->select("fc_user","*");
+$cnt_user = count($user);
 
 echo '<table class="table table-hover table-sm">';
 
-for($i=0;$i<count($result);$i++) {
+for($i=0;$i<$cnt_user;$i++) {
 
 	if($result[$i]['user_class'] == "deleted") {
 		continue;
 	}
 	
-	$user_id = $result[$i]['user_id'];
-	$user_nick = $result[$i]['user_nick'];
-	$user_firstname = $result[$i]['user_firstname'];
-	$user_lastname = $result[$i]['user_lastname'];
+	$user_id = $user[$i]['user_id'];
+	$user_nick = $user[$i]['user_nick'];
+	$user_firstname = $user[$i]['user_firstname'];
+	$user_lastname = $user[$i]['user_lastname'];
 		
 	if (in_array("$user_id", $array_group_user)) {
 	   $checked = "checked";
@@ -280,15 +229,13 @@ for($i=0;$i<count($result);$i++) {
 		$checked = "";
 	}
 	
-	
 	echo '<tr>';
 	echo '<td>';
 	echo tpl_checkbox('incUser[]',$user_id,"check_$user_nick",$user_nick,$checked);
-	//echo '<label><input type="checkbox" '.$checked.' name="incUser[]" value="'.$user_id.'"> '.$user_nick.' </label></td>';
 	echo '</td>';
 	echo '<td>'.$user_firstname.' '.$user_lastname.'</td>';
 	echo '</tr>';
-} //eol $i
+}
 
 echo '</table>';
 

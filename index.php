@@ -12,70 +12,20 @@ ini_set("url_rewriter.tags", '');
 session_start();
 error_reporting(0);
 
-require 'lib/Medoo.php';
-use Medoo\Medoo;
-
 $fc_start_time = microtime(true);
+require 'config.php';
 
 define("FC_SOURCE", "frontend");
 
-/* all requests -> strip_tags */
-foreach($_REQUEST as $key => $val) {
-	$$key = strip_tags($val); 
+
+
+
+if(!is_file('config_database.php') && !is_file("$fc_db_content")) {
+	header("location: /install/");
+	die();
 }
 
-
-require 'config.php';
-
-if(is_file('config_database.php')) {
-	include 'config_database.php';
-	
-	$db_type = 'mysql';
-	 
-	$database = new Medoo([
-
-		'database_type' => 'mysql',
-		'database_name' => "$database_name",
-		'server' => "$database_host",
-		'username' => "$database_user",
-		'password' => "$database_psw",
-	 
-		'charset' => 'utf8',
-		'port' => $database_port,
-	 
-		'prefix' => DB_PREFIX
-	]);
-	
-	$db_content = $database;
-	$db_user = $database;
-	$db_statistics = $database;
-	
-} else {
-	
-	$db_type = 'sqlite';
-	
-	define("CONTENT_DB", "$fc_db_content");
-	define("USER_DB", "$fc_db_user");
-	define("STATS_DB", "$fc_db_stats");
-	define("INDEX_DB", "$fc_db_index");
-	
-	$db_content = new Medoo([
-		'database_type' => 'sqlite',
-		'database_file' => CONTENT_DB
-	]);
-	
-	$db_user = new Medoo([
-		'database_type' => 'sqlite',
-		'database_file' => USER_DB
-	]);
-	
-	$db_statistics = new Medoo([
-		'database_type' => 'sqlite',
-		'database_file' => STATS_DB
-	]);
-	
-}
-
+require FC_CORE_DIR.'/database.php';
 
 if(is_file(FC_CORE_DIR . "/maintance.html")) {
 	header("location:" . FC_INC_DIR . "/maintance.html");
@@ -83,12 +33,13 @@ if(is_file(FC_CORE_DIR . "/maintance.html")) {
 }
 
 
-
-require FC_CORE_DIR . '/core/functions.php';
-
+/* all requests -> strip_tags */
+foreach($_REQUEST as $key => $val) {
+	$$key = strip_tags($val); 
+}
 
 /* reserved $_GET['p'] parameters */
-$a_allowed_p = array('register', 'account', 'profile', 'search', 'sitemap', 'logout', 'password');
+$a_allowed_p = array('register', 'account', 'profile', 'search', 'sitemap', 'logout', 'password','display_post');
 
 /*
  * mod_rewrite
@@ -132,6 +83,8 @@ for($i=0;$i<$cnt_active_mods;$i++) {
 		}
 	}	
 }
+
+
 
 if($query == '/') {
 	list($page_contents,$fc_nav,$fc_prefs) = get_content('portal','page_sort');
@@ -309,6 +262,16 @@ $smarty->template_dir = 'styles/'.$fc_template.'/templates/';
 foreach($lang as $key => $val) {
 	$smarty->assign("lang_$key", $val);
 }
+
+
+if(!empty($page_contents['page_posts_categories'])) {
+	include 'core/posts.php';
+}
+
+if($page_contents['page_type_of_use'] == 'display_post') {
+	include 'core/posts.php';
+}
+
 
 $tyo_search = fc_get_type_of_use_pages('search');
 $smarty->assign("search_uri", '/'.$tyo_search['page_permalink']);

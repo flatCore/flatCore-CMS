@@ -25,11 +25,13 @@ $icon['bars'] = '<i class="fas fa-bars"></i>';
 $icon['bookmark'] = '<i class="fas fa-bookmark"></i>';
 
 $icon['check'] = '<i class="far fa-check"></i>';
+$icon['circle_alt'] = '<i class="far fa-circle"></i>';
 $icon['check_circle'] = '<i class="fas fa-check-circle"></i>';
 $icon['caret_left'] = '<i class="fas fa-caret-left"></i>';
 $icon['caret_right'] = '<i class="fas fa-caret-right"></i>';
 $icon['circle'] = '<i class="fas fa-circle"></i>';
 $icon['clipboard'] = '<i class="fas fa-clipboard"></i>';
+$icon['clipboard_list'] = '<i class="fas fa-clipboard-list"></i>';
 $icon['code'] = '<i class="fas fa-code"></i>';
 $icon['comments'] = '<i class="fas fa-comments"></i>';
 $icon['compress']  = '<i class="fas fa-compress"></i>';
@@ -57,6 +59,7 @@ $icon['folder_open'] = '<i class="fas fa-folder-open"></i>';
 
 $icon['github'] = '<i class="fab fa-github"></i>';
 
+$icon['handshake'] = '<i class="fas fa-handshake"></i>';
 $icon['home'] = '<i class="fas fa-home"></i>';
 
 $icon['info_circle'] = '<i class="far fa-info-circle"></i>';
@@ -75,6 +78,7 @@ $icon['map_marker_alt'] = '<i class="fas fa-map-marker-alt"></i>';
 $icon['paper_clip'] = '<i class="fas fa-paperclip"></i>';
 $icon['paper_plane'] = '<i class="fas fa-paper-plane"></i>';
 $icon['paste'] = '<i class="fas fa-paste"></i>';
+$icon['pencil_ruler'] = '<i class="fas fa-pencil-ruler"></i>';
 $icon['plus'] = '<i class="fas fa-plus"></i>';
 
 $icon['question'] = '<i class="fas fa-question"></i>';
@@ -92,8 +96,12 @@ $icon['star_outline'] = '<i class="far fa-star"></i>';
 $icon['store'] = '<i class="fas fa-store"></i>';
 $icon['sync_alt'] = '<i class="fas fa-sync-alt"></i>';
 
+$icon['table'] = '<i class="fas fa-table"></i>';
 $icon['tags'] = '<i class="fas fa-tags"></i>';
 $icon['tasks'] = '<i class="fas fa-tasks"></i>';
+$icon['th'] = '<i class="fas fa-th"></i>';
+$icon['th_large'] = '<i class="fas fa-th-large"></i>';
+$icon['th_list'] = '<i class="fas fa-th-list"></i>';
 $icon['trash_alt'] = '<i class="far fa-trash-alt"></i>';
 $icon['times_circle'] = '<i class="fas fa-times-circle"></i>';
 $icon['tools'] = '<i class="fas fa-tools"></i>';

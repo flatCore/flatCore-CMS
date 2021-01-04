@@ -17,7 +17,7 @@ $files_folder = basename($path_files);
 
 
 if(isset($_REQUEST['selected_folder'])) {
-	$_SESSION['disk'] = $_REQUEST['selected_folder'];
+	$_SESSION['disk'] = fc_filter_filepath($_REQUEST['selected_folder']);
 }
 
 if(isset($_SESSION['disk'])) {
@@ -213,26 +213,28 @@ if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
 			
 			$filesize = filesize($filename);
 			$filemtime = filemtime($filename);
+			$filetype = mime_content_type(realpath($filename));
 			
 			$db_content->insert("fc_media", [
 				"media_file" => "$filename",
 				"media_lang" => "$languagePack",
 				"media_filesize" => "$filesize",
-				"media_lastedit" => "$filemtime"
+				"media_lastedit" => "$filemtime",
+				"media_upload_time" => "$filemtime",
+				"media_type" => "$filetype"
 			]);
 			
 			$cnt_files_rebuild++;
-		}
+		}	
 	
 		if((time()-$rebuild_start) > 5) {
 			$incomplete = TRUE;
 			break;
-		}
-	
+		}	
 	}
 
 	
-	$storedFiles = $db_content->select("fc_media", ["media_file"], [
+	$storedFiles = $db_content->select("fc_media", '*', [
 		"media_file[~]" => "$disk"
 	]);
 	
@@ -248,10 +250,68 @@ if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
 	}
 	
 	
+	/* check if thumbnail exists and create missing thumbnail file */
+	foreach($storedFiles as $k) {
+
+		/* thumbnail directories */
+		$tmb_dir = '../'.$img_tmb_path;
+		$tmb_dir_year = $tmb_dir.'/'.date('Y',$k['media_upload_time']);
+		$tmb_destination = $tmb_dir_year.'/'.date('m',$k['media_upload_time']);
+		
+		$tmb_name = md5($k['media_file']).'.jpg';
+		
+		$ckeck_tmb = $tmb_destination.'/'.$tmb_name;
+		
+		if(!file_exists($ckeck_tmb)) {
+			fc_create_tmb($k['media_file'], $tmb_name, 250, 250, 60);
+			
+			$db_content->update("fc_media", [
+				"media_thumb" => $ckeck_tmb
+				],[
+					"media_file" => $k['media_file']
+			]);	
+			
+		}
+		
+		
+	}
+
+
+	/* create missing thumbnail files if 'media_thumb' is empty */
+	$missing_thumb = $db_content->select('fc_media', '*', [
+		"AND" => [
+			'OR' => [
+				'media_thumb' => null,'OR #Empty' => ['media_thumb' => '']
+			],
+			"media_type[~]" => "image"
+		]	
+	]);
+	
+	if(count($missing_thumb)>0) {
+		foreach($missing_thumb as $row) {
+			
+			$image = $row['media_file'];
+			$tmb_name = md5($image).'.jpg';
+			$store_tmb_name = $tmb_destination.'/'.$tmb_name;
+			
+			fc_create_tmb($image, $tmb_name, 250, 250, 60);
+
+			$db_content->update("fc_media", [
+				"media_thumb" => $tmb_name
+				],[
+					"media_file" => $row['media_file']
+			]);			
+			
+		}
+	}
+	
+	
 	$missing_rows = $db_content->select('fc_media', '*', [
 		"AND" => [
 			'OR' => ['media_filesize' => null,'OR #Empty' => ['media_filesize' => '']],
-			'OR' => ['media_lastedit' => null,'OR #Empty' => ['media_lastedit' => '']]
+			'OR' => ['media_lastedit' => null,'OR #Empty' => ['media_lastedit' => '']],
+			'OR' => ['media_upload_time' => null,'OR #Empty' => ['media_upload_time' => '']],
+			'OR' => ['media_type' => null,'OR #Empty' => ['media_type' => '']]
 		]	
 	]);
 	
@@ -261,10 +321,13 @@ if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
 							
 				$filesize = filesize($row['media_file']);
 				$filemtime = filemtime($row['media_file']);
+				$filetype = mime_content_type(realpath($row['media_file']));
 
 				$db_content->update("fc_media", [
 				"media_filesize" => $filesize,
-				"media_lastedit" => $filemtime
+				"media_lastedit" => $filemtime,
+				"media_upload_time" => $filemtime,
+				"media_type" => $filetype
 				],[
 					"media_file" => $row['media_file']
 					]);
@@ -292,7 +355,8 @@ if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
 
 /* expand filter */
 if(isset($_POST['media_filter']) && (trim($_POST['media_filter']) != '')) {
-	$_SESSION['media_filter'] = $_SESSION['media_filter'] . ' ' . $_POST['media_filter'];
+	$add_media_filter = clean_filename(filter_var($_POST['media_filter'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH));
+	$_SESSION['media_filter'] = $_SESSION['media_filter'] . ' ' . $add_media_filter;
 }
 
 /* remove keyword from filter list */
@@ -393,12 +457,8 @@ if(is_array($all_filter)) {
 	$_SESSION['media_filter_string'] = $add_keyword_filter;
 }
 
-//$dbh = new PDO("sqlite:".CONTENT_DB);
-
 $sql_cnt = "SELECT count(*) AS 'all' FROM fc_media WHERE media_file LIKE '%$disk%' AND (media_lang LIKE '$languagePack' OR media_lang IS NULL) ".$_SESSION['media_filter_string'];
-//$sth = $dbh->prepare($sql_cnt);
-//$sth->execute();
-//$all_files = $sth->fetch();
+
 $all_files = $db_content->query($sql_cnt)->fetch();
 $nbr_of_files = $all_files['all'];
 
@@ -493,6 +553,7 @@ for($i=0;$i<$cnt_get_files;$i++) {
 	$filename = '';
 
 	$filename = $get_files[$i]['media_file'];
+	$filename_thumb = $get_files[$i]['media_thumb'];
 	$filetime = $get_files[$i]['media_lastedit'];
 	$filesize = readable_filesize($get_files[$i]['media_filesize']);
 	$show_filetime = date('d.m.Y H:i',$filetime);
@@ -517,9 +578,15 @@ for($i=0;$i<$cnt_get_files;$i++) {
 	
 	if(in_array($suffix,$ext) === true) {
 		$set_style = '';
-		$preview_img = "<img src='$filename' class='card-img-top'>";
+		
+		if(file_exists($filename_thumb)) {
+			$preview_img = "<img src='$filename_thumb' class='card-img-top'>";
+		} else {
+			$preview_img = "<img src='$filename' class='card-img-top'>";
+		}
+		
+		
 	} else {
-		$preview_img = "<img src='images/no-preview.gif' class='img-fluid'>";
 		$preview_img = '<p class="text-right p-0 m-0">'.$icon['file'].' <span class="badge badge-secondary">'.$suffix.'</span></p>';
 	}
 	

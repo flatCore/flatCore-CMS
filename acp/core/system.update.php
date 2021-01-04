@@ -35,6 +35,13 @@ if(isset($_GET['github']) && $_GET['github'] == 'master') {
 	$remote_versions[3] = 'flatCore-CMS-master.zip';
 }
 
+if(isset($_GET['github']) && $_GET['github'] == 'main') {
+	$remote_versions[0] = '';
+	$remote_versions[1] = 'GitHub';
+	$remote_versions[2] = 'main';
+	$remote_versions[3] = 'flatCore-CMS-main.zip';
+}
+
 if(isset($_GET['github']) && $_GET['github'] == 'develop') {
 	$remote_versions[0] = '';
 	$remote_versions[1] = 'GitHub';
@@ -90,6 +97,8 @@ function start_update() {
 	
 	if($remote_versions[3] == 'flatCore-CMS-master.zip') {
 		$source_file = 'https://github.com/flatCore/flatCore-CMS/archive/master.zip';
+	} else if($remote_versions[3] == 'flatCore-CMS-main.zip') {
+		$source_file = 'https://github.com/flatCore/flatCore-CMS/archive/main.zip';
 	} else if($remote_versions[3] == 'flatCore-CMS-develop.zip') {
 		$source_file = 'https://github.com/flatCore/flatCore-CMS/archive/develop.zip';
 	} else {
@@ -253,7 +262,7 @@ function compare_versions() {
 	echo '<tr>';
 	echo "<td>$fc_version_name (Build $fc_version_build)</td>";
 	echo "<td>$remote_versions[1] (Build $remote_versions[2])</td>";
-	echo '<td><span class="badge badge-danger">Attention!</span> You should not perform this function in a real environment. Load latest from  <a href="?tn=system&sub=update&github=master">branch master</a> or load latest from <a href="?tn=system&sub=update&github=develop">branch develop</a></td>';
+	echo '<td><span class="badge badge-danger">Attention!</span> You should not perform this function in a real environment. Load latest from  <a href="?tn=system&sub=update&github=master">branch master</a> or load latest from <a href="?tn=system&sub=update&github=develop">develop develop</a></td>';
 	echo '</tr>';
 	echo '</table>';
 	
@@ -269,6 +278,9 @@ function compare_versions() {
 	}
 	if($remote_versions[2] == 'master') {
 		$start_dl  = 'acp.php?tn=system&sub=update&a=start&github=master';
+	}
+	if($remote_versions[2] == 'main') {
+		$start_dl  = 'acp.php?tn=system&sub=update&a=start&github=main';
 	}
 	if($remote_versions[2] == 'develop') {
 		$start_dl  = 'acp.php?tn=system&sub=update&a=start&github=develop';
@@ -358,6 +370,7 @@ function copy_recursive($source, $target) {
 
 function update_database($dbfile) {
 	
+	global $fc_db_content;
 	global $fc_db_user;
 	global $fc_db_stats;
 	global $fc_db_index;
@@ -371,29 +384,7 @@ function update_database($dbfile) {
 		unset($db_path,$table_name,$database);
 		
 		include $all_tables[$i]; // returns $cols and $table_name
-		
-		/*
-		if($database == "content") {
-			$db_path = "../$dbfile";
-		} elseif($database == "user") {
-			$db_path = "../$fc_db_user";
-		} elseif($database == "tracker") {
-			$db_path = "../$fc_db_stats";
-		} elseif($database == "index") {
-			$db_path = "../$fc_db_index";
-		} else {
-			$_SESSION['protocol'] .= '<b class="text-danger">DATABASE UNKNOWN:</b> '.$database.'<|>';
-			$_SESSION['errors_cnt']++;
-			continue;
-		}
-		
-		if(!is_file($db_path)) {
-			$_SESSION['protocol'] .= '<b class="text-danger">DATABASE NOT FOUND:</b> '.$db_path.'<|>';
-			$_SESSION['errors_cnt']++;
-			continue;
-		}
-		*/
-	
+			
 		$is_table = table_exists("$database","$table_name");
 	
 		if($is_table < 1) {

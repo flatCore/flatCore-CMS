@@ -41,6 +41,30 @@ switch ($sub) {
 		$subinc = "system.images";
 		break;
 		
+	case "labels":
+		$subinc = "system.labels";
+		break;
+		
+	case "categories":
+		$subinc = "system.categories";
+		break;
+		
+	case "customize":
+		$subinc = "system.customize";
+		break;
+		
+	case "migrate":
+		$subinc = "system.migrate";
+		break;
+		
+	case "posts":
+		$subinc = "system.posts";
+		break;
+		
+	case "comments":
+		$subinc = "system.comments";
+		break;
+		
 	default:
 		$subinc = "system.syspref";
 		break;

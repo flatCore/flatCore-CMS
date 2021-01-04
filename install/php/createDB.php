@@ -13,19 +13,22 @@ if(!defined('INSTALLER')) {
 require '../lib/Medoo.php';
 use Medoo\Medoo;
 
-$username = $_POST['username'];
-$mail = $_POST['mail'];
-$psw = $_POST['psw'];
+$username = $_SESSION['temp_username'];
+$mail = $_SESSION['temp_usermail'];
+$psw = $_SESSION['temp_userpsw'];
 
 $user_psw_hash = password_hash($psw, PASSWORD_DEFAULT);
 $drm_string = "drm_acp_pages|drm_acp_files|drm_acp_user|drm_acp_system|drm_acp_editpages|drm_acp_editownpages|drm_moderator|drm_can_publish";
 $user_verified = "verified";
 $user_registerdate = time();
 
+$prefs_cms_domain = $_SESSION['temp_prefs_cms_domain'];
+$prefs_cms_ssl_domain = $_SESSION['temp_prefs_cms_ssl_domain'];
+$prefs_cms_base = $_SESSION['temp_prefs_cms_base'];
 
 
 
-if((isset($_POST['set_db']) && ($_POST['set_db'] == 'mysql'))) {
+if(isset($_POST['install_mysql'])) {
 	/* we use MySQL */
 	$db_type = 'mysql';
 	
@@ -78,6 +81,7 @@ if((isset($_POST['set_db']) && ($_POST['set_db'] == 'mysql'))) {
 	define("CONTENT_DB", "../$fc_db_content");
 	define("USER_DB", "../$fc_db_user");
 	define("STATS_DB", "../$fc_db_stats");
+	define("POSTS_DB", "../$fc_db_posts");
 	
 	
 	$db_content = new Medoo([
@@ -93,6 +97,11 @@ if((isset($_POST['set_db']) && ($_POST['set_db'] == 'mysql'))) {
 	$db_statistics = new Medoo([
 		'database_type' => 'sqlite',
 		'database_file' => STATS_DB
+	]);
+	
+	$db_posts = new Medoo([
+		'database_type' => 'sqlite',
+		'database_file' => POSTS_DB
 	]);
 
 }
@@ -121,7 +130,10 @@ $sql_textlib_table = fc_generate_sql_query("fc_textlib.php",$db_type);
 $sql_comments_table = fc_generate_sql_query("fc_comments.php",$db_type);
 $sql_media_table = fc_generate_sql_query("fc_media.php",$db_type);
 $sql_labels_table = fc_generate_sql_query("fc_labels.php",$db_type);
+$sql_categories_table = fc_generate_sql_query("fc_categories.php",$db_type);
 $sql_addons_table = fc_generate_sql_query("fc_addons.php",$db_type);
+
+$sql_posts_table = fc_generate_sql_query("fc_posts.php",$db_type);
 
 $sql_hits_table = fc_generate_sql_query("fc_hits.php",$db_type);
 $sql_log_table = fc_generate_sql_query("fc_log.php",$db_type);
@@ -135,12 +147,14 @@ if($db_type == 'mysql') {
 	$dbh_user = $database;
 	$dbh_content = $database;
 	$dbh_statistics = $database;
+	$dbh_posts = $database;
 	
 } else {
 	
 	$dbh_user = $db_user;
 	$dbh_content = $db_content;
 	$dbh_statistics = $db_statistics;
+	$dbh_posts = $db_posts;
 	
 }
 
@@ -181,6 +195,7 @@ $dbh_content->query($sql_comments_table);
 $dbh_content->query($sql_media_table);
 $dbh_content->query($sql_feeds_table);
 $dbh_content->query($sql_labels_table);
+$dbh_content->query($sql_categories_table);
 $dbh_content->query($sql_addons_table);
 
 /* insert two example pages */
@@ -226,18 +241,32 @@ $dbh_content->insert("fc_pages", [
 
 $dbh_content->insert("fc_preferences", [
 	"prefs_status" => "active",
-	"prefs_pagetitle" => "flatCore",
+	"prefs_pagename" => "flatCore",
+	"prefs_pagetitle" => "flatCore CMS",
 	"prefs_pagesubtitle" => "Content Management System",
 	"prefs_template" => "default",
 	"prefs_template_layout" => "layout_default.tpl",
 	"prefs_showloginform" => "yes",
 	"prefs_xml_sitemap" => "off",
 	"prefs_logfile" => "off",
-	"prefs_rss_time_offset" => 216000,
+	"prefs_rss_time_offset" => 86400,
 	"prefs_cms_domain" => "$prefs_cms_domain",
 	"prefs_cms_ssl_domain" => "$prefs_cms_ssl_domain",
 	"prefs_cms_base" => "$prefs_cms_base",
-	"prefs_default_language" => "$languagePack"
+	"prefs_default_language" => "$languagePack",
+	"prefs_nbr_page_versions" => 25,
+	"prefs_acp_session_lifetime" => 86400,
+	"prefs_posts_entries_per_page" => 10,
+	"prefs_posts_event_time_offset" => 86400,
+	"prefs_default_language" => "$l",
+	"prefs_comments_mode" => 3,
+	"prefs_comments_authorization" => 1,
+	"prefs_comments_max_entries" => 100,
+	"prefs_comments_max_level" => 3,
+	"prefs_pagesort_minlength" => 3,
+	"prefs_maximagewidth" => 1024,
+	"prefs_maximageheight" => 1024,
+	"prefs_maxfilesize" => 2500
 ]);
 
 
@@ -295,6 +324,10 @@ $dbh_statistics->query($sql_hits_table);
 $dbh_statistics->query($sql_log_table);
 
 
+/* posts table */
+
+$dbh_posts->query($sql_posts_table);
+
 /**
  * DATABASE INDEX
  */
@@ -305,7 +338,7 @@ $db_index->query($sql_index_items_table);
 
 
 echo '<div class="alert alert-success">'.$lang['installed'].' | Admin: '.$username.'</div>';
-echo '<hr><a class="btn" href="../acp/index.php">'.$lang['link_admin'].'</a><hr>';
+echo '<hr><a class="btn btn-success" href="../acp/index.php">'.$lang['link_admin'].'</a><hr>';
 
 
 

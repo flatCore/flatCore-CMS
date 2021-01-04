@@ -22,8 +22,6 @@ if(count($all_plugins)<1) {
 		$comment = getfirstcommentblock($plugin_src);
 		$plugin_info = get_include_contents('../'.FC_CONTENT_DIR.'/plugins/'.$plugin);
 		$tpl_icon = "images/plugin-icon.png";
-		//$filesize = readable_filesize(filesize('../'.FC_CONTENT_DIR.'/plugins/'.$plugin));
-		//$lastedit = date('Y-m-d H:i:s',filemtime('../'.FC_CONTENT_DIR.'/plugins/'.$plugin));
 		
 		$edit_btn = '<a class="btn btn-fc btn-sm" data-toggle="modal" data-target="#myModal'.$id.'" href="javascript:;">Source</a>';
 		

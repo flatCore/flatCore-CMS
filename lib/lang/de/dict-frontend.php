@@ -51,6 +51,9 @@ $lang['label_fax'] = "Fax";
 $lang['label_about_you'] = "Über Dich (öffentlich)";
 $lang['label_remember_me'] = 'Angemeldet bleiben';
 
+$lang['label_entries'] = 'Einträge';
+$lang['label_entries_total'] = 'Gesamt';
+
 /* Buttons, Links */
 $lang['button_login'] = "Anmelden";
 $lang['button_profile'] = "Profil bearbeiten";
@@ -67,6 +70,8 @@ $lang['button_acp'] = "Administration";
 $lang['button_acp_edit_page'] = "Seite bearbeiten";
 $lang['link_delete_avatar'] = "Benutzerbild löschen";
 $lang['link_register'] = "Jetzt registrieren ...";
+$lang['btn_read_more'] = "weiter lesen";
+$lang['btn_download'] = "Download";
 
 /* Messages */
 $lang['msg_missingfield'] = "Alle Felder müssen ausgefüllt werden";
@@ -114,5 +119,48 @@ $lang['forgotten_psw_intro'] = "Bitte geben Sie in das folgende Eingabefeld die 
 $lang['forgotten_psw_mail_info'] = "Hallo {USERNAME},<br />Sie möchten Ihr Passwort zurücksetzen? Klicken Sie einfach auf den unten stehenden Link um ein neues Passwort zu erhalten.<br />Ignorieren Sie diese E-Mail, wenn die Anforderung zum Zurücksetzen Ihres Kennworts nicht von Ihnen stammt.<br /><br />Passwort zurücksetzen:<br />{RESET_LINK}";
 $lang['forgotten_psw_mail_update']  = "<p>Hallo {USERNAME},<br />Ihr Passwort wurde zurückgesetzt.</p> <p>Ihr neues Passwort lautet:<br />{temp_psw}</p>";
 
+$lang['posts_category_filter'] = 'Es werden nur Beiträge aus der Kategorie <strong>{categorie}</strong> angezeigt.';
 
+/* comment */
+$lang['label_name'] = "Name";
+$lang['label_mail'] = "E-Mail";
+$lang['label_mail_helptext'] = "Deine E-Mail Adresse wird hier nicht veröffentlicht";
+$lang['label_comment'] = "Kommentar";
+$lang['label_comment_answer'] = "Antwort an";
+$lang['btn_send_comment'] = 'Kommentar eintragen';
+$lang['btn_send_answer'] = 'Antworten';
+$lang['comment_msg_sucess'] = 'Vielen Dank für Deinen Kommentar';
+$lang['comment_msg_fail'] = 'Es ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.';
+
+$lang['comment_form_title'] = 'Schreibe einen Kommentar';
+$lang['comment_msg_auth1'] = 'Du musst Dich einloggen um Kommentare zu schreiben.';
+$lang['comment_msg_auth2'] = 'Du musst Deinen Namen und Deine E-Mail Adresse angeben.';
+$lang['comments_title'] = 'Kommentare ({cnt_comments})';
+
+/* Dates */
+
+$lang['m01'] = "Januar";
+$lang['m02'] = "Februar";
+$lang['m03'] = "März";
+$lang['m04'] = "April";
+$lang['m05'] = "Mai";
+$lang['m06'] = "Juni";
+$lang['m07'] = "Juli";
+$lang['m08'] = "August";
+$lang['m09'] = "September";
+$lang['m10'] = "Oktober";
+$lang['m11'] = "November";
+$lang['m12'] = "Dezember";
+
+
+$lang['d01'] = "Montag";
+$lang['d02'] = "Dienstag";
+$lang['d03'] = "Mittwoch";
+$lang['d04'] = "Donnerstag";
+$lang['d05'] = "Freitag";
+$lang['d06'] = "Samstag";
+$lang['d07'] = "Sonntag";
+
+$lang['date_today'] = "Heute";
+$lang['date_yesterday'] = "Gestern";
 ?>

@@ -1,25 +1,17 @@
 html, body {
-	background-color: #252525;
+	background-color: #151515;
 	color: #666;
 	height: 100%;
 	width: 100%;
 }
 
-
-div#inst-frame {
-	width: 950px;
-	margin: 15px auto 0 auto;
-	padding: 15px;
-	border: none;
-	background: transparent;
-	
-}
-
 div#inst-background {
-	background: rgba(255,255,255,0.9);
+	background: #222;
+	color: #eee;
 	padding: 15px;
 	border-radius: 9px;
-	box-shadow: 0px 0px 10px 2px #000;
+	box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.5);
+	margin: 15px 0;
 }
 
 div#inst-header {
@@ -27,13 +19,17 @@ div#inst-header {
 	margin: 0 0 5px 0;
 	height: 80px;
 	text-align: center;
-	border-bottom: 1px solid #fff;
+}
+
+div#inst-body {
+	padding: 15px 35px;
 }
 
 div#inst-footer {
 	text-align: center;
 	padding: 15px;
-	border-top: 1px solid #fff;
+	border-top: 1px solid #111;
+	margin-bottom: 15px;
 }
 
 div.alert {
@@ -48,4 +44,69 @@ div#inst-footer h3 {
 div#inst-footer a {
 	color: #666;
 	text-decoration: none;
+}
+
+fieldset,
+.well {
+	margin: 5px 25px;
+	padding: 15px;
+	background: #181818;
+	border-radius: 9px;
+}
+
+legend {
+	font-size: 18px;
+	display: inline-block;
+	width: auto;
+	padding: 5px 20px;
+	background: #181818;
+	border-radius: 9px;
+	color: #aaa;
+}
+
+fieldset {
+	margin-top: 15px;
+}
+
+
+#progress {
+  margin-bottom: 30px;
+  overflow: hidden;
+  counter-reset: step;
+  background: #333;
+  padding: 10px 0 5px 0;
+}
+#progress li {
+  list-style-type: none;
+  color: #fff;
+  font-size: 12px;
+  width: 25%;
+  float: left;
+  position: relative;
+  text-align: center;
+}
+#progress li:before {
+	content: counter(step);
+	counter-increment: step;
+  width: 40px;
+  line-height: 40px;
+  display: block;
+  font-size: 15px;
+  color: #333;
+  background: white;
+  border-radius: 50%;
+  margin: 0 auto 5px auto;
+  box-shadow: 0px 3px 5px 1px rgba(0,0,0,0.3);
+}
+
+
+#progress li.active:before {
+	background: #28a745;
+	color: white;
+}
+
+#progress li.active-shine:before {
+	background: #28a745;
+	color: white;
+	box-shadow: 0px 0px 7px 5px #D8FFD7;
 }

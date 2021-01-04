@@ -42,15 +42,12 @@ function fc_crawler($id='') {
 	if(substr($url, 0,1) == '/') {
 		$url = substr($url, 1,strlen($url));
 	}
-	//$check_page = $url;
 	
 	$check_page = $fc_base_url.$url;
 	
 	if(isset($_POST['start_index']) && $_POST['start_index'] != '') {
 		$check_page = $_POST['start_index'];
 	}
-	
-	//echo '<div class="alert alert-info">checking: '.$check_page.'</div>';
 	
 
 	$get_html = fc_loadSourceCode($check_page);
@@ -101,8 +98,7 @@ function fc_crawler($id='') {
 		fc_add_url($href);
 		
 	}
-	
-	//return $links;
+
 }
 
 

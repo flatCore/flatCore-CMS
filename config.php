@@ -33,6 +33,7 @@ define('FC_ACP_DIR',  "acp");
 
 /* Database Files */
 $fc_db_content 	= FC_CONTENT_DIR . "/SQLite/content.sqlite3";
+$fc_db_posts 	= FC_CONTENT_DIR . "/SQLite/posts.sqlite3";
 $fc_db_user 	= FC_CONTENT_DIR . "/SQLite/user.sqlite3";
 $fc_db_stats 	= FC_CONTENT_DIR . "/SQLite/flatTracker.sqlite3";
 $fc_db_index 	= FC_CONTENT_DIR . "/SQLite/index.sqlite3";
@@ -44,6 +45,7 @@ $fc_db_index 	= FC_CONTENT_DIR . "/SQLite/index.sqlite3";
  */
  
 $img_path 	= FC_CONTENT_DIR . "/images";
+$img_tmb_path 	= FC_CONTENT_DIR . "/images_tmb";
 $files_path = FC_CONTENT_DIR . "/files";
 
 define('FC_CORE_DIR', dirname(__FILE__) . DIRECTORY_SEPARATOR);
@@ -64,6 +66,10 @@ define('FC_INC_DIR',  $fc_inc_dir);
 
 if(is_file(FC_CONTENT_DIR . '/config.php')){
 	include FC_CONTENT_DIR . '/config.php';
+}
+
+if(is_file(FC_CONTENT_DIR . '/config_smtp.php')){
+	include FC_CONTENT_DIR . '/config_smtp.php';
 }
 
 ?>

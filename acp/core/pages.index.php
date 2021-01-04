@@ -347,7 +347,6 @@ echo '<div class="col-sm-4">';
 
 /**
  * preferences for page index
-
  */
 
 echo '<fieldset>';

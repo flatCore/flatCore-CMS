@@ -4,6 +4,19 @@ include 'dict-backend.php';
 
 $lang['progress'] = 'Fortschritt';
 $lang['step'] = 'Stufe';
+$lang['next_step'] = 'nächster Schritt';
+$lang['prev_step'] = 'zurück';
+$lang['btn_check_system'] = 'System-Check';
+$lang['btn_enter_user'] = 'Benutzer anlegen';
+$lang['btn_enter_page_infos'] = 'Seiten Infos';
+$lang['btn_enter_database'] = 'Datenbank';
+
+$lang['label_add_user'] = 'Benutzerdaten angeben';
+$lang['description_add_user'] = 'Gib die gewünschten Daten für einen ersten Benutzeraccount ein. Merke Dir diese Daten gut - mit diesen Daten kannst Du Dich später im ACP anmelden.';
+
+$lang['label_add_page_data'] = 'Informationen zu Deiner neuen Seite';
+$lang['description_add_page_data'] = 'Hier kannst Du die ersten Informationen zu Deiner Seite angeben. Alle Angaben kannst Du natürlich später im ACP ändern oder ergänzen.';
+
 $lang['permission_false'] = 'Datei/Verzeichnis benötigt Schreibrechte!';
 $lang['permission_true'] = 'Datei/Verzeichnis ist beschreibbar';
 $lang['missing_folder'] = 'Das Verzeichnis fehlt';
@@ -16,7 +29,7 @@ $lang['pdo_false'] = 'PDO/SQLite muss installiert/aktiviert werden';
 $lang['username'] = 'Username';
 $lang['email'] = 'E-Mail';
 $lang['password'] = 'Passwort';
-$lang['password_too_short'] = 'Das Passwort ist zu kurz (mind. 8 Zeichen)';
+$lang['password_help_text'] = 'Das Passwort muss mind. 8 Zeichen enthalten';
 $lang['msg_form'] = 'Um die Installation zu starten benötigt flatCore die Zugangsdaten für einen Administrator.<br><strong>WICHTIG!</strong> Auf die Korrektheit der Eingaben achten!<br>Alle Angaben können später noch ergänzt bzw. geändert werden.';
 $lang['start_install'] = 'Installation starten';
 $lang['installed'] = 'Installation erfolgt';
@@ -36,6 +49,10 @@ $lang['db_psw_help'] = 'Das Passwort für Deine Datenbank';
 $lang['db_prefix'] = 'Prefix';
 $lang['db_prefix_help'] = 'Falls Du noch weitere Installationen in dieser Datenbank installieren möchtest - oder hast. <strong>Achte darauf, dass Du ein Prefix nur einmal vergeben kannst.</strong>';
 
+$lang['label_database'] = 'Datenbank';
+
 $lang['db_sqlite_help'] = 'Falls Du SQLite als Datenbank nutzen möchtest, brauchst Du keine weiteren Angaben mehr machen.';
+
+$lang['check_connection'] = 'Verbindung prüfen';
 
 ?>

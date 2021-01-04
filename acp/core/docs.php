@@ -1,20 +1,31 @@
 <?php
-
+//error_reporting(E_ALL ^E_NOTICE);
+require 'access.php';
 
 $core_docs = fc_get_core_docs();
 $modules_docs = fc_get_modules_docs();
 $themes_docs = fc_get_themes_docs();
+
+$Parsedown = new Parsedown();
+
+$all_docs = $core_docs;
+if(is_array($modules_docs)) {
+	$all_docs = array_merge($all_docs, $modules_docs);
+}
+
+if(is_array($themes_docs)) {
+	$all_docs = array_merge($all_docs, $themes_docs);
+}
+
 $docs_file = '';
 
 if(isset($_POST['docs_file'])) {
-	$docs_file = $_POST['docs_file'];
-	if(is_file($docs_file)) {
-		$_SESSION['docs_file'] = $docs_file;
-	}
-	
+	$_SESSION['docs_file'] = (int) $_POST['docs_file'];
 }
 
-
+foreach($all_docs as $k => $v) {
+	$parsed_docs[] = fc_parse_doc_md_file($v);
+}
 
 
 echo '<form action="#" method="post" id="setHelp">';
@@ -23,34 +34,70 @@ echo '<div class="col-md-9">';
 echo '<select name="docs_file" class="form-control custom-select" onchange="this.form.submit()">';
 
 echo '<optgroup label="flatCore">';
-foreach($core_docs as $d) {
+foreach($parsed_docs as $k => $v) {
+	
+	if(substr($parsed_docs[$k]['filepath'], 0, 4) != 'docs') {
+		continue;
+	}
+	
 	$sel = '';
-	if($_SESSION['docs_file'] == $d) {
+	if($_SESSION['docs_file'] == $k) {
 		$sel = 'selected';
 	}
-	echo '<option value="'.$d.'" '.$sel.'>'.basename($d).'</option>';
+	
+	if($parsed_docs[$k]['header']['navigation'] != '') {
+		$show_title = $parsed_docs[$k]['header']['navigation'];
+	} else {
+		$show_title = $parsed_docs[$k]['filename'];
+	}
+	
+	echo '<option value="'.$k.'" '.$sel.'>'.$show_title.'</option>';
 }
 echo '</optgroup>';
 
 echo '<optgroup label="Modules">';
-foreach($modules_docs as $d) {
+foreach($parsed_docs as $k => $v) {
+	
+	if(substr($parsed_docs[$k]['filepath'], 0, 11) != '../modules/') {
+		continue;
+	}
+	
 	$sel = '';
-	if($_SESSION['docs_file'] == $d) {
+	if($_SESSION['docs_file'] == $k) {
 		$sel = 'selected';
 	}
-	$path = explode('/', $d);
-	echo '<option value="'.$d.'" '.$sel.'>'.$path[2].' > '.basename($d).'</option>';
+	
+	if($parsed_docs[$k]['header']['navigation'] != '') {
+		$show_title = $parsed_docs[$k]['header']['navigation'];
+	} else {
+		$show_title = $parsed_docs[$k]['filename'];
+	}
+	
+	$path = explode('/', $parsed_docs[$k]['filepath']);	
+	echo '<option value="'.$k.'" '.$sel.'>'.$path[2].' > '.$show_title.'</option>';
 }
 echo '</optgroup>';
 
 echo '<optgroup label="Themes">';
-foreach($themes_docs as $d) {
+foreach($parsed_docs as $k => $v) {
+	
+	if(substr($parsed_docs[$k]['filepath'], 0, 10) != '../styles/') {
+		continue;
+	}
+	
 	$sel = '';
-	if($_SESSION['docs_file'] == $d) {
+	if($_SESSION['docs_file'] == $k) {
 		$sel = 'selected';
 	}
-	$path = explode('/', $d);
-	echo '<option value="'.$d.'" '.$sel.'>'.$path[2].' > '.basename($d).'</option>';
+	
+	if($parsed_docs[$k]['header']['navigation'] != '') {
+		$show_title = $parsed_docs[$k]['header']['navigation'];
+	} else {
+		$show_title = $parsed_docs[$k]['filename'];
+	}
+	
+	$path = explode('/', $parsed_docs[$k]['filepath']);	
+	echo '<option value="'.$k.'" '.$sel.'>'.$path[2].' > '.$show_title.'</option>';
 }
 echo '</optgroup>';
 
@@ -67,11 +114,7 @@ echo '</form>';
 
 
 if(isset($_SESSION['docs_file'])) {
-	
-	$help_text = file_get_contents($_SESSION['docs_file']);
-	$Parsedown = new Parsedown();
-	$help_text_html = $Parsedown->text($help_text);
-	echo '<hr>'.$help_text_html;
+	echo '<hr>'.$parsed_docs[$_SESSION['docs_file']]['content'];
 }
 
 
@@ -84,5 +127,33 @@ if($languagePack == 'de') {
 }
 
 echo '<hr><a target="_blank" href="'.$helpURL.'" title="'.$helpURL.'" class="btn btn-fc btn-block">'.$icon['question'].' '.$lang['show_help'].'</a>';
+
+
+
+
+function fc_parse_doc_md_file($path) {
+	
+	global $Parsedown;
+	
+	if(is_file($path)) {
+		$src = file_get_contents($path);
+		$src_content = explode('---',$src);
+		$header_length = strlen($src_content[1])+6;
+		$content = substr($src, $header_length);
+		$parsed_header = Spyc::YAMLLoadString($src_content[1]);
+		$parsed_content = $Parsedown->text($content);
+		$filemtime = filemtime($path);
+	} else {
+		$parsed = 'FILE NOT FOUND';
+	}
+	
+	$doc['header'] = $parsed_header;
+	$doc['content'] = $parsed_content;
+	$doc['filename'] = basename($path);
+	$doc['filepath'] = $path;
+	
+	return $doc;
+}
+
 
 ?>

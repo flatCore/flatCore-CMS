@@ -46,11 +46,9 @@ function get_content($page, $mode = 'p') {
 				"AND" => [
 				"page_id_original" => "$page",
 				"page_language" => "$languagePack"
-				],
-				[
-					"ORDER" => "page_id"
-				]
-		]);			
+			],
+				"ORDER" => ["page_id" => "DESC"]
+			]);			
 	
 	} else {
 		
@@ -68,6 +66,8 @@ function get_content($page, $mode = 'p') {
 
 	if($page_contents['page_language'] == '') {
 		$page_contents['page_language'] = $languagePack;
+	} else {
+		$languagePack = $page_contents['page_language'];
 	}
 
 	$nav_sql_filter = "WHERE page_language = '$languagePack' ";

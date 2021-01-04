@@ -3,14 +3,10 @@
 /**
  * flatCore Content Management System
  * Installer/Updater
- *
- * @package: install/
- * @author: Patrick Konstandin
- *
  */
 
 session_start();
-error_reporting(0);
+error_reporting(E_ALL ^E_NOTICE);
 
 require '../config.php';
 
@@ -31,16 +27,20 @@ if(!isset($_SESSION['lang']) || $_SESSION['lang'] == '') {
 
 include 'php/functions.php';
 include '../lib/lang/'.$l.'/dict-install.php';
-
+include '../acp/core/icons.php';
 
 if(is_file("../$fc_db_content")) {
 	$modus = "update";
 	$db_type = 'sqlite';
-} else if(is_file("../config_database.php")) {
+}
+
+if(is_file("../config_database.php")) {
 	$modus = "update";
 	$db_type = 'mysql';
-} else if($modus == 'choose_lang') {
-	$modus = "install";
+}
+
+if(isset($_POST['check_database'])) {
+	include 'php/check_connection.php';
 }
 
 if($_SESSION['user_class'] == "administrator") {
@@ -54,8 +54,6 @@ if($modus == "update") {
 	}
 }
 
-
-
 ?>
 
 <!DOCTYPE html>
@@ -63,13 +61,14 @@ if($modus == "update") {
 <head>
 	<meta charset="utf-8">
 	<title><?php echo"$modus"; ?> flatCore | Content Management System</title>
-	<script src="../lib/js/jquery/jquery-3.4.1.min.js"></script>
-	<script src="../acp/js/bootstrap.bundle.min.js"></script>
-	<link media="screen" rel="stylesheet" type="text/css" href="../acp/css/bootstrap.min.css" />
+	<script src="../styles/default/js/jquery.min.js"></script>
+	<script src="../styles/default/js/bootstrap.bundle.min.js"></script>
+	<link media="screen" rel="stylesheet" type="text/css" href="../styles/default/css/styles.min.css" />
 	<link media="screen" rel="stylesheet" type="text/css" href="css/styles.css" />
+	<link href="../acp/fontawesome/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-<div id="inst-frame">
+<div class="container">
 	<div id="inst-background">
 		<div id="inst-header">
 			<div style="float:right;margin-top:-38px;"><span class="badge badge-info p-2"><?php echo"$modus" ?></span></div>
@@ -79,7 +78,7 @@ if($modus == "update") {
 			<?php
 			if($modus == "install") {
 				include("inc.install.php");
-			} elseif($modus == "update") {
+			} else if($modus == "update") {
 				include("inc.update.php");
 			} else {
 				echo '<h3 class="text-center">Choose your Language ...</h3><hr>';
@@ -102,6 +101,7 @@ if($modus == "update") {
 			</a>
 		</div>
 	</div>
+	<p class="text-center"><?php echo date("Y/m/d H:i:s",time());  ?></p>
 </div>
 </body>
 </html>

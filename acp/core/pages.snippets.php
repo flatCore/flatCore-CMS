@@ -35,11 +35,6 @@ ${'active_'.$_SESSION['type']} = 'active';
 if(isset($_POST['delete_snippet'])) {
 
 	$delete_snip_id = (int) $_POST['snip_id'];
-	/*
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = "DELETE FROM fc_textlib WHERE textlib_id = $delete_snip_id";
-	$cnt_changes = $dbh->exec($sql);
-	*/
 	
 	$cnt_changes=$db_content->delete("fc_textlib",[
 			"textlib_id" => $delete_snip_id
@@ -61,9 +56,6 @@ if(isset($_POST['delete_snippet'])) {
 /* Save Textsnippet */
 if(isset($_POST['save_snippet'])) {
 
-	// connect to database
-	//$db = new PDO("sqlite:".CONTENT_DB);
-	
 	$snippet_name = clean_filename($_POST['snippet_name']);
 	$timestamp =  time();
 	
@@ -72,11 +64,11 @@ if(isset($_POST['save_snippet'])) {
 	$snippet_theme = $snippet_themes[0];
 	$snippet_template = $snippet_themes[1];
 	
-	if(count($_POST['snippet_thumbnail']) > 1) {
+	if(count($_POST['picker1_images']) > 1) {
 		
-		$snippet_thumbnail = implode("<->", array_unique($_POST['snippet_thumbnail']));
+		$snippet_thumbnail = implode("<->", array_unique($_POST['picker1_images']));
 	} else {
-		$st = $_POST['snippet_thumbnail'];
+		$st = $_POST['picker1_images'];
 		$snippet_thumbnail = $st[0].'<->';
 	}
 	
@@ -252,7 +244,6 @@ $sql_cnt = "SELECT count(*) AS 'cnt_all_snippets',
 (SELECT count(*) FROM fc_textlib $filter_string ) AS 'cnt_filter_snippets'
 FROM fc_textlib";
 
-//$cnt = $dbh->query("$sql_cnt")->fetch(PDO::FETCH_ASSOC);
 $cnt = $db_content->query($sql_cnt)->fetch(PDO::FETCH_ASSOC);
 
 $files_per_page = 50;
@@ -287,15 +278,8 @@ $sql = "SELECT * FROM fc_textlib $filter_string ORDER BY textlib_name ASC LIMIT 
 foreach($system_snippets as $snippet) {
 	$snippet_exception[] = " textlib_name != '$snippet' ";
 }
-/*
-foreach ($dbh->query($sql) as $row) {
-	$snippets_list[] = $row;
-}
-*/
 
 $snippets_list = $db_content->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-
-//$dbh = null;
 
 $cnt_pages = ceil($cnt['cnt_filter_snippets']/$files_per_page);
 
@@ -466,7 +450,6 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 		
 		$snippet_images = explode('<->',$get_snip_images);
 		
-		
 		echo '<tr>';
 		echo '<td>'.$lang_thumb.'</td>';
 		echo '<td nowrap>'.$show_snip_name.'</td>';
@@ -477,7 +460,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 		if(count($snippet_images) > 1) {
 			$x=0;
 			foreach($snippet_images as $img) {
-				if(is_file("../$img")) {
+				if(is_file("$img")) {
 					$x++;
 					echo '<a data-toggle="popover" data-trigger="hover" data-html="true" data-content="<img src=\''.$img.'\'>">'.$icon['images'].'</a> ';
 				}

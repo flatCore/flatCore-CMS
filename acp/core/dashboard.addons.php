@@ -24,6 +24,10 @@ if($cnt_mods > 0) {
 			$poster_img = '<img src="images/poster-addons.jpg" class="card-img-top">';
 		}
 		
+		if($i % 6 == 0) {
+			echo '<div class="w-100"></div>';
+		}
+		
 		if(is_file("$mod_info_file")) {
 			
 			unset($mod,$modnav);
@@ -32,7 +36,7 @@ if($cnt_mods > 0) {
 			$mod_id = 'id_'.clean_filename($mod['name']);
 			
 			echo '<div class="col mb-4">';	
-			echo '<div class="card">';
+			echo '<div class="card" style="max-width:450px;">';
 			echo '<div class="card-header p-1"><strong>'.$mod['name'].'</strong> <span class="badge badge-dark float-right">v'.$mod['version'].'</span></div>';
 			echo $poster_img;
 			echo '<div class="card-img-overlay fade-menu">';

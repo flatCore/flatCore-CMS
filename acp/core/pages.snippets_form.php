@@ -105,40 +105,18 @@ echo '</div>';
 echo '</div>';
 echo '<div class="tab-pane fade" id="images">';
 
-$arr_Images = fc_get_all_images_rec("$prefs_pagethumbnail_prefix",NULL);
+
+$images = fc_get_all_media_data('image');
+
+$page_thumbnail_array = explode("&lt;-&gt;", $textlib_images);
 $snippet_thumbnail_array = explode("&lt;-&gt;", $textlib_images);
 
 echo '<input class="filter-images form-control" name="filter-images" placeholder="Filter ..." type="text">';
 
-echo '<div class="scroll-container">';
-echo '<select multiple="multiple" name="snippet_thumbnail[]" class="form-control image-picker">';
 
-/* if we have selected images, show them first */
-if(count($snippet_thumbnail_array) > 1) {
-	echo '<optgroup label="SELECTED">';
-	foreach($snippet_thumbnail_array as $sel_images) {
-		if(is_file('..'.$sel_images)) {
-			echo '<option selected data-img-src="'.$sel_images.'" title="'.$sel_images.'" value="'.$sel_images.'">'.basename($sel_images).'</option>';
-		}		
-	}
-	echo '</optgroup>'."\r\n";
-}
-
-echo '<optgroup label="NO SELECTED">';
-echo '<option value="">'.$lang['page_thumbnail'].'</option>';
-	foreach($arr_Images as $page_thumbnails) {
-		$selected = "";
-		$page_thumbnails = str_replace('../', '/', $page_thumbnails);
-		if(strpos($page_thumbnail, $page_thumbnails) !== false) {
-			$selected = "selected";
-		}
-		if(in_array("$page_thumbnails", $snippet_thumbnail_array) == false) {
-			echo '<option '.$selected.' data-img-src="'.$page_thumbnails.'" title="'.$page_thumbnails.'" value="'.$page_thumbnails.'">'.basename($page_thumbnails).'</option>';
-		}
-}
-echo '</optgroup>'."\r\n";
-echo '</select>';
-echo '</div>';
+$choose_images = fc_select_img_widget($images,$snippet_thumbnail_array,$prefs_pagethumbnail_prefix,1);
+// picker1_images[]
+echo $choose_images;
 
 echo '</div>'; // images
 echo '<div class="tab-pane fade" id="link">';

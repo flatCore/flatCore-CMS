@@ -10,23 +10,19 @@ unset($result);
 $sql = "SELECT page_id, page_language, page_linkname, page_title, page_meta_description, page_sort, page_lastedit, page_lastedit_from, page_status, page_template, page_modul, page_authorized_users, page_permalink, page_redirect, page_redirect_code, page_labels, page_psw
 		FROM fc_pages
 		$_SESSION[filter_string]
-		ORDER BY page_language ASC, page_sort ASC, page_linkname ASC";
+		ORDER BY page_language ASC, page_sort *1 ASC, LENGTH(page_sort), page_sort ASC, page_linkname ASC";
 
 $result = $db_content->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
 $x=0;
 foreach($result as $p) {
 	$this_page_id = 'p'.$p['page_id'];
-	$count_comments = $db_content->query("Select Count(*) FROM fc_comments WHERE comment_parent LIKE '$this_page_id' ")->fetch();
+	$count_comments = $db_content->query("Select Count(*) FROM fc_comments WHERE comment_parent_id LIKE '$this_page_id' ")->fetch();
 	$result[$x]['cnt_comments'] = $count_comments[0];
 	$x++;
 }
 
-	
-//$dbh = null;
-   
 $cnt_result = count($result);
-$result = fc_array_multisort($result, 'page_language', SORT_ASC, 'page_sort', SORT_ASC, SORT_NATURAL);
 
 
 echo '<div class="app-container">';
@@ -70,7 +66,7 @@ $item_template = file_get_contents('templates/list-pages-item.tpl');
 
 for($i=0;$i<$cnt_result;$i++) {
 
-	if($result[$i]['page_sort'] == "" || $result[$i]['page_sort'] == 'portal') {
+	if($result[$i]['page_sort'] == "") {
 		continue;
 	}
 	
@@ -116,6 +112,10 @@ for($i=0;$i<$cnt_result;$i++) {
 	
 	if($page_title == '') {
 		$page_title = '<span class="text-danger">'.$icon['exclamation_triangle'].' '.$lang['alert_no_page_title'].'</span>';
+	}
+	
+	if($page_sort == 'portal') {
+		$page_linkname = $icon['home'].' ' . $page_linkname;
 	}
 	
 	$points_of_page = substr_count($page_sort, '.');
@@ -242,7 +242,7 @@ echo '<div class="pages-list-container">';
 
 for($i=0;$i<$cnt_result;$i++) {
 
-	if($result[$i]['page_sort'] != "" && $result[$i]['page_sort'] != 'portal') {
+	if($result[$i]['page_sort'] != "" OR $result[$i]['page_sort'] == 'portal') {
 		continue;
 	}
 	
@@ -276,10 +276,6 @@ for($i=0;$i<$cnt_result;$i++) {
 	
 	if($result[$i]['page_psw'] != '') {
 		$page_title = $icon['lock'].' '.$page_title;
-	}
-	
-	if($page_sort == 'portal') {
-		$page_linkname = $icon['home'].' ' . $page_linkname;
 	}
 	
 	if(strlen($page_description) > 100) {

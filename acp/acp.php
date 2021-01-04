@@ -5,9 +5,14 @@ error_reporting(0);
 require '../lib/Medoo.php';
 use Medoo\Medoo;
 
+require '../lib/Spyc/Spyc.php';
+
 require '../config.php';
 if(is_file('../'.FC_CONTENT_DIR.'/config.php')) {
 	include '../'.FC_CONTENT_DIR.'/config.php';
+}
+if(is_file('../'.FC_CONTENT_DIR.'/config_smtp.php')) {
+	include '../'.FC_CONTENT_DIR.'/config_smtp.php';
 }
 
 
@@ -31,7 +36,8 @@ if(is_file('../config_database.php')) {
 	
 	$db_content = $database;
 	$db_user = $database;
-	$db_statistics = $database;	
+	$db_statistics = $database;
+	$db_posts = $database;
 	
 	
 	
@@ -46,7 +52,8 @@ if(is_file('../config_database.php')) {
 	
 	define("CONTENT_DB", "../$fc_db_content");
 	define("USER_DB", "../$fc_db_user");
-	define("STATS_DB", "../$fc_db_stats");	
+	define("STATS_DB", "../$fc_db_stats");
+	define("POSTS_DB", "../$fc_db_posts");
 
 	$db_content = new Medoo([
 		'database_type' => 'sqlite',
@@ -61,18 +68,26 @@ if(is_file('../config_database.php')) {
 	$db_statistics = new Medoo([
 		'database_type' => 'sqlite',
 		'database_file' => STATS_DB
-	]);	
+	]);
+
+	$db_posts = new Medoo([
+		'database_type' => 'sqlite',
+		'database_file' => POSTS_DB
+	]);
 	
 }
-
-
-
 
 define("INDEX_DB", "../$fc_db_index");
 define("FC_ROOT", str_replace("/acp","",FC_INC_DIR));
 define("IMAGES_FOLDER", "$img_path");
 define("FILES_FOLDER", "$files_path");
 define("FC_SOURCE", "backend");
+
+
+$db_index = new Medoo([
+	'database_type' => 'sqlite',
+	'database_file' => INDEX_DB
+]);	
 
 
 
@@ -131,6 +146,7 @@ if(isset($_SESSION['lang'])) {
 
 require '../lib/lang/index.php';
 require 'core/functions.php';
+require '../global/functions.php';
 require 'core/switch.php';
 
 $all_mods = get_all_moduls();
@@ -187,18 +203,15 @@ if(isset($set_acptheme)) {
     <script language="javascript" type="text/javascript" src="../lib/js/tinymce/jquery.tinymce.min.js"></script>
 
 		<!-- Add fancyBox -->
-		<link rel="stylesheet" href="./css/jquery.fancybox.min.css?v=2.1.5" type="text/css" media="screen" />
 		<script type="text/javascript" src="./js/jquery.fancybox.min.js?v=2.1.5"></script>
 		
 		<script type="text/javascript" src="../lib/js/jquery/jquery.textareaCounter.plugin.js"></script>
-
-		<link rel="stylesheet" href="css/bootstrap.min.css?v=4.5.2" type="text/css" media="screen, projection">
 		
 		<?php
 		if($acptheme == 'dark') {
-			$style_file = 'css/styles_dark.css?v='.time();
+			$style_file = 'theme/css/styles_dark.css?v='.time();
 		} else {			
-			$style_file = 'css/styles_light.css?v='.time();
+			$style_file = 'theme/css/styles_light.css?v='.time();
 		}
 		echo '<link rel="stylesheet" href="'.$style_file.'" type="text/css" media="screen, projection">';
 		?>
@@ -222,7 +235,6 @@ if(isset($set_acptheme)) {
 				
 		<!-- uploader -->
 		<script src="../lib/js/dropzone.js"></script>
-		<link rel="stylesheet" href="../lib/css/dropzone.css" type="text/css" media="screen, projection">
 		
 		<!-- ACE Editor -->
 		<script src="../lib/js/ace/ace.js" data-ace-base="../lib/js/ace" type="text/javascript" charset="utf-8"></script>
@@ -236,7 +248,96 @@ if(isset($set_acptheme)) {
 		
 		<!-- image picker -->
 		<script type="text/javascript" src="../lib/js/jquery/image-picker.min.js"></script>
-	
+		
+		<!-- date/time picker -->
+		<script type="text/javascript" src="js/moment.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+		
+		<script type="text/javascript" src="js/accounting.min.js"></script>
+
+		<script type="text/javascript">
+			
+			$.extend(true, $.fn.datetimepicker.defaults, {
+		    icons: {
+		      time: 'far fa-clock',
+		      date: 'far fa-calendar',
+		      up: 'fas fa-arrow-up',
+		      down: 'fas fa-arrow-down',
+		      previous: 'fas fa-chevron-left',
+		      next: 'fas fa-chevron-right',
+		      today: 'fas fa-calendar-check',
+		      clear: 'far fa-trash-alt',
+		      close: 'far fa-times-circle'
+		    }
+		  });
+		  
+			$(function(){
+				
+				$('.dp').datetimepicker({
+					timeZone: 'UTC',
+		    	format: 'YYYY-MM-DD HH:mm'
+		  	});
+		
+				if($("#price").val()) {
+					
+					get_netto = $("#price").val();
+					
+					var e = document.getElementById("tax");
+					var get_tax = e.options[e.selectedIndex].text;
+					get_tax = parseInt(get_tax);
+					get_netto_calc = get_netto.replace(/\./g, '');
+					get_netto_calc = get_netto_calc.replace(",",".");
+					current_brutto = get_netto_calc*(get_tax+100)/100;
+					current_brutto = accounting.formatNumber(current_brutto,4,".",",");
+					$('#price_total').val(current_brutto);	
+			
+					$('#price').keyup(function(){
+						get_netto = $('#price').val();
+						//get_tax = parseInt($('#tax').val());
+						get_netto_calc = get_netto.replace(/\./g, '');
+						get_netto_calc = get_netto_calc.replace(",",".");
+						current_brutto = get_netto_calc*(get_tax+100)/100;
+						current_brutto = accounting.formatNumber(current_brutto,4,".",",");
+						$('#price_total').val(current_brutto);
+					});			
+					
+					$('#price_total').keyup(function(){
+						get_brutto = $('#price_total').val();
+						//get_tax = parseInt($('#tax').val());
+						get_brutto_calc = get_brutto.replace(/\./g, '');
+						get_brutto_calc = get_brutto_calc.replace(",",".");
+						current_netto = get_brutto_calc*100/(get_tax+100);
+						current_netto = accounting.formatNumber(current_netto,4,".",",");
+						$('#price').val(current_netto);
+					});
+					
+					$('#tax').bind("change keyup", function(){
+						
+						var e = document.getElementById("tax");
+						var get_tax = e.options[e.selectedIndex].text;
+						get_tax = parseInt(get_tax);
+						
+						get_netto = $('#price').val();
+						get_netto_calc = get_netto.replace(",",".");
+		
+						current_brutto = get_netto_calc*(get_tax+100)/100;
+						current_brutto = accounting.formatNumber(current_brutto,4,".",",");
+		
+						get_brutto_calc = current_brutto.replace(",",".");
+						current_netto = get_brutto_calc*100/(get_tax+100);
+						current_netto = accounting.formatNumber(current_netto,4,".",",");
+		
+						$('#price_total').val(current_brutto);
+						$('#price').val(current_netto);
+					});
+				
+				}
+			
+			
+			});
+			
+		</script>
+
 		
 		<?php
 
@@ -317,9 +418,12 @@ if(isset($set_acptheme)) {
 }
 			?>
 			</p>
-			
-		<p><b>flatCore</b> Content Management System (<?php echo $fc_version_name . ' <small>B: ' . $fc_version_build; ?>)</small><br />
-		copyright © <?php echo date('Y'); ?>, <a href="https://www.flatcore.org/" target="_blank">flatCore.org</a> | <a href="https://github.com/flatCore/flatCore-CMS"><i class="fab fa-github"></i> flatCore-CMS</a></p>
+			<hr>
+		<p>
+			<img src="images/fc-logo.svg" alt="fc-logo" width="60px"><br>
+			<b>flatCore</b> Content Management System (<?php echo $fc_version_name . ' <small>B: ' . $fc_version_build; ?>)</small><br>
+		copyright © <?php echo date('Y'); ?>, <a href="https://flatcore.org/" target="_blank">flatCore.org</a> | <a href="https://github.com/flatCore/flatCore-CMS"><i class="fab fa-github"></i> flatCore-CMS</a>
+		</p>
 		<p class="d-none"><?php echo microtime(true)-$_SERVER['REQUEST_TIME_FLOAT']; ?></p>
 		</div>
 		

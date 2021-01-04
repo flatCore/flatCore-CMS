@@ -30,120 +30,6 @@ if(!empty($_POST['preview_the_page'])) {
 	$editpage = (int) $_POST['editpage'];
 	$modus = "preview";
 }
-/*
-$pdo_fields = array(
-	'page_sort' => 'STR',
-	'page_language' => 'STR',
-	'page_linkname' => 'STR',
-	'page_permalink' => 'STR',
-	'page_permalink_short' => 'STR',
-	'page_hash' => 'STR',
-	'page_type_of_use' => 'STR',
-	'page_redirect' => 'STR',
-	'page_redirect_code' => 'STR',
-	'page_funnel_uri' => 'STR',
-	'page_title' => 'STR',
-	'page_status' => 'STR',
-	'page_usergroup' => 'STR',
-	'page_content' => 'STR',
-	'page_lastedit' => 'STR',
-	'page_lastedit_from' => 'STR',
-	'page_extracontent' => 'STR',
-	'page_template' => 'STR',
-	'page_template_layout' => 'STR',
-	'page_meta_author' => 'STR',
-	'page_meta_keywords' => 'STR',
-	'page_meta_description' => 'STR',
-	'page_meta_robots' => 'STR',
-	'page_head_styles' => 'STR',
-	'page_head_enhanced' => 'STR',
-	'page_thumbnail' => 'STR',
-	'page_modul' => 'STR',
-	'page_modul_query' => 'STR',
-	'page_addon_string' => 'STR',
-	'page_authorized_users' => 'STR',
-	'page_version' => 'STR',
-	'page_labels' => 'STR',
-	'page_psw' => 'STR'
-);
-
-
-$pdo_fields_new = array(
-	'page_id' => 'NULL',
-	'page_sort' => 'STR',
-	'page_language' => 'STR',
-	'page_linkname' => 'STR',
-	'page_permalink' => 'STR',
-	'page_permalink_short' => 'STR',
-	'page_hash' => 'STR',
-	'page_type_of_use' => 'STR',
-	'page_redirect' => 'STR',
-	'page_redirect_code' => 'STR',
-	'page_funnel_uri' => 'STR',
-	'page_title' => 'STR',
-	'page_status' => 'STR',
-	'page_usergroup' => 'STR',
-	'page_content' => 'STR',
-	'page_lastedit' => 'STR',
-	'page_lastedit_from' => 'STR',
-	'page_extracontent' => 'STR',
-	'page_template' => 'STR',
-	'page_template_layout' => 'STR',
-	'page_meta_author' => 'STR',
-	'page_meta_keywords' => 'STR',
-	'page_meta_description' => 'STR',
-	'page_meta_robots' => 'STR',
-	'page_head_styles' => 'STR',
-	'page_head_enhanced' => 'STR',
-	'page_thumbnail' => 'STR',
-	'page_modul' => 'STR',
-	'page_modul_query' => 'STR',
-	'page_addon_string' => 'STR',
-	'page_authorized_users' => 'STR',
-	'page_version' => 'STR',
-	'page_labels' => 'STR',
-	'page_psw' => 'STR'
-);
-	
-$pdo_fields_cache = array(
-	'page_id' => 'NULL',
-	'page_id_original' => 'STR',
-	'page_sort' => 'STR',
-	'page_language' => 'STR',
-	'page_linkname' => 'STR',
-	'page_permalink' => 'STR',
-	'page_permalink_short' => 'STR',
-	'page_hash' => 'STR',
-	'page_type_of_use' => 'STR',
-	'page_redirect' => 'STR',
-	'page_redirect_code' => 'STR',
-	'page_funnel_uri' => 'STR',
-	'page_title' => 'STR',
-	'page_status' => 'STR',
-	'page_usergroup' => 'STR',
-	'page_content' => 'STR',
-	'page_lastedit' => 'STR',
-	'page_lastedit_from' => 'STR',
-	'page_extracontent' => 'STR',
-	'page_template' => 'STR',
-	'page_template_layout' => 'STR',
-	'page_meta_author' => 'STR',
-	'page_meta_keywords' => 'STR',
-	'page_meta_description' => 'STR',
-	'page_meta_robots' => 'STR',
-	'page_head_styles' => 'STR',
-	'page_head_enhanced' => 'STR',
-	'page_thumbnail' => 'STR',
-	'page_modul' => 'STR',
-	'page_modul_query' => 'STR',
-	'page_addon_string' => 'STR',
-	'page_authorized_users' => 'STR',
-	'page_cache_type' => 'STR',
-	'page_version' => 'STR',
-	'page_labels' => 'STR',
-	'page_psw' => 'STR'
-);
-*/
 
 
 /**
@@ -171,33 +57,71 @@ if(preg_match("/custom_/i", implode(",", array_keys($_POST))) ){
 if(isset($_POST['delete_the_page'])) {
 
 
-	if(is_numeric($editpage)){
+	if(is_numeric($editpage)) {
 		$comment_id = 'p'.$editpage;
 		
-		$db_content->delete("fc_pages", [
+		/**
+		 * we check, if this page has subpages
+		 * if there are subpages, we can not delete the page
+		 */
+
+		$delete_page = $db_content->get("fc_pages", ["page_sort","page_language"],[
 			"page_id" => $editpage
 		]);
-		$db_content->delete("fc_pages_cache", [
-			"page_id_original" => $editpage
-		]);
-		$db_content->delete("fc_pages_cache", [
-			"page_id_original" => NULL
-		]);
-		$db_content->delete("fc_comments", [
-			"comment_parent" => $comment_id
-		]);
+		
+		$delpage_sort = $delete_page['page_sort'];
+		$delpage_lang = $delete_page['page_language'];
+		
+		if($delpage_sort != '') {
+			$subpages = $db_content->select("fc_pages", ["page_sort","page_title"],[
+				"AND" => [
+					"page_sort[~]" => "$delpage_sort%",
+					"page_language" => $delpage_lang
+				]
+			]);
+		} else {
+			$subpages = '';
+		}
+		
+		if(is_array($subpages)) {
+			echo '<div class="alert alert-danger">';
+			echo $lang['msg_error_deleting_sub_pages'];
+			
+			echo '<ol>';
+			foreach($subpages as $pages) {
+				echo '<li>'.$pages['page_title'].'</li>';
+			}
+			echo '</ol>';
+			
+			echo '</div>';
+		} else {
 
+			$del_page = $db_content->delete("fc_pages", [
+				"page_id" => $editpage
+			]);
+			$db_content->delete("fc_pages_cache", [
+				"page_id_original" => $editpage
+			]);
+			$db_content->delete("fc_pages_cache", [
+				"page_id_original" => NULL
+			]);
+			$db_content->delete("fc_comments", [
+				"comment_parent" => $comment_id
+			]);
+			
+			if($del_page->rowCount() > 0) {
+				$success_message = '{OKAY} '. $lang['msg_page_deleted'];
+				record_log($_SESSION['user_nick'],"deleted page id: $editpage","10");
+				generate_xml_sitemap();
+				delete_cache_file();
+				unset($editpage);
+				print_sysmsg("$success_message");
+			}
+		}
 	}
 
 
-	if($cnt_del_pages > 0) {
-		$success_message = "{OKAY} $lang[msg_page_deleted]";
-		record_log("$_SESSION[user_nick]","deleted page id: $editpage","10");
-		generate_xml_sitemap();
-		delete_cache_file();
-		unset($editpage);
-		print_sysmsg("$success_message");
-	}
+
 
 	$show_form = "false";
 }
@@ -216,6 +140,14 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	$page_position = $_POST['page_position'];
 	$page_order = $_POST['page_order'];
 	
+	if($page_position != 'null' OR $page_position != 'portal') {
+		$page_order = (int) $page_order;
+		if(strlen($page_order) < $prefs_pagesort_minlength) {
+			$page_order = str_pad($page_order, $prefs_pagesort_minlength, "0", STR_PAD_LEFT);
+		}
+		
+	}
+	
 	$page_sort = "$page_position.$page_order";
 	
 	$page_version = $_POST['page_version'];
@@ -224,17 +156,19 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	
 	if($page_position == "portal") {
 		$page_sort = "portal";
-	} elseif ($page_position == "mainpage") {
+	}
+	if($page_position == "mainpage") {
 		$page_sort = (int) $page_order;
-	} elseif ($page_position == "null") {
+	}
+	if($page_position == "null") {
 		$page_sort = "";
 	}
 	
 	/* page thumbnails */
-	if(count($_POST['page_thumbnail']) > 1) {
-		$page_thumbnail = implode("<->", $_POST['page_thumbnail']);
+	if(count($_POST['picker1_images']) > 1) {
+		$page_thumbnail = implode("<->", $_POST['picker1_images']);
 	} else {
-		$pt = $_POST['page_thumbnail'];
+		$pt = $_POST['picker1_images'];
 		$page_thumbnail = $pt[0];
 	}
 	
@@ -280,6 +214,15 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 		$string_labels = implode(",", $arr_labels);
 	} else {
 		$string_labels = "";
+	}
+
+	/* categories */
+	$arr_categories = $_POST['set_page_categories'];
+	if(is_array($arr_categories)) {
+		sort($arr_categories);
+		$string_page_categories = implode(",", $arr_categories);
+	} else {
+		$string_page_categories = "";
 	}	
 	
 	// template
@@ -295,10 +238,20 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	if(is_array($_POST['addon'])) {
 		$page_addon_string = json_encode($_POST['addon'],JSON_UNESCAPED_UNICODE);
 	}
-
-	// connect to database
-	//$dbh = new PDO("sqlite:".CONTENT_DB);
-
+	
+	/* posts categories */
+	if(is_array($_POST['page_post_categories'])) {
+		$string_categories = implode(",", $_POST['page_post_categories']);
+	} else {
+		$string_categories = "";
+	}
+	
+	/* posts types */
+	if(is_array($_POST['page_post_types'])) {
+		$string_types = implode("-", $_POST['page_post_types']);
+	} else {
+		$string_types = "";
+	}
 
 	/**
 	 * modus update
@@ -338,9 +291,13 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_modul" => "$page_modul",
 			"page_modul_query" => "$page_modul_query",
 			"page_addon_string" => "$page_addon_string",
+			"page_posts_categories" => "$string_categories",
+			"page_posts_types" => "$string_types",
 			"page_authorized_users" => "$page_authorized_users",
 			"page_version" => $page_version,
 			"page_labels" => "$string_labels",
+			"page_categories" => "$string_page_categories",
+			"page_comments" => "$page_comments",
 			"page_psw" => "$page_psw"		
 		];
 		
@@ -404,9 +361,13 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_modul" => "$page_modul",
 			"page_modul_query" => "$page_modul_query",
 			"page_addon_string" => "$page_addon_string",
+			"page_posts_categories" => "$string_categories",
+			"page_posts_types" => "$string_types",
 			"page_authorized_users" => "$page_authorized_users",
 			"page_version" => $page_version,
 			"page_labels" => "$string_labels",
+			"page_categories" => "$string_page_categories",
+			"page_comments" => "$page_comments",
 			"page_psw" => "$page_psw"
 		];
 		
@@ -458,9 +419,13 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_modul" => "$page_modul",
 			"page_modul_query" => "$page_modul_query",
 			"page_addon_string" => "$page_addon_string",
+			"page_posts_categories" => "$string_categories",
+			"page_posts_types" => "$string_types",
 			"page_authorized_users" => "$page_authorized_users",
 			"page_version" => $page_version,
 			"page_labels" => "$string_labels",
+			"page_categories" => "$string_page_categories",
+			"page_comments" => "$page_comments",
 			"page_psw" => "$page_psw"
 		];
 		
@@ -525,9 +490,13 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_modul" => "$page_modul",
 			"page_modul_query" => "$page_modul_query",
 			"page_addon_string" => "$page_addon_string",
+			"page_posts_categories" => "$string_categories",
+			"page_posts_types" => "$string_types",
 			"page_authorized_users" => "$page_authorized_users",
 			"page_version" => $page_version,
 			"page_labels" => "$string_labels",
+			"page_categories" => "$string_page_categories",
+			"page_comments" => "$page_comments",
 			"page_psw" => "$page_psw"
 		];
 		
@@ -585,9 +554,13 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_modul" => "$page_modul",
 			"page_modul_query" => "$page_modul_query",
 			"page_addon_string" => "$page_addon_string",
+			"page_posts_categories" => "$string_categories",
+			"page_posts_types" => "$string_types",
 			"page_authorized_users" => "$page_authorized_users",
 			"page_version" => $page_version,
 			"page_labels" => "$string_labels",
+			"page_categories" => "$string_page_categories",
+			"page_comments" => "$page_comments",
 			"page_psw" => "$page_psw"
 		];
 		
@@ -600,9 +573,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 		
 		
 		/* delete older entries from fc_pages_cache */
-		$interval = time() - 86400; // now - 24h
-		//$count = $dbh->exec("DELETE FROM fc_pages_cache WHERE page_cache_type = 'preview' AND page_lastedit < '$interval'");
-		
+		$interval = time() - 86400; // now - 24h		
 		$db_content->delete("fc_pages_cache", [
 			"AND" => [
 				"page_cache_type" => "preview",
@@ -627,7 +598,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	fc_get_hook('page_updated',$_POST);	
 	fc_delete_smarty_cache(md5($_POST['page_permalink']));
 	
-	if($_POST['page_sort'] == 'ghost' OR $_POST['page_status'] == 'public') {
+	if($_POST['page_status'] == 'ghost' OR $_POST['page_status'] == 'public') {
 		fc_update_or_insert_index($_POST['page_permalink']);
 	}
 	
@@ -635,28 +606,27 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 }
 
 
-
-
 /* get the data to fill the form (again) */
 if(is_numeric($editpage)) {
 
-	
-	if($modus == "preview") {
-		//$sql = "SELECT * FROM fc_pages_cache WHERE page_id_original = $editpage ORDER BY page_id DESC";
-		$page_data = $db_content->get("fc_pages_cache","*",[ "page_id_original" => $editpage ],["ORDER" => ["page_id" => "DESC"]]);
+	if($modus == "preview") {		
+		$page_data = $db_content->get("fc_pages_cache","*",[
+			"AND" => [
+			"page_id_original" => $editpage
+		],
+			"ORDER" => ["page_id" => "DESC"]
+		]);
+		
 	} else {
-		//$sql = "SELECT * FROM fc_pages WHERE page_id = $editpage";
 		$page_data = $db_content->get("fc_pages","*",[ "page_id" => $editpage ]);
 	}
 	
 	if(!empty($_POST['restore_id'])) {
 		$restore_id = (int) $_POST['restore_id'];
-		//$sql = "SELECT * FROM fc_pages_cache WHERE page_id = $restore_id";
 		$page_data = $db_content->get("fc_pages_cache","*",[ "page_id" => $restore_id ]);	
 		$restore_page_version = $db_content->query("SELECT page_version FROM fc_pages WHERE page_id = $editpage")->fetch();
 	}
-	
-	//$result = $db_content->query($sql)->fetch(PDO::FETCH_ASSOC);
+
 	
 	foreach($page_data as $k => $v) {
 	   $$k = htmlentities(stripslashes($v), ENT_QUOTES, "UTF-8");
@@ -779,7 +749,6 @@ if($show_form == "true" AND $sub != "new") {
 										ORDER BY page_lastedit ASC
 										LIMIT 1)";
 			
-			//$cnt_changes = $dbh->exec($del_sql);
 			$db_content->query("$del_sql");
 			continue;
 
@@ -817,8 +786,6 @@ if($show_form == "true" AND $sub != "new") {
 		echo '</td>';
 		echo '</tr>';
 	}
-	
-	//$dbh = null;
 	
 	echo '</div>';
 	echo '</table>';

@@ -1,4 +1,23 @@
 <?php
+	
+/**
+ *
+ * prefs_status - active -> this set will be used by the system
+ *
+ * prefs_comments_mode - 1 -> all comments must be activated by an admin
+ *                     - 2 -> all comments will be public immediately
+ *                     - 3 -> all comment functions deactivated
+ *
+ * prefs_comments_autoclose -> time (seconds) when comment section is closed
+ *
+ * prefs_comments_authorization - 1 -> only registered users
+ *                              - 2 -> user have to fill out name and e-mail
+ *                              - 3 -> accept all anonymous inputs
+ *
+ * prefs_comments_max_entries -> maximum number of entries per thread
+ * prefs_comments_max_level -> maximum depth of a thread
+ *
+ */
 
 $database = "content";
 $table_name = "fc_preferences";
@@ -31,6 +50,9 @@ $cols = array(
   "prefs_anonymize_ip" => "VARCHAR(20) NOT NULL DEFAULT ''",
   "prefs_template_layout" => "VARCHAR(100) NOT NULL DEFAULT ''",
   "prefs_xml_sitemap" => "VARCHAR(20) NOT NULL DEFAULT ''",
+  
+  /* E-Mail */
+  
   "prefs_mailer_adr" => "VARCHAR(100) NOT NULL DEFAULT ''",
   "prefs_mailer_name" => "VARCHAR(100) NOT NULL DEFAULT ''",
   "prefs_mailer_type" => "VARCHAR(100) NOT NULL DEFAULT ''",
@@ -41,6 +63,7 @@ $cols = array(
   "prefs_smtp_authentication" => "VARCHAR(20) NOT NULL DEFAULT ''",
   "prefs_smtp_username" => "VARCHAR(100) NOT NULL DEFAULT ''",
   "prefs_smtp_psw" => "VARCHAR(100) NOT NULL DEFAULT ''",
+  
   "prefs_rss_time_offset" => "VARCHAR(20) NOT NULL DEFAULT ''",
   "prefs_cms_domain" => "VARCHAR(100) NOT NULL DEFAULT ''",
   "prefs_cms_ssl_domain" => "VARCHAR(100) NOT NULL DEFAULT ''",
@@ -51,7 +74,29 @@ $cols = array(
   "prefs_deleted_resources" => "VARCHAR(500) NOT NULL DEFAULT ''",
   "prefs_default_publisher" => "VARCHAR(100) NOT NULL DEFAULT ''",
   "prefs_publisher_mode" => "VARCHAR(20) NOT NULL DEFAULT ''",
-  "prefs_acp_session_lifetime" => "VARCHAR(20) NOT NULL DEFAULT ''"
+  "prefs_acp_session_lifetime" => "VARCHAR(20) NOT NULL DEFAULT ''",
+  "prefs_pagesort_minlength" => "VARCHAR(20) NOT NULL DEFAULT ''",
+  
+  /* posts */
+  
+	"prefs_posts_url_pattern" => "VARCHAR(100) NOT NULL DEFAULT ''",
+	"prefs_posts_images_prefix" => "VARCHAR(20) NOT NULL DEFAULT ''",
+	"prefs_posts_default_banner" => "VARCHAR(100) NOT NULL DEFAULT ''",
+	"prefs_posts_entries_per_page" => 'INTEGER(12)',
+	"prefs_posts_products_default_tax" => 'INTEGER(12)',
+	"prefs_posts_products_tax_alt1" => 'INTEGER(12)',
+	"prefs_posts_products_tax_alt2" => 'INTEGER(12)',
+	"prefs_posts_products_default_currency" => "VARCHAR(100) NOT NULL DEFAULT ''",
+	"prefs_posts_event_time_offset" => "VARCHAR(100) NOT NULL DEFAULT ''",
+	
+	/* comments */
+  
+  "prefs_comments_mode" => 'INTEGER(12)',
+  "prefs_comments_autoclose" => 'INTEGER(12)',
+  "prefs_comments_authorization" => 'INTEGER(12)',
+  "prefs_comments_max_entries" => 'INTEGER(12)',
+  "prefs_comments_max_level" => 'INTEGER(12)'
+  
   );
 
 ?>

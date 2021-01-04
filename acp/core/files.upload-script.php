@@ -77,6 +77,17 @@ if(strpos($_REQUEST['upload_destination'],"/images") !== false) {
 	$upload_type = 'files';
 }
 
+/* thumbnail directories */
+$tmb_dir = '../../'.$img_tmb_path;
+$tmb_dir_year = $tmb_dir.'/'.date('Y',time());
+$tmb_destination = $tmb_dir_year.'/'.date('m',time());
+if(!is_dir($tmb_dir_year)) {
+	mkdir($tmb_dir_year);
+}
+if(!is_dir($tmb_destination)) {
+	mkdir($tmb_destination);
+}
+
 
 /* upload images to /content/images/ */
 if($upload_type == 'images') {
@@ -95,15 +106,20 @@ if($upload_type == 'images') {
 
 			if($_REQUEST['unchanged'] == 'yes' OR $suffix == 'svg') {
 				@move_uploaded_file($tmp_name, $target);
-			} else {
-				resize_image($tmp_name,$target, $max_w,$max_h,90);
+			} else {			
+				resize_image($tmp_name,$target,$max_w,$max_h,100);
+				$tmb_name = md5($target).'.jpg';
+				$store_tmb_name = $tmb_destination.'/'.$tmb_name;
+				fc_create_tmb($tmp_name,$tmb_name,250,250,60);
 			}
+						
 			$filetype = mime_content_type(realpath($target));
 			$filesize = filesize(realpath($target));
 			if($_POST['file_mode'] != 'overwrite') {
-				fc_write_media_data_name($target,$filesize,$time,$filetype);
+				fc_write_media_data_name($target,$store_tmb_name,$filesize,$time,$filetype);
 			}
 			
+		
 		}
 
 	}
@@ -128,7 +144,7 @@ if($upload_type == 'files') {
 			$filetype = mime_content_type(realpath($target));
 			$filesize = filesize(realpath($target));
 			if($_POST['file_mode'] != 'overwrite') {
-				fc_write_media_data_name($target,$filesize,$time,$filetype);
+				fc_write_media_data_name($target,'',$filesize,$time,$filetype);
 			}		
 		}
 	  
@@ -295,25 +311,71 @@ function clean_filename($prefix,$suffix) {
 
 
 
-function fc_write_media_data_name($filename,$filesize,$time,$mediatype) {
+function fc_write_media_data_name($filename,$store_tmb_name,$filesize,$time,$mediatype) {
 	
 	global $db_content;
 	global $languagePack;
 	
 	$filename = substr($filename, 3,strlen($filename));
+	$store_tmb_name = substr($store_tmb_name, 3,strlen($store_tmb_name));
+	
+	$uploader = $_SESSION['user_nick'];
 	
 	$columns = [
 		"media_file" => "$filename",
+		"media_thumb" => "$store_tmb_name",
 		"media_filesize" => "$filesize",
 		"media_lastedit" => "$time",
+		"media_upload_time" => "$time",
+		"media_upload_from" => "$uploader",
 		"media_type" => "$mediatype",
 		"media_lang" => "$languagePack"	
 	];
 	
 	$cnt_changes = $db_content->insert("fc_media", $columns);
-	
-	
 
 }
+
+
+
+function fc_create_tmb($img_src, $tmb_name, $tmb_width, $tmb_height, $tmb_quality) {
+	
+	global $tmb_destination;
+	
+	$arr_image_details	= GetImageSize("$img_src");
+	$original_width		= $arr_image_details[0];
+	$original_height	= $arr_image_details[1];
+	$a = $tmb_width / $tmb_height;
+  $b = $original_width / $original_height;
+	
+	
+	if ($a<$b) {
+     $new_width = $tmb_width;
+     $new_height	= intval($original_height*$new_width/$original_width);
+  } else {
+     $new_height = $tmb_height;
+     $new_width	= intval($original_width*$new_height/$original_height);
+  }
+	
+	if(($original_width <= $tmb_width) AND ($original_height <= $tmb_height)) {
+	  $new_width = $original_width;
+	  $new_height = $original_height;
+  }
+  
+	if($arr_image_details[2]==1) { $imgt = "imagegif"; $imgcreatefrom = "imagecreatefromgif";  }
+	if($arr_image_details[2]==2) { $imgt = "imagejpeg"; $imgcreatefrom = "imagecreatefromjpeg";  }
+	if($arr_image_details[2]==3) { $imgt = "imagepng"; $imgcreatefrom = "imagecreatefrompng";  }
+	
+	
+	if($imgt) { 
+		$old_image	= $imgcreatefrom("$img_src");
+		$new_image	= imagecreatetruecolor($new_width, $new_height);
+		imagecopyresampled($new_image,$old_image,0,0,0,0,$new_width,$new_height,$original_width,$original_height);
+		imagejpeg($new_image,"$tmb_destination/$tmb_name",$tmb_quality);
+		imagedestroy($new_image);
+	}
+	
+}
+
 
 ?>

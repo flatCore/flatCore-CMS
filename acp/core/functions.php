@@ -89,7 +89,6 @@ function fc_get_themes_docs() {
 
 function get_all_languages($d='../lib/lang') {
 
-	//$mdir = "../lib/lang";
 	$cntLangs = 0;
 	$scanned_directory = array_diff(scandir($d), array('..', '.','.DS_Store'));
 	
@@ -370,7 +369,15 @@ function clean_filename($str) {
 	$str = preg_replace('/[^a-z0-9_-]/isU', '', $str); // only a-z 0-9
 	$str = trim($str); 
 	return $str; 
-}  
+}
+
+function fc_filter_filepath($str) {
+	$str = strip_tags($str);
+	$remove_chars = array('<','>','\\','=','@','(',')',' ',',','%','');
+	$str = preg_replace('/\s/s', '_', $str);
+	$str = str_replace($remove_chars, "", $str);
+	return $str; 
+}
 
 
 /**
@@ -511,6 +518,7 @@ function record_log($log_trigger = 'system', $log_entry, $log_priority = '0') {
 function show_log($nbr) {
 	
 	global $db_statistics;
+	global $lang;
 	$interval = time() - (30 * 86400); // 30 days
 	
 	$del = $db_statistics->delete("log", [
@@ -543,7 +551,7 @@ function show_log($nbr) {
 	}
 	
 	if($cnt_result < 1) {
-		echo "<div class='alert alert-info'>No entries.</div>";
+		echo '<div class="alert alert-secondary">'.$lang['msg_no_entries_so_far'].'</div>';
 	}
 
 }
@@ -746,115 +754,34 @@ function first_words($string,$nbr=5) {
 }
 
 
+
+
+
+
 /**
- * get comments from fc_comments
- * delete records from chat that are older than 30 days
- *
+ * get data from fc_media
+ * all files bei type f.e. 'image'
  */
  
-function fc_get_comments($parent) {
-
-	$dbh = new PDO("sqlite:".CONTENT_DB);
+ function fc_get_all_media_data($type) {
+	 
+	global $db_content;
 	
-	$interval = time() - (30 * 86400); // 30 days
-	$count = $dbh->exec("DELETE FROM fc_comments WHERE comment_time < '$interval' AND comment_parent LIKE 'c' ");
+	$media_data = $db_content->select("fc_media","*",[
 
-	$sql = "SELECT * FROM fc_comments WHERE comment_parent LIKE '$parent' ORDER BY comment_time DESC";
+		"AND" => [
+			"media_type[~]" => "$type"
+		],
+		"ORDER" => [
+			"media_upload_time" => "DESC"
+			]
+	]);
 	
-	foreach ($dbh->query($sql) as $row) {
-  	$result[] = $row;
-	}
-	
-	$dbh = null;
-	
-	return($result);
-}
-
-
-/**
- * get comment from fc_comments
- * by comment_id
- *
- */
-
-function fc_get_comment($id) {
-
-	$id = (int) $id;
-
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	$sql = "SELECT * FROM fc_comments WHERE comment_id = '$id' ";
-	
-	$result = $dbh->query($sql);
-	$result = $result->fetch(PDO::FETCH_ASSOC);
-	
-	$dbh = null;
-	
-	return($result);
-}
-
-
-/**
- * write a comment
- * $parent - 'c' for chat
- * $parent - 'p + page_id' for comments on page overview
- * 
- */
-
-
-function fc_write_comment($author, $message, $parent, $id = NULL) {
-	
-	$comment_time = time();
-	$comment_hash = md5($comment_time);
-	$author = strip_tags($author);
-	$message = strip_tags($message);
-	$parent = strip_tags($parent);
-	
-	$pdo_fields_update = array(
-		'comment_text' => 'STR'
-	);
-	
-	$pdo_fields_new = array(
-		'comment_id' => 'INT',
-		'comment_hash' => 'STR',
-		'comment_parent' => 'STR',
-		'comment_time' => 'STR',
-		'comment_author' => 'STR',
-		'comment_text' => 'STR'
-	);
-	
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	
-	if(!is_null($id)) {
-		$sql = generate_sql_update_str($pdo_fields_update,"fc_comments","WHERE comment_id = '$id' ");
-		$sth = $dbh->prepare($sql);
-		generate_bindParam_str($pdo_fields_update,$sth);
-		$sth->bindParam(':comment_text', $message, PDO::PARAM_STR);
-	} else {
-		$sql = generate_sql_insert_str($pdo_fields_new,"fc_comments");
-		$sth = $dbh->prepare($sql);
-		generate_bindParam_str($pdo_fields_new,$sth);
-		$sth->bindParam(':comment_hash', $comment_hash, PDO::PARAM_STR);
-		$sth->bindParam(':comment_parent', $parent, PDO::PARAM_STR);
-		$sth->bindParam(':comment_time', $comment_time, PDO::PARAM_STR);
-		$sth->bindParam(':comment_author', $author, PDO::PARAM_STR);
-		$sth->bindParam(':comment_text', $message, PDO::PARAM_STR);
-	}
-
-	$cnt_changes = $sth->execute();
-
-	$error = print_r($dbh->errorInfo(),true);
-	$lastId = $dbh->lastInsertId();
-	$dbh = null;
-	
-	if($cnt_changes == true) {
-		return 'success';
-	} else {
-		return $error;
-	}
-
-}
-
-
+	return $media_data;
+	 
+	 
+ }
+ 
 
 /**
  * get data from fc_media
@@ -937,14 +864,11 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 		"media_version" => "$version",
 		"media_filesize" => "$filesize",
 		"media_lastedit" => "$lastedit",
-		"media_type" => "$type"		
+		"media_type" => "$filetype"		
 	];
 	
 	if($cnt > 0) {
 		$modus = 'update';
-		//$sql_update = generate_sql_update_str($pdo_fields_update,"fc_media","WHERE media_file = :media_file AND (media_lang = :media_lang OR media_lang = '' OR media_lang is null)");
-		//$sth = $dbh->prepare($sql_update);
-		//generate_bindParam_str($pdo_fields_update,$sth);
 		
 		$cnt_changes = $db_content->update("fc_media", $columns, [
 			"AND" => [
@@ -955,11 +879,8 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 		
 	} else {
 		$modus = 'new';
-		//$sql_new = generate_sql_insert_str($pdo_fields_new,"fc_media");
-		//$sth = $dbh->prepare($sql_new);
-		//generate_bindParam_str($pdo_fields_new,$sth);
 		
-			$columns["media_file"] = "$filename";
+		$columns["media_file"] = "$filename";
 			
 		$cnt_changes = $db_content->insert("fc_media", $columns, [
 			"AND" => [
@@ -971,32 +892,6 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 		$lastId = $db_content->id();
 		
 	}
-	
-
-	/*
-	$sth->bindParam(':media_file', $filename, PDO::PARAM_STR);
-	$sth->bindParam(':media_title', $title, PDO::PARAM_STR);
-	$sth->bindParam(':media_notes', $notes, PDO::PARAM_STR);
-	$sth->bindParam(':media_keywords', $keywords, PDO::PARAM_STR);
-	$sth->bindParam(':media_text', $text, PDO::PARAM_STR);
-	$sth->bindParam(':media_url', $url, PDO::PARAM_STR);
-	$sth->bindParam(':media_alt', $alt, PDO::PARAM_STR);
-	$sth->bindParam(':media_lang', $lang, PDO::PARAM_STR);
-	$sth->bindParam(':media_priority', $priority, PDO::PARAM_STR);
-	$sth->bindParam(':media_license', $license, PDO::PARAM_STR);
-	$sth->bindParam(':media_credit', $credit, PDO::PARAM_STR);
-	$sth->bindParam(':media_version', $version, PDO::PARAM_STR);
-	$sth->bindParam(':media_filesize', $filesize, PDO::PARAM_STR);
-	$sth->bindParam(':media_lastedit', $lastedit, PDO::PARAM_STR);
-	$sth->bindParam(':media_type', $filetype, PDO::PARAM_STR);
-
-	$cnt_changes = $sth->execute();
-	*/
-	
-	//$error = print_r($dbh->errorInfo(),true);
-	//$lastId = $dbh->lastInsertId();
-	//debug_to_console($modus);
-	//$dbh = null;
 	
 	if($cnt_changes->rowCount() > 0) {
 		return 'success';
@@ -1047,6 +942,208 @@ function fc_get_labels() {
 	
 	return $labels;
 }
+
+
+
+/**
+ * generate an select-image widget
+ * $images array()
+ * $selected array()
+ * return html string
+ * post name => picker$id_images[]
+ */
+
+function fc_select_img_widget($images,$seleced_img,$prefix='',$id=1) {
+	
+	global $lang;
+	
+	if(!array($seleced_img)) {
+		$seleced_img = array();
+	}
+	
+	$choose_images  = '<div class="scroll-container">';
+	$choose_images .= '<select multiple="multiple" class="image-picker show-html" name="picker'.$id.'_images[]">';
+	
+	/* if we have selected images, show them first */
+	if(count($seleced_img)>0) {
+		$choose_images .= '<optgroup label="'.$lang['label_image_selected'].'">';
+		foreach($seleced_img as $sel_images) {
+			if(is_file("$sel_images")) {
+				$choose_images .= '<option data-img-src="'.$sel_images.'" value="'.$sel_images.'" selected>'.basename($sel_images).'</option>'."\r\n";
+			}
+		}
+		$choose_images .= '</optgroup>'."\r\n";
+	}
+	
+	for($i=0;$i<count($images);$i++) {
+		
+		$img_filename = basename($images[$i]['media_file']);
+		$image_name = $images[$i]['media_file'];
+		$image_tmb_name = $images[$i]['media_thumb'];
+		$imgsrc = "../$img_path/$images[$i][media_file]";
+		$lastedit = $images[$i]['media_lastedit'];
+		$lastedit_year = date('Y',$lastedit);
+		$filemtime = $lastedit_year;
+		
+		if($prefix != '') {
+			if((strpos($image_name, $prefix)) === false) {
+				continue;
+			}
+		}
+		
+		if(file_exists($image_tmb_name)) {
+			$preview = $image_tmb_name;
+		} else {
+			$preview = $image_name;
+		}
+		
+		/* new label for each year */
+		if(date('Y',$images[$i-1]['media_lastedit']) != $lastedit_year) {	
+			if($i == 0) {
+				$choose_images .= '<optgroup label="'.$filemtime.'">'."\r\n";
+			} else {
+				$choose_images .= '</optgroup><optgroup label="'.$filemtime.'">'."\r\n";
+			}
+		}
+		
+		if(!in_array($image_name, $seleced_img)) {
+			$choose_images .= '<option data-img-src="'.$preview.'" value="'.$image_name.'">'.$img_filename.'</option>'."\r\n";
+		}
+		
+	}
+	$choose_images .= '</optgroup>'."\r\n";
+	$choose_images .= '</select>'."\r\n";
+	$choose_images .= '</div>';
+	
+	return $choose_images;
+	
+}
+
+
+function fc_list_gallery_thumbs($gid) {
+	
+	global $db_posts;
+	global $icon;
+	$gid = (int) $gid;
+	
+	
+	$date = $db_posts->get("fc_posts","post_date", [
+	"post_id" => $gid
+	]);
+	
+	$filepath = '../content/galleries/'.date('Y',$date).'/gallery'.$gid.'/*_tmb.jpg';
+	$thumbs_array = glob("$filepath");
+	arsort($thumbs_array);
+
+	$thumbs = '';
+	foreach($thumbs_array as $tmb) {
+		$thumbs .= '<div class="tmb">';
+		$thumbs .= '<div class="tmb-preview"><img src="'.$tmb.'" class="img-fluid"></div>';
+		$thumbs .= '<div class="tmb-actions d-flex btn-group">';
+		$thumbs .= '<button type="submit" name="sort_tmb" value="'.$tmb.'" class="btn btn-sm btn-fc w-100">'.$icon['angle_up'].'</button>';
+		$thumbs .= '<button type="submit" name="del_tmb" value="'.$tmb.'" class="btn btn-sm btn-danger w-50">'.$icon['trash_alt'].'</button>';
+		$thumbs .= '</div>';
+		$thumbs .= '</div>';
+	}
+	
+	
+	$str = '';
+	$str .= $thumbs;
+	
+	
+	return $str;
+		
+}
+
+
+
+function fc_rename_gallery_image($thumb) {
+	
+	$timestring = microtime(true);
+	
+	$path_parts = pathinfo($thumb);
+	$dir = $path_parts['dirname'].'/';
+	$tmb = $dir.$path_parts['basename'];
+	$img = str_replace("_tmb", "_img", $tmb);
+	
+	$new_tmb = $dir.$timestring.'_tmb.jpg';
+	$new_img = $dir.$timestring.'_img.jpg';
+
+	
+	rename("$tmb", "$new_tmb");
+	rename("$img", "$new_img");
+	
+}
+
+
+
+function fc_remove_gallery($id,$dir) {
+
+	$fp = '../content/galleries/'.$dir.'/gallery'.$id.'/';
+	$files = glob("$fp*jpg");
+
+	foreach($files as $file) {
+		unlink($file);
+	}
+	
+	rmdir($fp);
+	
+	
+}
+
+
+
+
+function fc_create_tmb($img_src, $tmb_name, $tmb_width, $tmb_height, $tmb_quality) {
+	
+	global $img_tmb_path;
+	
+	/* thumbnail directories */
+	$tmb_dir = '../'.$img_tmb_path;
+	$tmb_dir_year = $tmb_dir.'/'.date('Y',time());
+	$tmb_destination = $tmb_dir_year.'/'.date('m',time());
+	if(!is_dir($tmb_dir_year)) {
+		mkdir($tmb_dir_year);
+	}
+	if(!is_dir($tmb_destination)) {
+		mkdir($tmb_destination);
+	}
+	
+	$arr_image_details	= GetImageSize("$img_src");
+	$original_width		= $arr_image_details[0];
+	$original_height	= $arr_image_details[1];
+	$a = $tmb_width / $tmb_height;
+  $b = $original_width / $original_height;
+	
+	
+	if ($a<$b) {
+     $new_width = $tmb_width;
+     $new_height	= intval($original_height*$new_width/$original_width);
+  } else {
+     $new_height = $tmb_height;
+     $new_width	= intval($original_width*$new_height/$original_height);
+  }
+	
+	if(($original_width <= $tmb_width) AND ($original_height <= $tmb_height)) {
+	  $new_width = $original_width;
+	  $new_height = $original_height;
+  }
+  
+	if($arr_image_details[2]==1) { $imgt = "imagegif"; $imgcreatefrom = "imagecreatefromgif";  }
+	if($arr_image_details[2]==2) { $imgt = "imagejpeg"; $imgcreatefrom = "imagecreatefromjpeg";  }
+	if($arr_image_details[2]==3) { $imgt = "imagepng"; $imgcreatefrom = "imagecreatefrompng";  }
+	
+	
+	if($imgt) { 
+		$old_image	= $imgcreatefrom("$img_src");
+		$new_image	= imagecreatetruecolor($new_width, $new_height);
+		imagecopyresampled($new_image,$old_image,0,0,0,0,$new_width,$new_height,$original_width,$original_height);
+		imagejpeg($new_image,"$tmb_destination/$tmb_name",$tmb_quality);
+		imagedestroy($new_image);
+	}
+	
+}
+
 
 
 

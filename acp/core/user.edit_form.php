@@ -149,7 +149,7 @@ echo '</div>';
 
 echo'<div class="tab-pane fade" id="psw">';
 
-echo tpl_form_control_group('',$lang['f_user_psw'],"<div class='alert alert-danger'>$lang[f_user_psw_description]</div>");
+echo '<div class="alert alert-info">'.$lang['f_user_psw_description'].'</div>';
 
 echo tpl_form_control_group('',$lang['f_user_psw_new'],"<input class='form-control' type='password' name='user_psw_new' value=''>");
 echo tpl_form_control_group('',$lang['f_user_psw_reconfirmation'],"<input class='form-control' type='password' name='user_psw_reconfirmation' value=''>");
@@ -175,18 +175,29 @@ if($arr_drm[5] == "drm_acp_editownpages")	{  $checked_editownpages = "checked"; 
 if($arr_drm[6] == "drm_moderator")	{  $checked_moderator = "checked";  }
 if($arr_drm[7] == "drm_can_publish")	{  $checked_can_publish = "checked";  }
 
-echo '<fieldset class="mt-4">';
+echo '<fieldset class="mt-5 fieldset-danger">';
 echo '<legend>'.$lang['f_user_drm'].'</legend>';
 
-echo tpl_checkbox('drm_acp_class','administrator','check_admin',$lang['drm_administrator'],$checked_class);
+$label_admin = $lang['drm_administrator'].'<br>'.$lang['drm_administrator_desc'];
+echo tpl_checkbox('drm_acp_class','administrator','check_admin',$label_admin,$checked_class);
+echo '<hr>';
+
+echo '<h6>'.$lang['drm_description'].'</h6>';
+
+$label_drm = $lang['drm_user'].'<br>'.$lang['drm_user_desc'];
+
+echo tpl_checkbox('drm_acp_user','drm_acp_user','check_user',$label_drm,$checked_user);
+echo '<hr>';
 echo tpl_checkbox('drm_acp_pages','drm_acp_pages','check_page',$lang['drm_pages'],$checked_pages);
 echo tpl_checkbox('drm_acp_editpages','drm_acp_editpages','check_editpages',$lang['drm_editpages'],$checked_editpages);
 echo tpl_checkbox('drm_acp_editownpages','drm_acp_editownpages','check_ownpages',$lang['drm_editownpages'],$checked_editownpages);
-echo tpl_checkbox('drm_acp_files','drm_acp_files','check_files',$lang['drm_files'],$checked_files);
-echo tpl_checkbox('drm_acp_user','drm_acp_user','check_user',$lang['drm_user'],$checked_user);
-echo tpl_checkbox('drm_acp_system','drm_acp_system','check_system',$lang['drm_system'],$checked_system);
-echo tpl_checkbox('drm_moderator','drm_moderator','check_mod',$lang['drm_moderator'],$checked_moderator);
 echo tpl_checkbox('drm_can_publish','drm_can_publish','check_pub',$lang['drm_user_can_publish'],$checked_can_publish);
+echo '<hr>';
+echo tpl_checkbox('drm_acp_files','drm_acp_files','check_files',$lang['drm_files'],$checked_files);
+echo '<hr>';
+echo tpl_checkbox('drm_acp_system','drm_acp_system','check_system',$lang['drm_system'],$checked_system);
+echo '<hr>';
+echo tpl_checkbox('drm_moderator','drm_moderator','check_mod',$lang['drm_moderator'],$checked_moderator);
 
 echo '</fieldset>';
 

@@ -1,8 +1,7 @@
 <?php
 
-/**
- * acp - english language file
- */
+include 'dict-posts.php';
+include 'dict-frontend.php';
 
 /* tn_ = topNav */
 
@@ -12,6 +11,8 @@ $lang['tn_moduls'] = "Addons";
 $lang['tn_moduls_desc'] = "Access and manage Module and Themes";
 $lang['tn_pages'] = "Pages";
 $lang['tn_pages_desc'] = "Edit content, Creating/Edit pages ...";
+$lang['tn_posts'] = "Posts";
+$lang['tn_posts_desc'] = "Create and manage posts, events, galleries ...";
 $lang['tn_filebrowser'] = "Files";
 $lang['tn_filebrowser_desc'] = "Upload and manage images, graphics and files";
 $lang['tn_usermanagement'] = "User";
@@ -20,6 +21,7 @@ $lang['tn_system'] = "System";
 $lang['tn_system_desc'] = "Preferences, Snippets and Backup";
 $lang['tn_contents'] = "Contents";
 $lang['tn_contents_desc'] = "Pages, Snippets, RSS Feeds create/edit/delete ...";
+$lang['tn_comments'] = 'Comments';
 
 /* Links and Buttons */
 $lang['back_to_page'] = "back to Homepage";
@@ -174,6 +176,8 @@ $lang['tab_addons'] = "Addons";
 $lang['tab_page_preferences'] = "Preferences";
 $lang['tab_page_preferences_description'] = "Templates, Rights Management ...";
 
+$lang['tab_posts'] = 'Posts';
+
 $lang['lastedit'] = "Last Edit";
 $lang['filesize'] = "Filesize";
 $lang['date_of_change'] = "Date of Change";
@@ -230,6 +234,7 @@ $lang['type_of_use_register'] = "Registration";
 $lang['type_of_use_password'] = "Reset Password";
 $lang['type_of_use_sitemap'] = "Sitemap";
 $lang['type_of_use_404'] = "404 (Page not found)";
+$lang['type_of_use_display_post'] = "Display Post";
 
 $lang['legend_structured_pages'] = "Ordered Pages";
 $lang['legend_unstructured_pages'] = "Single Pages";
@@ -291,6 +296,12 @@ $lang['f_user_select_paused'] = "Locked temporarily";
 $lang['f_user_select_deleted'] = "Deleted";
 $lang['f_administrators'] = "Administrators";
 
+$lang['label_position_top'] = "This Page is a ...";
+$lang['label_single_page'] = "... single Page";
+$lang['label_portal_page'] = "... the Home Page";
+$lang['label_mainnav_page'] = "... Part of the main navigation";
+$lang['label_position_sub'] = "This Page is a Subpage of ...";
+
 $lang['label_title'] = "Title";
 $lang['label_description'] = "Description";
 $lang['label_keywords'] = "Keywords";
@@ -331,6 +342,8 @@ $lang['label_missing_meta_description'] = 'Missing Meta Description';
 
 $lang['label_active_theme'] = 'Active Theme';
 $lang['label_installed_themes'] = 'Installed Themes';
+
+$lang['label_show_entries'] = '%s of %s Entries are displayed';
 
 /* Preferences */
 
@@ -387,14 +400,46 @@ $lang['prefs_mailer_smtp_username'] = "Username";
 $lang['prefs_mailer_smtp_password'] = "Password";
 $lang['prefs_mailer_send_test'] = "Send E-mail for testing";
 $lang['prefs_mailer_send_test_success'] = "Die E-Mail wurde versendet";
+$lang['prefs_mail_type_smtp_desc'] = 'To use SMTP, you have to create a <code>config_smtp.php</code> file in the <code>/content/</code> folder.';
 
 $lang['prefs_nbr_page_versions'] = "Number of Page-Versions";
+$lang['prefs_pagesort_minlength'] = "Minimum length of the character string &quot;Page Order&quot; ";
 
+$lang['prefs_comments_mode_1'] = "All Comments must be activated by an Admin";
+$lang['prefs_comments_mode_2'] = "All Comments will be public immediately";
+$lang['prefs_comments_mode_3'] = "Comments are deactivated";
+$lang['prefs_comments_auth_1'] = 'Only registered users can comment';
+$lang['prefs_comments_auth_2'] = 'User have to fill out Name and E-Mail';
+$lang['prefs_comments_auth_3'] = 'Accept all anonymous inputs (not recommended)';
+$lang['prefs_comments_autoclose_time'] = 'Close the comment function after X seconds';
+$lang['label_comment_auto'] = 'Comments - automated';
+$lang['label_comment_auth'] = 'Comments - authorization';
+$lang['label_comment_mode'] = 'Comments - mode';
+$lang['label_comments'] = 'Comments';
+$lang['label_filter_by_status'] = 'Filter by Status';
+$lang['label_filter_comments_by_page'] = 'Comments from Pages';
+$lang['label_filter_comments_by_posts'] = 'Comments from Posts';
+$lang['label_all_comments'] = 'All Comments';
+$lang['label_comments_status1'] = 'Wait for approval';
+$lang['label_comments_status2'] = 'Public Comments';
+$lang['label_comments_max_entries'] = 'Maximum number of posts per thread';
+$lang['label_comments_max_level'] = 'Maximum depth of a thread';
+
+$lang['customize_database'] = 'Customize database';
+$lang['migrate_database'] = 'Migrate database';
 
 $lang['yes'] = "Yes";
 $lang['no'] = "No";
 
 $lang['labels'] = 'Labels';
+$lang['categories'] = 'Categories';
+
+$lang['category_name'] = 'Title';
+$lang['category_priority'] = 'Priority';
+$lang['category_thumbnail'] = 'Thumbnail';
+$lang['category_description'] = 'Description';
+
+$lang['no_image'] = 'No Image';
 
 $lang['prefs_cms_domain'] = 'CMS Domain';
 $lang['prefs_cms_ssl_domain'] = 'SSL Domain';
@@ -412,13 +457,16 @@ $lang['acp_session_lifetime'] = 'ACP Session Lifetime (Seconds)';
 
 /* rights management */
 
-$lang['drm_administrator'] = "User is Administrator";
-$lang['drm_pages'] = "Edit Pages";
-$lang['drm_editpages'] = "Edit All Pages";
-$lang['drm_editownpages'] = "Only own Pages";
+$lang['drm_description'] = "The user can perform the following actions";
+$lang['drm_administrator'] = "The user is an administrator";
+$lang['drm_administrator_desc'] = "<strong>Attention!</strong> This option enables access to the ACP (Backend)";
+$lang['drm_pages'] = "Create new Pages";
+$lang['drm_editpages'] = "Edit all Pages";
+$lang['drm_editownpages'] = "Edit only own Pages";
 $lang['drm_user'] = "Manage User";
+$lang['drm_user_desc'] = "<strong>Attention!</strong> If this option is activated, the user can change all authorizations. Of course, this also applies to his own user rights.";
 $lang['drm_system'] = "Edit Preferences";
-$lang['drm_files'] = "Dateien hochladen";
+$lang['drm_files'] = "Upload files";
 $lang['drm_no_access'] = "You do not have the required access rights for this action";
 $lang['drm_moderator'] = "Moderator";
 $lang['drm_user_can_publish'] = "User can publish";
@@ -431,6 +479,7 @@ $lang['msg_user_exists'] = "User already exists";
 $lang['msg_user_mandatory'] = "Username is mandatory";
 $lang['msg_usermail_exists'] = "E-Mail Address already exists";
 $lang['db_changed'] = "Database updated";
+$lang['db_record_changed'] = "The record was updated";
 $lang['db_not_changed'] = "Error on updating";
 $lang['msg_user_updated'] = "User updated";
 $lang['msg_new_user_saved'] = "New user was stored";
@@ -448,11 +497,13 @@ $lang['backup_description'] = "Download the databases on your local computer.";
 
 $lang['msg_file_delete'] = "The file was deleted.";
 $lang['msg_file_delete_error'] = "Error while deleting";
+$lang['msg_entry_delete'] = "The entry was deleted";
 
 $lang['msg_page_saved'] = "Page has been saved";
 $lang['msg_page_saved_error'] = "An Error has occurred";
 $lang['msg_page_deleted'] = "Page has been deleted";
 $lang['msg_page_updated'] = "Page has been updated";
+$lang['msg_error_deleting_sub_pages'] = 'You cannot delete pages with subpages. To do this, you must first delete all subpages contained.';
 
 $lang['msg_update_available'] = "<b>There is a newer version available!</b><br>Please remember, a backup before the installation is always a good idea.";
 $lang['msg_no_update_available'] = "The installed version is up to date.";
@@ -472,6 +523,7 @@ $lang['section_is_beta'] = '<strong>Please note:</strong><br>This area is in a b
 $lang['msg_nothing_to_install'] = 'There are currently no addons been uploaded for installation.';
 
 $lang['msg_no_help_doc'] = 'Sorry, there are no instructions yet';
+$lang['msg_no_entries_so_far'] = 'So far there are no entries here';
 
 /* System */
 
@@ -503,33 +555,5 @@ $lang['add_custom_field'] = "New Custom Field";
 $lang['delete_custom_field'] = "Delete Fields";
 $lang['delete_custom_field_desc'] = "If you remove a field, its data will be lost.";
 $lang['no_custom_fields'] = "There are no Custom Fields, so far";
-
-/* Dates */
-$lang['m01'] = "January";
-$lang['m02'] = "February";
-$lang['m03'] = "March";
-$lang['m04'] = "April";
-$lang['m05'] = "May";
-$lang['m06'] = "June";
-$lang['m07'] = "July";
-$lang['m08'] = "August";
-$lang['m09'] = "September";
-$lang['m10'] = "October";
-$lang['m11'] = "November";
-$lang['m12'] = "December";
-
-
-$lang['d01'] = "Monday";
-$lang['d02'] = "Tuesday";
-$lang['d03'] = "Wednesday";
-$lang['d04'] = "Thursday";
-$lang['d05'] = "Friday";
-$lang['d06'] = "Saturday";
-$lang['d07'] = "Sunday";
-
-
-$lang['date_today'] = "Today";
-$lang['date_yesterday'] = "Yesterday";
-
 
 ?>

@@ -11,6 +11,7 @@ function get_collumns($database,$table_name) {
 	global $db_content;
 	global $db_user;
 	global $db_statistics;
+	global $db_posts;
 	global $db_index;
 	global $db_type;
 	global $database_name;
@@ -27,6 +28,8 @@ function get_collumns($database,$table_name) {
 		$data = $db_user->query($query)->fetchAll(PDO::FETCH_ASSOC);
 	} else if($database == "tracker") {
 		$data = $db_statistics->query($query)->fetchAll(PDO::FETCH_ASSOC);
+	} else if($database == "posts") {
+		$data = $db_posts->query($query)->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
 	/* index is a sqlite file */
@@ -55,9 +58,11 @@ function table_exists($database,$table_name) {
 	global $db_content;
 	global $db_user;
 	global $db_statistics;
+	global $db_posts;
 	global $db_type;
 	global $database_name;
 	global $db_index;
+	global $db_type;
 	
 	if($db_type == "mysql") {
 		$query = "SELECT count(*) FROM information_schema.TABLES WHERE (TABLE_SCHEMA = '$database_name') AND (TABLE_NAME = '$table_name')";
@@ -71,6 +76,8 @@ function table_exists($database,$table_name) {
 		$cnt_tables = $db_user->query($query)->fetch();
 	} else if($database == "tracker") {
 		$cnt_tables = $db_statistics->query($query)->fetch();
+	} else if($database == "posts") {
+		$cnt_tables = $db_posts->query($query)->fetch();
 	} else if($database == "index") {
 		$query = "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name='$table_name'";
 		$cnt_tables = $db_index->query($query)->fetch();
@@ -162,6 +169,7 @@ function update_table($col_name,$type,$table_name,$database) {
 	global $db_content;
 	global $db_user;
 	global $db_statistics;
+	global $db_posts;
 	global $db_type;
 	global $database_name;
 	
@@ -174,6 +182,8 @@ function update_table($col_name,$type,$table_name,$database) {
 		$db_user->query($sql);
 	} else if($database == "tracker") {
 		$db_statistics->query($sql);
+	} else if($database == "posts") {
+		$db_posts->query($sql);
 	}
 	
 }
@@ -192,19 +202,42 @@ column_name3 data_type,
 
 function add_table($database,$table_name,$cols) {
 
-
-
 	global $db_content;
 	global $db_user;
 	global $db_statistics;
+	global $db_posts;
 	global $db_type;
 	global $db_index;
 	global $database_name;
+
+
+	if($db_type == 'sqlite') {
+
+		foreach ($cols as $k => $v) {
+			if(strpos($v,'INTEGER') !== false) {
+				$str = 'INTEGER';
+			} else if(strpos($v,'VARCHAR') !== false) {
+				$str = 'VARCHAR';
+			} else {
+				$str = 'TEXT';
+			}
+			
+			if(strpos($v,'PRIMARY') !== false) {
+				$str .= ' NOT NULL PRIMARY KEY';
+			}
+			
+    	$string .= "$k $str,\r";			
+		}
+		
+		$cols_string = substr(trim("$string"), 0,-1); // cut last commata and returns
 	
-	foreach ($cols as $k => $v) {
-		$cols_string .= "$k $cols[$k],\r";
+	} else {
+
+		foreach ($cols as $k => $v) {
+			$cols_string .= "$k $cols[$k],\r";
+		}
+		
 	}
-	
 		
 	$sql = "CREATE TABLE $table_name ( $cols_string )";
 	
@@ -214,6 +247,8 @@ function add_table($database,$table_name,$cols) {
 		$db_user->query($sql);
 	} else if($database == "tracker") {
 		$db_statistics->query($sql);
+	} else if($database == "posts") {
+		$db_posts->query($sql);
 	} else if($database == "index") {
 		$db_index->query($sql);
 	}

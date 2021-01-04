@@ -15,31 +15,24 @@ if(isset($_POST['saveDesign'])) {
 	$select_template = explode("<|-|>", $_POST['select_template']);
 	$prefs_template = $select_template[0];
 	$prefs_template_layout = $select_template[1];
-	
-	$dbh = new PDO("sqlite:".CONTENT_DB);
-	
-	$pdo_fields = array(
-		'prefs_template' => 'STR',
-		'prefs_template_layout' => 'STR'
-	);
 
-	$sql = generate_sql_update_str($pdo_fields,"fc_preferences","WHERE prefs_id = 1");
-	$sth = $dbh->prepare($sql);
+	
+	$data = $db_content->update("fc_preferences", [
+		"prefs_template" =>  $prefs_template,
+		"prefs_template_layout" =>  $prefs_template_layout,
+	], [
+		"prefs_id" => 1
+	]);	
 
-	generate_bindParam_str($pdo_fields,$sth);
-	$sth->bindParam(':prefs_template', $prefs_template, PDO::PARAM_STR);
-	$sth->bindParam(':prefs_template_layout', $prefs_template_layout, PDO::PARAM_STR);
-	$cnt_changes = $sth->execute();
 	
-	$dbh = null;
-	
-	if($cnt_changes == TRUE) {
+	if($data->rowCount() > 0) {
 		$sys_message = "{OKAY} $lang[db_changed]";
 		record_log($_SESSION['user_nick'],"edit system design <b>$prefs_template</b>","6");
 	} else {
 		$sys_message = "{ERROR} $lang[db_not_changed]";
 		record_log($_SESSION['user_nick'],"error on saving system design","11");
 	}
+
 
 }
 
