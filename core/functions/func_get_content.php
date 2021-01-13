@@ -75,7 +75,7 @@ function get_content($page, $mode = 'p') {
 		$nav_sql_filter = "WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = '$languagePack'";
 	}
 
-	$nav_sql = "SELECT page_id, page_hash, page_language, page_linkname, page_permalink, page_title, page_sort, page_status
+	$nav_sql = "SELECT page_id, page_classes, page_hash, page_language, page_linkname, page_permalink, page_title, page_sort, page_status
 			  FROM fc_pages $nav_sql_filter ORDER BY page_sort DESC";
 
 	$fc_nav = $db_content->query("$nav_sql")->fetchAll();

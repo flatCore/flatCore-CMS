@@ -16,6 +16,7 @@ $cols = array(
 	"page_redirect" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"page_redirect_code" => "VARCHAR(20) NOT NULL DEFAULT ''",
 	"page_funnel_uri" => "VARCHAR(500) NOT NULL DEFAULT ''",
+	"page_classes" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"page_hash" => "VARCHAR(50) NOT NULL DEFAULT ''",
 	"page_psw" => "VARCHAR(255) NOT NULL DEFAULT ''",
 	"page_title" => "VARCHAR(255) NOT NULL DEFAULT ''",

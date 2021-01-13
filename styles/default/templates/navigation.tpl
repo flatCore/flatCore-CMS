@@ -9,7 +9,7 @@
       <ul class="navbar-nav mr-auto">
       	<li class="nav-item {$homelink_status}"><a class="nav-link" href="{$link_home}" title="{$homepage_title}">{$homepage_linkname}</a></li>	
 				{foreach item=nav from=$arr_menue}
-				<li class="nav-item {$nav.link_status}">
+				<li class="nav-item {$nav.link_status} {$nav.page_classes}">
 					<a class="nav-link nav-id-{$nav.page_id} {$nav.page_hash}" href="{$nav.link}" title="{$nav.page_title}">{$nav.page_linkname}</a>
 				</li>
 				{/foreach}

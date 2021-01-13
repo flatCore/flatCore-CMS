@@ -202,10 +202,13 @@ echo '</div>'; // end tab position
 echo'<div class="tab-pane fade show active" id="info">';
 	
 echo '<div class="row">';
-echo '<div class="col-md-9">';
+echo '<div class="col-md-5">';
 echo tpl_form_control_group('',$lang['f_page_linkname'],'<input class="form-control" type="text" name="page_linkname" value="'.$page_linkname.'">');
 echo '</div>';
-echo '<div class="col-md-3">';
+echo '<div class="col-md-4">';
+echo tpl_form_control_group('',$lang['f_page_classes'],"<input class='form-control' type='text' name='page_classes' value='$page_classes'>");
+echo '</div>';
+echo '<div class="col-md-2 offset-md-1">';
 echo tpl_form_control_group('',$lang['f_page_hash'],"<input class='form-control' type='text' name='page_hash' value='$page_hash'>");
 echo '</div>';
 echo '</div>';
