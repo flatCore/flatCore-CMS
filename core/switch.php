@@ -45,10 +45,6 @@ for($i=0;$i<$cnt_menu;$i++) {
 	}
 }
 
-echo '<pre>';
-print_r($mainmenu);
-echo '</pre>';
-
 $smarty->assign('homepage_linkname', text_parser($mainmenu['homepage_linkname']));
 $smarty->assign('homepage_title', $mainmenu['homepage_title']);
 unset($mainmenu['homepage_linkname'],$mainmenu['homepage_title']);
