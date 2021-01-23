@@ -269,7 +269,14 @@ foreach($get_posts as $k => $post) {
 	$this_entry = str_replace("{post_tpl_event_prices}", $price_list, $this_entry);
 	
 	/* products */
-	$post_price_gross = $get_posts[$k]['post_product_price_net']*($get_posts[$k]['post_product_tax']+100)/100;;
+	if($get_posts[$k]['post_product_tax'] == '1') {
+		$tax = $fc_prefs['prefs_posts_products_default_tax'];
+	} else if($get_posts[$k]['post_product_tax'] == '2') {
+		$tax = $fc_prefs['prefs_posts_products_tax_alt1'];
+	} else {
+		$tax = $fc_prefs['prefs_posts_products_tax_alt2'];
+	}
+	$post_price_gross = $get_posts[$k]['post_product_price_net']*($tax+100)/100;;
 	$post_price_gross = fc_post_print_currency($post_price_gross);
 	
 	$this_entry = str_replace("{post_price_gross}", $post_price_gross, $this_entry);
