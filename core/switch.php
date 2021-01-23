@@ -40,8 +40,14 @@ $fc_sitemap = show_sitemap();
 
 $cnt_menu = count($mainmenu);
 for($i=0;$i<$cnt_menu;$i++) {
-	$mainmenu[$i]['page_linkname'] = text_parser($mainmenu[$i]['page_linkname']);
+	if($mainmenu[$i]['page_linkname'] != '') {
+		$mainmenu[$i]['page_linkname'] = text_parser($mainmenu[$i]['page_linkname']);
+	}
 }
+
+echo '<pre>';
+print_r($mainmenu);
+echo '</pre>';
 
 $smarty->assign('homepage_linkname', text_parser($mainmenu['homepage_linkname']));
 $smarty->assign('homepage_title', $mainmenu['homepage_title']);
