@@ -27,16 +27,28 @@ if(substr("$mod_slug", -5) == '.html') {
 	$display_mode = 'show_post';	
 }
 
+$tpl_nav_cats = fc_load_posts_tpl($fc_template,'nav-categories.tpl');
+$tpl_nav_cats_item = fc_load_posts_tpl($fc_template,'nav-categories-item.tpl');
+
 $all_categories = fc_get_categories();
 $array_mod_slug = explode("/", $mod_slug);
 
+$nav_categories_list = '';
 
-foreach($all_categories as $cats) {	
+foreach($all_categories as $cats) {
+	
+	$this_nav_cat_item = $tpl_nav_cats_item;
+	$show_category_title = $cats['cat_name'];
+	$this_nav_cat_item = str_replace('{nav_item_title}', $show_category_title, $this_nav_cat_item);
+	$cat_link = '/'.$fct_slug.$cats['cat_name_clean'].'/';
+	$this_nav_cat_item = str_replace('{nav_item_link}', $cat_link, $this_nav_cat_item);
+	
 	if($cats['cat_name_clean'] == $array_mod_slug[0]) {
 		// show only posts from this category
 		$posts_filter['categories'] = $cats['cat_id'];
 		$display_mode = 'list_posts_category';
-		$show_category_title = $cats['cat_name'];
+		
+		$this_nav_cat_item = str_replace('{nav_item_class}', 'active', $this_nav_cat_item);
 		
 		if($array_mod_slug[1] == 'p') {
 			
@@ -48,8 +60,15 @@ foreach($all_categories as $cats) {
 				header("Connection: close");
 			}				
 		}
+	} else {
+		
+		$this_nav_cat_item = str_replace('{nav_item_class}', '', $this_nav_cat_item);
+		
 	}
+	$nav_categories_list .= $this_nav_cat_item;
 }
+
+$tpl_nav_cats = str_replace('{nav_categories_items}', $nav_categories_list, $tpl_nav_cats);
 
 
 /* pagination f.e. /p/2/ or /p/3/ .... */

@@ -31,7 +31,6 @@ $tpl_list_l = fc_load_posts_tpl($fc_template,'post-list-l.tpl');
 $tpl_list_p = fc_load_posts_tpl($fc_template,'post-list-p.tpl');
 $tpl_list_f = fc_load_posts_tpl($fc_template,'post-list-f.tpl');
 
-
 $tpl_pagination = fc_load_posts_tpl($fc_template,'pagination.tpl');
 $tpl_pagagination_list = fc_load_posts_tpl($fc_template,'pagination_list.tpl');
 
