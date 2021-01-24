@@ -276,10 +276,16 @@ foreach($get_posts as $k => $post) {
 	} else {
 		$tax = $fc_prefs['prefs_posts_products_tax_alt2'];
 	}
-	$post_price_gross = $get_posts[$k]['post_product_price_net']*($tax+100)/100;;
+	
+	$post_price_net = str_replace(',', '.', $get_posts[$k]['post_product_price_net']);
+	
+	$post_price_gross = $post_price_net*($tax+100)/100;;
 	$post_price_gross = fc_post_print_currency($post_price_gross);
+	$post_price_net = fc_post_print_currency($post_price_net);
 	
 	$this_entry = str_replace("{post_price_gross}", $post_price_gross, $this_entry);
+	$this_entry = str_replace("{post_price_net}", $post_price_net, $this_entry);
+	$this_entry = str_replace("{post_price_tax}", $tax, $this_entry);
 	$this_entry = str_replace("{post_currency}", $get_posts[$k]['post_product_currency'], $this_entry);
 	$this_entry = str_replace("{post_product_unit}", $get_posts[$k]['post_product_unit'], $this_entry);
 	$this_entry = str_replace("{post_product_price_label}", $get_posts[$k]['post_product_price_label'], $this_entry);
