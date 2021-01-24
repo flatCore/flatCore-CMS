@@ -147,7 +147,8 @@ if($post_data['post_product_tax'] == '1') {
 	$tax = $fc_prefs['prefs_posts_products_tax_alt2'];
 }
 
-$post_product_price_net = str_replace(',', '.', $post_data['post_product_price_net']);
+$post_product_price_net = str_replace('.', '', $post_data['post_product_price_net']);
+$post_product_price_net = str_replace(',', '.', $post_product_price_net);
 
 $post_price_gross = $post_product_price_net*($tax+100)/100;
 $post_price_gross = fc_post_print_currency($post_price_gross);

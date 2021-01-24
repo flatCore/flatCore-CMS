@@ -329,10 +329,22 @@ if($cnt_filter_posts > 0) {
 		$show_items_price = '';
 		if($get_posts[$i]['post_type'] == 'p') {
 			
-			$post_price_gross = $get_posts[$i]['post_product_price_net']*($get_posts[$i]['post_product_tax']+100)/100;
+			if($get_posts[$i]['post_product_tax'] == '1') {
+				$tax = $fc_preferences['prefs_posts_products_default_tax'];
+			} else if($get_posts[$i]['post_product_tax'] == '2') {
+				$tax = $fc_preferences['prefs_posts_products_tax_alt1'];
+			} else {
+				$tax = $fc_preferences['prefs_posts_products_tax_alt2'];
+			}
+			
+			$post_price_net = str_replace('.', '', $get_posts[$i]['post_product_price_net']);
+			$post_price_net = str_replace(',', '.', $post_price_net);
+			
+			$post_price_gross = $post_price_net*($tax+100)/100;
 			$post_price_gross = fc_post_print_currency($post_price_gross);
 
 			$show_items_price = '<div class="float-right small well well-sm">';
+			$show_items_price .= $post_price_net . ' ('.$tax.'%)<br>';
 			$show_items_price .= $post_price_gross;
 			$show_items_price .= '</div>';		
 		}
