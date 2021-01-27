@@ -156,7 +156,10 @@ function fc_get_type_of_use_pages($type) {
 	global $languagePack;
 	
 	$page = $db_content->get("fc_pages", ["page_permalink", "page_funnel_uri"], [
-		"page_type_of_use" => "$type"
+		"AND" => [
+			"page_type_of_use" => "$type",
+			"page_language" => "$languagePack"
+		]
 	]);
 	
 	return $page;
