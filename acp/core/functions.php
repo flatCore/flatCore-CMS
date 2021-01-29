@@ -617,7 +617,12 @@ function generate_xml_sitemap() {
 	
 
 		$results = $db_content->select("fc_pages", "*", [
-			"ORDER" => ["page_lastedit" => "DESC"]
+			"AND" => [
+				"page_status[!]" => ["draft","private","ghost"]
+			],
+			"ORDER" => [
+				"page_lastedit" => "DESC"
+			]
 		]);
 		
 		$cnt_results = count($results);
