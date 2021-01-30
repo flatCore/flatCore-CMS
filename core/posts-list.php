@@ -34,6 +34,8 @@ $tpl_list_f = fc_load_posts_tpl($fc_template,'post-list-f.tpl');
 $tpl_pagination = fc_load_posts_tpl($fc_template,'pagination.tpl');
 $tpl_pagagination_list = fc_load_posts_tpl($fc_template,'pagination_list.tpl');
 
+$tpl_category_link = fc_load_posts_tpl($fc_template,'link-categories.tpl');
+
 
 $sql_start = ($posts_start*$posts_limit)-$posts_limit;
 if($sql_start < 0) {
@@ -228,8 +230,13 @@ foreach($get_posts as $k => $post) {
 	$cat_str = '';
 	foreach($all_categories as $cats) {
 		
+		$link = $tpl_category_link;
+		
 		if(in_array($cats['cat_id'], $post_categories)) {
-			$cat_str .= '<a href="/'.$fct_slug.$cats['cat_name_clean'].'/">'.$cats['cat_name'].'</a> ';
+			$cat_href = '/'.$fct_slug.$cats['cat_name_clean'];
+			$link = str_replace('{cat_href}', $cat_href, $link);
+			$link = str_replace('{cat_name}', $cats['cat_name'], $link);
+			$cat_str .= $link;
 		}
 		
 		
