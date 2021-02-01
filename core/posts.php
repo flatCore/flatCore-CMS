@@ -47,7 +47,7 @@ foreach($all_categories as $cats) {
 		// show only posts from this category
 		$posts_filter['categories'] = $cats['cat_id'];
 		$display_mode = 'list_posts_category';
-		
+		$selected_category_title = $cats['cat_name'];
 		$this_nav_cat_item = str_replace('{nav_item_class}', 'active', $this_nav_cat_item);
 		
 		if($array_mod_slug[1] == 'p') {

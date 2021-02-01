@@ -317,7 +317,7 @@ $page_content = str_replace("{post_start_nbr}", $show_start, $page_content);
 $page_content = str_replace("{post_end_nbr}", $show_end, $page_content);
 
 if($display_mode == 'list_posts_category') {
-	$category_message = str_replace('{categorie}', $show_category_title, $lang['posts_category_filter']);
+	$category_message = str_replace('{categorie}', $selected_category_title, $lang['posts_category_filter']);
 	$page_content = str_replace("{category_filter}", $category_message, $page_content);
 } else {
 	$page_content = str_replace("{category_filter}", '', $page_content);
