@@ -461,11 +461,17 @@ if($_GET['new'] == 'm' OR $post_data['post_type'] == 'm') {
 } else if ($_GET['new'] == 'g' OR $post_data['post_type'] == 'g') {
 	$form_tpl = file_get_contents('templates/post_gallery.tpl');
 	
+	if($post_data['post_id'] == '') {
+		$form_tpl = str_replace('{disabled_upload_btn}','disabled', $form_tpl);
+	} else {
+		$form_tpl = str_replace('{disabled_upload_btn}','', $form_tpl);
+	}
+	
 	
 	$form_upload_tpl = file_get_contents('templates/gallery_upload_form.tpl');
 	$form_upload_tpl = str_replace('{token}',$_SESSION['token'], $form_upload_tpl);
 	$form_upload_tpl = str_replace('{post_id}',$post_data['post_id'], $form_upload_tpl);
-	$form_upload_tpl = str_replace('{disabled_upload_btn}','disabled', $form_upload_tpl);
+	
 	
 	$form_sort_tpl = file_get_contents('templates/gallery_sort_form.tpl');
 	

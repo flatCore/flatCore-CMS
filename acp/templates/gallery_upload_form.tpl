@@ -20,10 +20,14 @@
   </div>
 </div>
 
+<form action="acp.php?tn=posts&sub=edit" method="POST" id="reload_form">
+	<input type="hidden" name="post_id" value="{post_id}">
+</form>
+
 <script>
 $(function() {
 	$('#uploadGalModal').on('hidden.bs.modal', function (e) {
-		window.location.assign("acp.php?tn=posts&sub=edit&post_id={post_id}")
+		$("#reload_form").submit();
 	});
 });
 </script>
