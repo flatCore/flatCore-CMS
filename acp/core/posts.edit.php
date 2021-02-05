@@ -364,6 +364,17 @@ $select_tax .= '<option value="2" '.$sel_tax_2.'>'.$fc_preferences['prefs_posts_
 $select_tax .= '<option value="3" '.$sel_tax_3.'>'.$fc_preferences['prefs_posts_products_tax_alt2'].'</option>';
 $select_tax .= '</select>';
 
+$post_product_price_net = $post_data['post_product_price_net'];
+if($post_product_price_net == '') {
+	$post_product_price_net = '0,00';
+}
+
+$post_product_currency = $post_data['post_product_currency'];
+if($post_product_currency == '') {
+	$post_product_currency = $fc_preferences['prefs_posts_products_default_currency'];
+}
+
+
 /* add text snippet to prices */
 
 $snippet_select_pricelist = '<select class="form-control custom-select" name="post_product_textlib_price">';
@@ -450,11 +461,17 @@ if($_GET['new'] == 'm' OR $post_data['post_type'] == 'm') {
 } else if ($_GET['new'] == 'g' OR $post_data['post_type'] == 'g') {
 	$form_tpl = file_get_contents('templates/post_gallery.tpl');
 	
+	if($post_data['post_id'] == '') {
+		$form_tpl = str_replace('{disabled_upload_btn}','disabled', $form_tpl);
+	} else {
+		$form_tpl = str_replace('{disabled_upload_btn}','', $form_tpl);
+	}
+	
 	
 	$form_upload_tpl = file_get_contents('templates/gallery_upload_form.tpl');
 	$form_upload_tpl = str_replace('{token}',$_SESSION['token'], $form_upload_tpl);
 	$form_upload_tpl = str_replace('{post_id}',$post_data['post_id'], $form_upload_tpl);
-	$form_upload_tpl = str_replace('{disabled_upload_btn}','disabled', $form_upload_tpl);
+	
 	
 	$form_sort_tpl = file_get_contents('templates/gallery_sort_form.tpl');
 	
@@ -521,11 +538,11 @@ $form_tpl = str_replace('{post_event_price_note}', $post_data['post_event_price_
 $form_tpl = str_replace('{post_product_number}', $post_data['post_product_number'], $form_tpl);
 $form_tpl = str_replace('{post_product_manufacturer}', $post_data['post_product_manufacturer'], $form_tpl);
 $form_tpl = str_replace('{post_product_supplier}', $post_data['post_product_supplier'], $form_tpl);
-$form_tpl = str_replace('{post_product_currency}', $post_data['post_product_currency'], $form_tpl);
+$form_tpl = str_replace('{post_product_currency}', $post_product_currency, $form_tpl);
 $form_tpl = str_replace('{post_product_price_label}', $post_data['post_product_price_label'], $form_tpl);
 $form_tpl = str_replace('{post_product_amount}', $post_data['post_product_amount'], $form_tpl);
 $form_tpl = str_replace('{post_product_unit}', $post_data['post_product_unit'], $form_tpl);
-$form_tpl = str_replace('{post_product_price_net}', $post_data['post_product_price_net'], $form_tpl);
+$form_tpl = str_replace('{post_product_price_net}', $post_product_price_net, $form_tpl);
 $form_tpl = str_replace('{post_product_price_gross}', $post_product_price_gross, $form_tpl);
 $form_tpl = str_replace('{select_tax}', $select_tax, $form_tpl);
 $form_tpl = str_replace('{snippet_select_pricelist}', $snippet_select_pricelist, $form_tpl);

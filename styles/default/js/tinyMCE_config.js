@@ -21,6 +21,8 @@ $(function() {
 	  image_list : "core/imagelist.php",
 	  image_advtab: true,
 	  image_title: true,
+	  
+	  link_list : "core/linklist.php",
 	  convert_urls: false,
 	  
 	  templates: [ 

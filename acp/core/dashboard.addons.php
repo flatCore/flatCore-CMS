@@ -24,10 +24,6 @@ if($cnt_mods > 0) {
 			$poster_img = '<img src="images/poster-addons.jpg" class="card-img-top">';
 		}
 		
-		if($i % 6 == 0) {
-			echo '<div class="w-100"></div>';
-		}
-		
 		if(is_file("$mod_info_file")) {
 			
 			unset($mod,$modnav);

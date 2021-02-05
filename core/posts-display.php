@@ -16,6 +16,24 @@ $post_releasedate_time = date('H:i:s',$post_data['post_releasedate']);
 $post_lastedit = date('Y-m-d H:i',$post_data['lastedit']);
 $post_lastedit_from = $post_data['post_lastedit_from'];
 
+/* categories */
+$tpl_category_link = fc_load_posts_tpl($fc_template,'link-categories.tpl');
+$cat_links_array = explode('<->',$post_data['post_categories']);
+
+foreach($all_categories as $cats) {
+	
+	$link = $tpl_category_link;
+	
+	if(in_array($cats['cat_id'],$cat_links_array)) {
+		$post_cats_string .= $cats['cat_name'] .' ';
+		$cat_href = '/'.$fct_slug.$cats['cat_name_clean'];
+		$link = str_replace('{cat_href}', $cat_href, $link);
+		$link = str_replace('{cat_name}', $cats['cat_name'], $link);
+		$post_cats_btn .= $link;
+		
+	}
+}
+
 
 /* event dates */
 
@@ -104,6 +122,11 @@ $this_entry = str_replace('{post_text}', $post_text, $this_entry);
 $this_entry = str_replace("{post_type}", $post_data['post_type'], $this_entry);
 $this_entry = str_replace('{post_img_src}', $first_post_image, $this_entry);
 
+$this_entry = str_replace("{post_source}", $post_data['post_source'], $this_entry);
+$this_entry = str_replace("{post_product_manufacturer}", $post_data['post_product_manufacturer'], $this_entry);
+$this_entry = str_replace("{post_product_supplier}", $post_data['post_product_supplier'], $this_entry);
+$this_entry = str_replace("{post_product_number}", $post_data['post_product_number'], $this_entry);
+
 $this_entry = str_replace("{post_releasedate_ts}", $post_data['post_releasedate'], $this_entry); /* timestring */
 $this_entry = str_replace("{post_releasedate}", $post_releasedate, $this_entry);
 $this_entry = str_replace("{post_releasedate_year}", $post_releasedate_year, $this_entry);
@@ -127,7 +150,8 @@ $this_entry = str_replace("{post_tpl_event_prices}", $price_list, $this_entry);
 
 $this_entry = str_replace("{video_id}", $video['v'], $this_entry);
 $this_entry = str_replace("{post_external_link}", $post_data['post_link'], $this_entry);
-$this_entry = str_replace("{post_cats}", $cat_links_string, $this_entry);
+$this_entry = str_replace("{post_cats}", $post_cats_btn, $this_entry);
+$this_entry = str_replace("{post_cats_string}", $post_cats_string, $this_entry);
 $this_entry = str_replace("{back_to_overview}", $lang['back_to_overview'], $this_entry);
 $this_entry = str_replace("{back_link}", "/$fct_slug", $this_entry);
 
@@ -139,9 +163,23 @@ $filepath = str_replace('../','/',$post_data['post_file_attachment']);
 $this_entry = str_replace("{post_file_attachment}", $filepath, $this_entry);
 
 /* products */
-$post_price_gross = $post_data['post_product_price_net']*($post_data['post_product_tax']+100)/100;;
+if($post_data['post_product_tax'] == '1') {
+	$tax = $fc_prefs['prefs_posts_products_default_tax'];
+} else if($post_data['post_product_tax'] == '2') {
+	$tax = $fc_prefs['prefs_posts_products_tax_alt1'];
+} else {
+	$tax = $fc_prefs['prefs_posts_products_tax_alt2'];
+}
+
+$post_product_price_net = str_replace('.', '', $post_data['post_product_price_net']);
+$post_product_price_net = str_replace(',', '.', $post_product_price_net);
+
+$post_price_gross = $post_product_price_net*($tax+100)/100;
 $post_price_gross = fc_post_print_currency($post_price_gross);
+$post_price_net = fc_post_print_currency($post_product_price_net);
 $this_entry = str_replace("{post_price_gross}", $post_price_gross, $this_entry);
+$this_entry = str_replace("{post_price_net}", $post_price_net, $this_entry);
+$this_entry = str_replace("{post_price_tax}", $tax, $this_entry);
 $this_entry = str_replace("{post_currency}", $post_data['post_product_currency'], $this_entry);
 $this_entry = str_replace("{post_product_unit}", $post_data['post_product_unit'], $this_entry);
 $this_entry = str_replace("{post_product_amount}", $post_data['post_product_amount'], $this_entry);

@@ -72,6 +72,8 @@ $lang['link_delete_avatar'] = "Benutzerbild löschen";
 $lang['link_register'] = "Jetzt registrieren ...";
 $lang['btn_read_more'] = "weiter lesen";
 $lang['btn_download'] = "Download";
+$lang['btn_show_gallery'] = "Alle {cnt_images} Bilder anzeigen";
+$lang['btn_open_product'] = "Weitere Informationen";
 
 /* Messages */
 $lang['msg_missingfield'] = "Alle Felder müssen ausgefüllt werden";

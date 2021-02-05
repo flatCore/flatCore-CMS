@@ -38,7 +38,14 @@ $submenu = show_menu($current_page_sort);
 $bcmenu = breadcrumbs_menu($current_page_sort);
 $fc_sitemap = show_sitemap();
 
-$smarty->assign('homepage_linkname', $mainmenu['homepage_linkname']);
+$cnt_menu = count($mainmenu);
+for($i=0;$i<$cnt_menu;$i++) {
+	if($mainmenu[$i]['page_linkname'] != '') {
+		$mainmenu[$i]['page_linkname'] = text_parser($mainmenu[$i]['page_linkname']);
+	}
+}
+
+$smarty->assign('homepage_linkname', text_parser($mainmenu['homepage_linkname']));
 $smarty->assign('homepage_title', $mainmenu['homepage_title']);
 unset($mainmenu['homepage_linkname'],$mainmenu['homepage_title']);
 

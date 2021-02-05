@@ -31,9 +31,10 @@ $tpl_list_l = fc_load_posts_tpl($fc_template,'post-list-l.tpl');
 $tpl_list_p = fc_load_posts_tpl($fc_template,'post-list-p.tpl');
 $tpl_list_f = fc_load_posts_tpl($fc_template,'post-list-f.tpl');
 
-
 $tpl_pagination = fc_load_posts_tpl($fc_template,'pagination.tpl');
 $tpl_pagagination_list = fc_load_posts_tpl($fc_template,'pagination_list.tpl');
+
+$tpl_category_link = fc_load_posts_tpl($fc_template,'link-categories.tpl');
 
 
 $sql_start = ($posts_start*$posts_limit)-$posts_limit;
@@ -229,15 +230,17 @@ foreach($get_posts as $k => $post) {
 	$cat_str = '';
 	foreach($all_categories as $cats) {
 		
+		$link = $tpl_category_link;
+		
 		if(in_array($cats['cat_id'], $post_categories)) {
-			$cat_str .= '<a href="/'.$fct_slug.$cats['cat_name_clean'].'/">'.$cats['cat_name'].'</a> ';
+			$cat_href = '/'.$fct_slug.$cats['cat_name_clean'];
+			$link = str_replace('{cat_href}', $cat_href, $link);
+			$link = str_replace('{cat_name}', $cats['cat_name'], $link);
+			$cat_str .= $link;
 		}
 		
 		
 	}
-	
-	$this_entry = str_replace("{read_more_text}", $lang['btn_read_more'], $this_entry);
-	$this_entry = str_replace('{post_href}', $post_href, $this_entry);
 	
 	$this_entry = str_replace('{post_author}', $get_posts[$k]['post_autor'], $this_entry);
 	$this_entry = str_replace('{post_title}', $get_posts[$k]['post_title'], $this_entry);
@@ -269,19 +272,47 @@ foreach($get_posts as $k => $post) {
 	$this_entry = str_replace("{post_tpl_event_prices}", $price_list, $this_entry);
 	
 	/* products */
-	$post_price_gross = $get_posts[$k]['post_product_price_net']*($get_posts[$k]['post_product_tax']+100)/100;;
-	$post_price_gross = fc_post_print_currency($post_price_gross);
+	if($get_posts[$k]['post_type'] == 'p') {
+		
+		if($get_posts[$k]['post_product_tax'] == '1') {
+			$tax = $fc_prefs['prefs_posts_products_default_tax'];
+		} else if($get_posts[$k]['post_product_tax'] == '2') {
+			$tax = $fc_prefs['prefs_posts_products_tax_alt1'];
+		} else {
+			$tax = $fc_prefs['prefs_posts_products_tax_alt2'];
+		}
+		
+		$post_price_net = str_replace('.', '', $get_posts[$k]['post_product_price_net']);
+		$post_price_net = str_replace(',', '.', $post_price_net);
+		
+		$post_price_gross = $post_price_net*($tax+100)/100;;
+		$post_price_gross = fc_post_print_currency($post_price_gross);
+		$post_price_net = fc_post_print_currency($post_price_net);
+		
+		$this_entry = str_replace("{post_price_gross}", $post_price_gross, $this_entry);
+		$this_entry = str_replace("{post_price_net}", $post_price_net, $this_entry);
+		$this_entry = str_replace("{post_price_tax}", $tax, $this_entry);
+		$this_entry = str_replace("{post_currency}", $get_posts[$k]['post_product_currency'], $this_entry);
+		$this_entry = str_replace("{post_product_unit}", $get_posts[$k]['post_product_unit'], $this_entry);
+		$this_entry = str_replace("{post_product_price_label}", $get_posts[$k]['post_product_price_label'], $this_entry);
+		
+		$this_entry = str_replace("{read_more_text}", $lang['btn_open_product'], $this_entry);
+	}
 	
-	$this_entry = str_replace("{post_price_gross}", $post_price_gross, $this_entry);
-	$this_entry = str_replace("{post_currency}", $get_posts[$k]['post_product_currency'], $this_entry);
-	$this_entry = str_replace("{post_product_unit}", $get_posts[$k]['post_product_unit'], $this_entry);
-	$this_entry = str_replace("{post_product_price_label}", $get_posts[$k]['post_product_price_label'], $this_entry);
+	
 	
 	/* links */
 	$this_entry = str_replace("{post_external_link}", $get_posts[$k]['post_link'], $this_entry);
 	
-	$this_entry = str_replace("{post_thumbnails}", $thumbnails_str, $this_entry);
+	/* gallery */
+	if($get_posts[$k]['post_type'] == 'g') {
+		$this_entry = str_replace("{post_thumbnails}", $thumbnails_str, $this_entry);
+		$this_entry = str_replace("{read_more_text}", $lang['btn_show_gallery'], $this_entry);
+		$this_entry = str_replace("{cnt_images}", $cnt_thumbs_array, $this_entry);
+	}
 	
+	$this_entry = str_replace("{read_more_text}", $lang['btn_read_more'], $this_entry);
+	$this_entry = str_replace('{post_href}', $post_href, $this_entry);
 	
 	$posts_list .= $this_entry;
 	
@@ -297,7 +328,7 @@ $page_content = str_replace("{post_start_nbr}", $show_start, $page_content);
 $page_content = str_replace("{post_end_nbr}", $show_end, $page_content);
 
 if($display_mode == 'list_posts_category') {
-	$category_message = str_replace('{categorie}', $show_category_title, $lang['posts_category_filter']);
+	$category_message = str_replace('{categorie}', $selected_category_title, $lang['posts_category_filter']);
 	$page_content = str_replace("{category_filter}", $category_message, $page_content);
 } else {
 	$page_content = str_replace("{category_filter}", '', $page_content);

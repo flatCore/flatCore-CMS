@@ -272,6 +272,7 @@ if($page_contents['page_type_of_use'] == 'display_post') {
 	include 'core/posts.php';
 }
 
+$smarty->assign('nav_categories', $tpl_nav_cats);
 
 $tyo_search = fc_get_type_of_use_pages('search');
 $smarty->assign("search_uri", '/'.$tyo_search['page_permalink']);

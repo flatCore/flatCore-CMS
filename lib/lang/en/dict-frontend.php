@@ -69,9 +69,10 @@ $lang['button_acp'] 			= "Administration";
 $lang['button_acp_edit_page'] = "Edit Page";
 $lang['link_delete_avatar']		= "Delete Avatar";
 $lang['link_register'] 			= "Register now ...";
-$lang['btn_read_more'] = "read more";
+$lang['btn_read_more'] = "Read more";
 $lang['btn_download'] = "Download";
-
+$lang['btn_show_gallery'] = "Show {cnt_images} Images";
+$lang['btn_open_product'] = "More Informations";
 
 /* Messages */
 $lang['msg_missingfield'] 		= "All fields are required";
