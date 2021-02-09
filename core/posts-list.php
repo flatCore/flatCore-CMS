@@ -242,6 +242,8 @@ foreach($get_posts as $k => $post) {
 		
 	}
 	
+	$this_entry = str_replace('{post_id}', $get_posts[$k]['post_id'], $this_entry);
+	
 	$this_entry = str_replace('{post_author}', $get_posts[$k]['post_autor'], $this_entry);
 	$this_entry = str_replace('{post_title}', $get_posts[$k]['post_title'], $this_entry);
 	$this_entry = str_replace('{post_teaser}', $post_teaser, $this_entry);

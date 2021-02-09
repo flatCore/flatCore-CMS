@@ -115,6 +115,7 @@ if($post_data['post_type'] == 'm') {
 $post_teaser = htmlspecialchars_decode($post_data['post_teaser']);
 $post_text = htmlspecialchars_decode($post_data['post_text']);
 
+$this_entry = str_replace("{post_id}", $post_data['post_id'], $this_entry);
 $this_entry = str_replace("{post_author}", $post_data['post_author'], $this_entry);
 $this_entry = str_replace('{post_title}', $post_data['post_title'], $this_entry);
 $this_entry = str_replace('{post_teaser}', $post_teaser, $this_entry);
