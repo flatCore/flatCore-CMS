@@ -223,7 +223,6 @@ if($textlib_global_extracontent != "") {
 }
 
 
-
 /* last edit */
 $le_cache_file = FC_CONTENT_DIR . "/cache/cache_lastedit.php";
 if(is_file("$le_cache_file")) {
@@ -232,6 +231,9 @@ if(is_file("$le_cache_file")) {
 	$arr_lastedit = get_lastedit();
 }
 
+for($i=0;$i<5;$i++) {
+	$arr_lastedit[$i]['page_linkname'] = text_parser($arr_lastedit[$i]['page_linkname']);
+}
 $smarty->assign('arr_lastedit', $arr_lastedit);
 
 
@@ -248,6 +250,9 @@ if(is_file("$mc_cache_file")) {
 	cache_most_clicked();
 }
 
+for($i=0;$i<5;$i++) {
+	$arr_mostclicked[$i]['linkname'] = text_parser($arr_mostclicked[$i]['linkname']);
+}
 $smarty->assign('arr_mostclicked', $arr_mostclicked,true);
 
 
