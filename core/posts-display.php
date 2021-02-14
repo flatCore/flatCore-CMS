@@ -162,6 +162,12 @@ $this_entry = str_replace("{post_file_version}", $post_data['post_file_version']
 $this_entry = str_replace("{post_file_license}", $post_data['post_file_license'], $this_entry);
 $filepath = str_replace('../','/',$post_data['post_file_attachment']);
 $this_entry = str_replace("{post_file_attachment}", $filepath, $this_entry);
+$this_entry = str_replace("{post_file_attachment_external}", $post_data['post_file_attachment_external'], $this_entry);
+
+$form_action = '/'.$fct_slug.$mod_slug;
+$this_entry = str_replace("{form_action}", $form_action, $this_entry);
+
+
 
 /* products */
 if($post_data['post_product_tax'] == '1') {

@@ -60,6 +60,7 @@ $cols = array(
 	"post_product_amount" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	/* files */
 	"post_file_attachment" => "VARCHAR(100) NOT NULL DEFAULT ''",
+	"post_file_attachment_hits" => 'INTEGER(12)',
 	"post_file_attachment_external" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"post_file_license" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"post_file_version" => "VARCHAR(100) NOT NULL DEFAULT ''"

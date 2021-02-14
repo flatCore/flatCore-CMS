@@ -43,7 +43,12 @@
 							</div>
 						</div>
 					</div>
-					
+
+					<div class="form-group">
+						<label>{label_external_file}</label>
+						<input class='form-control' name="post_file_attachment_external" type="text" value="{post_file_attachment_external}">
+					</div>
+									
 					<div class="form-group">
 						<label>{label_license}</label>
 						<input class='form-control' name="post_file_license" type="text" value="{post_file_license}">
