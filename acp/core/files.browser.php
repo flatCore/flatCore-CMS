@@ -251,20 +251,25 @@ if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
 	
 	
 	/* check if thumbnail exists and create missing thumbnail file */
+	$cnt_created_tmbs = 0;
 	foreach($storedFiles as $k) {
 
 		/* thumbnail directories */
 		$tmb_dir = '../'.$img_tmb_path;
 		$tmb_dir_year = $tmb_dir.'/'.date('Y',$k['media_upload_time']);
 		$tmb_destination = $tmb_dir_year.'/'.date('m',$k['media_upload_time']);
+				
+		if(!is_dir($tmb_destination)) {
+			mkdir($tmb_destination, 0777, true);
+		}
 		
 		$tmb_name = md5($k['media_file']).'.jpg';
 		
 		$ckeck_tmb = $tmb_destination.'/'.$tmb_name;
 		
 		if(!file_exists($ckeck_tmb)) {
-			fc_create_tmb($k['media_file'], $tmb_name, 250, 250, 60);
-			
+			$cnt_created_tmbs++;
+			fc_create_thumbnail($k['media_file'], $tmb_name, $tmb_destination, $fc_preferences['prefs_maxtmbwidth'], $fc_preferences['prefs_maxtmbheight'], 80);
 			$db_content->update("fc_media", [
 				"media_thumb" => $ckeck_tmb
 				],[
@@ -343,7 +348,11 @@ if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
 		}
 	}
 	
-	echo '<div class="alert alert-info">Add '.$cnt_files_rebuild.' Files, removed '.$cnt_files_removed.' Files from Database. Completed '.$cnt_infos_completed.' File-Informations</div>';
+	echo '<div class="alert alert-info">';
+	echo 'Created Add <strong>'.$cnt_files_rebuild. '</strong> Files, removed <strong>'.$cnt_files_removed.'</strong> Files from Database<br>';
+	echo 'Completed <strong>'.$cnt_infos_completed. '</strong> File-Informations in Database<br>';
+	echo 'Created <strong>'.$cnt_created_tmbs. '</strong> Thumbnails.';
+	echo '</div>';
 	
 	if($incomplete === TRUE) {
 		echo '<div class="alert alert-info">Maximum Time reached, <a href="?tn=filebrowser&sub=browse&rebuild=database">start again</a>.</div>';

@@ -1098,7 +1098,10 @@ function fc_remove_gallery($id,$dir) {
 
 
 
-
+/**
+ * please use the new function fc_create_thumbnail()
+ */
+ 
 function fc_create_tmb($img_src, $tmb_name, $tmb_width, $tmb_height, $tmb_quality) {
 	
 	global $img_tmb_path;
@@ -1147,6 +1150,64 @@ function fc_create_tmb($img_src, $tmb_name, $tmb_width, $tmb_height, $tmb_qualit
 		imagedestroy($new_image);
 	}
 	
+}
+
+/**
+ * $img_src = path to original image
+ * $tmb_name = name of the new thumbnail
+ * $tmb_dir = directory where the thumb should be saved
+ * $tmb_width $tmb_height $tmb_quality = size and quality
+ */
+
+function fc_create_thumbnail($img_src, $tmb_name, $tmb_dir=NULL, $tmb_width=100, $tmb_height=100, $tmb_quality=50) {
+	
+	global $img_tmb_path;
+		
+	/* thumbnail directories */
+	if($tmb_dir == NULL) {
+		$dir = '../'.$img_tmb_path;
+		$dir_year = $tmb_dir.'/'.date('Y',time());
+		$tmb_destination = $tmb_dir_year.'/'.date('m',time());
+	} else {
+		$tmb_destination = $tmb_dir;
+	}
+	
+	if(!is_dir($tmb_destination)) {
+		mkdir($tmb_destination,0777,true);
+	}
+	
+	$arr_image_details	= GetImageSize("$img_src");
+	$original_width		= $arr_image_details[0];
+	$original_height	= $arr_image_details[1];
+	$a = $tmb_width / $tmb_height;
+  $b = $original_width / $original_height;
+	
+	
+	if ($a<$b) {
+     $new_width = $tmb_width;
+     $new_height	= intval($original_height*$new_width/$original_width);
+  } else {
+     $new_height = $tmb_height;
+     $new_width	= intval($original_width*$new_height/$original_height);
+  }
+	
+	if(($original_width <= $tmb_width) AND ($original_height <= $tmb_height)) {
+	  $new_width = $original_width;
+	  $new_height = $original_height;
+  }
+  
+	if($arr_image_details[2]==1) { $imgt = "imagegif"; $imgcreatefrom = "imagecreatefromgif";  }
+	if($arr_image_details[2]==2) { $imgt = "imagejpeg"; $imgcreatefrom = "imagecreatefromjpeg";  }
+	if($arr_image_details[2]==3) { $imgt = "imagepng"; $imgcreatefrom = "imagecreatefrompng";  }
+	
+	
+	if($imgt) { 
+		$old_image	= $imgcreatefrom("$img_src");
+		$new_image	= imagecreatetruecolor($new_width, $new_height);
+		imagecopyresampled($new_image,$old_image,0,0,0,0,$new_width,$new_height,$original_width,$original_height);
+		imagejpeg($new_image,"$tmb_destination/$tmb_name",$tmb_quality);
+		imagedestroy($new_image);
+	}
 }
 
 
