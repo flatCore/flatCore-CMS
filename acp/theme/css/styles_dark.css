@@ -12291,6 +12291,10 @@ span.categories-list input[type=checkbox] {
   background: rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(0, 0, 0, 0.5);
 }
+.tmb .tmb-preview {
+  max-height: 160px;
+  overflow: hidden;
+}
 
 .tmb-actions {
   position: absolute;

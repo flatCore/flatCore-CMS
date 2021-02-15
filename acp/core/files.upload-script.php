@@ -67,7 +67,17 @@ $time = time();
 
 $max_w = (int) $_REQUEST['w']; // max image width
 $max_h = (int) $_REQUEST['h']; // max image height
+$max_w_tmb = (int) $_REQUEST['w_tmb']; // max thumbnail width
+$max_h_tmb = (int) $_REQUEST['h_tmb']; // max thumbnail height
 $max_fz = (int) $_REQUEST['fz']; // max filesize
+
+if($max_w_tmb < 1) {
+	$max_w_tmb = 250;
+}
+
+if($max_h_tmb < 1) {
+	$max_h_tmb = 250;
+}
 
 if(strpos($_REQUEST['upload_destination'],"/images") !== false) {
 	$destination = '../'.$_REQUEST['upload_destination'];
@@ -110,7 +120,7 @@ if($upload_type == 'images') {
 				resize_image($tmp_name,$target,$max_w,$max_h,100);
 				$tmb_name = md5($target).'.jpg';
 				$store_tmb_name = $tmb_destination.'/'.$tmb_name;
-				fc_create_tmb($tmp_name,$tmb_name,250,250,60);
+				fc_create_tmb($tmp_name,$tmb_name,$max_w_tmb,$max_h_tmb,80);
 			}
 						
 			$filetype = mime_content_type(realpath($target));

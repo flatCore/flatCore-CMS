@@ -4,8 +4,10 @@ $year = date('Y',time());
 $gallery_id = 'gallery'. (int) $_REQUEST['gal'];
 $uploads_dir = '../../content/galleries/'.$year.'/'.$gallery_id;
 
-$max_width = 950;
-$max_height = 950;
+$max_width = (int) $_REQUEST['w']; // max image width
+$max_height = (int) $_REQUEST['h']; // max image height
+$max_width_tmb = (int) $_REQUEST['w_tmb']; // max thumbnail width
+$max_height_tmb = (int) $_REQUEST['h_tmb']; // max thumbnail height
 
 if(!is_dir($uploads_dir)) {
 	mkdir($uploads_dir, 0777, true);
@@ -27,8 +29,8 @@ if(array_key_exists('file',$_FILES) && $_FILES['file']['error'] == 0 ){
 	$tmb_name = $timestring."_tmb.jpg";
         
 	if(move_uploaded_file($tmp_name, "$uploads_dir/$org_name")) {
-		create_thumbs($uploads_dir,$org_name,$img_name, $max_width,$max_height,80);
-		create_thumbs($uploads_dir,$img_name,$tmb_name, 150,100,100);
+		create_thumbs($uploads_dir,$org_name,$img_name, $max_width,$max_height,90);
+		create_thumbs($uploads_dir,$img_name,$tmb_name, $max_width_tmb,$max_height_tmb,80);
 		unlink("$uploads_dir/$org_name");
 		print ('Uploaded');
 	}

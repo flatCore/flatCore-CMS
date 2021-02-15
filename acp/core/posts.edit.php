@@ -471,7 +471,10 @@ if($_GET['new'] == 'm' OR $post_data['post_type'] == 'm') {
 	$form_upload_tpl = file_get_contents('templates/gallery_upload_form.tpl');
 	$form_upload_tpl = str_replace('{token}',$_SESSION['token'], $form_upload_tpl);
 	$form_upload_tpl = str_replace('{post_id}',$post_data['post_id'], $form_upload_tpl);
-	
+	$form_upload_tpl = str_replace('{max_img_width}',$fc_preferences['prefs_maximagewidth'], $form_upload_tpl);
+	$form_upload_tpl = str_replace('{max_tmb_width}',$fc_preferences['prefs_maxtmbwidth'], $form_upload_tpl);
+	$form_upload_tpl = str_replace('{max_img_height}',$fc_preferences['prefs_maximageheight'], $form_upload_tpl);
+	$form_upload_tpl = str_replace('{max_tmb_height}',$fc_preferences['prefs_maxtmbheight'], $form_upload_tpl);
 	
 	$form_sort_tpl = file_get_contents('templates/gallery_sort_form.tpl');
 	

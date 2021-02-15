@@ -159,6 +159,12 @@ span.categories-list input[type="checkbox"] {
 	padding: 5px;
 	background: rgba(0,0,0,0.2);
 	border: 1px solid rgba(0,0,0,0.5);
+	
+	.tmb-preview {
+		max-height: 160px;
+		overflow: hidden;
+	}
+	
 }
 
 .tmb-actions {
