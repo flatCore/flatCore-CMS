@@ -909,6 +909,38 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 
 
 /**
+ * remove duplicate entries from multidimensional array
+ * we use this for fc_media entries
+ * because we only want one result per upload
+ * not an result for every language
+ * $array = multidimensional array
+ * $key = key you want to check for duplicates
+ *
+ * https://www.php.net/manual/de/function.array-unique.php#116302
+ *
+ */
+
+function fc_unique_multi_array($array, $key) { 
+    $temp_array = array(); 
+    $i = 0; 
+    $key_array = array(); 
+    
+    foreach($array as $val) { 
+      if(!in_array($val[$key], $key_array)) { 
+      	$key_array[$i] = $val[$key]; 
+        $temp_array[$i] = $val; 
+      } 
+      $i++; 
+    }
+    
+    // re-index
+    $temp_array= array_values($temp_array);
+    return $temp_array; 
+} 
+
+
+
+/**
  * sort arrays like SQL Results
  * example:
  * $s = fc_array_multisort($pages, 'lang', SORT_ASC, 'page_sort', SORT_ASC, SORT_NATURAL);

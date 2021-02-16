@@ -466,9 +466,11 @@ if(is_array($all_filter)) {
 	$_SESSION['media_filter_string'] = $add_keyword_filter;
 }
 
-$sql_cnt = "SELECT count(*) AS 'all' FROM fc_media WHERE media_file LIKE '%$disk%' AND (media_lang LIKE '$languagePack' OR media_lang IS NULL) ".$_SESSION['media_filter_string'];
+//$sql_cnt = "SELECT count(*) AS 'all' FROM fc_media WHERE media_file LIKE '%$disk%' AND (media_lang LIKE '$languagePack' OR media_lang IS NULL) ".$_SESSION['media_filter_string'];
+$sql_cnt = "SELECT count(*) AS 'all' FROM fc_media WHERE media_file LIKE '%$disk%' ".$_SESSION['media_filter_string'];
 
 $all_files = $db_content->query($sql_cnt)->fetch();
+$all_files = fc_unique_multi_array($all_files,'media_file');
 $nbr_of_files = $all_files['all'];
 
 
@@ -503,13 +505,15 @@ if($start < 1) {
 $order_sql = 'ORDER BY '.$_SESSION['sort_by'].' '.$_SESSION['sort_direction']. ' ';
 $where_sql = 'WHERE media_id IS NOT NULL AND ';
 $where_sql .= " (media_file like '%$disk%')";
-$where_sql .= " AND (media_lang LIKE '$languagePack' OR media_lang IS NULL)";
+//$where_sql .= " AND (media_lang LIKE '$languagePack' OR media_lang IS NULL)";
 
 $limit_sql = "LIMIT $start,$files_per_page ";
 
 
 $sql = "SELECT * FROM fc_media $where_sql ".$_SESSION['media_filter_string']." $order_sql $limit_sql";
 $get_files = $db_content->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+
+$get_files = fc_unique_multi_array($get_files,'media_file');
 
 $cnt_pages = ceil($nbr_of_files/$files_per_page);
 $cnt_get_files = count($get_files);
