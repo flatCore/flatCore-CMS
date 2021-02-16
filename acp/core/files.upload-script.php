@@ -339,7 +339,7 @@ function fc_write_media_data_name($filename,$store_tmb_name,$filesize,$time,$med
 		"media_upload_time" => "$time",
 		"media_upload_from" => "$uploader",
 		"media_type" => "$mediatype",
-		"media_lang" => "$languagePack"	
+		"media_lang" => $_SESSION['lang']	
 	];
 	
 	$cnt_changes = $db_content->insert("fc_media", $columns);
