@@ -122,21 +122,34 @@ if((isset($_POST['new_folder'])) && ($_POST['new_folder'] != '')) {
 }
 
 
-/* DELETE FILE OR IMAGE */
+/**
+ * Delete Files
+ * or Images and Thumbnails
+ */
 if(isset($_POST['delete'])) {
 	
-	$deleteFile = basename($_POST['file']);
+	$deleteFile = (int) $_POST['delete'];
+	$get_file_data = fc_get_media_data_by_id($deleteFile);
 	
-	if(is_file("$disk/$deleteFile")) {
-		if(unlink("$disk/$deleteFile")) {
-			fc_delete_media_data("$disk/$deleteFile");
+	$delete_file = $get_file_data['media_file'];
+	$delete_thumb = $get_file_data['media_thumb'];
+		
+	if(is_file($delete_file)) {
+		if(unlink($delete_file)) {
+			fc_delete_media_data($delete_file);
+			if(is_file($delete_thumb)) {
+				unlink($delete_thumb);
+			}
 			echo '<div class="alert alert-success alert-auto-close">'.$lang['msg_file_delete'].'</div>';
 		} else {
-			echo '<div class="alert alert-danger"><strong>'.$disk.'/'.$deleteFile.'</strong><br>'.$lang['msg_file_delete_error'].'</div>';
+			echo '<div class="alert alert-danger"><strong>'.$delete_file.'</strong><br>'.$lang['msg_file_delete_error'].'</div>';
 		}	
 	} else {
-		echo '<div class="alert alert-error">File ('.$disk.'/'.$deleteFile.') not found</div>';
+		echo '<div class="alert alert-error">File ('.$delete_file.') not found</div>';
 	}
+	
+	
+	
 }
 
 /* delete folder */
@@ -299,7 +312,7 @@ if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
 			$tmb_name = md5($image).'.jpg';
 			$store_tmb_name = $tmb_destination.'/'.$tmb_name;
 			
-			fc_create_tmb($image, $tmb_name, 250, 250, 60);
+			fc_create_thumbnail($row['media_file'], $tmb_name, $tmb_destination, $fc_preferences['prefs_maxtmbwidth'], $fc_preferences['prefs_maxtmbheight'], 80);
 
 			$db_content->update("fc_media", [
 				"media_thumb" => $tmb_name
@@ -466,9 +479,7 @@ if(is_array($all_filter)) {
 	$_SESSION['media_filter_string'] = $add_keyword_filter;
 }
 
-//$sql_cnt = "SELECT count(*) AS 'all' FROM fc_media WHERE media_file LIKE '%$disk%' AND (media_lang LIKE '$languagePack' OR media_lang IS NULL) ".$_SESSION['media_filter_string'];
 $sql_cnt = "SELECT count(*) AS 'all' FROM fc_media WHERE media_file LIKE '%$disk%' ".$_SESSION['media_filter_string'];
-
 $all_files = $db_content->query($sql_cnt)->fetch();
 $all_files = fc_unique_multi_array($all_files,'media_file');
 $nbr_of_files = $all_files['all'];
@@ -564,7 +575,7 @@ echo '<div class="'.$tpl_container_class.'">';
 for($i=0;$i<$cnt_get_files;$i++) {
 	
 	$filename = '';
-
+	$id = $get_files[$i]['media_id'];
 	$filename = $get_files[$i]['media_file'];
 	$filename_thumb = $get_files[$i]['media_thumb'];
 	$filetime = $get_files[$i]['media_lastedit'];
@@ -578,7 +589,7 @@ for($i=0;$i<$cnt_get_files;$i++) {
 	}
 	
 	
-	$delete_btn = '<button type="submit" onclick="return confirm(\''.$lang['confirm_delete_file'].'\')" class="btn btn-fc btn-sm w-100 text-danger" name="delete" value="'.$lang['delete'].'">'.$icon['trash_alt'].'</button>';
+	$delete_btn = '<button type="submit" onclick="return confirm(\''.$lang['confirm_delete_file'].'\')" class="btn btn-fc btn-sm w-100 text-danger" name="delete" value="'.$id.'">'.$icon['trash_alt'].'</button>';
 	$edit_btn = '<a data-fancybox data-type="ajax" data-src="/acp/core/ajax.media.php?file='.$filename.'&folder='.$disk.'" href="javascript:;" class="btn btn-sm btn-fc w-100 text-success">'.$icon['edit'].'</a>';
 	
 	

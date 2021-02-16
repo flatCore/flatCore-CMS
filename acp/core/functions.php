@@ -810,6 +810,27 @@ function fc_get_media_data($filename,$lang=NULL) {
 }
 
 /**
+ * get data from fc_media
+ * by id
+ *
+ */
+
+function fc_get_media_data_by_id($id) {
+	
+	global $db_content;
+	
+	$media_data = $db_content->get("fc_media","*",[
+
+		"media_id" => $id
+	]);
+	
+	return $media_data;
+}
+
+
+
+
+/**
  * delete data from fc_media
  * by filename
  *
