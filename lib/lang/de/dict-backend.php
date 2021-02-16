@@ -184,6 +184,7 @@ $lang['label_comment'] = "Kommentar schreiben";
 
 $lang['files'] = "Dateien";
 $lang['images'] = "Bilder";
+$lang['thumbnails'] = "Thumbnails";
 $lang['browse_files'] = "Festplpatte nach Dateien durchsuchen";
 $lang['browse_images'] = "Festplatte nur nach Bildern durchsuchen";
 $lang['clear_list'] = "Liste löschen";

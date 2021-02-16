@@ -158,11 +158,11 @@ $prefs_maxtmb_input .= '</div></div>';
 
 echo '<div class="row">';
 echo '<div class="col-md-6">';
-echo '<p>Images</p>';
+echo '<p>'.$lang['images'].'</p>';
 echo tpl_form_control_group('',$lang['f_prefs_maximage'],"$prefs_maximage_input");
 echo '</div>';
 echo '<div class="col-md-6">';
-echo '<p>Thumbnails</p>';
+echo '<p>'.$lang['thumbnails'].'</p>';
 echo tpl_form_control_group('',$lang['f_prefs_maximage'],"$prefs_maxtmb_input");
 echo '</div>';
 echo '</div>';

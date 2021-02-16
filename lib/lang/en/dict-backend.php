@@ -187,6 +187,7 @@ $lang['label_comment'] = "Comment ...";
 
 $lang['files'] = "Files";
 $lang['images'] = "Images";
+$lang['thumbnails'] = "Thumbnails";
 $lang['browse_files'] = "Browse Files";
 $lang['browse_images'] = "Browse images only";
 $lang['clear_list'] = "Delete List";
