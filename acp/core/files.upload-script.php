@@ -109,6 +109,7 @@ if($upload_type == 'images') {
 		$img_name = clean_filename($prefix,$suffix);
 		$target = "$destination/$img_name";
 		
+		
 		//$fc_upload_img_types from config.php
 		if(!in_array($suffix, $fc_upload_img_types)) {
 			exit;
@@ -118,9 +119,9 @@ if($upload_type == 'images') {
 				@move_uploaded_file($tmp_name, $target);
 			} else {			
 				resize_image($tmp_name,$target,$max_w,$max_h,100);
-				$tmb_name = md5($target).'.jpg';
+				$tmb_name = md5(substr($target, 3,strlen($target))).'.jpg';
 				$store_tmb_name = $tmb_destination.'/'.$tmb_name;
-				fc_create_tmb($tmp_name,$tmb_name,$max_w_tmb,$max_h_tmb,80);
+				fc_create_tmb($target,$tmb_name,$max_w_tmb,$max_h_tmb,80);
 			}
 						
 			$filetype = mime_content_type(realpath($target));
@@ -328,7 +329,6 @@ function fc_write_media_data_name($filename,$store_tmb_name,$filesize,$time,$med
 	
 	$filename = substr($filename, 3,strlen($filename));
 	$store_tmb_name = substr($store_tmb_name, 3,strlen($store_tmb_name));
-	
 	$uploader = $_SESSION['user_nick'];
 	
 	$columns = [
