@@ -176,6 +176,11 @@ function delete_folder($dir) {
   } 
 
 
+if(isset($_POST['clear_tmb'])) {
+	fc_clear_thumbs_directory();	
+}
+
+
 /**
  * check if all files stored in media database
  * if not, catch up
@@ -187,7 +192,7 @@ function delete_folder($dir) {
  * if yes, fill up
  */
 
-if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
+if(isset($_POST['rebuild']) && ($_POST['rebuild'] == 'database')) {
 	
 	$incomplete = FALSE;
 	$rebuild_start = time();
@@ -436,9 +441,6 @@ echo '<div class="col-md-4">';
 
 echo '<div class="btn-toolbar float-right">';
 
-echo '<div class="btn-group float-right mr-1">';
-echo '<a class="btn btn-sm btn-fc" href="acp.php?tn='.$tn.'&sub=browse&rebuild=database">'.$icon['wrench'].'</a>';
-echo '</div>';
 echo '<div class="btn-group float-right">';
 echo '<a class="btn btn-sm btn-fc '.$check_lastedit.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=time">'.$lang['date_of_change'].'</a>';
 echo '<a class="btn btn-sm btn-fc '.$check_name.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=name">'.$lang['filename'].'</a>';
@@ -653,6 +655,13 @@ foreach(range($pag_start, $pag_end) as $number) {
 echo ' '. $pag_forwardlink;
 echo '</p></div>'; //EOL PAGINATION
 
+
+echo '<form action="acp.php?tn=filebrowser&sub=browse" method="POST" class="d-block text-right mt-4">';
+echo '<div class="btn-group" role="group">';
+echo '<button class="btn btn-sm btn-fc" type="submit" name="rebuild" value="database">Database '.$icon['wrench'].'</button>';
+echo '<button class="btn btn-sm btn-fc" type="submit" name="clear_tmb">Thumbnails '.$icon['trash_alt'].'</button>';
+echo '</div>';
+echo '</form>';
 
 
 

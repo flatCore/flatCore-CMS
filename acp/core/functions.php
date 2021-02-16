@@ -828,6 +828,46 @@ function fc_get_media_data_by_id($id) {
 }
 
 
+/**
+ * clear all thumbnails
+ * and subdirectories in /content/images_tmb/ 
+ */
+
+function fc_clear_thumbs_directory($dir=NULL) {
+
+	if($dir == NULL) {
+		$dir = '../content/images_tmb/';
+	}
+	
+	/* check if we are in the thumbnail directory */
+	if(substr($dir,0,22) != '../content/images_tmb/') {
+		return 'Sorry. No permissions to delete in:' . $dir;
+	} else {
+		
+   if(is_dir($dir)) {
+     $objects = scandir($dir);
+     foreach ($objects as $object) {
+       if ($object != "." && $object != "..") {
+         if(filetype($dir."/".$object) == "dir") {
+         		fc_clear_thumbs_directory($dir."/".$object);
+         	} else {
+	        	unlink($dir."/".$object);
+         	}
+       }
+     }
+     reset($objects);
+     if($dir != '../content/images_tmb/') {
+	     rmdir($dir);
+     }
+     
+   }
+		
+	}
+	
+	
+
+
+}
 
 
 /**
