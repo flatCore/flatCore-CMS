@@ -2,7 +2,7 @@
 //prohibit unauthorized access
 require 'core/access.php';
 
-echo '<form id="editpage" action="acp.php?tn=pages&sub=edit" class="form-horizontal" method="POST">';
+echo '<form id="editpage" action="acp.php?tn=pages&sub=edit" class="form-horizontal" method="POST" autocomplete="off">';
 
 $custom_fields = get_custom_fields();
 sort($custom_fields);
@@ -220,7 +220,7 @@ echo '<div class="input-group">';
 echo '<div class="input-group-prepend">';
 echo '<span class="input-group-text">'.$fc_base_url.'</span>';
 echo '</div>';
-echo '<input class="form-control" type="text" name="page_permalink" id="set_permalink" value="'.$page_permalink.'">';
+echo '<input class="form-control" type="text" autocomplete="off" name="page_permalink" id="set_permalink" value="'.$page_permalink.'">';
 echo '</div>';
 echo '</div>';
 
