@@ -21,6 +21,14 @@ if($s != '' && $start_search == "true") {
 		for($i=0;$i<$cnt_result;$i++) {
 			$sr[$i]['set_link'] = $sr[$i]['page_url'];
 			
+			$img = explode('<|>',$sr[$i]['page_images']);
+			$thumb = trim($img[0]);
+			if(file_exists(".$thumb")) {
+				$sr[$i]['page_thumb'] = $thumb;
+			} else {
+				$sr[$i]['page_thumb'] = $fc_prefs['prefs_pagethumbnail'];
+			}
+			
 			if(strpos($sr[$i]['snipp'],'<|>') === false) {
 				$sr[$i]['page_meta_description'] = $sr[$i]['snipp'];
 			} else {
