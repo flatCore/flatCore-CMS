@@ -9,6 +9,7 @@ $cols = array(
   "page_url"  => 'VARCHAR',
   "page_title"  => 'VARCHAR',
   "page_description"  => 'VARCHAR',
+  "page_thumbnail"  => 'VARCHAR',
   "page_keywords"  => 'VARCHAR',
  	"page_robots" => 'VARCHAR',
 	"page_h1" => 'VARCHAR',

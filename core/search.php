@@ -21,10 +21,11 @@ if($s != '' && $start_search == "true") {
 		for($i=0;$i<$cnt_result;$i++) {
 			$sr[$i]['set_link'] = $sr[$i]['page_url'];
 			
-			$img = explode('<|>',$sr[$i]['page_images']);
-			$thumb = trim($img[0]);
-			if(file_exists(".$thumb")) {
-				$sr[$i]['page_thumb'] = $thumb;
+			$parse_page_thumb = parse_url($sr[$i]['page_thumbnail']);
+			$page_thumb = $parse_page_thumb['path'];
+
+			if(file_exists(".$page_thumb")) {
+				$sr[$i]['page_thumb'] = $page_thumb;
 			} else {
 				$sr[$i]['page_thumb'] = $fc_prefs['prefs_pagethumbnail'];
 			}

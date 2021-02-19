@@ -107,10 +107,8 @@ for($i=0;$i<count($all_tables);$i++) {
 
 	unset($db_path,$table_name,$table_type);
 	include $all_tables[$i]; // returns $cols and $table_name
-
 	
 	$is_table = table_exists("$database","$table_name");
-	
 	
 	if($is_table < 1) {
 		if($table_type == 'virtual') {
