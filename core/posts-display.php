@@ -212,7 +212,7 @@ $this_entry = str_replace("{post_thumbnails}", $thumbnails_str, $this_entry);
 $page_contents['page_title'] = $post_data['post_title'];
 $page_contents['page_meta_description'] = substr(strip_tags($post_teaser),0,160);
 $page_contents['page_meta_keywords'] = $post_data['post_tags'];
-$page_contents['page_thumbnail'] = '/'.$img_path.'/'.basename($first_post_image);
+$page_contents['page_thumbnail'] = $fc_base_url.$img_path.'/'.basename($first_post_image);
 
 $modul_content = $this_entry.$debug_string;
 
