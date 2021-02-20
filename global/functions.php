@@ -223,9 +223,9 @@ function fc_send_mail($recipient,$subject,$message) {
 	$message = preg_replace( "/(content-type:|bcc:|cc:|to:|from:)/im", "", $message );
 
 	
-	require FC_CORE_DIR.'lib/PHPMailer/src/Exception.php';
-	require FC_CORE_DIR.'lib/PHPMailer/src/PHPMailer.php';
-	require FC_CORE_DIR.'lib/PHPMailer/src/SMTP.php';
+	require_once FC_CORE_DIR.'lib/PHPMailer/src/Exception.php';
+	require_once FC_CORE_DIR.'lib/PHPMailer/src/PHPMailer.php';
+	require_once FC_CORE_DIR.'lib/PHPMailer/src/SMTP.php';
 	
 	$mail = new PHPMailer(true);
 	
