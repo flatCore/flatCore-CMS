@@ -38,12 +38,18 @@ $submenu = show_menu($current_page_sort);
 $bcmenu = breadcrumbs_menu($current_page_sort);
 $fc_sitemap = show_sitemap();
 
-$cnt_menu = count($mainmenu);
-for($i=0;$i<$cnt_menu;$i++) {
-	if($mainmenu[$i]['page_linkname'] != '') {
-		$mainmenu[$i]['page_linkname'] = text_parser($mainmenu[$i]['page_linkname']);
-	}
+foreach($mainmenu as $k => $v) {
+	$mainmenu[$k]['page_linkname'] = text_parser($mainmenu[$k]['page_linkname']);
 }
+
+foreach($submenu as $k => $v) {
+	$submenu[$k]['page_linkname'] = text_parser($submenu[$k]['page_linkname']);
+}
+
+foreach($bcmenu as $k => $v) {
+	$bcmenu[$k]['page_linkname'] = text_parser($bcmenu[$k]['page_linkname']);
+}
+
 
 $smarty->assign('homepage_linkname', text_parser($mainmenu['homepage_linkname']));
 $smarty->assign('homepage_title', $mainmenu['homepage_title']);
@@ -60,7 +66,7 @@ $smarty->assign('fc_sitemap', $fc_sitemap);
 /* submenu only if $submenu != empty */
 if(count($submenu) >= 1) {
 	$smarty->assign('arr_submenue', $arr_subnmenu);
-	$smarty->assign('legend_toc', FC_TOC_HEADER);
+	$smarty->assign('legend_toc', text_parser(FC_TOC_HEADER));
 }
 
 if($page_contents['page_sort'] == 'portal' OR $p == '') {
