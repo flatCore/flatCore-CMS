@@ -200,15 +200,35 @@ echo '</div>'; // end tab position
 
 /* tab_info */
 echo'<div class="tab-pane fade show active" id="info">';
+
+if($page_target == '' OR $page_target == '_self') {
+	$sel_self = 'selected';
+} else if($page_target == '_blank') {
+	$sel_blank = 'selected';
+} else if($page_target == '_parent') {
+	$sel_parent = 'selected';
+} else if($page_target == '_top') {
+	$sel_top = 'selected';
+}
+
+$sel_target  = '<select name="page_target" class="form-control">';
+$sel_target .= '<option '.$sel_self.' value="_self">_self</option>';
+$sel_target .= '<option '.$sel_blank.' value="_blank">_blank</option>';
+$sel_target .= '<option '.$sel_parent.' value="_parent">_parent</option>';
+$sel_target .= '<option '.$sel_top.' value="_top">_top</option>';
+$sel_target .= '</select>';
 	
 echo '<div class="row">';
-echo '<div class="col-md-5">';
+echo '<div class="col-md-4">';
 echo tpl_form_control_group('',$lang['f_page_linkname'],'<input class="form-control" type="text" name="page_linkname" value="'.$page_linkname.'">');
 echo '</div>';
 echo '<div class="col-md-4">';
 echo tpl_form_control_group('',$lang['f_page_classes'],"<input class='form-control' type='text' name='page_classes' value='$page_classes'>");
 echo '</div>';
-echo '<div class="col-md-2 offset-md-1">';
+echo '<div class="col-md-2">';
+echo tpl_form_control_group('',"target","$sel_target");
+echo '</div>';
+echo '<div class="col-md-2">';
 echo tpl_form_control_group('',$lang['f_page_hash'],"<input class='form-control' type='text' name='page_hash' value='$page_hash'>");
 echo '</div>';
 echo '</div>';

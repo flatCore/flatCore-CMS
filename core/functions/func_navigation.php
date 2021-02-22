@@ -37,6 +37,7 @@ function show_mainmenu() {
 			$menu[$i]['page_linkname'] = stripslashes($fc_nav[$i]['page_linkname']);
 			$menu[$i]['page_title'] = stripslashes($fc_nav[$i]['page_title']);
 			$menu[$i]['page_permalink'] = $fc_nav[$i]['page_permalink'];
+			$menu[$i]['page_target'] = $fc_nav[$i]['page_target'];
 			$menu[$i]['page_hash'] = $fc_nav[$i]['page_hash'];
 			$menu[$i]['page_classes'] = $fc_nav[$i]['page_classes'];
 			$menu[$i]['link_status'] = $fc_defs['main_nav_class'];
@@ -149,6 +150,7 @@ function build_submenu($index,$level=1) {
 	$submenu[$index]['page_id'] = $fc_nav[$index]['page_id'];
 	$submenu[$index]['page_sort'] = $fc_nav[$index]['page_sort'];
 	$submenu[$index]['page_permalink'] = $fc_nav[$index]['page_permalink'];
+	$submenu[$index]['page_target'] = $fc_nav[$index]['page_target'];
 	$submenu[$index]['page_hash'] = $fc_nav[$index]['page_hash'];
 	$submenu[$index]['page_classes'] = $fc_nav[$index]['page_classes'];
 	$submenu[$index]['page_linkname'] = stripslashes($fc_nav[$index]['page_linkname']);

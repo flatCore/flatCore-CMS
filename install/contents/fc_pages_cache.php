@@ -21,6 +21,7 @@ $cols = array(
 	"page_permalink" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"page_permalink_short" => "VARCHAR(50) NOT NULL DEFAULT ''",
 	"page_permalink_short_cnt" => "VARCHAR(50) NOT NULL DEFAULT ''",
+	"page_target" => "VARCHAR(50) NOT NULL DEFAULT ''",
 	"page_type_of_use" => "VARCHAR(255) NOT NULL DEFAULT ''",
 	"page_redirect" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"page_redirect_code" => "VARCHAR(20) NOT NULL DEFAULT ''",
