@@ -316,6 +316,25 @@ foreach($get_posts as $k => $post) {
 	$this_entry = str_replace("{read_more_text}", $lang['btn_read_more'], $this_entry);
 	$this_entry = str_replace('{post_href}', $post_href, $this_entry);
 	
+
+
+
+
+	/* file */
+	$this_entry = str_replace("{lang_download}", $lang['btn_download'], $this_entry);
+	$this_entry = str_replace("{post_file_version}", $get_posts[$k]['post_file_version'], $this_entry);
+	$this_entry = str_replace("{post_file_license}", $get_posts[$k]['post_file_license'], $this_entry);
+	$filepath = str_replace('../','/',$get_posts[$k]['post_file_attachment']);
+	$this_entry = str_replace("{post_file_attachment}", $filepath, $this_entry);
+	$this_entry = str_replace("{post_file_attachment_external}", $get_posts[$k]['post_file_attachment_external'], $this_entry);
+	
+	$form_action = '/'.$fct_slug.$mod_slug;
+	$this_entry = str_replace("{form_action}", $form_action, $this_entry);
+
+
+
+
+
 	$posts_list .= $this_entry;
 	
 }

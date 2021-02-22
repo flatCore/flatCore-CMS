@@ -147,7 +147,7 @@ if(isset($_POST['post_attachment'])) {
 		$download_file = str_replace('../content/','./content/',$target_file['post_file_attachment']);
 	
 		if(is_file($download_file)) {
-			header("Content-Disposition: attachment; filename=\"" . $download_file . "\"");
+			header("Content-Disposition: attachment; filename=\"" . basename($download_file) . "\"");
 			header("Content-Type: application/octet-stream");
 			header("Content-Length: " . filesize($download_file));
 			readfile($download_file);
