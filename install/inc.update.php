@@ -182,6 +182,8 @@ if(is_array($fails)) {
 	
 }
 
+echo '<a href="/install/" class="btn btn-primary">Reload</a>';
+
 
 if(is_file('../maintance.html')) {
 	unlink('../maintance.html');

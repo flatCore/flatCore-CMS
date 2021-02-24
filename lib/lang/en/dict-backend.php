@@ -510,6 +510,7 @@ $lang['msg_error_deleting_sub_pages'] = 'You cannot delete pages with subpages. 
 $lang['msg_update_available'] = "<b>There is a newer version available!</b><br>Please remember, a backup before the installation is always a good idea.";
 $lang['msg_no_update_available'] = "The installed version is up to date.";
 $lang['msg_update_modus_activated'] = "<b>Update-Modus is activated</b><br>The Frontend is not available";
+$lang['msg_after_update'] = "Please go to the <a href='/install/'>install</a> directory and check whether the database has been updated correctly.";
 
 $lang['alert_no_htaccess'] = 'There isn\'t a .htaccess file in your root.';
 $lang['alert_not_writable'] = 'The File/Directory is not writable:';
