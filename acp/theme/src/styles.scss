@@ -287,24 +287,29 @@ div#contentSwitch {
 	text-align: right;
 }
 
-.navbar-fc {
-	border: 1px solid darken($widget_background,10);
-	background: $widget_background;
-	padding: 0;
-	.nav-item {
 
+.navbar-fc {
+	border: 1px solid darken($navbar-fc-bg,5);
+	background: $navbar-fc-bg;
+	padding: 3px;
+	border-radius: 3px;
+	.nav-item {
+		margin-right: 2px;
 	}
 	.nav-link {
-		background: darken($widget_background,15);
+		background: $navbar-fc-btn-bg;
+		border-radius: 3px;
+		border: 1px solid darken($navbar-fc-btn-bg,10);
 		&:hover {
-			background: darken($widget_background,8);
+			background: lighten($navbar-fc-btn-bg,10);
 		}
 		&.active {
-			background: darken($widget_background,8);
+			background: $navbar-fc-btn-bg;
+			border-bottom: 1px solid $navbar-fc-btn-active;
 		}
 	}
 	.dropdown-menu {
-		background: darken($widget_background,5);
+		background: darken($navbar-fc-bg,5);
 		.dropdown-item {
 			color: $font_color;
 			&.active {

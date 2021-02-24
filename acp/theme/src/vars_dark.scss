@@ -1,4 +1,3 @@
-
 $page_bg: #111;
 $content_bg: #333;
 $brand_color: #40a4fb;
@@ -37,7 +36,6 @@ $color_queue: $color_ghost;
 $color_banned: #f0ad4e;
 $color_deleted: #d9534f;
 
-
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
 	font-weight: 200;
@@ -51,5 +49,11 @@ h1, h2, h3, h4, h5, h6,
 
 $table_striped_bg_odd: lighten($widget_background,5);
 
+
+/* navbar */
+
+$navbar-fc-bg: $widget_background;
+$navbar-fc-btn-bg: lighten($widget_background,15);
+$navbar-fc-btn-active: darken($brand_color,0);
 
 @import "styles";

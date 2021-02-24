@@ -14,6 +14,7 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small,
 }
 
 /* tables */
+/* navbar */
 /**
  * flatCore ACP
  */
@@ -12557,18 +12558,25 @@ div#contentSwitch {
 }
 
 .navbar-fc {
-  border: 1px solid black;
+  border: 1px solid #0c0c0c;
   background: #191919;
-  padding: 0;
+  padding: 3px;
+  border-radius: 3px;
+}
+.navbar-fc .nav-item {
+  margin-right: 2px;
 }
 .navbar-fc .nav-link {
-  background: black;
+  background: #3f3f3f;
+  border-radius: 3px;
+  border: 1px solid #262626;
 }
 .navbar-fc .nav-link:hover {
-  background: #050505;
+  background: #595959;
 }
 .navbar-fc .nav-link.active {
-  background: #050505;
+  background: #3f3f3f;
+  border-bottom: 1px solid #40a4fb;
 }
 .navbar-fc .dropdown-menu {
   background: #0c0c0c;

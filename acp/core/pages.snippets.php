@@ -327,11 +327,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	/* list snippets */
 	
 	echo '<div class="app-container">';
-	echo '<h3>' . $lang['snippets'] . '</h3>';
-	
 	echo '<nav class="navbar navbar-expand-sm navbar-fc">';
-	
-	
 
 	echo '<ul class="navbar-nav">';
 	echo '<li class="nav-item"><a class="nav-link '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle ('.$cnt['cnt_all_snippets'].')</a></li>';
@@ -345,7 +341,6 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 
 	
 	echo '<a href="?tn=pages&sub=snippets&snip_id=n" class="nav-link text-success">'.$icon['plus'].' '.$lang['new'].'</a>';
-
 
 	echo '<form action="acp.php?tn=pages&sub=snippets" method="POST" class="form-inline ml-auto dirtyignore">';
 	echo '<div class="input-group">';
