@@ -127,7 +127,7 @@ if($languagePack == 'de') {
 }
 
 echo '<hr><a target="_blank" href="'.$helpURL.'" title="'.$helpURL.'" class="btn btn-fc btn-block">'.$icon['question'].' '.$lang['show_help'].'</a>';
-
+echo '<a target="_blank" href="https://github.com/flatCore/flatCore-CMS/discussions" title="Discussions" class="btn btn-primary btn-block">'.$icon['comments'].' Discussions</a>';
 
 
 
