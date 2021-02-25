@@ -44,29 +44,29 @@ $(function() {
 				{title : 'Lead paragraph', block : 'p', classes : 'lead'}
 			]},
 			{title: 'Links', items: [
-				{title : 'btn', selector: 'a', classes : 'btn btn-default'},
+				{title : 'btn', selector: 'a', classes : 'btn btn-secondary'},
 				{title : 'btn-primary', selector: 'a', classes : 'btn btn-primary'},
 				{title : 'btn-info', selector: 'a', classes : 'btn btn-info'},
 				{title : 'btn-success', selector: 'a', classes : 'btn btn-success'},
 				{title : 'btn-warning', selector: 'a', classes : 'btn btn-warning'},
 				{title : 'btn-danger', selector: 'a', classes : 'btn btn-danger'}
 			]},
-			{title: 'Label/Div', items: [
-			{title : 'Label', inline : 'span', classes : 'label label-default'},
-			{title : 'Label Success', inline : 'span', classes : 'label label-success'},
-			{title : 'Label Warning', inline : 'span', classes : 'label label-warning'},
-			{title : 'Label Info', inline : 'span', classes : 'label label-info'},
-			{title : 'Div alert-danger', block : 'div', classes : 'alert alert-danger'},
-			{title : 'Div alert-success', block : 'div', classes : 'alert alert-success'},
-			{title : 'Div alert-info', block : 'div', classes : 'alert alert-info'}
+			{title: 'Badge/Alerts', items: [
+			{title : 'Badge', inline : 'span', classes : 'badge bg-secondary'},
+			{title : 'Badge Success', inline : 'span', classes : 'badge bg-success'},
+			{title : 'Badge Warning', inline : 'span', classes : 'badge bg-warning text-dark'},
+			{title : 'Badge Danger', inline : 'span', classes : 'badge bg-danger'},
+			{title : 'Alert danger', block : 'div', classes : 'alert alert-danger'},
+			{title : 'Alert Success', block : 'div', classes : 'alert alert-success'},
+			{title : 'Alert info', block : 'div', classes : 'alert alert-info'}
 			]},
 			{title: 'IMG', items: [
-				{title : 'img-rounded', selector : 'img', classes : 'img-rounded'},
-				{title : 'img-circle', selector : 'img', classes : 'img-circle'}
+				{title : 'fluid', selector : 'img', classes : 'img-fluid'},
+				{title : 'rounded', selector : 'img', classes : 'rounded'}
 			]},
 			{title: 'Code', items: [
-				{title : 'Code PrettyPrint', block : 'pre', classes : 'prettyprint'},
-				{title : 'Code PrettyPrint Linenums', block : 'pre', classes : 'prettyprint linenums'}
+				{title : 'Code <pre>', block : 'pre', classes : 'code'},
+				{title : 'Code <code>', inline : 'code', classes : 'code'}
 			]},
 		],
 	  fontsize_formats : "10px 12px 13px 14px 16px 18px 20px",
@@ -120,29 +120,29 @@ $(function() {
 				{title : 'Lead paragraph', block : 'p', classes : 'lead'}
 			]},
 			{title: 'Links', items: [
-				{title : 'btn', selector: 'a', classes : 'btn btn-default'},
+				{title : 'btn', selector: 'a', classes : 'btn btn-secondary'},
 				{title : 'btn-primary', selector: 'a', classes : 'btn btn-primary'},
 				{title : 'btn-info', selector: 'a', classes : 'btn btn-info'},
 				{title : 'btn-success', selector: 'a', classes : 'btn btn-success'},
 				{title : 'btn-warning', selector: 'a', classes : 'btn btn-warning'},
 				{title : 'btn-danger', selector: 'a', classes : 'btn btn-danger'}
 			]},
-			{title: 'Label/Div', items: [
-			{title : 'Label', inline : 'span', classes : 'label label-default'},
-			{title : 'Label Success', inline : 'span', classes : 'label label-success'},
-			{title : 'Label Warning', inline : 'span', classes : 'label label-warning'},
-			{title : 'Label Info', inline : 'span', classes : 'label label-info'},
-			{title : 'Div alert-danger', block : 'div', classes : 'alert alert-danger'},
-			{title : 'Div alert-success', block : 'div', classes : 'alert alert-success'},
-			{title : 'Div alert-info', block : 'div', classes : 'alert alert-info'}
+			{title: 'Badge/Alerts', items: [
+			{title : 'Badge', inline : 'span', classes : 'badge bg-secondary'},
+			{title : 'Badge Success', inline : 'span', classes : 'badge bg-success'},
+			{title : 'Badge Warning', inline : 'span', classes : 'badge bg-warning text-dark'},
+			{title : 'Badge Danger', inline : 'span', classes : 'badge bg-danger'},
+			{title : 'Alert danger', block : 'div', classes : 'alert alert-danger'},
+			{title : 'Alert Success', block : 'div', classes : 'alert alert-success'},
+			{title : 'Alert info', block : 'div', classes : 'alert alert-info'}
 			]},
 			{title: 'IMG', items: [
-				{title : 'img-rounded', selector : 'img', classes : 'img-rounded'},
-				{title : 'img-circle', selector : 'img', classes : 'img-circle'}
+				{title : 'fluid', selector : 'img', classes : 'img-fluid'},
+				{title : 'rounded', selector : 'img', classes : 'rounded'}
 			]},
 			{title: 'Code', items: [
-				{title : 'Code PrettyPrint', block : 'pre', classes : 'prettyprint'},
-				{title : 'Code PrettyPrint Linenums', block : 'pre', classes : 'prettyprint linenums'}
+				{title : 'Code <pre>', block : 'pre', classes : 'code'},
+				{title : 'Code <code>', inline : 'code', classes : 'code'}
 			]},
 		],
 	  fontsize_formats : "10px 12px 13px 14px 16px 18px 20px",
