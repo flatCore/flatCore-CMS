@@ -34,8 +34,8 @@ function fc_get_post_entries($start=0,$limit=10,$filter) {
 	$order = "ORDER BY post_fixed ASC, sortdate DESC, post_priority DESC, post_id DESC";
 	
 	if(FC_SOURCE == 'frontend') {
-		if($filter['types'] == '-event') {
-			$order = 'ORDER BY post_fixed DESC, post_sortdate_events ASC, post_sortdate DESC, post_priority DESC, post_id DESC';
+		if($filter['types'] == 'e') {
+			$order = 'ORDER BY post_fixed DESC, sortdate_events ASC, post_priority DESC';
 		}
 	}
 	
