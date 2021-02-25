@@ -12,6 +12,10 @@ function fc_get_post_entries($start=0,$limit=10,$filter) {
 	global $time_string_end;
 	global $time_string_now;
 	global $fc_preferences;
+	
+	if(FC_SOURCE == 'frontend') {
+		global $fc_prefs;
+	}
 		
 	$limit_str = 'LIMIT '. (int) $start;
 	
@@ -110,15 +114,14 @@ function fc_get_post_entries($start=0,$limit=10,$filter) {
 	if(FC_SOURCE == 'frontend') {
 		$sql_filter .= "AND post_releasedate <= '$time_string_now' ";
 		
-		if($filter['post_types'] == '-e') {
+		if($filter['types'] == 'e') {
 			// we show events longer (from event end)
-			$time_hide_events = $time_string_now-$fc_preferences['prefs_posts_event_time_offset'];
+			$time_hide_events = $time_string_now-$fc_prefs['prefs_posts_event_time_offset'];
 			$sql_filter .= "AND post_event_enddate >= '$time_hide_events' ";
 		}
 		
 	}
-	
-	
+
 	if($time_string_start != '') {
 		$sql_filter .= "AND post_releasedate >= '$time_string_start' AND post_releasedate <= '$time_string_end' AND post_releasedate < '$time_string_now' ";
 	}
@@ -128,7 +131,7 @@ function fc_get_post_entries($start=0,$limit=10,$filter) {
 	} else {
 		$sql = "SELECT *, FROM_UNIXTIME(post_releasedate,'%Y-%m-%d') as 'sortdate', FROM_UNIXTIME(post_event_startdate,'%Y-%m-%d') as 'sortdate_events' FROM fc_posts $sql_filter $order $limit_str";
 	}
-		
+
 	$entries = $db_posts->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 			
 	$sql_cnt = "SELECT count(*) AS 'A', (SELECT count(*) FROM fc_posts $sql_filter) AS 'F'";
