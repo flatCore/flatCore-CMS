@@ -1,13 +1,16 @@
 /*
  * default | flatCore Theme
- * Copyright 2020 flatCore CMS
+ * Copyright 2021 flatCore CMS
  */
 
 // Theme Core
 @import 'variables';
 
 // Bootstrap Core
-@import '../../../../lib/src/scss/bootstrap/scss/bootstrap';
+@import '../bootstrap/scss/bootstrap';
+
+// Bootstrap Icons
+@import '../bootstrap-icons/font/bootstrap-icons';
 
 @import '../../../../lib/src/css/featherlight';
 @import '../../../../lib/src/css/featherlight.gallery';

@@ -42,7 +42,8 @@
 
 <!-- jQuery -->
 <script type="text/javascript" src="{$fc_inc_dir}/styles/default/js/jquery.min.js"></script>
-<script type="text/javascript" src="{$fc_inc_dir}/styles/default/js/bootstrap.bundle.min.js"></script>
+<!-- bootstrap -->
+<script type="text/javascript" src="{$fc_inc_dir}/styles/default/src/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <script type="text/javascript" src="{$fc_inc_dir}/styles/default/js/js.cookie.js"></script>
 
