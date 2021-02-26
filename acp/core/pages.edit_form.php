@@ -700,7 +700,7 @@ echo '</div>';
 
 /* Select Template */
 
-$arr_Styles = get_all_templates();
+$arr_themes = get_all_templates();
 
 $select_select_template = '<select id="select_template" name="select_template"  class="custom-select form-control">';
 
@@ -711,7 +711,7 @@ if($page_template == '') {
 $select_select_template .= "<option value='use_standard<|-|>use_standard' $selected_standard>$lang[use_standard]</option>";
 
 /* templates list */
-foreach($arr_Styles as $template) {
+foreach($arr_themes as $template) {
 
 	$arr_layout_tpl = glob("../styles/$template/templates/layout*.tpl");
 	
@@ -739,6 +739,23 @@ echo '<label>'.$lang['f_page_template'].'</label>';
 echo $select_select_template;
 echo '</div>';
 
+$get_stylesheets = fc_get_stylesheets($page_template);
+if($get_stylesheets != '0') {
+	$select_stylesheet = '<select name="page_template_stylesheet"  class="custom-select form-control">';
+	foreach($get_stylesheets as $stylesheet) {
+		$selected = '';
+		if($page_template_stylesheet == $stylesheet) {
+			$selected = 'selected';
+		}
+		$select_stylesheet .=  '<option '.$selected.' value="'.$stylesheet.'">'.basename($stylesheet).'</option>';
+	}
+	$select_stylesheet .= '</select>';
+
+	echo '<div class="form-group">';
+	echo $select_stylesheet;
+	echo '</div>';
+
+}
 
 
 /* Select  Status */

@@ -238,6 +238,7 @@ if($page_contents['page_template_layout'] == "use_standard") {
 if(is_dir('styles/'.$page_contents['page_template'].'/templates/')) {
 	$fc_template = $page_contents['page_template'];
 	$fc_template_layout = $page_contents['page_template_layout'];
+	$fc_template_stylesheet = $page_contents['page_template_stylesheet'];
 }
 
 /* module has its own theme/template */

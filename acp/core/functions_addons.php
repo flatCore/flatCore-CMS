@@ -101,6 +101,24 @@ function get_all_templates() {
 	return($arr_Styles);
 }
 
+/**
+ * return available stylesheets from a theme
+ * find css files theme_*.css
+ */
+ 
+function fc_get_stylesheets($theme){
+	
+	$stylesheets = glob('../styles/'.$theme.'/css/theme_*.css');
+	
+	if(is_array($stylesheets) && (count($stylesheets) > 0)){
+		return $stylesheets;
+	} else {
+		return '0';
+	}
+	
+	
+}
+
 
 
 /**

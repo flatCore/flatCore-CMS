@@ -185,7 +185,7 @@ foreach($arr_Styles as $template) {
 	}
 	echo '</select><hr>';
 	
-	$stylesheets = glob('../styles/'.$template.'/css/*css');
+	$stylesheets = glob('../styles/'.$template.'/css/theme_*.css');
 	
 	echo '<select name="select_template_sytlesheet" class="form-control">';
 	
