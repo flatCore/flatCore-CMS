@@ -147,11 +147,15 @@ if(isset($_POST['post_attachment'])) {
 		$download_file = str_replace('../content/','./content/',$target_file['post_file_attachment']);
 	
 		if(is_file($download_file)) {
-			header("Content-Disposition: attachment; filename=\"" . basename($download_file) . "\"");
-			header("Content-Type: application/octet-stream");
-			header("Content-Length: " . filesize($download_file));
+			header('Content-Description: File Transfer');
+			header('Content-Type: ' . mime_content_type($download_file));
+			header('Content-Disposition: attachment; filename="'.basename($download_file).'"');
+			header('Expires: 0');
+			header('Cache-Control: must-revalidate');
+			header('Pragma: public');
+			header('Content-Length: ' . filesize($download_file));
 			readfile($download_file);
-			header("Connection: close");
+			exit;
 		}	
 	}
 }
