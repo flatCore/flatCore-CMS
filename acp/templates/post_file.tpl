@@ -5,6 +5,7 @@
 				<div class="card-header">
 			<ul class="nav nav-tabs card-header-tabs" id="bsTabs" role="tablist">
 				<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#intro">{post_tab_intro}</a></li>
+				<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#content">{post_tab_content}</a></li>
 				<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#file">{post_tab_file}</a></li>
 				<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#prefs">{post_tab_preferences}</a></li>
 			</ul>
@@ -27,6 +28,11 @@
 						</div>
 					</div>
 				</div>
+				
+				<div class="tab-pane fade" id="content">
+					<textarea class='mceEditor' name='post_text'>{post_text}</textarea>
+				</div>
+				
 				<div class="tab-pane fade" id="file">
 					
 					<div class="row">
