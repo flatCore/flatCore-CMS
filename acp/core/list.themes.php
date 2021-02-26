@@ -3,7 +3,6 @@
 //prohibit unauthorized access
 require 'core/access.php';
 
-
 if(isset($_POST['saveDesign'])) {
 
 	// all incoming data -> strip_tags
@@ -20,6 +19,7 @@ if(isset($_POST['saveDesign'])) {
 	$data = $db_content->update("fc_preferences", [
 		"prefs_template" =>  $prefs_template,
 		"prefs_template_layout" =>  $prefs_template_layout,
+		"prefs_template_stylesheet" =>  $select_template_sytlesheet
 	], [
 		"prefs_id" => 1
 	]);	
@@ -28,21 +28,26 @@ if(isset($_POST['saveDesign'])) {
 	if($data->rowCount() > 0) {
 		$sys_message = "{OKAY} $lang[db_changed]";
 		record_log($_SESSION['user_nick'],"edit system design <b>$prefs_template</b>","6");
+		
+		/* read the preferences again */
+		$fc_preferences = get_preferences();
+		foreach($fc_preferences as $k => $v) {
+			$$k = stripslashes($v);
+		}
+		
+		fc_delete_smarty_cache('all');
+		
 	} else {
 		$sys_message = "{ERROR} $lang[db_not_changed]";
 		record_log($_SESSION['user_nick'],"error on saving system design","11");
 	}
 
-
 }
-
 
 
 if($sys_message != ""){
 	print_sysmsg("$sys_message");
 }
-
-
 
 
 echo '<h3>'.$lang['f_prefs_layout'].'</h3>';
@@ -178,6 +183,23 @@ foreach($arr_Styles as $template) {
 		
 		echo basename($layout_tpl,'.tpl').'<br>';
 	}
+	echo '</select><hr>';
+	
+	$stylesheets = glob('../styles/'.$template.'/css/*css');
+	
+	echo '<select name="select_template_sytlesheet" class="form-control">';
+	
+	echo '<option value=""></option>'; //blank
+	foreach($stylesheets as $css) {
+		
+		$active = '';
+		if($css == $fc_preferences['prefs_template_stylesheet']) {
+			$active = 'selected';
+		}
+		
+		echo '<option value="'.$css.'" '.$active.'>'.$css.'</option>';
+	}
+	
 	echo '</select><hr>';
 	
 	echo '<input type="submit" class="btn btn-save btn-md" name="saveDesign" value="'.$lang['save'].'">';

@@ -35,6 +35,8 @@ $cols = array(
   "prefs_pagesglobalhead" => "VARCHAR(500) NOT NULL DEFAULT ''",
   "prefs_nbr_page_versions" => 'INTEGER(12)',
   "prefs_template" => "VARCHAR(50) NOT NULL DEFAULT ''",
+  "prefs_template_layout" => "VARCHAR(100) NOT NULL DEFAULT ''",
+  "prefs_template_stylesheet" => "VARCHAR(100) NOT NULL DEFAULT ''",
   "prefs_usertemplate" => "VARCHAR(50) NOT NULL DEFAULT ''",
   "prefs_default_language" => "VARCHAR(20) NOT NULL DEFAULT ''",
   "prefs_imagesuffix" => "VARCHAR(20) NOT NULL DEFAULT ''",
@@ -50,7 +52,6 @@ $cols = array(
   "prefs_showloginform" => "VARCHAR(20) NOT NULL DEFAULT ''",
   "prefs_logfile" => "VARCHAR(20) NOT NULL DEFAULT ''",
   "prefs_anonymize_ip" => "VARCHAR(20) NOT NULL DEFAULT ''",
-  "prefs_template_layout" => "VARCHAR(100) NOT NULL DEFAULT ''",
   "prefs_xml_sitemap" => "VARCHAR(20) NOT NULL DEFAULT ''",
   
   /* E-Mail */

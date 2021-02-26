@@ -224,6 +224,7 @@ if($prefs_smarty_compile_check == 1) {
 // default template
 $fc_template = $prefs_template;
 $fc_template_layout = $prefs_template_layout;
+$fc_template_stylesheet = $prefs_template_stylesheet;
 
 if($page_contents['page_template'] == "use_standard") {
 	$fc_template = $prefs_template;
@@ -244,6 +245,10 @@ if(is_dir('styles/'.$page_contents['page_template'].'/templates/')) {
 
 $smarty->assign('fc_template', $fc_template);
 $smarty->assign('fc_template_layout', $fc_template_layout);
+
+if($fc_template_stylesheet != '') {
+	$smarty->assign('fc_template_stylesheet', basename($fc_template_stylesheet));
+}
 
 include 'core/definitions.php';
 
