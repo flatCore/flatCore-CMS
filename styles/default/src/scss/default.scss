@@ -12,8 +12,8 @@
 // Bootstrap Icons
 @import '../bootstrap-icons/font/bootstrap-icons';
 
-@import '../../../../lib/src/css/featherlight';
-@import '../../../../lib/src/css/featherlight.gallery';
+@import '../featherlight/featherlight';
+@import '../featherlight/featherlight.gallery';
 
 #pageHeader {
 	background: $gray-900;
