@@ -37,6 +37,8 @@ $mainmenu = show_mainmenu();
 $submenu = show_menu($current_page_sort);
 $bcmenu = breadcrumbs_menu($current_page_sort);
 $fc_sitemap = show_sitemap();
+/* shortcodes will be replaced in text_parser */
+$shortcodes = fc_get_shortcodes();
 
 foreach($mainmenu as $k => $v) {
 	$mainmenu[$k]['page_linkname'] = text_parser($mainmenu[$k]['page_linkname']);

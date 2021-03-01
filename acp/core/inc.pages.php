@@ -28,6 +28,10 @@ switch ($sub) {
 	case "snippets":
 		$subinc = "pages.snippets";
 		break;
+		
+	case "shortcodes":
+		$subinc = "pages.shortcodes";
+		break;
 			
 	case "rss":
 		$subinc = "pages.edit_rss";

@@ -265,5 +265,15 @@ function fc_send_mail($recipient,$subject,$message) {
 }
 
 
+/* get all shortcodes */
+function fc_get_shortcodes() {
+	global $db_content;
+	$shortcodes = $db_content->select("fc_textlib", "*", [
+		"textlib_type" => 'shortcode'
+	]);
+	return $shortcodes;
+}
+
+
 
 ?>

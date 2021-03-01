@@ -236,11 +236,11 @@ if($snippet_lang_filter != "") {
 	$filter_string .= " AND ($snippet_lang_filter)";
 }
 
-//$dbh = new PDO("sqlite:".CONTENT_DB);
 
 $sql_cnt = "SELECT count(*) AS 'cnt_all_snippets',
+(SELECT count(*) FROM fc_textlib WHERE textlib_type NOT IN('shortcode') ) AS 'cnt_snippets',
 (SELECT count(*) FROM fc_textlib WHERE textlib_name IN($system_snippets_str) ) AS 'cnt_system_snippets',
-(SELECT count(*) FROM fc_textlib WHERE textlib_name NOT IN($system_snippets_str) ) AS 'cnt_custom_snippets',
+(SELECT count(*) FROM fc_textlib WHERE textlib_name NOT IN($system_snippets_str) AND (textlib_type NOT IN('shortcode')) ) AS 'cnt_custom_snippets',
 (SELECT count(*) FROM fc_textlib $filter_string ) AS 'cnt_filter_snippets'
 FROM fc_textlib";
 
@@ -330,7 +330,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	echo '<nav class="navbar navbar-expand-sm navbar-fc">';
 
 	echo '<ul class="navbar-nav">';
-	echo '<li class="nav-item"><a class="nav-link '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle ('.$cnt['cnt_all_snippets'].')</a></li>';
+	echo '<li class="nav-item"><a class="nav-link '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle ('.$cnt['cnt_snippets'].')</a></li>';
 	echo '<li class="nav-item"><a class="nav-link '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System ('.$cnt['cnt_system_snippets'].')</a></li>';
 	echo '<li class="nav-item mr-3"><a class="nav-link '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene ('.$cnt['cnt_custom_snippets'].')</a></li>';
 	
