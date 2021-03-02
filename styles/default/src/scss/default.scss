@@ -7,13 +7,13 @@
 @import 'variables';
 
 // Bootstrap Core
-@import '../bootstrap/scss/bootstrap';
+@import '../../node_modules/bootstrap/scss/bootstrap';
 
 // Bootstrap Icons
-@import '../bootstrap-icons/font/bootstrap-icons';
+@import '../../node_modules/bootstrap-icons/font/bootstrap-icons';
 
-@import '../featherlight/featherlight';
-@import '../featherlight/featherlight.gallery';
+@import '../../node_modules/featherlight/src/featherlight';
+@import '../../node_modules/featherlight/src/featherlight.gallery';
 
 #pageHeader {
 	background: $gray-900;

@@ -38,18 +38,11 @@
 <meta property="twitter:image" content="{$page_thumbnail}">
 
 <!-- CSS -->
-<link rel="stylesheet" media="screen" href="{$fc_inc_dir}/styles/default/css/styles.min.css" />
+<link rel="stylesheet" media="screen" href="{$fc_inc_dir}/styles/{$fc_template}/css/styles.min.css" />
 
-<!-- jQuery -->
-<script type="text/javascript" src="{$fc_inc_dir}/styles/default/js/jquery.min.js"></script>
-<!-- bootstrap -->
-<script type="text/javascript" src="{$fc_inc_dir}/styles/default/src/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- JavaScript -->
+<script type="text/javascript" src="{$fc_inc_dir}/styles/{$fc_template}/js/main.min.js"></script>
 
-<script type="text/javascript" src="{$fc_inc_dir}/styles/default/js/js.cookie.js"></script>
-
-<!-- featherlight -->
-<script src="{$fc_inc_dir}/styles/default/js/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="{$fc_inc_dir}/styles/default/js/featherlight.gallery.min.js" type="text/javascript" charset="utf-8"></script>
 
 {$page_head_styles}	
 {$page_head_enhanced}
