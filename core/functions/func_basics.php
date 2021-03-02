@@ -148,8 +148,10 @@ function text_parser($text) {
 	$text = str_replace(']</p>', ']', $text);
 	
 	/* replace all shortcodes */
-	foreach($shortcodes as $k => $v) {
-		$text = str_replace($v['textlib_shortcode'], $v['textlib_content'], $text);
+	if(is_array($shortcodes)) {
+		foreach($shortcodes as $k => $v) {
+			$text = str_replace($v['textlib_shortcode'], $v['textlib_content'], $text);
+		}
 	}
 	
 	if(preg_match_all('#\<pre.*?\>(.*?)\</pre\>#', $text, $matches)) {
