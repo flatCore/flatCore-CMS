@@ -188,7 +188,6 @@ function update_table($col_name,$type,$table_name,$database) {
 	} else if($database == "index") {
 		$db_index->query("DROP TABLE $table_name");
 	}
-	
 }
 
 /*
@@ -239,7 +238,7 @@ function add_table($database,$table_name,$cols) {
 		foreach ($cols as $k => $v) {
 			$cols_string .= "$k $cols[$k],\r";
 		}
-		
+		$cols_string = substr(trim("$cols_string"), 0,-1);
 	}
 		
 	$sql = "CREATE TABLE $table_name ( $cols_string )";
