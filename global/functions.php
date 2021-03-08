@@ -275,5 +275,20 @@ function fc_get_shortcodes() {
 }
 
 
+/**
+ * get saved data from table fc_themes
+ * $theme (string) name of the theme
+ */
+function fc_get_theme_options($theme) {
+
+	global $db_content;
+	
+	$theme_data = $db_content->select("fc_themes", "*",[
+		"theme_name" => $theme
+	]);
+	
+	return $theme_data;		
+}
+
 
 ?>
