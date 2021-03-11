@@ -25,7 +25,16 @@
 	.social-media {
 		a {
 			color: #fff;
+			&:hover {
+				color: #eee;
+			}
 		}
+		float: right;
+		margin-top: -1rem;
+		padding: 3px 5px;
+		background: $gray-800;
+		border-bottom-left-radius: 5px;
+		border-bottom-right-radius: 5px;
 	}
 	
 }
