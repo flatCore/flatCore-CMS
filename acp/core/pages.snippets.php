@@ -201,14 +201,15 @@ $snippet_lang_filter = substr("$snippet_lang_filter", 0, -3); // cut the last ' 
 
 
 $snippet_label_filter = '';
+$checked_labels_array = explode('-', $_SESSION['checked_label_str']);
 for($i=0;$i<count($fc_labels);$i++) {
 	$label = $fc_labels[$i]['label_id'];
-	if(strpos("$_SESSION[checked_label_str]", "$label") !== false) {
-		$snippet_label_filter .= "textlib_labels LIKE '%$label%' OR ";
+	if(in_array($label, $checked_labels_array)) {
+		$snippet_label_filter .= "textlib_labels LIKE '%$label,%' OR textlib_labels LIKE '$label' OR ";
 	}
 }
 $snippet_label_filter = substr("$snippet_label_filter", 0, -3); // cut the last ' OR'
-
+echo $_SESSION['checked_label_str'].' -> <br>'.$snippet_label_filter;
 
 $filter_string = "WHERE textlib_id IS NOT NULL";
 
