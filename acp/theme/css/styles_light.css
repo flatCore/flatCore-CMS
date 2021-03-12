@@ -14,6 +14,7 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small,
 }
 
 /* tables */
+/* navbar */
 /**
  * flatCore ACP
  */
@@ -12291,6 +12292,10 @@ span.categories-list input[type=checkbox] {
   background: rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(0, 0, 0, 0.5);
 }
+.tmb .tmb-preview {
+  max-height: 160px;
+  overflow: hidden;
+}
 
 .tmb-actions {
   position: absolute;
@@ -12553,18 +12558,25 @@ div#contentSwitch {
 }
 
 .navbar-fc {
-  border: 1px solid #d5d5d5;
+  border: 1px solid #e1e1e1;
   background: #eee;
-  padding: 0;
+  padding: 3px;
+  border-radius: 3px;
+}
+.navbar-fc .nav-item {
+  margin-right: 2px;
 }
 .navbar-fc .nav-link {
   background: #c8c8c8;
+  border-radius: 3px;
+  border: 1px solid #aeaeae;
 }
 .navbar-fc .nav-link:hover {
-  background: #dadada;
+  background: #e1e1e1;
 }
 .navbar-fc .nav-link.active {
-  background: #dadada;
+  background: #c8c8c8;
+  border-bottom: 1px solid #62aef1;
 }
 .navbar-fc .dropdown-menu {
   background: #e1e1e1;

@@ -223,9 +223,9 @@ function fc_send_mail($recipient,$subject,$message) {
 	$message = preg_replace( "/(content-type:|bcc:|cc:|to:|from:)/im", "", $message );
 
 	
-	require FC_CORE_DIR.'lib/PHPMailer/src/Exception.php';
-	require FC_CORE_DIR.'lib/PHPMailer/src/PHPMailer.php';
-	require FC_CORE_DIR.'lib/PHPMailer/src/SMTP.php';
+	require_once FC_CORE_DIR.'lib/PHPMailer/src/Exception.php';
+	require_once FC_CORE_DIR.'lib/PHPMailer/src/PHPMailer.php';
+	require_once FC_CORE_DIR.'lib/PHPMailer/src/SMTP.php';
 	
 	$mail = new PHPMailer(true);
 	
@@ -264,6 +264,31 @@ function fc_send_mail($recipient,$subject,$message) {
 	return $return;
 }
 
+
+/* get all shortcodes */
+function fc_get_shortcodes() {
+	global $db_content;
+	$shortcodes = $db_content->select("fc_textlib", "*", [
+		"textlib_type" => 'shortcode'
+	]);
+	return $shortcodes;
+}
+
+
+/**
+ * get saved data from table fc_themes
+ * $theme (string) name of the theme
+ */
+function fc_get_theme_options($theme) {
+
+	global $db_content;
+	
+	$theme_data = $db_content->select("fc_themes", "*",[
+		"theme_name" => $theme
+	]);
+	
+	return $theme_data;		
+}
 
 
 ?>

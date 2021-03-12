@@ -67,7 +67,17 @@ $time = time();
 
 $max_w = (int) $_REQUEST['w']; // max image width
 $max_h = (int) $_REQUEST['h']; // max image height
+$max_w_tmb = (int) $_REQUEST['w_tmb']; // max thumbnail width
+$max_h_tmb = (int) $_REQUEST['h_tmb']; // max thumbnail height
 $max_fz = (int) $_REQUEST['fz']; // max filesize
+
+if($max_w_tmb < 1) {
+	$max_w_tmb = 250;
+}
+
+if($max_h_tmb < 1) {
+	$max_h_tmb = 250;
+}
 
 if(strpos($_REQUEST['upload_destination'],"/images") !== false) {
 	$destination = '../'.$_REQUEST['upload_destination'];
@@ -99,6 +109,7 @@ if($upload_type == 'images') {
 		$img_name = clean_filename($prefix,$suffix);
 		$target = "$destination/$img_name";
 		
+		
 		//$fc_upload_img_types from config.php
 		if(!in_array($suffix, $fc_upload_img_types)) {
 			exit;
@@ -108,9 +119,9 @@ if($upload_type == 'images') {
 				@move_uploaded_file($tmp_name, $target);
 			} else {			
 				resize_image($tmp_name,$target,$max_w,$max_h,100);
-				$tmb_name = md5($target).'.jpg';
+				$tmb_name = md5(substr($target, 3,strlen($target))).'.jpg';
 				$store_tmb_name = $tmb_destination.'/'.$tmb_name;
-				fc_create_tmb($tmp_name,$tmb_name,250,250,60);
+				fc_create_tmb($target,$tmb_name,$max_w_tmb,$max_h_tmb,80);
 			}
 						
 			$filetype = mime_content_type(realpath($target));
@@ -318,7 +329,6 @@ function fc_write_media_data_name($filename,$store_tmb_name,$filesize,$time,$med
 	
 	$filename = substr($filename, 3,strlen($filename));
 	$store_tmb_name = substr($store_tmb_name, 3,strlen($store_tmb_name));
-	
 	$uploader = $_SESSION['user_nick'];
 	
 	$columns = [
@@ -329,7 +339,7 @@ function fc_write_media_data_name($filename,$store_tmb_name,$filesize,$time,$med
 		"media_upload_time" => "$time",
 		"media_upload_from" => "$uploader",
 		"media_type" => "$mediatype",
-		"media_lang" => "$languagePack"	
+		"media_lang" => $_SESSION['lang']	
 	];
 	
 	$cnt_changes = $db_content->insert("fc_media", $columns);

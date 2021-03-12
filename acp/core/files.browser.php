@@ -122,21 +122,34 @@ if((isset($_POST['new_folder'])) && ($_POST['new_folder'] != '')) {
 }
 
 
-/* DELETE FILE OR IMAGE */
+/**
+ * Delete Files
+ * or Images and Thumbnails
+ */
 if(isset($_POST['delete'])) {
 	
-	$deleteFile = basename($_POST['file']);
+	$deleteFile = (int) $_POST['delete'];
+	$get_file_data = fc_get_media_data_by_id($deleteFile);
 	
-	if(is_file("$disk/$deleteFile")) {
-		if(unlink("$disk/$deleteFile")) {
-			fc_delete_media_data("$disk/$deleteFile");
+	$delete_file = $get_file_data['media_file'];
+	$delete_thumb = $get_file_data['media_thumb'];
+		
+	if(is_file($delete_file)) {
+		if(unlink($delete_file)) {
+			fc_delete_media_data($delete_file);
+			if(is_file($delete_thumb)) {
+				unlink($delete_thumb);
+			}
 			echo '<div class="alert alert-success alert-auto-close">'.$lang['msg_file_delete'].'</div>';
 		} else {
-			echo '<div class="alert alert-danger"><strong>'.$disk.'/'.$deleteFile.'</strong><br>'.$lang['msg_file_delete_error'].'</div>';
+			echo '<div class="alert alert-danger"><strong>'.$delete_file.'</strong><br>'.$lang['msg_file_delete_error'].'</div>';
 		}	
 	} else {
-		echo '<div class="alert alert-error">File ('.$disk.'/'.$deleteFile.') not found</div>';
+		echo '<div class="alert alert-error">File ('.$delete_file.') not found</div>';
 	}
+	
+	
+	
 }
 
 /* delete folder */
@@ -163,6 +176,11 @@ function delete_folder($dir) {
   } 
 
 
+if(isset($_POST['clear_tmb'])) {
+	fc_clear_thumbs_directory();	
+}
+
+
 /**
  * check if all files stored in media database
  * if not, catch up
@@ -174,7 +192,7 @@ function delete_folder($dir) {
  * if yes, fill up
  */
 
-if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
+if(isset($_POST['rebuild']) && ($_POST['rebuild'] == 'database')) {
 	
 	$incomplete = FALSE;
 	$rebuild_start = time();
@@ -251,20 +269,25 @@ if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
 	
 	
 	/* check if thumbnail exists and create missing thumbnail file */
+	$cnt_created_tmbs = 0;
 	foreach($storedFiles as $k) {
 
 		/* thumbnail directories */
 		$tmb_dir = '../'.$img_tmb_path;
 		$tmb_dir_year = $tmb_dir.'/'.date('Y',$k['media_upload_time']);
 		$tmb_destination = $tmb_dir_year.'/'.date('m',$k['media_upload_time']);
+				
+		if(!is_dir($tmb_destination)) {
+			mkdir($tmb_destination, 0777, true);
+		}
 		
 		$tmb_name = md5($k['media_file']).'.jpg';
 		
 		$ckeck_tmb = $tmb_destination.'/'.$tmb_name;
 		
 		if(!file_exists($ckeck_tmb)) {
-			fc_create_tmb($k['media_file'], $tmb_name, 250, 250, 60);
-			
+			$cnt_created_tmbs++;
+			fc_create_thumbnail($k['media_file'], $tmb_name, $tmb_destination, $fc_preferences['prefs_maxtmbwidth'], $fc_preferences['prefs_maxtmbheight'], 80);
 			$db_content->update("fc_media", [
 				"media_thumb" => $ckeck_tmb
 				],[
@@ -294,7 +317,7 @@ if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
 			$tmb_name = md5($image).'.jpg';
 			$store_tmb_name = $tmb_destination.'/'.$tmb_name;
 			
-			fc_create_tmb($image, $tmb_name, 250, 250, 60);
+			fc_create_thumbnail($row['media_file'], $tmb_name, $tmb_destination, $fc_preferences['prefs_maxtmbwidth'], $fc_preferences['prefs_maxtmbheight'], 80);
 
 			$db_content->update("fc_media", [
 				"media_thumb" => $tmb_name
@@ -343,7 +366,11 @@ if(isset($_GET['rebuild']) && ($_GET['rebuild'] == 'database')) {
 		}
 	}
 	
-	echo '<div class="alert alert-info">Add '.$cnt_files_rebuild.' Files, removed '.$cnt_files_removed.' Files from Database. Completed '.$cnt_infos_completed.' File-Informations</div>';
+	echo '<div class="alert alert-info">';
+	echo 'Created Add <strong>'.$cnt_files_rebuild. '</strong> Files, removed <strong>'.$cnt_files_removed.'</strong> Files from Database<br>';
+	echo 'Completed <strong>'.$cnt_infos_completed. '</strong> File-Informations in Database<br>';
+	echo 'Created <strong>'.$cnt_created_tmbs. '</strong> Thumbnails.';
+	echo '</div>';
 	
 	if($incomplete === TRUE) {
 		echo '<div class="alert alert-info">Maximum Time reached, <a href="?tn=filebrowser&sub=browse&rebuild=database">start again</a>.</div>';
@@ -414,9 +441,6 @@ echo '<div class="col-md-4">';
 
 echo '<div class="btn-toolbar float-right">';
 
-echo '<div class="btn-group float-right mr-1">';
-echo '<a class="btn btn-sm btn-fc" href="acp.php?tn='.$tn.'&sub=browse&rebuild=database">'.$icon['wrench'].'</a>';
-echo '</div>';
 echo '<div class="btn-group float-right">';
 echo '<a class="btn btn-sm btn-fc '.$check_lastedit.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=time">'.$lang['date_of_change'].'</a>';
 echo '<a class="btn btn-sm btn-fc '.$check_name.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=name">'.$lang['filename'].'</a>';
@@ -457,9 +481,9 @@ if(is_array($all_filter)) {
 	$_SESSION['media_filter_string'] = $add_keyword_filter;
 }
 
-$sql_cnt = "SELECT count(*) AS 'all' FROM fc_media WHERE media_file LIKE '%$disk%' AND (media_lang LIKE '$languagePack' OR media_lang IS NULL) ".$_SESSION['media_filter_string'];
-
+$sql_cnt = "SELECT count(*) AS 'all' FROM fc_media WHERE media_file LIKE '%$disk%' ".$_SESSION['media_filter_string'];
 $all_files = $db_content->query($sql_cnt)->fetch();
+$all_files = fc_unique_multi_array($all_files,'media_file');
 $nbr_of_files = $all_files['all'];
 
 
@@ -494,13 +518,15 @@ if($start < 1) {
 $order_sql = 'ORDER BY '.$_SESSION['sort_by'].' '.$_SESSION['sort_direction']. ' ';
 $where_sql = 'WHERE media_id IS NOT NULL AND ';
 $where_sql .= " (media_file like '%$disk%')";
-$where_sql .= " AND (media_lang LIKE '$languagePack' OR media_lang IS NULL)";
+//$where_sql .= " AND (media_lang LIKE '$languagePack' OR media_lang IS NULL)";
 
 $limit_sql = "LIMIT $start,$files_per_page ";
 
 
 $sql = "SELECT * FROM fc_media $where_sql ".$_SESSION['media_filter_string']." $order_sql $limit_sql";
 $get_files = $db_content->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+
+$get_files = fc_unique_multi_array($get_files,'media_file');
 
 $cnt_pages = ceil($nbr_of_files/$files_per_page);
 $cnt_get_files = count($get_files);
@@ -551,7 +577,7 @@ echo '<div class="'.$tpl_container_class.'">';
 for($i=0;$i<$cnt_get_files;$i++) {
 	
 	$filename = '';
-
+	$id = $get_files[$i]['media_id'];
 	$filename = $get_files[$i]['media_file'];
 	$filename_thumb = $get_files[$i]['media_thumb'];
 	$filetime = $get_files[$i]['media_lastedit'];
@@ -565,7 +591,7 @@ for($i=0;$i<$cnt_get_files;$i++) {
 	}
 	
 	
-	$delete_btn = '<button type="submit" onclick="return confirm(\''.$lang['confirm_delete_file'].'\')" class="btn btn-fc btn-sm w-100 text-danger" name="delete" value="'.$lang['delete'].'">'.$icon['trash_alt'].'</button>';
+	$delete_btn = '<button type="submit" onclick="return confirm(\''.$lang['confirm_delete_file'].'\')" class="btn btn-fc btn-sm w-100 text-danger" name="delete" value="'.$id.'">'.$icon['trash_alt'].'</button>';
 	$edit_btn = '<a data-fancybox data-type="ajax" data-src="/acp/core/ajax.media.php?file='.$filename.'&folder='.$disk.'" href="javascript:;" class="btn btn-sm btn-fc w-100 text-success">'.$icon['edit'].'</a>';
 	
 	
@@ -629,6 +655,13 @@ foreach(range($pag_start, $pag_end) as $number) {
 echo ' '. $pag_forwardlink;
 echo '</p></div>'; //EOL PAGINATION
 
+
+echo '<form action="acp.php?tn=filebrowser&sub=browse" method="POST" class="d-block text-right mt-4">';
+echo '<div class="btn-group" role="group">';
+echo '<button class="btn btn-sm btn-fc" type="submit" name="rebuild" value="database">Database '.$icon['wrench'].'</button>';
+echo '<button class="btn btn-sm btn-fc" type="submit" name="clear_tmb">Thumbnails '.$icon['trash_alt'].'</button>';
+echo '</div>';
+echo '</form>';
 
 
 

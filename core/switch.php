@@ -37,13 +37,21 @@ $mainmenu = show_mainmenu();
 $submenu = show_menu($current_page_sort);
 $bcmenu = breadcrumbs_menu($current_page_sort);
 $fc_sitemap = show_sitemap();
+/* shortcodes will be replaced in text_parser */
+$shortcodes = fc_get_shortcodes();
 
-$cnt_menu = count($mainmenu);
-for($i=0;$i<$cnt_menu;$i++) {
-	if($mainmenu[$i]['page_linkname'] != '') {
-		$mainmenu[$i]['page_linkname'] = text_parser($mainmenu[$i]['page_linkname']);
-	}
+foreach($mainmenu as $k => $v) {
+	$mainmenu[$k]['page_linkname'] = text_parser($mainmenu[$k]['page_linkname']);
 }
+
+foreach($submenu as $k => $v) {
+	$submenu[$k]['page_linkname'] = text_parser($submenu[$k]['page_linkname']);
+}
+
+foreach($bcmenu as $k => $v) {
+	$bcmenu[$k]['page_linkname'] = text_parser($bcmenu[$k]['page_linkname']);
+}
+
 
 $smarty->assign('homepage_linkname', text_parser($mainmenu['homepage_linkname']));
 $smarty->assign('homepage_title', $mainmenu['homepage_title']);
@@ -60,7 +68,7 @@ $smarty->assign('fc_sitemap', $fc_sitemap);
 /* submenu only if $submenu != empty */
 if(count($submenu) >= 1) {
 	$smarty->assign('arr_submenue', $arr_subnmenu);
-	$smarty->assign('legend_toc', FC_TOC_HEADER);
+	$smarty->assign('legend_toc', text_parser(FC_TOC_HEADER));
 }
 
 if($page_contents['page_sort'] == 'portal' OR $p == '') {
@@ -223,7 +231,6 @@ if($textlib_global_extracontent != "") {
 }
 
 
-
 /* last edit */
 $le_cache_file = FC_CONTENT_DIR . "/cache/cache_lastedit.php";
 if(is_file("$le_cache_file")) {
@@ -232,6 +239,9 @@ if(is_file("$le_cache_file")) {
 	$arr_lastedit = get_lastedit();
 }
 
+for($i=0;$i<5;$i++) {
+	$arr_lastedit[$i]['page_linkname'] = text_parser($arr_lastedit[$i]['page_linkname']);
+}
 $smarty->assign('arr_lastedit', $arr_lastedit);
 
 
@@ -248,6 +258,9 @@ if(is_file("$mc_cache_file")) {
 	cache_most_clicked();
 }
 
+for($i=0;$i<5;$i++) {
+	$arr_mostclicked[$i]['linkname'] = text_parser($arr_mostclicked[$i]['linkname']);
+}
 $smarty->assign('arr_mostclicked', $arr_mostclicked,true);
 
 

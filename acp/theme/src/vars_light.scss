@@ -49,4 +49,11 @@ h1, h2, h3, h4, h5, h6,
 
 $table_striped_bg_odd: lighten($widget_background,5);
 
+
+/* navbar */
+
+$navbar-fc-bg: $widget_background;
+$navbar-fc-btn-bg: darken($widget_background,15);
+$navbar-fc-btn-active: lighten($brand_color,10);
+
 @import "styles";

@@ -1,0 +1,17 @@
+{
+  "name": "default-theme",
+  "version": "1.5.0",
+  "description": "The default flatCore CMS Theme",
+  "scripts": {},
+  "author": "",
+  "license": "GPL-3.0 License",
+  "repository": {},
+  "private": true,
+  "dependencies": {
+    "@popperjs/core": "^2.9.0",
+    "bootstrap": "^5.0.0-beta2",
+    "featherlight": "^1.7.14",
+    "jquery": "^3.6.0",
+    "js-cookie": "^2.2.1"
+  }
+}

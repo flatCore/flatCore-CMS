@@ -76,6 +76,7 @@ if(isset($_POST['delete_the_page'])) {
 			$subpages = $db_content->select("fc_pages", ["page_sort","page_title"],[
 				"AND" => [
 					"page_sort[~]" => "$delpage_sort%",
+					"page_sort[!]" => "$delpage_sort",
 					"page_language" => $delpage_lang
 				]
 			]);
@@ -83,10 +84,9 @@ if(isset($_POST['delete_the_page'])) {
 			$subpages = '';
 		}
 		
-		if(is_array($subpages)) {
+		if(count($subpages) > 0) {
 			echo '<div class="alert alert-danger">';
 			echo $lang['msg_error_deleting_sub_pages'];
-			
 			echo '<ol>';
 			foreach($subpages as $pages) {
 				echo '<li>'.$pages['page_title'].'</li>';
@@ -267,6 +267,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_linkname" => "$page_linkname",
 			"page_permalink" => "$page_permalink",
 			"page_permalink_short" => "$page_permalink_short",
+			"page_target" => "$page_target",
 			"page_classes" => "$page_classes",
 			"page_hash" => "$page_hash",
 			"page_type_of_use" => "$page_type_of_use",
@@ -282,6 +283,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_lastedit_from" => $_SESSION['user_nick'],
 			"page_template" => "$page_template",
 			"page_template_layout" => "$page_template_layout",
+			"page_template_stylesheet" => "$page_template_stylesheet",
 			"page_meta_author" => "$page_meta_author",
 			"page_meta_keywords" => "$page_meta_keywords",
 			"page_meta_description" => "$page_meta_description",
@@ -294,7 +296,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_addon_string" => "$page_addon_string",
 			"page_posts_categories" => "$string_categories",
 			"page_posts_types" => "$string_types",
-			"page_authorized_users" => "$page_authorized_users",
+			"page_authorized_users" => "$string_authorized_admins",
 			"page_version" => $page_version,
 			"page_labels" => "$string_labels",
 			"page_categories" => "$string_page_categories",
@@ -338,6 +340,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_linkname" => "$page_linkname",
 			"page_permalink" => "$page_permalink",
 			"page_permalink_short" => "$page_permalink_short",
+			"page_target" => "$page_target",
 			"page_classes" => "$page_classes",
 			"page_hash" => "$page_hash",
 			"page_type_of_use" => "$page_type_of_use",
@@ -353,6 +356,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_lastedit_from" => $_SESSION['user_nick'],
 			"page_template" => "$page_template",
 			"page_template_layout" => "$page_template_layout",
+			"page_template_stylesheet" => "$page_template_stylesheet",
 			"page_meta_author" => "$page_meta_author",
 			"page_meta_keywords" => "$page_meta_keywords",
 			"page_meta_description" => "$page_meta_description",
@@ -365,7 +369,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_addon_string" => "$page_addon_string",
 			"page_posts_categories" => "$string_categories",
 			"page_posts_types" => "$string_types",
-			"page_authorized_users" => "$page_authorized_users",
+			"page_authorized_users" => "$string_authorized_admins",
 			"page_version" => $page_version,
 			"page_labels" => "$string_labels",
 			"page_categories" => "$string_page_categories",
@@ -397,6 +401,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_linkname" => "$page_linkname",
 			"page_permalink" => "$page_permalink",
 			"page_permalink_short" => "$page_permalink_short",
+			"page_target" => "$page_target",
 			"page_classes" => "$page_classes",
 			"page_hash" => "$page_hash",
 			"page_type_of_use" => "$page_type_of_use",
@@ -412,6 +417,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_lastedit_from" => $_SESSION['user_nick'],
 			"page_template" => "$page_template",
 			"page_template_layout" => "$page_template_layout",
+			"page_template_stylesheet" => "$page_template_stylesheet",
 			"page_meta_author" => "$page_meta_author",
 			"page_meta_keywords" => "$page_meta_keywords",
 			"page_meta_description" => "$page_meta_description",
@@ -424,7 +430,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_addon_string" => "$page_addon_string",
 			"page_posts_categories" => "$string_categories",
 			"page_posts_types" => "$string_types",
-			"page_authorized_users" => "$page_authorized_users",
+			"page_authorized_users" => "$string_authorized_admins",
 			"page_version" => $page_version,
 			"page_labels" => "$string_labels",
 			"page_categories" => "$string_page_categories",
@@ -469,6 +475,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_linkname" => "$page_linkname",
 			"page_permalink" => "$page_language",
 			"page_permalink_short" => "$page_permalink_short",
+			"page_target" => "$page_target",
 			"page_classes" => "$page_classes",
 			"page_hash" => "$page_hash",
 			"page_type_of_use" => "$page_type_of_use",
@@ -484,6 +491,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_lastedit_from" => $_SESSION['user_nick'],
 			"page_template" => "$page_template",
 			"page_template_layout" => "$page_template_layout",
+			"page_template_stylesheet" => "$page_template_stylesheet",
 			"page_meta_author" => "$page_meta_author",
 			"page_meta_keywords" => "$page_meta_keywords",
 			"page_meta_description" => "$page_meta_description",
@@ -496,7 +504,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_addon_string" => "$page_addon_string",
 			"page_posts_categories" => "$string_categories",
 			"page_posts_types" => "$string_types",
-			"page_authorized_users" => "$page_authorized_users",
+			"page_authorized_users" => "$string_authorized_admins",
 			"page_version" => $page_version,
 			"page_labels" => "$string_labels",
 			"page_categories" => "$string_page_categories",
@@ -534,6 +542,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_linkname" => "$page_linkname",
 			"page_permalink" => "$page_language",
 			"page_permalink_short" => "$page_permalink_short",
+			"page_target" => "$page_target",
 			"page_classes" => "$page_classes",
 			"page_hash" => "$page_hash",
 			"page_type_of_use" => "$page_type_of_use",
@@ -549,6 +558,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_lastedit_from" => $_SESSION['user_nick'],
 			"page_template" => "$page_template",
 			"page_template_layout" => "$page_template_layout",
+			"page_template_stylesheet" => "$page_template_stylesheet",
 			"page_meta_author" => "$page_meta_author",
 			"page_meta_keywords" => "$page_meta_keywords",
 			"page_meta_description" => "$page_meta_description",
@@ -561,7 +571,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_addon_string" => "$page_addon_string",
 			"page_posts_categories" => "$string_categories",
 			"page_posts_types" => "$string_types",
-			"page_authorized_users" => "$page_authorized_users",
+			"page_authorized_users" => "$string_authorized_admins",
 			"page_version" => $page_version,
 			"page_labels" => "$string_labels",
 			"page_categories" => "$string_page_categories",

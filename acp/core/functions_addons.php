@@ -101,6 +101,24 @@ function get_all_templates() {
 	return($arr_Styles);
 }
 
+/**
+ * return available stylesheets from a theme
+ * find css files theme_*.css
+ */
+ 
+function fc_get_stylesheets($theme){
+	
+	$stylesheets = glob('../styles/'.$theme.'/css/theme_*.css');
+	
+	if(is_array($stylesheets) && (count($stylesheets) > 0)){
+		return $stylesheets;
+	} else {
+		return '0';
+	}
+	
+	
+}
+
 
 
 /**
@@ -157,6 +175,39 @@ function mods_check_in() {
 	file_put_contents($file, $str, LOCK_EX);
 
 }
+
+/**
+ * write/update theme options
+ * $data (array) $data['theme'] -> name of the theme
+ * values are prefixed by 'theme' f.e. $data['theme_']
+ */
+
+function fc_write_theme_options($data) {
+	
+	global $db_content;
+	
+	$db_content->delete("fc_themes", [
+		"theme_name" => $data['theme']
+	]);
+	
+	foreach($data as $key => $value) {
+		
+		if($key == 'theme') {
+			$theme = $value;
+			continue;
+		}
+		
+		if((strstr($key, '_', true)) == 'theme') {	
+			$db_content->insert("fc_themes", ["theme_name" => $data['theme'],"theme_label" => "$key","theme_value" => "$value"]);
+		}
+		
+		
+	}
+
+}
+
+
+
 
 
 

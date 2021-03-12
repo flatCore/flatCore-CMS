@@ -48,6 +48,7 @@ function get_textlib($textlib_name,$textlib_lang) {
 			$snippet_thumbnail_array = explode("<->", $textlib_images);
 			if(count($snippet_thumbnail_array) > 0) {
 				foreach($snippet_thumbnail_array as $img) {
+					$img = str_replace('../content/', '/content/', $img);
 					$tpl_file = str_replace('{$snippet_img_src}',$img,$tpl_file);						
 				}
 			}

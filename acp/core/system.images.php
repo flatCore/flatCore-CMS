@@ -43,6 +43,8 @@ if(isset($_POST['save_prefs_upload'])) {
 		"prefs_imagesuffix" =>  $prefs_imagesuffix,
 		"prefs_maximagewidth" => $prefs_maximagewidth,
 		"prefs_maximageheight" => $prefs_maximageheight,
+		"prefs_maxtmbwidth" => $prefs_maxtmbwidth,
+		"prefs_maxtmbheight" => $prefs_maxtmbheight,
 		"prefs_filesuffix" => $prefs_filesuffix,
 		"prefs_maxfilesize" => $prefs_maxfilesize,
 		"prefs_showfilesize" => $prefs_showfilesize,
@@ -130,19 +132,41 @@ echo '<fieldset>';
 echo '<legend>'.$lang['f_prefs_uploads'].'</legend>';
 echo '<form action="acp.php?tn=system&sub=images" method="POST" class="form-horizontal">';
 
-$prefs_maximage_input  = '<div class="row"><div class="col-md-3">';
+$prefs_maximage_input  = '<div class="row"><div class="col-md-6">';
 $prefs_maximage_input .= '<div class="input-group">';
 $prefs_maximage_input .= '<input class="form-control" type="text" name="prefs_maximagewidth" value="'.$prefs_maximagewidth.'">';
 $prefs_maximage_input .= '<div class="input-group-append"><span class="input-group-text"><i class="fas fa-arrows-alt-h"></i></span></div>';
 $prefs_maximage_input .= '</div>';
-$prefs_maximage_input .= '</div><div class="col-md-3">';
+$prefs_maximage_input .= '</div><div class="col-md-6">';
 $prefs_maximage_input .= '<div class="input-group">';
 $prefs_maximage_input .= '<input class="form-control" type="text" name="prefs_maximageheight" value="'.$prefs_maximageheight.'">';
 $prefs_maximage_input .= '<div class="input-group-append"><span class="input-group-text"><i class="fas fa-arrows-alt-v"></i></span></div>';
 $prefs_maximage_input .= '</div>';
 $prefs_maximage_input .= '</div></div>';
 
+$prefs_maxtmb_input  = '<div class="row"><div class="col-md-6">';
+$prefs_maxtmb_input .= '<div class="input-group">';
+$prefs_maxtmb_input .= '<input class="form-control" type="text" name="prefs_maxtmbwidth" value="'.$prefs_maxtmbwidth.'">';
+$prefs_maxtmb_input .= '<div class="input-group-append"><span class="input-group-text"><i class="fas fa-arrows-alt-h"></i></span></div>';
+$prefs_maxtmb_input .= '</div>';
+$prefs_maxtmb_input .= '</div><div class="col-md-6">';
+$prefs_maxtmb_input .= '<div class="input-group">';
+$prefs_maxtmb_input .= '<input class="form-control" type="text" name="prefs_maxtmbheight" value="'.$prefs_maxtmbheight.'">';
+$prefs_maxtmb_input .= '<div class="input-group-append"><span class="input-group-text"><i class="fas fa-arrows-alt-v"></i></span></div>';
+$prefs_maxtmb_input .= '</div>';
+$prefs_maxtmb_input .= '</div></div>';
+
+echo '<div class="row">';
+echo '<div class="col-md-6">';
+echo '<p>'.$lang['images'].'</p>';
 echo tpl_form_control_group('',$lang['f_prefs_maximage'],"$prefs_maximage_input");
+echo '</div>';
+echo '<div class="col-md-6">';
+echo '<p>'.$lang['thumbnails'].'</p>';
+echo tpl_form_control_group('',$lang['f_prefs_maximage'],"$prefs_maxtmb_input");
+echo '</div>';
+echo '</div>';
+
 echo tpl_form_control_group('',$lang['f_prefs_maxfilesize'],"<input class='form-control' type='text' name='prefs_maxfilesize' value='$prefs_maxfilesize'>");
 
 $toggle_btn_upload_unchanged  = '<div class="form-group form-check">';

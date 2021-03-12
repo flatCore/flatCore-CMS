@@ -172,6 +172,7 @@ function update_table($col_name,$type,$table_name,$database) {
 	global $db_posts;
 	global $db_type;
 	global $database_name;
+	global $db_index;
 	
 		
 	$sql = "ALTER TABLE $table_name ADD $col_name $type";
@@ -184,8 +185,9 @@ function update_table($col_name,$type,$table_name,$database) {
 		$db_statistics->query($sql);
 	} else if($database == "posts") {
 		$db_posts->query($sql);
+	} else if($database == "index") {
+		$db_index->query("DROP TABLE $table_name");
 	}
-	
 }
 
 /*
@@ -236,7 +238,7 @@ function add_table($database,$table_name,$cols) {
 		foreach ($cols as $k => $v) {
 			$cols_string .= "$k $cols[$k],\r";
 		}
-		
+		$cols_string = substr(trim("$cols_string"), 0,-1);
 	}
 		
 	$sql = "CREATE TABLE $table_name ( $cols_string )";
@@ -266,7 +268,6 @@ function add_virtual_table($db,$table_name,$cols) {
 	}
 	
 	$cols_string = substr(trim("$cols_string"), 0,-1); // cut last commata and returns
-	
 
 	$db_index->query("SET NAMES 'utf-8'");
 	$db_index->query("CREATE VIRTUAL TABLE $table_name USING fts3($cols_string,tokenize=porter)");

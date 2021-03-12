@@ -184,6 +184,7 @@ $lang['label_comment'] = "Kommentar schreiben";
 
 $lang['files'] = "Dateien";
 $lang['images'] = "Bilder";
+$lang['thumbnails'] = "Thumbnails";
 $lang['browse_files'] = "Festplpatte nach Dateien durchsuchen";
 $lang['browse_images'] = "Festplatte nur nach Bildern durchsuchen";
 $lang['clear_list'] = "Liste löschen";
@@ -508,6 +509,7 @@ $lang['msg_error_deleting_sub_pages'] = 'Du kannst keine Seiten mit Unterseiten 
 $lang['msg_update_available'] = "<b>Es ist ein Update verfügbar!</b><br>Bitte denke daran, vor einer Installation ist ein Backup immer eine gute Idee.";
 $lang['msg_no_update_available'] = "Die installierte Version ist auf dem neusten Stand.";
 $lang['msg_update_modus_activated'] = "<b>Der Update-Modus ist aktiv</b><br>Das Frontend kann im Moment nicht aufgerufen werden.";
+$lang['msg_after_update'] = "Bitte rufe das <a href='/install/'>install</a> Verzeichnis auf und prüfe, ob die Datenbank korrekt aktualisiert wurde.";
 
 $lang['alert_no_htaccess'] = 'Es ist keine .htaccess Datei vorhanden.';
 $lang['alert_not_writable'] = 'Die Datei oder das Verzeichnis hat nicht die nötigen Schreibrechte:';

@@ -72,6 +72,7 @@ if(isset($_GET['a']) && $_GET['a'] == 'start') {
 	}
 	echo '</ul>';
 	echo '</div>';
+	echo '<div class="alert alert-info">'.$lang['msg_after_update'].'</div>';
 }
 	
 /**

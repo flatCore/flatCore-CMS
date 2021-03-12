@@ -142,9 +142,17 @@ function fc_global_mod_snippets($mod,$params=NULL) {
 function text_parser($text) {
 	
 	global $languagePack;
-		
+	global $shortcodes;
+			
 	$text = str_replace('<p>[', '[', $text);
 	$text = str_replace(']</p>', ']', $text);
+	
+	/* replace all shortcodes */
+	if(is_array($shortcodes)) {
+		foreach($shortcodes as $k => $v) {
+			$text = str_replace($v['textlib_shortcode'], $v['textlib_content'], $text);
+		}
+	}
 	
 	if(preg_match_all('#\<pre.*?\>(.*?)\</pre\>#', $text, $matches)) {
 		$match = $matches[0];
@@ -541,7 +549,7 @@ function fc_search($query, $currentPage=1, $itemsPerPage=10) {
 	$startOffset = (int) ($currentPage-1) * $itemsPerPage;
 	$endOffset = $startOffset + $itemsPerPage;
 		
-	$sql = "SELECT page_url, page_title, page_description, snippet(pages, '<mark class=\"hi\">', '</mark>', '...', -1, -60) AS snipp, rank(matchinfo(pages)) AS score FROM pages WHERE pages MATCH :search ORDER BY score DESC LIMIT $startOffset, $endOffset;"; // LIMIT 0,10
+	$sql = "SELECT page_url, page_title, page_description, page_thumbnail, snippet(pages, '<mark class=\"hi\">', '</mark>', '...', -1, -60) AS snipp, rank(matchinfo(pages)) AS score FROM pages WHERE pages MATCH :search ORDER BY score DESC LIMIT $startOffset, $endOffset;"; // LIMIT 0,10
 
 	$stmt = $dbh->prepare($sql);
 	$stmt->bindValue(':search', "*$query*", PDO::PARAM_STR);

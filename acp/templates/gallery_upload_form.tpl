@@ -13,6 +13,10 @@
 						<input name="file" type="file" multiple />
 					</div>
 					<input type="hidden" name="gal" value="{post_id}">
+					<input type="hidden" name="w" value="{max_img_width}">
+					<input type="hidden" name="w_tmb" value="{max_tmb_width}">
+					<input type="hidden" name="h" value="{max_img_height}">
+					<input type="hidden" name="h_tmb" value="{max_tmb_height}">
 					<input type="hidden" name="csrf_token" value="{token}">
 				</form>
       </div>

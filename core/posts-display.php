@@ -115,6 +115,7 @@ if($post_data['post_type'] == 'm') {
 $post_teaser = htmlspecialchars_decode($post_data['post_teaser']);
 $post_text = htmlspecialchars_decode($post_data['post_text']);
 
+$this_entry = str_replace("{post_id}", $post_data['post_id'], $this_entry);
 $this_entry = str_replace("{post_author}", $post_data['post_author'], $this_entry);
 $this_entry = str_replace('{post_title}', $post_data['post_title'], $this_entry);
 $this_entry = str_replace('{post_teaser}', $post_teaser, $this_entry);
@@ -161,6 +162,12 @@ $this_entry = str_replace("{post_file_version}", $post_data['post_file_version']
 $this_entry = str_replace("{post_file_license}", $post_data['post_file_license'], $this_entry);
 $filepath = str_replace('../','/',$post_data['post_file_attachment']);
 $this_entry = str_replace("{post_file_attachment}", $filepath, $this_entry);
+$this_entry = str_replace("{post_file_attachment_external}", $post_data['post_file_attachment_external'], $this_entry);
+
+$form_action = '/'.$fct_slug.$mod_slug;
+$this_entry = str_replace("{form_action}", $form_action, $this_entry);
+
+
 
 /* products */
 if($post_data['post_product_tax'] == '1') {
@@ -205,7 +212,7 @@ $this_entry = str_replace("{post_thumbnails}", $thumbnails_str, $this_entry);
 $page_contents['page_title'] = $post_data['post_title'];
 $page_contents['page_meta_description'] = substr(strip_tags($post_teaser),0,160);
 $page_contents['page_meta_keywords'] = $post_data['post_tags'];
-$page_contents['page_thumbnail'] = '/'.$img_path.'/'.basename($first_post_image);
+$page_contents['page_thumbnail'] = $fc_base_url.$img_path.'/'.basename($first_post_image);
 
 $modul_content = $this_entry.$debug_string;
 

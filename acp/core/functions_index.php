@@ -189,6 +189,12 @@ function fc_get_html_data($html) {
   	$imgs[$i]['alt'] = $image->attributes->getNamedItem('alt')->nodeValue;
   	$imgs[$i]['title'] = $image->attributes->getNamedItem('title')->nodeValue;  	
   }
+  
+  foreach($d->getElementsByTagName('meta') as $meta) {
+	  if($meta->getAttribute('property')=='og:image'){
+		  $data['page_thumbnail'] = $meta->getAttribute('content');
+	  }
+  }
 
 	$img_str = '';
 	foreach($imgs as $k => $v) {	
@@ -319,7 +325,7 @@ function fc_update_page_index($id) {
 	$sql = "UPDATE pages SET
 		page_content = :page_content,
 		page_title = :page_title,	page_description = :page_description,
-		page_keywords = :page_keywords, indexed_time = :indexed_time,
+		page_thumbnail = :page_thumbnail, page_keywords = :page_keywords, indexed_time = :indexed_time,
 		page_h1 = :page_h1, page_h2 = :page_h2, page_h3 = :page_h3,
 		page_images = :page_images, page_links = :page_links
 		WHERE page_id = :page_id";
@@ -329,6 +335,7 @@ function fc_update_page_index($id) {
 	$sth->bindParam(':page_title', $page_title, PDO::PARAM_STR);
 	$sth->bindParam(':page_description', $page_description, PDO::PARAM_STR);
 	$sth->bindParam(':page_keywords', $page_keywords, PDO::PARAM_STR);
+	$sth->bindParam(':page_thumbnail', $html_data['page_thumbnail'], PDO::PARAM_STR);
 	$sth->bindParam(':page_id', $id, PDO::PARAM_STR);
 	$sth->bindParam(':page_h1', $html_data['h1_str'], PDO::PARAM_STR);
 	$sth->bindParam(':page_h2', $html_data['h2_str'], PDO::PARAM_STR);

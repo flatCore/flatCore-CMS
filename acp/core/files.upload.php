@@ -54,7 +54,9 @@ $files_folder = basename($path_files);
 </div>
 		
 <input type="hidden" name="w" value="<?php echo $fc_preferences['prefs_maximagewidth']; ?>" />
+<input type="hidden" name="w_tmb" value="<?php echo $fc_preferences['prefs_maxtmbwidth']; ?>" />
 <input type="hidden" name="h" value="<?php echo $fc_preferences['prefs_maximageheight']; ?>" />
+<input type="hidden" name="h_tmb" value="<?php echo $fc_preferences['prefs_maxtmbheight']; ?>" />
 <input type="hidden" name="fz" value="<?php echo $fc_preferences['prefs_maxfilesize']; ?>" />
 <input type="hidden" name="unchanged" value="<?php echo $fc_preferences['prefs_uploads_remain_unchanged']; ?>" />
 <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['token']; ?>">

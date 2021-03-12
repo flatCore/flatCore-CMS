@@ -810,6 +810,67 @@ function fc_get_media_data($filename,$lang=NULL) {
 }
 
 /**
+ * get data from fc_media
+ * by id
+ *
+ */
+
+function fc_get_media_data_by_id($id) {
+	
+	global $db_content;
+	
+	$media_data = $db_content->get("fc_media","*",[
+
+		"media_id" => $id
+	]);
+	
+	return $media_data;
+}
+
+
+/**
+ * clear all thumbnails
+ * and subdirectories in /content/images_tmb/ 
+ */
+
+function fc_clear_thumbs_directory($dir=NULL) {
+
+	if($dir == NULL) {
+		$dir = '../content/images_tmb/';
+	}
+	
+	/* check if we are in the thumbnail directory */
+	if(substr($dir,0,22) != '../content/images_tmb/') {
+		return 'Sorry. No permissions to delete in:' . $dir;
+	} else {
+		
+   if(is_dir($dir)) {
+     $objects = scandir($dir);
+     foreach ($objects as $object) {
+       if ($object != "." && $object != "..") {
+         if(filetype($dir."/".$object) == "dir") {
+         		fc_clear_thumbs_directory($dir."/".$object);
+         	} else {
+	        	unlink($dir."/".$object);
+         	}
+       }
+     }
+     reset($objects);
+     if($dir != '../content/images_tmb/') {
+	     rmdir($dir);
+     }
+     
+   }
+		
+	}
+	
+	
+
+
+}
+
+
+/**
  * delete data from fc_media
  * by filename
  *
@@ -906,6 +967,38 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 	}
 
 }
+
+
+/**
+ * remove duplicate entries from multidimensional array
+ * we use this for fc_media entries
+ * because we only want one result per upload
+ * not an result for every language
+ * $array = multidimensional array
+ * $key = key you want to check for duplicates
+ *
+ * https://www.php.net/manual/de/function.array-unique.php#116302
+ *
+ */
+
+function fc_unique_multi_array($array, $key) { 
+    $temp_array = array(); 
+    $i = 0; 
+    $key_array = array(); 
+    
+    foreach($array as $val) { 
+      if(!in_array($val[$key], $key_array)) { 
+      	$key_array[$i] = $val[$key]; 
+        $temp_array[$i] = $val; 
+      } 
+      $i++; 
+    }
+    
+    // re-index
+    $temp_array= array_values($temp_array);
+    return $temp_array; 
+} 
+
 
 
 /**
@@ -1098,7 +1191,10 @@ function fc_remove_gallery($id,$dir) {
 
 
 
-
+/**
+ * please use the new function fc_create_thumbnail()
+ */
+ 
 function fc_create_tmb($img_src, $tmb_name, $tmb_width, $tmb_height, $tmb_quality) {
 	
 	global $img_tmb_path;
@@ -1147,6 +1243,64 @@ function fc_create_tmb($img_src, $tmb_name, $tmb_width, $tmb_height, $tmb_qualit
 		imagedestroy($new_image);
 	}
 	
+}
+
+/**
+ * $img_src = path to original image
+ * $tmb_name = name of the new thumbnail
+ * $tmb_dir = directory where the thumb should be saved
+ * $tmb_width $tmb_height $tmb_quality = size and quality
+ */
+
+function fc_create_thumbnail($img_src, $tmb_name, $tmb_dir=NULL, $tmb_width=100, $tmb_height=100, $tmb_quality=50) {
+	
+	global $img_tmb_path;
+		
+	/* thumbnail directories */
+	if($tmb_dir == NULL) {
+		$dir = '../'.$img_tmb_path;
+		$dir_year = $tmb_dir.'/'.date('Y',time());
+		$tmb_destination = $tmb_dir_year.'/'.date('m',time());
+	} else {
+		$tmb_destination = $tmb_dir;
+	}
+	
+	if(!is_dir($tmb_destination)) {
+		mkdir($tmb_destination,0777,true);
+	}
+	
+	$arr_image_details	= GetImageSize("$img_src");
+	$original_width		= $arr_image_details[0];
+	$original_height	= $arr_image_details[1];
+	$a = $tmb_width / $tmb_height;
+  $b = $original_width / $original_height;
+	
+	
+	if ($a<$b) {
+     $new_width = $tmb_width;
+     $new_height	= intval($original_height*$new_width/$original_width);
+  } else {
+     $new_height = $tmb_height;
+     $new_width	= intval($original_width*$new_height/$original_height);
+  }
+	
+	if(($original_width <= $tmb_width) AND ($original_height <= $tmb_height)) {
+	  $new_width = $original_width;
+	  $new_height = $original_height;
+  }
+  
+	if($arr_image_details[2]==1) { $imgt = "imagegif"; $imgcreatefrom = "imagecreatefromgif";  }
+	if($arr_image_details[2]==2) { $imgt = "imagejpeg"; $imgcreatefrom = "imagecreatefromjpeg";  }
+	if($arr_image_details[2]==3) { $imgt = "imagepng"; $imgcreatefrom = "imagecreatefrompng";  }
+	
+	
+	if($imgt) { 
+		$old_image	= $imgcreatefrom("$img_src");
+		$new_image	= imagecreatetruecolor($new_width, $new_height);
+		imagecopyresampled($new_image,$old_image,0,0,0,0,$new_width,$new_height,$original_width,$original_height);
+		imagejpeg($new_image,"$tmb_destination/$tmb_name",$tmb_quality);
+		imagedestroy($new_image);
+	}
 }
 
 

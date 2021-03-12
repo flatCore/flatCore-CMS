@@ -1,10 +1,16 @@
 <?php
+	
+/**
+ * textlib_type -> snippet or shortcode
+ */
 
 $database = "content";
 $table_name = "fc_textlib";
 
 $cols = array(
   "textlib_id"  => 'INTEGER(12) NOT NULL PRIMARY KEY AUTO_INCREMENT',
+  "textlib_type"  => "VARCHAR(50) NOT NULL DEFAULT ''",
+  "textlib_shortcode"  => "VARCHAR(50) NOT NULL DEFAULT ''",
   "textlib_name"  => "VARCHAR(50) NOT NULL DEFAULT ''",
   "textlib_title"  => "VARCHAR(255) NOT NULL DEFAULT ''",
   "textlib_content"  => "LONGTEXT NOT NULL DEFAULT ''",

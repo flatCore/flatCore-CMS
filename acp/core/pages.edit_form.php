@@ -2,7 +2,7 @@
 //prohibit unauthorized access
 require 'core/access.php';
 
-echo '<form id="editpage" action="acp.php?tn=pages&sub=edit" class="form-horizontal" method="POST">';
+echo '<form id="editpage" action="acp.php?tn=pages&sub=edit" class="form-horizontal" method="POST" autocomplete="off">';
 
 $custom_fields = get_custom_fields();
 sort($custom_fields);
@@ -200,15 +200,35 @@ echo '</div>'; // end tab position
 
 /* tab_info */
 echo'<div class="tab-pane fade show active" id="info">';
+
+if($page_target == '' OR $page_target == '_self') {
+	$sel_self = 'selected';
+} else if($page_target == '_blank') {
+	$sel_blank = 'selected';
+} else if($page_target == '_parent') {
+	$sel_parent = 'selected';
+} else if($page_target == '_top') {
+	$sel_top = 'selected';
+}
+
+$sel_target  = '<select name="page_target" class="form-control">';
+$sel_target .= '<option '.$sel_self.' value="_self">_self</option>';
+$sel_target .= '<option '.$sel_blank.' value="_blank">_blank</option>';
+$sel_target .= '<option '.$sel_parent.' value="_parent">_parent</option>';
+$sel_target .= '<option '.$sel_top.' value="_top">_top</option>';
+$sel_target .= '</select>';
 	
 echo '<div class="row">';
-echo '<div class="col-md-5">';
+echo '<div class="col-md-4">';
 echo tpl_form_control_group('',$lang['f_page_linkname'],'<input class="form-control" type="text" name="page_linkname" value="'.$page_linkname.'">');
 echo '</div>';
 echo '<div class="col-md-4">';
 echo tpl_form_control_group('',$lang['f_page_classes'],"<input class='form-control' type='text' name='page_classes' value='$page_classes'>");
 echo '</div>';
-echo '<div class="col-md-2 offset-md-1">';
+echo '<div class="col-md-2">';
+echo tpl_form_control_group('',"target","$sel_target");
+echo '</div>';
+echo '<div class="col-md-2">';
 echo tpl_form_control_group('',$lang['f_page_hash'],"<input class='form-control' type='text' name='page_hash' value='$page_hash'>");
 echo '</div>';
 echo '</div>';
@@ -220,7 +240,7 @@ echo '<div class="input-group">';
 echo '<div class="input-group-prepend">';
 echo '<span class="input-group-text">'.$fc_base_url.'</span>';
 echo '</div>';
-echo '<input class="form-control" type="text" name="page_permalink" id="set_permalink" value="'.$page_permalink.'">';
+echo '<input class="form-control" type="text" autocomplete="off" name="page_permalink" id="set_permalink" value="'.$page_permalink.'">';
 echo '</div>';
 echo '</div>';
 
@@ -680,7 +700,7 @@ echo '</div>';
 
 /* Select Template */
 
-$arr_Styles = get_all_templates();
+$arr_themes = get_all_templates();
 
 $select_select_template = '<select id="select_template" name="select_template"  class="custom-select form-control">';
 
@@ -691,7 +711,7 @@ if($page_template == '') {
 $select_select_template .= "<option value='use_standard<|-|>use_standard' $selected_standard>$lang[use_standard]</option>";
 
 /* templates list */
-foreach($arr_Styles as $template) {
+foreach($arr_themes as $template) {
 
 	$arr_layout_tpl = glob("../styles/$template/templates/layout*.tpl");
 	
@@ -719,6 +739,23 @@ echo '<label>'.$lang['f_page_template'].'</label>';
 echo $select_select_template;
 echo '</div>';
 
+$get_stylesheets = fc_get_stylesheets($page_template);
+if($get_stylesheets != '0') {
+	$select_stylesheet = '<select name="page_template_stylesheet"  class="custom-select form-control">';
+	foreach($get_stylesheets as $stylesheet) {
+		$selected = '';
+		if($page_template_stylesheet == $stylesheet) {
+			$selected = 'selected';
+		}
+		$select_stylesheet .=  '<option '.$selected.' value="'.$stylesheet.'">'.basename($stylesheet).'</option>';
+	}
+	$select_stylesheet .= '</select>';
+
+	echo '<div class="form-group">';
+	echo $select_stylesheet;
+	echo '</div>';
+
+}
 
 
 /* Select  Status */

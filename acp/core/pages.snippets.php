@@ -201,14 +201,14 @@ $snippet_lang_filter = substr("$snippet_lang_filter", 0, -3); // cut the last ' 
 
 
 $snippet_label_filter = '';
+$checked_labels_array = explode('-', $_SESSION['checked_label_str']);
 for($i=0;$i<count($fc_labels);$i++) {
 	$label = $fc_labels[$i]['label_id'];
-	if(strpos("$_SESSION[checked_label_str]", "$label") !== false) {
-		$snippet_label_filter .= "textlib_labels LIKE '%$label%' OR ";
+	if(in_array($label, $checked_labels_array)) {
+		$snippet_label_filter .= "textlib_labels LIKE '%,$label,%' OR textlib_labels LIKE '%,$label' OR textlib_labels LIKE '$label,%' OR textlib_labels = '$label' OR ";
 	}
 }
 $snippet_label_filter = substr("$snippet_label_filter", 0, -3); // cut the last ' OR'
-
 
 $filter_string = "WHERE textlib_id IS NOT NULL";
 
@@ -236,11 +236,11 @@ if($snippet_lang_filter != "") {
 	$filter_string .= " AND ($snippet_lang_filter)";
 }
 
-//$dbh = new PDO("sqlite:".CONTENT_DB);
 
 $sql_cnt = "SELECT count(*) AS 'cnt_all_snippets',
+(SELECT count(*) FROM fc_textlib WHERE textlib_type NOT IN('shortcode') ) AS 'cnt_snippets',
 (SELECT count(*) FROM fc_textlib WHERE textlib_name IN($system_snippets_str) ) AS 'cnt_system_snippets',
-(SELECT count(*) FROM fc_textlib WHERE textlib_name NOT IN($system_snippets_str) ) AS 'cnt_custom_snippets',
+(SELECT count(*) FROM fc_textlib WHERE textlib_name NOT IN($system_snippets_str) AND (textlib_type NOT IN('shortcode')) ) AS 'cnt_custom_snippets',
 (SELECT count(*) FROM fc_textlib $filter_string ) AS 'cnt_filter_snippets'
 FROM fc_textlib";
 
@@ -327,14 +327,10 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	/* list snippets */
 	
 	echo '<div class="app-container">';
-	echo '<h3>' . $lang['snippets'] . '</h3>';
-	
 	echo '<nav class="navbar navbar-expand-sm navbar-fc">';
-	
-	
 
 	echo '<ul class="navbar-nav">';
-	echo '<li class="nav-item"><a class="nav-link '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle ('.$cnt['cnt_all_snippets'].')</a></li>';
+	echo '<li class="nav-item"><a class="nav-link '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle ('.$cnt['cnt_snippets'].')</a></li>';
 	echo '<li class="nav-item"><a class="nav-link '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System ('.$cnt['cnt_system_snippets'].')</a></li>';
 	echo '<li class="nav-item mr-3"><a class="nav-link '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene ('.$cnt['cnt_custom_snippets'].')</a></li>';
 	
@@ -345,7 +341,6 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 
 	
 	echo '<a href="?tn=pages&sub=snippets&snip_id=n" class="nav-link text-success">'.$icon['plus'].' '.$lang['new'].'</a>';
-
 
 	echo '<form action="acp.php?tn=pages&sub=snippets" method="POST" class="form-inline ml-auto dirtyignore">';
 	echo '<div class="input-group">';
