@@ -518,6 +518,7 @@ $lang['alert_no_modules'] = 'There are no modules are installed.';
 
 $lang['alert_no_page_title'] = 'No Pagetitle';
 $lang['alert_no_page_description'] = 'No Page Description';
+$lang['alert_prefs_thumbnails'] = 'The size specifications for thumbnails are incomplete';
 
 $lang['alert_no_plugins'] = 'There are no plugins available';
 
