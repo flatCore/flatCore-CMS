@@ -6,7 +6,10 @@ $display_mode = 'list_posts';
 
 /* defaults */
 $posts_start = 0;
-$posts_limit = $fc_prefs['prefs_posts_entries_per_page'];
+$posts_limit = (int) $fc_prefs['prefs_posts_entries_per_page'];
+if($posts_limit == '') {
+	$posts_limit = 10;
+}
 $posts_order = 'id';
 $posts_direction = 'DESC';
 $posts_filter = array();
