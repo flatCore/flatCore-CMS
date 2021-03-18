@@ -65,5 +65,8 @@ if($prefs_cms_base == '') {
 	echo '<div class="alert alert-danger">'.$lang['alert_prefs_cms_base'].'</div>';
 }
 
+if($prefs_maxtmbwidth == '' || $prefs_maxtmbheight == '') {
+	echo '<div class="alert alert-danger">'.$lang['alert_prefs_thumbnails'].'</div>';
+}
 
 ?>
