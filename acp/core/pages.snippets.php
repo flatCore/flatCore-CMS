@@ -210,7 +210,7 @@ for($i=0;$i<count($fc_labels);$i++) {
 }
 $snippet_label_filter = substr("$snippet_label_filter", 0, -3); // cut the last ' OR'
 
-$filter_string = "WHERE textlib_id IS NOT NULL";
+$filter_string = "WHERE textlib_id IS NOT NULL AND textlib_type NOT IN('shortcode')";
 
 if($_SESSION['type'] == 'all') {
 	$filter_type = '';
