@@ -287,7 +287,7 @@ if(is_dir('../upload')) {
 	echo '<legend>'.$lang['label_ready_to_install'].'</legend>';
 	
 	if(count($all_uploads) < 1) {
-		echo '<p class="text-muted">'.$lang['msg_nothing_to_install'].'</p>';
+		echo '<p class="text-muted">'.$lang['msg_nothing_to_install'].' <a href="?tn=moduls&sub=u" class="btn btn-link">'.$icon['sync_alt'].' reload</a></p>';
 	} else {
 	
 		echo '<table class="table table-condensed">';
