@@ -221,6 +221,23 @@ if($prefs_smarty_compile_check == 1) {
 }
 
 
+/* reset of the user-defined theme */
+if(isset($_POST['reset_theme'])) {
+	unset($_SESSION['prefs_template']);
+}
+
+/* set the theme defined by the user */
+if(isset($_POST['set_theme'])) {
+	$set_theme = 'styles/'.sanitizeUserInputs($_POST['set_theme']);
+	if(is_dir($set_theme)) {
+		$_SESSION['prefs_template'] = sanitizeUserInputs($_POST['set_theme']);
+	}
+}
+
+if($_SESSION['prefs_template'] != '') {
+	$prefs_template = $_SESSION['prefs_template'];
+}
+
 // default template
 $fc_template = $prefs_template;
 $fc_template_layout = $prefs_template_layout;
