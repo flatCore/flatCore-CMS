@@ -81,12 +81,14 @@ if(isset($_POST['delete_the_page'])) {
 				]
 			]);
 		} else {
-			$subpages = '';
+			$subpages = array();
 		}
 		
-		if(count($subpages) > 0) {
+		$cnt_subpages = count($subpages);
+		
+		if($cnt_subpages > 0) {
 			echo '<div class="alert alert-danger">';
-			echo $lang['msg_error_deleting_sub_pages'];
+			echo $lang['msg_error_deleting_sub_pages'] .' ('.$cnt_subpages.')';
 			echo '<ol>';
 			foreach($subpages as $pages) {
 				echo '<li>'.$pages['page_title'].'</li>';
