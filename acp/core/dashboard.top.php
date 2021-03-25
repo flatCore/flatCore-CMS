@@ -3,6 +3,19 @@
 //prohibit unauthorized access
 require 'core/access.php';
 
+if(isset($_GET['a'])) {
+	
+	if($_GET['a'] == 'delete_cache') {
+		fc_delete_smarty_cache('all');
+	}
+	if($_GET['a'] == 'update_index') {
+		fc_update_bulk_page_index();
+	}
+	
+}
+
+
+
 $tpl_file = file_get_contents('templates/dashboard_top.tpl');
 
 /* get latest infos from user database */
@@ -271,6 +284,29 @@ $tpl_file = str_replace('{tab_comments}', $lang['tn_comments'], $tpl_file);
 $tpl_file = str_replace('{tab_user}', $lang['tn_usermanagement'], $tpl_file);
 $tpl_file = str_replace('{tab_user_stats}', $lang['h_status'], $tpl_file);
 
+$btn_page_overview = '<a href="acp.php?tn=pages" class="btn btn-fc btn-sm">'.$icon['sitemap'].'</a>';
+$btn_new_page = '<a href="acp.php?tn=pages&sub=new" class="btn btn-fc btn-sm">'.$icon['plus'].' '.$lang['new_page'].'</a>';
+$btn_update_index = '<a href="acp.php?tn=dashboard&a=update_index" class="btn btn-fc btn-sm">'.$icon['sync_alt'].' Index</a>';
+$btn_delete_cache = '<a href="acp.php?tn=dashboard&a=delete_cache" class="btn btn-fc btn-sm">'.$icon['trash_alt'].' Cache</a>';
+
+$btn_post_overview = '<a href="acp.php?tn=posts" class="btn btn-fc btn-sm">'.$lang['tn_posts'].'</a>';
+$btn_new_post = '<a href="acp.php?tn=posts&sub=edit" class="btn btn-fc btn-sm">'.$icon['plus'].' '.$lang['label_new_post'].'</a>';
+$btn_comments_overview = '<a href="acp.php?tn=comments" class="btn btn-fc btn-sm">'.$lang['tn_comments'].'</a>';
+
+$btn_user_overview = '<a href="acp.php?tn=user" class="btn btn-fc btn-sm">'.$lang['list_user'].'</a>';
+$btn_new_user = '<a href="acp.php?tn=user&sub=new" class="btn btn-fc btn-sm">'.$icon['plus'].' '.$lang['new_user'].'</a>';
+
+$tpl_file = str_replace('{btn_page_overview}', $btn_page_overview, $tpl_file);
+$tpl_file = str_replace('{btn_new_page}', $btn_new_page, $tpl_file);
+$tpl_file = str_replace('{btn_update_index}', $btn_update_index, $tpl_file);
+$tpl_file = str_replace('{btn_delete_cache}', $btn_delete_cache, $tpl_file);
+
+$tpl_file = str_replace('{btn_post_overview}', $btn_post_overview, $tpl_file);
+$tpl_file = str_replace('{btn_new_post}', $btn_new_post, $tpl_file);
+$tpl_file = str_replace('{btn_comments_overview}', $btn_comments_overview, $tpl_file);
+
+$tpl_file = str_replace('{btn_user_overview}', $btn_user_overview, $tpl_file);
+$tpl_file = str_replace('{btn_new_user}', $btn_new_user, $tpl_file);
 
 echo $tpl_file;
 
