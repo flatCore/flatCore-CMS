@@ -53,10 +53,12 @@ for($i=0;$i<$cnt_user;$i++) {
 		}
 		$user_latest5 .= '<a href="acp.php?tn=user&sub=edit&edituser='.$user_id.'" class="list-group-item list-group-item-ghost list-group-item-action flex-column align-items-start">';
 		$user_latest5 .= '<div class="d-flex w-100 justify-content-between">';
-		$user_latest5 .= '<h6 class="mb-1">'.$user_nick.'</h6>';
+		$user_latest5 .= '<div>';
+		$user_latest5 .= '<h6 class="mb-0">'.$user_nick.'</h6>';
+		$user_latest5 .= '<small>'.$user_name.'</small>';
+		$user_latest5 .= '</div>';
 		$user_latest5 .= '<small>'.$user_registerdate.'</small>';
 		$user_latest5 .= '</div>';
-		$user_latest5 .= '<small>'.$user_name.'</small>';
 		$user_latest5 .= '</a>';
 	}
 
@@ -104,13 +106,16 @@ for($i=0;$i<$cnt_pages;$i++) {
 		
 		$top5pages .= '<div class="list-group-item list-group-item-ghost list-group-item-action flex-column align-items-start">';
 		$top5pages .= '<div class="d-flex w-100 justify-content-between">';
+		$top5pages .= '<div>';
 		$top5pages .= '<h6 class="mb-0">'.$page_linkname.' ';
 		$top5pages .= '<small>('.$last_edit.')</small></h6>';
+		$top5pages .= '<small>'.$page_title.'</small>';
+		$top5pages .= '</div>';
 		$top5pages .= '<form class="inline" action="?tn=pages&sub=edit" method="POST">';
 		$top5pages .= '<button class="btn btn-fc btn-sm" name="editpage" value="'.$allPages[$i]['page_id'].'">'.$icon['edit'].'</button>';
 		$top5pages .= '</form>';
 		$top5pages .= '</div>';
-		$top5pages .= '<small>'.$page_title.'</small>';
+		
 		$top5pages .= '</div>';
 		
 	}
@@ -147,13 +152,16 @@ for($i=0;$i<$cnt_posts;$i++) {
 		
 		$top5posts .= '<div class="list-group-item list-group-item-ghost list-group-item-action flex-column align-items-start">';
 		$top5posts .= '<div class="d-flex w-100 justify-content-between">';
+		$top5posts .= '<div>';
 		$top5posts .= '<h6 class="mb-0">'.$allPosts[$i]['post_title'].' ';
 		$top5posts .= '<small>('.$last_edit.')</small></h6>';
+		$top5posts .= '<small>'.$post_teaser.'</small>';
+		$top5posts .= '</div>';
 		$top5posts .= '<form class="inline" action="?tn=posts&sub=edit" method="POST">';
 		$top5posts .= '<button class="btn btn-fc btn-sm" name="post_id" value="'.$allPosts[$i]['post_id'].'">'.$icon['edit'].'</button>';
 		$top5posts .= '</form>';
 		$top5posts .= '</div>';
-		$top5posts .= '<small>'.$post_teaser.'</small>';
+		
 		$top5posts .= '</div>';		
 	}
 	
@@ -182,14 +190,16 @@ for($i=0;$i<$cnt_comments;$i++) {
 		
 		$top5comments .= '<div class="list-group-item list-group-item-ghost list-group-item-action flex-column align-items-start">';
 		$top5comments .= '<div class="d-flex w-100 justify-content-between">';
+		$top5comments .= '<div>';
 		$top5comments .= '<h6 class="mb-0">'.$allComments[$i]['comment_author'].' ';
 		$top5comments .= '<small>('.$last_edit.')</small></h6>';
+		$top5comments .= '<small>'.$comment_text.'</small>';
+		$top5comments .= '</div>';
 		$top5comments .= '<form class="inline" action="?tn=comments&sub=list#comid'.$allComments[$i]['comment_id'].'" method="POST">';
 		$top5comments .= '<button class="btn btn-fc btn-sm" name="editid" value="'.$allComments[$i]['comment_id'].'">'.$icon['edit'].'</button>';
 		$top5comments .= '</form>';
 		$top5comments .= '</div>';
-		$top5comments .= '<small>'.$comment_text.'</small>';
-		$top5comments .= '</div>';		
+		$top5comments .= '</div>';
 		
 	}
 	
