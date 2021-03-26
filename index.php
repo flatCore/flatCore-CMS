@@ -194,6 +194,17 @@ foreach($fc_prefs as $key => $val) {
 	$$key = stripslashes($val); 
 }
 
+
+if($prefs_dateformat == '') {
+	$prefs_dateformat = 'Y-m-d';
+}
+
+if($prefs_timeformat == '') {
+	$prefs_timeformat = 'H:i:s';
+}
+
+
+
 if(!empty($page_contents['page_modul'])) {
 	include 'modules/'.$page_contents['page_modul'].'/index.php';
 }
