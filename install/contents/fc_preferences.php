@@ -54,6 +54,12 @@ $cols = array(
   "prefs_anonymize_ip" => "VARCHAR(20) NOT NULL DEFAULT ''",
   "prefs_xml_sitemap" => "VARCHAR(20) NOT NULL DEFAULT ''",
   
+  /* Date and Time */
+  
+  "prefs_timezone" => "VARCHAR(20) NOT NULL DEFAULT ''",
+  "prefs_dateformat" => "VARCHAR(100) NOT NULL DEFAULT ''",
+  "prefs_timeformat" => "VARCHAR(100) NOT NULL DEFAULT ''",
+  
   /* E-Mail */
   
   "prefs_mailer_adr" => "VARCHAR(100) NOT NULL DEFAULT ''",

@@ -50,6 +50,20 @@ if(isset($_POST['save_system'])) {
 
 }
 
+/* save date/time settings */
+
+if(isset($_POST['save_datetime'])) {
+
+	$data = $db_content->update("fc_preferences", [
+		"prefs_timezone" =>  $prefs_timezone,
+		"prefs_dateformat" => $prefs_dateformat,
+		"prefs_timeformat" => $prefs_timeformat
+	], [
+	"prefs_id" => 1
+	]);
+
+}
+
 
 
 
@@ -242,7 +256,105 @@ echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</form>';
 echo '</fieldset>';
 
+$timezones = DateTimeZone::listIdentifiers(DateTimeZone::ALL);
 
+/* date and time settings */
+echo '<div id="date_time" class="pt-2"></div>';
+
+echo '<fieldset>';
+echo '<legend>'.$lang['label_datetime_settings'].'</legend>';
+echo '<form action="acp.php?tn=system&sub=sys_pref#date_time" method="POST">';
+
+echo '<div class="form-group">';
+echo '<label>'.$lang['label_datetime_timezone'].'</label>';
+echo '<select class="form-control" name="prefs_timezone">';
+$x=0;
+foreach($timezones as $key => $value) {
+	
+	
+	if(strpos($value,'/') !== false) {
+		$region[$x] = substr($value,0,strpos($value,'/'));
+		$location = substr($value, strpos($value,'/')+1);
+	} else {
+		$region[$x] = 'Other';
+		$location = $value;
+	}
+
+	
+	$s_optgroup = '';
+	$e_optgroup = '';
+	
+	if(($region[$x] != $region[$x-1]) OR ($x==0)) {
+		$s_optgroup = '<optgroup label="'.$region[$x].'">';
+		$cnt_opt = $x;
+	}
+	
+	if(($region[$x] != $region[$x-1]) AND ($x != $cnt_opt)) {
+		$e_optgroup = '</optgroup>';
+	}
+	
+	$selected = '';
+	if($prefs_timezone == $value) {
+		$selected = 'selected';
+	}
+	
+	echo $s_optgroup;
+	echo '<option value="'.$value.'" '.$selected.'>'.$location.'</option>';
+	echo $e_optgroup;
+	
+	$x++;
+	
+}
+echo '</select>';
+echo '</div>';
+
+
+$date_formats = array("Y-m-d","d.m.Y","d/m/Y","m/d/Y");
+
+echo '<div class="form-group">';
+echo '<label>'.$lang['label_datetime_dateformat'].'</label>';
+echo '<select class="form-control" name="prefs_dateformat">';
+
+foreach($date_formats as $dates) {
+	
+	$selected = '';
+	if($prefs_dateformat == $dates) {
+		$selected = 'selected';
+	}
+	
+	echo '<option value="'.$dates.'" '.$selected.'>'.date("$dates",time()).' ('.$dates.')</option>';
+}
+
+
+echo '</select>';
+echo '</div>';
+
+$time_formats = array("H:i","g:i a","g:i A");
+
+echo '<div class="form-group">';
+echo '<label>'.$lang['label_datetime_timeformat'].'</label>';
+echo '<select class="form-control" name="prefs_timeformat">';
+
+foreach($time_formats as $times) {
+
+	$selected = '';
+	if($prefs_timeformat == $times) {
+		$selected = 'selected';
+	}
+
+	echo '<option value="'.$times.'" '.$selected.'>'.date("$times",time()).' ('.$times.')</option>';
+}
+
+
+echo '</select>';
+echo '</div>';
+
+
+
+echo '<input type="submit" class="btn btn-save" name="save_datetime" value="'.$lang['save'].'">';
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+echo '</form>';
+echo '</fieldset>';
 
 /* User Preferences */
 echo '<div id="user" class="pt-2"></div>';
