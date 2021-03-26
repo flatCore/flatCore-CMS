@@ -132,7 +132,7 @@ foreach($arr_Styles as $template) {
 	echo '</form><hr>';
 	
 	
-	
+	unset($theme_options);
 	if(is_file("../styles/$template/php/options.php")) {
 		include '../styles/'.$template.'/php/options.php';
 	}

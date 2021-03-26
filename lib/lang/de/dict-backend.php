@@ -456,6 +456,11 @@ $lang['delete_cache'] = 'Cache löschen';
 $lang['acp_session_lifetime'] = 'ACP Session Lifetime (Sekunden)';
 
 
+$lang['label_datetime_settings'] = 'Datums- und Uhrzeit-Einstellungen';
+$lang['label_datetime_timezone'] = 'Zeitzone';
+$lang['label_datetime_dateformat'] = 'Datumsformat';
+$lang['label_datetime_timeformat'] = 'Zeitformat';
+
 /* Rights Management */
 
 $lang['drm_description'] = "Der Benutzer darf folgende Aktionen durchführen";

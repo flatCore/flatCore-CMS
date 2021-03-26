@@ -126,11 +126,11 @@ if($show_end > $cnt_filter_posts) {
 $posts_list = '';
 foreach($get_posts as $k => $post) {
 		
-	$post_releasedate = date('Y-m-d',$get_posts[$k]['post_releasedate']);
+	$post_releasedate = date($prefs_dateformat,$get_posts[$k]['post_releasedate']);
 	$post_releasedate_year = date('Y',$get_posts[$k]['post_releasedate']);
 	$post_releasedate_month = date('m',$get_posts[$k]['post_releasedate']);
 	$post_releasedate_day = date('d',$get_posts[$k]['post_releasedate']);
-	$post_releasedate_time = date('H:i:s',$get_posts[$k]['post_releasedate']);
+	$post_releasedate_time = date($prefs_timeformat,$get_posts[$k]['post_releasedate']);
 
 	/* event dates */
 	
@@ -224,7 +224,6 @@ foreach($get_posts as $k => $post) {
 
 	$post_teaser = htmlspecialchars_decode($get_posts[$k]['post_teaser']);
 	$post_text = htmlspecialchars_decode($get_posts[$k]['post_text']);
-	$post_releasedate = date('d.m.Y',$get_posts[$k]['post_releasedate']);
 	
 	$post_categories = explode('<->',$get_posts[$k]['post_categories']);
 	$cat_str = '';

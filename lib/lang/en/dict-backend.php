@@ -456,6 +456,11 @@ $lang['delete_cache'] = 'Clear Cache';
 
 $lang['acp_session_lifetime'] = 'ACP Session Lifetime (Seconds)';
 
+$lang['label_datetime_settings'] = 'Date and Time Settings';
+$lang['label_datetime_timezone'] = 'Timezone';
+$lang['label_datetime_dateformat'] = 'Dateformat';
+$lang['label_datetime_timeformat'] = 'Timeformat';
+
 
 /* rights management */
 

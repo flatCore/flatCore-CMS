@@ -7,7 +7,7 @@ $post_data = fc_get_post_data($get_post_id);
 $post_images = explode("<->", $post_data['post_images']);
 
 
-$post_releasedate = date('Y-m-d H:i',$post_data['post_releasedate']);
+$post_releasedate = date("$prefs_dateformat $prefs_timeformat",$post_data['post_releasedate']);
 $post_releasedate_year = date('Y',$post_data['post_releasedate']);
 $post_releasedate_month = date('m',$post_data['post_releasedate']);
 $post_releasedate_day = date('d',$post_data['post_releasedate']);

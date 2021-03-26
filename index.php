@@ -194,6 +194,17 @@ foreach($fc_prefs as $key => $val) {
 	$$key = stripslashes($val); 
 }
 
+
+if($prefs_dateformat == '') {
+	$prefs_dateformat = 'Y-m-d';
+}
+
+if($prefs_timeformat == '') {
+	$prefs_timeformat = 'H:i:s';
+}
+
+
+
 if(!empty($page_contents['page_modul'])) {
 	include 'modules/'.$page_contents['page_modul'].'/index.php';
 }
@@ -220,6 +231,23 @@ if($prefs_smarty_compile_check == 1) {
 	$smarty->compile_check = false;
 }
 
+
+/* reset of the user-defined theme */
+if(isset($_POST['reset_theme'])) {
+	unset($_SESSION['prefs_template']);
+}
+
+/* set the theme defined by the user */
+if(isset($_POST['set_theme'])) {
+	$set_theme = 'styles/'.sanitizeUserInputs($_POST['set_theme']);
+	if(is_dir($set_theme)) {
+		$_SESSION['prefs_template'] = sanitizeUserInputs($_POST['set_theme']);
+	}
+}
+
+if($_SESSION['prefs_template'] != '') {
+	$prefs_template = $_SESSION['prefs_template'];
+}
 
 // default template
 $fc_template = $prefs_template;
