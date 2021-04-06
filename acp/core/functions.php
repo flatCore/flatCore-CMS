@@ -898,7 +898,7 @@ function fc_delete_media_data($filename) {
  *
  */
 
-function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$text=NULL,$url=NULL,$alt=NULL,$lang=NULL,$credit=NULL,$priority=NULL,$license=NULL,$lastedit=NULL,$filesize=NULL,$version=NULL) {
+function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$text=NULL,$url=NULL,$alt=NULL,$lang=NULL,$credit=NULL,$priority=NULL,$license=NULL,$lastedit=NULL,$filesize=NULL,$version=NULL,$labels=NULL) {
 
 	global $db_content;
 	global $languagePack;
@@ -906,6 +906,14 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 	if($lang === NULL) {
 		$lang = $languagePack;
 	}
+	
+	/* labels */
+	if(is_array($labels)) {
+		sort($labels);
+		$string_labels = implode(",", $labels);
+	} else {
+		$string_labels = "";
+	}	
 		
 	$filetype = mime_content_type("../$filename");
 	
@@ -930,7 +938,8 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 		"media_version" => "$version",
 		"media_filesize" => "$filesize",
 		"media_lastedit" => "$lastedit",
-		"media_type" => "$filetype"		
+		"media_type" => "$filetype",
+		"media_labels" => "$string_labels"
 	];
 	
 	if($cnt > 0) {
