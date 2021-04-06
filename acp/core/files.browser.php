@@ -626,9 +626,28 @@ for($i=0;$i<$cnt_get_files;$i++) {
 		$edit_btn = '';
 		$delete_btn = '';
 		$filesize = '';
-	}	
+	}
+	
+	
+	$labels = '';
+	if($get_files[$i]['media_labels'] != '') {
+		$get_media_labels = explode(',',$get_files[$i]['media_labels']);
+		foreach($get_media_labels as $media_label) {
+			
+			foreach($fc_labels as $l) {
+				if($media_label == $l['label_id']) {
+					$label_color = $l['label_color'];
+					$label_title = $l['label_title'];
+				}
+			}
+			
+			$labels .= '<span class="label-dot" style="background-color:'.$label_color.';" title="'.$label_title.'"></span>';
+		}
+	}
+	
 
 	$tpl_list = str_replace('{short_filename}', $short_filename, $tpl_list);
+	$tpl_list = str_replace('{labels}', $labels, $tpl_list);
 	$tpl_list = str_replace('{filename}', $filename, $tpl_list);
 	$tpl_list = str_replace('{set_style}', $set_style, $tpl_list);
 	$tpl_list = str_replace('{preview_img}', $preview_img, $tpl_list);

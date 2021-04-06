@@ -26,6 +26,7 @@ default:
 
 }
 
+$fc_labels = fc_get_labels();
 
 include $subinc.'.php';
 
