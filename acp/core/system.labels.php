@@ -63,16 +63,15 @@ $cnt_labels = count($fc_labels);
 for($i=0;$i<$cnt_labels;$i++) {
 	echo '<form action="acp.php?tn=system&sub=labels" method="POST" class="clearfix" id="labels">';
 	echo '<div class="row mb-1">';
-	echo '<div class="col-md-2">';
+	echo '<div class="col-md-4">';
+	
 	echo '<div class="input-group">';
-	echo '<span class="input-group-text" id="basic-addon1" style="background-color:'.$fc_labels[$i]['label_color'].'"></span>';
-	echo '<input class="form-control" type="text" name="label_color" value="'.$fc_labels[$i]['label_color'].'">';
-	echo '</div>';
-	echo '</div>';
-	echo '<div class="col-md-3">';
+	echo '<input type="color" class="form-control form-control-color" name="label_color" value="'.$fc_labels[$i]['label_color'].'" title="Choose your color">';
 	echo '<input class="form-control" type="text" name="label_title" value="'.$fc_labels[$i]['label_title'].'">';
 	echo '</div>';
-	echo '<div class="col-md-5">';
+	
+	echo '</div>';
+	echo '<div class="col-md-6">';
 	echo '<input class="form-control" type="text" name="label_description" value="'.$fc_labels[$i]['label_description'].'">';
 	echo '</div>';
 	echo '<div class="col-md-2">';
@@ -96,29 +95,24 @@ for($i=0;$i<$cnt_labels;$i++) {
 
 echo '<form action="acp.php?tn=system&sub=labels" method="POST" class="form-horizontal">';
 echo '<div class="row">';
-echo '<div class="col-md-2">';
-echo $lang['label_color'];
+echo '<div class="col-md-4">';
+
 echo '<div class="input-group">';
-echo '<span class="input-group-addon" id="basic-addon1" style="background-color:'.$fc_labels[$i]['label_color'].'"></span>';
-echo '<input class="form-control" type="text" name="label_color" value="" placeholder="#3366cc">';
+echo '<input type="color" class="form-control form-control-color" name="label_color" value="#3366cc" title="Choose your color">';
+echo '<input class="form-control" type="text" name="label_title" value="" placeholder="'.$lang['label_title'].'">';
 echo '</div>';
+
 echo '</div>';
-echo '<div class="col-md-3">';
-echo $lang['label_title'];
-echo '<input class="form-control" type="text" name="label_title" value="">';
-echo '</div>';
-echo '<div class="col-md-5">';
-echo $lang['label_description'];
-echo '<input class="form-control" type="text" name="label_description" value="">';
+echo '<div class="col-md-6">';
+
+echo '<input class="form-control" type="text" name="label_description" value="" placeholder="'.$lang['label_description'].'">';
 echo '</div>';
 echo '<div class="col-md-2">';
-echo '<br><button type="submit" name="new_label" class="btn btn-save">'.$lang['save'].'</button>';
+echo '<button type="submit" name="new_label" class="btn btn-save">'.$lang['save'].'</button>';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</div>';
 echo '</div>';
 echo '</form>';
-
-
 
 echo"</fieldset>";
 
