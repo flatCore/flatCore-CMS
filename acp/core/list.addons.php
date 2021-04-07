@@ -91,7 +91,7 @@ for($i=0;$i<$nbrModuls;$i++) {
 	$modal = '';
 	if(is_file('../modules/'.$modFolder.'/readme.md')) {
 		$addon_id = 'addonID'.$i;
-		$btn_help_text = '<button type="button" class="btn btn-sm btn-fc" data-toggle="modal" data-target="#'.$addon_id.'">'.$icon['question'].'</button>';
+		$btn_help_text = '<button type="button" class="btn btn-sm btn-fc" data-bs-toggle="modal" data-bs-target="#'.$addon_id.'">'.$icon['question'].'</button>';
 		
 		$modal_body_text = file_get_contents('../modules/'.$modFolder.'/readme.md');
 		$Parsedown = new Parsedown();

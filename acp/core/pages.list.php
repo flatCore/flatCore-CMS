@@ -36,7 +36,7 @@ echo $kw_form;
 echo '</nav>';
 
 if($btn_remove_keyword != '') {
-	echo '<div class="float-right">';
+	echo '<div class="float-end">';
 	echo '<p style="padding-top:5px;">' . $btn_remove_keyword . '</p>';
 	echo '</div>';
 }

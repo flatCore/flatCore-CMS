@@ -286,7 +286,7 @@ if($cnt_filter_posts > 0) {
 				$image_src = "/$img_path/" . $post_image[1];
 			}
 		
-			$show_thumb  = '<a data-toggle="popover" data-trigger="hover" data-html="true" data-content="<img src=\''.$image_src.'\'>">';
+			$show_thumb  = '<a data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="<img src=\''.$image_src.'\'>">';
 			$show_thumb .= '<div class="show-thumb" style="background-image: url('.$image_src.');">';
 			$show_thumb .= '</div>';
 		}
@@ -319,7 +319,7 @@ if($cnt_filter_posts > 0) {
 		
 		$show_events_date = '';
 		if($get_posts[$i]['post_type'] == 'e') {
-			$show_events_date = '<div class="float-right small well well-sm">';
+			$show_events_date = '<div class="float-end small well well-sm">';
 			$show_events_date .= date('Y-m-d',$get_posts[$i]['post_event_startdate']);
 			$show_events_date .= '<br>';
 			$show_events_date .= date('Y-m-d',$get_posts[$i]['post_event_enddate']);
@@ -343,7 +343,7 @@ if($cnt_filter_posts > 0) {
 			$post_price_gross = $post_price_net*($tax+100)/100;
 			$post_price_gross = fc_post_print_currency($post_price_gross);
 
-			$show_items_price = '<div class="float-right small well well-sm">';
+			$show_items_price = '<div class="float-end small well well-sm">';
 			$show_items_price .= $post_price_net . ' ('.$tax.'%)<br>';
 			$show_items_price .= $post_price_gross;
 			$show_items_price .= '</div>';		
@@ -353,7 +353,7 @@ if($cnt_filter_posts > 0) {
 			
 			$download_counter = 0;
 			$download_counter = $get_posts[$i]['post_file_attachment_hits'];
-			$show_items_price = '<div class="float-right small well well-sm">';
+			$show_items_price = '<div class="float-end small well well-sm">';
 			$show_items_price .= 'Downloads: '.$download_counter;
 			$show_items_price .= '</div>';
 		}
@@ -410,7 +410,7 @@ echo '<div class="col-md-3">';
 
 
 
-echo '<button class="btn btn-block btn-success dropdown-toggle" type="button" data-toggle="collapse" data-target="#collapseNew">'.$lang['label_new_post'].'</button>';
+echo '<button class="btn w-100 btn-success dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNew">'.$lang['label_new_post'].'</button>';
 
 echo '<div class="collapse" id="collapseNew">';
 
@@ -431,9 +431,9 @@ echo '<hr>';
 echo '<div class="row">';
 echo '<div class="col-md-2">';
 if($prevPage < 0) {
-	echo '<a class="btn btn-fc btn-block disabled" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>';
+	echo '<a class="btn btn-fc w-100 disabled" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>';
 } else {
-	echo '<a class="btn btn-fc btn-block" href="acp.php?tn=posts&posts_start='.$prevPage.'" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>';
+	echo '<a class="btn btn-fc w-100" href="acp.php?tn=posts&posts_start='.$prevPage.'" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>';
 }
 
 echo '</div>';
@@ -454,9 +454,9 @@ echo '</form>';
 echo '</div>';
 echo '<div class="col-md-2">';
 if($nextPage < ($cnt_filter_posts-$posts_limit)+$posts_limit) {
-	echo '<a class="btn btn-fc btn-block" href="acp.php?tn=posts&posts_start='.$nextPage.'" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>';
+	echo '<a class="btn btn-fc w-100" href="acp.php?tn=posts&posts_start='.$nextPage.'" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>';
 } else {
-	echo '<a class="btn btn-fc btn-block disabled" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>';
+	echo '<a class="btn btn-fc w-100 disabled" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>';
 }
 echo '</div>';
 echo '</div>';

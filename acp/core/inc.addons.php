@@ -37,7 +37,7 @@ if(isset($a) && (is_file("../modules/$sub/info.inc.php"))) {
 
 if($sub == 'list' OR $sub == 'p' OR $sub == 'm' OR $sub == 't' OR $sub == 'u') {
 	echo '<div class="subHeader">';
-	echo '<div class="btn-group float-right" role="group">';
+	echo '<div class="btn-group float-end" role="group">';
 	echo '<a href="?tn=moduls&sub=u" class="btn btn-fc '.$active_upload.'">'.$icon['upload'].' '.$lang['btn_install'].'</a>';
 	echo '</div>';
 	

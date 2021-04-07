@@ -657,7 +657,7 @@ if(is_numeric($editpage)) {
 	$form_title = '<h3>'.$lang['h_modus_editpage'].' - <small>'.$page_title.' (Version: '.$page_version.' ID: '.$editpage.')</small></h3>';
 	//set submit button
 	$submit_button = "<input type='submit' class='btn btn-save w-100' name='save_the_page' value='$lang[update_page]'>";
-	$delete_button = "<hr><input type='submit' class='btn btn-danger btn-sm btn-block' name='delete_the_page' value='$lang[delete_page]' onclick=\"return confirm('$lang[confirm_delete_data]')\">";
+	$delete_button = "<hr><input type='submit' class='btn btn-danger btn-sm w-100' name='delete_the_page' value='$lang[delete_page]' onclick=\"return confirm('$lang[confirm_delete_data]')\">";
 	$previev_button = "<input type='submit' class='btn btn-fc w-100' id='preview_the_page' name='preview_the_page' value='$lang[preview]'>";
 	
 	if($modus == 'duplicate') {
@@ -673,7 +673,7 @@ if(is_numeric($editpage)) {
 	
 	$form_title = '<h3>'.$lang['h_modus_newpage'].'</h3>';
 	//set submit button
-	$submit_button = "<input type='submit' class='btn btn-save btn-block' name='save_the_page' value='$lang[save_new_page]'>";
+	$submit_button = "<input type='submit' class='btn btn-save w-100' name='save_the_page' value='$lang[save_new_page]'>";
 	$delete_button = '';
 	$previev_button = '';
 }
@@ -742,7 +742,7 @@ if($show_form == "true" AND $sub != "new") {
 	echo '<div class="accordion" id="versionsToggle">';
 	echo '<div class="accordion-group">';
 	echo '<div class="accordion-heading">';
-	echo '<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#showVersions">Versions ('.$cnt_result.')</a>';
+	echo '<a class="accordion-toggle" data-bs-toggle="collapse" data-parent="#accordion2" href="#showVersions">Versions ('.$cnt_result.')</a>';
 	echo '</div>';
 	
 	echo '<div id="showVersions" class="accordion-body collapse in">';

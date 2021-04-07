@@ -23,11 +23,11 @@ echo '<div class="card">';
 echo '<div class="card-header">';
 
 echo '<ul class="nav nav-tabs card-header-tabs" id="bsTabs" role="tablist">';
-echo '<li class="nav-item"><a class="nav-link active" href="#info" data-toggle="tab">'.$lang['tab_user_info'].'</a></li>';
-echo '<li class="nav-item"><a class="nav-link" href="#contact" data-toggle="tab">'.$lang['tab_contact'].'</a></li>';
-echo '<li class="nav-item"><a class="nav-link" href="#psw" data-toggle="tab">'.$lang['tab_psw'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link active" href="#info" data-bs-toggle="tab">'.$lang['tab_user_info'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#contact" data-bs-toggle="tab">'.$lang['tab_contact'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#psw" data-bs-toggle="tab">'.$lang['tab_psw'].'</a></li>';
 if($cnt_custom_fields > 0) {
-	echo '<li class="nav-item"><a class="nav-link" href="#custom" data-toggle="tab">'.$lang['legend_custom_fields'].'</a></li>';
+	echo '<li class="nav-item"><a class="nav-link" href="#custom" data-bs-toggle="tab">'.$lang['legend_custom_fields'].'</a></li>';
 }
 echo '</ul>';
 

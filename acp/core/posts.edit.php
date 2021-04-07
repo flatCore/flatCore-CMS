@@ -12,12 +12,12 @@ if((isset($_POST['post_id'])) && is_numeric($_POST['post_id'])) {
 	$post_id = (int) $_POST['post_id'];
 	$modus = 'update';
 	$post_data = fc_get_post_data($post_id);
-	$submit_btn = '<input type="submit" class="btn btn-save btn-block" name="save_post" value="'.$lang['update'].'">';
+	$submit_btn = '<input type="submit" class="btn btn-save w-100" name="save_post" value="'.$lang['update'].'">';
 	
 } else {
 	$post_id = '';
 	$modus = 'new';
-	$submit_btn = '<input type="submit" class="btn btn-save btn-block" name="save_post" value="'.$lang['save'].'">';
+	$submit_btn = '<input type="submit" class="btn btn-save w-100" name="save_post" value="'.$lang['save'].'">';
 
 }
 
@@ -115,7 +115,7 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 		$db_posts->insert("fc_posts", $inputs);
 		$post_id = $db_posts->id();
 		$modus = 'update';
-		$submit_btn = '<input type="submit" class="btn btn-save btn-block" name="save_post" value="'.$lang['update'].'">';
+		$submit_btn = '<input type="submit" class="btn btn-save w-100" name="save_post" value="'.$lang['update'].'">';
 	}
 	
 	/* update the rss url */

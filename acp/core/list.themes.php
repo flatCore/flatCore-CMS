@@ -200,7 +200,7 @@ foreach($arr_Styles as $template) {
 		$modal = str_replace('{modalID}', "ID$template", $modal);
 		$modal = str_replace('{modalBody}', "$readme", $modal);
 		$modal = str_replace('{modalTitle}', "$template <small>readme.html</small>", $modal);
-		echo '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ID'.$template.'">readme.html</button>';
+		echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ID'.$template.'">readme.html</button>';
 	}
 	
 	echo $modal;

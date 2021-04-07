@@ -17,7 +17,7 @@ echo '</ul>';
 echo '<ul class="nav">';
 
 echo '<li><a class="sidebar-sub" href="acp.php?tn=filebrowser&sub=browse">'.$icon['folder_open'].' '.$lang['manage_files'].'</a></li>';
-echo '<li class="mb-1"><a class="sidebar-sub" data-toggle="modal" data-target="#uploadModal" href="#">'.$icon['upload'].' '.$lang['go_to_upload'].'</a></li>';
+echo '<li class="mb-1"><a class="sidebar-sub" data-bs-toggle="modal" data-bs-target="#uploadModal" href="#">'.$icon['upload'].' '.$lang['go_to_upload'].'</a></li>';
 
 echo '</ul>';
 

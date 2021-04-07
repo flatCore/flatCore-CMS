@@ -7,7 +7,7 @@ echo '<div id="topNavBox">';
 
 echo '<a href="#" id="toggleNav" title="Dashboard"><span class="caret_left">'.$icon['caret_left'].'</span> '.$icon['bars'].' <span class="caret_right">'.$icon['caret_right'].'</span></a>';
 
-echo '<div class="float-right">';
+echo '<div class="float-end">';
 
 echo '<a class="'.$active[0].' tooltip_bottom" href="acp.php?tn=dashboard" title="'.$lang['tn_dashboard_desc'].'"><span class="mm"></span>'.$lang['tn_dashboard'].'</a>';
 echo '<a class="'.$active[1].' tooltip_bottom" href="acp.php?tn=pages" title="'.$lang['tn_contents_desc'].'"><span class="mm"></span>'.$lang['tn_contents'].'</a>';

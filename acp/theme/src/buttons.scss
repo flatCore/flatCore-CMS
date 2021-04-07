@@ -67,10 +67,20 @@
   	}
 }
 
+.btn-check:checked + .btn-fc,
+.btn-check:active + .btn-fc,
+.btn-fc:active,
+.btn-fc.active,
+.show > .btn-fc.dropdown-toggle {
+	color: $btn_fc_color_active;
+	background: $btn_fc_background_active;
+	border-color: $btn_fc_background_active;
+}
+
 
 
 .btn-public {
-	color: $color_public;
+	color: $color_public !important;
 	text-shadow: none;
 	&.active {
 		color: $color_public !important;
@@ -81,7 +91,7 @@
 }
 
 .btn-private {
-	color: $color_private;
+	color: $color_private !important;
 	text-shadow: none;
 	&.active {
 		color: $color_private !important;
@@ -92,10 +102,10 @@
 }
 
 .btn-draft {
-	color: $color_draft;
+	color: $color_draft !important;
 	text-shadow: none;
 	&.active {
-		color: $color_draft;
+		color: $color_draft !important;
 	}
 	&:hover {
 		color: darken($color_draft,5);

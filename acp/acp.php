@@ -197,8 +197,8 @@ if(isset($set_acptheme)) {
 		
 		<link rel="icon" type="image/x-icon" href="images/favicon.ico" />
 		
-		<script src="../lib/js/jquery/jquery-3.4.1.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
+		<script src="js/jquery-3.6.0.min.js"></script>
+    <script src="theme/bootstrap5/js/bootstrap.bundle.min.js"></script>
     <script language="javascript" type="text/javascript" src="../lib/js/tinymce/tinymce.min.js"></script>
     <script language="javascript" type="text/javascript" src="../lib/js/tinymce/jquery.tinymce.min.js"></script>
 
@@ -437,20 +437,20 @@ if(isset($set_acptheme)) {
 					echo '<a class="btn btn-sm btn-fc" href="acp.php?tn='.$tn.'&theme=true">Dark Theme</a>';
 				}
 			?>
-			<button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#uploadModal"><?php echo $icon['upload']; ?> Upload</button>
+			<button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#uploadModal"><?php echo $icon['upload']; ?> Upload</button>
 		</div>
 		<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-hidden="true">
 		  <div class="modal-dialog modal-lg">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <h4 class="modal-title" id="myModalLabel"><?php echo $icon['upload']; ?> Upload</h4>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		      </div>
 		      <div class="modal-body">
 		        <?php include 'core/files.upload.php'; ?>
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-fc" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-fc" data-bs-dismiss="modal">Close</button>
 		      </div>
 		    </div>
 		  </div>
@@ -521,7 +521,10 @@ if(isset($set_acptheme)) {
 						}
 						textEditor.addClass('aceEditor_code form-control switchEditor');
 		    		setAceEditor();
-		  		}	
+		  		}
+		  		
+		  		$("input[name='optEditor']").parent().removeClass('active');
+		  		$("input[value="+mode+"]").parent().addClass('active');
 					
 				}
 				
@@ -565,7 +568,7 @@ if(isset($set_acptheme)) {
 				});
 							
 
-				$('#bsTabs').tab();				
+				//$('#bsTabs').tab();				
 					
 		  	setTimeout(function() {
 		        $(".alert-auto-close").slideUp('slow');
@@ -579,29 +582,15 @@ if(isset($set_acptheme)) {
 				})
 			
 				$('.tooltip').tooltip();
-				$('[data-toggle="popover"]').popover()
+				$('[data-bs-toggle="popover"]').popover()
 
-				
-				$(".fancybox").fancybox();
-				
-				$(".fancybox-iframe").fancybox({
-					type: 'iframe',
-					autoWidth: true,
-					autoHeight: true
-				});
-				
-				$(".fancybox-docs").fancybox({
-					type: 'iframe',
-					width: '77%',
-					height: '90%',
-					buttons: ['close'],
-				});
 												
 				$(".fancybox-ajax").fancybox({
 					type: 'ajax',
 					minWidth: '450px',
 					height: '90%'
 				});
+				
 				
 				
 				$("select.image-picker").imagepicker({
@@ -628,16 +617,6 @@ if(isset($set_acptheme)) {
 					$(this).find('.controls').hide();
 				});
 
-		    
-				$(document).on('click', 'a[href^=\\#]', function(e){
-        	e.preventDefault();
-					var id = $(this).attr('href');
-					$('html,body').animate({scrollTop: $(id).offset().top}, 500);
-    		});		    
-		    
-				
-		    
-		    
 				
 				Dropzone.options.myDropzone = {
 			  	init: function() {

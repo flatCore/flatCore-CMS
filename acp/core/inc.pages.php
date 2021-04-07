@@ -284,8 +284,8 @@ $_SESSION['filter_string'] = $filter_string;
 if($sub == "list" OR $sub == "snippets") {
 	
 
-	$label_dropdown  = '<li class="nav-item dropdown mr-3">';
-	$label_dropdown .= '<a class="nav-link dropdown-toggle" href="#" id="navLabels" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Labels</a>';	
+	$label_dropdown  = '<li class="nav-item dropdown me-3">';
+	$label_dropdown .= '<a class="nav-link dropdown-toggle" href="#" id="navLabels" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Labels</a>';	
 	$label_dropdown .= '<div class="dropdown-menu" aria-labelledby="navLabels">';
 	$this_btn_status = '';
 	foreach($fc_labels as $label) {
@@ -305,7 +305,7 @@ if($sub == "list" OR $sub == "snippets") {
 
 	/* Filter Languages */
 	$lang_dropdown = '<li class="nav-item dropdown">';
-	$lang_dropdown .= '<a class="nav-link dropdown-toggle" href="#" id="navLangs" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'.$lang['f_page_language'].'</a>';	
+	$lang_dropdown .= '<a class="nav-link dropdown-toggle" href="#" id="navLangs" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'.$lang['f_page_language'].'</a>';	
 	$lang_dropdown .= '<div class="dropdown-menu" aria-labelledby="navLangs">';
 
 	for($i=0;$i<count($arr_lang);$i++) {
@@ -343,9 +343,9 @@ if($sub == "list" OR $sub == "snippets") {
 	
 	$nav_btn_group .= '</ul> ';
 
-	$kw_form  = '<form action="acp.php?tn=pages&sub=list" method="POST" class="form-inline ml-auto">';
+	$kw_form  = '<form action="acp.php?tn=pages&sub=list" method="POST" class="form-inline ms-auto">';
 	$kw_form .= '<div class="input-group">';
-	$kw_form .= '<div class="input-group-prepend"><span class="input-group-text">'.$icon['filter'].'</span></div>';
+	$kw_form .= '<span class="input-group-text">'.$icon['filter'].'</span>';
 	$kw_form .= '<input class="form-control" type="text" name="kw_filter" value="" placeholder="Filter">';
 	$kw_form .= '</div>';
 	$kw_form .= '</form>';

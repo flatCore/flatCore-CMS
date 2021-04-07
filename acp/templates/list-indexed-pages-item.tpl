@@ -1,6 +1,6 @@
 <div class="well well-sm clearfix">
 	<p class="mb-0">
-		<span class="float-right">{indexed_time}</span>
+		<span class="float-end">{indexed_time}</span>
 		<strong>{title}</strong>
 	</p>
 	<p class="mb-0">{description}</p>
@@ -10,16 +10,16 @@
 		<div class="col-md-8">
 						
 				<div class="btn-group" role="group">
-					<button type="button" class="btn btn-sm btn-fc" data-toggle="modal" data-target="#modalHeadlines_{id}">Headlines {cnt_headlines} ({cnt_headline_errors})</button>
-					<button type="button" class="btn btn-sm btn-fc" data-toggle="modal" data-target="#modalLinks_{id}">Links {cnt_links} ({cnt_links_errors})</button>
-					<button type="button" class="btn btn-sm btn-fc" data-toggle="modal" data-target="#modalImages_{id}">Images {cnt_images} ({cnt_images_errors})</button>
-					<button type="button" class="btn btn-sm btn-fc" data-toggle="modal" data-target="#modalSource_{id}">Source</button>
+					<button type="button" class="btn btn-sm btn-fc" data-bs-toggle="modal" data-bs-target="#modalHeadlines_{id}">Headlines {cnt_headlines} ({cnt_headline_errors})</button>
+					<button type="button" class="btn btn-sm btn-fc" data-bs-toggle="modal" data-bs-target="#modalLinks_{id}">Links {cnt_links} ({cnt_links_errors})</button>
+					<button type="button" class="btn btn-sm btn-fc" data-bs-toggle="modal" data-bs-target="#modalImages_{id}">Images {cnt_images} ({cnt_images_errors})</button>
+					<button type="button" class="btn btn-sm btn-fc" data-bs-toggle="modal" data-bs-target="#modalSource_{id}">Source</button>
 				</div>
 				
 		</div>
 		<div class="col-md-4">
 			
-			<div class="btn-group float-right" role="group">
+			<div class="btn-group float-end" role="group">
 				<a href="acp.php?tn=pages&sub=index&a=start&id={id}" class="btn btn-fc btn-sm" title="{title_update_page_index}">{btn_start_index}</a>
 				<a href="acp.php?tn=pages&sub=index&a=update&id={id}" class="btn btn-fc btn-sm" title="{title_update_page_content}">{btn_update_info}</a>
 			</div>
@@ -35,7 +35,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Links {url}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -43,7 +43,7 @@
         {link_str}
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-fc" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -56,7 +56,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Headlines {url}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -64,7 +64,7 @@
         {headline_str}
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-fc" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -77,7 +77,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Images {url}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -85,7 +85,7 @@
         {images_str}
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-fc" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -97,7 +97,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Source {url}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -105,7 +105,7 @@
         <textarea class="form-control" rows="20">{page_content}</textarea>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-fc" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

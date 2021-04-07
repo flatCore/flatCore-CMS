@@ -147,7 +147,7 @@ echo '</div>';
 echo '</div>';
 echo '<div class="col-md-3">';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
-echo '<input type="submit" class="btn btn-fc btn-block" name="select_group" value="'.$lang['edit'].'">';
+echo '<input type="submit" class="btn btn-fc w-100" name="select_group" value="'.$lang['edit'].'">';
 echo '</div>';
 echo '</div>';
 echo '</form>';

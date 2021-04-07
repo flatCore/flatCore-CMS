@@ -464,7 +464,7 @@ function print_sysmsg($msg) {
 
 	$msg = substr(strstr($msg, '}'), 2);
 	echo '<div class="'.$style.' alert-dismissible" role="alert">';
-	echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>';
+	echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>';
 	echo $msg;
 	echo '</div>';
 }

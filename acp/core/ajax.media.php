@@ -233,8 +233,8 @@ $(document).ready(function(){
 	setTimeout(function() {
       $(".alert-auto-close").slideUp('slow');
 	}, 2000);
-
-
+	
+	
 });
 
 </script>

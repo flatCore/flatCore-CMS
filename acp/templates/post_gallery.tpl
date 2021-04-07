@@ -4,8 +4,8 @@
 			<div class="card">
 				<div class="card-header">
 					<ul class="nav nav-tabs card-header-tabs" id="bsTabs" role="tablist">
-						<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#content">{post_tab_content}</a></li>
-						<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#preferences">{post_tab_preferences}</a></li>
+						<li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#content">{post_tab_content}</a></li>
+						<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#preferences">{post_tab_preferences}</a></li>
 					</ul>
 				</div>
 				<div class="card-body">
@@ -20,7 +20,7 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								<label>{label_upload}</label>
-								<button type="button" class="form-control btn btn-primary" data-toggle="modal" data-target="#uploadGalModal" {disabled_upload_btn}>{btn_upload}</button>
+								<button type="button" class="form-control btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadGalModal" {disabled_upload_btn}>{btn_upload}</button>
 								<p class="form-text text-muted">{gallery_upload_help_text}</p>
 							</div>
 						</div>

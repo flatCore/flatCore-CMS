@@ -439,9 +439,9 @@ echo '</div>';
 
 echo '<div class="col-md-4">';
 
-echo '<div class="btn-toolbar float-right">';
+echo '<div class="btn-toolbar float-end">';
 
-echo '<div class="btn-group float-right">';
+echo '<div class="btn-group float-end">';
 echo '<a class="btn btn-sm btn-fc '.$check_lastedit.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=time">'.$lang['date_of_change'].'</a>';
 echo '<a class="btn btn-sm btn-fc '.$check_name.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=name">'.$lang['filename'].'</a>';
 echo '<a class="btn btn-sm btn-fc '.$check_size.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=size">'.$lang['filesize'].'</a>';
@@ -593,8 +593,7 @@ for($i=0;$i<$cnt_get_files;$i++) {
 	
 	$delete_btn = '<button type="submit" onclick="return confirm(\''.$lang['confirm_delete_file'].'\')" class="btn btn-fc btn-sm w-100 text-danger" name="delete" value="'.$id.'">'.$icon['trash_alt'].'</button>';
 	$edit_btn = '<a data-fancybox data-type="ajax" data-src="/acp/core/ajax.media.php?file='.$filename.'&folder='.$disk.'" href="javascript:;" class="btn btn-sm btn-fc w-100 text-success">'.$icon['edit'].'</a>';
-	
-	
+
 	
 	$tpl_list = $tpl_file;
 	

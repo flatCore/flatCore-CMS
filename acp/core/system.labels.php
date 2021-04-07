@@ -65,9 +65,7 @@ for($i=0;$i<$cnt_labels;$i++) {
 	echo '<div class="row mb-1">';
 	echo '<div class="col-md-2">';
 	echo '<div class="input-group">';
-	echo '<div class="input-group-prepend">';
 	echo '<span class="input-group-text" id="basic-addon1" style="background-color:'.$fc_labels[$i]['label_color'].'"></span>';
-	echo '</div>';
 	echo '<input class="form-control" type="text" name="label_color" value="'.$fc_labels[$i]['label_color'].'">';
 	echo '</div>';
 	echo '</div>';

@@ -169,7 +169,7 @@ foreach($all_categories as $cats) {
 	echo '<div class="card-body">';
 	echo '<h5 class="card-title">'.$cats['cat_name'].'</h5>';
 	echo '<p class="card-text">'.$cats['cat_description'].'</p>';
-	echo '<a href="?tn=system&sub=categories&editcat='.$cats['cat_id'].'" class="card-link stretched-link float-right">'.$icon['edit'].' '.$lang['edit'].'</a>';
+	echo '<a href="?tn=system&sub=categories&editcat='.$cats['cat_id'].'" class="card-link stretched-link float-end">'.$icon['edit'].' '.$lang['edit'].'</a>';
 	echo '</div>';
 	echo '</div>';
 	echo '</div>';

@@ -285,7 +285,7 @@ for($i=$start;$i<$end;$i++) {
 		case "":
 			$bg_class = 'table-danger';
 			$statusLabel = "label label-default center";
-			$label = 'badge badge-pill badge-danger';
+			$label = 'badge badge-pill bg-danger';
 			break;
 	}
 	
@@ -296,7 +296,7 @@ for($i=$start;$i<$end;$i++) {
 	echo '<td class="'.$td_class.'">'.$show_registerdate.'</td>';
 	echo '<td class="'.$td_class.'">'.$user_firstname.' '.$user_lastname.'</td>';
 	echo '<td class="'.$td_class.'">'.$user_mail.'</td>';
-	echo '<td class="'.$td_class.'"><a class="btn btn-sm btn-fc btn-block" href="acp.php?tn=user&sub=edit&edituser='.$user_id.'">'.$icon['edit'].' '.$lang['edit'].'</a></td>';
+	echo '<td class="'.$td_class.'"><a class="btn btn-sm btn-fc w-100" href="acp.php?tn=user&sub=edit&edituser='.$user_id.'">'.$icon['edit'].' '.$lang['edit'].'</a></td>';
 	echo '</tr>';
 
 

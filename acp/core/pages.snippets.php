@@ -342,9 +342,9 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	
 	echo '<a href="?tn=pages&sub=snippets&snip_id=n" class="nav-link text-success">'.$icon['plus'].' '.$lang['new'].'</a>';
 
-	echo '<form action="acp.php?tn=pages&sub=snippets" method="POST" class="form-inline ml-auto dirtyignore">';
+	echo '<form action="acp.php?tn=pages&sub=snippets" method="POST" class="form-inline ms-auto dirtyignore">';
 	echo '<div class="input-group">';
-	echo '<div class="input-group-prepend"><span class="input-group-text">'.$icon['filter'].'</span></div>';
+	echo '<span class="input-group-text">'.$icon['filter'].'</span>';
 	echo '<input class="form-control" type="text" name="snippet_filter" value="" placeholder="Filter">';
 	echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 	echo '</div>';
@@ -355,7 +355,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	echo '</nav>';
 	
 		if($btn_remove_keyword != '') {
-			echo '<div class="float-right">';
+			echo '<div class="float-end">';
 		echo '<p style="padding-top:5px;">'.$btn_remove_keyword.'</p>';
 			echo '</div>';
 	}
@@ -457,7 +457,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 			foreach($snippet_images as $img) {
 				if(is_file("$img")) {
 					$x++;
-					echo '<a data-toggle="popover" data-trigger="hover" data-html="true" data-content="<img src=\''.$img.'\'>">'.$icon['images'].'</a> ';
+					echo '<a data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="<img src=\''.$img.'\'>">'.$icon['images'].'</a> ';
 				}
 				if($x>2) {
 					echo '<small>(...)</small>';
@@ -468,7 +468,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 		echo '</td>';
 		echo '<td>';
 		if($get_snip_url != '') {
-			echo '<a data-toggle="popover" data-trigger="hover" data-html="true" title="'.$get_snip_url_title.'" data-content="URL: '.$get_snip_url.'<br>Name: '.$get_snip_url_name.'<br>'.$lang['label_classes'].': '.$get_snip_url_classes.'">'.$icon['link'].'</a>';
+			echo '<a data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" title="'.$get_snip_url_title.'" data-bs-content="URL: '.$get_snip_url.'<br>Name: '.$get_snip_url_name.'<br>'.$lang['label_classes'].': '.$get_snip_url_classes.'">'.$icon['link'].'</a>';
 		}
 		echo '</td>';
 		echo '<td nowrap><small>'.$icon['clock']. ' '.date('Y.m.d H:i:s',$get_snip_lastedit).'<br>'.$icon['user'].' '.$get_snip_lastedit_from.'</small></td>';
