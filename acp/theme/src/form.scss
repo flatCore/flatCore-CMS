@@ -78,17 +78,9 @@ input.form-control[readonly] {
 
 .input-group-text {
 	border: 1px solid #222;
-	background: #111;
-	color: $font_color;
-}
-
-.input-group-prepend,
-.input-group-append {
-	.input-group-text {
-		background: lighten($input_background,5);
-		color: darken($font_color,10);
-		border-color: darken($input_background,10);	
-	}
+	background: lighten($input_background,5);
+	color: darken($font_color,10);
+	border-color: darken($input_background,20);
 }
 
 

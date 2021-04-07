@@ -214,12 +214,12 @@ echo tpl_form_control_group('',$lang['f_prefs_pagedescription'],$prefs_pagedescr
 
 echo '<hr>';
 
-$toggle_btn_publisher  = '<div class="input-group-append">';
+
 $toggle_btn_publisher .= '<span class="input-group-text">'.$lang['f_prefs_publisher_mode'].'</span>';
-$toggle_btn_publisher .= '<div class="input-group-text">';
+$toggle_btn_publisher .= '<span class="input-group-text">';
 $toggle_btn_publisher .= '<input type="checkbox" name="prefs_publisher_mode" '.($prefs_publisher_mode == "overwrite" ? 'checked' :'').'>';
-$toggle_btn_publisher .= '</div>';
-$toggle_btn_publisher .= '</div>';
+$toggle_btn_publisher .= '</span>';
+
 
 $prefs_publisher_input  = '<div class="input-group">';
 $prefs_publisher_input .= '<input class="form-control" type="text" name="prefs_default_publisher" value="'.$prefs_default_publisher.'">';

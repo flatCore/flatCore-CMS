@@ -13223,15 +13223,9 @@ input.form-control[readonly] {
 
 .input-group-text {
   border: 1px solid #222;
-  background: #111;
-  color: #222;
-}
-
-.input-group-prepend .input-group-text,
-.input-group-append .input-group-text {
   background: white;
   color: #090909;
-  border-color: #e6e6e6;
+  border-color: #cccccc;
 }
 
 #CSSeditor,
