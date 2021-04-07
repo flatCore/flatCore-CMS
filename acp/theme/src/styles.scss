@@ -156,6 +156,20 @@ hr.shadow-line:after {
 }
 
 
+.well {
+	background: $widget_background;
+	padding: 10px;
+}
+
+.well-sm {
+	padding: 5px;
+}
+
+.alert-fc {
+	background: $brand_color;
+}
+
+
 /* Footer */
 
 div#footer {

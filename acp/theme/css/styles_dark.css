@@ -13944,6 +13944,19 @@ hr.shadow-line:after {
   border-radius: 50%;
 }
 
+.well {
+  background: #191919;
+  padding: 10px;
+}
+
+.well-sm {
+  padding: 5px;
+}
+
+.alert-fc {
+  background: #40a4fb;
+}
+
 /* Footer */
 div#footer {
   clear: both;
