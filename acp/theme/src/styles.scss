@@ -127,7 +127,7 @@ div#container {
 }
 
 
-hr.shadow {
+hr.shadow-line {
   padding: 0;
   border: 0;
   outline: 0;
@@ -138,9 +138,10 @@ hr.shadow {
   margin-bottom: 15px;
   margin-left: 0;
   box-shadow: none !important;
+  background: transparent;
 }
 
-hr.shadow:after {
+hr.shadow-line:after {
   content: "";
   margin: 0 auto;
   position: relative;

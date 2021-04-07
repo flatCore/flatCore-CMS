@@ -8,7 +8,7 @@ require 'core/access.php';
 $cnt_mods = count($all_mods);
 
 if($cnt_mods > 0) {
-	echo '<hr class="shadow">';
+	echo '<hr class="shadow-line">';
 	
 	echo '<div class="row row-cols-1 row-cols-md-3 row-cols-xl-5">';
 	

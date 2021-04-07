@@ -172,7 +172,7 @@ for($i=0;$i<$cnt_result;$i++) {
 		echo '<tr><td class="text-nowrap">User Agent:</td><td>'.$log_ua.'</td></tr>';
 	}
 	
-	echo '<tr><td colspan="2" class="p-0 border-top-0"><hr class="shadow mt-1"></td></tr>';
+	echo '<tr><td colspan="2" class="p-0 border-top-0"><hr class="shadow-line mt-1"></td></tr>';
 
 }
 

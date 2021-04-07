@@ -4,7 +4,7 @@
 require 'core/access.php';
 
 
-echo '<hr class="shadow">';
+echo '<hr class="shadow-line">';
 
 echo '<div class="row">';
 
