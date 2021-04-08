@@ -413,7 +413,7 @@ if($_SESSION['media_filter'] != "") {
 
 $kw_form  = '<form action="acp.php?tn=filebrowser&sub=browse&d=" method="POST" class="form-inline dirtyignore">';
 $kw_form .= '<div class="input-group">';
-$kw_form .= '<div class="input-group-prepend"><span class="input-group-text">'.$icon['filter'].'</span></div>';
+$kw_form .= '<span class="input-group-text">'.$icon['filter'].'</span>';
 $kw_form .= '<input class="form-control" type="text" name="media_filter" value="" placeholder="Filter">';
 $kw_form .= '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 $kw_form .= '</div>';
@@ -674,7 +674,7 @@ echo ' '. $pag_forwardlink;
 echo '</p></div>'; //EOL PAGINATION
 
 
-echo '<form action="acp.php?tn=filebrowser&sub=browse" method="POST" class="d-block text-right mt-4">';
+echo '<form action="acp.php?tn=filebrowser&sub=browse" method="POST" class="d-block text-end mt-4">';
 echo '<div class="btn-group" role="group">';
 echo '<button class="btn btn-sm btn-fc" type="submit" name="rebuild" value="database">Database '.$icon['wrench'].'</button>';
 echo '<button class="btn btn-sm btn-fc" type="submit" name="clear_tmb">Thumbnails '.$icon['trash_alt'].'</button>';
