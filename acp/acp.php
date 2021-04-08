@@ -151,6 +151,8 @@ require 'core/switch.php';
 
 $all_mods = get_all_moduls();
 $all_plugins = get_all_plugins();
+$fc_labels = fc_get_labels();
+$cnt_labels = count($fc_labels);
 
 /* READ THE PREFS */
 $fc_preferences = get_preferences();

@@ -60,7 +60,7 @@ if($_SESSION['acp_system'] != "allowed" AND $subinc == "pages.customize"){
  */
 
 $arr_lang = get_all_languages();
-$fc_labels = fc_get_labels();
+
 
 /* default: check default language */
 if(!isset($_SESSION['checked_lang_string'])) {	
