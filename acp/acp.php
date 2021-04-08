@@ -591,6 +591,12 @@ if(isset($set_acptheme)) {
 					height: '90%'
 				});
 				
+				$(".fancybox-iframe").fancybox({
+					type: 'iframe',
+					width: '90%',
+					height: '90%',
+					buttons: ['close']
+				});			
 				
 				
 				$("select.image-picker").imagepicker({
@@ -608,8 +614,6 @@ if(isset($set_acptheme)) {
 			    });
 				});
 				
-				$( "#chat_container" ).load( "core/ajax.chat.php" );
-
 			
 	      $(document).on('mouseenter', '.hiddenControls', function () {
 					$(this).find('.controls').fadeIn();
