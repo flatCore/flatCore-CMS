@@ -55,6 +55,36 @@ if(isset($_GET['sort_direction'])) {
 	switch_sort();
 }
 
+
+
+
+/* labels */
+if(!isset($_SESSION['checked_label_str'])) {
+	$_SESSION['checked_label_str'] = '';
+}
+
+$a_checked_labels = explode('-', $_SESSION['checked_label_str']);
+
+if(isset($_GET['switchLabel'])) {
+	
+		if(in_array($_GET['switchLabel'], $a_checked_labels)) {
+			/* remove label*/
+			if(($key = array_search($_GET['switchLabel'], $a_checked_labels)) !== false) {
+				unset($a_checked_labels[$key]);
+			}
+		} else {
+			/* add label */
+			$a_checked_labels[] = $_GET['switchLabel'];
+		}
+
+		$_SESSION['checked_label_str'] = implode('-', $a_checked_labels);
+}
+$a_checked_labels = explode('-', $_SESSION['checked_label_str']);
+
+
+
+
+
 unset($check_lastedit,$check_size,$check_name);
 
 if($_SESSION['sort_by'] == 'media_lastedit') {
@@ -68,7 +98,7 @@ if($_SESSION['sort_by'] == 'media_lastedit') {
 
 
 $select_dir = '';
-$select_dir  .= '<form action="acp.php?tn=filebrowser&sub=browse" method="POST" class="form-inlinne dirtyignore">';
+$select_dir  .= '<form action="acp.php?tn=filebrowser&sub=browse" method="POST" class="d-inline dirtyignore">';
 
 $select_dir  .= '<div class="row">';
 if($disk != $path_img AND $disk != $path_files) {
@@ -417,8 +447,8 @@ if($_SESSION['media_filter'] != "") {
 
 $kw_form  = '<form action="acp.php?tn=filebrowser&sub=browse&d=" method="POST" class="form-inline dirtyignore">';
 $kw_form .= '<div class="input-group">';
-$kw_form .= '<span class="input-group-text">'.$icon['filter'].'</span>';
-$kw_form .= '<input class="form-control" type="text" name="media_filter" value="" placeholder="Filter">';
+$kw_form .= '<span class="input-group-text">'.$icon['search'].'</span>';
+$kw_form .= '<input class="form-control" type="text" name="media_filter" value="" placeholder="'.$lang['button_search'].'">';
 $kw_form .= '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 $kw_form .= '</div>';
 $kw_form .= '</form>';
@@ -427,7 +457,7 @@ $kw_form .= '</form>';
 echo '<div class="subHeader">';
 echo '<div class="row">';
 
-echo '<div class="col-md-4">';
+echo '<div class="col-md-8">';
 echo $select_dir;
 echo '</div>';
 
@@ -445,25 +475,13 @@ echo '<div class="col-md-4">';
 
 echo '<div class="btn-toolbar float-end">';
 
-echo '<div class="btn-group float-end">';
-echo '<a class="btn btn-sm btn-fc '.$check_lastedit.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=time">'.$lang['date_of_change'].'</a>';
-echo '<a class="btn btn-sm btn-fc '.$check_name.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=name">'.$lang['filename'].'</a>';
-echo '<a class="btn btn-sm btn-fc '.$check_size.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=size">'.$lang['filesize'].'</a>';
-echo '<a class="btn btn-sm btn-fc" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_direction=1">'. show_sort_arrow() .'</a>';
-echo '</div>';
+
 echo '</div>';
 
 echo '</div>';
 echo '</div>';
 
-echo '<div class="row" style="margin-top:10px;">';
-echo '<div class="col-md-4">';
-echo "$kw_form";
-echo '</div>';
-echo '<div class="col-md-8">';
-echo "$btn_remove_keyword";
-echo '</div>';
-echo '</div>';
+
 echo '</div>';
 
 unset($_SESSION['media_filter_string']);
@@ -484,6 +502,26 @@ if(is_array($all_filter)) {
 
 	$_SESSION['media_filter_string'] = $add_keyword_filter;
 }
+
+
+/* build SQL query for labels */
+
+$set_label_filter = '';
+$checked_labels_array = explode('-', $_SESSION['checked_label_str']);
+
+for($i=0;$i<count($fc_labels);$i++) {
+	$label = $fc_labels[$i]['label_id'];
+	if(in_array($label, $checked_labels_array)) {
+		$set_label_filter .= "media_labels LIKE '%,$label,%' OR media_labels LIKE '%,$label' OR media_labels LIKE '$label,%' OR media_labels = '$label' OR ";
+	}
+}
+
+$set_label_filter = substr("$set_label_filter", 0, -3); // cut the last ' OR'
+
+if($set_label_filter != "") {
+	$_SESSION['media_filter_string'] .= " AND ($set_label_filter)";
+}
+
 
 $sql_cnt = "SELECT count(*) AS 'all' FROM fc_media WHERE media_file LIKE '%$disk%' ".$_SESSION['media_filter_string'];
 $all_files = $db_content->query($sql_cnt)->fetch();
@@ -573,6 +611,9 @@ if($disk != $path_img AND $disk != $path_files) {
 	echo '</div>';
 }
 
+
+echo '<div class="row">';
+echo '<div class="col-md-9">';
 
 echo '<div class="'.$tpl_container_class.'">';
 
@@ -675,15 +716,70 @@ foreach(range($pag_start, $pag_end) as $number) {
     echo $a_pag_string[$number];
 }
 echo ' '. $pag_forwardlink;
-echo '</p></div>'; //EOL PAGINATION
+echo '</div>'; //EOL PAGINATION
 
 
-echo '<form action="acp.php?tn=filebrowser&sub=browse" method="POST" class="d-block text-end mt-4">';
-echo '<div class="btn-group" role="group">';
-echo '<button class="btn btn-sm btn-fc" type="submit" name="rebuild" value="database">Database '.$icon['wrench'].'</button>';
-echo '<button class="btn btn-sm btn-fc" type="submit" name="clear_tmb">Thumbnails '.$icon['trash_alt'].'</button>';
+echo '</div>';
+echo '<div class="col-md-3">';
+
+/* sidebar */
+
+echo '<div class="card p-3">';
+
+echo "$kw_form";
+
+echo '<div class="pt-1">'.$btn_remove_keyword.'</div>';
+
+echo '<hr>';
+
+echo '<fieldset>';
+echo '<legend>'.$lang['h_page_sort'].'</legend>';
+
+echo '<div class="btn-group d-flex">';
+echo '<a class="btn btn-sm btn-fc w-100 '.$check_lastedit.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=time">'.$lang['date_of_change'].'</a>';
+echo '<a class="btn btn-sm btn-fc w-100 '.$check_name.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=name">'.$lang['filename'].'</a>';
+echo '<a class="btn btn-sm btn-fc w-100 '.$check_size.'" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_by=size">'.$lang['filesize'].'</a>';
+echo '<a class="btn btn-sm btn-fc" href="acp.php?tn='.$tn.'&sub=browse&d='.$disk.'&sort_direction=1">'. show_sort_arrow() .'</a>';
+echo '</div>';
+
+echo '</fieldset>';
+
+
+$label_filter_box  = '<div class="card mt-2">';
+$label_filter_box .= '<div class="card-header p-1 px-2">'.$lang['labels'].'</div>';
+$label_filter_box .= '<div class="card-body">';
+$this_btn_status = '';
+foreach($fc_labels as $label) {
+	
+	if(in_array($label['label_id'], $a_checked_labels)) {
+		$this_btn_status = 'active';
+	} else {
+		$this_btn_status = '';
+	}		
+
+	$label_title = '<span class="label-dot" style="background-color:'.$label['label_color'].';"></span> '.$label['label_title'];
+	$label_filter_box .= '<a href="acp.php?tn=filebrowser&switchLabel='.$label['label_id'].'" class="btn btn-fc btn-sm m-1 '.$this_btn_status.'">'.$label_title.'</a>';
+	
+}
+$label_filter_box .= '</div>';
+$label_filter_box .= '</div>'; // card
+
+echo $label_filter_box;
+
+
+
+echo '<form action="acp.php?tn=filebrowser&sub=browse" method="POST" class="mt-4">';
+echo '<div class="btn-group d-flex" role="group">';
+echo '<button class="btn btn-sm btn-fc w-100" type="submit" name="rebuild" value="database">Database '.$icon['wrench'].'</button>';
+echo '<button class="btn btn-sm btn-fc w-100" type="submit" name="clear_tmb">Thumbnails '.$icon['trash_alt'].'</button>';
 echo '</div>';
 echo '</form>';
+
+echo '</div>'; // card
+
+
+echo '</div>';
+echo '</div>';
 
 
 
