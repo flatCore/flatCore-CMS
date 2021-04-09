@@ -577,14 +577,9 @@ if(isset($set_acptheme)) {
 				}, 2000);
 			
 				$('#showVersions').collapse('hide');
-				
-				$('.tooltip_bottom').tooltip({
-					placement: 'bottom',
-					delay: { show: 1000, hide: 100 }
-				})
 			
-				$('.tooltip').tooltip();
-				$('[data-bs-toggle="popover"]').popover()
+				$('[data-bs-toggle="popover"]').popover();
+				$('[data-bs-toggle="tooltip"]').tooltip();
 
 												
 				$(".fancybox-ajax").fancybox({
