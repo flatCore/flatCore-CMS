@@ -36,7 +36,11 @@ if((isset($_GET['sort_by'])) && ($_GET['sort_by'] == 'name')) {
 }
 
 if((isset($_GET['sort_by'])) && ($_GET['sort_by'] == 'size')) {
-	$_SESSION['sort_by'] = 'CAST(media_filesize AS INTEGER)';
+	if($db_type == 'mysql') {
+		$_SESSION['sort_by'] = 'CAST(media_filesize AS SIGNED)';
+	} else {
+		$_SESSION['sort_by'] = 'CAST(media_filesize AS INTEGER)';
+	}
 }
 
 if((isset($_GET['sort_by'])) && ($_GET['sort_by'] == 'time')) {
