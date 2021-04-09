@@ -305,7 +305,7 @@ if($cnt_filter_posts > 0) {
 		$icon_fixed_form .= '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 		$icon_fixed_form .= '</form>';
 		
-		if($get_posts[$i]['status'] == 'draft') {
+		if($get_posts[$i]['post_status'] == '2') {
 			$draft_class = 'item_is_draft';
 		}
 		

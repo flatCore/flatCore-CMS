@@ -330,7 +330,10 @@ foreach($get_posts as $k => $post) {
 	$form_action = '/'.$fct_slug.$mod_slug;
 	$this_entry = str_replace("{form_action}", $form_action, $this_entry);
 
-
+	if($get_posts[$k]['post_status'] == '2') {
+		$draft_msg = '<div style="background:#aaa;color:#fff;padding:5px;margin-top:-5px;margin-left:-5px;margin-bottom:5px;display:inline-block"><small>'.$lang['post_is_draft'].'</small></div>';
+		$this_entry  = '<div style="opacity:0.75;border: 1px dotted #aaa; padding: 5px;margin-bottom:15px;">'.$draft_msg.$this_entry.'</div>';
+	}
 
 
 
