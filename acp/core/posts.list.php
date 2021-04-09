@@ -197,6 +197,54 @@ $cat_btn_group .= '</div>';
 $cat_btn_group .= '</div>';
 
 
+/* filter buttons for labels */
+
+if(!isset($_SESSION['checked_label_str'])) {
+	$_SESSION['checked_label_str'] = '';
+}
+
+$a_checked_labels = explode('-', $_SESSION['checked_label_str']);
+
+if(isset($_GET['switchLabel'])) {
+	
+		if(in_array($_GET['switchLabel'], $a_checked_labels)) {
+			/* remove label*/
+			if(($key = array_search($_GET['switchLabel'], $a_checked_labels)) !== false) {
+				unset($a_checked_labels[$key]);
+			}
+		} else {
+			/* add label */
+			$a_checked_labels[] = $_GET['switchLabel'];
+		}
+
+		$_SESSION['checked_label_str'] = implode('-', $a_checked_labels);
+}
+
+$a_checked_labels = explode('-', $_SESSION['checked_label_str']);
+
+$label_filter_box  = '<div class="card mt-2">';
+$label_filter_box .= '<div class="card-header p-1 px-2">'.$lang['labels'].'</div>';
+$label_filter_box .= '<div class="card-body">';
+$this_btn_status = '';
+foreach($fc_labels as $label) {
+	
+	if(in_array($label['label_id'], $a_checked_labels)) {
+		$this_btn_status = 'active';
+	} else {
+		$this_btn_status = '';
+	}		
+
+	$label_title = '<span class="label-dot" style="background-color:'.$label['label_color'].';"></span> '.$label['label_title'];
+	$label_filter_box .= '<a href="acp.php?tn=posts&sub=list&switchLabel='.$label['label_id'].'" class="btn btn-fc btn-sm m-1 '.$this_btn_status.'">'.$label_title.'</a>';
+	
+}
+$label_filter_box .= '</div>';
+$label_filter_box .= '</div>'; // card
+
+
+
+
+
 if((isset($_GET['posts_start'])) && is_numeric($_GET['posts_start'])) {
 	$posts_start = (int) $_GET['posts_start'];
 }
@@ -210,6 +258,7 @@ $posts_filter['languages'] = $_SESSION['checked_lang_string'];
 $posts_filter['types'] = $_SESSION['checked_type_string'];
 $posts_filter['status'] = $_SESSION['checked_status_string'];
 $posts_filter['categories'] = $_SESSION['checked_cat_string'];
+$posts_filter['labels'] = $_SESSION['checked_label_str'];
 
 
 $get_posts = fc_get_post_entries($posts_start,$posts_limit,$posts_filter);
@@ -424,7 +473,7 @@ echo '</div>';
 echo '<div class="col-md-3">';
 
 
-
+/* sidebar */
 
 
 echo '<button class="btn w-100 btn-success dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNew">'.$lang['label_new_post'].'</button>';
@@ -609,7 +658,13 @@ echo $cat_btn_group;
 
 echo '</div>';
 
+echo $label_filter_box;
+
 echo '</fieldset>';
+
+
+
+
 
 echo '</div>';
 echo '</div>';

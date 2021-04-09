@@ -265,12 +265,45 @@ function fc_send_mail($recipient,$subject,$message) {
 }
 
 
-/* get all shortcodes */
-function fc_get_shortcodes() {
+/**
+ * get all shortcodes or filter by label
+ * example for filters
+ * $filter['labels'] = '1-2-3-4';
+ */
+function fc_get_shortcodes($filter=NULL) {
+	
 	global $db_content;
-	$shortcodes = $db_content->select("fc_textlib", "*", [
-		"textlib_type" => 'shortcode'
-	]);
+	global $fc_labels;
+		
+	/* label filter */
+	if($filter['labels'] == 'all' OR $filter['labels'] == '') {
+		
+		$set_label_filter = '';
+		
+	} else {
+			
+		$filter_labels = explode('-', $filter['labels']);
+		
+		for($i=0;$i<count($fc_labels);$i++) {
+			$label = $fc_labels[$i]['label_id'];
+			if(in_array($label, $filter_labels)) {
+				$set_label_filter .= "textlib_labels LIKE '%,$label,%' OR textlib_labels LIKE '%,$label' OR textlib_labels LIKE '$label,%' OR textlib_labels = '$label' OR ";
+			}
+		}
+		
+		$set_label_filter = substr("$set_label_filter", 0, -3); // cut the last ' OR'
+		
+	}
+	
+	$sql_filter = "WHERE textlib_type LIKE 'shortcode' ";
+	
+	if($set_label_filter != "") {
+		$sql_filter .= " AND ($set_label_filter) ";
+	}
+	
+	$sql = "SELECT * FROM fc_textlib $sql_filter";
+	$shortcodes = $db_content->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+
 	return $shortcodes;
 }
 

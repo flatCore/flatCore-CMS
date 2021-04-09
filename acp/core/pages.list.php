@@ -27,6 +27,7 @@ $cnt_result = count($result);
 
 echo '<div class="app-container">';
 
+/*
 echo '<div class="subHeader">';
 echo '<nav class="navbar navbar-expand-sm navbar-fc">';
 
@@ -42,11 +43,15 @@ if($btn_remove_keyword != '') {
 }
 
 echo '</div>';
-
+*/
 
 
 
 echo '<div class="max-height-container">';
+
+echo '<div class="row">';
+echo '<div class="col-md-9">';
+
 echo '<div class="row">';
 echo '<div class="col-sm-6">';
 
@@ -57,8 +62,9 @@ echo '<div class="col-sm-6">';
 $btn_list_toggler = '<a id="toggleExpand" class="px-2">'.$icon['angle_down'].'</a>';
 
 
-echo '<fieldset>';
-echo '<legend>' . $lang['legend_structured_pages'] . ' '.$btn_list_toggler.'</legend>';
+echo '<div class="card">';
+echo '<div class="card-header">' . $lang['legend_structured_pages'] . ' '.$btn_list_toggler.'</div>';
+echo '<div class="card-body">';
 echo '<div class="scroll-box">';
 echo '<div class="pages-list-container">';
 
@@ -221,7 +227,8 @@ for($i=0;$i<$cnt_result;$i++) {
 
 echo '</div>';
 echo '</div>';
-echo '</fieldset>';
+echo '</div>'; // card-body
+echo '</div>'; // card
 
 echo '</div>';
 echo '<div class="col-sm-6">';
@@ -234,8 +241,10 @@ echo '<div class="col-sm-6">';
  * or page_sort == portal
  */
 
-echo '<fieldset>';
-echo '<legend>' . $lang['legend_unstructured_pages'] . '</legend>';
+echo '<div class="card">';
+echo '<div class="card-header">'.$lang['legend_unstructured_pages'].'</div>';
+echo '<div class="card-body">';
+
 echo '<div class="scroll-box">';
 echo '<div class="pages-list-container">';
 
@@ -394,8 +403,40 @@ for($i=0;$i<$cnt_result;$i++) {
 
 echo '</div>';
 echo '</div>';
-echo '</fieldset>';
 
+echo '</div>'; // card-body
+echo '</div>'; // card
+
+
+echo '</div>';
+echo '</div>';
+
+echo '</div>';
+echo '<div class="col-md-3">';
+
+echo '<a href="?tn=pages&sub=new#position" class="btn btn-success w-100">'.$icon['plus'].' '.$lang['new_page'].'</a><hr>';
+
+/* sidebar */
+
+echo '<div class="card">';
+echo '<div class="card-header">FILTER</div>';
+echo '<div class="card-body">';
+
+echo $kw_form;
+
+if($btn_remove_keyword != '') {
+	echo '<div class="d-inline">';
+	echo '<p style="padding-top:5px;">' . $btn_remove_keyword . '</p>';
+	echo '</div><hr>';
+}
+
+echo $nav_btn_group;
+
+
+echo '</div>'; // card-body
+echo '</div>'; // card
+
+/* end of sidebar */
 
 echo '</div>';
 echo '</div>';

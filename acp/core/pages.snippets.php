@@ -327,8 +327,9 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	/* list snippets */
 	
 	echo '<div class="app-container">';
+	
+	/*
 	echo '<nav class="navbar navbar-expand-sm navbar-fc">';
-
 	echo '<ul class="navbar-nav">';
 	echo '<li class="nav-item"><a class="nav-link '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle ('.$cnt['cnt_snippets'].')</a></li>';
 	echo '<li class="nav-item"><a class="nav-link '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System ('.$cnt['cnt_system_snippets'].')</a></li>';
@@ -359,8 +360,15 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 		echo '<p style="padding-top:5px;">'.$btn_remove_keyword.'</p>';
 			echo '</div>';
 	}
+	
+	*/
 		
 	echo '<div class="max-height-container">';
+	
+	echo '<div class="row">';
+	echo '<div class="col-md-9">';
+	
+	
 	echo '<div class="scroll-box">';
 	
 	echo '<table class="table table-hover table-striped table-sm mt-3">';
@@ -494,6 +502,47 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	echo '</div>'; //EOL PAGINATION
 	
 	echo '</div>';
+	
+	echo '</div>';
+	echo '<div class="col-md-3">';
+
+
+	/* sidebar */
+	
+	echo '<a href="?tn=pages&sub=snippets&snip_id=n" class="btn btn-success w-100">'.$icon['plus'].' '.$lang['new'].'</a><hr>';
+	
+	echo '<div class="card">';
+	echo '<div class="card-header">FILTER</div>';
+	echo '<div class="card-body">';
+
+	echo '<form action="acp.php?tn=pages&sub=snippets" method="POST" class="form-inline ms-auto dirtyignore">';
+	echo '<div class="input-group">';
+	echo '<span class="input-group-text">'.$icon['search'].'</span>';
+	echo '<input class="form-control" type="text" name="snippet_filter" value="" placeholder="'.$lang['button_search'].'">';
+	echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+	echo '</div>';
+	echo '</form>';
+	
+	echo '<div class="btn-group d-flex my-3">';
+	echo '<a class="btn btn-fc w-100 '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle ('.$cnt['cnt_snippets'].')</a>';
+	echo '<a class="btn btn-fc w-100 '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System ('.$cnt['cnt_system_snippets'].')</a>';
+	echo '<a class="btn btn-fc w-100 '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene ('.$cnt['cnt_custom_snippets'].')</a>';
+	echo '</div>';
+	
+	echo $lang_filter_box;
+	echo $label_filter_box;
+	
+	echo '</div>'; // card-body
+	echo '</div>'; // card
+	
+	/* end of sidebar */
+
+
+
+	echo '</div>';
+	echo '</div>';
+	
+	
 	echo '</div>';
 
 	echo '</div>'; // .app-container

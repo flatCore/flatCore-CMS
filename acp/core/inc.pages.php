@@ -183,39 +183,39 @@ if($_GET['switch'] == 'statusGhost' && $_SESSION['checked_ghost'] == 'checked') 
 
 $set_status_filter = "page_status = 'foobar' "; // reset -> result = 0
 
-$dot_draft = $icon['dot_circle'];
-$dot_private = $icon['dot_circle'];
-$dot_public = $icon['dot_circle'];
-$dot_ghost = $icon['dot_circle'];
-$dot_redirect = $icon['dot_circle'];
+$dot_draft = $icon['circle_alt'];
+$dot_private = $icon['circle_alt'];
+$dot_public = $icon['circle_alt'];
+$dot_ghost = $icon['circle_alt'];
+$dot_redirect = $icon['circle_alt'];
 
 if($_SESSION['checked_draft'] == "checked") {
 	$set_status_filter .= "OR page_status = 'draft' ";
 	$btn_status_draft = 'active';
-	$dot_draft = $icon['circle'];
+	$dot_draft = $icon['check_circle'];
 }
 
 if($_SESSION['checked_private'] == "checked") {
 	$set_status_filter .= "OR page_status = 'private' ";
 	$btn_status_private = 'active';
-	$dot_private = $icon['circle'];
+	$dot_private = $icon['check_circle'];
 }
 
 if($_SESSION['checked_public'] == "checked") {
 	$set_status_filter .= "OR page_status = 'public' ";
 	$btn_status_public = 'active';
-	$dot_public = $icon['circle'];
+	$dot_public = $icon['check_circle'];
 }
 
 if($_SESSION['checked_ghost'] == "checked") {
 	$set_status_filter .= "OR page_status = 'ghost' ";
 	$btn_status_ghost = 'active';
-	$dot_ghost = $icon['circle'];
+	$dot_ghost = $icon['check_circle'];
 }
 
 if($_SESSION['checked_redirect'] == "checked") {
 	$btn_status_redirect = 'active';
-	$dot_redirect = $icon['circle'];
+	$dot_redirect = $icon['check_circle'];
 }
 
 
@@ -284,9 +284,9 @@ $_SESSION['filter_string'] = $filter_string;
 if($sub == "list" OR $sub == "snippets") {
 	
 
-	$label_dropdown  = '<li class="nav-item dropdown me-3">';
-	$label_dropdown .= '<a class="nav-link dropdown-toggle" href="#" id="navLabels" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Labels</a>';	
-	$label_dropdown .= '<div class="dropdown-menu" aria-labelledby="navLabels">';
+	$label_filter_box  = '<div class="card mt-2">';
+	$label_filter_box .= '<div class="card-header p-1 px-2">'.$lang['labels'].'</div>';
+	$label_filter_box .= '<div class="card-body">';
 	$this_btn_status = '';
 	foreach($fc_labels as $label) {
 		
@@ -297,16 +297,17 @@ if($sub == "list" OR $sub == "snippets") {
 		}		
 
 		$label_title = '<span class="label-dot" style="background-color:'.$label['label_color'].';"></span> '.$label['label_title'];
-		$label_dropdown .= '<a href="acp.php?tn=pages&sub='.$sub.'&switchLabel='.$label['label_id'].'" class="dropdown-item '.$this_btn_status.'">'.$label_title.'</a>';
+		$label_filter_box .= '<a href="acp.php?tn=pages&sub='.$sub.'&switchLabel='.$label['label_id'].'" class="btn btn-fc btn-sm m-1 '.$this_btn_status.'">'.$label_title.'</a>';
 		
 	}
-	$label_dropdown .= '</div>';
-	$label_dropdown .= '</li>';
+	$label_filter_box .= '</div>';
+	$label_filter_box .= '</div>'; // card
 
 	/* Filter Languages */
-	$lang_dropdown = '<li class="nav-item dropdown">';
-	$lang_dropdown .= '<a class="nav-link dropdown-toggle" href="#" id="navLangs" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'.$lang['f_page_language'].'</a>';	
-	$lang_dropdown .= '<div class="dropdown-menu" aria-labelledby="navLangs">';
+	$lang_filter_box = '<div class="card my-3">';
+	$lang_filter_box .= '<div class="card-header p-1 px-2">'.$lang['f_page_language'].'</div>';
+	$lang_filter_box .= '<div class="list-group list-group-flush">';
+	$lang_filter_box .= '<div class="btn-group">';
 
 	for($i=0;$i<count($arr_lang);$i++) {
 		$lang_desc = $arr_lang[$i]['lang_desc'];
@@ -319,34 +320,39 @@ if($sub == "list" OR $sub == "snippets") {
 			$this_btn_status = '';
 		}
 		
-		$lang_dropdown .= '<a href="acp.php?tn=pages&sub='.$sub.'&switchLang='.$lang_folder.'" class="dropdown-item '.$this_btn_status.'">'.$lang_folder.'</a>';
+		$lang_filter_box .= '<a href="acp.php?tn=pages&sub='.$sub.'&switchLang='.$lang_folder.'" class="btn btn-sm btn-fc '.$this_btn_status.'">'.$lang_folder.'</a>';
 	}
 	
-	$lang_dropdown .= '</div>';
-	$lang_dropdown .= '</li>';
+	$lang_filter_box .= '</div>';
+	$lang_filter_box .= '</div>';
+	$lang_filter_box .= '</div>'; // card
 	
 	
+	$nav_btn_group  = '<div class="card my-3">';
+	$nav_btn_group .= '<div class="card-header p-1 px-2">Status</div>';
 	
-	$nav_btn_group  = '<ul class="navbar-nav">';
-	$nav_btn_group .= '<li class="nav-item"><a href="acp.php?tn=pages&sub=list&switch=statusPuplic" class="nav-link text-public '.$btn_status_public.'">'.$dot_public.' '.$lang['f_page_status_puplic'].' ('.$count_pages['public'].')</a></li>';
-	$nav_btn_group .= '<li class="nav-item"><a href="acp.php?tn=pages&sub=list&switch=statusGhost" class="nav-link text-ghost '.$btn_status_ghost.'">'.$dot_ghost.' '.$lang['f_page_status_ghost'].' ('.$count_pages['ghost'].')</a></li>';
-	$nav_btn_group .= '<li class="nav-item"><a href="acp.php?tn=pages&sub=list&switch=statusPrivate" class="nav-link text-private '.$btn_status_private.'">'.$dot_private.' '.$lang['f_page_status_private'].' ('.$count_pages['private'].')</a></li>';
-	$nav_btn_group .= '<li class="nav-item"><a href="acp.php?tn=pages&sub=list&switch=statusDraft" class="nav-link text-draft '.$btn_status_draft.'">'.$dot_draft.' '.$lang['f_page_status_draft'].' ('.$count_pages['draft'].')</a></li>';
-		
-	$nav_btn_group .= '<li class="nav-item mr-3"><a href="acp.php?tn=pages&sub=list&switch=statusRedirect" class="nav-link text-redirect '.$btn_status_redirect.'">'.$dot_redirect.' '.$lang['btn_redirect'].' ('.$count_pages['redirect'].')</a></li>';
+	$nav_btn_group .= '<div class="list-group list-group-flush">';
+	$nav_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPuplic" class="list-group-item list-group-item-ghost p-1 px-2 text-public '.$btn_status_public.'">'.$dot_public.' '.$lang['f_page_status_puplic'].' ('.$count_pages['public'].')</a>';
+	$nav_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusGhost" class="list-group-item list-group-item-ghost p-1 px-2  text-ghost '.$btn_status_ghost.'">'.$dot_ghost.' '.$lang['f_page_status_ghost'].' ('.$count_pages['ghost'].')</a>';
+	$nav_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusPrivate" class="list-group-item list-group-item-ghost p-1 px-2  text-private '.$btn_status_private.'">'.$dot_private.' '.$lang['f_page_status_private'].' ('.$count_pages['private'].')</a>';
+	$nav_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusDraft" class="list-group-item list-group-item-ghost p-1 px-2  text-draft '.$btn_status_draft.'">'.$dot_draft.' '.$lang['f_page_status_draft'].' ('.$count_pages['draft'].')</a>';
+	$nav_btn_group .= '<a href="acp.php?tn=pages&sub=list&switch=statusRedirect" class="list-group-item list-group-item-ghost p-1 px-2  text-redirect '.$btn_status_redirect.'">'.$dot_redirect.' '.$lang['btn_redirect'].' ('.$count_pages['redirect'].')</a>';
+	$nav_btn_group .= '</div>';
+	$nav_btn_group .= '</div>'; // card
 	
-	$nav_btn_group .= $lang_dropdown;
+	
+	$nav_btn_group .= $lang_filter_box;
 
 	
-	$nav_btn_group .= $label_dropdown;
+	$nav_btn_group .= $label_filter_box;
 
 	
-	$nav_btn_group .= '</ul> ';
+	
 
 	$kw_form  = '<form action="acp.php?tn=pages&sub=list" method="POST" class="form-inline ms-auto">';
 	$kw_form .= '<div class="input-group">';
-	$kw_form .= '<span class="input-group-text">'.$icon['filter'].'</span>';
-	$kw_form .= '<input class="form-control" type="text" name="kw_filter" value="" placeholder="Filter">';
+	$kw_form .= '<span class="input-group-text">'.$icon['search'].'</span>';
+	$kw_form .= '<input class="form-control" type="text" name="kw_filter" value="" placeholder="'.$lang['button_search'].'">';
 	$kw_form .= '</div>';
 	$kw_form .= '</form>';
 
