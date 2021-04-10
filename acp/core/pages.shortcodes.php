@@ -163,16 +163,16 @@ $label_filter_box .= '<div class="card-header p-1 px-2">'.$lang['labels'].'</div
 $label_filter_box .= '<div class="card-body">';
 $this_btn_status = '';
 foreach($fc_labels as $label) {
-	
+
 	if(in_array($label['label_id'], $a_checked_labels)) {
 		$this_btn_status = 'active';
 	} else {
 		$this_btn_status = '';
-	}		
+	}
 
 	$label_title = '<span class="label-dot" style="background-color:'.$label['label_color'].';"></span> '.$label['label_title'];
 	$label_filter_box .= '<a href="acp.php?tn=pages&sub='.$sub.'&switchLabel='.$label['label_id'].'" class="btn btn-fc btn-sm m-1 '.$this_btn_status.'">'.$label_title.'</a>';
-	
+
 }
 $label_filter_box .= '</div>';
 $label_filter_box .= '</div>'; // card
@@ -230,8 +230,13 @@ for($i=0;$i<$cnt_shortcodes;$i++) {
 		$longcode = substr($longcode, 0,75). ' <em><small>(...)</small></em>';
 	}
 	
+	$copy_shortcode  = '<div class="input-group">';
+	$copy_shortcode .= '<input type="text" class="form-control" id="copy_sc_'.$i.'" value="'.$shortcodes[$i]['textlib_shortcode'].'" readonly>';
+	$copy_shortcode .= '<button type="button" class="btn btn-fc copy-btn" data-clipboard-target="#copy_sc_'.$i.'">'.$icon['clipboard'].'</button>';
+	$copy_shortcode .= '</div>';
+		
 	echo '<tr>';
-	echo '<td>'.$shortcodes[$i]['textlib_shortcode'].'</td>';
+	echo '<td>'.$copy_shortcode.'</td>';
 	echo '<td><code>'.$longcode.'</code></td>';
 	echo '<td>'.$label.'</td>';
 	echo '<td class="text-right">'.$btn_edit.' '.$btn_delete.'</td>';

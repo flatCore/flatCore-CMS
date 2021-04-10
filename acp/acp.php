@@ -255,6 +255,8 @@ if(isset($set_acptheme)) {
 		<script type="text/javascript" src="js/moment.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
 		
+		<script src="js/clipboard.min.js"></script>
+		
 		<script type="text/javascript" src="js/accounting.min.js"></script>
 
 		<script type="text/javascript">
@@ -463,7 +465,7 @@ if(isset($set_acptheme)) {
 		<script type="text/javascript">
 			
 			$(function() {
-
+				
 				/* toggle editor class [mceEditor|plain|aceEditor_html] */
 				var editor_mode = localStorage.getItem('editor_mode');	
 				if(!editor_mode) {
@@ -505,14 +507,16 @@ if(isset($set_acptheme)) {
 		  		}
 		  		if(mode == 'optE2') {
 			  		/* switch to plain textarea */
-			  		divEditor.remove();
-		    		textEditor.addClass('plain form-control switchEditor');
-		    		textEditor.css("display","block");
-		    		textEditor.css("visibility","visible");
 			  		if(tinymce.editors.length > 0) {
+				  		tinymce.EditorManager.execCommand('mceRemoveEditor',true, '#textEditor');
 				  		$('div.mceEditor').remove();
 							tinymce.remove('.switchEditor');
+							tinymce.remove();
 						}
+			  		divEditor.remove();
+		    		textEditor.addClass('plain form-control switchEditor');
+		    		textEditor.css("visibility","visible");
+		    		textEditor.css("display","flex");
 		  		}
 		  		if(mode == 'optE3') {
 			  		/* switch to ace editor */
@@ -567,10 +571,7 @@ if(isset($set_acptheme)) {
 				  $('.info-collapse').toggleClass('info-hide');
 				  $('.glyphicon-collapse-down').toggleClass('glyphicon-collapse-up');
 				  $('.controls-container .btn-sm').toggleClass('btn-xs');
-				});
-							
-
-				//$('#bsTabs').tab();				
+				});		
 					
 		  	setTimeout(function() {
 		        $(".alert-auto-close").slideUp('slow');
@@ -580,6 +581,8 @@ if(isset($set_acptheme)) {
 			
 				$('[data-bs-toggle="popover"]').popover();
 				$('[data-bs-toggle="tooltip"]').tooltip();
+				
+				var clipboard = new ClipboardJS('.copy-btn');
 
 												
 				$(".fancybox-ajax").fancybox({

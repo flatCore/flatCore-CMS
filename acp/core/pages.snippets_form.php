@@ -155,9 +155,10 @@ echo '</div>';
 
 if($textlib_name != '') {
 	$get_snip_name_editor = '[snippet]'.$textlib_name.'[/snippet]';
-	echo '<hr><div class="form-group">';
-	echo '<label>Snippet</label>';
-	echo '<input type="text" class="form-control" placeholder="[snippet]...[/snippet]" value="'.$get_snip_name_editor.'" readonly>';
+	echo '<hr><label>Snippet</label>';
+	echo '<div class="input-group">';
+	echo '<input type="text" class="form-control" id="copy_snip" placeholder="[snippet]...[/snippet]" value="'.$get_snip_name_editor.'" readonly>';
+	echo '<button type="button" class="btn btn-fc copy-btn" data-clipboard-target="#copy_snip">'.$icon['clipboard'].'</button>';
 	echo '</div>';
 }
 

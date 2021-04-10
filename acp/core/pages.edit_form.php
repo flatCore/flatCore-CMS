@@ -27,6 +27,7 @@ echo '<li class="nav-item"><a class="nav-link" href="#head" data-bs-toggle="tab"
 if($cnt_custom_fields > 0) {
 	echo '<li class="nav-item"><a class="nav-link" href="#custom" data-bs-toggle="tab" title="'.$lang['legend_custom_fields'].'">'.$icon['th_list'].'</a></li>';
 }
+echo '<li class="nav-item"><a class="nav-link" href="#shortcodes" data-bs-toggle="tab" title="Shortcodes">'.$icon['clipboard'].'</a></li>';
 
 
 
@@ -658,6 +659,93 @@ echo '<div class="tab-pane fade" id="custom">';
 echo '</div>'; /* EOL tab custom fields */
 
 }
+
+
+
+/* tab_info */
+echo'<div class="tab-pane fade" id="shortcodes">';
+
+echo '<div class="row">';
+echo '<div class="col-md-3">';
+echo '<h5>Shortcodes</h5>';
+$shortcodes = fc_get_shortcodes();
+
+echo '<div class="scroll-container" style="height:50vh">';
+foreach($shortcodes as $sc) {
+	echo '<div class="input-group">';
+	echo '<input type="text" class="form-control" id="copy_sc_'.md5($sc['textlib_shortcode']).'" value="'.$sc['textlib_shortcode'].'" readonly>';
+	echo '<button type="button" class="btn btn-fc copy-btn" data-clipboard-target="#copy_sc_'.md5($sc['textlib_shortcode']).'">'.$icon['clipboard'].'</button>';
+	echo '</div>';
+}
+echo '</div>';
+
+echo '</div>';
+echo '<div class="col-md-3">';
+echo '<h5>'.$lang['snippets'].'</h5>';
+
+$snippets = $db_content->select("fc_textlib","textlib_name", [
+	"OR" => [
+		"textlib_type" => "",
+		"textlib_type[!]" => "shortcode"
+	]
+]);
+
+echo '<div class="scroll-container" style="height:50vh">';
+foreach($snippets as $snip) {
+	echo '<div class="input-group">';
+	echo '<input type="text" class="form-control" id="copy_sc_'.md5($snip).'" value="[snippet='.basename($snip).'][/snippet]" readonly>';
+	echo '<button type="button" class="btn btn-fc copy-btn" data-clipboard-target="#copy_sc_'.md5($snip).'">'.$icon['clipboard'].'</button>';
+	echo '</div>';
+}
+echo '</div>';
+
+echo '</div>';
+echo '<div class="col-md-3">';
+echo '<h5>'.$lang['files'].'</h5>';
+
+$get_all_files = fc_get_all_media_data('application');
+
+foreach($get_all_files as $file) {
+	$file_names[] = $file['media_file'];
+}
+$file_names = array_unique($file_names);
+
+echo '<div class="scroll-container" style="height:50vh">';
+foreach($file_names as $file) {
+	echo '<div class="input-group">';
+	echo '<input type="text" class="form-control" id="copy_sc_'.md5($file).'" value="[file='.basename($file).'][/file]" readonly>';
+	echo '<button type="button" class="btn btn-fc copy-btn" data-clipboard-target="#copy_sc_'.md5($file).'">'.$icon['clipboard'].'</button>';
+	echo '</div>';
+}
+echo '</div>';
+
+echo '</div>';
+echo '<div class="col-md-3">';
+echo '<h5>'.$lang['images'].'</h5>';
+
+$get_all_images = fc_get_all_media_data('image');
+
+foreach($get_all_images as $img) {
+	$img_names[] = $img['media_file'];
+}
+$img_names = array_unique($img_names);
+
+
+echo '<div class="scroll-container" style="height:50vh">';
+foreach($img_names as $img) {
+	echo '<div class="input-group">';
+	echo '<input type="text" class="form-control" id="copy_sc_'.md5($img).'" value="[image='.basename($img).'][/image]" readonly>';
+	echo '<button type="button" class="btn btn-fc copy-btn" data-clipboard-target="#copy_sc_'.md5($img).'">'.$icon['clipboard'].'</button>';
+	echo '</div>';
+}
+echo '</div>';
+
+echo '</div>';
+
+echo '</div>';
+
+
+echo '</div>'; /* EOL tab shortcodes */
 
 echo '</div>';
 

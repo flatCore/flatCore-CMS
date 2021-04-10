@@ -21,19 +21,20 @@ This branch will be merged into main branch, as soon as a new stable version is 
 
 #### 3rd Party Frameworks and Plugins
 
-+ Medoo - https://github.com/catfan/Medoo
-+ TinyMCE - http://www.tinymce.com/
 + Ace Editor - http://ace.c9.io/
-+ Smarty - http://www.smarty.net/
-+ PHPMailer - https://github.com/PHPMailer/PHPMailer
 + Bootstrap - http://getbootstrap.com/
-+ jQuery - https://jquery.com/
++ bootstrap-tagsinput - https://github.com/bootstrap-tagsinput/bootstrap-tagsinput
++ clipboard.js- https://github.com/zenorocha/clipboard.js
++ DropzoneJS - http://www.dropzonejs.com
 + fancyBox - http://fancyapps.com/fancybox/3/
 + featherlight - https://github.com/noelboss/featherlight/
-+ DropzoneJS - http://www.dropzonejs.com
++ image-picker - https://github.com/rvera/image-picker
++ jQuery - https://jquery.com/
 + jquery.dirtyforms - https://github.com/snikch/jquery.dirtyforms
 + matchHeight - http://brm.io/jquery-match-height/
-+ bootstrap-tagsinput - https://github.com/bootstrap-tagsinput/bootstrap-tagsinput
-+ image-picker - https://github.com/rvera/image-picker
-+ Spyc - https://github.com/mustangostang/spyc/
++ Medoo - https://github.com/catfan/Medoo
 + Parsedown - https://parsedown.org
++ PHPMailer - https://github.com/PHPMailer/PHPMailer
++ Smarty - http://www.smarty.net/
++ Spyc - https://github.com/mustangostang/spyc/
++ TinyMCE - http://www.tinymce.com/
