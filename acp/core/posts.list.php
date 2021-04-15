@@ -481,14 +481,14 @@ echo '<button class="btn w-100 btn-success dropdown-toggle" type="button" data-b
 echo '<div class="collapse" id="collapseNew">';
 
 echo '<div class="list-group list-group-flush">';
-echo '<div class="list-group-item list-group-item-ghost"><a href="?tn=posts&sub=edit&new=m"><span class="color-message">'.$icon['plus'].'</span> '.$lang['post_type_message'].'</a></div>';
-echo '<div class="list-group-item list-group-item-ghost"><a href="?tn=posts&sub=edit&new=e"><span class="color-event">'.$icon['plus'].'</span> '.$lang['post_type_event'].'</a></div>';
-echo '<div class="list-group-item list-group-item-ghost"><a href="?tn=posts&sub=edit&new=i"><span class="color-image">'.$icon['plus'].'</span> '.$lang['post_type_image'].'</a></div>';
-echo '<div class="list-group-item list-group-item-ghost"><a href="?tn=posts&sub=edit&new=g"><span class="color-gallery">'.$icon['plus'].'</span> '.$lang['post_type_gallery'].'</a></div>';
-echo '<div class="list-group-item list-group-item-ghost"><a href="?tn=posts&sub=edit&new=v"><span class="color-video">'.$icon['plus'].'</span> '.$lang['post_type_video'].'</a></div>';
-echo '<div class="list-group-item list-group-item-ghost"><a href="?tn=posts&sub=edit&new=l"><span class="color-link">'.$icon['plus'].'</span> '.$lang['post_type_link'].'</a></div>';
-echo '<div class="list-group-item list-group-item-ghost"><a href="?tn=posts&sub=edit&new=p"><span class="color-product">'.$icon['plus'].'</span> '.$lang['post_type_product'].'</a></div>';
-echo '<div class="list-group-item list-group-item-ghost"><a href="?tn=posts&sub=edit&new=f"><span class="color-file">'.$icon['plus'].'</span> '.$lang['post_type_file'].'</a></div>';
+echo '<a class="list-group-item list-group-item-ghost" href="?tn=posts&sub=edit&new=m"><span class="color-message">'.$icon['plus'].'</span> '.$lang['post_type_message'].'</a>';
+echo '<a class="list-group-item list-group-item-ghost" href="?tn=posts&sub=edit&new=e"><span class="color-event">'.$icon['plus'].'</span> '.$lang['post_type_event'].'</a>';
+echo '<a class="list-group-item list-group-item-ghost" href="?tn=posts&sub=edit&new=i"><span class="color-image">'.$icon['plus'].'</span> '.$lang['post_type_image'].'</a>';
+echo '<a class="list-group-item list-group-item-ghost" href="?tn=posts&sub=edit&new=g"><span class="color-gallery">'.$icon['plus'].'</span> '.$lang['post_type_gallery'].'</a>';
+echo '<a class="list-group-item list-group-item-ghost" href="?tn=posts&sub=edit&new=v"><span class="color-video">'.$icon['plus'].'</span> '.$lang['post_type_video'].'</a>';
+echo '<a class="list-group-item list-group-item-ghost" href="?tn=posts&sub=edit&new=l"><span class="color-link">'.$icon['plus'].'</span> '.$lang['post_type_link'].'</a>';
+echo '<a class="list-group-item list-group-item-ghost" href="?tn=posts&sub=edit&new=p"><span class="color-product">'.$icon['plus'].'</span> '.$lang['post_type_product'].'</a>';
+echo '<a class="list-group-item list-group-item-ghost" href="?tn=posts&sub=edit&new=f"><span class="color-file">'.$icon['plus'].'</span> '.$lang['post_type_file'].'</a>';
 echo '</div>';
 echo '</div>';
 
