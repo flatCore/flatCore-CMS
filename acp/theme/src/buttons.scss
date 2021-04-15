@@ -64,7 +64,17 @@
 	 	&:hover {
 			color: $btn_fc_color;
    	}
-  	}
+   	
+   	.badge-fc {
+	   	background: $btn_fc_background;
+   	}
+  
+  }
+
+		.badge-fc {
+			background: darken($btn_fc_background,5%);
+		}
+
 }
 
 .btn-check:checked + .btn-fc,

@@ -13545,6 +13545,12 @@ li.sidebar-sub-end {
 .btn-fc:active:hover, .btn-fc.active:hover {
   color: #333;
 }
+.btn-fc:active .badge-fc, .btn-fc.active .badge-fc {
+  background: #ddd;
+}
+.btn-fc .badge-fc {
+  background: #d0d0d0;
+}
 
 .btn-check:checked + .btn-fc,
 .btn-check:active + .btn-fc,
@@ -13893,9 +13899,12 @@ div#bigHeader {
   right: 0;
   padding: 10px;
   z-index: 1005;
-  background: fade(#eee, 90);
+  background: rgba(238, 238, 238, 0.9);
   border-top-left-radius: 5px;
-  border: 1px solid #c8c8c8;
+  border: 1px solid #e1e1e1;
+}
+.bottom-bar:hover {
+  background: #eee;
 }
 
 div#wrapper {

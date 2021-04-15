@@ -327,41 +327,6 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	/* list snippets */
 	
 	echo '<div class="app-container">';
-	
-	/*
-	echo '<nav class="navbar navbar-expand-sm navbar-fc">';
-	echo '<ul class="navbar-nav">';
-	echo '<li class="nav-item"><a class="nav-link '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle ('.$cnt['cnt_snippets'].')</a></li>';
-	echo '<li class="nav-item"><a class="nav-link '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System ('.$cnt['cnt_system_snippets'].')</a></li>';
-	echo '<li class="nav-item mr-3"><a class="nav-link '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene ('.$cnt['cnt_custom_snippets'].')</a></li>';
-	
-	echo $lang_dropdown;
-	echo $label_dropdown;
-	
-	echo '</ul>';
-
-	
-	echo '<a href="?tn=pages&sub=snippets&snip_id=n" class="nav-link text-success">'.$icon['plus'].' '.$lang['new'].'</a>';
-
-	echo '<form action="acp.php?tn=pages&sub=snippets" method="POST" class="form-inline ms-auto dirtyignore">';
-	echo '<div class="input-group">';
-	echo '<span class="input-group-text">'.$icon['filter'].'</span>';
-	echo '<input class="form-control" type="text" name="snippet_filter" value="" placeholder="Filter">';
-	echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
-	echo '</div>';
-	echo '</form>';
-	
-
-	
-	echo '</nav>';
-	
-		if($btn_remove_keyword != '') {
-			echo '<div class="float-end">';
-		echo '<p style="padding-top:5px;">'.$btn_remove_keyword.'</p>';
-			echo '</div>';
-	}
-	
-	*/
 		
 	echo '<div class="max-height-container">';
 	
@@ -524,9 +489,9 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	echo '</form>';
 	
 	echo '<div class="btn-group d-flex my-3">';
-	echo '<a class="btn btn-fc w-100 '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle ('.$cnt['cnt_snippets'].')</a>';
-	echo '<a class="btn btn-fc w-100 '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System ('.$cnt['cnt_system_snippets'].')</a>';
-	echo '<a class="btn btn-fc w-100 '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene ('.$cnt['cnt_custom_snippets'].')</a>';
+	echo '<a class="btn btn-fc w-100 '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle <span class="badge badge-fc position-absolute top-0 end-0">'.$cnt['cnt_snippets'].'</span></a>';
+	echo '<a class="btn btn-fc w-100 '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System <span class="badge badge-fc position-absolute top-0 end-0">'.$cnt['cnt_system_snippets'].'</span></a>';
+	echo '<a class="btn btn-fc w-100 '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene <span class="badge badge-fc position-absolute top-0 end-0">'.$cnt['cnt_custom_snippets'].'</span></a>';
 	echo '</div>';
 	
 	echo $lang_filter_box;

@@ -99,9 +99,12 @@ div#bigHeader {
 	right:0;
 	padding:10px;
 	z-index:1005;
-	background: fade($widget_background,90);
+	background: rgba($widget_background, .9);
 	border-top-left-radius: 5px;
-	border: 1px solid darken($widget_background,15);
+	border: 1px solid darken($widget_background,5);
+	&:hover {
+		background: $widget_background;
+	}
 }
 
 
