@@ -65,6 +65,9 @@ $lang['textlib'] = "Textbausteine";
 $lang['snippets'] = "Textvorlagen";
 $lang['filename'] = "Dateiname";
 
+$lang['shortcode'] = 'Shortcode';
+$lang['shortcode_replacement'] = 'Ersetzung';
+
 $lang['save_new_page'] = "Speichern";
 $lang['update_page'] = "Aktualisieren";
 $lang['delete_page'] = "Seite löschen";

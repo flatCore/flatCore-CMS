@@ -98,12 +98,12 @@ if($show_form == 'true') {
 	echo '<div class="col-md-9">';
 	
 	echo '<div class="form-group">';
-	echo '<label for="elements">Shortcode</label>';
+	echo '<label for="elements">'.$lang['shortcode'].'</label>';
 	echo '<input type="text" class="form-control" name="shortcode" value="'.$get_shortcode['textlib_shortcode'].'">';
 	echo '</div>';
 	
 	echo '<div class="form-group">';
-	echo '<label for="elements">Longcode</label>';
+	echo '<label for="elements">'.$lang['shortcode_replacement'].'</label>';
 	echo '<textarea name="longcode" rows="8" class="form-control">'.$get_shortcode['textlib_content'].'</textarea>';
 	echo '</div>';
 	
@@ -191,8 +191,8 @@ echo '<div class="col-md-9">';
 echo '<table class="table table-sm">';
 echo '<thead>';
 echo '<tr>';
-echo '<th>Shortcode</th>';
-echo '<th>Longcode</th>';
+echo '<th>'.$lang['shortcode'].'</th>';
+echo '<th>'.$lang['shortcode_replacement'].'</th>';
 echo '<th>Label</th>';
 echo '<th></th>';
 echo '</tr>';
