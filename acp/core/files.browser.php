@@ -525,9 +525,7 @@ if($set_label_filter != "") {
 
 $sql_cnt = "SELECT count(*) AS 'all' FROM fc_media WHERE media_file LIKE '%$disk%' ".$_SESSION['media_filter_string'];
 $all_files = $db_content->query($sql_cnt)->fetch();
-$all_files = fc_unique_multi_array($all_files,'media_file');
 $nbr_of_files = $all_files['all'];
-
 
 
 $files_per_page = 36;
