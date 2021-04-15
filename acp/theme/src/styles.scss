@@ -240,6 +240,8 @@ ol {
 div#topNavBox {
 	padding-right: 20px;
 	padding-left: 20px;
+	display: flex;
+	justify-content: flex-end;
 }
 
 a.topnav,
@@ -247,8 +249,7 @@ a.topnav_selected,
 a.topnav:visited,
 a.topnav_selected:visited {
 	position: relative;
-	display: block;
-	float: left;
+	display: inline-block;
 	min-width: 100px;
 	text-align: center;
 	font-size: 12px;
@@ -277,19 +278,18 @@ a.topnav_selected,
 a.topnav_selected:visited {
 	background-color: $brand_color;
 	color: #111;
-}
 
-
-a.topnav_selected span.mm {
-	position: absolute;
-	bottom: 0;
-	left: 50%;
-	width: 0; 
-	height: 0; 
-	border-left: 6px solid transparent;
-	border-right: 6px solid transparent;
-	border-bottom: 4px solid $content_bg;
-	margin-left: -6px;
+	span.mm {
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		width: 0; 
+		height: 0; 
+		border-left: 6px solid transparent;
+		border-right: 6px solid transparent;
+		border-bottom: 4px solid $content_bg;
+		margin-left: -6px;
+	}	
 }
 
 

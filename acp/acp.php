@@ -200,14 +200,13 @@ if(isset($set_acptheme)) {
 		<link rel="icon" type="image/x-icon" href="images/favicon.ico" />
 		
 		<script src="js/jquery-3.6.0.min.js"></script>
-    <script src="theme/bootstrap5/js/bootstrap.bundle.min.js"></script>
+    
     <script language="javascript" type="text/javascript" src="../lib/js/tinymce/tinymce.min.js"></script>
     <script language="javascript" type="text/javascript" src="../lib/js/tinymce/jquery.tinymce.min.js"></script>
 
-		<!-- Add fancyBox -->
-		<script type="text/javascript" src="./js/jquery.fancybox.min.js?v=2.1.5"></script>
+
 		
-		<script type="text/javascript" src="../lib/js/jquery/jquery.textareaCounter.plugin.js"></script>
+		
 		
 		<?php
 		if($acptheme == 'dark') {
@@ -231,9 +230,6 @@ if(isset($set_acptheme)) {
 			}
 		</script>
 		
-		
-		<!-- jquery.matchHeight-min.js-->
-		<script type="text/javascript" src="../lib/js/jquery/jquery.matchHeight-min.js"></script>
 				
 		<!-- uploader -->
 		<script src="../lib/js/dropzone.js"></script>
@@ -243,10 +239,8 @@ if(isset($set_acptheme)) {
 		
 		<!-- dirty forms -->
 		<script src="../lib/js/jquery/jquery.dirtyforms.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript" src="../lib/js/jquery/jquery.dirtyforms.tinymce.js"></script>
 		
-		<!-- Tags -->
-		<script type="text/javascript" src="../lib/js/bootstrap-tagsinput.min.js"></script>
+
 		
 		<!-- image picker -->
 		<script type="text/javascript" src="../lib/js/jquery/image-picker.min.js"></script>
@@ -341,6 +335,8 @@ if(isset($set_acptheme)) {
 			});
 			
 		</script>
+		
+		
 
 		
 		<?php
@@ -461,8 +457,21 @@ if(isset($set_acptheme)) {
 		</div>
 
 
+		<!-- Add fancyBox -->
+		<script type="text/javascript" src="./js/jquery.fancybox.min.js?v=2.1.5"></script>
+		
+		<!-- Tags -->
+		<script type="text/javascript" src="../lib/js/bootstrap-tagsinput.min.js"></script>
+		<script type="text/javascript" src="../lib/js/jquery/jquery.textareaCounter.plugin.js"></script>
+
+		<!-- bootstrap -->
+		<script src="theme/bootstrap5/js/bootstrap.bundle.min.js"></script>
+		
+
 
 		<script type="text/javascript">
+			
+
 			
 			$(function() {
 				
@@ -569,9 +578,8 @@ if(isset($set_acptheme)) {
 				
 				$("#toggleExpand").click(function() {
 				  $('.info-collapse').toggleClass('info-hide');
-				  $('.glyphicon-collapse-down').toggleClass('glyphicon-collapse-up');
-				  $('.controls-container .btn-sm').toggleClass('btn-xs');
-				});		
+				});
+				
 					
 		  	setTimeout(function() {
 		        $(".alert-auto-close").slideUp('slow');
@@ -614,14 +622,6 @@ if(isset($set_acptheme)) {
 			    });
 				});
 				
-			
-	      $(document).on('mouseenter', '.hiddenControls', function () {
-					$(this).find('.controls').fadeIn();
-	      }).on('mouseleave', '.hiddenControls', function () {
-					$(this).find('.controls').hide();
-				});
-
-				
 				Dropzone.options.myDropzone = {
 			  	init: function() {
 			    	this.on("success", function(file, responseText) {
@@ -638,16 +638,14 @@ if(isset($set_acptheme)) {
 					}
 				};
 	
-			  var options = {   
+
+			  $('.cntValues').textareaCount({   
 			      'originalStyle': 'text-left',
-			      'displayFormat': '<span class="label label-default">#input</span> <span class="label label-default">#words</span>'  
-			  };  
-			  $('.cntValues').textareaCount(options);  
+			      'displayFormat': '<span class="badge bg-secondary">#input</span> <span class="badge bg-secondary">#words</span>'  
+			  });  
 			  
 		
 
-			
-				$.fn.matchHeight._update('.equal');
 				
 				/* css and html editor for page header */
 				if($('#CSSeditor').length != 0) {
@@ -916,7 +914,6 @@ $(function(){
     if(auto_logout !== false) {
 	    countdown.startInterval();
     }
-    
 
 </script>
 

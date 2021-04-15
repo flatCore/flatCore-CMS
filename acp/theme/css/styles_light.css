@@ -14020,6 +14020,10 @@ ol {
 div#topNavBox {
   padding-right: 20px;
   padding-left: 20px;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: flex-end;
+          justify-content: flex-end;
 }
 
 a.topnav,
@@ -14027,8 +14031,7 @@ a.topnav_selected,
 a.topnav:visited,
 a.topnav_selected:visited {
   position: relative;
-  display: block;
-  float: left;
+  display: inline-block;
   min-width: 100px;
   text-align: center;
   font-size: 12px;
@@ -14057,8 +14060,8 @@ a.topnav_selected:visited {
   background-color: #3396ed;
   color: #111;
 }
-
-a.topnav_selected span.mm {
+a.topnav_selected span.mm,
+a.topnav_selected:visited span.mm {
   position: absolute;
   bottom: 0;
   left: 50%;
