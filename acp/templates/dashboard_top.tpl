@@ -21,7 +21,7 @@
 				</div>				
 			</div>
 			</div>
-			<div class="card-footer p-1 text-center">
+			<div class="card-footer p-1 text-center d-flex">
 				{btn_page_overview} {btn_new_page} {btn_update_index} {btn_delete_cache}
 			</div>
 		</div>
@@ -46,7 +46,7 @@
 				</div>				
 			</div>
 			</div>
-			<div class="card-footer p-1 text-center">
+			<div class="card-footer p-1 text-center d-flex">
 				{btn_post_overview} {btn_new_post} {btn_comments_overview}
 			</div>
 		</div>
@@ -73,7 +73,7 @@
 				</div>				
 			</div>
 			</div>
-			<div class="card-footer p-1 text-center">
+			<div class="card-footer p-1 text-center d-flex">
 				{btn_user_overview} {btn_new_user}
 			</div>
 		</div>

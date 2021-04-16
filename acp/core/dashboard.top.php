@@ -284,17 +284,17 @@ $tpl_file = str_replace('{tab_comments}', $lang['tn_comments'], $tpl_file);
 $tpl_file = str_replace('{tab_user}', $lang['tn_usermanagement'], $tpl_file);
 $tpl_file = str_replace('{tab_user_stats}', $lang['h_status'], $tpl_file);
 
-$btn_page_overview = '<a href="acp.php?tn=pages" class="btn btn-fc btn-sm">'.$icon['sitemap'].'</a>';
-$btn_new_page = '<a href="acp.php?tn=pages&sub=new" class="btn btn-fc btn-sm">'.$icon['plus'].' '.$lang['new_page'].'</a>';
-$btn_update_index = '<a href="acp.php?tn=dashboard&a=update_index" class="btn btn-fc btn-sm">'.$icon['sync_alt'].' Index</a>';
-$btn_delete_cache = '<a href="acp.php?tn=dashboard&a=delete_cache" class="btn btn-fc btn-sm">'.$icon['trash_alt'].' Cache</a>';
+$btn_page_overview = '<a href="acp.php?tn=pages" class="btn btn-fc btn-sm w-100">'.$icon['sitemap'].'</a>';
+$btn_new_page = '<a href="acp.php?tn=pages&sub=new" class="btn btn-fc btn-sm w-100">'.$icon['plus'].' '.$lang['new'].'</a>';
+$btn_update_index = '<a href="acp.php?tn=dashboard&a=update_index" class="btn btn-fc btn-sm w-100">'.$icon['sync_alt'].' Index</a>';
+$btn_delete_cache = '<a href="acp.php?tn=dashboard&a=delete_cache" class="btn btn-fc btn-sm w-100">'.$icon['trash_alt'].' Cache</a>';
 
-$btn_post_overview = '<a href="acp.php?tn=posts" class="btn btn-fc btn-sm">'.$lang['tn_posts'].'</a>';
-$btn_new_post = '<a href="acp.php?tn=posts&sub=edit" class="btn btn-fc btn-sm">'.$icon['plus'].' '.$lang['label_new_post'].'</a>';
-$btn_comments_overview = '<a href="acp.php?tn=comments" class="btn btn-fc btn-sm">'.$lang['tn_comments'].'</a>';
+$btn_post_overview = '<a href="acp.php?tn=posts" class="btn btn-fc btn-sm w-100">'.$lang['tn_posts'].'</a>';
+$btn_new_post = '<a href="acp.php?tn=posts&sub=edit" class="btn btn-fc btn-sm w-100">'.$icon['plus'].' '.$lang['new'].'</a>';
+$btn_comments_overview = '<a href="acp.php?tn=comments" class="btn btn-fc btn-sm w-100">'.$lang['tn_comments'].'</a>';
 
-$btn_user_overview = '<a href="acp.php?tn=user" class="btn btn-fc btn-sm">'.$lang['list_user'].'</a>';
-$btn_new_user = '<a href="acp.php?tn=user&sub=new" class="btn btn-fc btn-sm">'.$icon['plus'].' '.$lang['new_user'].'</a>';
+$btn_user_overview = '<a href="acp.php?tn=user" class="btn btn-fc btn-sm w-100">'.$lang['list_user'].'</a>';
+$btn_new_user = '<a href="acp.php?tn=user&sub=new" class="btn btn-fc btn-sm w-100">'.$icon['plus'].' '.$lang['new_user'].'</a>';
 
 $tpl_file = str_replace('{btn_page_overview}', $btn_page_overview, $tpl_file);
 $tpl_file = str_replace('{btn_new_page}', $btn_new_page, $tpl_file);
