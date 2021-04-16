@@ -270,10 +270,12 @@ $nextPage = $posts_start+$posts_limit;
 $prevPage = $posts_start-$posts_limit;
 $cnt_pages = ceil($cnt_filter_posts / $posts_limit);
 
+echo '<div class="subHeader">';
+echo '<h3>' . sprintf($lang['label_show_entries'], $cnt_filter_posts, $cnt_posts['All']) .'</h3>';
+echo '</div>';
+
 echo '<div class="row">';
 echo '<div class="col-md-9">';
-
-echo '<h4>' . sprintf($lang['label_show_entries'], $cnt_filter_posts, $cnt_posts['All']) .'</h4>';
 
 if($cnt_filter_posts > 0) {
 

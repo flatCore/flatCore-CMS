@@ -63,6 +63,13 @@ div#bigHeader {
 
 .subHeader {
 	margin-bottom: 20px;
+	padding: 10px;
+	background: darken($content_bg,5%);
+	h3 {
+		font-size: 18px;
+		margin-bottom: 0;
+		font-weight: 300;
+	}
 }
 
 

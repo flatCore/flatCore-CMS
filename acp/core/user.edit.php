@@ -275,11 +275,11 @@ if($db_status == "locked") {
 //print message(s)
 
 if($success_message != ""){
-	echo"<div class='alert alert-success'><p>$success_message</p></div>";
+	echo"<div class='alert alert-success'>$success_message</div>";
 }
 
 if($error_message != ""){
-	echo"<div class='alert alert-danger'><p>$error_message</p></div>";
+	echo"<div class='alert alert-danger'>$error_message</div>";
 }
 
 
@@ -296,7 +296,10 @@ if(is_numeric($edituser)){
 	
 	$user_avatar_path = '../'. FC_CONTENT_DIR . '/avatars/' . md5($user_nick) . '.png';
 	
+	echo '<div class="subHeader">';
 	echo '<h3>'.$lang['h_modus_edituser'].' - '.$user_nick.' <small>ID: '.$user_id.'</small></h3>';
+	echo '</div>';
+	
 	$submit_button = "<input class='btn btn-save w-100' type='submit' name='save_the_user' value='$lang[update_user]'>";
 		
 	//no delete_button for myself
@@ -306,7 +309,10 @@ if(is_numeric($edituser)){
 
 } else {
 	// modus new user
+	echo '<div class="subHeader">';
 	echo"<h3>$lang[h_modus_newuser]</h3>";
+	echo '</div>';
+	
 	$submit_button = "<input class='btn btn-save' type='submit' name='save_the_user' value='$lang[save_new_user]'>";
 	$delete_button = "";
 }

@@ -13864,6 +13864,13 @@ div#bigHeader {
 
 .subHeader {
   margin-bottom: 20px;
+  padding: 10px;
+  background: #262626;
+}
+.subHeader h3, .subHeader .h3 {
+  font-size: 18px;
+  margin-bottom: 0;
+  font-weight: 300;
 }
 
 #expireDiv {

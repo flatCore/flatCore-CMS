@@ -195,9 +195,7 @@ echo '<div class="col-md-5">';
 echo "<form action='acp.php?tn=user' class='form-inline' method='POST'>";
 
 echo '<div class="input-group">';
-echo '<div class="input-group-prepend">';
 echo '<span class="input-group-text">'.$icon['search'].'</span>';
-echo '</div>';
 echo '<input type="text" name="findUser" class="form-control" placeholder="Filter">';
 echo '</div>';
 echo "</form>";

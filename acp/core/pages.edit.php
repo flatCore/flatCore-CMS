@@ -678,7 +678,9 @@ if(is_numeric($editpage)) {
 	$previev_button = '';
 }
 
+echo '<div class="subHeader">';
 echo $form_title;
+echo '</div>';
 
 
 if($_SESSION['acp_editpages'] != "allowed") {
