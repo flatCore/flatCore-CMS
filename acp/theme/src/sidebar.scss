@@ -17,7 +17,7 @@ div#page-sidebar {
 	color: $sidebar_color;
 	background: $sidebar_background;
 	height: 100%;
-	border-right: 1px solid $content_bg;
+	border-right: 1px solid transparent;
 	
 	overflow: hidden;
 	overflow-y: auto;
@@ -215,16 +215,15 @@ a.sidebar-sub-active {
 
 a.sidebar-sub:hover {
 	color: darken($sidebar_color,5);
-	background: darken($sidebar_link_background,5);
+	background: lighten($sidebar_link_background,10);
 }
 
 
 a.sidebar-sub-active {
 	color: $font_color;
-	background: $content_bg;
-	background: linear-gradient(to right, $widget_background 0%,$content_bg 100%);
+	background: darken($sidebar_link_background,15);
 	i {
-		color: $brand_color;
+		color: $brand_primary;
 	}
 }
 
@@ -241,18 +240,24 @@ li.sidebar-sub-end {
 }
 
 
-.sidebar-nav, .sidebar-nav-active, .sidebar-nav-disabled {
+.sidebar-nav,
+.sidebar-nav-active,
+.sidebar-nav-disabled {
 	display: block;
 	padding: 3px 0;
-	border-bottom: 1px solid #111;
-	color: #aaa;
-	background: #191919;
+	border-bottom: 1px solid darken($sidebar_link_background,25);
+	color: $sidebar_color;
 }
 
-.sidebar-nav:hover {
-	color: #bbb;
-	background: #111;
+.sidebar-nav {
+	background: $sidebar_link_background;
+	&:hover {
+		background: lighten($sidebar_link_background,10);
+		color: lighten($sidebar_color,5);
+	}
+	
 }
+
 
 .sidebar-nav-disabled,
 .sidebar-nav-disabled:hover {
@@ -265,20 +270,6 @@ li.sidebar-sub-end {
 .sidebar-nav-active:hover,
 .dashboard-toggle.active,
 .dashboard-toggle.active:hover {
-	background: $content_bg;
-	color: $brand_color;
-}
-
-.sidebar-nav-active span.tri-left,
-.sidebar-nav-active:hover span.tri-left,
-.dashboard-toggle.active span.tri-left,
-.dashboard-toggle.active:hover span.tri-left {
-	display: block;
-	float: right;
-	width: 0;
-	height: 0;
-	margin-right: -6px;
-	border-top: 10px solid transparent;
-	border-right: 7px solid $page_bg;
-	border-bottom: 10px solid transparent;
+	background: darken($sidebar_link_background,20);
+	color: $brand_primary;
 }

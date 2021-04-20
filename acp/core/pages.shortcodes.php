@@ -188,6 +188,8 @@ $cnt_shortcodes = count($shortcodes);
 echo '<div class="row">';
 echo '<div class="col-md-9">';
 
+echo '<div class="card p-3">';
+
 echo '<table class="table table-sm">';
 echo '<thead>';
 echo '<tr>';
@@ -246,7 +248,7 @@ for($i=0;$i<$cnt_shortcodes;$i++) {
 
 echo '</table>';
 
-
+echo '</div>'; // card
 
 
 

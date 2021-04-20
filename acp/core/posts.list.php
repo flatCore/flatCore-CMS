@@ -277,6 +277,8 @@ echo '</div>';
 echo '<div class="row">';
 echo '<div class="col-md-9">';
 
+echo '<div class="card p-3">';
+
 if($cnt_filter_posts > 0) {
 
 	echo '<table class="table table-sm table-hover">';
@@ -471,6 +473,10 @@ if($cnt_filter_posts > 0) {
 } else {
 	echo '<div class="alert alert-info">'.$lang['msg_no_posts_to_show'].'</div>';
 }
+
+echo '</div>'; // card
+
+
 echo '</div>';
 echo '<div class="col-md-3">';
 

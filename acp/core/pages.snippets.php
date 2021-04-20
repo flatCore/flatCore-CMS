@@ -326,13 +326,14 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	
 	/* list snippets */
 	
+	
 	echo '<div class="app-container">';
-		
 	echo '<div class="max-height-container">';
 	
 	echo '<div class="row">';
 	echo '<div class="col-md-9">';
 	
+	echo '<div class="card p-3">';
 	
 	echo '<div class="scroll-box">';
 	
@@ -468,6 +469,8 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	
 	echo '</div>';
 	
+	echo '</div>'; // card
+	
 	echo '</div>';
 	echo '<div class="col-md-3">';
 
@@ -511,7 +514,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	echo '</div>';
 
 	echo '</div>'; // .app-container
-
+	
 	
 }
 ?>

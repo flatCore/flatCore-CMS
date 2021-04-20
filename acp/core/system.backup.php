@@ -3,7 +3,10 @@
 //prohibit unauthorized access
 require 'core/access.php';
 
+echo '<div class="subHeader">';
 echo '<h3>Backup</h3>';
+echo '</div>';
+
 echo '<div class="alert alert-info">'.$lang['backup_description'].'</div>';
 
 $data_folder = "../" . FC_CONTENT_DIR . "/SQLite";
@@ -50,6 +53,7 @@ if(isset($_GET['vac'])) {
 	}
 }
 
+echo '<div class="card p-3">';
 
 echo '<table class="table table-sm table-hover">';
 echo '<thead>';
@@ -97,7 +101,7 @@ foreach($dbfiles as $filename) {
 
 echo '</table>';
 
-
+echo '</div>'; //card
 
 
 ?>

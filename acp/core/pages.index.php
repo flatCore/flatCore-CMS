@@ -75,8 +75,7 @@ echo '<div class="scroll-box">';
 echo '<div class="p-3">';
 
 if($status_msg != '') {
-	echo '<div class="alert alert-info alert-dismissible fade show autoclose">'.$status_msg.'<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
-  </button></div>';
+	echo '<div class="alert alert-info alert-dismissible fade show autoclose">'.$status_msg.'<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
 }
 
 

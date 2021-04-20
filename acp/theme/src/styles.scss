@@ -17,7 +17,7 @@
 @import "posts";
 
 ::selection {
-	background-color: $brand_color;
+	background-color: $brand_primary;
 	color: #ccc;
 }
 
@@ -29,9 +29,11 @@ html, body {
 	text-align: left;
 	color: $font_color;
 	font-weight: 400;
-	background: #000;
 	height: 100%;
 	min-height: 100%;
+	background: linear-gradient(135deg, $brand_primary 0%, $brand_secondary 100%);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 }
 
 
@@ -49,6 +51,7 @@ a#dashboard {
 
 div#page-content {
 	background: $content_bg;
+	
 	min-height: 100%;
 	height: auto !important;
 	overflow: hidden !important;
@@ -112,6 +115,37 @@ div#bigHeader {
 	&:hover {
 		background: $widget_background;
 	}
+	
+	.styleswitch {
+		display: inline-block;
+		line-height: 1;
+		padding: 5px;
+		margin: 0 2px;
+		border-radius: 50%;
+		border: 1px solid darken($widget_background,20);
+		background: darken($widget_background,10);
+		
+		&.styleswitch-light {
+			color: #fff;
+			background: linear-gradient(135deg, $brand_primary 0%, $brand_secondary 100%);
+		}
+		&.styleswitch-light-mono {
+			color: #fff;
+			background: linear-gradient(135deg, $widget_background 0%, darken($widget_background,15) 100%);
+		}
+		&.styleswitch-dark {
+			color: #333;
+			background: linear-gradient(135deg, $brand_primary 0%, $brand_secondary 100%);
+		}
+		&.styleswitch-dark-mono {
+			color: #333;
+		}
+		&.active {
+			box-shadow: 0px 0px 5px 0px rgba($brand_secondary, 0.9);
+		}
+		
+	}
+	
 }
 
 
@@ -159,7 +193,7 @@ hr.shadow-line:after {
   display: block;
   width: 90%;
   height: 20px;
-  box-shadow: 0px 20px 10px darken($widget_background,5);
+  box-shadow: 0px 20px 10px darken($widget_background,65);
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
@@ -176,7 +210,7 @@ hr.shadow-line:after {
 }
 
 .alert-fc {
-	background: $brand_color;
+	background: $brand_primary;
 }
 
 
@@ -266,7 +300,7 @@ a.topnav_selected:visited {
 	line-height: 40px;
 	font-weight: normal;
 	background: #111;
-	color: $brand_color;
+	color: $brand_secondary;
 	height: 40px;
 	transition: background 0.3s linear, color 0.3s linear;
 	margin-right: 1px;
@@ -274,7 +308,7 @@ a.topnav_selected:visited {
 
 a.topnav:hover {
 	background: #222;
-	color: lighten($brand_color,15%);
+	color: lighten($brand_primary,15%);
 }
 
 a.topnav:active,
@@ -286,9 +320,9 @@ a.topnav:focus {
 
 a.topnav_selected,
 a.topnav_selected:visited {
-	background-color: $brand_color;
-	color: #111;
-
+	background-color: $brand_primary;
+	color: #fff;
+	/*
 	span.mm {
 		position: absolute;
 		bottom: 0;
@@ -299,7 +333,8 @@ a.topnav_selected:visited {
 		border-right: 6px solid transparent;
 		border-bottom: 4px solid $content_bg;
 		margin-left: -6px;
-	}	
+	}
+	*/
 }
 
 
@@ -364,11 +399,11 @@ a:focus {
 }
 
 .modal-content {
-	background: $widget_background;
+	background: rgba($widget_background,1);
 	.modal-header {
 		border-bottom: 1px solid darken($widget_background,10);
 		.close {
-			color: $brand_color;
+			color: $brand_primary;
 			opacity: 1;
 			text-shadow: none;
 		}
@@ -432,7 +467,7 @@ a:focus {
 	padding: 2px;
 	height: 1.5rem;
 	.progress-bar {
-		background: $brand_color;
+		background: $brand_primary;
 		color: $widget_background;
 		border-radius: .15rem;
 	}
@@ -557,7 +592,7 @@ div.header-bc span:first-child {
 		margin-bottom: 5px;
 		font-size: 15px;
 		a {
-			color: $brand_color;
+			color: $brand_primary;
 		}
 		small {
 			color: $font_color;
@@ -952,7 +987,7 @@ pre {
 	font-weight: 300;
 	font-size: 15px;
 	line-height: 15px;
-	color: $brand_color;
+	color: $brand_primary;
 	background: $widget_background;
 	padding: 5px 15px;
 	border-bottom-left-radius: 5px;
@@ -1006,7 +1041,7 @@ img.avatar {
 
 
 .bootstrap-tagsinput {
-  /*background-color: $brand_color;*/
+  /*background-color: $brand_primary;*/
   /*border: 1px solid #ccc;*/
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   display: inline-block;
@@ -1018,7 +1053,7 @@ img.avatar {
   cursor: text;
   width: 100%;
   span {
-	  background-color: $brand_color;
+	  background-color: $brand_primary;
   }
 }
 .bootstrap-tagsinput input {
@@ -1200,12 +1235,12 @@ ul.image_picker_selector li .thumbnail {
 
 ul.image_picker_selector li .thumbnail.selected {
 	background: darken($widget_background,25);
-	border: 1px solid $brand_color;
+	border: 1px solid $brand_primary;
 }
 
 ul.image_picker_selector li .thumbnail.selected > p {
-	background: $brand_color;
-	border: 1px solid $brand_color;
+	background: $brand_primary;
+	border: 1px solid $brand_primary;
 }
 
 
@@ -1264,7 +1299,7 @@ ul.page-list {
 		
 		padding-left: 10px;
 		margin-left: 10px;
-		border-left: 1px $brand_color solid;
+		border-left: 1px $brand_primary solid;
 		
 		span.page-toggler {
 			display: inline-block;
@@ -1279,14 +1314,14 @@ ul.page-list {
 		left: -1px;
 		width: 11px;
 		height: 31px;
-		border-bottom: 1px $brand_color solid;
-		border-left: 1px $brand_color solid;
+		border-bottom: 1px $brand_primary solid;
+		border-left: 1px $brand_primary solid;
 	}
 	
 	li:after {
 		width: 10px;
 		height: 10px;
-		background-color: $brand_color;
+		background-color: $brand_primary;
 		top: 26px;
 		left: -5px;
 		transform: rotateZ(45deg);

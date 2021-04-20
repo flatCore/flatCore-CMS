@@ -1,16 +1,16 @@
 $page_bg: #111;
-$content_bg: rgba(0,0,0,0.55);
+$content_bg: #333;
 $brand_primary: #9E0055;
 $brand_secondary: #019ADD;
 $dark_brand: desaturate(darken($brand_primary,50%),20);
 
 $font_color: #ccc; /* font color */
-$widget_background: rgba(30,30,30,0.75); /* background for cards, fieldsets etc. */
+$widget_background: #191919; /* background for cards, fieldsets etc. */
 
-$sidebar_background: rgba(0,0,0,0.75);
-$sidebar_link_background: rgba(0,0,0,0.55);
+$sidebar_background: #111;
+$sidebar_link_background: #222;
 $sidebar_color: #eee;
-$sidebar_help_background: rgba(0,0,0,0.75);
+$sidebar_help_background: #111;
 $sidebar_help_color: #ccc;
 
 $input_background: #111;
@@ -20,7 +20,7 @@ $input_fill: 'white';
 $btn_fc_background: #222;
 $btn_fc_background_active: #151515;
 $btn_fc_color: #fff;
-$btn_fc_color_active: $brand_secondary;
+$btn_fc_color_active: $brand_primary;
 
 $pages_list_items_background: darken($widget_background,5);
 
@@ -40,7 +40,7 @@ $color_deleted: #d9534f;
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
 	font-weight: 200;
-	color: lighten($brand_secondary,5);
+	color: lighten($brand_primary,5);
 	small {
 		font-weight: 300;
 	}

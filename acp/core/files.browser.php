@@ -613,6 +613,8 @@ if($disk != $path_img AND $disk != $path_files) {
 echo '<div class="row">';
 echo '<div class="col-md-9">';
 
+echo '<div class="card p-3">';
+
 echo '<div class="'.$tpl_container_class.'">';
 
 
@@ -716,6 +718,7 @@ foreach(range($pag_start, $pag_end) as $number) {
 echo ' '. $pag_forwardlink;
 echo '</div>'; //EOL PAGINATION
 
+echo '</div>'; // card
 
 echo '</div>';
 echo '<div class="col-md-3">';

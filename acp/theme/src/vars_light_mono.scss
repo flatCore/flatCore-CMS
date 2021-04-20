@@ -1,14 +1,14 @@
 $page_bg: #eee;
-$content_bg: rgba(255,255,255,0.55);
+$content_bg: #fff;
 $brand_primary: #9E0055;
 $brand_secondary: #019ADD;
 $dark_brand: desaturate(darken($brand_primary,50%),20);
 
 $font_color: #222; /* font color */
-$widget_background: rgba(255,255,255,0.45); /* background for cards, fieldsets etc. */
+$widget_background: #eee; /* background for cards, fieldsets etc. */
 
-$sidebar_background: rgba(0,0,0,0.55);
-$sidebar_link_background: rgba(0,0,0,0.45);
+$sidebar_background: #111;
+$sidebar_link_background: #222;
 $sidebar_color: #eee;
 $sidebar_help_background: #eee;
 $sidebar_help_color: #222;
@@ -17,10 +17,10 @@ $input_background: #fff;
 $input_color: darken($brand_primary,50%);
 $input_fill: 'black';
 
-$btn_fc_background: #f5f5f5;
-$btn_fc_background_active: #eee;
+$btn_fc_background: #ddd;
+$btn_fc_background_active: #ccc;
 $btn_fc_color: #333;
-$btn_fc_color_active: $brand_secondary;
+$btn_fc_color_active: $brand_primary;
 
 $pages_list_items_background: lighten($widget_background,15);
 
@@ -40,7 +40,7 @@ $color_deleted: #d9534f;
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
 	font-weight: 200;
-	color: darken($brand_secondary,5);
+	color: darken($brand_primary,5);
 	small {
 		font-weight: 300;
 	}

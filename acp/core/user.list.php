@@ -189,7 +189,7 @@ for($x=0;$x<$cnt_pages;$x++) {
 
 $pag_forwardlink = "<a class='btn btn-fc' href='acp.php?tn=user&sub=list&start=$next_start&sort=$sort'>$lang[pagination_forward]</a>";
 
-
+echo '<div class="subHeader">';
 echo '<div class="row">';
 echo '<div class="col-md-5">';
 echo "<form action='acp.php?tn=user' class='form-inline' method='POST'>";
@@ -202,16 +202,18 @@ echo "</form>";
 
 echo '</div>';
 echo '<div class="col-md-7">';
-echo '<div style="float:right;">';
+echo '<div class="text-end">';
 echo $status_btn_group;
 echo '</div>';
 echo '<div class="clearfix"></div>';
 echo '</div>';
-echo '</div><br>';
-
+echo '</div>';
+echo '</div>';
 
 
 //print the list
+
+echo '<div class="card p-3">';
 
 echo"<table class='table table-hover table-striped table-sm'>";
 
@@ -266,31 +268,27 @@ for($i=$start;$i<$end;$i++) {
 	//status image
 	switch ($user_verified) {
 		case "waiting":
-			$statusLabel = "label label-info center";
 			$bg_class = 'table-info';
-			$label = 'badge badge-pill badge-info';
+			$label = 'badge rounded-pill bg-info';
 			break;
 		case "paused":
-			$statusLabel = "label label-warning center";
-			$label = 'badge badge-pill badge-warning';
+			$label = 'badge badge-pill bg-warning';
 			$bg_class = 'table-warning';
 			break;
 		case "verified":
-			$statusLabel = "alert alert-success center";
 			$bg_class = 'table-success';
-			$label = 'badge badge-pill badge-success';
+			$label = 'badge rounded-pill bg-success';
 			break;
 		case "":
 			$bg_class = 'table-danger';
-			$statusLabel = "label label-default center";
-			$label = 'badge badge-pill bg-danger';
+			$label = 'badge rounded-pill bg-danger';
 			break;
 	}
 	
-	echo '<tr class="'.$tr_class.'">';
+	echo '<tr class="'.$bg_class.'">';
 	echo '<td class="'.$td_class.'" style="text-align:right;">'.$user_id.'</td>';
 	echo '<td>'.$user_avatar.'</td>';
-	echo '<td class="lead '.$td_class.'">'.$admin_img.' <span class="'.$label.'">'.$user_nick.'</span></td>';
+	echo '<td class="'.$td_class.'">'.$admin_img.' <span class="'.$label.'">'.$user_nick.'</span></td>';
 	echo '<td class="'.$td_class.'">'.$show_registerdate.'</td>';
 	echo '<td class="'.$td_class.'">'.$user_firstname.' '.$user_lastname.'</td>';
 	echo '<td class="'.$td_class.'">'.$user_mail.'</td>';
@@ -309,5 +307,6 @@ echo '<div id="well well-sm"><p class="text-center">';
 echo "$pag_backlink $pag_string $pag_forwardlink";
 echo '</p></div>';
 
+echo '</div>';
 
 ?>

@@ -12,7 +12,7 @@ echo '<li><a class="sidebar-nav '.($sub == "list" ? 'sidebar-nav-active' :'').'"
 echo '<li><a class="sidebar-nav '.($sub == "new" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=pages&sub=new#position">'.$icon['plus'].' '.$lang['new_page'].'</a></li>';
 
 if($sub == "edit") {
-	echo '<li><a class="sidebar-nav'.($sub == "edit" ? 'sidebar-nav-active' :'').'" href="#">'.$icon['edit'].' '.$lang['page_edit'].'</a></li>';
+	echo '<li><a class="sidebar-nav '.($sub == "edit" ? 'sidebar-nav-active' :'').'" href="#">'.$icon['edit'].' '.$lang['page_edit'].'</a></li>';
 }
 
 echo '<li><a class="sidebar-nav '.($sub == "snippets" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=pages&sub=snippets">'.$icon['clipboard'].' '.$lang['snippets'].'</a></li>';

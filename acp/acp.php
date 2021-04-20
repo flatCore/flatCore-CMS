@@ -172,14 +172,24 @@ if(!isset($_COOKIE['acptheme'])) {
 	setcookie("acptheme", "dark",time()+(3600*24*365));
 }
 
-if(isset($_GET['theme'])) {
-	if($_COOKIE["acptheme"] == 'light') {
-		setcookie("acptheme", 'dark',time()+(3600*24*365));
-		$set_acptheme = 'dark';
-	} else {
-		setcookie("acptheme", 'light',time()+(3600*24*365));
-		$set_acptheme = 'light';
-	}
+if(isset($_GET['theme']) && ($_GET['theme'] == 'light_mono')) {
+	setcookie("acptheme", 'light_mono',time()+(3600*24*365));
+	$set_acptheme = 'light_mono';
+}
+
+if(isset($_GET['theme']) && ($_GET['theme'] == 'light')) {
+	setcookie("acptheme", 'light',time()+(3600*24*365));
+	$set_acptheme = 'light';
+}
+
+if(isset($_GET['theme']) && ($_GET['theme'] == 'dark_mono')) {
+	setcookie("acptheme", 'dark_mono',time()+(3600*24*365));
+	$set_acptheme = 'dark_mono';
+}
+
+if(isset($_GET['theme']) && ($_GET['theme'] == 'dark')) {
+	setcookie("acptheme", 'dark',time()+(3600*24*365));
+	$set_acptheme = 'dark';
 }
 
 
@@ -211,8 +221,12 @@ if(isset($set_acptheme)) {
 		<?php
 		if($acptheme == 'dark') {
 			$style_file = 'theme/css/styles_dark.css?v='.time();
-		} else {			
+		} else if($acptheme == 'light') {			
 			$style_file = 'theme/css/styles_light.css?v='.time();
+		} else if($acptheme == 'dark_mono') {			
+			$style_file = 'theme/css/styles_dark_mono.css?v='.time();
+		} else {			
+			$style_file = 'theme/css/styles_light_mono.css?v='.time();
 		}
 		echo '<link rel="stylesheet" href="'.$style_file.'" type="text/css" media="screen, projection">';
 		?>
@@ -431,11 +445,29 @@ if(isset($set_acptheme)) {
 		
 		<div class="bottom-bar">
 			<?php
+				/*
 				if($acptheme == 'dark') {
 					echo '<a class="btn btn-sm btn-fc" href="acp.php?tn='.$tn.'&theme=true">Light Theme</a>';
 				} else {
 					echo '<a class="btn btn-sm btn-fc" href="acp.php?tn='.$tn.'&theme=true">Dark Theme</a>';
 				}
+				*/
+				
+				if($acptheme == 'dark') {
+					$active_dark = 'active';
+				} else if($acptheme == 'dark_mono') {
+					$active_dark_mono = 'active';
+				} else if($acptheme == 'light') {
+					$active_light = 'active';
+				} else {
+					$active_light_mono = 'active';
+				}
+				
+				echo '<a class="styleswitch styleswitch-light '.$active_light.'" href="acp.php?tn='.$tn.'&theme=light">'.$icon['circle'].'</a>';
+				echo '<a class="styleswitch styleswitch-light-mono '.$active_light_mono.'" href="acp.php?tn='.$tn.'&theme=light_mono">'.$icon['circle'].'</a>';
+				echo '<a class="styleswitch styleswitch-dark '.$active_dark.'" href="acp.php?tn='.$tn.'&theme=dark">'.$icon['circle'].'</a>';
+				echo '<a class="styleswitch styleswitch-dark-mono '.$active_dark_mono.'" href="acp.php?tn='.$tn.'&theme=dark_mono">'.$icon['circle'].'</a>';
+				
 			?>
 			<button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#uploadModal"><?php echo $icon['upload']; ?> Upload</button>
 		</div>

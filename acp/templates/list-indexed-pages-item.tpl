@@ -35,9 +35,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Links {url}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         {link_str}
@@ -56,9 +54,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Headlines {url}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         {headline_str}
@@ -77,9 +73,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Images {url}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         {images_str}
@@ -97,9 +91,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Source {url}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <textarea class="form-control" rows="20">{page_content}</textarea>
