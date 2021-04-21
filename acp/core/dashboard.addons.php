@@ -8,7 +8,7 @@ require 'core/access.php';
 $cnt_mods = count($all_mods);
 
 if($cnt_mods > 0) {
-	echo '<hr class="shadow">';
+	echo '<hr class="shadow-line">';
 	
 	echo '<div class="row row-cols-1 row-cols-md-3 row-cols-xl-5">';
 	
@@ -33,7 +33,7 @@ if($cnt_mods > 0) {
 			
 			echo '<div class="col mb-4">';	
 			echo '<div class="card" style="max-width:450px;">';
-			echo '<div class="card-header p-1"><strong>'.$mod['name'].'</strong> <span class="badge badge-dark float-right">v'.$mod['version'].'</span></div>';
+			echo '<div class="card-header p-1"><strong>'.$mod['name'].'</strong> <span class="badge badge-dark float-end">v'.$mod['version'].'</span></div>';
 			echo $poster_img;
 			echo '<div class="card-img-overlay fade-menu">';
 			echo '<div class="list-group list-group-flush">';

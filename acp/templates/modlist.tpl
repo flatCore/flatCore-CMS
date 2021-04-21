@@ -8,7 +8,7 @@
 		</div>
 	
 		<div class="col-md-10">
-			<div class="float-right">{$MOD_CHECK_IN_OUT} {$MOD_README}</div>
+			<div class="float-end">{$MOD_CHECK_IN_OUT} {$MOD_README}</div>
 			<p>{$MOD_LIVECODE}</p>
 			<p>{$MOD_DESCRIPTION}</p>
 			<p>Version: {$MOD_VERSION}<br>Copyright: {$MOD_AUTHOR}</p>

@@ -266,6 +266,8 @@ $dbh_content->insert("fc_preferences", [
 	"prefs_pagesort_minlength" => 3,
 	"prefs_maximagewidth" => 1024,
 	"prefs_maximageheight" => 1024,
+	"prefs_maxtmbwidth" => 350,
+	"prefs_maxtmbheight" => 350,
 	"prefs_maxfilesize" => 2500
 ]);
 

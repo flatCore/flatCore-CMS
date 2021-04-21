@@ -1,11 +1,12 @@
 
-<div class="card-deck mb-1">
-	
-		<div class="card">
+<div class="row row-cols-1 row-cols-md-3 g-4">
+	<div class="col">
+		
+		<div class="card h-100">
 			<div class="card-header">
 				<ul class="nav nav-tabs card-header-tabs" id="bsTabs" role="tablist">
-					<li class="nav-item"><a class="nav-link active" href="#" data-target="#pages_list" data-toggle="tab">{tab_pages}</a></li>
-					<li class="nav-item"><a class="nav-link" href="#" data-target="#pages_stats" data-toggle="tab">{tab_pages_stats}</a></li>
+					<li class="nav-item"><a class="nav-link active" href="#" data-bs-target="#pages_list" data-bs-toggle="tab">{tab_pages}</a></li>
+					<li class="nav-item"><a class="nav-link" href="#" data-bs-target="#pages_stats" data-bs-toggle="tab">{tab_pages_stats}</a></li>
 				</ul>
 			</div>
 			<div class="card-body p-0">
@@ -20,16 +21,21 @@
 				</div>				
 			</div>
 			</div>
-			<div class="card-footer p-1 text-center">
+			<div class="card-footer p-1">
+				<div class="btn-group d-flex">
 				{btn_page_overview} {btn_new_page} {btn_update_index} {btn_delete_cache}
+				</div>
 			</div>
 		</div>
+		
+	</div>
+	<div class="col">
 
-		<div class="card">
+		<div class="card h-100">
 			<div class="card-header">
 				<ul class="nav nav-tabs card-header-tabs" id="bsTabs" role="tablist">
-					<li class="nav-item"><a class="nav-link active" href="#" data-target="#post_list" data-toggle="tab">{tab_posts}</a></li>
-					<li class="nav-item"><a class="nav-link" href="#" data-target="#comment_list" data-toggle="tab">{tab_comments}</a></li>
+					<li class="nav-item"><a class="nav-link active" href="#" data-bs-target="#post_list" data-bs-toggle="tab">{tab_posts}</a></li>
+					<li class="nav-item"><a class="nav-link" href="#" data-bs-target="#comment_list" data-bs-toggle="tab">{tab_comments}</a></li>
 				</ul>
 			</div>
 			<div class="card-body p-0">
@@ -42,17 +48,21 @@
 				</div>				
 			</div>
 			</div>
-			<div class="card-footer p-1 text-center">
+			<div class="card-footer p-1">
+				<div class="btn-group d-flex">
 				{btn_post_overview} {btn_new_post} {btn_comments_overview}
+				</div>
 			</div>
 		</div>
 		
+	</div>
+	<div class="col">		
 
-		<div class="card">
+		<div class="card h-100">
 			<div class="card-header">
 				<ul class="nav nav-tabs card-header-tabs" id="bsTabs" role="tablist">
-					<li class="nav-item"><a class="nav-link active" href="#" data-target="#user_list" data-toggle="tab">{tab_user}</a></li>
-					<li class="nav-item"><a class="nav-link" href="#" data-target="#user_stats" data-toggle="tab">{tab_user_stats}</a></li>
+					<li class="nav-item"><a class="nav-link active" href="#" data-bs-target="#user_list" data-bs-toggle="tab">{tab_user}</a></li>
+					<li class="nav-item"><a class="nav-link" href="#" data-bs-target="#user_stats" data-bs-toggle="tab">{tab_user_stats}</a></li>
 				</ul>
 			</div>
 			<div class="card-body p-0">
@@ -67,10 +77,12 @@
 				</div>				
 			</div>
 			</div>
-			<div class="card-footer p-1 text-center">
+			<div class="card-footer p-1">
+				<div class="btn-group d-flex">
 				{btn_user_overview} {btn_new_user}
+				</div>
 			</div>
 		</div>
 
-
+	</div>
 </div>

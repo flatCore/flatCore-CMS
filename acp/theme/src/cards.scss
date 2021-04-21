@@ -3,28 +3,35 @@
 	color: $font_color;
 	
 	.card-header {
-		background: darken($widget_background,4);
-		border-bottom: 1px solid $widget_background;
+		background: rgba($widget_background,0.5);
+		border-bottom: 1px solid darken($widget_background,5);
 	}
 
 	.card-header-tabs {
-		border-bottom: 1px solid $widget_background;
+		border-bottom: 1px solid darken($widget_background,2);
 		li {
 			.nav-link {
-				color: $brand_color;
+				color: $brand_secondary;
+				background: lighten($widget_background,3);
+				border-color: darken($widget_background,2);
 				&:hover {
 					border-color: darken($widget_background,10);
 					border-bottom-color: darken($widget_background,10);
-					background: darken($widget_background,10);
+					background: darken($widget_background,5);
+					color: $brand_primary;
 				}
 			}
 			.active,
 			.active:hover {
-				background: $widget_background;
-				border-color: $widget_background;
+				background: linear-gradient(0deg, darken($widget_background,2) 0%, rgba($widget_background,0) 100%);
+				border-color: darken($widget_background,3);
 				color: $font_color;
 			}
 		}
+	}
+	
+	.card-body {
+		background: linear-gradient(180deg, darken($widget_background,3) 0%, rgba($widget_background,0) 20%);
 	}
 
 }

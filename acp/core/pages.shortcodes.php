@@ -3,6 +3,8 @@
 //prohibit unauthorized access
 require 'core/access.php';
 
+$show_form = 'false';
+
 /*save or update shortcode */
 if(isset($_POST['write_shortcode'])) {
 	
@@ -43,9 +45,13 @@ if(isset($_POST['write_shortcode'])) {
 			"textlib_shortcode" => $_POST['shortcode'],
 			"textlib_labels" => $string_labels,
 			"textlib_type" => "shortcode"
-		]);		
+		]);
+		
+		$last_insert_id = $db_content->id();
 		
 	}
+	
+	$show_form = 'true';
 	
 }
 
@@ -54,6 +60,12 @@ if(isset($_POST['write_shortcode'])) {
 
 if(isset($_GET['edit'])) {
 	$shortcode_id = (int) $_GET['edit'];
+	$show_form = 'true';
+}
+
+if(is_numeric($last_insert_id)) {
+	$shortcode_id = (int) $last_insert_id;
+	$show_form = 'true';	
 }
 	
 if($shortcode_id != '' && is_numeric($shortcode_id)) {
@@ -75,21 +87,114 @@ if(isset($_POST['delete'])) {
 }
 
 
+
+/* print the form */
+
+if($show_form == 'true') {
+	echo '<div class="card p-3 mb-3">';
+	echo '<form action="?tn=pages&sub=shortcodes" method="POST">';
+	
+	echo '<div class="row">';
+	echo '<div class="col-md-9">';
+	
+	echo '<div class="form-group">';
+	echo '<label for="elements">'.$lang['shortcode'].'</label>';
+	echo '<input type="text" class="form-control" name="shortcode" value="'.$get_shortcode['textlib_shortcode'].'">';
+	echo '</div>';
+	
+	echo '<div class="form-group">';
+	echo '<label for="elements">'.$lang['shortcode_replacement'].'</label>';
+	echo '<textarea name="longcode" rows="8" class="form-control">'.$get_shortcode['textlib_content'].'</textarea>';
+	echo '</div>';
+	
+	
+	
+	$cnt_labels = count($fc_labels);
+	$arr_checked_labels = explode(",", $get_shortcode['textlib_labels']);
+	
+	for($i=0;$i<$cnt_labels;$i++) {
+		$label_title = $fc_labels[$i]['label_title'];
+		$label_id = $fc_labels[$i]['label_id'];
+		$label_color = $fc_labels[$i]['label_color'];
+		
+	  if(in_array("$label_id", $arr_checked_labels)) {
+			$checked_label = "checked";
+		} else {
+			$checked_label = "";
+		}
+		
+		$checkbox_set_labels .= '<div class="form-check form-check-inline">';
+	 	$checkbox_set_labels .= '<input class="form-check-input" id="label'.$label_id.'" type="checkbox" '.$checked_label.' name="shortcode_labels[]" value="'.$label_id.'">';
+	 	$checkbox_set_labels .= '<label class="form-check-label" for="label'.$label_id.'">'.$label_title.'</label>';
+		$checkbox_set_labels .= '</div>';
+	}
+	
+	echo '</div>';
+	echo '<div class="col-md-3">';
+	
+	echo '<div class="form-group">';
+	echo '<p>'.$lang['labels'].'</p>';
+	echo $checkbox_set_labels;
+	echo '</div>';
+	
+	echo '<hr>';
+	
+	echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+	
+	if($get_shortcode['textlib_id'] != '') {
+		echo '<input type="hidden" name="shortcode_id" value="'.$get_shortcode['textlib_id'].'">';
+		echo '<input type="submit" name="write_shortcode" value="'.$lang['update'].'" class="btn btn-success w-100">';
+	} else {
+		echo '<input type="submit" name="write_shortcode" value="'.$lang['save'].'" class="btn btn-success w-100">';
+	}
+	
+	echo '</div>';
+	echo '</div>';
+	
+	echo '</form>';
+	echo '</div>';
+	echo '<hr class="shadow-line">';
+}
+
+
+
+$label_filter_box  = '<div class="card mt-2">';
+$label_filter_box .= '<div class="card-header p-1 px-2">'.$lang['labels'].'</div>';
+$label_filter_box .= '<div class="card-body">';
+$this_btn_status = '';
+foreach($fc_labels as $label) {
+
+	if(in_array($label['label_id'], $a_checked_labels)) {
+		$this_btn_status = 'active';
+	} else {
+		$this_btn_status = '';
+	}
+
+	$label_title = '<span class="label-dot" style="background-color:'.$label['label_color'].';"></span> '.$label['label_title'];
+	$label_filter_box .= '<a href="acp.php?tn=pages&sub='.$sub.'&switchLabel='.$label['label_id'].'" class="btn btn-fc btn-sm m-1 '.$this_btn_status.'">'.$label_title.'</a>';
+
+}
+$label_filter_box .= '</div>';
+$label_filter_box .= '</div>'; // card
+
+$label_filter['labels'] = $_SESSION['checked_label_str'];
+
+
 /* get all shortcodes */
 
-$shortcodes = fc_get_shortcodes();
+$shortcodes = fc_get_shortcodes($label_filter);
 $cnt_shortcodes = count($shortcodes);
 
-
 echo '<div class="row">';
-echo '<div class="col-md-6">';
+echo '<div class="col-md-9">';
 
+echo '<div class="card p-3">';
 
 echo '<table class="table table-sm">';
 echo '<thead>';
 echo '<tr>';
-echo '<th>Shortcode</th>';
-echo '<th>Longcode</th>';
+echo '<th>'.$lang['shortcode'].'</th>';
+echo '<th>'.$lang['shortcode_replacement'].'</th>';
 echo '<th>Label</th>';
 echo '<th></th>';
 echo '</tr>';
@@ -127,8 +232,13 @@ for($i=0;$i<$cnt_shortcodes;$i++) {
 		$longcode = substr($longcode, 0,75). ' <em><small>(...)</small></em>';
 	}
 	
+	$copy_shortcode  = '<div class="input-group">';
+	$copy_shortcode .= '<input type="text" class="form-control" id="copy_sc_'.$i.'" value="'.$shortcodes[$i]['textlib_shortcode'].'" readonly>';
+	$copy_shortcode .= '<button type="button" class="btn btn-fc copy-btn" data-clipboard-target="#copy_sc_'.$i.'">'.$icon['clipboard'].'</button>';
+	$copy_shortcode .= '</div>';
+		
 	echo '<tr>';
-	echo '<td>'.$shortcodes[$i]['textlib_shortcode'].'</td>';
+	echo '<td>'.$copy_shortcode.'</td>';
 	echo '<td><code>'.$longcode.'</code></td>';
 	echo '<td>'.$label.'</td>';
 	echo '<td class="text-right">'.$btn_edit.' '.$btn_delete.'</td>';
@@ -138,63 +248,24 @@ for($i=0;$i<$cnt_shortcodes;$i++) {
 
 echo '</table>';
 
+echo '</div>'; // card
+
+
+
+
+
 
 echo '</div>';
-echo '<div class="col-md-6">';
+echo '<div class="col-md-3">';
 
-echo '<div class="card p-3">';
-echo '<form action="?tn=pages&sub=shortcodes" method="POST">';
+/* sidebar */
 
-echo '<div class="form-group">';
-echo '<label for="elements">Shortcode</label>';
-echo '<input type="text" class="form-control" name="shortcode" value="'.$get_shortcode['textlib_shortcode'].'">';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label for="elements">Longcode</label>';
-echo '<textarea name="longcode" rows="4" class="form-control">'.$get_shortcode['textlib_content'].'</textarea>';
-echo '</div>';
+echo '<a href="?tn=pages&sub=shortcodes&edit=new" class="btn btn-success w-100">'.$icon['plus'].' '.$lang['new'].'</a><hr>';
 
 
+echo $label_filter_box;
 
-$cnt_labels = count($fc_labels);
-$arr_checked_labels = explode(",", $get_shortcode['textlib_labels']);
-
-for($i=0;$i<$cnt_labels;$i++) {
-	$label_title = $fc_labels[$i]['label_title'];
-	$label_id = $fc_labels[$i]['label_id'];
-	$label_color = $fc_labels[$i]['label_color'];
-	
-  if(in_array("$label_id", $arr_checked_labels)) {
-		$checked_label = "checked";
-	} else {
-		$checked_label = "";
-	}
-	
-	$checkbox_set_labels .= '<div class="form-check form-check-inline">';
- 	$checkbox_set_labels .= '<input class="form-check-input" id="label'.$label_id.'" type="checkbox" '.$checked_label.' name="shortcode_labels[]" value="'.$label_id.'">';
- 	$checkbox_set_labels .= '<label class="form-check-label" for="label'.$label_id.'">'.$label_title.'</label>';
-	$checkbox_set_labels .= '</div>';
-}
-
-echo '<div class="form-group">';
-echo '<p>'.$lang['labels'].'</p>';
-echo $checkbox_set_labels;
-echo '</div>';
-
-
-
-echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
-
-if($get_shortcode['textlib_id'] != '') {
-	echo '<input type="hidden" name="shortcode_id" value="'.$get_shortcode['textlib_id'].'">';
-	echo '<input type="submit" name="write_shortcode" value="'.$lang['update'].'" class="btn btn-success">';
-} else {
-	echo '<input type="submit" name="write_shortcode" value="'.$lang['save'].'" class="btn btn-success">';
-}
-
-echo '</form>';
-echo '</div>';
+/* sidebar end */
 
 echo '</div>';
 echo '</div>';

@@ -106,7 +106,7 @@ echo '</select>';
 echo '</div>';
 echo '<div class="col-md-3">';
 echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
-echo '<button type="submit" name="s" class="btn btn-fc btn-block">'.$icon['sync_alt'].'</button>';
+echo '<button type="submit" name="s" class="btn btn-fc w-100">'.$icon['sync_alt'].'</button>';
 echo '</div>';
 echo '</div>';
 
@@ -126,8 +126,8 @@ if($languagePack == 'de') {
 	$helpURL = 'https://flatcore.org/de/dokumentation/';	
 }
 
-echo '<hr><a target="_blank" href="'.$helpURL.'" title="'.$helpURL.'" class="btn btn-fc btn-block">'.$icon['question'].' '.$lang['show_help'].'</a>';
-echo '<a target="_blank" href="https://github.com/flatCore/flatCore-CMS/discussions" title="Discussions" class="btn btn-primary btn-block">'.$icon['comments'].' Discussions</a>';
+echo '<hr><a target="_blank" href="'.$helpURL.'" title="'.$helpURL.'" class="btn btn-fc w-100">'.$icon['question'].' '.$lang['show_help'].'</a>';
+echo '<a target="_blank" href="https://github.com/flatCore/flatCore-CMS/discussions" title="Discussions" class="btn btn-primary w-100">'.$icon['comments'].' Discussions</a>';
 
 
 

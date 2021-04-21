@@ -28,7 +28,7 @@ if(isset($_SESSION['fc_db_content'])) {
 }
 
 
-$fc_content_switch = '<button class="btn btn-fc btn-sm" data-target="#contentSwitchContainer" data-toggle="collapse">'.$icon['angle_down'].' '.$fc_db_content.'</button>';
+$fc_content_switch = '<button class="btn btn-fc btn-sm" data-bs-target="#contentSwitchContainer" data-bs-toggle="collapse">'.$icon['angle_down'].' '.$fc_db_content.'</button>';
 
 $fc_content_switch .= '<div id="contentSwitchContainer" class="collapse">';
 $fc_content_switch .= '<div class="well well-sm">';

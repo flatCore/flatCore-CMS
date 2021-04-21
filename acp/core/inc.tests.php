@@ -84,7 +84,7 @@ require 'core/access.php';
 		?>
 		</div>
 		
-		<hr class="shadow">
+		<hr class="shadow-line">
 		
 		<h4 id="tables">Tables</h4>
 		

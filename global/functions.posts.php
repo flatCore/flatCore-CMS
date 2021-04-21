@@ -12,6 +12,7 @@ function fc_get_post_entries($start=0,$limit=10,$filter) {
 	global $time_string_end;
 	global $time_string_now;
 	global $fc_preferences;
+	global $fc_labels;
 	
 	if(FC_SOURCE == 'frontend') {
 		global $fc_prefs;
@@ -93,7 +94,22 @@ function fc_get_post_entries($start=0,$limit=10,$filter) {
 		}
 		$sql_cat_filter = substr("$sql_cat_filter", 0, -3); // cut the last ' OR'
 	}
+	
+	/* label filter */
+	if($filter['labels'] == 'all' OR $filter['labels'] == '') {
+		$sql_label_filter = '';
+	} else {
 
+		$checked_labels_array = explode('-', $filter['labels']);
+		
+		for($i=0;$i<count($fc_labels);$i++) {
+			$label = $fc_labels[$i]['label_id'];
+			if(in_array($label, $checked_labels_array)) {
+				$sql_label_filter .= "post_labels LIKE '%,$label,%' OR post_labels LIKE '%,$label' OR post_labels LIKE '$label,%' OR post_labels = '$label' OR ";
+			}
+		}		
+		$sql_label_filter = substr("$sql_label_filter", 0, -3); // cut the last ' OR'
+	}
 
 	$sql_filter = $sql_filter_start;
 	
@@ -109,7 +125,9 @@ function fc_get_post_entries($start=0,$limit=10,$filter) {
 	if($sql_cat_filter != "") {
 		$sql_filter .= " AND ($sql_cat_filter) ";
 	}
-
+	if($sql_label_filter != "") {
+		$sql_filter .= " AND ($sql_label_filter) ";
+	}
 	
 	if(FC_SOURCE == 'frontend') {
 		$sql_filter .= "AND post_releasedate <= '$time_string_now' ";

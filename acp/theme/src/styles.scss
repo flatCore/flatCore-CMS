@@ -7,7 +7,7 @@
 @import 'jquery.fancybox.min';
 
 // Bootstrap Core
-@import '../bootstrap/scss/bootstrap';
+@import '../bootstrap5/scss/bootstrap';
 
 @import "cards";
 @import "table";
@@ -17,7 +17,7 @@
 @import "posts";
 
 ::selection {
-	background-color: $brand_color;
+	background-color: $brand_primary;
 	color: #ccc;
 }
 
@@ -29,9 +29,11 @@ html, body {
 	text-align: left;
 	color: $font_color;
 	font-weight: 400;
-	background: #000;
 	height: 100%;
 	min-height: 100%;
+	background: linear-gradient(135deg, $brand_primary 0%, $brand_secondary 100%);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 }
 
 
@@ -49,6 +51,7 @@ a#dashboard {
 
 div#page-content {
 	background: $content_bg;
+	
 	min-height: 100%;
 	height: auto !important;
 	overflow: hidden !important;
@@ -63,6 +66,13 @@ div#bigHeader {
 
 .subHeader {
 	margin-bottom: 20px;
+	padding: 10px;
+	background: darken($content_bg,5%);
+	h3 {
+		font-size: 18px;
+		margin-bottom: 0;
+		font-weight: 300;
+	}
 }
 
 
@@ -99,9 +109,48 @@ div#bigHeader {
 	right:0;
 	padding:10px;
 	z-index:1005;
-	background: fade($widget_background,90);
+	background: linear-gradient(0deg, #111 0%, #252525 100%);
 	border-top-left-radius: 5px;
-	border: 1px solid darken($widget_background,15);
+	box-shadow: 0px 0px 10px 0px rgba($brand_secondary, 0.8);
+	
+	.divider {
+		display: inline-block;
+		width: 10px;
+	}
+	
+	.styleswitch {
+		display: inline-block;
+		line-height: 1;
+		padding: 3px;
+		margin: 0 2px;
+		border-radius: 50%;
+		border: 1px solid #000;
+		background: darken($widget_background,10);
+		opacity: 0.5;
+		&.styleswitch-light {
+			color: #fff;
+			background: linear-gradient(135deg, $brand_primary 0%, $brand_secondary 100%);
+		}
+		&.styleswitch-light-mono {
+			color: #fff;
+			background: linear-gradient(135deg, $widget_background 0%, darken($widget_background,15) 100%);
+		}
+		&.styleswitch-dark {
+			color: #333;
+			background: linear-gradient(135deg, $brand_primary 0%, $brand_secondary 100%);
+		}
+		&.styleswitch-dark-mono {
+			color: #333;
+		}
+		&.active {
+			box-shadow: 0px 0px 7px 2px rgba($brand_secondary, 0.9);
+			opacity: 1;
+		}
+		&:hover {
+			opacity: 1;
+		}
+	}
+	
 }
 
 
@@ -127,7 +176,7 @@ div#container {
 }
 
 
-hr.shadow {
+hr.shadow-line {
   padding: 0;
   border: 0;
   outline: 0;
@@ -138,9 +187,10 @@ hr.shadow {
   margin-bottom: 15px;
   margin-left: 0;
   box-shadow: none !important;
+  background: transparent;
 }
 
-hr.shadow:after {
+hr.shadow-line:after {
   content: "";
   margin: 0 auto;
   position: relative;
@@ -148,10 +198,24 @@ hr.shadow:after {
   display: block;
   width: 90%;
   height: 20px;
-  box-shadow: 0px 20px 10px darken($widget_background,5);
+  box-shadow: 0px 20px 10px darken($widget_background,65);
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
+}
+
+
+.well {
+	background: $widget_background;
+	padding: 10px;
+}
+
+.well-sm {
+	padding: 5px;
+}
+
+.alert-fc {
+	background: $brand_primary;
 }
 
 
@@ -225,6 +289,8 @@ ol {
 div#topNavBox {
 	padding-right: 20px;
 	padding-left: 20px;
+	display: flex;
+	justify-content: flex-end;
 }
 
 a.topnav,
@@ -232,15 +298,14 @@ a.topnav_selected,
 a.topnav:visited,
 a.topnav_selected:visited {
 	position: relative;
-	display: block;
-	float: left;
+	display: inline-block;
 	min-width: 100px;
 	text-align: center;
 	font-size: 12px;
 	line-height: 40px;
 	font-weight: normal;
 	background: #111;
-	color: $brand_color;
+	color: $brand_secondary;
 	height: 40px;
 	transition: background 0.3s linear, color 0.3s linear;
 	margin-right: 1px;
@@ -248,7 +313,7 @@ a.topnav_selected:visited {
 
 a.topnav:hover {
 	background: #222;
-	color: lighten($brand_color,15%);
+	color: lighten($brand_primary,15%);
 }
 
 a.topnav:active,
@@ -260,21 +325,21 @@ a.topnav:focus {
 
 a.topnav_selected,
 a.topnav_selected:visited {
-	background-color: $brand_color;
-	color: #111;
-}
-
-
-a.topnav_selected span.mm {
-	position: absolute;
-	bottom: 0;
-	left: 50%;
-	width: 0; 
-	height: 0; 
-	border-left: 6px solid transparent;
-	border-right: 6px solid transparent;
-	border-bottom: 4px solid $content_bg;
-	margin-left: -6px;
+	background-color: $brand_primary;
+	color: #fff;
+	/*
+	span.mm {
+		position: absolute;
+		bottom: 0;
+		left: 50%;
+		width: 0; 
+		height: 0; 
+		border-left: 6px solid transparent;
+		border-right: 6px solid transparent;
+		border-bottom: 4px solid $content_bg;
+		margin-left: -6px;
+	}
+	*/
 }
 
 
@@ -339,11 +404,11 @@ a:focus {
 }
 
 .modal-content {
-	background: $widget_background;
+	background: rgba($widget_background,1);
 	.modal-header {
 		border-bottom: 1px solid darken($widget_background,10);
 		.close {
-			color: $brand_color;
+			color: $brand_primary;
 			opacity: 1;
 			text-shadow: none;
 		}
@@ -407,7 +472,7 @@ a:focus {
 	padding: 2px;
 	height: 1.5rem;
 	.progress-bar {
-		background: $brand_color;
+		background: $brand_primary;
 		color: $widget_background;
 		border-radius: .15rem;
 	}
@@ -532,7 +597,7 @@ div.header-bc span:first-child {
 		margin-bottom: 5px;
 		font-size: 15px;
 		a {
-			color: $brand_color;
+			color: $brand_primary;
 		}
 		small {
 			color: $font_color;
@@ -927,7 +992,7 @@ pre {
 	font-weight: 300;
 	font-size: 15px;
 	line-height: 15px;
-	color: $brand_color;
+	color: $brand_primary;
 	background: $widget_background;
 	padding: 5px 15px;
 	border-bottom-left-radius: 5px;
@@ -981,7 +1046,7 @@ img.avatar {
 
 
 .bootstrap-tagsinput {
-  /*background-color: $brand_color;*/
+  /*background-color: $brand_primary;*/
   /*border: 1px solid #ccc;*/
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   display: inline-block;
@@ -993,7 +1058,7 @@ img.avatar {
   cursor: text;
   width: 100%;
   span {
-	  background-color: $brand_color;
+	  background-color: $brand_primary;
   }
 }
 .bootstrap-tagsinput input {
@@ -1175,12 +1240,12 @@ ul.image_picker_selector li .thumbnail {
 
 ul.image_picker_selector li .thumbnail.selected {
 	background: darken($widget_background,25);
-	border: 1px solid $brand_color;
+	border: 1px solid $brand_primary;
 }
 
 ul.image_picker_selector li .thumbnail.selected > p {
-	background: $brand_color;
-	border: 1px solid $brand_color;
+	background: $brand_primary;
+	border: 1px solid $brand_primary;
 }
 
 
@@ -1239,7 +1304,7 @@ ul.page-list {
 		
 		padding-left: 10px;
 		margin-left: 10px;
-		border-left: 1px $brand_color solid;
+		border-left: 1px $brand_primary solid;
 		
 		span.page-toggler {
 			display: inline-block;
@@ -1254,14 +1319,14 @@ ul.page-list {
 		left: -1px;
 		width: 11px;
 		height: 31px;
-		border-bottom: 1px $brand_color solid;
-		border-left: 1px $brand_color solid;
+		border-bottom: 1px $brand_primary solid;
+		border-left: 1px $brand_primary solid;
 	}
 	
 	li:after {
 		width: 10px;
 		height: 10px;
-		background-color: $brand_color;
+		background-color: $brand_primary;
 		top: 26px;
 		left: -5px;
 		transform: rotateZ(45deg);

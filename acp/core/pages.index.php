@@ -75,8 +75,7 @@ echo '<div class="scroll-box">';
 echo '<div class="p-3">';
 
 if($status_msg != '') {
-	echo '<div class="alert alert-info alert-dismissible fade show autoclose">'.$status_msg.'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
-  </button></div>';
+	echo '<div class="alert alert-info alert-dismissible fade show autoclose">'.$status_msg.'<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
 }
 
 
@@ -361,7 +360,7 @@ echo '<div class="col-8">';
 echo '<input type="text" class="form-control" name="start_index" value="'.$fc_base_url.'">';
 echo '</div>';
 echo '<div class="col-4">';
-echo '<button type="submit" name="start" class="btn btn-save btn-block">'.$icon['sitemap'].'</button>';
+echo '<button type="submit" name="start" class="btn btn-save w-100">'.$icon['sitemap'].'</button>';
 echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</div>';
 echo '</div>';
@@ -381,43 +380,43 @@ $ce_title_class = 'text-success';
 if($ce_title > 0) {
 	$ce_title_class = 'text-danger';
 }
-echo '<tr><td class="text-right '.$ce_title_class.'">'.$ce_title.'</td><td>'.$lang['label_missing_title'].'</td></tr>';
+echo '<tr><td class="text-end '.$ce_title_class.'">'.$ce_title.'</td><td>'.$lang['label_missing_title'].'</td></tr>';
 
 $ce_description_class = 'text-success';
 if($ce_description > 0) {
 	$ce_description_class = 'text-danger';
 }
-echo '<tr><td class="text-right '.$ce_description_class.'">'.$ce_description.'</td><td>'.$lang['label_missing_meta_description'].'</td></tr>';
+echo '<tr><td class="text-end '.$ce_description_class.'">'.$ce_description.'</td><td>'.$lang['label_missing_meta_description'].'</td></tr>';
 
 $ce_img_alt_class = 'text-success';
 if($ce_img_alt > 0) {
 	$ce_img_alt_class = 'text-danger';
 }
-echo '<tr><td class="text-right '.$ce_img_alt_class.'">'.$ce_img_alt.'</td><td>'.$lang['label_missing_img_alt_tags'].'</td></tr>';
+echo '<tr><td class="text-end '.$ce_img_alt_class.'">'.$ce_img_alt.'</td><td>'.$lang['label_missing_img_alt_tags'].'</td></tr>';
 
 $ce_img_title_class = 'text-success';
 if($ce_img_title > 0) {
 	$ce_img_title_class = 'text-danger';
 }
-echo '<tr><td class="text-right '.$ce_img_title_class.'">'.$ce_img_title.'</td><td>'.$lang['label_missing_img_title_tags'].'</td></tr>';
+echo '<tr><td class="text-end '.$ce_img_title_class.'">'.$ce_img_title.'</td><td>'.$lang['label_missing_img_title_tags'].'</td></tr>';
 
 $ce_links_title_class = 'text-success';
 if($ce_links_title > 0) {
 	$ce_links_title_class = 'text-danger';
 }
-echo '<tr><td class="text-right '.$ce_links_title_class.'">'.$ce_links_title.'</td><td>'.$lang['label_missing_link_title_tags'].'</td></tr>';
+echo '<tr><td class="text-end '.$ce_links_title_class.'">'.$ce_links_title.'</td><td>'.$lang['label_missing_link_title_tags'].'</td></tr>';
 
 $ce_h1_class = 'text-success';
 if($ce_h1 > 0) {
 	$ce_h1_class = 'text-danger';
 }
-echo '<tr><td class="text-right '.$ce_h1_class.'">'.$ce_h1.'</td><td>'.$lang['label_missing_h1'].'</td></tr>';
+echo '<tr><td class="text-end '.$ce_h1_class.'">'.$ce_h1.'</td><td>'.$lang['label_missing_h1'].'</td></tr>';
 
 $ce_h2_class = 'text-success';
 if($ce_h2 > 0) {
 	$ce_h2_class = 'text-danger';
 }
-echo '<tr><td class="text-right '.$ce_h2_class.'">'.$ce_h2.'</td><td>'.$lang['label_missing_h2'].'</td></tr>';
+echo '<tr><td class="text-end '.$ce_h2_class.'">'.$ce_h2.'</td><td>'.$lang['label_missing_h2'].'</td></tr>';
 echo '</table>';
 echo '</div>';
 
@@ -428,7 +427,7 @@ foreach($exclude_items as $ex_item) {
 	echo '<tr>';
 	echo '<td><code>'.$ex_item['item_element'].'</code></td>';
 	echo '<td><code>'.$ex_item['item_attributes'].'</code></td>';
-	echo '<td class="text-right"><a href="acp.php?tn=pages&sub=index&del_exclude='.$ex_item['item_id'].'" class="btn btn-danger btn-sm">'.$icon['trash_alt'].'</a></td>';
+	echo '<td class="text-end"><a href="acp.php?tn=pages&sub=index&del_exclude='.$ex_item['item_id'].'" class="btn btn-danger btn-sm">'.$icon['trash_alt'].'</a></td>';
 	echo '<tr>';
 }
 echo '</table>';
@@ -452,8 +451,8 @@ echo '</div>';
 echo '</div>';
 echo '<div class="col-4">';
 echo '<div class="form-group">';
-echo '<label for="attribute"><br></label>';
-echo '<input type="submit" name="add_excludes" value="'.$lang['save'].'" class="btn btn-save btn-block">';
+echo '<label class="d-block"><br></label>';
+echo '<input type="submit" name="add_excludes" value="'.$lang['save'].'" class="btn btn-save w-100">';
 echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</div>';
 echo '</div>';
@@ -472,7 +471,7 @@ echo '<table class="table table-sm">';
 foreach($exclude_urls as $ex_url) {
 	echo '<tr>';
 	echo '<td><code>'.$ex_url['item_url'].'</code></td>';
-	echo '<td class="text-right"><a href="acp.php?tn=pages&sub=index&del_exclude='.$ex_url['item_id'].'" class="btn btn-danger btn-sm">'.$icon['trash_alt'].'</a></td>';
+	echo '<td class="text-end"><a href="acp.php?tn=pages&sub=index&del_exclude='.$ex_url['item_id'].'" class="btn btn-danger btn-sm">'.$icon['trash_alt'].'</a></td>';
 	echo '<tr>';
 }
 echo '</table>';
@@ -490,8 +489,8 @@ echo '</div>';
 echo '</div>';
 echo '<div class="col-4">';
 echo '<div class="form-group">';
-echo '<label for="attribute"><br></label>';
-echo '<input type="submit" name="add_exclude_url" value="'.$lang['save'].'" class="btn btn-save btn-block">';
+echo '<label class="d-block"><br></label>';
+echo '<input type="submit" name="add_exclude_url" value="'.$lang['save'].'" class="btn btn-save w-100">';
 echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</div>';
 echo '</div>';

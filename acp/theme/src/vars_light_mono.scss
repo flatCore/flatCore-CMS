@@ -1,0 +1,60 @@
+$page_bg: #eee;
+$content_bg: #fff;
+$brand_primary: #9E0055;
+$brand_secondary: #019ADD;
+$dark_brand: desaturate(darken($brand_primary,50%),20);
+
+$font_color: #222; /* font color */
+$widget_background: #eee; /* background for cards, fieldsets etc. */
+
+$sidebar_background: #111;
+$sidebar_link_background: #222;
+$sidebar_color: #eee;
+$sidebar_help_background: #eee;
+$sidebar_help_color: #222;
+
+$input_background: #fff;
+$input_color: darken($brand_primary,50%);
+$input_fill: 'black';
+
+$btn_fc_background: #ddd;
+$btn_fc_background_active: #ccc;
+$btn_fc_color: #333;
+$btn_fc_color_active: $brand_primary;
+
+$pages_list_items_background: lighten($widget_background,15);
+
+/* pages - status colors */
+$color_public: #2ca62c;
+$color_ghost: #5c7156;
+$color_private: #d9534f;
+$color_draft: #989898;
+$color_redirect: #078dfe;
+
+/* user - status colors */
+$color_verified: #5cb85c;
+$color_queue: $color_ghost;
+$color_banned: #f0ad4e;
+$color_deleted: #d9534f;
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+	font-weight: 200;
+	color: darken($brand_primary,5);
+	small {
+		font-weight: 300;
+	}
+}
+
+/* tables */
+
+$table_striped_bg_odd: lighten($widget_background,5);
+
+
+/* navbar */
+
+$navbar-fc-bg: $widget_background;
+$navbar-fc-btn-bg: darken($widget_background,15);
+$navbar-fc-btn-active: lighten($brand_primary,10);
+
+@import "styles";

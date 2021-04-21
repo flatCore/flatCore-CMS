@@ -1,3 +1,12 @@
+
+.form-group {
+	padding-bottom: 0.5rem;
+	label {
+		padding-bottom: 0.25rem;
+	}
+}
+
+
 /* fieldset */
 
 
@@ -6,6 +15,7 @@ fieldset {
 	margin: 18px 0 25px 0;
 	border: 1px solid darken($widget_background,10);
 	background: $widget_background;
+	background: linear-gradient(90deg, rgba($widget_background,1) 0%, $widget_background 100%);
 	border-radius: 4px;
 	position: relative;
 }
@@ -17,7 +27,7 @@ fieldset legend {
 	width: auto;
 	padding: 7px 15px;
 	margin: -25px 10px 0 10px;
-	background: $widget_background;
+	background: rgba($widget_background,1);
 	color: $font_color;
 	font-size: 15px;
 	line-height: 14px;
@@ -69,17 +79,9 @@ input.form-control[readonly] {
 
 .input-group-text {
 	border: 1px solid #222;
-	background: #111;
-	color: $font_color;
-}
-
-.input-group-prepend,
-.input-group-append {
-	.input-group-text {
-		background: lighten($input_background,5);
-		color: darken($font_color,10);
-		border-color: darken($input_background,10);	
-	}
+	background: lighten($input_background,5);
+	color: darken($font_color,10);
+	border-color: darken($input_background,20);
 }
 
 

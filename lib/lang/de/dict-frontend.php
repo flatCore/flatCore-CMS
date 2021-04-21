@@ -122,6 +122,7 @@ $lang['forgotten_psw_mail_info'] = "Hallo {USERNAME},<br />Sie möchten Ihr Pass
 $lang['forgotten_psw_mail_update']  = "<p>Hallo {USERNAME},<br />Ihr Passwort wurde zurückgesetzt.</p> <p>Ihr neues Passwort lautet:<br />{temp_psw}</p>";
 
 $lang['posts_category_filter'] = 'Es werden nur Beiträge aus der Kategorie <strong>{categorie}</strong> angezeigt.';
+$lang['post_is_draft'] = 'Dieser Eintrag ist ein Entwurf. Nur Administratoren können diesen Eintrag sehen.';
 
 /* comment */
 $lang['label_name'] = "Name";

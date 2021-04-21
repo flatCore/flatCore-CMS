@@ -151,6 +151,8 @@ require 'core/switch.php';
 
 $all_mods = get_all_moduls();
 $all_plugins = get_all_plugins();
+$fc_labels = fc_get_labels();
+$cnt_labels = count($fc_labels);
 
 /* READ THE PREFS */
 $fc_preferences = get_preferences();
@@ -170,14 +172,24 @@ if(!isset($_COOKIE['acptheme'])) {
 	setcookie("acptheme", "dark",time()+(3600*24*365));
 }
 
-if(isset($_GET['theme'])) {
-	if($_COOKIE["acptheme"] == 'light') {
-		setcookie("acptheme", 'dark',time()+(3600*24*365));
-		$set_acptheme = 'dark';
-	} else {
-		setcookie("acptheme", 'light',time()+(3600*24*365));
-		$set_acptheme = 'light';
-	}
+if(isset($_GET['theme']) && ($_GET['theme'] == 'light_mono')) {
+	setcookie("acptheme", 'light_mono',time()+(3600*24*365));
+	$set_acptheme = 'light_mono';
+}
+
+if(isset($_GET['theme']) && ($_GET['theme'] == 'light')) {
+	setcookie("acptheme", 'light',time()+(3600*24*365));
+	$set_acptheme = 'light';
+}
+
+if(isset($_GET['theme']) && ($_GET['theme'] == 'dark_mono')) {
+	setcookie("acptheme", 'dark_mono',time()+(3600*24*365));
+	$set_acptheme = 'dark_mono';
+}
+
+if(isset($_GET['theme']) && ($_GET['theme'] == 'dark')) {
+	setcookie("acptheme", 'dark',time()+(3600*24*365));
+	$set_acptheme = 'dark';
 }
 
 
@@ -197,21 +209,24 @@ if(isset($set_acptheme)) {
 		
 		<link rel="icon" type="image/x-icon" href="images/favicon.ico" />
 		
-		<script src="../lib/js/jquery/jquery-3.4.1.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
+		<script src="js/jquery-3.6.0.min.js"></script>
+    
     <script language="javascript" type="text/javascript" src="../lib/js/tinymce/tinymce.min.js"></script>
     <script language="javascript" type="text/javascript" src="../lib/js/tinymce/jquery.tinymce.min.js"></script>
 
-		<!-- Add fancyBox -->
-		<script type="text/javascript" src="./js/jquery.fancybox.min.js?v=2.1.5"></script>
+
 		
-		<script type="text/javascript" src="../lib/js/jquery/jquery.textareaCounter.plugin.js"></script>
+		
 		
 		<?php
 		if($acptheme == 'dark') {
 			$style_file = 'theme/css/styles_dark.css?v='.time();
-		} else {			
+		} else if($acptheme == 'light') {			
 			$style_file = 'theme/css/styles_light.css?v='.time();
+		} else if($acptheme == 'dark_mono') {			
+			$style_file = 'theme/css/styles_dark_mono.css?v='.time();
+		} else {			
+			$style_file = 'theme/css/styles_light_mono.css?v='.time();
 		}
 		echo '<link rel="stylesheet" href="'.$style_file.'" type="text/css" media="screen, projection">';
 		?>
@@ -229,9 +244,6 @@ if(isset($set_acptheme)) {
 			}
 		</script>
 		
-		
-		<!-- jquery.matchHeight-min.js-->
-		<script type="text/javascript" src="../lib/js/jquery/jquery.matchHeight-min.js"></script>
 				
 		<!-- uploader -->
 		<script src="../lib/js/dropzone.js"></script>
@@ -241,10 +253,8 @@ if(isset($set_acptheme)) {
 		
 		<!-- dirty forms -->
 		<script src="../lib/js/jquery/jquery.dirtyforms.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript" src="../lib/js/jquery/jquery.dirtyforms.tinymce.js"></script>
 		
-		<!-- Tags -->
-		<script type="text/javascript" src="../lib/js/bootstrap-tagsinput.min.js"></script>
+
 		
 		<!-- image picker -->
 		<script type="text/javascript" src="../lib/js/jquery/image-picker.min.js"></script>
@@ -252,6 +262,8 @@ if(isset($set_acptheme)) {
 		<!-- date/time picker -->
 		<script type="text/javascript" src="js/moment.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+		
+		<script src="js/clipboard.min.js"></script>
 		
 		<script type="text/javascript" src="js/accounting.min.js"></script>
 
@@ -337,6 +349,8 @@ if(isset($set_acptheme)) {
 			});
 			
 		</script>
+		
+		
 
 		
 		<?php
@@ -430,38 +444,61 @@ if(isset($set_acptheme)) {
 		</div>
 		
 		<div class="bottom-bar">
-			<?php
+			<?php			
 				if($acptheme == 'dark') {
-					echo '<a class="btn btn-sm btn-fc" href="acp.php?tn='.$tn.'&theme=true">Light Theme</a>';
+					$active_dark = 'active';
+				} else if($acptheme == 'dark_mono') {
+					$active_dark_mono = 'active';
+				} else if($acptheme == 'light') {
+					$active_light = 'active';
 				} else {
-					echo '<a class="btn btn-sm btn-fc" href="acp.php?tn='.$tn.'&theme=true">Dark Theme</a>';
+					$active_light_mono = 'active';
 				}
+				
+				echo '<a title="Light" class="styleswitch styleswitch-light '.$active_light.'" href="acp.php?tn='.$tn.'&theme=light">'.$icon['circle'].'</a>';
+				echo '<a title="Light Mono" class="styleswitch styleswitch-light-mono '.$active_light_mono.'" href="acp.php?tn='.$tn.'&theme=light_mono">'.$icon['circle'].'</a>';
+				echo '<a title="Dark" class="styleswitch styleswitch-dark '.$active_dark.'" href="acp.php?tn='.$tn.'&theme=dark">'.$icon['circle'].'</a>';
+				echo '<a title="Dark Mono" class="styleswitch styleswitch-dark-mono '.$active_dark_mono.'" href="acp.php?tn='.$tn.'&theme=dark_mono">'.$icon['circle'].'</a>';
 			?>
-			<button type="button" class="btn btn-dark btn-sm" data-toggle="modal" data-target="#uploadModal"><?php echo $icon['upload']; ?> Upload</button>
+			<div class="divider"></div>
+			<button type="button" class="btn btn-fc btn-sm" data-bs-toggle="modal" data-bs-target="#uploadModal"><?php echo $icon['upload']; ?> Upload</button>
 		</div>
 		<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-hidden="true">
 		  <div class="modal-dialog modal-lg">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <h4 class="modal-title" id="myModalLabel"><?php echo $icon['upload']; ?> Upload</h4>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		      </div>
 		      <div class="modal-body">
 		        <?php include 'core/files.upload.php'; ?>
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-fc" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-fc" data-bs-dismiss="modal">Close</button>
 		      </div>
 		    </div>
 		  </div>
 		</div>
 
 
+		<!-- Add fancyBox -->
+		<script type="text/javascript" src="./js/jquery.fancybox.min.js?v=2.1.5"></script>
+		
+		<!-- Tags -->
+		<script type="text/javascript" src="../lib/js/bootstrap-tagsinput.min.js"></script>
+		<script type="text/javascript" src="../lib/js/jquery/jquery.textareaCounter.plugin.js"></script>
+
+		<!-- bootstrap -->
+		<script src="theme/bootstrap5/js/bootstrap.bundle.min.js"></script>
+		
+
 
 		<script type="text/javascript">
 			
-			$(function() {
 
+			
+			$(function() {
+				
 				/* toggle editor class [mceEditor|plain|aceEditor_html] */
 				var editor_mode = localStorage.getItem('editor_mode');	
 				if(!editor_mode) {
@@ -503,14 +540,16 @@ if(isset($set_acptheme)) {
 		  		}
 		  		if(mode == 'optE2') {
 			  		/* switch to plain textarea */
-			  		divEditor.remove();
-		    		textEditor.addClass('plain form-control switchEditor');
-		    		textEditor.css("display","block");
-		    		textEditor.css("visibility","visible");
 			  		if(tinymce.editors.length > 0) {
+				  		tinymce.EditorManager.execCommand('mceRemoveEditor',true, '#textEditor');
 				  		$('div.mceEditor').remove();
 							tinymce.remove('.switchEditor');
+							tinymce.remove();
 						}
+			  		divEditor.remove();
+		    		textEditor.addClass('plain form-control switchEditor');
+		    		textEditor.css("visibility","visible");
+		    		textEditor.css("display","flex");
 		  		}
 		  		if(mode == 'optE3') {
 			  		/* switch to ace editor */
@@ -521,7 +560,10 @@ if(isset($set_acptheme)) {
 						}
 						textEditor.addClass('aceEditor_code form-control switchEditor');
 		    		setAceEditor();
-		  		}	
+		  		}
+		  		
+		  		$("input[name='optEditor']").parent().removeClass('active');
+		  		$("input[value="+mode+"]").parent().addClass('active');
 					
 				}
 				
@@ -560,48 +602,33 @@ if(isset($set_acptheme)) {
 				
 				$("#toggleExpand").click(function() {
 				  $('.info-collapse').toggleClass('info-hide');
-				  $('.glyphicon-collapse-down').toggleClass('glyphicon-collapse-up');
-				  $('.controls-container .btn-sm').toggleClass('btn-xs');
 				});
-							
-
-				$('#bsTabs').tab();				
+				
 					
 		  	setTimeout(function() {
 		        $(".alert-auto-close").slideUp('slow');
 				}, 2000);
 			
 				$('#showVersions').collapse('hide');
-				
-				$('.tooltip_bottom').tooltip({
-					placement: 'bottom',
-					delay: { show: 1000, hide: 100 }
-				})
 			
-				$('.tooltip').tooltip();
-				$('[data-toggle="popover"]').popover()
+				$('[data-bs-toggle="popover"]').popover();
+				$('[data-bs-toggle="tooltip"]').tooltip();
+				
+				var clipboard = new ClipboardJS('.copy-btn');
 
-				
-				$(".fancybox").fancybox();
-				
-				$(".fancybox-iframe").fancybox({
-					type: 'iframe',
-					autoWidth: true,
-					autoHeight: true
-				});
-				
-				$(".fancybox-docs").fancybox({
-					type: 'iframe',
-					width: '77%',
-					height: '90%',
-					buttons: ['close'],
-				});
 												
 				$(".fancybox-ajax").fancybox({
 					type: 'ajax',
 					minWidth: '450px',
 					height: '90%'
 				});
+				
+				$(".fancybox-iframe").fancybox({
+					type: 'iframe',
+					width: '90%',
+					height: '90%',
+					buttons: ['close']
+				});			
 				
 				
 				$("select.image-picker").imagepicker({
@@ -619,26 +646,6 @@ if(isset($set_acptheme)) {
 			    });
 				});
 				
-				$( "#chat_container" ).load( "core/ajax.chat.php" );
-
-			
-	      $(document).on('mouseenter', '.hiddenControls', function () {
-					$(this).find('.controls').fadeIn();
-	      }).on('mouseleave', '.hiddenControls', function () {
-					$(this).find('.controls').hide();
-				});
-
-		    
-				$(document).on('click', 'a[href^=\\#]', function(e){
-        	e.preventDefault();
-					var id = $(this).attr('href');
-					$('html,body').animate({scrollTop: $(id).offset().top}, 500);
-    		});		    
-		    
-				
-		    
-		    
-				
 				Dropzone.options.myDropzone = {
 			  	init: function() {
 			    	this.on("success", function(file, responseText) {
@@ -655,16 +662,14 @@ if(isset($set_acptheme)) {
 					}
 				};
 	
-			  var options = {   
+
+			  $('.cntValues').textareaCount({   
 			      'originalStyle': 'text-left',
-			      'displayFormat': '<span class="label label-default">#input</span> <span class="label label-default">#words</span>'  
-			  };  
-			  $('.cntValues').textareaCount(options);  
+			      'displayFormat': '<span class="badge bg-secondary">#input</span> <span class="badge bg-secondary">#words</span>'  
+			  });  
 			  
 		
 
-			
-				$.fn.matchHeight._update('.equal');
 				
 				/* css and html editor for page header */
 				if($('#CSSeditor').length != 0) {
@@ -933,7 +938,6 @@ $(function(){
     if(auto_logout !== false) {
 	    countdown.startInterval();
     }
-    
 
 </script>
 

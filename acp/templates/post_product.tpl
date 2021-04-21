@@ -4,10 +4,10 @@
 			<div class="card">
 				<div class="card-header">
 			<ul class="nav nav-tabs card-header-tabs" id="bsTabs" role="tablist">
-				<li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#intro">{post_tab_intro}</a></li>
-				<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#content">{post_tab_content}</a></li>
-				<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#product">{post_tab_product}</a></li>
-				<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#prefs">{post_tab_preferences}</a></li>
+				<li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#intro">{post_tab_intro}</a></li>
+				<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#content">{post_tab_content}</a></li>
+				<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#product">{post_tab_product}</a></li>
+				<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#prefs">{post_tab_preferences}</a></li>
 			</ul>
 				</div>
 				<div class="card-body">
@@ -180,6 +180,9 @@
 				</fieldset>
 				<fieldset>
 					<legend>{label_comments}</legend> {select_comments}
+				</fieldset>
+				<fieldset>
+					<legend>{labels}</legend> {post_labels}
 				</fieldset>
 				<input name="post_type" type="hidden" value="{post_type}">
 				<input name="modus" type="hidden" value="{modus}">

@@ -3,7 +3,7 @@
 		{preview_img}
 	</div>
 	<div class="col-md-5">
-		<a href="{preview_link}">{short_filename}</a>
+		<a href="{preview_link}">{short_filename}</a> {labels}
 	</div>
 	<div class="col-md-2">
 		{filesize}

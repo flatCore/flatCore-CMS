@@ -125,7 +125,7 @@ if(!empty($_GET['plg'])) {
 			if($status == 'success') {
 				$show_status = "<span class='badge badge-success'>ok</span>";
 			} else {
-				$show_status = '<span class="badge badge-danger">'.$status.'</span>';
+				$show_status = '<span class="badge bg-danger">'.$status.'</span>';
 				$cnt_errors++;
 			}
 			
@@ -188,7 +188,7 @@ if(!empty($_GET['mod'])) {
 			if($status == 'success') {
 				$show_status = "<span class='badge badge-success'>ok</span>";
 			} else {
-				$show_status = '<span class="badge badge-danger">'.$status.'</span>';
+				$show_status = '<span class="badge bg-danger">'.$status.'</span>';
 				$cnt_errors++;
 			}
 			
@@ -256,7 +256,7 @@ if(!empty($_GET['installtheme'])) {
 			if($status == 'success') {
 				$show_status = "<span class='badge badge-success'>ok</span>";
 			} else {
-				$show_status = '<span class="badge badge-danger">'.$status.'</span>';
+				$show_status = '<span class="badge bg-danger">'.$status.'</span>';
 				$cnt_errors++;
 			}
 			
@@ -302,7 +302,7 @@ if(is_dir('../upload')) {
 				echo '<tr>';
 				echo '<td>Module:</td><td><strong>'.$this_pathinfo['basename'].'</strong> <small>Upload time: '.$filemtime.'</small></td>';
 				echo '<td>';
-				echo '<div class="btn-group float-right">';
+				echo '<div class="btn-group float-end">';
 				echo '<a href="?tn=moduls&sub=u&mod='.$this_pathinfo['basename'].'" class="btn btn-fc">Install</a>';
 				echo '<a href="?tn=moduls&sub=u&dir=modules&del='.$this_pathinfo['basename'].'" class="btn btn-danger">'.$lang['delete'].'</a>';
 				echo '</div>';
@@ -314,7 +314,7 @@ if(is_dir('../upload')) {
 				echo '<tr>';
 				echo '<td>Plugin:</td><td><strong>'.$this_pathinfo['basename'].'</strong> <small>Upload time: '.$filemtime.'</small></td>';
 				echo '<td>';
-				echo '<div class="btn-group float-right">';
+				echo '<div class="btn-group float-end">';
 				echo '<a href="?tn=moduls&sub=u&plg='.$this_pathinfo['basename'].'" class="btn btn-fc">Install</a>';
 				echo '<a href="?tn=moduls&sub=u&dir=plugins&del='.$this_pathinfo['basename'].'" class="btn btn-danger">'.$lang['delete'].'</a>';
 				echo '</div>';
@@ -326,7 +326,7 @@ if(is_dir('../upload')) {
 				echo '<tr>';
 				echo '<td>Theme:</td><td><strong>'.$this_pathinfo['basename'].'</strong> <small>Upload time: '.$filemtime.'</small></td>';
 				echo '<td>';
-				echo '<div class="btn-group float-right">';
+				echo '<div class="btn-group float-end">';
 				echo '<a href="?tn=moduls&sub=u&installtheme='.$this_pathinfo['basename'].'" class="btn btn-fc">Install</a>';
 				echo '<a href="?tn=moduls&sub=u&dir=themes&del='.$this_pathinfo['basename'].'" class="btn btn-danger">'.$lang['delete'].'</a>';
 				echo '</div>';

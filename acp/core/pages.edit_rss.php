@@ -3,7 +3,9 @@
 //prohibit unauthorized access
 require 'core/access.php';
 
+echo '<div class="subHeader">';
 echo '<h3>RSS <small>Feed</small></h3>';
+echo '</div>';
 
 if($_REQUEST['delete'] != "") {
 	$delete = (int) $_REQUEST['delete'];	

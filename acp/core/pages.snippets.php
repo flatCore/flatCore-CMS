@@ -326,41 +326,15 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	
 	/* list snippets */
 	
+	
 	echo '<div class="app-container">';
-	echo '<nav class="navbar navbar-expand-sm navbar-fc">';
-
-	echo '<ul class="navbar-nav">';
-	echo '<li class="nav-item"><a class="nav-link '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle ('.$cnt['cnt_snippets'].')</a></li>';
-	echo '<li class="nav-item"><a class="nav-link '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System ('.$cnt['cnt_system_snippets'].')</a></li>';
-	echo '<li class="nav-item mr-3"><a class="nav-link '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene ('.$cnt['cnt_custom_snippets'].')</a></li>';
-	
-	echo $lang_dropdown;
-	echo $label_dropdown;
-	
-	echo '</ul>';
-
-	
-	echo '<a href="?tn=pages&sub=snippets&snip_id=n" class="nav-link text-success">'.$icon['plus'].' '.$lang['new'].'</a>';
-
-	echo '<form action="acp.php?tn=pages&sub=snippets" method="POST" class="form-inline ml-auto dirtyignore">';
-	echo '<div class="input-group">';
-	echo '<div class="input-group-prepend"><span class="input-group-text">'.$icon['filter'].'</span></div>';
-	echo '<input class="form-control" type="text" name="snippet_filter" value="" placeholder="Filter">';
-	echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
-	echo '</div>';
-	echo '</form>';
-	
-
-	
-	echo '</nav>';
-	
-		if($btn_remove_keyword != '') {
-			echo '<div class="float-right">';
-		echo '<p style="padding-top:5px;">'.$btn_remove_keyword.'</p>';
-			echo '</div>';
-	}
-		
 	echo '<div class="max-height-container">';
+	
+	echo '<div class="row">';
+	echo '<div class="col-md-9">';
+	
+	echo '<div class="card p-3">';
+	
 	echo '<div class="scroll-box">';
 	
 	echo '<table class="table table-hover table-striped table-sm mt-3">';
@@ -457,7 +431,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 			foreach($snippet_images as $img) {
 				if(is_file("$img")) {
 					$x++;
-					echo '<a data-toggle="popover" data-trigger="hover" data-html="true" data-content="<img src=\''.$img.'\'>">'.$icon['images'].'</a> ';
+					echo '<a data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="<img src=\''.$img.'\'>">'.$icon['images'].'</a> ';
 				}
 				if($x>2) {
 					echo '<small>(...)</small>';
@@ -468,7 +442,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 		echo '</td>';
 		echo '<td>';
 		if($get_snip_url != '') {
-			echo '<a data-toggle="popover" data-trigger="hover" data-html="true" title="'.$get_snip_url_title.'" data-content="URL: '.$get_snip_url.'<br>Name: '.$get_snip_url_name.'<br>'.$lang['label_classes'].': '.$get_snip_url_classes.'">'.$icon['link'].'</a>';
+			echo '<a data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" title="'.$get_snip_url_title.'" data-bs-content="URL: '.$get_snip_url.'<br>Name: '.$get_snip_url_name.'<br>'.$lang['label_classes'].': '.$get_snip_url_classes.'">'.$icon['link'].'</a>';
 		}
 		echo '</td>';
 		echo '<td nowrap><small>'.$icon['clock']. ' '.date('Y.m.d H:i:s',$get_snip_lastedit).'<br>'.$icon['user'].' '.$get_snip_lastedit_from.'</small></td>';
@@ -494,10 +468,53 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	echo '</div>'; //EOL PAGINATION
 	
 	echo '</div>';
+	
+	echo '</div>'; // card
+	
+	echo '</div>';
+	echo '<div class="col-md-3">';
+
+
+	/* sidebar */
+	
+	echo '<a href="?tn=pages&sub=snippets&snip_id=n" class="btn btn-success w-100">'.$icon['plus'].' '.$lang['new'].'</a><hr>';
+	
+	echo '<div class="card">';
+	echo '<div class="card-header">FILTER</div>';
+	echo '<div class="card-body">';
+
+	echo '<form action="acp.php?tn=pages&sub=snippets" method="POST" class="form-inline ms-auto dirtyignore">';
+	echo '<div class="input-group">';
+	echo '<span class="input-group-text">'.$icon['search'].'</span>';
+	echo '<input class="form-control" type="text" name="snippet_filter" value="" placeholder="'.$lang['button_search'].'">';
+	echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+	echo '</div>';
+	echo '</form>';
+	
+	echo '<div class="btn-group d-flex my-3">';
+	echo '<a class="btn btn-fc w-100 '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle <span class="badge badge-fc position-absolute top-0 end-0">'.$cnt['cnt_snippets'].'</span></a>';
+	echo '<a class="btn btn-fc w-100 '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System <span class="badge badge-fc position-absolute top-0 end-0">'.$cnt['cnt_system_snippets'].'</span></a>';
+	echo '<a class="btn btn-fc w-100 '.$active_own.'" href="?tn=pages&sub=snippets&type=3">Eigene <span class="badge badge-fc position-absolute top-0 end-0">'.$cnt['cnt_custom_snippets'].'</span></a>';
+	echo '</div>';
+	
+	echo $lang_filter_box;
+	echo $label_filter_box;
+	
+	echo '</div>'; // card-body
+	echo '</div>'; // card
+	
+	/* end of sidebar */
+
+
+
+	echo '</div>';
+	echo '</div>';
+	
+	
 	echo '</div>';
 
 	echo '</div>'; // .app-container
-
+	
 	
 }
 ?>

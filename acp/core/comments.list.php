@@ -190,7 +190,7 @@ for($i=0;$i<$cnt_comments;$i++) {
 	echo '<div class="col-md-2">';
 	
 	echo '<form class="form-inline" action="?tn=comments&sub=list#comid'.$comment_id.'" method="POST">';
-	echo '<button type="submit" class="btn btn-sm btn-block btn-fc" name="editid" value="'.$comment_id.'">'.$lang['edit'].'</button>';
+	echo '<button type="submit" class="btn btn-sm w-100 btn-fc" name="editid" value="'.$comment_id.'">'.$lang['edit'].'</button>';
 	echo '</form>';
 	echo '</div>';
 	echo '<div class="col-md-1">';
@@ -199,12 +199,12 @@ for($i=0;$i<$cnt_comments;$i++) {
 		$btn_class = 'btn-fc';
 	}
 	echo '<form class="form-inline" action="?tn=comments&sub=list" method="POST">';
-	echo '<button type="submit" class="btn btn-sm btn-block '.$btn_class.'" name="change_status" value="'.$comment_id.'">'.$icon['check'].'</button>';
+	echo '<button type="submit" class="btn btn-sm w-100 '.$btn_class.'" name="change_status" value="'.$comment_id.'">'.$icon['check'].'</button>';
 	echo '</form>';
 	echo '</div>';
 	echo '<div class="col-md-1">';	
 	echo '<form class="form-inline" action="?tn=comments&sub=list" method="POST">';
-	echo '<button type="submit" class="btn btn-sm btn-block btn-danger" name="delid" value="'.$comment_id.'">'.$icon['trash_alt'].'</button>';
+	echo '<button type="submit" class="btn btn-sm w-100 btn-danger" name="delid" value="'.$comment_id.'">'.$icon['trash_alt'].'</button>';
 	echo '</form>';
 	echo '</div>';
 	echo '</div>';
@@ -247,6 +247,9 @@ echo '</div>';
 echo '<div class="col-md-3">';
 
 /* sidebar */
+
+
+echo '<div class="card p-3">';
 
 /* show select for status */
 
@@ -309,6 +312,7 @@ echo '</select>';
 echo '</form>';
 echo '</fieldset>';
 
+echo '</div>'; //card
 
 
 echo '</div>';

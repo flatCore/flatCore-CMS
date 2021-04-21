@@ -41,9 +41,9 @@ echo '<div class="card">';
 echo '<div class="card-header">';
 
 echo '<ul class="nav nav-tabs card-header-tabs" id="bsTabs" role="tablist">';
-echo '<li class="nav-item"><a class="nav-link active" href="#content" data-toggle="tab">'.$lang['tab_content'].'</a></li>';
-echo '<li class="nav-item"><a class="nav-link" href="#images" data-toggle="tab">'.$lang['images'].'</a></li>';
-echo '<li class="nav-item"><a class="nav-link" href="#link" data-toggle="tab">'.$lang['label_url'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link active" href="#content" data-bs-toggle="tab">'.$lang['tab_content'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#images" data-bs-toggle="tab">'.$lang['images'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#link" data-bs-toggle="tab">'.$lang['label_url'].'</a></li>';
 echo '</ul>';
 
 echo '</div>';
@@ -155,9 +155,10 @@ echo '</div>';
 
 if($textlib_name != '') {
 	$get_snip_name_editor = '[snippet]'.$textlib_name.'[/snippet]';
-	echo '<hr><div class="form-group">';
-	echo '<label>Snippet</label>';
-	echo '<input type="text" class="form-control" placeholder="[snippet]...[/snippet]" value="'.$get_snip_name_editor.'" readonly>';
+	echo '<hr><label>Snippet</label>';
+	echo '<div class="input-group">';
+	echo '<input type="text" class="form-control" id="copy_snip" placeholder="[snippet]...[/snippet]" value="'.$get_snip_name_editor.'" readonly>';
+	echo '<button type="button" class="btn btn-fc copy-btn" data-clipboard-target="#copy_snip">'.$icon['clipboard'].'</button>';
 	echo '</div>';
 }
 
@@ -172,10 +173,10 @@ echo '<div class="card-body" style="padding-left:20px;padding-right:20px;">';
 
 
 echo '<div class="form-group">';
-echo '<div class="btn-group btn-group-toggle d-flex" data-toggle="buttons" role="flex">';
-echo '<label class="btn btn-sm btn-fc w-100"><input type="radio" name="optEditor" value="optE1"> WYSIWYG</label>';
-echo '<label class="btn btn-sm btn-fc w-100"><input type="radio" name="optEditor" value="optE2"> Text</label>';
-echo '<label class="btn btn-sm btn-fc w-100"><input type="radio" name="optEditor" value="optE3"> Code</label>';
+echo '<div class="btn-group btn-group-toggle d-flex" data-bs-toggle="buttons" role="flex">';
+echo '<label class="btn btn-sm btn-fc"><input type="radio" class="btn-check" name="optEditor" value="optE1"> WYSIWYG</label>';
+echo '<label class="btn btn-sm btn-fc"><input type="radio" class="btn-check" name="optEditor" value="optE2"> Text</label>';
+echo '<label class="btn btn-sm btn-fc"><input type="radio" class="btn-check" name="optEditor" value="optE3"> Code</label>';
 echo '</div>';
 echo '</div>';
 
@@ -291,12 +292,12 @@ echo '</div>';
 
 echo '<div class="well well-sm">';
 if($modus == 'new') {
-	echo '<input type="submit" name="save_snippet" class="btn btn-save btn-block" value="'.$lang['save'].'">';
+	echo '<input type="submit" name="save_snippet" class="btn btn-save w-100" value="'.$lang['save'].'">';
 } else if($modus == 'duplicate') {
-	echo '<input type="submit" name="save_snippet" class="btn btn-save btn-block" value="'.$lang['duplicate'].'">';
+	echo '<input type="submit" name="save_snippet" class="btn btn-save w-100" value="'.$lang['duplicate'].'">';
 } else {
 	echo '<input type="hidden" name="snip_id" value="'.$snip_id.'">';
-	echo '<input type="submit" name="save_snippet" class="btn btn-save btn-block" value="'.$lang['update'].'"> ';
+	echo '<input type="submit" name="save_snippet" class="btn btn-save w-100" value="'.$lang['update'].'"> ';
 	echo '<div class="mt-1 d-flex">';
 	echo '<a class="btn btn-fc w-100 mr-1" href="acp.php?tn=pages&sub=snippets">'.$lang['discard_changes'].'</a> ';
 	echo '<input type="submit" name="delete_snippet" class="btn btn-fc text-danger" value="'.$lang['delete'].'" onclick="return confirm(\''.$lang['confirm_delete_data'].'\')">';

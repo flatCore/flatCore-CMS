@@ -4,6 +4,7 @@
 	{preview_img}
 	<div class="card-body p-1">
 		<p class="m-0 text-center"><small>{show_filetime} / {filesize}</small></p>
+		 {labels}
 	</div>
 	<div class="card-footer p-1">
 		<form action="?tn=filebrowser" method="POST">

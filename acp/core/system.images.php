@@ -135,24 +135,24 @@ echo '<form action="acp.php?tn=system&sub=images" method="POST" class="form-hori
 $prefs_maximage_input  = '<div class="row"><div class="col-md-6">';
 $prefs_maximage_input .= '<div class="input-group">';
 $prefs_maximage_input .= '<input class="form-control" type="text" name="prefs_maximagewidth" value="'.$prefs_maximagewidth.'">';
-$prefs_maximage_input .= '<div class="input-group-append"><span class="input-group-text"><i class="fas fa-arrows-alt-h"></i></span></div>';
+$prefs_maximage_input .= '<span class="input-group-text"><i class="fas fa-arrows-alt-h"></i></span>';
 $prefs_maximage_input .= '</div>';
 $prefs_maximage_input .= '</div><div class="col-md-6">';
 $prefs_maximage_input .= '<div class="input-group">';
 $prefs_maximage_input .= '<input class="form-control" type="text" name="prefs_maximageheight" value="'.$prefs_maximageheight.'">';
-$prefs_maximage_input .= '<div class="input-group-append"><span class="input-group-text"><i class="fas fa-arrows-alt-v"></i></span></div>';
+$prefs_maximage_input .= '<span class="input-group-text"><i class="fas fa-arrows-alt-v"></i></span>';
 $prefs_maximage_input .= '</div>';
 $prefs_maximage_input .= '</div></div>';
 
 $prefs_maxtmb_input  = '<div class="row"><div class="col-md-6">';
 $prefs_maxtmb_input .= '<div class="input-group">';
 $prefs_maxtmb_input .= '<input class="form-control" type="text" name="prefs_maxtmbwidth" value="'.$prefs_maxtmbwidth.'">';
-$prefs_maxtmb_input .= '<div class="input-group-append"><span class="input-group-text"><i class="fas fa-arrows-alt-h"></i></span></div>';
+$prefs_maxtmb_input .= '<span class="input-group-text"><i class="fas fa-arrows-alt-h"></i></span>';
 $prefs_maxtmb_input .= '</div>';
 $prefs_maxtmb_input .= '</div><div class="col-md-6">';
 $prefs_maxtmb_input .= '<div class="input-group">';
 $prefs_maxtmb_input .= '<input class="form-control" type="text" name="prefs_maxtmbheight" value="'.$prefs_maxtmbheight.'">';
-$prefs_maxtmb_input .= '<div class="input-group-append"><span class="input-group-text"><i class="fas fa-arrows-alt-v"></i></span></div>';
+$prefs_maxtmb_input .= '<span class="input-group-text"><i class="fas fa-arrows-alt-v"></i></span>';
 $prefs_maxtmb_input .= '</div>';
 $prefs_maxtmb_input .= '</div></div>';
 

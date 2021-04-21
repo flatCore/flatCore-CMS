@@ -197,6 +197,54 @@ $cat_btn_group .= '</div>';
 $cat_btn_group .= '</div>';
 
 
+/* filter buttons for labels */
+
+if(!isset($_SESSION['checked_label_str'])) {
+	$_SESSION['checked_label_str'] = '';
+}
+
+$a_checked_labels = explode('-', $_SESSION['checked_label_str']);
+
+if(isset($_GET['switchLabel'])) {
+	
+		if(in_array($_GET['switchLabel'], $a_checked_labels)) {
+			/* remove label*/
+			if(($key = array_search($_GET['switchLabel'], $a_checked_labels)) !== false) {
+				unset($a_checked_labels[$key]);
+			}
+		} else {
+			/* add label */
+			$a_checked_labels[] = $_GET['switchLabel'];
+		}
+
+		$_SESSION['checked_label_str'] = implode('-', $a_checked_labels);
+}
+
+$a_checked_labels = explode('-', $_SESSION['checked_label_str']);
+
+$label_filter_box  = '<div class="card mt-2">';
+$label_filter_box .= '<div class="card-header p-1 px-2">'.$lang['labels'].'</div>';
+$label_filter_box .= '<div class="card-body">';
+$this_btn_status = '';
+foreach($fc_labels as $label) {
+	
+	if(in_array($label['label_id'], $a_checked_labels)) {
+		$this_btn_status = 'active';
+	} else {
+		$this_btn_status = '';
+	}		
+
+	$label_title = '<span class="label-dot" style="background-color:'.$label['label_color'].';"></span> '.$label['label_title'];
+	$label_filter_box .= '<a href="acp.php?tn=posts&sub=list&switchLabel='.$label['label_id'].'" class="btn btn-fc btn-sm m-1 '.$this_btn_status.'">'.$label_title.'</a>';
+	
+}
+$label_filter_box .= '</div>';
+$label_filter_box .= '</div>'; // card
+
+
+
+
+
 if((isset($_GET['posts_start'])) && is_numeric($_GET['posts_start'])) {
 	$posts_start = (int) $_GET['posts_start'];
 }
@@ -210,6 +258,7 @@ $posts_filter['languages'] = $_SESSION['checked_lang_string'];
 $posts_filter['types'] = $_SESSION['checked_type_string'];
 $posts_filter['status'] = $_SESSION['checked_status_string'];
 $posts_filter['categories'] = $_SESSION['checked_cat_string'];
+$posts_filter['labels'] = $_SESSION['checked_label_str'];
 
 
 $get_posts = fc_get_post_entries($posts_start,$posts_limit,$posts_filter);
@@ -221,10 +270,14 @@ $nextPage = $posts_start+$posts_limit;
 $prevPage = $posts_start-$posts_limit;
 $cnt_pages = ceil($cnt_filter_posts / $posts_limit);
 
+echo '<div class="subHeader">';
+echo '<h3>' . sprintf($lang['label_show_entries'], $cnt_filter_posts, $cnt_posts['All']) .'</h3>';
+echo '</div>';
+
 echo '<div class="row">';
 echo '<div class="col-md-9">';
 
-echo '<h4>' . sprintf($lang['label_show_entries'], $cnt_filter_posts, $cnt_posts['All']) .'</h4>';
+echo '<div class="card p-3">';
 
 if($cnt_filter_posts > 0) {
 
@@ -256,7 +309,7 @@ if($cnt_filter_posts > 0) {
 		$icon_fixed_form .= '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 		$icon_fixed_form .= '</form>';
 		
-		if($get_posts[$i]['status'] == 'draft') {
+		if($get_posts[$i]['post_status'] == '2') {
 			$draft_class = 'item_is_draft';
 		}
 		
@@ -286,9 +339,26 @@ if($cnt_filter_posts > 0) {
 				$image_src = "/$img_path/" . $post_image[1];
 			}
 		
-			$show_thumb  = '<a data-toggle="popover" data-trigger="hover" data-html="true" data-content="<img src=\''.$image_src.'\'>">';
+			$show_thumb  = '<a data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="<img src=\''.$image_src.'\'>">';
 			$show_thumb .= '<div class="show-thumb" style="background-image: url('.$image_src.');">';
 			$show_thumb .= '</div>';
+		}
+		
+		/* labels */
+		$get_labels = explode(',',$get_posts[$i]['post_labels']);
+		$label = '';
+		if($get_posts[$i]['post_labels'] != '') {
+			foreach($get_labels as $labels) {
+				
+				foreach($fc_labels as $l) {
+					if($labels == $l['label_id']) {
+						$label_color = $l['label_color'];
+						$label_title = $l['label_title'];
+					}
+				}
+				
+				$label .= '<span class="label-dot" style="background-color:'.$label_color.';" title="'.$label_title.'"></span>';
+			}
 		}
 	
 		
@@ -319,7 +389,7 @@ if($cnt_filter_posts > 0) {
 		
 		$show_events_date = '';
 		if($get_posts[$i]['post_type'] == 'e') {
-			$show_events_date = '<div class="float-right small well well-sm">';
+			$show_events_date = '<div class="float-end small well well-sm">';
 			$show_events_date .= date('Y-m-d',$get_posts[$i]['post_event_startdate']);
 			$show_events_date .= '<br>';
 			$show_events_date .= date('Y-m-d',$get_posts[$i]['post_event_enddate']);
@@ -343,7 +413,7 @@ if($cnt_filter_posts > 0) {
 			$post_price_gross = $post_price_net*($tax+100)/100;
 			$post_price_gross = fc_post_print_currency($post_price_gross);
 
-			$show_items_price = '<div class="float-right small well well-sm">';
+			$show_items_price = '<div class="float-end small well well-sm">';
 			$show_items_price .= $post_price_net . ' ('.$tax.'%)<br>';
 			$show_items_price .= $post_price_gross;
 			$show_items_price .= '</div>';		
@@ -353,7 +423,7 @@ if($cnt_filter_posts > 0) {
 			
 			$download_counter = 0;
 			$download_counter = $get_posts[$i]['post_file_attachment_hits'];
-			$show_items_price = '<div class="float-right small well well-sm">';
+			$show_items_price = '<div class="float-end small well well-sm">';
 			$show_items_price .= 'Downloads: '.$download_counter;
 			$show_items_price .= '</div>';
 		}
@@ -387,7 +457,7 @@ if($cnt_filter_posts > 0) {
 		echo '<td nowrap><small>'.$published_date.'<br>'.$release_date.'<br>'.$lastedit_date.'</small></td>';
 		echo '<td>'.$show_type.'</td>';
 		echo '<td>'.$show_thumb.'</td>';
-		echo '<td>'.$show_events_date.$show_items_price.$show_items_downloads.'<h5 class="mb-0">'.$get_posts[$i]['post_title'].'</h5><small>'.$trimmed_teaser.'</small></td>';
+		echo '<td>'.$show_events_date.$show_items_price.$show_items_downloads.'<h5 class="mb-0">'.$get_posts[$i]['post_title'].'</h5><small>'.$trimmed_teaser.'</small><br>'.$label.'</td>';
 		echo '<td style="min-width: 150px;">';
 		echo '<nav class="nav justify-content-end">';
 		echo '<form class="form-inline mr-1" action="?tn=posts&sub=edit" method="POST"><button class="btn btn-fc btn-sm text-success" type="submit" name="post_id" value="'.$get_posts[$i]['post_id'].'">'.$lang['edit'].'</button></form> ';
@@ -403,26 +473,30 @@ if($cnt_filter_posts > 0) {
 } else {
 	echo '<div class="alert alert-info">'.$lang['msg_no_posts_to_show'].'</div>';
 }
+
+echo '</div>'; // card
+
+
 echo '</div>';
 echo '<div class="col-md-3">';
 
 
+/* sidebar */
 
 
-
-echo '<button class="btn btn-block btn-success dropdown-toggle" type="button" data-toggle="collapse" data-target="#collapseNew">'.$lang['label_new_post'].'</button>';
+echo '<button class="btn w-100 btn-success dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNew">'.$lang['label_new_post'].'</button>';
 
 echo '<div class="collapse" id="collapseNew">';
 
 echo '<div class="list-group list-group-flush">';
-echo '<div class="list-group-item list-group-item-ghost"><a href="?tn=posts&sub=edit&new=m"><span class="color-message">'.$icon['plus'].'</span> '.$lang['post_type_message'].'</a></div>';
-echo '<div class="list-group-item list-group-item-ghost"><a href="?tn=posts&sub=edit&new=e"><span class="color-event">'.$icon['plus'].'</span> '.$lang['post_type_event'].'</a></div>';
-echo '<div class="list-group-item list-group-item-ghost"><a href="?tn=posts&sub=edit&new=i"><span class="color-image">'.$icon['plus'].'</span> '.$lang['post_type_image'].'</a></div>';
-echo '<div class="list-group-item list-group-item-ghost"><a href="?tn=posts&sub=edit&new=g"><span class="color-gallery">'.$icon['plus'].'</span> '.$lang['post_type_gallery'].'</a></div>';
-echo '<div class="list-group-item list-group-item-ghost"><a href="?tn=posts&sub=edit&new=v"><span class="color-video">'.$icon['plus'].'</span> '.$lang['post_type_video'].'</a></div>';
-echo '<div class="list-group-item list-group-item-ghost"><a href="?tn=posts&sub=edit&new=l"><span class="color-link">'.$icon['plus'].'</span> '.$lang['post_type_link'].'</a></div>';
-echo '<div class="list-group-item list-group-item-ghost"><a href="?tn=posts&sub=edit&new=p"><span class="color-product">'.$icon['plus'].'</span> '.$lang['post_type_product'].'</a></div>';
-echo '<div class="list-group-item list-group-item-ghost"><a href="?tn=posts&sub=edit&new=f"><span class="color-file">'.$icon['plus'].'</span> '.$lang['post_type_file'].'</a></div>';
+echo '<a class="list-group-item list-group-item-ghost" href="?tn=posts&sub=edit&new=m"><span class="color-message">'.$icon['plus'].'</span> '.$lang['post_type_message'].'</a>';
+echo '<a class="list-group-item list-group-item-ghost" href="?tn=posts&sub=edit&new=e"><span class="color-event">'.$icon['plus'].'</span> '.$lang['post_type_event'].'</a>';
+echo '<a class="list-group-item list-group-item-ghost" href="?tn=posts&sub=edit&new=i"><span class="color-image">'.$icon['plus'].'</span> '.$lang['post_type_image'].'</a>';
+echo '<a class="list-group-item list-group-item-ghost" href="?tn=posts&sub=edit&new=g"><span class="color-gallery">'.$icon['plus'].'</span> '.$lang['post_type_gallery'].'</a>';
+echo '<a class="list-group-item list-group-item-ghost" href="?tn=posts&sub=edit&new=v"><span class="color-video">'.$icon['plus'].'</span> '.$lang['post_type_video'].'</a>';
+echo '<a class="list-group-item list-group-item-ghost" href="?tn=posts&sub=edit&new=l"><span class="color-link">'.$icon['plus'].'</span> '.$lang['post_type_link'].'</a>';
+echo '<a class="list-group-item list-group-item-ghost" href="?tn=posts&sub=edit&new=p"><span class="color-product">'.$icon['plus'].'</span> '.$lang['post_type_product'].'</a>';
+echo '<a class="list-group-item list-group-item-ghost" href="?tn=posts&sub=edit&new=f"><span class="color-file">'.$icon['plus'].'</span> '.$lang['post_type_file'].'</a>';
 echo '</div>';
 echo '</div>';
 
@@ -431,9 +505,9 @@ echo '<hr>';
 echo '<div class="row">';
 echo '<div class="col-md-2">';
 if($prevPage < 0) {
-	echo '<a class="btn btn-fc btn-block disabled" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>';
+	echo '<a class="btn btn-fc w-100 disabled" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>';
 } else {
-	echo '<a class="btn btn-fc btn-block" href="acp.php?tn=posts&posts_start='.$prevPage.'" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>';
+	echo '<a class="btn btn-fc w-100" href="acp.php?tn=posts&posts_start='.$prevPage.'" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>';
 }
 
 echo '</div>';
@@ -454,9 +528,9 @@ echo '</form>';
 echo '</div>';
 echo '<div class="col-md-2">';
 if($nextPage < ($cnt_filter_posts-$posts_limit)+$posts_limit) {
-	echo '<a class="btn btn-fc btn-block" href="acp.php?tn=posts&posts_start='.$nextPage.'" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>';
+	echo '<a class="btn btn-fc w-100" href="acp.php?tn=posts&posts_start='.$nextPage.'" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>';
 } else {
-	echo '<a class="btn btn-fc btn-block disabled" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>';
+	echo '<a class="btn btn-fc w-100 disabled" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>';
 }
 echo '</div>';
 echo '</div>';
@@ -592,7 +666,13 @@ echo $cat_btn_group;
 
 echo '</div>';
 
+echo $label_filter_box;
+
 echo '</fieldset>';
+
+
+
+
 
 echo '</div>';
 echo '</div>';

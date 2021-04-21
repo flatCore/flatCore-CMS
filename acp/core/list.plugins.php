@@ -23,7 +23,7 @@ if(count($all_plugins)<1) {
 		$plugin_info = get_include_contents('../'.FC_CONTENT_DIR.'/plugins/'.$plugin);
 		$tpl_icon = "images/plugin-icon.png";
 		
-		$edit_btn = '<a class="btn btn-fc btn-sm" data-toggle="modal" data-target="#myModal'.$id.'" href="javascript:;">Source</a>';
+		$edit_btn = '<a class="btn btn-fc btn-sm" data-bs-toggle="modal" data-bs-target="#myModal'.$id.'" href="javascript:;">Source</a>';
 		
 		/* show the first comment block */
 		$help_btn = '';
@@ -32,7 +32,7 @@ if(count($all_plugins)<1) {
 			$help_btn = ' <a class="fancybox btn btn-fc btn-sm" href="#help'.$id.'">'.$icon['question'].'</a>';
 		}
 		
-		$btn_group = '<div class="btn-group float-right" role="group">'.$edit_btn.$help_btn.'</div>';
+		$btn_group = '<div class="btn-group float-end" role="group">'.$edit_btn.$help_btn.'</div>';
 		
 		/* shorten the filename if needed */
 		$plugin_name = basename($plugin,'.php');
@@ -68,13 +68,13 @@ if(count($all_plugins)<1) {
 		echo '<div class="modal-content">';
 		echo '<div class="modal-header">';
 		echo '<h4 class="modal-title" id="myModalLabel'.$id.'">'.$plugin.'</h4>';
-		echo '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+		echo '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
 		echo '</div>';
 		echo '<div class="modal-body">';
 		echo '<pre class="form-control" style="height:400px;overflow:auto;">'.htmlentities($plugin_src,ENT_QUOTES,"UTF-8").'</pre>';
 		echo '</div>';
 		echo '<div class="modal-footer">';
-		echo '<button type="button" class="btn btn-fc" data-dismiss="modal">Close</button>';
+		echo '<button type="button" class="btn btn-fc" data-bs-dismiss="modal">Close</button>';
 		echo '</div>';
 		echo '</div>';
 		echo '</div>';

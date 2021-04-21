@@ -4,7 +4,7 @@
 require 'core/access.php';
 
 
-echo '<hr class="shadow">';
+echo '<hr class="shadow-line">';
 
 echo '<div class="row">';
 
@@ -83,10 +83,10 @@ echo '<div class="card">';
 echo '<div class="card-header">';
 
 echo '<ul class="nav nav-tabs card-header-tabs" id="bsTabs" role="tablist">';
-echo '<li class="nav-item"><a class="nav-link active" href="#" data-target="#log" data-toggle="tab">'.$icon['file_alt'].' Logfile</a></li>';
-echo '<li class="nav-item"><a class="nav-link" href="#" data-target="#sitemap" data-toggle="tab">'.$icon['sitemap'].' sitemap.xml</a></li>';
-echo '<li class="nav-item"><a class="nav-link" href="#" data-target="#deleted_resources" data-toggle="tab">'.$icon['trash_alt'].' '.$lang['label_deleted_resources'].'</a></li>';
-echo '<li class="nav-item"><a class="nav-link" href="#" data-target="#config" data-toggle="tab">'.$icon['cogs'].' Config</a></li>';
+echo '<li class="nav-item"><a class="nav-link active" href="#" data-bs-target="#log" data-bs-toggle="tab">'.$icon['file_alt'].' Logfile</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#" data-bs-target="#sitemap" data-bs-toggle="tab">'.$icon['sitemap'].' sitemap.xml</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#" data-bs-target="#deleted_resources" data-bs-toggle="tab">'.$icon['trash_alt'].' '.$lang['label_deleted_resources'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#" data-bs-target="#config" data-bs-toggle="tab">'.$icon['cogs'].' Config</a></li>';
 echo '</ul>';
 
 echo '</div>';

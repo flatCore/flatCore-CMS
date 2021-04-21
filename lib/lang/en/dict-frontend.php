@@ -136,6 +136,7 @@ $lang['forgotten_psw_mail_info'] = "Hello {USERNAME},<br />You want to reset you
 
 $lang['forgotten_psw_mail_update']    = "<p>Hello {USERNAME},<br />Your password has been reset.</p> <p>Your new password is:<br />{temp_psw}</p>";
 $lang['posts_category_filter'] = 'Entries from Category <strong>{categorie}</strong>.';
+$lang['post_is_draft'] = 'This entry is a draft. Only administrators can see this entry.';
 
 /* comment */
 $lang['label_name'] = "Name";

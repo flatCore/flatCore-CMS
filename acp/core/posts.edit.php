@@ -12,12 +12,12 @@ if((isset($_POST['post_id'])) && is_numeric($_POST['post_id'])) {
 	$post_id = (int) $_POST['post_id'];
 	$modus = 'update';
 	$post_data = fc_get_post_data($post_id);
-	$submit_btn = '<input type="submit" class="btn btn-save btn-block" name="save_post" value="'.$lang['update'].'">';
+	$submit_btn = '<input type="submit" class="btn btn-save w-100" name="save_post" value="'.$lang['update'].'">';
 	
 } else {
 	$post_id = '';
 	$modus = 'new';
-	$submit_btn = '<input type="submit" class="btn btn-save btn-block" name="save_post" value="'.$lang['save'].'">';
+	$submit_btn = '<input type="submit" class="btn btn-save w-100" name="save_post" value="'.$lang['save'].'">';
 
 }
 
@@ -76,6 +76,10 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 	$product_price_net = str_replace('.', '', $_POST['post_product_price_net']);
 	$product_price_net = str_replace(',', '.', $product_price_net);
 	
+	/* labels */
+	
+	$post_labels = implode(",", $_POST['post_labels']);
+	
 	/* fix on top */
 	
 	if($_POST['post_fixed'] == 'fixed') {
@@ -115,7 +119,7 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 		$db_posts->insert("fc_posts", $inputs);
 		$post_id = $db_posts->id();
 		$modus = 'update';
-		$submit_btn = '<input type="submit" class="btn btn-save btn-block" name="save_post" value="'.$lang['update'].'">';
+		$submit_btn = '<input type="submit" class="btn btn-save w-100" name="save_post" value="'.$lang['update'].'">';
 	}
 	
 	/* update the rss url */
@@ -485,9 +489,37 @@ if($_GET['new'] == 'm' OR $post_data['post_type'] == 'm') {
 	$post_data['post_type'] = 'g';
 }
 
+/* replace all entries from $lang */
 foreach($lang as $k => $v) {
 	$form_tpl = str_replace('{'.$k.'}', $lang[$k], $form_tpl);
 }
+
+
+/* labels */
+
+$arr_checked_labels = explode(",", $post_data['post_labels']);
+
+for($i=0;$i<$cnt_labels;$i++) {
+	$label_title = $fc_labels[$i]['label_title'];
+	$label_id = $fc_labels[$i]['label_id'];
+	$label_color = $fc_labels[$i]['label_color'];
+	
+  if(in_array("$label_id", $arr_checked_labels)) {
+		$checked_label = "checked";
+	} else {
+		$checked_label = "";
+	}
+	
+	$checkbox_set_labels .= '<div class="form-check form-check-inline" style="border-bottom: 1px solid '.$label_color.'">';
+ 	$checkbox_set_labels .= '<input class="form-check-input" id="label'.$label_id.'" type="checkbox" '.$checked_label.' name="post_labels[]" value="'.$label_id.'">';
+ 	$checkbox_set_labels .= '<label class="form-check-label" for="label'.$label_id.'">'.$label_title.'</label>';
+	$checkbox_set_labels .= '</div>';
+}
+
+$form_tpl = str_replace('{post_labels}', $checkbox_set_labels, $form_tpl);
+
+
+
 
 /* user inputs */
 

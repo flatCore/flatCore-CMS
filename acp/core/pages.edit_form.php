@@ -16,17 +16,18 @@ echo '<div class="card">';
 echo '<div class="card-header">';
 
 echo '<ul class="nav nav-tabs card-header-tabs" id="bsTabs" role="tablist">';
-echo '<li class="nav-item"><a class="nav-link" href="#position" data-toggle="tab">Position</a></li>';
-echo '<li class="nav-item"><a class="nav-link active" href="#info" data-toggle="tab">'.$lang['tab_info'].'</a></li>';
-echo '<li class="nav-item"><a class="nav-link" href="#content" data-toggle="tab">'.$lang['tab_content'].'</a></li>';
-echo '<li class="nav-item"><a class="nav-link" href="#meta" data-toggle="tab">'.$lang['tab_meta'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#position" data-bs-toggle="tab">Position</a></li>';
+echo '<li class="nav-item"><a class="nav-link active" href="#info" data-bs-toggle="tab">'.$lang['tab_info'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#content" data-bs-toggle="tab">'.$lang['tab_content'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#meta" data-bs-toggle="tab">'.$lang['tab_meta'].'</a></li>';
 
-echo '<li class="nav-item ml-auto"><a class="nav-link" href="#posts" data-toggle="tab" title="'.$lang['tab_posts'].'">'.$icon['clipboard_list'].'</a></li>';
-echo '<li class="nav-item"><a class="nav-link" href="#addons" data-toggle="tab" title="'.$lang['tab_addons'].'">'.$icon['cogs'].'</a></li>';
-echo '<li class="nav-item"><a class="nav-link" href="#head" data-toggle="tab" title="'.$lang['tab_head'].'">'.$icon['code'].'</a></li>';
+echo '<li class="nav-item ms-auto"><a class="nav-link" href="#posts" data-bs-toggle="tab" title="'.$lang['tab_posts'].'">'.$icon['clipboard_list'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#addons" data-bs-toggle="tab" title="'.$lang['tab_addons'].'">'.$icon['cogs'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#head" data-bs-toggle="tab" title="'.$lang['tab_head'].'">'.$icon['code'].'</a></li>';
 if($cnt_custom_fields > 0) {
-	echo '<li class="nav-item"><a class="nav-link" href="#custom" data-toggle="tab" title="'.$lang['legend_custom_fields'].'">'.$icon['th_list'].'</a></li>';
+	echo '<li class="nav-item"><a class="nav-link" href="#custom" data-bs-toggle="tab" title="'.$lang['legend_custom_fields'].'">'.$icon['th_list'].'</a></li>';
 }
+echo '<li class="nav-item"><a class="nav-link" href="#shortcodes" data-bs-toggle="tab" title="Shortcodes">'.$icon['clipboard'].'</a></li>';
 
 
 
@@ -49,7 +50,7 @@ $(function() {
 		window.localStorage.removeItem("activeTab");
 	}
 	
-  $('a[data-toggle="tab"]').on('click', function(e) {
+  $('a[data-bs-toggle="tab"]').on('click', function(e) {
       window.localStorage.setItem('activeTab', $(e.target).attr('href'));
   });
   var activeTab = window.localStorage.getItem('activeTab');
@@ -336,19 +337,19 @@ echo '</div>'; /* EOL tab_info */
 echo '<div class="tab-pane fade" id="content">';
 
 echo '<div class="form-group">';
-echo '<div class="btn-group btn-group-toggle float-right" data-toggle="buttons" role="flex">';
-echo '<label class="btn btn-sm btn-fc"><input type="radio" name="optEditor" value="optE1"> WYSIWYG</label>';
-echo '<label class="btn btn-sm btn-fc"><input type="radio" name="optEditor" value="optE2"> Text</label>';
-echo '<label class="btn btn-sm btn-fc"><input type="radio" name="optEditor" value="optE3"> Code</label>';
+echo '<div class="btn-group float-end" role="group">';
+echo '<label class="btn btn-sm btn-fc"><input type="radio" class="btn-check" name="optEditor" value="optE1"> WYSIWYG</label>';
+echo '<label class="btn btn-sm btn-fc"><input type="radio" class="btn-check" name="optEditor" value="optE2"> Text</label>';
+echo '<label class="btn btn-sm btn-fc"><input type="radio" class="btn-check" name="optEditor" value="optE3"> Code</label>';
 echo '</div>';
 echo '</div>';
 
 echo '<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">';
 echo '<li class="nav-item nav-item-fc" role="presentation">';
-echo '<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-main" role="tab" aria-controls="pills-home" aria-selected="true">'.$lang['tab_content'].'</a>';
+echo '<a class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" href="#pills-main" role="tab" aria-controls="pills-home" aria-selected="true">'.$lang['tab_content'].'</a>';
 echo '</li>';
 echo '<li class="nav-item nav-item-fc" role="presentation">';
-echo '<a class="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-sub" role="tab" aria-controls="pills-home" aria-selected="false">'.$lang['tab_extracontent'].'</a>';
+echo '<a class="nav-link" id="pills-home-tab" data-bs-toggle="pill" href="#pills-sub" role="tab" aria-controls="pills-home" aria-selected="false">'.$lang['tab_extracontent'].'</a>';
 echo '</li>';
 echo '</ul>';
 
@@ -425,7 +426,7 @@ echo '</fieldset>';
 
 $robots = array("all", "noindex", "nofollow", "none", "noarchive", "nosnippet", "noodp", "notranslate", "noimageindex");
 
-$checkbox_robots = '<div class="btn-group btn-group-toggle" data-toggle="buttons">';
+$checkbox_robots = '<div class="btn-group btn-group-toggle" data-bs-toggle="buttons">';
 foreach($robots as $r) {
 	
 	$active = '';
@@ -436,8 +437,9 @@ foreach($robots as $r) {
 		$checked = 'checked';
 	}
 	
-	$checkbox_robots .= '<label class="btn btn-fc btn-sm '.$active.'">';
-	$checkbox_robots .= '<input type="checkbox" name="page_meta_robots[]" value="'.$r.'" '.$checked.'> '.$r;
+	
+	$checkbox_robots .= '<input type="checkbox" class="btn-check" id="btn-check-'.$r.'" name="page_meta_robots[]" value="'.$r.'" '.$checked.'>';
+	$checkbox_robots .= '<label class="btn btn-fc btn-sm" for="btn-check-'.$r.'">'.$r;
 	$checkbox_robots .= '</label>';
 }
 $checkbox_robots .= '</div>';
@@ -454,10 +456,10 @@ echo '<div class="tab-pane fade" id="head">';
 
 echo '<ul class="nav nav-pills mb-3" id="pills-tab-head" role="tablist">';
 echo '<li class="nav-item nav-item-fc" role="presentation">';
-echo '<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-head-styles" role="tab" aria-controls="pills-home" aria-selected="true">'.$lang['f_head_styles'].'</a>';
+echo '<a class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" href="#pills-head-styles" role="tab" aria-controls="pills-home" aria-selected="true">'.$lang['f_head_styles'].'</a>';
 echo '</li>';
 echo '<li class="nav-item nav-item-fc" role="presentation">';
-echo '<a class="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-head-code" role="tab" aria-controls="pills-home" aria-selected="false">'.$lang['f_head_enhanced'].'</a>';
+echo '<a class="nav-link" id="pills-home-tab" data-bs-toggle="pill" href="#pills-head-code" role="tab" aria-controls="pills-home" aria-selected="false">'.$lang['f_head_enhanced'].'</a>';
 echo '</li>';
 echo '</ul>';
 
@@ -658,6 +660,93 @@ echo '</div>'; /* EOL tab custom fields */
 
 }
 
+
+
+/* tab_info */
+echo'<div class="tab-pane fade" id="shortcodes">';
+
+echo '<div class="row">';
+echo '<div class="col-md-3">';
+echo '<h5>Shortcodes</h5>';
+$shortcodes = fc_get_shortcodes();
+
+echo '<div class="scroll-container" style="height:50vh">';
+foreach($shortcodes as $sc) {
+	echo '<div class="input-group">';
+	echo '<input type="text" class="form-control" id="copy_sc_'.md5($sc['textlib_shortcode']).'" value="'.$sc['textlib_shortcode'].'" readonly>';
+	echo '<button type="button" class="btn btn-fc copy-btn" data-clipboard-target="#copy_sc_'.md5($sc['textlib_shortcode']).'">'.$icon['clipboard'].'</button>';
+	echo '</div>';
+}
+echo '</div>';
+
+echo '</div>';
+echo '<div class="col-md-3">';
+echo '<h5>'.$lang['snippets'].'</h5>';
+
+$snippets = $db_content->select("fc_textlib","textlib_name", [
+	"OR" => [
+		"textlib_type" => "",
+		"textlib_type[!]" => "shortcode"
+	]
+]);
+
+echo '<div class="scroll-container" style="height:50vh">';
+foreach($snippets as $snip) {
+	echo '<div class="input-group">';
+	echo '<input type="text" class="form-control" id="copy_sc_'.md5($snip).'" value="[snippet='.basename($snip).'][/snippet]" readonly>';
+	echo '<button type="button" class="btn btn-fc copy-btn" data-clipboard-target="#copy_sc_'.md5($snip).'">'.$icon['clipboard'].'</button>';
+	echo '</div>';
+}
+echo '</div>';
+
+echo '</div>';
+echo '<div class="col-md-3">';
+echo '<h5>'.$lang['files'].'</h5>';
+
+$get_all_files = fc_get_all_media_data('application');
+
+foreach($get_all_files as $file) {
+	$file_names[] = $file['media_file'];
+}
+$file_names = array_unique($file_names);
+
+echo '<div class="scroll-container" style="height:50vh">';
+foreach($file_names as $file) {
+	echo '<div class="input-group">';
+	echo '<input type="text" class="form-control" id="copy_sc_'.md5($file).'" value="[file='.basename($file).'][/file]" readonly>';
+	echo '<button type="button" class="btn btn-fc copy-btn" data-clipboard-target="#copy_sc_'.md5($file).'">'.$icon['clipboard'].'</button>';
+	echo '</div>';
+}
+echo '</div>';
+
+echo '</div>';
+echo '<div class="col-md-3">';
+echo '<h5>'.$lang['images'].'</h5>';
+
+$get_all_images = fc_get_all_media_data('image');
+
+foreach($get_all_images as $img) {
+	$img_names[] = $img['media_file'];
+}
+$img_names = array_unique($img_names);
+
+
+echo '<div class="scroll-container" style="height:50vh">';
+foreach($img_names as $img) {
+	echo '<div class="input-group">';
+	echo '<input type="text" class="form-control" id="copy_sc_'.md5($img).'" value="[image='.basename($img).'][/image]" readonly>';
+	echo '<button type="button" class="btn btn-fc copy-btn" data-clipboard-target="#copy_sc_'.md5($img).'">'.$icon['clipboard'].'</button>';
+	echo '</div>';
+}
+echo '</div>';
+
+echo '</div>';
+
+echo '</div>';
+
+
+echo '</div>'; /* EOL tab shortcodes */
+
 echo '</div>';
 
 echo '</div>';
@@ -767,23 +856,19 @@ if($page_status == "") {
 }
 
 
-$select_page_status = '<div class="btn-group btn-group-vertical btn-group-toggle d-flex" data-toggle="buttons" role="group">';
+$select_page_status = '<div class="btn-group btn-group-vertical btn-group-toggle d-flex" data-bs-toggle="buttons" role="group">';
 
-$select_page_status .= '<label class="btn btn-sm btn-fc w-100 btn-public '.($page_status == "public" ? 'active' :'').' ">';
-$select_page_status .= "<input type='radio' name='page_status' value='public'".($page_status == "public" ? 'checked' :'')."> $lang[f_page_status_puplic]";
-$select_page_status .= '</label>';
+$select_page_status .= "<input type='radio' class='btn-check' id='toggle-btn-public' name='page_status' value='public'".($page_status == "public" ? 'checked' :'').">";
+$select_page_status .= '<label class="btn btn-sm btn-fc w-100 btn-public" for="toggle-btn-public">'.$lang['f_page_status_puplic'].'</label>';
 
-$select_page_status .= '<label class="btn btn-sm btn-fc w-100 btn-ghost '.($page_status == "ghost" ? 'active' :'').'">';
-$select_page_status .= "<input type='radio' name='page_status' value='ghost'".($page_status == "ghost" ? 'checked' :'')."> $lang[f_page_status_ghost]";
-$select_page_status .= '</label>';
+$select_page_status .= "<input type='radio' class='btn-check' id='toggle-btn-ghost' name='page_status' value='ghost'".($page_status == "ghost" ? 'checked' :'').">";
+$select_page_status .= '<label class="btn btn-sm btn-fc w-100 btn-ghost" for="toggle-btn-ghost">'.$lang['f_page_status_ghost'].'</label>';
 
-$select_page_status .= '<label class="btn btn-sm btn-fc w-100 btn-private '.($page_status == "private" ? 'active' :'').'">';
-$select_page_status .= "<input type='radio' name='page_status' value='private'".($page_status == "private" ? 'checked' :'')."> $lang[f_page_status_private]";
-$select_page_status .= '</label>';
+$select_page_status .= "<input type='radio' class='btn-check' id='toggle-btn-private' name='page_status' value='private'".($page_status == "private" ? 'checked' :'').">";
+$select_page_status .= '<label class="btn btn-sm btn-fc w-100 btn-private" for="toggle-btn-private">'.$lang['f_page_status_private'].'</label>';
 
-$select_page_status .= '<label class="btn btn-sm btn-fc w-100 btn-draft '.($page_status == "draft" ? 'active' :'').'">';
-$select_page_status .= "<input type='radio' name='page_status' value='draft'".($page_status == "draft" ? 'checked' :'')."> $lang[f_page_status_draft]";	
-$select_page_status .= '</label>';
+$select_page_status .= "<input type='radio' class='btn-check' id='toggle-btn-draft' name='page_status' value='draft'".($page_status == "draft" ? 'checked' :'').">";	
+$select_page_status .= '<label class="btn btn-sm btn-fc w-100 btn-draft" for="toggle-btn-draft">'.$lang['f_page_status_draft'].'</label>';
 
 $select_page_status .= '</div>';
 
@@ -855,7 +940,7 @@ for($i=0;$i<count($arr_groups);$i++) {
 
 echo '<div class="form-group">';
 echo '<div class="well well-sm">';
-echo '<a href="#" data-toggle="collapse" data-target="#usergroups">'.$lang['legend_choose_group'].'</a>';
+echo '<a href="#" data-bs-toggle="collapse" data-bs-target="#usergroups">'.$lang['legend_choose_group'].'</a>';
 echo '<div id="usergroups" class="collapse">';
 echo '<div class="p-3">';
 echo $checkbox_usergroup;
@@ -887,7 +972,7 @@ for($i=0;$i<$cnt_admins;$i++) {
 
 
 echo '<div class="well well-sm">';
-echo '<a href="#" data-toggle="collapse" data-target="#admins">'.$lang['f_page_authorized_admins'].'</a>';
+echo '<a href="#" data-bs-toggle="collapse" data-bs-target="#admins">'.$lang['f_page_authorized_admins'].'</a>';
 echo '<div id="admins" class="collapse">';
 echo '<div class="p-3">';
 echo $checkbox_set_authorized_admins;
@@ -922,7 +1007,7 @@ for($i=0;$i<$cnt_labels;$i++) {
 
 
 echo '<div class="well well-sm">';
-echo '<a href="#" data-toggle="collapse" data-target="#labels">'.$lang['labels'].'</a>';
+echo '<a href="#" data-bs-toggle="collapse" data-bs-target="#labels">'.$lang['labels'].'</a>';
 echo '<div id="labels" class="collapse">';
 echo '<div class="p-3">';
 echo $checkbox_set_labels;
@@ -952,7 +1037,7 @@ foreach($all_categories as $cats) {
 }
 
 echo '<div class="well well-sm">';
-echo '<a href="#" data-toggle="collapse" data-target="#categories">'.$lang['label_categories'].'</a>';
+echo '<a href="#" data-bs-toggle="collapse" data-bs-target="#categories">'.$lang['label_categories'].'</a>';
 echo '<div id="categories" class="collapse">';
 echo '<div class="p-3">';
 echo $checkbox_set_cat;

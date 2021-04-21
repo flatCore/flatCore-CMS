@@ -65,6 +65,9 @@ $lang['textlib'] = "Text Snippets";
 $lang['snippets'] = "Snippets";
 $lang['filename'] = "Filename";
 
+$lang['shortcode'] = 'Shortcode';
+$lang['shortcode_replacement'] = 'Replacement';
+
 $lang['save_new_page'] = "Save new Page";
 $lang['update_page'] = "Update Page";
 $lang['delete_page'] = "Delete Page";
