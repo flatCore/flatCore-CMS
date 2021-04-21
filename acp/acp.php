@@ -444,15 +444,7 @@ if(isset($set_acptheme)) {
 		</div>
 		
 		<div class="bottom-bar">
-			<?php
-				/*
-				if($acptheme == 'dark') {
-					echo '<a class="btn btn-sm btn-fc" href="acp.php?tn='.$tn.'&theme=true">Light Theme</a>';
-				} else {
-					echo '<a class="btn btn-sm btn-fc" href="acp.php?tn='.$tn.'&theme=true">Dark Theme</a>';
-				}
-				*/
-				
+			<?php			
 				if($acptheme == 'dark') {
 					$active_dark = 'active';
 				} else if($acptheme == 'dark_mono') {
@@ -463,13 +455,13 @@ if(isset($set_acptheme)) {
 					$active_light_mono = 'active';
 				}
 				
-				echo '<a class="styleswitch styleswitch-light '.$active_light.'" href="acp.php?tn='.$tn.'&theme=light">'.$icon['circle'].'</a>';
-				echo '<a class="styleswitch styleswitch-light-mono '.$active_light_mono.'" href="acp.php?tn='.$tn.'&theme=light_mono">'.$icon['circle'].'</a>';
-				echo '<a class="styleswitch styleswitch-dark '.$active_dark.'" href="acp.php?tn='.$tn.'&theme=dark">'.$icon['circle'].'</a>';
-				echo '<a class="styleswitch styleswitch-dark-mono '.$active_dark_mono.'" href="acp.php?tn='.$tn.'&theme=dark_mono">'.$icon['circle'].'</a>';
-				
+				echo '<a title="Light" class="styleswitch styleswitch-light '.$active_light.'" href="acp.php?tn='.$tn.'&theme=light">'.$icon['circle'].'</a>';
+				echo '<a title="Light Mono" class="styleswitch styleswitch-light-mono '.$active_light_mono.'" href="acp.php?tn='.$tn.'&theme=light_mono">'.$icon['circle'].'</a>';
+				echo '<a title="Dark" class="styleswitch styleswitch-dark '.$active_dark.'" href="acp.php?tn='.$tn.'&theme=dark">'.$icon['circle'].'</a>';
+				echo '<a title="Dark Mono" class="styleswitch styleswitch-dark-mono '.$active_dark_mono.'" href="acp.php?tn='.$tn.'&theme=dark_mono">'.$icon['circle'].'</a>';
 			?>
-			<button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#uploadModal"><?php echo $icon['upload']; ?> Upload</button>
+			<div class="divider"></div>
+			<button type="button" class="btn btn-fc btn-sm" data-bs-toggle="modal" data-bs-target="#uploadModal"><?php echo $icon['upload']; ?> Upload</button>
 		</div>
 		<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-hidden="true">
 		  <div class="modal-dialog modal-lg">

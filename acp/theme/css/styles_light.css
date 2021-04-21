@@ -13902,21 +13902,23 @@ div#bigHeader {
   right: 0;
   padding: 10px;
   z-index: 1005;
-  background: rgba(255, 255, 255, 0.9);
+  background: linear-gradient(0deg, #111 0%, #252525 100%);
   border-top-left-radius: 5px;
-  border: 1px solid rgba(242, 242, 242, 0.45);
+  box-shadow: 0px 0px 10px 0px rgba(1, 154, 221, 0.8);
 }
-.bottom-bar:hover {
-  background: rgba(255, 255, 255, 0.45);
+.bottom-bar .divider {
+  display: inline-block;
+  width: 10px;
 }
 .bottom-bar .styleswitch {
   display: inline-block;
   line-height: 1;
-  padding: 5px;
+  padding: 3px;
   margin: 0 2px;
   border-radius: 50%;
-  border: 1px solid rgba(204, 204, 204, 0.45);
+  border: 1px solid #000;
   background: rgba(230, 230, 230, 0.45);
+  opacity: 0.5;
 }
 .bottom-bar .styleswitch.styleswitch-light {
   color: #fff;
@@ -13934,7 +13936,11 @@ div#bigHeader {
   color: #333;
 }
 .bottom-bar .styleswitch.active {
-  box-shadow: 0px 0px 5px 0px rgba(1, 154, 221, 0.9);
+  box-shadow: 0px 0px 7px 2px rgba(1, 154, 221, 0.9);
+  opacity: 1;
+}
+.bottom-bar .styleswitch:hover {
+  opacity: 1;
 }
 
 div#wrapper {

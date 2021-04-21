@@ -248,6 +248,9 @@ echo '<div class="col-md-3">';
 
 /* sidebar */
 
+
+echo '<div class="card p-3">';
+
 /* show select for status */
 
 if($_SESSION['cf_status'] == 'all') {
@@ -309,6 +312,7 @@ echo '</select>';
 echo '</form>';
 echo '</fieldset>';
 
+echo '</div>'; //card
 
 
 echo '</div>';
