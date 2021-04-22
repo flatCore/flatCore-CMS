@@ -238,7 +238,7 @@ if(isset($set_acptheme)) {
 			var ace_theme = 'chrome';
 			var tinymce_skin = 'oxide';
 			var acptheme = "<?php echo $acptheme; ?>";
-			if(acptheme === 'dark') {
+			if(acptheme === 'dark' || acptheme === 'dark_mono') {
 				var ace_theme = 'twilight';
 				var tinymce_skin = 'oxide-dark';
 			}
