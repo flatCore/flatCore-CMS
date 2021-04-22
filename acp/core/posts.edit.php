@@ -302,7 +302,7 @@ $select_status .= '</select>';
 
 /* comments yes/no */
 
-if($post_comments == 1) {
+if($post_data['post_comments'] == 1) {
 	$sel_comments_yes = 'selected';
 	$sel_comments_no = '';
 } else {
@@ -310,12 +310,33 @@ if($post_comments == 1) {
 	$sel_comments_yes = '';
 }
 
-
 $select_comments  = '<select id="select_comments" name="post_comments"  class="custom-select form-control">';
 $select_comments .= '<option value="1" '.$sel_comments_yes.'>'.$lang['yes'].'</option>';
 $select_comments .= '<option value="2" '.$sel_comments_no.'>'.$lang['no'].'</option>';
 $select_comments .= '</select>';
 
+/* votings/reactions no, yes for registered users, yes for all */
+
+
+if($post_data['post_votings'] == 1 OR $post_data['post_votings'] == '') {
+	$sel_votings_1 = 'selected';
+	$sel_votings_2 = '';
+	$sel_votings_3 = '';
+} else if($post_data['post_votings'] == 2) {
+	$sel_votings_1 = '';
+	$sel_votings_2 = 'selected';
+	$sel_votings_3 = '';	
+} else {
+	$sel_votings_1 = '';
+	$sel_votings_2 = '';
+	$sel_votings_3 = 'selected';
+}
+
+$select_votings  = '<select id="select_votings" name="post_votings"  class="custom-select form-control">';
+$select_votings .= '<option value="1" '.$sel_votings_1.'>'.$lang['label_votings_off'].'</option>';
+$select_votings .= '<option value="2" '.$sel_votings_2.'>'.$lang['label_votings_on_registered'].'</option>';
+$select_votings .= '<option value="3" '.$sel_votings_3.'>'.$lang['label_votings_on_global'].'</option>';
+$select_votings .= '</select>';
 
 
 /* autor */
@@ -544,7 +565,7 @@ $form_tpl = str_replace('{select_priority}', $select_priority, $form_tpl);
 $form_tpl = str_replace('{checkbox_fixed}', $checkbox_fixed, $form_tpl);
 $form_tpl = str_replace('{select_status}', $select_status, $form_tpl);
 $form_tpl = str_replace('{select_comments}', $select_comments, $form_tpl);
-
+$form_tpl = str_replace('{select_votings}', $select_votings, $form_tpl);
 
 /* video */
 $form_tpl = str_replace('{post_video_url}', $post_data['post_video_url'], $form_tpl);
@@ -568,6 +589,41 @@ $form_tpl = str_replace('{post_event_zip}', $post_data['post_event_zip'], $form_
 $form_tpl = str_replace('{post_event_city}', $post_data['post_event_city'], $form_tpl);
 $form_tpl = str_replace('{post_event_street}', $post_data['post_event_street'], $form_tpl);
 $form_tpl = str_replace('{post_event_price_note}', $post_data['post_event_price_note'], $form_tpl);
+$form_tpl = str_replace('{post_event_guestlist_limit}', $post_data['post_event_guestlist_limit'], $form_tpl);
+
+$checked_guestlist = '';
+if($post_data['post_event_guestlist'] == '1') {
+	$checked_guestlist = 'checked';
+}
+
+if($post_data['post_event_guestlist_type'] == '1') {
+	$form_tpl = str_replace('{checked_gl_type_1}', 'checked', $form_tpl);
+	$form_tpl = str_replace('{checked_gl_type_2}', '', $form_tpl);
+} else {
+	$form_tpl = str_replace('{checked_gl_type_1}', '', $form_tpl);
+	$form_tpl = str_replace('{checked_gl_type_2}', 'checked', $form_tpl);	
+}
+
+if($post_data['post_event_guestlist_public'] == '1') {
+	$form_tpl = str_replace('{checked_gl_public_1}', 'checked', $form_tpl);
+	$form_tpl = str_replace('{checked_gl_public_2}', '', $form_tpl);
+} else {
+	$form_tpl = str_replace('{checked_gl_public_1}', '', $form_tpl);
+	$form_tpl = str_replace('{checked_gl_public_2}', 'checked', $form_tpl);	
+}
+
+if($post_data['post_event_guestlist_public_nbr'] == '1') {
+	$form_tpl = str_replace('{checked_gl_public_nbr_1}', 'checked', $form_tpl);
+	$form_tpl = str_replace('{checked_gl_public_nbr_2}', '', $form_tpl);
+} else {
+	$form_tpl = str_replace('{checked_gl_public_nbr_1}', '', $form_tpl);
+	$form_tpl = str_replace('{checked_gl_public_nbr_2}', 'checked', $form_tpl);	
+}
+
+
+$form_tpl = str_replace('{checked_guestlist}', $checked_guestlist, $form_tpl);
+
+
 
 /* product */
 $form_tpl = str_replace('{post_product_number}', $post_data['post_product_number'], $form_tpl);

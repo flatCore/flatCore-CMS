@@ -87,6 +87,48 @@
 
 					</fieldset>
 					
+					<fieldset>
+						<legend>{label_event_guestlist}</legend>
+						
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="checkbox" name="post_event_guestlist" value="1" id="post_event_guestlist_yes" {checked_guestlist}>
+							<label class="form-check-label" for="post_event_guestlist_yes">{label_guestlist_activate}</label>
+						</div>
+						<hr>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="post_event_guestlist_type" value="2" id="post_event_guestlist_type2" {checked_gl_type_2}>
+							<label class="form-check-label" for="post_event_guestlist_type2">{label_guestlist_for_registered}</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="post_event_guestlist_type" value="1" id="post_event_guestlist_type1" {checked_gl_type_1}>
+							<label class="form-check-label" for="post_event_guestlist_type1">{label_guestlist_for_everybody}</label>
+						</div>
+						<hr>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="post_event_guestlist_public" value="2" id="post_event_guestlist_public_no" {checked_gl_public_2}>
+							<label class="form-check-label" for="post_event_guestlist_public_no">{label_guestlist_public_no}</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="post_event_guestlist_public" value="1" id="post_event_guestlist_public_yes" {checked_gl_public_1}>
+							<label class="form-check-label" for="post_event_guestlist_public_yes">{label_guestlist_public_yes}</label>
+						</div>
+						<hr>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="post_event_guestlist_public_nbr" value="1" id="post_event_guestlist_public_nbr_yes" {checked_gl_public_nbr_1}>
+							<label class="form-check-label" for="post_event_guestlist_public_nbr_yes">{label_guestlist_show_nbr_no}</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="post_event_guestlist_public_nbr" value="2" id="post_event_guestlist_public_nbr_no" {checked_gl_public_nbr_2}>
+							<label class="form-check-label" for="post_event_guestlist_public_nbr_no">{label_guestlist_show_nbr_yes}</label>
+						</div>
+						<hr>
+						<div class="form-group">
+							<label>{label_guestlist_limit}</label>
+							<input class="form-control" name="post_event_guestlist_limit" type="text" value="{post_event_guestlist_limit}">
+						</div>
+						
+					</fieldset>
+					
 				</div>
 				<div class="tab-pane fade" id="prices">
 						
@@ -155,6 +197,9 @@
 				</fieldset>
 				<fieldset>
 					<legend>{label_comments}</legend> {select_comments}
+				</fieldset>
+				<fieldset>
+					<legend>{label_votings}</legend> {select_votings}
 				</fieldset>
 				<fieldset>
 					<legend>{labels}</legend> {post_labels}

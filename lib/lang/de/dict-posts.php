@@ -106,6 +106,21 @@ $lang['label_fixed'] = 'Oben festsetzen';
 $lang['status_draft'] = 'Eintwurf';
 $lang['status_public'] = 'Öffentlich';
 
+$lang['label_votings'] = 'Reaktionen/Votings';
+$lang['label_votings_off'] = 'Deaktivieren';
+$lang['label_votings_on_registered'] = 'Für registrierte Benutzer';
+$lang['label_votings_on_global'] = 'Für alle Benutzer';
+
+$lang['label_event_guestlist'] = 'Gästeliste';
+$lang['label_guestlist_activate'] = 'Gästeliste aktivieren';
+$lang['label_guestlist_for_registered'] = 'Nur für registrierte Benutzer';
+$lang['label_guestlist_for_everybody'] = 'Jeder kann teilnehmen';
+$lang['label_guestlist_public_no'] = 'Gästeliste verbergen';
+$lang['label_guestlist_public_yes'] = 'Gästeliste anzeigen';
+$lang['label_guestlist_show_nbr_no'] = 'Anzahl der Zusagen verbergen';
+$lang['label_guestlist_show_nbr_yes'] = 'Anzahl der Zusagen anzeigen';
+$lang['label_guestlist_limit'] = 'Anzahl der Registrierungen begrenzen (Leer bedeutet unbegrenzte Anmeldungen)';
+
 $lang['btn_upload'] = 'Upload';
 $lang['gallery_upload_help_text'] = 'Du musst die Galerie speichern, bevor Du Bilder hinzufügen kannst.';
 

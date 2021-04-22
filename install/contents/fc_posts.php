@@ -5,6 +5,13 @@
  * post_status -> 1 = public, 2 = draft
  * post_rss -> 1 = yes, 2 = no
  * post_fixed -> 1 = yes, 2 = no
+ * post_votings -> 1 = no, 2 = yes for registered useres, 3 = yes for everybody
+ *
+ * post_event_guestlist -> 1 = yes, 2 = no guestlist
+ * post_event_guestlist_type -> 1 = everybody can confirm, 2 = registered user can confirm
+ * post_event_guestlist_public -> 1 = yes, 2 = no
+ * post_event_guestlist_public_nbr -> 1 = yes, 2 = no
+ * post_event_guestlist_limit -> null = no limit, number = limit of guests
  */
 
 $database = "posts";
@@ -36,6 +43,7 @@ $cols = array(
 	"post_priority" => 'INTEGER(12)',
 	"post_fixed" => 'INTEGER(12)',
 	"post_hits" => 'INTEGER(12)',
+	"post_votings" => 'INTEGER(12)',
 	"post_labels" => "VARCHAR(50) NOT NULL DEFAULT ''",
 	"post_attachments" => "VARCHAR(255) NOT NULL DEFAULT ''",
 	/* events */
@@ -46,6 +54,11 @@ $cols = array(
 	"post_event_street" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"post_event_street_nbr" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"post_event_price_note" => "LONGTEXT NOT NULL DEFAULT ''",
+	"post_event_guestlist" => 'INTEGER(12)',
+	"post_event_guestlist_type" => 'INTEGER(12)',
+	"post_event_guestlist_public" => 'INTEGER(12)',
+	"post_event_guestlist_public_nbr" => 'INTEGER(12)',
+	"post_event_guestlist_limit" => "VARCHAR(50) NOT NULL DEFAULT ''",
 	/* products */
 	"post_product_number" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"post_product_manufacturer" => "VARCHAR(100) NOT NULL DEFAULT ''",
