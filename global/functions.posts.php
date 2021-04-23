@@ -269,4 +269,27 @@ function fc_load_posts_tpl($tpl_dir,$tpl_file) {
 }
 
 
+/**
+ * increase the hits counter
+ */
+ 
+function fc_increase_posts_hits($post_id) {
+	
+	global $db_posts;
+	
+	$post_data_hits = $db_posts->get("fc_posts","post_hits", [
+		"post_id" => $post_id
+	]);
+	
+	$post_data_hits = $post_data_hits+1;
+
+	$update = $db_posts->update("fc_posts", [
+		"post_hits" => $post_data_hits
+	],[
+		"post_id" => $post_id
+	]);
+		
+}
+
+
 ?>

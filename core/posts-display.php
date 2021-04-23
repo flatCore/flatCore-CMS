@@ -60,7 +60,8 @@ if($post_images[1] != "") {
 }
 
 $hits = (int) $post_data['hits'];
-$hits++;
+fc_increase_posts_hits($get_post_id);
+
 
 
 
