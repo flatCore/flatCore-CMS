@@ -26,7 +26,7 @@ foreach($all_categories as $cats) {
 	
 	if(in_array($cats['cat_id'],$cat_links_array)) {
 		$post_cats_string .= $cats['cat_name'] .' ';
-		$cat_href = '/'.$fct_slug.$cats['cat_name_clean'];
+		$cat_href = '/'.$fct_slug.$cats['cat_name_clean'].'/';
 		$link = str_replace('{cat_href}', $cat_href, $link);
 		$link = str_replace('{cat_name}', $cats['cat_name'], $link);
 		$post_cats_btn .= $link;

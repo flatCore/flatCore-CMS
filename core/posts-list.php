@@ -232,7 +232,7 @@ foreach($get_posts as $k => $post) {
 		$link = $tpl_category_link;
 		
 		if(in_array($cats['cat_id'], $post_categories)) {
-			$cat_href = '/'.$fct_slug.$cats['cat_name_clean'];
+			$cat_href = '/'.$fct_slug.$cats['cat_name_clean'].'/';
 			$link = str_replace('{cat_href}', $cat_href, $link);
 			$link = str_replace('{cat_name}', $cats['cat_name'], $link);
 			$cat_str .= $link;
