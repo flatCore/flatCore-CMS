@@ -6,7 +6,7 @@ function vote($val){
 
 	$.ajax({
   	type: 'POST',
-    url: '/core/votings.php',
+    url: '/core/ajax.votings.php',
     data: { 
     	val: $val
     },

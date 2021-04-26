@@ -27,6 +27,7 @@
 		{post_tpl_event_prices}
 		{post_event_price_note}
 		{post_tpl_event_hotline}
+		{post_guestlist}
 		{post_voting}
 
 	<div class="post-footer">

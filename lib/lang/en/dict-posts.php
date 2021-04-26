@@ -122,6 +122,7 @@ $lang['label_guestlist_show_nbr_no'] = 'Hide number of commitments';
 $lang['label_guestlist_show_nbr_yes'] = 'Show the number of commitments';
 $lang['label_guestlist_limit'] = 'Limit number of registrations (leave this field blank for unlimited registrations)';
 
+
 $lang['btn_upload'] = 'Upload';
 $lang['gallery_upload_help_text'] = 'You must save the gallery before you can add images.';
 

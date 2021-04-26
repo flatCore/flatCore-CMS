@@ -121,6 +121,8 @@ $lang['label_guestlist_show_nbr_no'] = 'Anzahl der Zusagen verbergen';
 $lang['label_guestlist_show_nbr_yes'] = 'Anzahl der Zusagen anzeigen';
 $lang['label_guestlist_limit'] = 'Anzahl der Registrierungen begrenzen (Leer bedeutet unbegrenzte Anmeldungen)';
 
+
+
 $lang['btn_upload'] = 'Upload';
 $lang['gallery_upload_help_text'] = 'Du musst die Galerie speichern, bevor Du Bilder hinzufügen kannst.';
 

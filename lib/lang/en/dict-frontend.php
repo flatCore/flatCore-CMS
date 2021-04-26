@@ -154,6 +154,13 @@ $lang['comment_msg_auth1'] = 'You have to log in to write comments.';
 $lang['comment_msg_auth2'] = 'You have to enter your name and your email address.';
 $lang['comments_title'] = 'Comments ({cnt_comments})';
 
+/* frontend */
+$lang['label_guestlist'] = 'Guest list';
+$lang['guestlist_description'] = 'Sign the guest list.';
+$lang['guestlist_description_for_members'] = 'Only registered users can sign the guest list.';
+$lang['label_guestlist_limit'] = 'There are still {nbr_available_registrations} registrations available';
+$lang['btn_guestlist_sign'] = 'Confirm';
+
 /* Dates */
 $lang['m01'] = "January";
 $lang['m02'] = "February";

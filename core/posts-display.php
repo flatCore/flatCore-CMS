@@ -134,6 +134,17 @@ if($post_data['post_votings'] == 2 || $post_data['post_votings'] == 3) {
 	$this_entry = str_replace('{post_voting}', '', $this_entry);
 }
 
+/* show guestlist */
+if($post_data['post_event_guestlist'] == 1) {
+	
+	$guestlist = fc_load_comments_tpl($fc_template,'guestlist.tpl');
+	$this_entry = str_replace("{post_guestlist}", $guestlist, $this_entry);
+	$this_entry = str_replace('{id}', $post_data['post_id'], $this_entry);
+	$this_entry = str_replace("{label_guestlist}", $lang['label_guestlist'], $this_entry);
+	$this_entry = str_replace("{description_guestlist}", $lang['guestlist_description'], $this_entry);
+	$this_entry = str_replace("{sign_guestlist}", $lang['btn_guestlist_sign'], $this_entry);	
+}
+
 
 
 $this_entry = str_replace("{post_id}", $post_data['post_id'], $this_entry);
@@ -170,6 +181,7 @@ $this_entry = str_replace("{post_tpl_event_hotline}", $tpl_hotline, $this_entry)
 $this_entry = str_replace("{post_event_hotline}", $post_data['post_event_hotline'], $this_entry);
 $this_entry = str_replace("{post_event_price_note}", $post_data['post_event_price_note'], $this_entry);
 $this_entry = str_replace("{post_tpl_event_prices}", $price_list, $this_entry);
+
 
 $this_entry = str_replace("{video_id}", $video['v'], $this_entry);
 $this_entry = str_replace("{post_external_link}", $post_data['post_link'], $this_entry);

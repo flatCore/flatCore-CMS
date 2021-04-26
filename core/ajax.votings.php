@@ -32,11 +32,10 @@ if($_POST['val']) {
 		$voter_name = $ip;		
 	}
 
-
 	$voting_data = explode('-',$_POST['val']);
 	
 	/* post id */
-	$vote_relation_id = $voting_data[2];
+	$vote_relation_id = (int) $voting_data[2];
 	
 	if($voting_data[0] == 'dn') {
 		$vote_type = 'dnv'; // down vote

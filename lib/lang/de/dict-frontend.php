@@ -140,6 +140,16 @@ $lang['comment_msg_auth1'] = 'Du musst Dich einloggen um Kommentare zu schreiben
 $lang['comment_msg_auth2'] = 'Du musst Deinen Namen und Deine E-Mail Adresse angeben.';
 $lang['comments_title'] = 'Kommentare ({cnt_comments})';
 
+
+/* guest list */
+
+/* frontend */
+$lang['label_guestlist'] = 'Gästeliste';
+$lang['guestlist_description'] = 'Du kannst Dich in die Gästeliste eintragen.';
+$lang['guestlist_description_for_members'] = 'Es können sich nur registrierte Benutzer in die Gästeliste eintragen.';
+$lang['label_guestlist_limit'] = 'Es sind noch {nbr_available_registrations} Anmeldungen verfügbar';
+$lang['btn_guestlist_sign'] = 'Teilnehmen';
+
 /* Dates */
 
 $lang['m01'] = "Januar";

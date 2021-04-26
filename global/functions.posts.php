@@ -340,7 +340,26 @@ function fc_get_voting_data($type,$id) {
 		return $votes;
 	
 	}
+}
+
+/**
+ * get data for events guestlist
+ * return number of commitments
+ */
+ 
+function fc_get_event_confirmation_data($id){
 	
+	global $db_content;
+	$count_evc = $db_content->count("fc_comments", [
+		"AND" => [
+			"comment_type" => "evc",
+			"comment_relation_id" => $id
+		]
+	]);
+	
+	$event_data = array('evc' => $count_evc);
+	
+	return $event_data;
 	
 }
 
