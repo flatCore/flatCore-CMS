@@ -53,6 +53,7 @@ $entrydate_year = date('Y',$post_data['post_date']);
 
 if($post_images[1] != "") {
 	$first_post_image = '/' . $img_path . '/' . str_replace('../content/images/','',$post_images[1]);
+	$post_image_data = fc_get_images_data($first_post_image,'data=array');
 } else if($fc_prefs['prefs_posts_default_banner'] == "without_image") {
 	$first_post_image = '';
 } else {
@@ -61,8 +62,6 @@ if($post_images[1] != "") {
 
 $hits = (int) $post_data['hits'];
 fc_increase_posts_hits($get_post_id);
-
-
 
 
 if($post_data['post_type'] == 'm') {
@@ -116,6 +115,27 @@ if($post_data['post_type'] == 'm') {
 $post_teaser = htmlspecialchars_decode($post_data['post_teaser']);
 $post_text = htmlspecialchars_decode($post_data['post_text']);
 
+
+/* vote up or down this post */
+if($post_data['post_votings'] == 2 || $post_data['post_votings'] == 3) {
+	
+	$voting_buttons = fc_load_comments_tpl($fc_template,'vote.tpl');
+	$voting_buttons = str_replace('{type}', 'post', $voting_buttons);
+	$voting_buttons = str_replace('{id}', $post_data['post_id'], $voting_buttons);
+	
+	$votes = fc_get_voting_data('post',$post_data['post_id']);
+
+	$voting_buttons = str_replace('{nbr_up}', $votes['upv'], $voting_buttons);
+	$voting_buttons = str_replace('{nbr_dn}', $votes['dnv'], $voting_buttons);
+	
+	$this_entry = str_replace('{post_voting}', $voting_buttons, $this_entry);
+	
+} else {
+	$this_entry = str_replace('{post_voting}', '', $this_entry);
+}
+
+
+
 $this_entry = str_replace("{post_id}", $post_data['post_id'], $this_entry);
 $this_entry = str_replace("{post_author}", $post_data['post_author'], $this_entry);
 $this_entry = str_replace('{post_title}', $post_data['post_title'], $this_entry);
@@ -123,6 +143,7 @@ $this_entry = str_replace('{post_teaser}', $post_teaser, $this_entry);
 $this_entry = str_replace('{post_text}', $post_text, $this_entry);
 $this_entry = str_replace("{post_type}", $post_data['post_type'], $this_entry);
 $this_entry = str_replace('{post_img_src}', $first_post_image, $this_entry);
+$this_entry = str_replace('{post_img_caption}', $post_image_data['media_text'], $this_entry);
 
 $this_entry = str_replace("{post_source}", $post_data['post_source'], $this_entry);
 $this_entry = str_replace("{post_product_manufacturer}", $post_data['post_product_manufacturer'], $this_entry);

@@ -2,7 +2,7 @@
 	<h1>{post_title}</h1>
 	
 	<div class="card">
-		<img src="{post_img_src}" class="card-img" alt="{post_title}">
+		<p><img src="{post_img_src}" class="img-fluid"><br><small>{post_img_caption}</small></p>
 		<div class="card-img-overlay">
 			<div class="price-tag">
 				<div class="clearfix">

@@ -250,7 +250,7 @@ function fc_set_pagination_query($display_mode,$start) {
 
 /**
  * check if the template $tpl_dir has the posts tpl file
- * if not, load files from the /default/ directory
+ * if not, load files from the /default/templates/posts/ directory
  * return tpl file contents (string)
  */
 
@@ -262,6 +262,26 @@ function fc_load_posts_tpl($tpl_dir,$tpl_file) {
 		$contents = file_get_contents($check_template);
 	} else {
 		$fallback_tpl = 'styles/default/templates/posts/'.$tpl_file;
+		$contents = file_get_contents($fallback_tpl);
+	}
+	
+	return $contents;
+}
+
+/**
+ * check if the template $tpl_dir has the comments tpl file
+ * if not, load files from the /default/templates/comments/ directory
+ * return tpl file contents (string)
+ */
+
+function fc_load_comments_tpl($tpl_dir,$tpl_file) {
+	
+	$check_template = 'styles/'.basename($tpl_dir).'/templates/comments/'.$tpl_file;
+	
+	if(is_file($check_template)) {
+		$contents = file_get_contents($check_template);
+	} else {
+		$fallback_tpl = 'styles/default/templates/comments/'.$tpl_file;
 		$contents = file_get_contents($fallback_tpl);
 	}
 	
@@ -291,5 +311,37 @@ function fc_increase_posts_hits($post_id) {
 		
 }
 
+/**
+ * get voting data for posts or comments
+ * return array $votes['upv'] = x / $votes['dnv'] = x
+ */
+
+function fc_get_voting_data($type,$id) {
+	
+	global $db_content;
+	
+	if($type == 'post') {
+		
+		$count_upv = $db_content->count("fc_comments", [
+			"AND" => [
+				"comment_type" => "upv",
+				"comment_relation_id" => $id
+			]
+		]);
+		$count_dnv = $db_content->count("fc_comments", [
+			"AND" => [
+				"comment_type" => "dnv",
+				"comment_relation_id" => $id
+			]
+		]);
+		
+		$votes = array('upv' => $count_upv, 'dnv' => $count_dnv);
+		
+		return $votes;
+	
+	}
+	
+	
+}
 
 ?>

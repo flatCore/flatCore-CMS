@@ -13,6 +13,7 @@
  * comment_status - 1 -> public
  *                - 2 -> wait for approval
  *
+ * comment_relation_id -> id of the blog post
  * comment_parent_id -> if it's an answer
  *
  */
