@@ -245,7 +245,35 @@ foreach($get_posts as $k => $post) {
 	/* vote up or down this post */
 	if($get_posts[$k]['post_votings'] == 2 || $get_posts[$k]['post_votings'] == 3) {
 		
+		$voter_data = false;
 		$voting_buttons = fc_load_comments_tpl($fc_template,'vote.tpl');
+		
+		if($get_posts[$k]['post_votings'] == 2) {
+			if($_SESSION['user_nick'] == '') {
+				$voter_data = false;
+			} else {
+				$voter_data = fc_check_voter_legitimacy($get_posts[$k]['post_id'],$_SESSION['user_nick']);
+			}
+		}
+		
+		if($get_posts[$k]['post_votings'] == 3) {
+			if($_SESSION['user_nick'] == '') {
+				$voter_name = fc_generate_anonymous_voter();
+				$voter_data = fc_check_voter_legitimacy($get_posts[$k]['post_id'],$voter_name);	
+			} else {
+				$voter_data = fc_check_voter_legitimacy($get_posts[$k]['post_id'],$_SESSION['user_nick']);
+			}
+		}
+				
+		if($voter_data == true) {
+			// user can vote
+			$voting_buttons = str_replace('{status_upv}', '', $voting_buttons);
+			$voting_buttons = str_replace('{status_dnv}', '', $voting_buttons);		
+		} else {
+			$voting_buttons = str_replace('{status_upv}', 'disabled', $voting_buttons);
+			$voting_buttons = str_replace('{status_dnv}', 'disabled', $voting_buttons);
+		}
+		
 		$voting_buttons = str_replace('{type}', 'post', $voting_buttons);
 		$voting_buttons = str_replace('{id}', $get_posts[$k]['post_id'], $voting_buttons);
 		

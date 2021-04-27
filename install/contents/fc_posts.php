@@ -7,10 +7,8 @@
  * post_fixed -> 1 = yes, 2 = no
  * post_votings -> 1 = no, 2 = yes for registered useres, 3 = yes for everybody
  *
- * post_event_guestlist -> 1 = yes, 2 = no guestlist
- * post_event_guestlist_type -> 1 = everybody can confirm, 2 = registered user can confirm
- * post_event_guestlist_public -> 1 = yes, 2 = no
- * post_event_guestlist_public_nbr -> 1 = yes, 2 = no
+ * post_event_guestlist -> 1 = deactivated, 2 = for registered users, 3 = everybody can confirm
+ * post_event_guestlist_public_nbr -> 1 = hide, 2 = show
  * post_event_guestlist_limit -> null = no limit, number = limit of guests
  */
 
@@ -55,8 +53,6 @@ $cols = array(
 	"post_event_street_nbr" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"post_event_price_note" => "LONGTEXT NOT NULL DEFAULT ''",
 	"post_event_guestlist" => 'INTEGER(12)',
-	"post_event_guestlist_type" => 'INTEGER(12)',
-	"post_event_guestlist_public" => 'INTEGER(12)',
 	"post_event_guestlist_public_nbr" => 'INTEGER(12)',
 	"post_event_guestlist_limit" => "VARCHAR(50) NOT NULL DEFAULT ''",
 	/* products */

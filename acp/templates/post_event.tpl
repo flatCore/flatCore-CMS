@@ -90,27 +90,8 @@
 					<fieldset>
 						<legend>{label_event_guestlist}</legend>
 						
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="checkbox" name="post_event_guestlist" value="1" id="post_event_guestlist_yes" {checked_guestlist}>
-							<label class="form-check-label" for="post_event_guestlist_yes">{label_guestlist_activate}</label>
-						</div>
-						<hr>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="post_event_guestlist_type" value="2" id="post_event_guestlist_type2" {checked_gl_type_2}>
-							<label class="form-check-label" for="post_event_guestlist_type2">{label_guestlist_for_registered}</label>
-						</div>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="post_event_guestlist_type" value="1" id="post_event_guestlist_type1" {checked_gl_type_1}>
-							<label class="form-check-label" for="post_event_guestlist_type1">{label_guestlist_for_everybody}</label>
-						</div>
-						<hr>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="post_event_guestlist_public" value="2" id="post_event_guestlist_public_no" {checked_gl_public_2}>
-							<label class="form-check-label" for="post_event_guestlist_public_no">{label_guestlist_public_no}</label>
-						</div>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="post_event_guestlist_public" value="1" id="post_event_guestlist_public_yes" {checked_gl_public_1}>
-							<label class="form-check-label" for="post_event_guestlist_public_yes">{label_guestlist_public_yes}</label>
+						<div class="form-group">
+							{select_guestlist}
 						</div>
 						<hr>
 						<div class="form-check form-check-inline">

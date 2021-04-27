@@ -119,12 +119,40 @@ $post_text = htmlspecialchars_decode($post_data['post_text']);
 /* vote up or down this post */
 if($post_data['post_votings'] == 2 || $post_data['post_votings'] == 3) {
 	
+	$voter_data = false;
 	$voting_buttons = fc_load_comments_tpl($fc_template,'vote.tpl');
+	
+	if($post_data['post_votings'] == 2) {
+		if($_SESSION['user_nick'] == '') {
+			$voter_data = false;
+		} else {
+			$voter_data = fc_check_voter_legitimacy($post_data['post_id'],$_SESSION['user_nick']);
+		}
+	}
+	
+	if($post_data['post_votings'] == 3) {
+		if($_SESSION['user_nick'] == '') {
+			$voter_name = fc_generate_anonymous_voter();
+			$voter_data = fc_check_voter_legitimacy($post_data['post_id'],$voter_name);
+		} else {
+			$voter_data = fc_check_voter_legitimacy($post_data['post_id'],$_SESSION['user_nick']);
+		}		
+	}
+	
+	if($voter_data == true) {
+		// user can vote
+		$voting_buttons = str_replace('{status_upv}', '', $voting_buttons);
+		$voting_buttons = str_replace('{status_dnv}', '', $voting_buttons);		
+	} else {
+		$voting_buttons = str_replace('{status_upv}', 'disabled', $voting_buttons);
+		$voting_buttons = str_replace('{status_dnv}', 'disabled', $voting_buttons);
+	}
+	
+	
 	$voting_buttons = str_replace('{type}', 'post', $voting_buttons);
 	$voting_buttons = str_replace('{id}', $post_data['post_id'], $voting_buttons);
 	
 	$votes = fc_get_voting_data('post',$post_data['post_id']);
-
 	$voting_buttons = str_replace('{nbr_up}', $votes['upv'], $voting_buttons);
 	$voting_buttons = str_replace('{nbr_dn}', $votes['dnv'], $voting_buttons);
 	
@@ -135,9 +163,35 @@ if($post_data['post_votings'] == 2 || $post_data['post_votings'] == 3) {
 }
 
 /* show guestlist */
-if($post_data['post_event_guestlist'] == 1) {
+if($post_data['post_event_guestlist'] == 2 OR $post_data['post_event_guestlist'] == 3) {
 	
 	$guestlist = fc_load_comments_tpl($fc_template,'guestlist.tpl');
+	
+	if($post_data['post_event_guestlist'] == 2 AND $_SESSION['user_nick'] == '') {
+		/* only registered user can confirm */
+		$guestlist = str_replace('{disabled}', 'disabled', $guestlist);
+	} else {
+		$guestlist = str_replace('{disabled}', '', $guestlist);
+	}
+	
+	if($post_data['post_event_guestlist_limit'] != '') {
+		$guestlist = str_replace("{label_nbr_total_available}", $lang['guestlist_label_nbr_total_available'], $guestlist);
+		$guestlist = str_replace("{nbr_available_total}", $post_data['post_event_guestlist_limit'], $guestlist);
+	} else {
+		$guestlist = str_replace("{label_nbr_total_available}", '', $guestlist);
+		$guestlist = str_replace("{nbr_available_total}", '', $guestlist);		
+	}
+	
+	if($post_data['post_event_guestlist_public_nbr'] == 2) {
+		$cnt_commitments = fc_get_event_confirmation_data($post_data['post_id']);
+		$guestlist = str_replace("{label_nbr_commitments}", $lang['guestlist_label_nbr_commitments'], $guestlist);
+		$guestlist = str_replace("{nbr_commitments}", $cnt_commitments['evc'], $guestlist);
+	} else {
+		$guestlist = str_replace("{label_nbr_commitments}", '', $guestlist);
+		$guestlist = str_replace("{nbr_commitments}", '', $guestlist);
+	}
+	
+	
 	$this_entry = str_replace("{post_guestlist}", $guestlist, $this_entry);
 	$this_entry = str_replace('{id}', $post_data['post_id'], $this_entry);
 	$this_entry = str_replace("{label_guestlist}", $lang['label_guestlist'], $this_entry);

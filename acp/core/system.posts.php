@@ -20,7 +20,9 @@ if(isset($_POST['update_posts'])) {
 		"prefs_posts_products_tax_alt1" =>  $prefs_posts_products_tax_alt1,
 		"prefs_posts_products_tax_alt2" =>  $prefs_posts_products_tax_alt2,
 		"prefs_posts_products_default_currency" =>  $prefs_posts_products_default_currency,
-		"prefs_posts_event_time_offset" =>  $prefs_posts_event_time_offset
+		"prefs_posts_event_time_offset" =>  $prefs_posts_event_time_offset,
+		"prefs_posts_default_guestlist" => $prefs_posts_default_guestlist,
+		"prefs_posts_default_votings" => $prefs_posts_default_votings
 	], [
 	"prefs_id" => 1
 	]);	
@@ -146,6 +148,51 @@ echo '<div class="form-group">
 				<input type="text" class="form-control" name="prefs_posts_event_time_offset" value="'.$prefs_posts_event_time_offset.'">
 				<small class="form-text text-muted">'.$lang['event_time_offset_help_text'].'</small>
 			</div>';
+
+
+$sel_guestlist1 = '';
+$sel_guestlist2 = '';
+$sel_guestlist3 = '';
+
+if($prefs_posts_default_guestlist == 1 OR $prefs_posts_default_guestlist == '') {
+	$sel_guestlist1 = 'selected';
+} else if($prefs_posts_default_guestlist == 2) {
+	$sel_guestlist2 = 'selected';
+} else if($prefs_posts_default_guestlist == 3) {
+	$sel_guestlist3 = 'selected';
+}
+
+echo '<div class="form-group">';
+echo '<label>' . $lang['label_guestlist'] . '</label>';
+echo '<select class="form-control custom-select" name="prefs_posts_default_guestlist">';
+echo '<option value="1" '.$sel_guestlist1.'>'.$lang['label_guestlist_deactivate'].'</option>';
+echo '<option value="2" '.$sel_guestlist2.'>'.$lang['label_guestlist_for_registered'].'</option>';
+echo '<option value="3" '.$sel_guestlist3.'>'.$lang['label_guestlist_for_everybody'].'</option>';
+echo '</select>';
+echo '</div>';		
+	
+echo'</fieldset>';
+
+/* votings */
+$sel_votings1 = '';
+$sel_votings2 = '';
+$sel_votings3 = '';
+
+if($prefs_posts_default_votings == 1 OR $prefs_posts_default_votings == '') {
+	$sel_votings1 = 'selected';
+} else if($prefs_posts_default_votings == 2) {
+	$sel_votings2 = 'selected';
+} else if($prefs_posts_default_votings == 3) {
+	$sel_votings3 = 'selected';
+}
+
+echo '<fieldset>';
+echo '<legend>'.$lang['label_votings'].'</legend>';
+echo '<select class="form-control custom-select" name="prefs_posts_default_votings">';
+echo '<option value="1" '.$sel_votings1.'>'.$lang['label_votings_off'].'</option>';
+echo '<option value="2" '.$sel_votings2.'>'.$lang['label_votings_on_registered'].'</option>';
+echo '<option value="3" '.$sel_votings3.'>'.$lang['label_votings_on_global'].'</option>';
+echo '</select>';
 echo'</fieldset>';
 
 

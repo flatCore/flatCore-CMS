@@ -11,6 +11,7 @@ $time = time();
 
 if($_POST['val']) {
 	
+	
 	/* check who is voting */
 
 	if($_SESSION['user_id'] != '') {
@@ -18,24 +19,20 @@ if($_POST['val']) {
 		$voter_name = $_SESSION['user_nick'];
 	} else {
 		// anonymous voter
-		
-		if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-		    $ip = $_SERVER['HTTP_CLIENT_IP'];
-		} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-		    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-		} else {
-		    $ip = $_SERVER['REMOTE_ADDR'];
-		}
-		
-		$ip = md5($ip);
 		$voter_id = '';
-		$voter_name = $ip;		
+		$voter_name = fc_generate_anonymous_voter();		
 	}
 
 	$voting_data = explode('-',$_POST['val']);
 	
 	/* post id */
 	$vote_relation_id = (int) $voting_data[2];
+	
+	$check_voter = fc_check_voter_legitimacy($vote_relation_id,$voter_name);
+	
+	if($check_voter == false) {
+		exit();
+	}
 	
 	if($voting_data[0] == 'dn') {
 		$vote_type = 'dnv'; // down vote

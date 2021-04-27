@@ -114,6 +114,7 @@ $lang['label_votings_on_global'] = 'For all Users';
 
 $lang['label_event_guestlist'] = 'Guest list';
 $lang['label_guestlist_activate'] = 'Activate Guest list';
+$lang['label_guestlist_deactivate'] = 'Deactivate Guest list';
 $lang['label_guestlist_for_registered'] = 'For registered Users only';
 $lang['label_guestlist_for_everybody'] = 'Everybody can confirm';
 $lang['label_guestlist_public_no'] = 'Hide Guest list';

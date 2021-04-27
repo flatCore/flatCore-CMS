@@ -317,6 +317,9 @@ $select_comments .= '</select>';
 
 /* votings/reactions no, yes for registered users, yes for all */
 
+if($post_data['post_votings'] == '') {
+	$post_data['post_votings'] = $prefs_posts_default_votings;
+}
 
 if($post_data['post_votings'] == 1 OR $post_data['post_votings'] == '') {
 	$sel_votings_1 = 'selected';
@@ -591,26 +594,32 @@ $form_tpl = str_replace('{post_event_street}', $post_data['post_event_street'], 
 $form_tpl = str_replace('{post_event_price_note}', $post_data['post_event_price_note'], $form_tpl);
 $form_tpl = str_replace('{post_event_guestlist_limit}', $post_data['post_event_guestlist_limit'], $form_tpl);
 
-$checked_guestlist = '';
+/* guest list */
+
+$sel_gl_type1 = '';
+$sel_gl_type2 = '';
+$sel_gl_type3 = '';
+
+if($post_data['post_event_guestlist'] == '') {
+	$post_data['post_event_guestlist'] = $prefs_posts_default_guestlist;
+}
+
 if($post_data['post_event_guestlist'] == '1') {
-	$checked_guestlist = 'checked';
+	$sel_gl_type1 = 'selected';
+} else if($post_data['post_event_guestlist'] == '2') {
+	$sel_gl_type2 = 'selected';
+} else if($post_data['post_event_guestlist'] == '3') {
+	$sel_gl_type3 = 'selected';
 }
 
-if($post_data['post_event_guestlist_type'] == '1') {
-	$form_tpl = str_replace('{checked_gl_type_1}', 'checked', $form_tpl);
-	$form_tpl = str_replace('{checked_gl_type_2}', '', $form_tpl);
-} else {
-	$form_tpl = str_replace('{checked_gl_type_1}', '', $form_tpl);
-	$form_tpl = str_replace('{checked_gl_type_2}', 'checked', $form_tpl);	
-}
+$select_guestlist = '<select class="form-control custom-select" name="post_event_guestlist">';
 
-if($post_data['post_event_guestlist_public'] == '1') {
-	$form_tpl = str_replace('{checked_gl_public_1}', 'checked', $form_tpl);
-	$form_tpl = str_replace('{checked_gl_public_2}', '', $form_tpl);
-} else {
-	$form_tpl = str_replace('{checked_gl_public_1}', '', $form_tpl);
-	$form_tpl = str_replace('{checked_gl_public_2}', 'checked', $form_tpl);	
-}
+$select_guestlist .= '<option value="1" '.$sel_gl_type1.'>'.$lang['label_guestlist_deactivate'].'</option>';
+$select_guestlist .= '<option value="2" '.$sel_gl_type2.'>'.$lang['label_guestlist_for_registered'].'</option>';
+$select_guestlist .= '<option value="3" '.$sel_gl_type3.'>'.$lang['label_guestlist_for_everybody'].'</option>';
+
+$select_guestlist .= '</select>';
+$form_tpl = str_replace('{select_guestlist}', $select_guestlist, $form_tpl);
 
 if($post_data['post_event_guestlist_public_nbr'] == '1') {
 	$form_tpl = str_replace('{checked_gl_public_nbr_1}', 'checked', $form_tpl);
@@ -619,7 +628,6 @@ if($post_data['post_event_guestlist_public_nbr'] == '1') {
 	$form_tpl = str_replace('{checked_gl_public_nbr_1}', '', $form_tpl);
 	$form_tpl = str_replace('{checked_gl_public_nbr_2}', 'checked', $form_tpl);	
 }
-
 
 $form_tpl = str_replace('{checked_guestlist}', $checked_guestlist, $form_tpl);
 

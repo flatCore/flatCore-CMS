@@ -342,12 +342,40 @@ function fc_get_voting_data($type,$id) {
 	}
 }
 
+
+/**
+ * check if user can vote on posts
+ * return true or false
+ */
+ 
+function fc_check_voter_legitimacy($id,$voter) {
+	
+	global $db_content;
+	
+	$get_voter_data = $db_content->select("fc_comments", "*",[
+			"AND" => [
+				"OR" => [
+					"comment_type" => ["upv","dnv"]
+				],
+				"comment_relation_id" => $id,
+				"comment_author" => $voter
+			]
+		]);
+		
+		if(count($get_voter_data) > 0) {
+			return false;
+		} else {
+			return true;
+		}
+}
+
+
 /**
  * get data for events guestlist
  * return number of commitments
  */
  
-function fc_get_event_confirmation_data($id){
+function fc_get_event_confirmation_data($id) {
 	
 	global $db_content;
 	$count_evc = $db_content->count("fc_comments", [
@@ -360,6 +388,25 @@ function fc_get_event_confirmation_data($id){
 	$event_data = array('evc' => $count_evc);
 	
 	return $event_data;
+}
+
+
+/**
+ * generate anonymous voter name
+ */
+ 
+function fc_generate_anonymous_voter() {
+	
+		if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+		    $ip = $_SERVER['HTTP_CLIENT_IP'];
+		} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+		    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		} else {
+		    $ip = $_SERVER['REMOTE_ADDR'];
+		}
+	
+	
+	return md5($ip);
 	
 }
 

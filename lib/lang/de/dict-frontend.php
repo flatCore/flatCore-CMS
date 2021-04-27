@@ -142,13 +142,14 @@ $lang['comments_title'] = 'Kommentare ({cnt_comments})';
 
 
 /* guest list */
-
-/* frontend */
 $lang['label_guestlist'] = 'Gästeliste';
 $lang['guestlist_description'] = 'Du kannst Dich in die Gästeliste eintragen.';
 $lang['guestlist_description_for_members'] = 'Es können sich nur registrierte Benutzer in die Gästeliste eintragen.';
-$lang['label_guestlist_limit'] = 'Es sind noch {nbr_available_registrations} Anmeldungen verfügbar';
 $lang['btn_guestlist_sign'] = 'Teilnehmen';
+
+$lang['guestlist_label_nbr_total_available'] = 'Verfügbare Plätze:';
+$lang['guestlist_label_nbr_commitments'] = 'Zusagen:';
+
 
 /* Dates */
 
