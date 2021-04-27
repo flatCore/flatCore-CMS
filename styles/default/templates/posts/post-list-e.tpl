@@ -19,6 +19,7 @@
 			<span class="post-author">{post_author}</span> <span class="post-releasedate">{post_releasedate}</span>
 			<a class="post-headline-link" href="{post_href}"><h3>{post_title}</h3></a>
 			{post_teaser}
+			{post_voting}
 		</div>
 		<div class="col-md-3">
 			

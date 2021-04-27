@@ -143,6 +143,8 @@ if($post_data['post_event_guestlist'] == 1) {
 	$this_entry = str_replace("{label_guestlist}", $lang['label_guestlist'], $this_entry);
 	$this_entry = str_replace("{description_guestlist}", $lang['guestlist_description'], $this_entry);
 	$this_entry = str_replace("{sign_guestlist}", $lang['btn_guestlist_sign'], $this_entry);	
+} else {
+	$this_entry = str_replace("{post_guestlist}", '', $this_entry);
 }
 
 

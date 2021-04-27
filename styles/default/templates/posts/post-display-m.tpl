@@ -6,6 +6,8 @@
 	
 	{post_text}
 	
+	{post_voting}
+	
 	<div class="post-footer">
 		<p class="text-right">{post_cats}</p>
 	</div>

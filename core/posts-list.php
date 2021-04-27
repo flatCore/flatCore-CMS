@@ -241,6 +241,25 @@ foreach($get_posts as $k => $post) {
 		
 	}
 	
+
+	/* vote up or down this post */
+	if($get_posts[$k]['post_votings'] == 2 || $get_posts[$k]['post_votings'] == 3) {
+		
+		$voting_buttons = fc_load_comments_tpl($fc_template,'vote.tpl');
+		$voting_buttons = str_replace('{type}', 'post', $voting_buttons);
+		$voting_buttons = str_replace('{id}', $get_posts[$k]['post_id'], $voting_buttons);
+		
+		$votes = fc_get_voting_data('post',$get_posts[$k]['post_id']);
+	
+		$voting_buttons = str_replace('{nbr_up}', $votes['upv'], $voting_buttons);
+		$voting_buttons = str_replace('{nbr_dn}', $votes['dnv'], $voting_buttons);
+		
+		$this_entry = str_replace('{post_voting}', $voting_buttons, $this_entry);
+		
+	} else {
+		$this_entry = str_replace('{post_voting}', '', $this_entry);
+	}
+	
 	$this_entry = str_replace('{post_id}', $get_posts[$k]['post_id'], $this_entry);
 	
 	$this_entry = str_replace('{post_author}', $get_posts[$k]['post_autor'], $this_entry);

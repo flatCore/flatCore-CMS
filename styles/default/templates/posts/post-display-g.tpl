@@ -9,7 +9,7 @@
 				</section>
 			</div>
 			{post_teaser}
-	
+			{post_voting}
 		</div>
 	</div>
 	

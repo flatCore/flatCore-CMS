@@ -5,7 +5,7 @@
 		<div class="col-md-12">
 			<img src="{post_img_src}" class="img-fluid"><br><small>{post_img_caption}</small>
 			{post_teaser}
-	
+			{post_voting}
 		</div>
 	</div>
 	
