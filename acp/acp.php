@@ -50,10 +50,10 @@ if(is_file('../config_database.php')) {
 	}
 	
 	
-	define("CONTENT_DB", "../$fc_db_content");
-	define("USER_DB", "../$fc_db_user");
-	define("STATS_DB", "../$fc_db_stats");
-	define("POSTS_DB", "../$fc_db_posts");
+	define("CONTENT_DB", "$fc_db_content");
+	define("USER_DB", "$fc_db_user");
+	define("STATS_DB", "$fc_db_stats");
+	define("POSTS_DB", "$fc_db_posts");
 
 	$db_content = new Medoo([
 		'database_type' => 'sqlite',

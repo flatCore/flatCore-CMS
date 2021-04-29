@@ -29,7 +29,7 @@ include 'php/functions.php';
 include '../lib/lang/'.$l.'/dict-install.php';
 include '../acp/core/icons.php';
 
-if(is_file("../$fc_db_content")) {
+if(is_file("$fc_db_content")) {
 	$modus = "update";
 	$db_type = 'sqlite';
 }
