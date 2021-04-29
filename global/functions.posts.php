@@ -313,32 +313,25 @@ function fc_increase_posts_hits($post_id) {
 
 /**
  * get voting data for posts or comments
- * return array $votes['upv'] = x / $votes['dnv'] = x
+ * return array $count['upv'] = x / $count['dnv'] = x, $count['all']
  */
 
 function fc_get_voting_data($type,$id) {
 	
 	global $db_content;
+	$id = (int) $id;
 	
 	if($type == 'post') {
 		
-		$count_upv = $db_content->count("fc_comments", [
-			"AND" => [
-				"comment_type" => "upv",
-				"comment_relation_id" => $id
-			]
-		]);
-		$count_dnv = $db_content->count("fc_comments", [
-			"AND" => [
-				"comment_type" => "dnv",
-				"comment_relation_id" => $id
-			]
-		]);
+		$sql_cnt = "SELECT count(*) AS 'all_comments',
+									(SELECT count(*) FROM fc_comments WHERE (comment_type = 'upv' OR comment_type = 'dnv') AND comment_relation_id = $id) AS 'all',
+									(SELECT count(*) FROM fc_comments WHERE comment_type = 'upv' AND comment_relation_id = $id) AS 'upv',
+									(SELECT count(*) FROM fc_comments WHERE comment_type = 'dnv' AND comment_relation_id = $id) AS 'dnv'
+									FROM fc_comments";
 		
-		$votes = array('upv' => $count_upv, 'dnv' => $count_dnv);
+		$count = $db_content->query("$sql_cnt")->fetch(PDO::FETCH_ASSOC);
 		
-		return $votes;
-	
+		return $count;
 	}
 }
 
@@ -393,6 +386,7 @@ function fc_get_event_confirmation_data($id) {
 
 /**
  * generate anonymous voter name
+ * we use this only if votings are allowed for all
  */
  
 function fc_generate_anonymous_voter() {
@@ -407,7 +401,6 @@ function fc_generate_anonymous_voter() {
 	
 	
 	return md5($ip);
-	
 }
 
 ?>

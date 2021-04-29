@@ -22,6 +22,7 @@ $lang['tn_system_desc'] = "Preferences, Snippets and Backup";
 $lang['tn_contents'] = "Contents";
 $lang['tn_contents_desc'] = "Pages, Snippets, RSS Feeds create/edit/delete ...";
 $lang['tn_comments'] = 'Comments';
+$lang['tn_reactions'] = 'Reaktionen';
 
 /* Links and Buttons */
 $lang['back_to_page'] = "back to Homepage";
@@ -30,6 +31,7 @@ $lang['logout'] = "logout";
 $lang['edit'] = "Edit";
 $lang['update'] = "Update";
 $lang['delete'] = "Delete";
+$lang['delete_selected'] = "Delete selected";
 $lang['preview'] = "Preview";
 $lang['submit'] = "Go";
 $lang['new'] = "New";
@@ -67,6 +69,10 @@ $lang['filename'] = "Filename";
 
 $lang['shortcode'] = 'Shortcode';
 $lang['shortcode_replacement'] = 'Replacement';
+
+$lang['reactions_comments'] = 'Comments';
+$lang['reactions_votings'] = 'Votings';
+$lang['reactions_events'] = 'Events';
 
 $lang['save_new_page'] = "Save new Page";
 $lang['update_page'] = "Update Page";
@@ -329,6 +335,7 @@ $lang['label_classes'] = 'Classes';
 $lang['label_password'] = 'Password';
 $lang['label_password_reset'] = 'Reset Password';
 $lang['label_filter'] = "Filter";
+$lang['label_filter_reset'] = "Reset Filter";
 $lang['label_type'] = "Type";
 $lang['label_overwrite_existing_files'] = "Overwrite existing";
 

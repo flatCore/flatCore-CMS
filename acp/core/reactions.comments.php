@@ -3,6 +3,9 @@
 //prohibit unauthorized access
 require 'core/access.php';
 
+echo '<div class="subHeader">';
+echo 'COMMENTS';
+echo '</div>';
 
 /* update comment */
 $update_msg = '';
@@ -107,8 +110,6 @@ foreach($blog_comment_ids as $id) {
 }
 
 
-
-
 // defaults
 $comments_start = 0;
 $comments_limit = 100;
@@ -135,11 +136,17 @@ if(isset($_POST['filter_by_status'])) {
 if(isset($_POST['filter_by_page_id'])) {
 	$_SESSION['cf_relation_id'] = $_POST['filter_by_page_id'];
 	$_SESSION['cf_type'] = 'p';
+	if($_POST['filter_by_page_id'] == 'all') {
+		$_SESSION['cf_type'] = 'all';
+	}
 }
 
 if(isset($_POST['filter_by_post_id'])) {
 	$_SESSION['cf_relation_id'] = $_POST['filter_by_post_id'];
 	$_SESSION['cf_type'] = 'b';
+	if($_POST['filter_by_post_id'] == 'all') {
+		$_SESSION['cf_type'] = 'all';
+	}
 }
 
 
@@ -189,7 +196,7 @@ for($i=0;$i<$cnt_comments;$i++) {
 	echo '</div>';
 	echo '<div class="col-md-2">';
 	
-	echo '<form class="form-inline" action="?tn=comments&sub=list#comid'.$comment_id.'" method="POST">';
+	echo '<form class="form-inline" action="?tn=reactions&sub=comments#comid'.$comment_id.'" method="POST">';
 	echo '<button type="submit" class="btn btn-sm w-100 btn-fc" name="editid" value="'.$comment_id.'">'.$lang['edit'].'</button>';
 	echo '</form>';
 	echo '</div>';
@@ -198,12 +205,12 @@ for($i=0;$i<$cnt_comments;$i++) {
 	if($comment_status == 1) {
 		$btn_class = 'btn-fc';
 	}
-	echo '<form class="form-inline" action="?tn=comments&sub=list" method="POST">';
+	echo '<form class="form-inline" action="?tn=reactions&sub=comments" method="POST">';
 	echo '<button type="submit" class="btn btn-sm w-100 '.$btn_class.'" name="change_status" value="'.$comment_id.'">'.$icon['check'].'</button>';
 	echo '</form>';
 	echo '</div>';
 	echo '<div class="col-md-1">';	
-	echo '<form class="form-inline" action="?tn=comments&sub=list" method="POST">';
+	echo '<form class="form-inline" action="?tn=reactions&sub=comments" method="POST">';
 	echo '<button type="submit" class="btn btn-sm w-100 btn-danger" name="delid" value="'.$comment_id.'">'.$icon['trash_alt'].'</button>';
 	echo '</form>';
 	echo '</div>';
@@ -219,7 +226,7 @@ for($i=0;$i<$cnt_comments;$i++) {
 		}
 				
 		echo '<div class="well well-sm p-3 m-3">';
-		echo '<form action="?tn=comments&sub=list#comid'.$comment_id.'" method="POST">';
+		echo '<form action="?tn=reactions&sub=comments#comid'.$comment_id.'" method="POST">';
 		echo '<div class="form-group">';
 		echo '<label>'.$lang['label_name'].'</label>';
 		echo '<input type="text" class="form-control" name="comment_author" value="'.$get_comments[$i]['comment_author'].'">';
@@ -263,7 +270,7 @@ if($_SESSION['cf_status'] == 'all') {
 
 echo '<fieldset>';
 echo '<legend>'.$lang['label_filter_by_status'].'</legend>';
-echo '<form action="?tn=comments&sub=list" method="POST">';
+echo '<form action="?tn=reactions&sub=comments" method="POST">';
 echo '<select name="filter_by_status" class="custom-select form-control" onchange="this.form.submit()">';
 echo '<option value="all" '.$sel_status_all.'>'.$lang['label_all_comments'].'</option>';
 echo '<option value="1" '.$sel_status_1.'>'.$lang['label_comments_status1'].'</option>';
@@ -276,7 +283,7 @@ echo '</fieldset>';
 /* show select for pages with comments */
 echo '<fieldset>';
 echo '<legend>'.$lang['label_filter_comments_by_page'].'</legend>';
-echo '<form action="?tn=comments&sub=list" method="POST">';
+echo '<form action="?tn=reactions&sub=comments" method="POST">';
 echo '<select name="filter_by_page_id" class="custom-select form-control" onchange="this.form.submit()">';
 echo '<option value="all">'.$lang['label_all_comments'].'</option>';
 
@@ -296,7 +303,7 @@ echo '</fieldset>';
 /* show select for posts with comments */
 echo '<fieldset>';
 echo '<legend>'.$lang['label_filter_comments_by_posts'].'</legend>';
-echo '<form action="?tn=comments&sub=list" method="POST">';
+echo '<form action="?tn=reactions&sub=comments" method="POST">';
 echo '<select name="filter_by_post_id" class="custom-select form-control" onchange="this.form.submit()">';
 echo '<option value="all">'.$lang['label_all_comments'].'</option>';
 

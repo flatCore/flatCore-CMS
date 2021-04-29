@@ -111,6 +111,7 @@ $lang['label_votings'] = 'Reactions/Votings';
 $lang['label_votings_off'] = 'Deactivated';
 $lang['label_votings_on_registered'] = 'For registered users';
 $lang['label_votings_on_global'] = 'For all Users';
+$lang['label_show_all_votings'] = 'Show all votings';
 
 $lang['label_event_guestlist'] = 'Guest list';
 $lang['label_guestlist_activate'] = 'Activate Guest list';
@@ -122,6 +123,7 @@ $lang['label_guestlist_public_yes'] = 'Show Guest list';
 $lang['label_guestlist_show_nbr_no'] = 'Hide number of commitments';
 $lang['label_guestlist_show_nbr_yes'] = 'Show the number of commitments';
 $lang['label_guestlist_limit'] = 'Limit number of registrations (leave this field blank for unlimited registrations)';
+$lang['label_show_all_events'] = 'Show all Events';
 
 
 $lang['btn_upload'] = 'Upload';
