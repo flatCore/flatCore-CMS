@@ -25,7 +25,7 @@ if($_POST['delete_reactions']) {
 
 
 /* get all events ids and titles */
-$get_events = $db_content->select("fc_posts", ["post_id","post_title"],[
+$get_events = $db_posts->select("fc_posts", ["post_id","post_title"],[
 	"post_type" => "e",
 	"ORDER" => ["post_id" => "DESC"]
 	]);

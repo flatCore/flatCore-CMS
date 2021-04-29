@@ -19,7 +19,7 @@ if($_POST['delete_reactions']) {
 }
 
 /* get all post ids and titles */
-$get_posts = $db_content->select("fc_posts", ["post_id","post_title"],[
+$get_posts = $db_posts->select("fc_posts", ["post_id","post_title"],[
 	"ORDER" => ["post_id" => "DESC"]
 	]);
 
