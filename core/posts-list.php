@@ -247,21 +247,21 @@ foreach($get_posts as $k => $post) {
 		
 		$voter_data = false;
 		$voting_buttons = fc_load_comments_tpl($fc_template,'vote.tpl');
-		
+		$voting_type = array("upv","dnv");
 		if($get_posts[$k]['post_votings'] == 2) {
 			if($_SESSION['user_nick'] == '') {
 				$voter_data = false;
 			} else {
-				$voter_data = fc_check_voter_legitimacy($get_posts[$k]['post_id'],$_SESSION['user_nick']);
+				$voter_data = fc_check_user_legitimacy($get_posts[$k]['post_id'],$_SESSION['user_nick'],$voting_type);
 			}
 		}
 		
 		if($get_posts[$k]['post_votings'] == 3) {
 			if($_SESSION['user_nick'] == '') {
 				$voter_name = fc_generate_anonymous_voter();
-				$voter_data = fc_check_voter_legitimacy($get_posts[$k]['post_id'],$voter_name);	
+				$voter_data = fc_check_user_legitimacy($get_posts[$k]['post_id'],$voter_name,$voting_type);	
 			} else {
-				$voter_data = fc_check_voter_legitimacy($get_posts[$k]['post_id'],$_SESSION['user_nick']);
+				$voter_data = fc_check_user_legitimacy($get_posts[$k]['post_id'],$_SESSION['user_nick'],$voting_type);
 			}
 		}
 				

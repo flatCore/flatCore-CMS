@@ -11,7 +11,6 @@ $time = time();
 
 if($_POST['val']) {
 	
-	
 	/* check who is voting */
 
 	if($_SESSION['user_id'] != '') {
@@ -27,8 +26,8 @@ if($_POST['val']) {
 	
 	/* post id */
 	$vote_relation_id = (int) $voting_data[2];
-	
-	$check_voter = fc_check_voter_legitimacy($vote_relation_id,$voter_name);
+	$type = array("upv","dnv");
+	$check_voter = fc_check_user_legitimacy($vote_relation_id,$voter_name,$type);
 	
 	if($check_voter == false) {
 		exit();
@@ -40,7 +39,6 @@ if($_POST['val']) {
 		$vote_type = 'upv'; // up vote
 	}
 	
-	
 	$db_content->insert("fc_comments", [
 		"comment_relation_id" => $vote_relation_id,
 		"comment_type" => $vote_type,
@@ -51,10 +49,7 @@ if($_POST['val']) {
 
 
 	/* get the new counters */
-	
 	$votes = fc_get_voting_data('post',$vote_relation_id);
-
 	echo json_encode($votes);
-
 }
 ?>

@@ -11,34 +11,27 @@ $time = time();
 
 if($_POST['val']) {
 	
-	/* check who is voting */
+	/* check who want to signn */
 
 	if($_SESSION['user_id'] != '') {
 		$sender_id = $_SESSION['user_id'];
 		$sender_name = $_SESSION['user_nick'];
 	} else {
-		// anonymous voter
-		
-		if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-		    $ip = $_SERVER['HTTP_CLIENT_IP'];
-		} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-		    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-		} else {
-		    $ip = $_SERVER['REMOTE_ADDR'];
-		}
-		
-		$ip = md5($ip);
+		// anonymous user
 		$sender_id = '';
-		$sender_name = $ip;		
+		$sender_name = fc_generate_anonymous_voter();
 	}
-
 
 	$event_data = explode('-',$_POST['val']);
 	
 	/* post id */
 	$event_relation_id = (int) $event_data[1];
 	$sender_type = 'evc';
-	
+	$type = array("evc");
+	$check_sender = fc_check_user_legitimacy($event_relation_id,$sender_name,$type);
+	if($check_sender == false) {
+		exit();
+	}
 	
 	$db_content->insert("fc_comments", [
 		"comment_relation_id" => $event_relation_id,
@@ -49,11 +42,8 @@ if($_POST['val']) {
 	]);
 
 
-	/* get the new counters */
-	
+	/* get the new number of confirmations */
 	$nbr_of_confirmations = fc_get_event_confirmation_data($event_relation_id);
-
 	echo json_encode($nbr_of_confirmations);
-
 }
 ?>

@@ -338,29 +338,35 @@ function fc_get_voting_data($type,$id) {
 
 /**
  * check if user can vote on posts
+ * $id = comment id
+ * $name = user name or ip
+ * $type = array("upv","dnv") or ("evc")
  * return true or false
  */
  
-function fc_check_voter_legitimacy($id,$voter) {
+function fc_check_user_legitimacy($id,$user,$type) {
 	
 	global $db_content;
 	
-	$get_voter_data = $db_content->select("fc_comments", "*",[
+	$get_data = $db_content->select("fc_comments", "*",[
 			"AND" => [
 				"OR" => [
-					"comment_type" => ["upv","dnv"]
+					"comment_type" => $type
 				],
 				"comment_relation_id" => $id,
-				"comment_author" => $voter
+				"comment_author" => $user
 			]
 		]);
+
 		
-		if(count($get_voter_data) > 0) {
+		if(count($get_data) > 0) {
 			return false;
 		} else {
 			return true;
 		}
 }
+
+
 
 
 /**
