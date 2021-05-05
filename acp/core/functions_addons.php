@@ -19,10 +19,12 @@ function get_all_plugins() {
 	foreach($scanned_directory as $p) {
 		
 		$path_parts = pathinfo($p);
-		if($path_parts['extension'] != 'php') {
-			continue;
-		} else {
+		if($path_parts['extension'] == 'php') {
 			$plugins[] = $p;
+		} else {
+			if((is_dir(FC_CONTENT_DIR.'/plugins/'.$p)) && (is_file(FC_CONTENT_DIR.'/plugins/'.$p.'/index.php'))) {
+				$plugins[] = $p;
+			}
 		}
 		
 	}

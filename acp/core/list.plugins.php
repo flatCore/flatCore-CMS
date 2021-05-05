@@ -12,19 +12,22 @@ if(count($all_plugins)<1) {
 	
 	foreach($all_plugins as $plugin) {
 		
+		$id = md5($plugin);
+		
 		$pathinfo = pathinfo('/content/plugins/'.$plugin);
-		if($pathinfo['extension'] != 'php') {
-			continue;
+		
+		if($pathinfo['extension'] == 'php') {
+			$plugin_src = file_get_contents(FC_CONTENT_DIR.'/plugins/'.$plugin);
+			$plugin_info = get_include_contents(FC_CONTENT_DIR.'/plugins/'.$plugin);
+		} else {
+			if((is_dir(FC_CONTENT_DIR.'/plugins/'.$plugin)) && (is_file(FC_CONTENT_DIR.'/plugins/'.$plugin.'/index.php'))) {
+				$plugin_src = file_get_contents(FC_CONTENT_DIR.'/plugins/'.$plugin.'/index.php');
+				$plugin_info = get_include_contents(FC_CONTENT_DIR.'/plugins/'.$plugin.'/index.php');
+			}
 		}
 		
-		$id = md5($plugin);
-		$plugin_src = file_get_contents(FC_CONTENT_DIR.'/plugins/'.$plugin);
-		$plugin_info = get_include_contents(FC_CONTENT_DIR.'/plugins/'.$plugin);
 		$tpl_icon = "images/plugin-icon.png";
-		
 		$source_btn = '<a class="btn btn-fc btn-sm" data-bs-toggle="modal" data-bs-target="#myModal'.$id.'" href="javascript:;">Source</a>';
-		
-		
 		$btn_group = '<div class="float-end">'.$source_btn.'</div>';
 		
 		/* shorten the filename if needed */
