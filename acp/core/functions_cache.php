@@ -55,7 +55,7 @@ function cache_lastedit($num = 5) {
 	$string .= "?>";
 	
 	
-		$file = "../" . FC_CONTENT_DIR . "/cache/cache_lastedit.php";
+		$file = FC_CONTENT_DIR . "/cache/cache_lastedit.php";
 		file_put_contents($file, $string, LOCK_EX);
 }
 
@@ -110,7 +110,7 @@ function cache_keywords() {
 	
 	} // eol foreach
 	
-		$file = "../" . FC_CONTENT_DIR . "/cache/cache_keywords.html";
+		$file = FC_CONTENT_DIR . "/cache/cache_keywords.html";
 		file_put_contents($file, $page_keywords, LOCK_EX);
 
 }
@@ -122,7 +122,7 @@ function cache_keywords() {
  
 function delete_cache_file($file='cache_mostclicked') {
 	
-	$fp = "../" . FC_CONTENT_DIR . "/cache";
+	$fp = FC_CONTENT_DIR . "/cache";
 	$file = basename($file) . ".php";
 	
 	if(is_file("$fp/$file")) {
@@ -141,8 +141,8 @@ function fc_delete_smarty_cache($cache_id) {
 	
 	require_once '../lib/Smarty/Smarty.class.php';
 	$smarty = new Smarty;
-	$smarty->cache_dir = '../'.FC_CONTENT_DIR.'/cache/cache/';
-	$smarty->compile_dir = '../'.FC_CONTENT_DIR.'/cache/templates_c/';
+	$smarty->cache_dir = FC_CONTENT_DIR.'/cache/cache/';
+	$smarty->compile_dir = FC_CONTENT_DIR.'/cache/templates_c/';
 	
 	if($cache_id == 'all') {
 		$smarty->clearAllCache();
@@ -181,7 +181,7 @@ function cache_url_paths() {
 	}
 	
 	$str = "<?php\n$string\n?>";
-	$file = "../" . FC_CONTENT_DIR . "/cache/active_urls.php";
+	$file = FC_CONTENT_DIR . "/cache/active_urls.php";
 	file_put_contents($file, $str, LOCK_EX);
 }
 

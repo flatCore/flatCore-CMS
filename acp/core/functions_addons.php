@@ -14,9 +14,8 @@ if(basename(__FILE__) == basename($_SERVER['PHP_SELF'])){
 
 function get_all_plugins() {
 	
-	$dir = "../content/";
 	$plugins = array();
-	$scanned_directory = array_diff(scandir('../'.FC_CONTENT_DIR.'/plugins/'), array('..', '.','.DS_Store'));
+	$scanned_directory = array_diff(scandir(FC_CONTENT_DIR.'/plugins/'), array('..', '.','.DS_Store'));
 	foreach($scanned_directory as $p) {
 		
 		$path_parts = pathinfo($p);
@@ -171,7 +170,7 @@ function mods_check_in() {
 	
 	$str = "<?php\n$string\n?>";
 		
-	$file = "../" . FC_CONTENT_DIR . "/cache/active_mods.php";
+	$file = FC_CONTENT_DIR . "/cache/active_mods.php";
 	file_put_contents($file, $str, LOCK_EX);
 
 }
