@@ -135,10 +135,10 @@ function get_preferences() {
  * - dashboard_listed_all_addons
  */
 
-function fc_get_hook($posion,$data) {
+function fc_get_hook($position,$data) {
 	
 	global $all_mods;	
-	$hook = basename($posion);
+	$hook = basename($position);
 	
 	foreach($all_mods as $mod) {
 		
