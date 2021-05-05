@@ -462,8 +462,8 @@ echo '<label class="form-check-label" for="compile">'.$lang['compile_check'].'</
 echo '</div>';
 
 
-$cache_size = fc_dir_size('../'.FC_CONTENT_DIR.'/cache/cache/');
-$compile_size = fc_dir_size('../'.FC_CONTENT_DIR.'/cache/templates_c/');
+$cache_size = fc_dir_size(FC_CONTENT_DIR.'/cache/cache/');
+$compile_size = fc_dir_size(FC_CONTENT_DIR.'/cache/templates_c/');
 $complete_size = readable_filesize($cache_size+$compile_size);
 
 echo '<div class="input-group mb-3">';
