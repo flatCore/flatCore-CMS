@@ -268,24 +268,20 @@ for($i=$start;$i<$end;$i++) {
 	//status image
 	switch ($user_verified) {
 		case "waiting":
-			$bg_class = 'table-info';
 			$label = 'badge rounded-pill bg-info';
 			break;
 		case "paused":
 			$label = 'badge badge-pill bg-warning';
-			$bg_class = 'table-warning';
 			break;
 		case "verified":
-			$bg_class = 'table-success';
 			$label = 'badge rounded-pill bg-success';
 			break;
 		case "":
-			$bg_class = 'table-danger';
 			$label = 'badge rounded-pill bg-danger';
 			break;
 	}
 	
-	echo '<tr class="'.$bg_class.'">';
+	echo '<tr>';
 	echo '<td class="'.$td_class.'" style="text-align:right;">'.$user_id.'</td>';
 	echo '<td>'.$user_avatar.'</td>';
 	echo '<td class="'.$td_class.'">'.$admin_img.' <span class="'.$label.'">'.$user_nick.'</span></td>';
