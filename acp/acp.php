@@ -8,11 +8,11 @@ use Medoo\Medoo;
 require '../lib/Spyc/Spyc.php';
 
 require '../config.php';
-if(is_file('../'.FC_CONTENT_DIR.'/config.php')) {
-	include '../'.FC_CONTENT_DIR.'/config.php';
+if(is_file(FC_CONTENT_DIR.'/config.php')) {
+	include FC_CONTENT_DIR.'/config.php';
 }
-if(is_file('../'.FC_CONTENT_DIR.'/config_smtp.php')) {
-	include '../'.FC_CONTENT_DIR.'/config_smtp.php';
+if(is_file(FC_CONTENT_DIR.'/config_smtp.php')) {
+	include FC_CONTENT_DIR.'/config_smtp.php';
 }
 
 

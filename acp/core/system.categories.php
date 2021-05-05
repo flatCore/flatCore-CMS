@@ -111,7 +111,7 @@ echo '</div>';
 echo '</div>';
 
 
-$images = fc_scandir_rec('../'.FC_CONTENT_DIR.'/images');
+$images = fc_scandir_rec('../content/images');
 
 /* avatar */
 $choose_tmb = '<select class="form-control choose-thumb custom-select" name="cat_thumbnail">';

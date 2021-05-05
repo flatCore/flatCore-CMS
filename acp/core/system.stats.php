@@ -40,7 +40,7 @@ $filename = $_SESSION['filename'];
 
 /* scan FC_CONTENT_DIR and return all logfiles */
 
-$log_dir = "../" . FC_CONTENT_DIR . "/SQLite";
+$log_dir = FC_CONTENT_DIR . "/SQLite";
 $logfiles = glob("$log_dir/logfile*");
 
 echo '<fieldset>';
@@ -72,7 +72,7 @@ echo '</fieldset>';
 
 
 
-$logfile_path = "../" . FC_CONTENT_DIR . "/SQLite/$filename";
+$logfile_path = FC_CONTENT_DIR . "/SQLite/$filename";
 
 
 if(is_file("$logfile_path")) {

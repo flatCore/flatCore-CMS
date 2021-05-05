@@ -231,7 +231,7 @@ for($i=$start;$i<$end;$i++) {
 
 	$user_id = $result[$i]['user_id'];
 	$user_nick = $result[$i]['user_nick'];
-	$user_avatar_path = '../'. FC_CONTENT_DIR . '/avatars/' . md5($user_nick) . '.png';
+	$user_avatar_path = '../content/avatars/' . md5($user_nick) . '.png';
 	$user_class = $result[$i]['user_class'];
 	$user_mail = $result[$i]['user_mail'];
 	$user_registerdate = $result[$i]['user_registerdate'];

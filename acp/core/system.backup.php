@@ -9,7 +9,7 @@ echo '</div>';
 
 echo '<div class="alert alert-info">'.$lang['backup_description'].'</div>';
 
-$data_folder = "../" . FC_CONTENT_DIR . "/SQLite";
+$data_folder = FC_CONTENT_DIR . "/SQLite";
 
 /* delete (only) logfiles */
 if(isset($_POST['delete'])) {

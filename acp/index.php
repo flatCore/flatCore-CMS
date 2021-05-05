@@ -6,8 +6,8 @@ require '../lib/Medoo.php';
 use Medoo\Medoo;
 
 require '../config.php';
-if(is_file('../'.FC_CONTENT_DIR.'/config.php')) {
-	include '../'.FC_CONTENT_DIR.'/config.php';
+if(is_file(FC_CONTENT_DIR.'/config.php')) {
+	include FC_CONTENT_DIR.'/config.php';
 }
 
 

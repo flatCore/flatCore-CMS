@@ -443,7 +443,7 @@ $snippet_select_text .= '</select>';
 
 $select_file = '<select class="form-control custom-select" name="post_file_attachment">';
 $select_file .= '<option value="">-- '.$lang['label_file_select_no_file'].' --</option>';
-$files_directory = '../'.FC_CONTENT_DIR.'/files';
+$files_directory = FC_CONTENT_DIR.'/files';
 $all_files = fc_scandir_rec($files_directory);
 
 foreach($all_files as $file) {

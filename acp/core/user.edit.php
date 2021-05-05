@@ -145,7 +145,7 @@ if($_POST['save_the_user']) {
 		]);
 		
 		if($_POST['deleteAvatar'] == 'on') {
-			$user_avatar_path = '../'. FC_CONTENT_DIR . '/avatars/' . md5($user_nick) . '.png';
+			$user_avatar_path = '../content/avatars/' . md5($user_nick) . '.png';
 			if(is_file($user_avatar_path)) {
 				unlink($user_avatar_path);
 			}
@@ -294,7 +294,7 @@ if(is_numeric($edituser)){
 	   $$k = stripslashes($v);
 	}
 	
-	$user_avatar_path = '../'. FC_CONTENT_DIR . '/avatars/' . md5($user_nick) . '.png';
+	$user_avatar_path = '../content/avatars/' . md5($user_nick) . '.png';
 	
 	echo '<div class="subHeader">';
 	echo '<h3>'.$lang['h_modus_edituser'].' - '.$user_nick.' <small>ID: '.$user_id.'</small></h3>';
