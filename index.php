@@ -17,8 +17,9 @@ require 'config.php';
 
 define("FC_SOURCE", "frontend");
 
-
-
+if(empty($_SESSION['visitor_csrf_token'])) {
+	$_SESSION['visitor_csrf_token'] = md5(uniqid(rand(), TRUE));
+}
 
 if(!is_file('config_database.php') && !is_file("$fc_db_content")) {
 	header("location: /install/");
@@ -31,7 +32,6 @@ if(is_file(FC_CORE_DIR . "/maintance.html")) {
 	header("location:" . FC_INC_DIR . "/maintance.html");
 	die("We'll be back soon.");
 }
-
 
 /* all requests -> strip_tags */
 foreach($_REQUEST as $key => $val) {
