@@ -491,6 +491,11 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	echo '</div>';
 	echo '</form>';
 	
+	if($btn_remove_keyword != '') {
+		echo '<p class="p-2">'.$btn_remove_keyword.'</p>';
+	}
+	
+	
 	echo '<div class="btn-group d-flex my-3">';
 	echo '<a class="btn btn-fc w-100 '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle <span class="badge badge-fc position-absolute top-0 end-0">'.$cnt['cnt_snippets'].'</span></a>';
 	echo '<a class="btn btn-fc w-100 '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System <span class="badge badge-fc position-absolute top-0 end-0">'.$cnt['cnt_system_snippets'].'</span></a>';
