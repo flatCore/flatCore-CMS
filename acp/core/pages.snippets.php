@@ -1,10 +1,26 @@
 <?php
-//error_reporting(E_ALL ^E_NOTICE);
 //prohibit unauthorized access
 require 'core/access.php';
 $system_snippets_str = "'footer_text','extra_content_text','agreement_text','account_confirm','account_confirm_mail','no_access'";
 $system_snippets = explode(',',str_replace("'",'',$system_snippets_str));
 $modus = 'new';
+
+/* update missing textlib_type for core snippets */
+$upd_core_snippets = $db_content->update("fc_textlib", [
+	"textlib_type" =>  "snippet_core"
+], [
+	"textlib_name" => $system_snippets
+]);
+
+/* update missing textlib_type for user generated snippets */
+$upd_core_snippets = $db_content->update("fc_textlib", [
+	"textlib_type" =>  "snippet"
+], [
+	"OR" => [
+	"textlib_type" => null,
+	"textlib_type" => ""
+	]
+]);
 
 
 if(isset($_REQUEST['suggest_name'])) {
@@ -210,19 +226,15 @@ for($i=0;$i<count($fc_labels);$i++) {
 }
 $snippet_label_filter = substr("$snippet_label_filter", 0, -3); // cut the last ' OR'
 
-$filter_string = "WHERE textlib_type IS NULL OR textlib_type != 'shortcode'";
 
 if($_SESSION['type'] == 'all') {
-	$filter_type = '';
+	$filter_string = "WHERE (textlib_type = 'snippet' OR textlib_type = 'snippet_core')";
 } else if($_SESSION['type'] == 'system') {
-	$filter_type = "textlib_name IN($system_snippets_str)";
+	$filter_string = "WHERE textlib_type = 'snippet_core'";
 } else if($_SESSION['type'] == 'own') {
-	$filter_type = "textlib_name NOT IN($system_snippets_str)";
+	$filter_string = "WHERE textlib_type = 'snippet'";
 }
 
-if($filter_type != "") {
-	$filter_string .= " AND ($filter_type) ";
-}
 
 if($set_snippet_keyword_filter != "") {
 	$filter_string .= " AND $set_snippet_keyword_filter";
@@ -239,8 +251,8 @@ if($snippet_lang_filter != "") {
 
 $sql_cnt = "SELECT count(*) AS 'cnt_all_snippets',
 (SELECT count(*) FROM fc_textlib WHERE textlib_type NOT IN('shortcode') ) AS 'cnt_snippets',
-(SELECT count(*) FROM fc_textlib WHERE textlib_name IN($system_snippets_str) ) AS 'cnt_system_snippets',
-(SELECT count(*) FROM fc_textlib WHERE textlib_name NOT IN($system_snippets_str) AND (textlib_type NOT IN('shortcode')) ) AS 'cnt_custom_snippets',
+(SELECT count(*) FROM fc_textlib WHERE textlib_type = 'snippet_core' ) AS 'cnt_system_snippets',
+(SELECT count(*) FROM fc_textlib WHERE textlib_type = 'snippet' ) AS 'cnt_custom_snippets',
 (SELECT count(*) FROM fc_textlib $filter_string ) AS 'cnt_filter_snippets'
 FROM fc_textlib";
 
@@ -280,7 +292,7 @@ foreach($system_snippets as $snippet) {
 }
 
 $snippets_list = $db_content->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-
+echo $sql;
 $cnt_pages = ceil($cnt['cnt_filter_snippets']/$files_per_page);
 
 $cnt_snippets = count($snippets_list);

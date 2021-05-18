@@ -279,38 +279,40 @@ $dbh_content->insert("fc_textlib", [
 	[
 		"textlib_name" => "footer_text",
 		"textlib_content" => "$footer_content",
-		"textlib_lang" => "$languagePack"
-		
+		"textlib_lang" => "$languagePack",
+		"textlib_type" => "snippet_core"
 	],[
 		
 		"textlib_name" => "extra_content_text",
 		"textlib_content" => "",
-		"textlib_lang" => "$languagePack"
-			
+		"textlib_lang" => "$languagePack",
+		"textlib_type" => "snippet_core"
 	],[
 	
 		"textlib_name" => "agreement_text",
 		"textlib_content" => "$agreement_content",
-		"textlib_lang" => "$languagePack"	
+		"textlib_lang" => "$languagePack",
+		"textlib_type" => "snippet_core"
 		
 	],[
 	
 		"textlib_name" => "account_confirm",
 		"textlib_content" => "<p>Dein Account wurde erfolgreich freigeschaltet.</p>",
-		"textlib_lang" => "$languagePack"		
+		"textlib_lang" => "$languagePack",
+		"textlib_type" => "snippet_core"
 		
 	],[
 		
 		"textlib_name" => "account_confirm_mail",
 		"textlib_content" => "$email_confirm_content",
-		"textlib_lang" => "$languagePack"	
-		
+		"textlib_lang" => "$languagePack",
+		"textlib_type" => "snippet_core"
 	],[
 		
 		"textlib_name" => "no_access",
 		"textlib_content" => "Zugriff verweigert...",
-		"textlib_lang" => "$languagePack"	
-		
+		"textlib_lang" => "$languagePack",
+		"textlib_type" => "snippet_core"
 	]
 ]);
 

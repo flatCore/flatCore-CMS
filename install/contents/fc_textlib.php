@@ -1,7 +1,7 @@
 <?php
 	
 /**
- * textlib_type -> snippet or shortcode
+ * textlib_type -> snippet_core, snippet or shortcode
  */
 
 $database = "content";
