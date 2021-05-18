@@ -48,7 +48,7 @@ if(is_file('../../config_database.php')) {
 	}
 	
 	
-	define("CONTENT_DB", "../../$fc_db_content");
+	define("CONTENT_DB", "$fc_db_content");
 
 	$db_content = new Medoo([
 		'database_type' => 'sqlite',
