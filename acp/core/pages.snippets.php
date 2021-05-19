@@ -133,6 +133,7 @@ if(isset($_POST['save_snippet'])) {
 		$data = $db_content->insert("fc_textlib", [
 			"textlib_content" =>  $_POST['textlib_content'],
 			"textlib_name" => $snippet_name,
+			"textlib_type" => 'snippet',
 			"textlib_lang" => $_POST['sel_language'],
 			"textlib_notes" => $_POST['textlib_notes'],
 			"textlib_groups" => $_POST['snippet_groups'],
