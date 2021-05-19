@@ -65,7 +65,6 @@ if(isset($_POST['delete_snippet'])) {
 	}
 	
 	print_sysmsg("$sys_message");
-
 }
 
 
@@ -80,8 +79,7 @@ if(isset($_POST['save_snippet'])) {
 	$snippet_theme = $snippet_themes[0];
 	$snippet_template = $snippet_themes[1];
 	
-	if(count($_POST['picker1_images']) > 1) {
-		
+	if(count($_POST['picker1_images']) > 1) {		
 		$snippet_thumbnail = implode("<->", array_unique($_POST['picker1_images']));
 	} else {
 		$st = $_POST['picker1_images'];
@@ -131,7 +129,6 @@ if(isset($_POST['save_snippet'])) {
 		]);
 	
 	} else {
-		
 		
 		$data = $db_content->insert("fc_textlib", [
 			"textlib_content" =>  $_POST['textlib_content'],
@@ -258,7 +255,7 @@ FROM fc_textlib";
 
 $cnt = $db_content->query($sql_cnt)->fetch(PDO::FETCH_ASSOC);
 
-$files_per_page = 50;
+$files_per_page = 5;
 $show_numbers = 6;
 $start = 0;
 $disable_next_start = '';
@@ -292,38 +289,40 @@ foreach($system_snippets as $snippet) {
 }
 
 $snippets_list = $db_content->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-echo $sql;
 $cnt_pages = ceil($cnt['cnt_filter_snippets']/$files_per_page);
 
 $cnt_snippets = count($snippets_list);
 
-$pag_backlink = '<a class="btn btn-fc '.$disable_prev_start.'" href="acp.php?tn=pages&sub=snippets&start='.$prev_start.'">'.$icon['angle_double_left'].'</a>';
-$pag_forwardlink = '<a class="btn btn-fc '.$disable_next_start.'" href="acp.php?tn=pages&sub=snippets&start='.$next_start.'">'.$icon['angle_double_right'].'</a>';
+$pag_backlink = '<li class="page-item '.$disable_prev_start.'"><a class="page-link" href="acp.php?tn=pages&sub=snippets&start='.$prev_start.'">'.$icon['angle_double_left'].'</a></li>';
+$pag_forwardlink = '<li class="page-item '.$disable_next_start.'"><a class="page-link" href="acp.php?tn=pages&sub=snippets&start='.$next_start.'">'.$icon['angle_double_right'].'</a></li>';
 
 unset($pag_string);
 for($x=0;$x<$cnt_pages;$x++) {
 
-	$aclass = "btn btn-fc";
+	$aclass = "page-link";
 	$page_start = $x*$files_per_page;
 	$page_nbr = $x+1;
 	
 	if($page_start == $start) {
-		$aclass = "btn btn-fc active";
 		
+		$aclass = "page-link active";
 		$pag_start = 	$x-($show_numbers/2);
 		
 		if($pag_start < 0) {
 			$pag_start = 0;
 		}
 		
-		$pag_end = 		$pag_start+$show_numbers;
+		$pag_end = $pag_start+$show_numbers;
 		if($pag_end > $cnt_pages) {
 			$pag_end = $cnt_pages;
 		}
+		
+		$a_pag_string[] = '<li class="page-item active"><span class="page-link">'.$page_nbr.'</span></li>';	
+	} else {
+		$a_pag_string[] = '<li class="page-item"><a class="page-link" href="acp.php?tn=pages&sub=snippets&start='.$page_start.'">'.$page_nbr.'</a></li>';
 	}
 	
-	$a_pag_string[] = "<a class='$aclass' href='acp.php?tn=pages&sub=snippets&start=$page_start'>$page_nbr</a> ";
-
+	
 }
 
 /**
@@ -337,7 +336,6 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 } else {
 	
 	/* list snippets */
-	
 	
 	echo '<div class="app-container">';
 	echo '<div class="max-height-container">';
@@ -461,7 +459,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 		echo '<td class="text-right">';
 		echo '<div class="btn-group" role="group">';
 		echo '<a href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'" class="btn btn-fc btn-sm text-success">'.$lang['edit'].'</a>';
-		echo '<a href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'&duplicate=1" class="btn btn-fc btn-sm">'.$icon['copy'].'</a>';
+		echo '<a href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'&duplicate=1" class="btn btn-fc btn-sm" title="'.$lang['duplicate'].'">'.$icon['copy'].'</a>';
 		echo '</div>';
 		echo '</td>';	
 		echo '</tr>';
@@ -471,13 +469,15 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	
 	echo '</table>';
 	
-	echo '<div class="well well-sm text-center">';
-	echo $pag_backlink .' ';
+	echo '<div class="pt-3">';
+	echo '<ul class="pagination justify-content-center">';
+	echo $pag_backlink;
 	foreach(range($pag_start, $pag_end) as $number) {
     echo $a_pag_string[$number];
 	}
-	echo ' '. $pag_forwardlink;
-	echo '</div>'; //EOL PAGINATION
+	echo $pag_forwardlink;
+	echo '</ul>';
+	echo '</div>';
 	
 	echo '</div>';
 	
@@ -523,13 +523,10 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	/* end of sidebar */
 
 
-
 	echo '</div>';
 	echo '</div>';
-	
-	
+		
 	echo '</div>';
-
 	echo '</div>'; // .app-container
 	
 	

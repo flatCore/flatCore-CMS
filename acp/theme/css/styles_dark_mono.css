@@ -13594,6 +13594,12 @@ div#pagina p {
   margin: 4px 2px;
 }
 
+/* re-color bootstrap pagination */
+.page-item .page-link, .page-item.disabled .page-link {
+  background: #222;
+  border-color: #090909;
+}
+
 div.header-bc {
   padding: 0;
   margin: 1px 0 10px 0;

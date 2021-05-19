@@ -503,6 +503,16 @@ div#pagina p {
 	margin: 4px 2px;
 }
 
+/* re-color bootstrap pagination */
+
+.page-item, .page-item.disabled {
+	.page-link {
+		background: $btn_fc_background;
+		border-color: darken($btn_fc_background,10);
+	}
+}
+
+
 
 div.header-bc {
 	padding: 0;
