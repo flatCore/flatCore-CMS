@@ -255,7 +255,7 @@ FROM fc_textlib";
 
 $cnt = $db_content->query($sql_cnt)->fetch(PDO::FETCH_ASSOC);
 
-$files_per_page = 5;
+$files_per_page = 50;
 $show_numbers = 6;
 $start = 0;
 $disable_next_start = '';
