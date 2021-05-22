@@ -9,7 +9,7 @@
 			<span class="post-author">{post_author}</span> <span class="post-releasedate">{post_releasedate}</span>
 			<a class="post-headline-link" href="{post_href}" title="{post_title}"><h3>{post_title}</h3></a>
 				{post_teaser}
-				<p><a href="{post_external_link}" title="{post_external_link}" target="_blank">{post_external_link}</a></p>
+				<p><a href="{post_external_redirect}" title="{post_external_link}" target="_blank">{post_external_link}</a></p>
 		</div>
 	</div>
 	<div class="row">

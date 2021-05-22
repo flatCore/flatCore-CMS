@@ -28,6 +28,7 @@ $cols = array(
 	"post_images" => "VARCHAR(255) NOT NULL DEFAULT ''",
 	"post_tags" => "VARCHAR(255) NOT NULL DEFAULT ''",
 	"post_link" => "VARCHAR(255) NOT NULL DEFAULT ''",
+	"post_link_hits" => 'INTEGER(12)',
 	"post_video_url" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"post_categories" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"post_comments" => 'INTEGER(12)',

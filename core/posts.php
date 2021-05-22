@@ -103,6 +103,28 @@ if($page_contents['page_type_of_use'] == 'display_post' AND $get_post_id == '') 
 	header("Connection: close");
 }
 
+/* redirect to external link */
+if(isset($_GET['goto'])) {
+	
+	$get_link_by_id = (int) $_GET['goto'];
+	$target_post = $db_posts->get("fc_posts", ["post_link","post_link_hits"], [
+			"post_id" => $get_link_by_id
+	]);
+	
+	$target_url = $target_post['post_link'];
+	$upd_counter = $target_post['post_link_hits']+1;
+	
+	$update_counter = $db_posts->update("fc_posts", [
+		"post_link_hits" => $upd_counter
+	],[
+		"post_id" => $get_link_by_id
+	]);	
+	
+	$redirect = $target_url;		
+	header("Location: $redirect");
+	exit;
+	
+}
 
 /* start post_attachment download */
 if(isset($_POST['post_attachment'])) {

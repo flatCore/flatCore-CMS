@@ -238,9 +238,13 @@ $this_entry = str_replace("{post_event_hotline}", $post_data['post_event_hotline
 $this_entry = str_replace("{post_event_price_note}", $post_data['post_event_price_note'], $this_entry);
 $this_entry = str_replace("{post_tpl_event_prices}", $price_list, $this_entry);
 
-
 $this_entry = str_replace("{video_id}", $video['v'], $this_entry);
+
 $this_entry = str_replace("{post_external_link}", $post_data['post_link'], $this_entry);
+$redirect = '?goto='.$post_data['post_id'];
+$this_entry = str_replace("{post_external_redirect}", $redirect, $this_entry);
+
+
 $this_entry = str_replace("{post_cats}", $post_cats_btn, $this_entry);
 $this_entry = str_replace("{post_cats_string}", $post_cats_string, $this_entry);
 $this_entry = str_replace("{back_to_overview}", $lang['back_to_overview'], $this_entry);

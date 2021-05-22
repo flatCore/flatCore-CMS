@@ -11,7 +11,7 @@
 		</div>
 		<div class="col-md-8">
 			{post_teaser}
-			<p><a href="{post_external_link}" target="_blank">{post_external_link}</a></p>
+			<p><a href="{post_external_redirect}" title="{post_external_link}" target="_blank">{post_external_link}</a></p>
 		</div>
 	</div>
 	

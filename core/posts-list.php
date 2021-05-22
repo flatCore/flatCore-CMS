@@ -351,6 +351,9 @@ foreach($get_posts as $k => $post) {
 	
 	/* links */
 	$this_entry = str_replace("{post_external_link}", $get_posts[$k]['post_link'], $this_entry);
+	$redirect = '?goto='.$get_posts[$k]['post_id'];
+	$this_entry = str_replace("{post_external_redirect}", $redirect, $this_entry);
+	
 	
 	/* gallery */
 	if($get_posts[$k]['post_type'] == 'g') {
