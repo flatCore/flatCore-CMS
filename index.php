@@ -115,8 +115,7 @@ if($p == "") {
 	fc_check_shortlinks($fct_slug);
 }
 
-
-if(isset($preview)) {
+if(isset($preview) AND ($_SESSION['user_class'] == "administrator")) {
 	$p = (int) $preview;
 	list($page_contents,$fc_nav) = fc_get_content($p,'preview');
 	unset($prefs_logfile);
