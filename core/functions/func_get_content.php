@@ -1,15 +1,13 @@
 <?php
 
-
 /**
  * get contents of the current page (default by (int) $p)
  * get contents for navigation
- * get preferences
  *
  * @return array
  */
 
-function get_content($page, $mode = 'p') {
+function fc_get_content($page, $mode = 'p') {
 
 	global $db_content;
 	global $languagePack;
@@ -58,11 +56,7 @@ function get_content($page, $mode = 'p') {
 		]);
 	
 	}
-		
-		$prefs = $db_content->get("fc_preferences", "*", [
-			"prefs_status" => "active"
-		]);	
-		
+				
 
 	if($page_contents['page_language'] == '') {
 		$page_contents['page_language'] = $languagePack;
@@ -81,7 +75,7 @@ function get_content($page, $mode = 'p') {
 	$fc_nav = $db_content->query("$nav_sql")->fetchAll();
 	$fc_nav = fc_array_multisort($fc_nav, 'page_language', SORT_ASC, 'page_sort', SORT_ASC, SORT_NATURAL);
 
-	$contents = array($page_contents,$fc_nav,$prefs);
+	$contents = array($page_contents,$fc_nav);
 	
 	return $contents;
 }

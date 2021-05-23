@@ -20,7 +20,7 @@ include_once 'functions.posts.php';
 function fc_get_preferences() {
 	global $db_content;	
 	$prefs = $db_content->get("fc_preferences", "*", [
-		"prefs_id" => 1
+		"prefs_status" => "active"
 	]);
 	return $prefs;
 }
