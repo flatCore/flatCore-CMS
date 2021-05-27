@@ -20,10 +20,10 @@
 		<div class="col-md-4">
 			
 			<div class="btn-group float-end" role="group">
-				<a href="acp.php?tn=pages&sub=index&a=start&id={id}" class="btn btn-fc btn-sm" title="{title_update_page_index}">{btn_start_index}</a>
-				<a href="acp.php?tn=pages&sub=index&a=update&id={id}" class="btn btn-fc btn-sm" title="{title_update_page_content}">{btn_update_info}</a>
+				<a href="acp.php?tn=pages&sub=index&a=start&id={id}" class="btn btn-fc btn-sm text-success" title="{title_update_page_index}">{btn_start_index}</a>
+				<a href="acp.php?tn=pages&sub=index&a=update&id={id}" class="btn btn-fc btn-sm text-success" title="{title_update_page_content}">{btn_update_info}</a>
+				<a href="acp.php?tn=pages&sub=index&a=remove&id={id}" class="btn btn-danger btn-sm" title="{title_remove_page_from_index}">{btn_remove}</a>
 			</div>
-			
 		</div>
 	</div>
 </div>
