@@ -13434,8 +13434,7 @@ a.sidebar-sub:hover {
 }
 
 a.sidebar-sub-active {
-  color: #222;
-  background: rgba(0, 0, 0, 0.45);
+  color: #c1297b;
 }
 a.sidebar-sub-active i {
   color: #9E0055;
