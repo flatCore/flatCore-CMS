@@ -26,7 +26,7 @@ if(count($all_plugins)<1) {
 			}
 		}
 		
-		$btn_delete_addon = '<form class="d-inline ps-2" action="?tn=addons&sub=p" method="POST" onsubmit="return confirm(\'Do you really want to submit the form?\');">';
+		$btn_delete_addon = '<form class="d-inline ps-2" action="?tn=addons&sub=p" method="POST" onsubmit="return confirm(\''.$lang['confirm_delete_file'].'\');">';
 		$btn_delete_addon .= '<button type="submit" name="delete_addon" class="btn btn-sm btn-fc text-danger">'.$icon['trash_alt'].'</button>';
 		$btn_delete_addon .= '<input type="hidden" name="type" value="p">';
 		$btn_delete_addon .= '<input type="hidden" name="addon" value="'.$plugin.'">';
