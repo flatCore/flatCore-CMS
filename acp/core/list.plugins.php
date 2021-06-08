@@ -26,9 +26,16 @@ if(count($all_plugins)<1) {
 			}
 		}
 		
+		$btn_delete_addon = '<form class="d-inline ps-2" action="?tn=addons&sub=p" method="POST" onsubmit="return confirm(\'Do you really want to submit the form?\');">';
+		$btn_delete_addon .= '<button type="submit" name="delete_addon" class="btn btn-sm btn-fc text-danger">'.$icon['trash_alt'].'</button>';
+		$btn_delete_addon .= '<input type="hidden" name="type" value="p">';
+		$btn_delete_addon .= '<input type="hidden" name="addon" value="'.$plugin.'">';
+		$btn_delete_addon .= '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+		$btn_delete_addon .= '</form>';
+		
 		$tpl_icon = "images/plugin-icon.png";
 		$source_btn = '<a class="btn btn-fc btn-sm" data-bs-toggle="modal" data-bs-target="#myModal'.$id.'" href="javascript:;">Source</a>';
-		$btn_group = '<div class="float-end">'.$source_btn.'</div>';
+		$btn_group = '<div class="float-end">'.$source_btn.$btn_delete_addon.'</div>';
 		
 		/* shorten the filename if needed */
 		$plugin_name = basename($plugin,'.php');
@@ -47,7 +54,7 @@ if(count($all_plugins)<1) {
 			$plugin_version .= '<span class="">Author: '.$plugin_info['author'].'</span>';
 		}
 		$plugin_version .= '</p>';
-		
+				
 		
 		$tpl = $template_file;
 		$tpl = str_replace("{\$PLUGIN_NAME}", "$plugin_name","$template_file");
