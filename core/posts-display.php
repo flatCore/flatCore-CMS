@@ -272,32 +272,76 @@ if($post_data['post_product_tax'] == '1') {
 	$tax = $fc_prefs['prefs_posts_products_tax_alt2'];
 }
 
-$post_product_price_net = str_replace('.', '', $post_data['post_product_price_net']);
-$post_product_price_net = str_replace(',', '.', $post_product_price_net);
+$post_product_price_addition = $post_data['post_product_price_addition'];
+if($post_product_price_addition == '') {
+	$post_product_price_addition = 0;
+}
 
-$post_price_gross = $post_product_price_net*($tax+100)/100;
-$post_price_gross = fc_post_print_currency($post_price_gross);
-$post_price_net = fc_post_print_currency($post_product_price_net);
+$post_prices = fc_posts_calc_price($post_data['post_product_price_net'],$post_product_price_addition,$tax);
+$post_price_net = $post_prices['net'];
+$post_price_gross = $post_prices['gross'];
+
+if($post_data['post_product_price_net_s1'] != '') {
+	
+	$tpl_prices_list = fc_load_posts_tpl($fc_template,'prices_list.tpl');
+	
+	$table_discounts  = '';
+	
+	for($i=1;$i<6;$i++) {
+	
+		$table_discounts .= '<tr>';
+		
+		$price_key = 'post_product_price_net_s'.$i;
+		$amount_key = 'post_product_amount_s'.$i;
+	
+		if($post_data[$price_key] == '') {
+			continue;
+		}
+	
+		$post_prices = fc_posts_calc_price($post_data[$price_key],$post_product_price_addition,$tax);
+		$price_scaled[$i]['net'] = $post_prices['net'];
+		$price_scaled[$i]['gross'] = $post_prices['gross'];
+	
+		$table_discounts .= '<td>'.$post_data[$amount_key].' {post_product_unit}</td>';
+		$table_discounts .= '<td>'.$price_scaled[$i]['gross'].' {post_currency}</td>';
+		$table_discounts .= '</tr>';
+	}
+	
+	$tpl_prices_list = str_replace('{post_prices_discount}', $table_discounts, $tpl_prices_list);
+	$tpl_prices_list = str_replace('{label_prices_discount}', $lang['label_prices_discount'], $tpl_prices_list);
+	$this_entry = str_replace("{tpl_prices_discount}", $tpl_prices_list, $this_entry);
+	
+} else {
+	$this_entry = str_replace("{tpl_prices_discount}", '', $this_entry);
+}
+
+
+$this_entry = str_replace("{post_prices_discount}", $table_discounts, $this_entry);
 $this_entry = str_replace("{post_price_gross}", $post_price_gross, $this_entry);
-$this_entry = str_replace("{post_price_net}", $post_price_net, $this_entry);
+$this_entry = str_replace("{post_price_net}", $post_price_net_calculated, $this_entry);
 $this_entry = str_replace("{post_price_tax}", $tax, $this_entry);
 $this_entry = str_replace("{post_currency}", $post_data['post_product_currency'], $this_entry);
 $this_entry = str_replace("{post_product_unit}", $post_data['post_product_unit'], $this_entry);
 $this_entry = str_replace("{post_product_amount}", $post_data['post_product_amount'], $this_entry);
 $this_entry = str_replace("{post_product_price_label}", $post_data['post_product_price_label'], $this_entry);
+$this_entry = str_replace("{price_tag_label_gross}", $lang['price_tag_label_gross'], $this_entry);
+$this_entry = str_replace("{price_tag_label_net}", $lang['price_tag_label_net'], $this_entry);
 
-if($post_data['posts_product_textlib_content'] != 'no_snippet') {
+if($post_data['post_product_textlib_content'] != 'no_snippet') {
 	$textlib_content = get_textlib($post_data['posts_product_textlib_content'],$languagePack);
 	$this_entry = str_replace("{post_snippet_text}", $textlib_content, $this_entry);
 } else {
 	$this_entry = str_replace("{post_snippet_text}", '', $this_entry);
 }
 
-if($post_data['posts_product_textlib_price'] != 'no_snippet') {
-	$textlib_price = get_textlib($post_data['posts_product_textlib_price'],$languagePack);
-	$this_entry = str_replace("{post_snippet_price}", $textlib_price, $this_entry);
+if($post_data['post_product_textlib_price'] != 'no_snippet') {
+	$tpl_snippet_discounts = fc_load_posts_tpl($fc_template,'prices_snippet.tpl');
+	$textlib_price = get_textlib($post_data['post_product_textlib_price'],$languagePack);
+	$tpl_snippet_discounts = str_replace("{post_snippet_price}", $textlib_price, $tpl_snippet_discounts);
+	$tpl_snippet_discounts = str_replace("{label_prices_snippet}", $lang['label_prices_snippet'], $tpl_snippet_discounts);
+	$this_entry = str_replace("{tpl_snippet_price}", $tpl_snippet_discounts, $this_entry);
 } else {
-	$this_entry = str_replace("{post_snippet_price}", '', $this_entry);
+	$this_entry = str_replace("{tpl_snippet_price}", '', $this_entry);
 }
 
 $this_entry = str_replace("{post_thumbnails}", $thumbnails_str, $this_entry);

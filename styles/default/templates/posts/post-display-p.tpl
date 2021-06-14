@@ -10,6 +10,7 @@
 				</div>
 				<div class="price-tag-inner">
 					{post_currency} {post_price_gross} <span class="product-amount">{post_product_amount}</span> <span class="product-unit">{post_product_unit}</span>
+					<span class="price-tag-note">{price_tag_label_gross}</span>
 				</div>
 			</div>
 		</div>
@@ -28,9 +29,11 @@
 		{post_snippet_text}
 	</div>
 
-	<div class="post-snippet-price">
-		{post_snippet_price}
-	</div>
+	
+		{tpl_prices_discount}
+	
+
+	{tpl_snippet_price}
 	
 	<div class="post-footer">
 		<p class="text-right">{post_cats}</p>

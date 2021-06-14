@@ -402,6 +402,15 @@ if($post_product_currency == '') {
 	$post_product_currency = $fc_preferences['prefs_posts_products_default_currency'];
 }
 
+if($post_data['post_product_price_addition'] == '') {
+	$post_data['post_product_price_addition'] = 0;
+}
+
+$post_product_price_net_purchasing = $post_data['post_product_price_net_purchasing'];
+if($post_product_price_net_purchasing == '') {
+	$post_product_price_net_purchasing = '0,00';
+}
+
 
 /* add text snippet to prices */
 
@@ -414,7 +423,7 @@ $snippets_price_list = $db_content->select("fc_textlib", "*", [
 
 foreach($snippets_price_list as $snippet) {
 	$selected = "";
-	if($snippet['textlib_name'] == $post_data['product_textlib_price']) {
+	if($snippet['textlib_name'] == $post_data['post_product_textlib_price']) {
 		$selected = 'selected';
 	}
 	$snippet_select_pricelist .= '<option '.$selected.' value='.$snippet['textlib_name'].'>'.$snippet['textlib_name']. ' - ' .$snippet['textlib_title'].'</option>';
@@ -646,6 +655,25 @@ $form_tpl = str_replace('{post_product_price_gross}', $post_product_price_gross,
 $form_tpl = str_replace('{select_tax}', $select_tax, $form_tpl);
 $form_tpl = str_replace('{snippet_select_pricelist}', $snippet_select_pricelist, $form_tpl);
 $form_tpl = str_replace('{snippet_select_text}', $snippet_select_text, $form_tpl);
+
+$form_tpl = str_replace('{post_product_price_net_purchasing}', $post_product_price_net_purchasing, $form_tpl);
+$form_tpl = str_replace('{post_product_price_addition}', $post_data['post_product_price_addition'], $form_tpl);
+
+$form_tpl = str_replace('{post_product_amount_s1}', $post_data['post_product_amount_s1'], $form_tpl);
+$form_tpl = str_replace('{post_product_amount_s2}', $post_data['post_product_amount_s2'], $form_tpl);
+$form_tpl = str_replace('{post_product_amount_s3}', $post_data['post_product_amount_s3'], $form_tpl);
+$form_tpl = str_replace('{post_product_amount_s4}', $post_data['post_product_amount_s4'], $form_tpl);
+$form_tpl = str_replace('{post_product_amount_s5}', $post_data['post_product_amount_s5'], $form_tpl);
+$form_tpl = str_replace('{post_product_price_net_s1}', $post_data['post_product_price_net_s1'], $form_tpl);
+$form_tpl = str_replace('{post_product_price_net_s2}', $post_data['post_product_price_net_s2'], $form_tpl);
+$form_tpl = str_replace('{post_product_price_net_s3}', $post_data['post_product_price_net_s3'], $form_tpl);
+$form_tpl = str_replace('{post_product_price_net_s4}', $post_data['post_product_price_net_s4'], $form_tpl);
+$form_tpl = str_replace('{post_product_price_net_s5}', $post_data['post_product_price_net_s5'], $form_tpl);
+$form_tpl = str_replace('{post_product_price_gross_s1}', $post_product_price_gross_s1, $form_tpl);
+$form_tpl = str_replace('{post_product_price_gross_s2}', $post_product_price_gross_s2, $form_tpl);
+$form_tpl = str_replace('{post_product_price_gross_s3}', $post_product_price_gross_s3, $form_tpl);
+$form_tpl = str_replace('{post_product_price_gross_s4}', $post_product_price_gross_s4, $form_tpl);
+$form_tpl = str_replace('{post_product_price_gross_s5}', $post_product_price_gross_s5, $form_tpl);
 
 /* galleries */
 

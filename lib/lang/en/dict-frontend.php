@@ -53,6 +53,11 @@ $lang['label_about_you'] = "About You (public)";
 $lang['label_entries'] = 'Entries';
 $lang['label_entries_total'] = 'Total';
 
+$lang['label_prices_discount'] = 'Quantity discount';
+$lang['label_prices_snippet'] = 'Notes on the prices';
+$lang['price_tag_label_gross'] = 'VAT included';
+$lang['price_tag_label_net'] = 'plus VAT';
+
 /* Buttons, Links */
 $lang['button_login'] 			= "Login";
 $lang['button_profile'] 		= "Edit Profile";

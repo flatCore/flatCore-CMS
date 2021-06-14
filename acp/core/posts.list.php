@@ -407,15 +407,25 @@ if($cnt_filter_posts > 0) {
 				$tax = $fc_preferences['prefs_posts_products_tax_alt2'];
 			}
 			
+			$post_product_price_addition = $get_posts[$i]['post_product_price_addition'];
+			if($post_product_price_addition == '') {
+				$post_product_price_addition = 0;
+			}
+			
 			$post_price_net = str_replace('.', '', $get_posts[$i]['post_product_price_net']);
 			$post_price_net = str_replace(',', '.', $post_price_net);
 			
-			$post_price_gross = $post_price_net*($tax+100)/100;
+			$post_price_net_calculated = $post_price_net*($post_product_price_addition+100)/100;
+			$post_price_gross = $post_price_net_calculated*($tax+100)/100;
+			
+			$post_price_net_calculated = fc_post_print_currency($post_price_net_calculated);			
 			$post_price_gross = fc_post_print_currency($post_price_gross);
 
-			$show_items_price = '<div class="float-end small well well-sm">';
-			$show_items_price .= $post_price_net . ' ('.$tax.'%)<br>';
-			$show_items_price .= $post_price_gross;
+			$show_items_price = '<div class="float-end small well well-sm ms-2">';
+			//$show_items_price .= fc_post_print_currency($post_price_net) . '<br>';
+			$show_items_price .= $post_price_net_calculated . '<br>';
+			$show_items_price .= '<small>incl. '.$post_product_price_addition . '%'. ' + '.$tax.'%</small><br>';
+			$show_items_price .= '<strong>'.$post_price_gross.'</strong>';
 			$show_items_price .= '</div>';		
 		}
 		

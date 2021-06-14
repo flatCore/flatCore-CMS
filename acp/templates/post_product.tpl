@@ -74,7 +74,11 @@
 							</div>
 						</div>
 						
+
+						
 					</div>
+					
+					<hr>
 					
 					<div class="row">
 						
@@ -90,27 +94,98 @@
 								<input class='form-control' name="post_product_unit" type="text" value="{post_product_unit}">
 							</div>	
 						</div>
+
+
+
+
+
+					</div>
+					
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>{label_product_price} {label_product_net}</label>
+								<input class='form-control' id="price" name="post_product_price_net" type="text" value="{post_product_price_net}">
+							</div>
+						</div>
+						
+						<div class="col-md-2">
+							<label>{label_product_price_addition}</label>
+							<div class="input-group">
+								<input class='form-control' id="price_addition" name="post_product_price_addition" type="text" value="{post_product_price_addition}">
+								<span class="input-group-text">%</span>
+							</div>
+						</div>
 						<div class="col-md-2">
 							<div class="form-group">
 								<label>{label_product_tax}</label>
 								{select_tax}
 							</div>
 						</div>
-						<div class="col-md-3">
+						
+						
+						<div class="col-md-4">
 							<div class="form-group">
-								<label>{label_product_price_net}</label>
-								<input class='form-control' id="price" name="post_product_price_net" type="text" value="{post_product_price_net}">
-							</div>
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<label>{label_product_price_gross}</label>
+								<label>{label_product_price} {label_product_gross} <small>({label_product_net} <span id="calculated_net"></span>)</small></label>
 								<input class='form-control' id="price_total" name="post_product_price_gross" type="text" value="{post_product_price_gross}">
 							</div>
 						</div>
-					</div>
+					</div>					
 					
-					<fieldset>
+					<fieldset class="mt-4">
+						<legend>{label_scaling_prices}</legend>
+						
+						<table class="table table-striped">
+							<tr>
+								<th>#</th>
+								<th width="150">{label_product_amount}</th>
+								<th>{label_product_price} <small>({label_product_net})</small></th>
+								<th>{label_product_price_addition} / {label_product_tax}</th>
+								<th>{label_product_price} <small>{label_product_net}/{label_product_gross}</small></th>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td><input class='form-control' name="post_product_amount_s1" type="text" value="{post_product_amount_s1}"></td>
+								<td><input class='form-control' id="price_s1" name="post_product_price_net_s1" type="text" value="{post_product_price_net_s1}"></td>
+								<td>+ <span class="show_price_addition"></span>% | + <span class="show_price_tax"></span>%</td>
+								<td><div class="d-flex"><pre class="p-1 w-100 text-center"><span id="calculated_net_s1"></span></pre><pre class="p-1 w-100 text-center"><span id="calculated_gross_s1"></span></pre></div></td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td><input class='form-control' name="post_product_amount_s2" type="text" value="{post_product_amount_s2}"></td>
+								<td><input class='form-control' id="price_s2" name="post_product_price_net_s2" type="text" value="{post_product_price_net_s2}"></td>
+								<td>+ <span class="show_price_addition"></span>% | + <span class="show_price_tax"></span>%</td>
+								<td><div class="d-flex"><pre class="p-1 w-100 text-center"><span id="calculated_net_s2"></span></pre><pre class="p-1 w-100 text-center"><span id="calculated_gross_s2"></span></pre></div></td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td><input class='form-control' name="post_product_amount_s3" type="text" value="{post_product_amount_s3}"></td>
+								<td><input class='form-control' id="price_s3" name="post_product_price_net_s3" type="text" value="{post_product_price_net_s3}"></td>
+								<td>+ <span class="show_price_addition"></span>% | + <span class="show_price_tax"></span>%</td>
+								<td><div class="d-flex"><pre class="p-1 w-100 text-center"><span id="calculated_net_s3"></span></pre><pre class="p-1 w-100 text-center"><span id="calculated_gross_s3"></span></pre></div></td>
+							</tr>
+							<tr>
+								<td>4</td>
+								<td><input class='form-control' name="post_product_amount_s4" type="text" value="{post_product_amount_s4}"></td>
+								<td><input class='form-control' id="price_s4" name="post_product_price_net_s4" type="text" value="{post_product_price_net_s4}"></td>
+								<td>+ <span class="show_price_addition"></span>% | + <span class="show_price_tax"></span>%</td>
+								<td><div class="d-flex"><pre class="p-1 w-100 text-center"><span id="calculated_net_s4"></span></pre><pre class="p-1 w-100 text-center"><span id="calculated_gross_s4"></span></pre></div></td>
+							</tr>
+							<tr>
+								<td>5</td>
+								<td><input class='form-control' name="post_product_amount_s5" type="text" value="{post_product_amount_s5}"></td>
+								<td><input class='form-control' id="price_s5" name="post_product_price_net_s5" type="text" value="{post_product_price_net_s5}"></td>
+								<td>+ <span class="show_price_addition"></span>% | + <span class="show_price_tax"></span>%</td>
+								<td><div class="d-flex"><pre class="p-1 w-100 text-center"><span id="calculated_net_s5"></span></pre><pre class="p-1 w-100 text-center"><span id="calculated_gross_s5"></span></pre></div></td>
+							</tr>
+						</table>
+						
+						
+					</fieldset>
+					
+					<hr>
+					
+					<fieldset class="mt-4">
 						<legend>{label_product_snippet_price}</legend>
 						{snippet_select_pricelist}
 					</fieldset>

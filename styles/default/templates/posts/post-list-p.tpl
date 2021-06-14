@@ -13,6 +13,7 @@
 				</div>
 				<div class="price-tag-inner">
 				{post_currency} {post_price_gross} <span class="product-unit">{post_product_unit}</span>
+				<span class="price-tag-note">{price_tag_label_gross}</span>
 				</div>
 			</div>
 			

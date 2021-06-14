@@ -330,12 +330,14 @@ foreach($get_posts as $k => $post) {
 			$tax = $fc_prefs['prefs_posts_products_tax_alt2'];
 		}
 		
-		$post_price_net = str_replace('.', '', $get_posts[$k]['post_product_price_net']);
-		$post_price_net = str_replace(',', '.', $post_price_net);
+		$post_product_price_addition = $get_posts[$k]['post_product_price_addition'];
+		if($post_product_price_addition == '') {
+			$post_product_price_addition = 0;
+		}
 		
-		$post_price_gross = $post_price_net*($tax+100)/100;;
-		$post_price_gross = fc_post_print_currency($post_price_gross);
-		$post_price_net = fc_post_print_currency($post_price_net);
+		$post_prices = fc_posts_calc_price($get_posts[$k]['post_product_price_net'],$post_product_price_addition,$tax);
+		$post_price_net = $post_prices['net'];
+		$post_price_gross = $post_prices['gross'];
 		
 		$this_entry = str_replace("{post_price_gross}", $post_price_gross, $this_entry);
 		$this_entry = str_replace("{post_price_net}", $post_price_net, $this_entry);
@@ -343,6 +345,8 @@ foreach($get_posts as $k => $post) {
 		$this_entry = str_replace("{post_currency}", $get_posts[$k]['post_product_currency'], $this_entry);
 		$this_entry = str_replace("{post_product_unit}", $get_posts[$k]['post_product_unit'], $this_entry);
 		$this_entry = str_replace("{post_product_price_label}", $get_posts[$k]['post_product_price_label'], $this_entry);
+		$this_entry = str_replace("{price_tag_label_gross}", $lang['price_tag_label_gross'], $this_entry);
+		$this_entry = str_replace("{price_tag_label_net}", $lang['price_tag_label_net'], $this_entry);
 		
 		$this_entry = str_replace("{read_more_text}", $lang['btn_open_product'], $this_entry);
 	}
