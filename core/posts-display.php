@@ -328,7 +328,7 @@ $this_entry = str_replace("{price_tag_label_gross}", $lang['price_tag_label_gros
 $this_entry = str_replace("{price_tag_label_net}", $lang['price_tag_label_net'], $this_entry);
 
 if($post_data['post_product_textlib_content'] != 'no_snippet') {
-	$textlib_content = get_textlib($post_data['posts_product_textlib_content'],$languagePack);
+	$textlib_content = get_textlib($post_data['post_product_textlib_content'],$languagePack);
 	$this_entry = str_replace("{post_snippet_text}", $textlib_content, $this_entry);
 } else {
 	$this_entry = str_replace("{post_snippet_text}", '', $this_entry);
