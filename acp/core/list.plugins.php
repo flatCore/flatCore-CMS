@@ -12,27 +12,30 @@ if(count($all_plugins)<1) {
 	
 	foreach($all_plugins as $plugin) {
 		
-		$pathinfo = pathinfo('/content/plugins/'.$plugin);
-		if($pathinfo['extension'] != 'php') {
-			continue;
-		}
-		
 		$id = md5($plugin);
-		$plugin_src = file_get_contents('../'.FC_CONTENT_DIR.'/plugins/'.$plugin);
-		$comment = getfirstcommentblock($plugin_src);
-		$plugin_info = get_include_contents('../'.FC_CONTENT_DIR.'/plugins/'.$plugin);
-		$tpl_icon = "images/plugin-icon.png";
 		
-		$edit_btn = '<a class="btn btn-fc btn-sm" data-bs-toggle="modal" data-bs-target="#myModal'.$id.'" href="javascript:;">Source</a>';
+		$pathinfo = pathinfo('/content/plugins/'.$plugin);
 		
-		/* show the first comment block */
-		$help_btn = '';
-		if($comment != '') {
-			echo '<div id="help'.$id.'" style="display:none;"><pre>'.$comment.'</pre></div>';
-			$help_btn = ' <a class="fancybox btn btn-fc btn-sm" href="#help'.$id.'">'.$icon['question'].'</a>';
+		if($pathinfo['extension'] == 'php') {
+			$plugin_src = file_get_contents(FC_CONTENT_DIR.'/plugins/'.$plugin);
+			$plugin_info = get_include_contents(FC_CONTENT_DIR.'/plugins/'.$plugin);
+		} else {
+			if((is_dir(FC_CONTENT_DIR.'/plugins/'.$plugin)) && (is_file(FC_CONTENT_DIR.'/plugins/'.$plugin.'/index.php'))) {
+				$plugin_src = file_get_contents(FC_CONTENT_DIR.'/plugins/'.$plugin.'/index.php');
+				$plugin_info = get_include_contents(FC_CONTENT_DIR.'/plugins/'.$plugin.'/index.php');
+			}
 		}
 		
-		$btn_group = '<div class="btn-group float-end" role="group">'.$edit_btn.$help_btn.'</div>';
+		$btn_delete_addon = '<form class="d-inline ps-2" action="?tn=addons&sub=p" method="POST" onsubmit="return confirm(\''.$lang['confirm_delete_file'].'\');">';
+		$btn_delete_addon .= '<button type="submit" name="delete_addon" class="btn btn-sm btn-fc text-danger">'.$icon['trash_alt'].'</button>';
+		$btn_delete_addon .= '<input type="hidden" name="type" value="p">';
+		$btn_delete_addon .= '<input type="hidden" name="addon" value="'.$plugin.'">';
+		$btn_delete_addon .= '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+		$btn_delete_addon .= '</form>';
+		
+		$tpl_icon = "images/plugin-icon.png";
+		$source_btn = '<a class="btn btn-fc btn-sm" data-bs-toggle="modal" data-bs-target="#myModal'.$id.'" href="javascript:;">Source</a>';
+		$btn_group = '<div class="float-end">'.$source_btn.$btn_delete_addon.'</div>';
 		
 		/* shorten the filename if needed */
 		$plugin_name = basename($plugin,'.php');
@@ -51,7 +54,7 @@ if(count($all_plugins)<1) {
 			$plugin_version .= '<span class="">Author: '.$plugin_info['author'].'</span>';
 		}
 		$plugin_version .= '</p>';
-		
+				
 		
 		$tpl = $template_file;
 		$tpl = str_replace("{\$PLUGIN_NAME}", "$plugin_name","$template_file");
@@ -68,7 +71,7 @@ if(count($all_plugins)<1) {
 		echo '<div class="modal-content">';
 		echo '<div class="modal-header">';
 		echo '<h4 class="modal-title" id="myModalLabel'.$id.'">'.$plugin.'</h4>';
-		echo '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+		echo '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
 		echo '</div>';
 		echo '<div class="modal-body">';
 		echo '<pre class="form-control" style="height:400px;overflow:auto;">'.htmlentities($plugin_src,ENT_QUOTES,"UTF-8").'</pre>';
@@ -83,8 +86,6 @@ if(count($all_plugins)<1) {
 	}
 }
 
-
-
 function get_include_contents($filename) {
     if (is_file($filename)) {
         ob_start();
@@ -94,16 +95,4 @@ function get_include_contents($filename) {
     }
     return false;
 }
-
-function getfirstcommentblock($str) {
-	$comments = array_filter(
-  	token_get_all($str),function($entry) {
-    	return $entry[0] == T_DOC_COMMENT;
-    }
-  );
-  $comment = array_shift($comments);
-  return $comment[1];
-}
-
-
 ?>

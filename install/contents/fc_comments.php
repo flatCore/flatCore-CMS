@@ -3,13 +3,17 @@
 /**
  * database used for
  *
- * comment_type - p -> comments on pages
- *              - b -> comments on blog posts
- *              - c -> chat in the acp
+ * comment_type - p 	-> comments on pages
+ *              - b 	-> comments on blog posts
+ *							- upv -> upvote on blog posts
+ *							- dnv -> downvote on blog posts
+ *							- evc -> Event confirmation
+ *              - c 	-> chat in the acp (currently not in use)
  *
  * comment_status - 1 -> public
  *                - 2 -> wait for approval
  *
+ * comment_relation_id -> id of the blog post
  * comment_parent_id -> if it's an answer
  *
  */

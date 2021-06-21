@@ -14,16 +14,17 @@ if(basename(__FILE__) == basename($_SERVER['PHP_SELF'])){
 
 function get_all_plugins() {
 	
-	$dir = "../content/";
 	$plugins = array();
-	$scanned_directory = array_diff(scandir('../'.FC_CONTENT_DIR.'/plugins/'), array('..', '.','.DS_Store'));
+	$scanned_directory = array_diff(scandir(FC_CONTENT_DIR.'/plugins/'), array('..', '.','.DS_Store'));
 	foreach($scanned_directory as $p) {
 		
 		$path_parts = pathinfo($p);
-		if($path_parts['extension'] != 'php') {
-			continue;
-		} else {
+		if($path_parts['extension'] == 'php') {
 			$plugins[] = $p;
+		} else {
+			if((is_dir(FC_CONTENT_DIR.'/plugins/'.$p)) && (is_file(FC_CONTENT_DIR.'/plugins/'.$p.'/index.php'))) {
+				$plugins[] = $p;
+			}
 		}
 		
 	}
@@ -77,6 +78,54 @@ function fc_get_addons($t='module') {
 	
 	return $result;
 }
+
+
+/**
+ * delete addon and its contents
+ */
+ 
+function fc_delete_addon($addon,$type) {
+	
+	if($type == 'm') {
+		$dir = '../modules';
+	} else if($type == 'p') {
+		$dir = FC_CONTENT_DIR.'/plugins';
+	} else if($type == 't') {
+		$dir = '../styles';
+	}
+	
+	$remove_dir = $dir.'/'.$addon;
+	fc_reomove_addon_files($remove_dir);
+	$record_msg = 'removed addon: <strong>'.$addon.' ('.$type.')</strong>';
+	record_log($_SESSION['user_nick'],$record_msg,"8");
+}
+
+/**
+ * remove addon contents
+ * folders (recursive) and/or files
+ */
+
+ function fc_reomove_addon_files($item) {
+   if(is_dir($item)){
+     $objects = scandir($item);
+     foreach ($objects as $object) {
+       if ($object != "." && $object != "..") {
+         if(filetype($item."/".$object) == "dir") {
+         	fc_reomove_addon_files($item."/".$object);
+         } else {
+         		unlink($item."/".$object);
+         }
+       }
+     }
+     reset($objects);
+     rmdir($item);
+   }
+   
+   if(is_file($item)) {
+	   unlink($item);
+   }
+   
+ }
 
 
 
@@ -171,7 +220,7 @@ function mods_check_in() {
 	
 	$str = "<?php\n$string\n?>";
 		
-	$file = "../" . FC_CONTENT_DIR . "/cache/active_mods.php";
+	$file = FC_CONTENT_DIR . "/cache/active_mods.php";
 	file_put_contents($file, $str, LOCK_EX);
 
 }

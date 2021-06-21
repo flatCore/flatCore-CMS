@@ -407,25 +407,42 @@ if($cnt_filter_posts > 0) {
 				$tax = $fc_preferences['prefs_posts_products_tax_alt2'];
 			}
 			
+			$post_product_price_addition = $get_posts[$i]['post_product_price_addition'];
+			if($post_product_price_addition == '') {
+				$post_product_price_addition = 0;
+			}
+			
 			$post_price_net = str_replace('.', '', $get_posts[$i]['post_product_price_net']);
 			$post_price_net = str_replace(',', '.', $post_price_net);
 			
-			$post_price_gross = $post_price_net*($tax+100)/100;
+			$post_price_net_calculated = $post_price_net*($post_product_price_addition+100)/100;
+			$post_price_gross = $post_price_net_calculated*($tax+100)/100;
+			
+			$post_price_net_calculated = fc_post_print_currency($post_price_net_calculated);			
 			$post_price_gross = fc_post_print_currency($post_price_gross);
 
-			$show_items_price = '<div class="float-end small well well-sm">';
-			$show_items_price .= $post_price_net . ' ('.$tax.'%)<br>';
-			$show_items_price .= $post_price_gross;
+			$show_items_price = '<div class="float-end small well well-sm ms-2">';
+			//$show_items_price .= fc_post_print_currency($post_price_net) . '<br>';
+			$show_items_price .= $post_price_net_calculated . '<br>';
+			$show_items_price .= '<small>incl. '.$post_product_price_addition . '%'. ' + '.$tax.'%</small><br>';
+			$show_items_price .= '<strong>'.$post_price_gross.'</strong>';
 			$show_items_price .= '</div>';		
 		}
 		
+		$show_items_downloads = '';
 		if($get_posts[$i]['post_type'] == 'f') {
-			
-			$download_counter = 0;
-			$download_counter = $get_posts[$i]['post_file_attachment_hits'];
-			$show_items_price = '<div class="float-end small well well-sm">';
-			$show_items_price .= 'Downloads: '.$download_counter;
-			$show_items_price .= '</div>';
+			$download_counter = (int) $get_posts[$i]['post_file_attachment_hits'];
+			$show_items_downloads = '<div class="float-end small well well-sm">';
+			$show_items_downloads .= $icon['download'].' '.$download_counter;
+			$show_items_downloads .= '</div>';
+		}
+		
+		$show_items_redirects = '';
+		if($get_posts[$i]['post_type'] == 'l') {
+			$redirects_counter = (int) $get_posts[$i]['post_link_hits'];
+			$show_items_redirects = '<div class="float-end small well well-sm">';
+			$show_items_redirects .= $icon['link'].' '.$redirects_counter;
+			$show_items_redirects .= '</div>';
 		}
 		
 		
@@ -457,7 +474,7 @@ if($cnt_filter_posts > 0) {
 		echo '<td nowrap><small>'.$published_date.'<br>'.$release_date.'<br>'.$lastedit_date.'</small></td>';
 		echo '<td>'.$show_type.'</td>';
 		echo '<td>'.$show_thumb.'</td>';
-		echo '<td>'.$show_events_date.$show_items_price.$show_items_downloads.'<h5 class="mb-0">'.$get_posts[$i]['post_title'].'</h5><small>'.$trimmed_teaser.'</small><br>'.$label.'</td>';
+		echo '<td>'.$show_events_date.$show_items_price.$show_items_downloads.$show_items_redirects.'<h5 class="mb-0">'.$get_posts[$i]['post_title'].'</h5><small>'.$trimmed_teaser.'</small><br>'.$label.'</td>';
 		echo '<td style="min-width: 150px;">';
 		echo '<nav class="nav justify-content-end">';
 		echo '<form class="form-inline mr-1" action="?tn=posts&sub=edit" method="POST"><button class="btn btn-fc btn-sm text-success" type="submit" name="post_id" value="'.$get_posts[$i]['post_id'].'">'.$lang['edit'].'</button></form> ';

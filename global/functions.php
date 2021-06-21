@@ -14,6 +14,19 @@ include_once 'functions.posts.php';
 
 
 /**
+ * get active preferences
+ */
+ 
+function fc_get_preferences() {
+	global $db_content;	
+	$prefs = $db_content->get("fc_preferences", "*", [
+		"prefs_status" => "active"
+	]);
+	return $prefs;
+}
+
+
+/**
  * get all categories
  * order by cat_sort
  */

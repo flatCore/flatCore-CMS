@@ -8,11 +8,11 @@ use Medoo\Medoo;
 require '../lib/Spyc/Spyc.php';
 
 require '../config.php';
-if(is_file('../'.FC_CONTENT_DIR.'/config.php')) {
-	include '../'.FC_CONTENT_DIR.'/config.php';
+if(is_file(FC_CONTENT_DIR.'/config.php')) {
+	include FC_CONTENT_DIR.'/config.php';
 }
-if(is_file('../'.FC_CONTENT_DIR.'/config_smtp.php')) {
-	include '../'.FC_CONTENT_DIR.'/config_smtp.php';
+if(is_file(FC_CONTENT_DIR.'/config_smtp.php')) {
+	include FC_CONTENT_DIR.'/config_smtp.php';
 }
 
 
@@ -50,10 +50,10 @@ if(is_file('../config_database.php')) {
 	}
 	
 	
-	define("CONTENT_DB", "../$fc_db_content");
-	define("USER_DB", "../$fc_db_user");
-	define("STATS_DB", "../$fc_db_stats");
-	define("POSTS_DB", "../$fc_db_posts");
+	define("CONTENT_DB", "$fc_db_content");
+	define("USER_DB", "$fc_db_user");
+	define("STATS_DB", "$fc_db_stats");
+	define("POSTS_DB", "$fc_db_posts");
 
 	$db_content = new Medoo([
 		'database_type' => 'sqlite',
@@ -77,7 +77,7 @@ if(is_file('../config_database.php')) {
 	
 }
 
-define("INDEX_DB", "../$fc_db_index");
+define("INDEX_DB", "$fc_db_index");
 define("FC_ROOT", str_replace("/acp","",FC_INC_DIR));
 define("IMAGES_FOLDER", "$img_path");
 define("FILES_FOLDER", "$files_path");
@@ -238,7 +238,7 @@ if(isset($set_acptheme)) {
 			var ace_theme = 'chrome';
 			var tinymce_skin = 'oxide';
 			var acptheme = "<?php echo $acptheme; ?>";
-			if(acptheme === 'dark') {
+			if(acptheme === 'dark' || acptheme === 'dark_mono') {
 				var ace_theme = 'twilight';
 				var tinymce_skin = 'oxide-dark';
 			}
@@ -289,38 +289,78 @@ if(isset($set_acptheme)) {
 					timeZone: 'UTC',
 		    	format: 'YYYY-MM-DD HH:mm'
 		  	});
+		  	
+		  	function addTax(price,addition,tax) {
+					addition = parseInt(addition);
+					tax = parseInt(tax);
+			  	price = price*(addition+100)/100;
+			  	price = price*(tax+100)/100;
+			  	return price;
+		  	}
+		  	
+		  	function removeTax(price,addition,tax) {
+					addition = parseInt(addition);
+					tax = parseInt(tax);					
+			  	price = price*100/(addition+100);
+			  	price = price*100/(tax+100);
+			  	return price;
+		  	}
 		
 				if($("#price").val()) {
 					
-					get_netto = $("#price").val();
-					
+					get_price_net = $("#price").val();			
 					var e = document.getElementById("tax");
 					var get_tax = e.options[e.selectedIndex].text;
 					get_tax = parseInt(get_tax);
-					get_netto_calc = get_netto.replace(/\./g, '');
-					get_netto_calc = get_netto_calc.replace(",",".");
-					current_brutto = get_netto_calc*(get_tax+100)/100;
-					current_brutto = accounting.formatNumber(current_brutto,4,".",",");
-					$('#price_total').val(current_brutto);	
+					get_price_addition = $("#price_addition").val();
+					get_net_calc = get_price_net.replace(/\./g, '');
+					get_net_calc = get_net_calc.replace(",",".");
+					current_gross = addTax(get_net_calc,get_price_addition,get_tax);
+					current_gross = accounting.formatNumber(current_gross,4,".",",");
+					$('#price_total').val(current_gross);
+					
+					calculated_net = addTax(get_net_calc,get_price_addition,0);
+					calculated_net = accounting.formatNumber(calculated_net,4,".",",");
+					$('#calculated_net').html(calculated_net);
+					
+					$('.show_price_tax').html(get_tax);
+					$('.show_price_addition').html(get_price_addition);
 			
 					$('#price').keyup(function(){
-						get_netto = $('#price').val();
-						//get_tax = parseInt($('#tax').val());
-						get_netto_calc = get_netto.replace(/\./g, '');
-						get_netto_calc = get_netto_calc.replace(",",".");
-						current_brutto = get_netto_calc*(get_tax+100)/100;
-						current_brutto = accounting.formatNumber(current_brutto,4,".",",");
-						$('#price_total').val(current_brutto);
-					});			
+						get_price_net = $('#price').val();
+						get_price_addition = $("#price_addition").val();
+						get_net_calc = get_price_net.replace(/\./g, '');
+						get_net_calc = get_net_calc.replace(",",".");
+						current_gross = addTax(get_net_calc,get_price_addition,get_tax);
+						current_gross = accounting.formatNumber(current_gross,4,".",",");
+						$('#price_total').val(current_gross);
+						
+						calculated_net = addTax(get_net_calc,get_price_addition,0);
+						calculated_net = accounting.formatNumber(calculated_net,4,".",",");
+						$('#calculated_net').html(calculated_net);
+						
+					});
 					
 					$('#price_total').keyup(function(){
 						get_brutto = $('#price_total').val();
-						//get_tax = parseInt($('#tax').val());
-						get_brutto_calc = get_brutto.replace(/\./g, '');
-						get_brutto_calc = get_brutto_calc.replace(",",".");
-						current_netto = get_brutto_calc*100/(get_tax+100);
-						current_netto = accounting.formatNumber(current_netto,4,".",",");
-						$('#price').val(current_netto);
+						get_price_addition = $("#price_addition").val();
+						get_gross_calc = get_brutto.replace(/\./g, '');
+						get_gross_calc = get_gross_calc.replace(",",".");
+						current_net = removeTax(get_gross_calc,get_price_addition,get_tax);
+						current_net = accounting.formatNumber(current_net,4,".",",");
+						$('#price').val(current_net);
+						$('#calculated_net').html(current_net);
+					});
+					
+					$('#price_addition').keyup(function(){
+						get_price_net = $('#price').val();
+						get_price_addition = $("#price_addition").val();
+						
+						get_net_calc = get_price_net.replace(/\./g, '');
+						get_net_calc = get_net_calc.replace(",",".");
+						current_gross = addTax(get_net_calc,get_price_addition,get_tax);
+						current_gross = accounting.formatNumber(current_gross,4,".",",");
+						$('#price_total').val(current_gross);
 					});
 					
 					$('#tax').bind("change keyup", function(){
@@ -329,19 +369,100 @@ if(isset($set_acptheme)) {
 						var get_tax = e.options[e.selectedIndex].text;
 						get_tax = parseInt(get_tax);
 						
-						get_netto = $('#price').val();
-						get_netto_calc = get_netto.replace(",",".");
+						get_price_addition = $('#price_addition').val();
+						get_price_net = $('#price').val();
+						get_net_calc = get_price_net.replace(",",".");
 		
-						current_brutto = get_netto_calc*(get_tax+100)/100;
-						current_brutto = accounting.formatNumber(current_brutto,4,".",",");
+						current_gross = addTax(get_net_calc,get_price_addition,get_tax);
+						current_gross = accounting.formatNumber(current_gross,4,".",",");
 		
-						get_brutto_calc = current_brutto.replace(",",".");
-						current_netto = get_brutto_calc*100/(get_tax+100);
-						current_netto = accounting.formatNumber(current_netto,4,".",",");
-		
-						$('#price_total').val(current_brutto);
-						$('#price').val(current_netto);
+						$('#price_total').val(current_gross);
 					});
+					
+					
+					get_price_net_s1 = $('#price_s1').val();
+					price_s1 = showScaledPrices(get_price_net_s1,get_price_addition,get_tax);
+					$('#calculated_net_s1').html(price_s1['net']);
+					$('#calculated_gross_s1').html(price_s1['gross']);
+										
+					$('#price_s1').keyup(function(){
+						get_price_net_s1 = $('#price_s1').val();
+						price = showScaledPrices(get_price_net_s1,get_price_addition,get_tax);
+						$('#calculated_net_s1').html(price['net']);
+						$('#calculated_gross_s1').html(price['gross']);
+					});
+					
+					get_price_net_s2 = $('#price_s2').val();
+					price_s2 = showScaledPrices(get_price_net_s2,get_price_addition,get_tax);
+					$('#calculated_net_s2').html(price_s2['net']);
+					$('#calculated_gross_s2').html(price_s2['gross']);
+										
+					$('#price_s2').keyup(function(){
+						get_price_net_s2 = $('#price_s2').val();
+						price = showScaledPrices(get_price_net_s2,get_price_addition,get_tax);
+						$('#calculated_net_s2').html(price['net']);
+						$('#calculated_gross_s2').html(price['gross']);
+					});
+					
+					get_price_net_s3 = $('#price_s3').val();
+					price_s3 = showScaledPrices(get_price_net_s3,get_price_addition,get_tax);
+					$('#calculated_net_s3').html(price_s3['net']);
+					$('#calculated_gross_s3').html(price_s3['gross']);
+										
+					$('#price_s3').keyup(function(){
+						get_price_net_s3 = $('#price_s3').val();
+						price = showScaledPrices(get_price_net_s3,get_price_addition,get_tax);
+						$('#calculated_net_s3').html(price['net']);
+						$('#calculated_gross_s3').html(price['gross']);
+					});
+					
+					get_price_net_s4 = $('#price_s4').val();
+					price_s4 = showScaledPrices(get_price_net_s4,get_price_addition,get_tax);
+					$('#calculated_net_s4').html(price_s4['net']);
+					$('#calculated_gross_s4').html(price_s4['gross']);
+										
+					$('#price_s4').keyup(function(){
+						get_price_net_s4 = $('#price_s4').val();
+						price = showScaledPrices(get_price_net_s4,get_price_addition,get_tax);
+						$('#calculated_net_s4').html(price['net']);
+						$('#calculated_gross_s4').html(price['gross']);
+					});
+					
+					get_price_net_s5 = $('#price_s5').val();
+					price_s5 = showScaledPrices(get_price_net_s5,get_price_addition,get_tax);
+					$('#calculated_net_s5').html(price_s5['net']);
+					$('#calculated_gross_s5').html(price_s5['gross']);
+										
+					$('#price_s5').keyup(function(){
+						get_price_net_s5 = $('#price_s5').val();
+						price = showScaledPrices(get_price_net_s5,get_price_addition,get_tax);
+						$('#calculated_net_s5').html(price['net']);
+						$('#calculated_gross_s5').html(price['gross']);
+					});
+					
+
+					
+					function showScaledPrices(price,addition,tax) {
+						addition = parseInt(addition);
+						tax = parseInt(tax);
+						
+						price = price.replace(/\./g, '');
+						price = price.replace(",",".");
+						
+						price_net = price*(addition+100)/100;
+						price_gross = price_net*(tax+100)/100;
+						
+						price_net = accounting.formatNumber(price_net,4,".",",");
+						price_gross = accounting.formatNumber(price_gross,4,".",",");
+						
+						var prices = new Object();
+						prices['net'] = price_net;
+						prices['gross'] = price_gross;
+						
+						
+						return prices;
+					}
+						
 				
 				}
 			

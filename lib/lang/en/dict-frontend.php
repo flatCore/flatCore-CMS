@@ -53,6 +53,11 @@ $lang['label_about_you'] = "About You (public)";
 $lang['label_entries'] = 'Entries';
 $lang['label_entries_total'] = 'Total';
 
+$lang['label_prices_discount'] = 'Quantity discount';
+$lang['label_prices_snippet'] = 'Notes on the prices';
+$lang['price_tag_label_gross'] = 'VAT included';
+$lang['price_tag_label_net'] = 'plus VAT';
+
 /* Buttons, Links */
 $lang['button_login'] 			= "Login";
 $lang['button_profile'] 		= "Edit Profile";
@@ -153,6 +158,16 @@ $lang['comment_form_title'] = 'Write a comment';
 $lang['comment_msg_auth1'] = 'You have to log in to write comments.';
 $lang['comment_msg_auth2'] = 'You have to enter your name and your email address.';
 $lang['comments_title'] = 'Comments ({cnt_comments})';
+
+/* guest list */
+$lang['label_guestlist'] = 'Guest list';
+$lang['guestlist_description'] = 'Sign the guest list.';
+$lang['guestlist_description_for_members'] = 'Only registered users can sign the guest list.';
+$lang['btn_guestlist_sign'] = 'Confirm';
+
+$lang['guestlist_label_nbr_total_available'] = 'Available Seats:';
+$lang['guestlist_label_nbr_commitments'] = 'Commitments:';
+
 
 /* Dates */
 $lang['m01'] = "January";

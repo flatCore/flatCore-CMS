@@ -302,7 +302,7 @@ $select_status .= '</select>';
 
 /* comments yes/no */
 
-if($post_comments == 1) {
+if($post_data['post_comments'] == 1) {
 	$sel_comments_yes = 'selected';
 	$sel_comments_no = '';
 } else {
@@ -310,12 +310,36 @@ if($post_comments == 1) {
 	$sel_comments_yes = '';
 }
 
-
 $select_comments  = '<select id="select_comments" name="post_comments"  class="custom-select form-control">';
 $select_comments .= '<option value="1" '.$sel_comments_yes.'>'.$lang['yes'].'</option>';
 $select_comments .= '<option value="2" '.$sel_comments_no.'>'.$lang['no'].'</option>';
 $select_comments .= '</select>';
 
+/* votings/reactions no, yes for registered users, yes for all */
+
+if($post_data['post_votings'] == '') {
+	$post_data['post_votings'] = $prefs_posts_default_votings;
+}
+
+if($post_data['post_votings'] == 1 OR $post_data['post_votings'] == '') {
+	$sel_votings_1 = 'selected';
+	$sel_votings_2 = '';
+	$sel_votings_3 = '';
+} else if($post_data['post_votings'] == 2) {
+	$sel_votings_1 = '';
+	$sel_votings_2 = 'selected';
+	$sel_votings_3 = '';	
+} else {
+	$sel_votings_1 = '';
+	$sel_votings_2 = '';
+	$sel_votings_3 = 'selected';
+}
+
+$select_votings  = '<select id="select_votings" name="post_votings"  class="custom-select form-control">';
+$select_votings .= '<option value="1" '.$sel_votings_1.'>'.$lang['label_votings_off'].'</option>';
+$select_votings .= '<option value="2" '.$sel_votings_2.'>'.$lang['label_votings_on_registered'].'</option>';
+$select_votings .= '<option value="3" '.$sel_votings_3.'>'.$lang['label_votings_on_global'].'</option>';
+$select_votings .= '</select>';
 
 
 /* autor */
@@ -378,6 +402,15 @@ if($post_product_currency == '') {
 	$post_product_currency = $fc_preferences['prefs_posts_products_default_currency'];
 }
 
+if($post_data['post_product_price_addition'] == '') {
+	$post_data['post_product_price_addition'] = 0;
+}
+
+$post_product_price_net_purchasing = $post_data['post_product_price_net_purchasing'];
+if($post_product_price_net_purchasing == '') {
+	$post_product_price_net_purchasing = '0,00';
+}
+
 
 /* add text snippet to prices */
 
@@ -390,7 +423,7 @@ $snippets_price_list = $db_content->select("fc_textlib", "*", [
 
 foreach($snippets_price_list as $snippet) {
 	$selected = "";
-	if($snippet['textlib_name'] == $post_data['product_textlib_price']) {
+	if($snippet['textlib_name'] == $post_data['post_product_textlib_price']) {
 		$selected = 'selected';
 	}
 	$snippet_select_pricelist .= '<option '.$selected.' value='.$snippet['textlib_name'].'>'.$snippet['textlib_name']. ' - ' .$snippet['textlib_title'].'</option>';
@@ -419,7 +452,7 @@ $snippet_select_text .= '</select>';
 
 $select_file = '<select class="form-control custom-select" name="post_file_attachment">';
 $select_file .= '<option value="">-- '.$lang['label_file_select_no_file'].' --</option>';
-$files_directory = '../'.FC_CONTENT_DIR.'/files';
+$files_directory = FC_CONTENT_DIR.'/files';
 $all_files = fc_scandir_rec($files_directory);
 
 foreach($all_files as $file) {
@@ -544,7 +577,7 @@ $form_tpl = str_replace('{select_priority}', $select_priority, $form_tpl);
 $form_tpl = str_replace('{checkbox_fixed}', $checkbox_fixed, $form_tpl);
 $form_tpl = str_replace('{select_status}', $select_status, $form_tpl);
 $form_tpl = str_replace('{select_comments}', $select_comments, $form_tpl);
-
+$form_tpl = str_replace('{select_votings}', $select_votings, $form_tpl);
 
 /* video */
 $form_tpl = str_replace('{post_video_url}', $post_data['post_video_url'], $form_tpl);
@@ -568,6 +601,46 @@ $form_tpl = str_replace('{post_event_zip}', $post_data['post_event_zip'], $form_
 $form_tpl = str_replace('{post_event_city}', $post_data['post_event_city'], $form_tpl);
 $form_tpl = str_replace('{post_event_street}', $post_data['post_event_street'], $form_tpl);
 $form_tpl = str_replace('{post_event_price_note}', $post_data['post_event_price_note'], $form_tpl);
+$form_tpl = str_replace('{post_event_guestlist_limit}', $post_data['post_event_guestlist_limit'], $form_tpl);
+
+/* guest list */
+
+$sel_gl_type1 = '';
+$sel_gl_type2 = '';
+$sel_gl_type3 = '';
+
+if($post_data['post_event_guestlist'] == '') {
+	$post_data['post_event_guestlist'] = $prefs_posts_default_guestlist;
+}
+
+if($post_data['post_event_guestlist'] == '1') {
+	$sel_gl_type1 = 'selected';
+} else if($post_data['post_event_guestlist'] == '2') {
+	$sel_gl_type2 = 'selected';
+} else if($post_data['post_event_guestlist'] == '3') {
+	$sel_gl_type3 = 'selected';
+}
+
+$select_guestlist = '<select class="form-control custom-select" name="post_event_guestlist">';
+
+$select_guestlist .= '<option value="1" '.$sel_gl_type1.'>'.$lang['label_guestlist_deactivate'].'</option>';
+$select_guestlist .= '<option value="2" '.$sel_gl_type2.'>'.$lang['label_guestlist_for_registered'].'</option>';
+$select_guestlist .= '<option value="3" '.$sel_gl_type3.'>'.$lang['label_guestlist_for_everybody'].'</option>';
+
+$select_guestlist .= '</select>';
+$form_tpl = str_replace('{select_guestlist}', $select_guestlist, $form_tpl);
+
+if($post_data['post_event_guestlist_public_nbr'] == '1') {
+	$form_tpl = str_replace('{checked_gl_public_nbr_1}', 'checked', $form_tpl);
+	$form_tpl = str_replace('{checked_gl_public_nbr_2}', '', $form_tpl);
+} else {
+	$form_tpl = str_replace('{checked_gl_public_nbr_1}', '', $form_tpl);
+	$form_tpl = str_replace('{checked_gl_public_nbr_2}', 'checked', $form_tpl);	
+}
+
+$form_tpl = str_replace('{checked_guestlist}', $checked_guestlist, $form_tpl);
+
+
 
 /* product */
 $form_tpl = str_replace('{post_product_number}', $post_data['post_product_number'], $form_tpl);
@@ -582,6 +655,25 @@ $form_tpl = str_replace('{post_product_price_gross}', $post_product_price_gross,
 $form_tpl = str_replace('{select_tax}', $select_tax, $form_tpl);
 $form_tpl = str_replace('{snippet_select_pricelist}', $snippet_select_pricelist, $form_tpl);
 $form_tpl = str_replace('{snippet_select_text}', $snippet_select_text, $form_tpl);
+
+$form_tpl = str_replace('{post_product_price_net_purchasing}', $post_product_price_net_purchasing, $form_tpl);
+$form_tpl = str_replace('{post_product_price_addition}', $post_data['post_product_price_addition'], $form_tpl);
+
+$form_tpl = str_replace('{post_product_amount_s1}', $post_data['post_product_amount_s1'], $form_tpl);
+$form_tpl = str_replace('{post_product_amount_s2}', $post_data['post_product_amount_s2'], $form_tpl);
+$form_tpl = str_replace('{post_product_amount_s3}', $post_data['post_product_amount_s3'], $form_tpl);
+$form_tpl = str_replace('{post_product_amount_s4}', $post_data['post_product_amount_s4'], $form_tpl);
+$form_tpl = str_replace('{post_product_amount_s5}', $post_data['post_product_amount_s5'], $form_tpl);
+$form_tpl = str_replace('{post_product_price_net_s1}', $post_data['post_product_price_net_s1'], $form_tpl);
+$form_tpl = str_replace('{post_product_price_net_s2}', $post_data['post_product_price_net_s2'], $form_tpl);
+$form_tpl = str_replace('{post_product_price_net_s3}', $post_data['post_product_price_net_s3'], $form_tpl);
+$form_tpl = str_replace('{post_product_price_net_s4}', $post_data['post_product_price_net_s4'], $form_tpl);
+$form_tpl = str_replace('{post_product_price_net_s5}', $post_data['post_product_price_net_s5'], $form_tpl);
+$form_tpl = str_replace('{post_product_price_gross_s1}', $post_product_price_gross_s1, $form_tpl);
+$form_tpl = str_replace('{post_product_price_gross_s2}', $post_product_price_gross_s2, $form_tpl);
+$form_tpl = str_replace('{post_product_price_gross_s3}', $post_product_price_gross_s3, $form_tpl);
+$form_tpl = str_replace('{post_product_price_gross_s4}', $post_product_price_gross_s4, $form_tpl);
+$form_tpl = str_replace('{post_product_price_gross_s5}', $post_product_price_gross_s5, $form_tpl);
 
 /* galleries */
 

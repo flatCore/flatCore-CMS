@@ -11,8 +11,11 @@
 			{post_teaser}
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-md-8 offset-md-4 text-end">
+	<div class="row mt-3">
+		<div class="col-md-4">
+			{post_voting}
+		</div>
+		<div class="col-md-8 text-end">
 			<p class="m-0 post-categories">{post_cats}</p>
 			
 			<form action="{form_action}" method="POST">

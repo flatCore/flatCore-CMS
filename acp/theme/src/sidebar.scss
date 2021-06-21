@@ -220,8 +220,7 @@ a.sidebar-sub:hover {
 
 
 a.sidebar-sub-active {
-	color: $font_color;
-	background: darken($sidebar_link_background,15);
+	color: desaturate(lighten($brand_primary,15),35);
 	i {
 		color: $brand_primary;
 	}

@@ -24,6 +24,7 @@ $icon['ban'] = '<i class="far fa-ban"></i>';
 $icon['bars'] = '<i class="fas fa-bars"></i>';
 $icon['bookmark'] = '<i class="fas fa-bookmark"></i>';
 
+$icon['calendar_check'] = '<i class="fas fa-calendar-check"></i>';
 $icon['check'] = '<i class="far fa-check"></i>';
 $icon['circle_alt'] = '<i class="far fa-circle"></i>';
 $icon['check_circle'] = '<i class="fas fa-check-circle"></i>';
@@ -102,6 +103,8 @@ $icon['tasks'] = '<i class="fas fa-tasks"></i>';
 $icon['th'] = '<i class="fas fa-th"></i>';
 $icon['th_large'] = '<i class="fas fa-th-large"></i>';
 $icon['th_list'] = '<i class="fas fa-th-list"></i>';
+$icon['thumbs_up'] = '<i class="fas fa-thumbs-up"></i>';
+$icon['thumbs_down'] = '<i class="fas fa-thumbs-down"></i>';
 $icon['trash_alt'] = '<i class="far fa-trash-alt"></i>';
 $icon['times_circle'] = '<i class="fas fa-times-circle"></i>';
 $icon['tools'] = '<i class="fas fa-tools"></i>';

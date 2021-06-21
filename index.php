@@ -17,8 +17,9 @@ require 'config.php';
 
 define("FC_SOURCE", "frontend");
 
-
-
+if(empty($_SESSION['visitor_csrf_token'])) {
+	$_SESSION['visitor_csrf_token'] = md5(uniqid(rand(), TRUE));
+}
 
 if(!is_file('config_database.php') && !is_file("$fc_db_content")) {
 	header("location: /install/");
@@ -31,6 +32,9 @@ if(is_file(FC_CORE_DIR . "/maintance.html")) {
 	header("location:" . FC_INC_DIR . "/maintance.html");
 	die("We'll be back soon.");
 }
+
+$fc_prefs = fc_get_preferences();
+$languagePack = $fc_prefs['prefs_default_language'];
 
 
 /* all requests -> strip_tags */
@@ -85,11 +89,10 @@ for($i=0;$i<$cnt_active_mods;$i++) {
 }
 
 
-
 if($query == '/') {
-	list($page_contents,$fc_nav,$fc_prefs) = get_content('portal','page_sort');
+	list($page_contents,$fc_nav) = fc_get_content('portal','page_sort');
 } else {
-	list($page_contents,$fc_nav,$fc_prefs) = get_content($fct_slug,'permalink');
+	list($page_contents,$fc_nav) = fc_get_content($fct_slug,'permalink');
 }
 
 foreach($active_mods as $mods) {
@@ -99,7 +102,6 @@ foreach($active_mods as $mods) {
 }
 
 $p = $page_contents['page_id'];
-
 
 if($p == "") {
 	$p = "404";					
@@ -111,13 +113,11 @@ if($p == "") {
 	
 	fc_check_funnel_uri($fct_slug);
 	fc_check_shortlinks($fct_slug);
-	
 }
 
-
-if(isset($preview)) {
+if(isset($preview) AND ($_SESSION['user_class'] == "administrator")) {
 	$p = (int) $preview;
-	list($page_contents,$fc_nav,$fc_prefs) = get_content($p,'preview');
+	list($page_contents,$fc_nav) = fc_get_content($p,'preview');
 	unset($prefs_logfile);
 }
 
@@ -128,13 +128,13 @@ if(isset($p) && preg_match('/[^0-9A-Za-z]/', $p)) {
 
 
 if(!is_array($page_contents) AND ($p != "")) {
-	list($page_contents,$fc_nav,$fc_prefs) = get_content($p);
+	list($page_contents,$fc_nav) = fc_get_content($p);
 }
 
 
 /* no page contents -> switch to the homepage */
 if($p == "" OR $p == "portal") {
-	list($page_contents,$fc_nav,$fc_prefs) = get_content('portal','page_sort');
+	list($page_contents,$fc_nav) = fc_get_content('portal','page_sort');
 }
 
 /**
@@ -143,7 +143,7 @@ if($p == "" OR $p == "portal") {
  * if not, we use the 404.tpl file
  */
 if($p == "404") {
-	list($page_contents,$fc_nav,$fc_prefs) = get_content('404','type_of_use');
+	list($page_contents,$fc_nav) = fc_get_content('404','type_of_use');
 }
 
 
@@ -189,7 +189,7 @@ if(is_dir("lib/lang/$page_contents[page_language]") AND ($page_contents['page_la
 /* include language */
 require(FC_CORE_DIR . "/lib/lang/index.php");
 
-/* preferences (data from get_content() ) */
+/* preferences (data from fc_get_preferences() ) */
 foreach($fc_prefs as $key => $val) {
 	$$key = stripslashes($val); 
 }
@@ -202,7 +202,6 @@ if($prefs_dateformat == '') {
 if($prefs_timeformat == '') {
 	$prefs_timeformat = 'H:i:s';
 }
-
 
 
 if(!empty($page_contents['page_modul'])) {

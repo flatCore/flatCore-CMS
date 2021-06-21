@@ -3,9 +3,9 @@
 	<p><span class="post-author">{post_author}</span> <span class="post-releasedate">{post_releasedate}</span></p>
 	<div class="row">
 		<div class="col-md-12">
-			<img src="{post_img_src}" class="img-fluid">
+			<img src="{post_img_src}" class="img-fluid"><br><small>{post_img_caption}</small>
 			{post_teaser}
-	
+			{post_voting}
 		</div>
 	</div>
 	

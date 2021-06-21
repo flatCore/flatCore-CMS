@@ -78,12 +78,18 @@ $lang['label_external_file'] = 'External File (URL)';
 $lang['label_product_number'] = 'Produktnummer';
 $lang['label_product_manufacturer'] = 'Hersteller';
 $lang['label_product_supplier'] = 'Lieferant';
-$lang['label_product_tax'] = 'Steuer (%)';
+$lang['label_product_tax'] = 'Steuer';
 $lang['label_product_tax_alt1'] = 'Steuersatz 2';
 $lang['label_product_tax_alt2'] = 'Steuersatz 3';
 $lang['products_default_tax'] = 'Standard Steuer (%)';
 $lang['products_default_currency'] = 'Standard Währung';
 $lang['label_product_currency'] = 'Währung';
+$lang['label_product_price_net_purchasing'] = 'Einkaufspreis (netto)';
+$lang['label_product_price_addition'] = 'Aufschlag';
+$lang['label_scaling_prices'] = 'Staffelpreise';
+$lang['label_product_price'] = 'Preis';
+$lang['label_product_net'] = 'Netto';
+$lang['label_product_gross'] = 'Brutto';
 $lang['label_product_price_net'] = 'Preis (netto)';
 $lang['label_product_price_gross'] = 'Preis (brutto)';
 $lang['label_product_amount'] = 'Menge';
@@ -105,6 +111,26 @@ $lang['label_fixed'] = 'Oben festsetzen';
 
 $lang['status_draft'] = 'Eintwurf';
 $lang['status_public'] = 'Öffentlich';
+
+$lang['label_votings'] = 'Reaktionen/Votings';
+$lang['label_votings_off'] = 'Deaktivieren';
+$lang['label_votings_on_registered'] = 'Für registrierte Benutzer';
+$lang['label_votings_on_global'] = 'Für alle Benutzer';
+$lang['label_show_all_votings'] = 'Alle Bewertungen anzeigen';
+
+$lang['label_event_guestlist'] = 'Gästeliste';
+$lang['label_guestlist_activate'] = 'Gästeliste aktivieren';
+$lang['label_guestlist_deactivate'] = 'Gästeliste deaktivieren';
+$lang['label_guestlist_for_registered'] = 'Nur für registrierte Benutzer';
+$lang['label_guestlist_for_everybody'] = 'Jeder kann teilnehmen';
+$lang['label_guestlist_public_no'] = 'Gästeliste verbergen';
+$lang['label_guestlist_public_yes'] = 'Gästeliste anzeigen';
+$lang['label_guestlist_show_nbr_no'] = 'Anzahl der Zusagen verbergen';
+$lang['label_guestlist_show_nbr_yes'] = 'Anzahl der Zusagen anzeigen';
+$lang['label_guestlist_limit'] = 'Anzahl der Registrierungen begrenzen (Leer bedeutet unbegrenzte Anmeldungen)';
+$lang['label_show_all_events'] = 'Alle Events anzeigen';
+
+
 
 $lang['btn_upload'] = 'Upload';
 $lang['gallery_upload_help_text'] = 'Du musst die Galerie speichern, bevor Du Bilder hinzufügen kannst.';

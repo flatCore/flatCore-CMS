@@ -13,7 +13,7 @@ if($_GET["dl"]) {
 
 
 	$filename = basename($_GET['dl']);
-	$download = '../../' . FC_CONTENT_DIR . '/SQLite/'.$filename;
+	$download = FC_CONTENT_DIR . '/SQLite/'.$filename;
 		
 	if(is_file("$download")) {
 	

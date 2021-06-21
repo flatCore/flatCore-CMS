@@ -90,10 +90,10 @@ switch ($tn) {
 		$navinc = "nav.posts";
 		break;
 
-	case "comments":
+	case "reactions":
 		$active[7] = "topnav_selected";
-		$maininc = "inc.comments";
-		$navinc = "nav.comments";
+		$maininc = "inc.reactions";
+		$navinc = "nav.reactions";
 		break;	
 		
 	default:

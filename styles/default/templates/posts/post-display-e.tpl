@@ -20,13 +20,15 @@
 			{post_text}
 		</div>
 		<div class="col-md-3">
-			<p><img src="{post_img_src}" class="img-fluid"></p>
+			<p><img src="{post_img_src}" class="img-fluid"><br><small>{post_img_caption}</small></p>
 		</div>
 		</div>
 		
 		{post_tpl_event_prices}
 		{post_event_price_note}
 		{post_tpl_event_hotline}
+		{post_guestlist}
+		{post_voting}
 
 	<div class="post-footer">
 		<p class="text-right">{post_cats}</p>

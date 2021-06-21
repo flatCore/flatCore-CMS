@@ -97,6 +97,8 @@ $cols = array(
 	"prefs_posts_products_tax_alt2" => 'INTEGER(12)',
 	"prefs_posts_products_default_currency" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"prefs_posts_event_time_offset" => "VARCHAR(100) NOT NULL DEFAULT ''",
+	"prefs_posts_default_guestlist" => 'INTEGER(12)',
+	"prefs_posts_default_votings" => 'INTEGER(12)',
 	
 	/* comments */
   

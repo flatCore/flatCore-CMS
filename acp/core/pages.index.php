@@ -62,6 +62,10 @@ if(isset($_GET['a']) && $_GET['a'] == 'index_bulk') {
 	fc_crawler_bulk();
 }
 
+if(isset($_GET['a']) && $_GET['a'] == 'remove') {
+	$fc_upi = fc_remove_page_from_index($_GET['id']);
+}
+
 
 
 
@@ -312,6 +316,7 @@ for($i=0;$i<$cnt_indexed_entries;$i++) {
 	
 	$tpl = str_replace("{btn_update_info}", $icon['sync_alt'], $tpl);
 	$tpl = str_replace("{btn_start_index}", $icon['sitemap'], $tpl);
+	$tpl = str_replace("{btn_remove}", $icon['trash_alt'], $tpl);
 	$tpl = str_replace("{title_update_page_index}", $lang['btn_update_page_index'], $tpl);
 	$tpl = str_replace("{title_update_page_content}", $lang['btn_update_page_content'], $tpl);
 

@@ -54,7 +54,7 @@ for($i=0;$i<$nbrModuls;$i++) {
 			$bnt_check_in_out = '<a class="btn btn-sm btn-fc text-danger" href="acp.php?tn=moduls&disable='.$modFolder.'">'.$lang['btn_mod_disable'].'</a>';
 		}
 	}
-		
+			
 	include '../modules/'.$modFolder.'/info.inc.php';
 	
 	$listlinks = '<div class="btn-group">';
@@ -104,6 +104,12 @@ for($i=0;$i<$nbrModuls;$i++) {
 		echo $modal;
 	}
 	
+	$btn_delete_addon = '<form class="d-inline ps-2" action="?tn=addons&sub=m" method="POST" onsubmit="return confirm(\''.$lang['confirm_delete_file'].'\');">';
+	$btn_delete_addon .= '<button type="submit" name="delete_addon" class="btn btn-sm btn-fc text-danger">'.$icon['trash_alt'].'</button>';
+	$btn_delete_addon .= '<input type="hidden" name="type" value="m">';
+	$btn_delete_addon .= '<input type="hidden" name="addon" value="'.$modFolder.'">';
+	$btn_delete_addon .= '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+	$btn_delete_addon .= '</form>';
 	
 	
 	$tpl = $template_file;
@@ -116,6 +122,7 @@ for($i=0;$i<$nbrModuls;$i++) {
 	$tpl = str_replace("{\$MOD_LIVECODE}", "$mod_livecode","$tpl");
 	$tpl = str_replace("{\$MOD_CHECK_IN_OUT}", "$bnt_check_in_out","$tpl");
 	$tpl = str_replace("{\$MOD_README}", "$btn_help_text","$tpl");
+	$tpl = str_replace("{\$MOD_DELETE}", "$btn_delete_addon","$tpl");
 	
 	$tpl = str_replace("{\$MOD_NAV}", "$listlinks","$tpl");
 	

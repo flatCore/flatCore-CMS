@@ -6,8 +6,8 @@ require '../lib/Medoo.php';
 use Medoo\Medoo;
 
 require '../config.php';
-if(is_file('../'.FC_CONTENT_DIR.'/config.php')) {
-	include '../'.FC_CONTENT_DIR.'/config.php';
+if(is_file(FC_CONTENT_DIR.'/config.php')) {
+	include FC_CONTENT_DIR.'/config.php';
 }
 
 
@@ -44,9 +44,9 @@ if(is_file('../config_database.php')) {
 	}
 	
 	
-	define("CONTENT_DB", "../$fc_db_content");
-	define("USER_DB", "../$fc_db_user");
-	define("STATS_DB", "../$fc_db_stats");	
+	define("CONTENT_DB", "$fc_db_content");
+	define("USER_DB", "$fc_db_user");
+	define("STATS_DB", "$fc_db_stats");	
 
 	$db_content = new Medoo([
 		'database_type' => 'sqlite',
@@ -86,57 +86,61 @@ if(isset($_POST['check']) && ($_POST['check'] == "Login")) {
 
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8">
-	<title>Login <?php echo $_SERVER['SERVER_NAME']; ?></title>
-	<meta name="robots" content="noindex">
-	<link rel="stylesheet" href="theme/css/styles_dark.css" type="text/css" media="screen, projection">
-
-	<style type="text/css">
-		#center {
-			position: absolute;
-			top:45%;
-			left: 50%;
-			width: 500px;
-			height: 250px;
-			margin-top: -125px;
-			margin-left: -250px;
-		}
-	</style>
-</head>
-<body>
-	<div id="center">
-		<form action="index.php" method="post" class="form-horizontal">
-			<fieldset>
-				<legend>Login:</legend>	
-				<div class="form-group row">
-					<label class="col-sm-3 col-form-label"><?php echo $lang['f_user_nick']; ?></label>
-					<div class="col-sm-9">
-						<input type="text" class="form-control" name="login_name" autofocus="autofocus">
+	<head>
+		<meta charset="utf-8">
+		<title>Login <?php echo $_SERVER['SERVER_NAME']; ?></title>
+		<meta name="robots" content="noindex">
+		
+		<link rel="stylesheet" href="theme/css/styles_light_mono.css" type="text/css" media="screen, projection">
+		<style type="text/css">
+			body {
+				background: #ddd;
+			}
+			
+			#center {
+				position: absolute;
+				top:50%;
+				left: 50%;
+				width: 500px;
+				height: 250px;
+				margin-top: -125px;
+				margin-left: -250px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="center">
+			<form action="index.php" method="post" class="form-horizontal">
+				<fieldset>
+					<legend>Login:</legend>	
+					<div class="row mb-2">
+						<label class="col-sm-3 col-form-label"><?php echo $lang['f_user_nick']; ?></label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control" name="login_name" autofocus="autofocus">
+						</div>
 					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-sm-3 col-form-label"><?php echo $lang['f_user_psw']; ?></label>
-					<div class="col-sm-9">
-						<input type="password" class="form-control" name="login_psw">
+					<div class="row mb-2">
+						<label class="col-sm-3 col-form-label"><?php echo $lang['f_user_psw']; ?></label>
+						<div class="col-sm-9">
+							<input type="password" class="form-control" name="login_psw">
+						</div>
 					</div>
-				</div>
-			  <div class="form-group row">
-			    <div class="offset-sm-3 col-sm-9">
-			      <div class="form-check form-check-inline">
-			        <label>
-			          <input type="checkbox" name="remember_me"> <?php echo $lang['remember_me']; ?>
-			        </label>
-			      </div>
-			    </div>
-			  </div>
-				<div class="form-group row">
-					<div class="offset-sm-3 col-sm-9">
-						<input type="submit" class="btn btn-success" name="check" value="Login">
+				  <div class="row mb-2">
+				    <div class="offset-sm-3 col-sm-9">
+				      <div class="form-check-inline">
+				        <label class="form-check-label">
+				          <input type="checkbox" name="remember_me"> <?php echo $lang['remember_me']; ?>
+				        </label>
+				      </div>
+				    </div>
+				  </div>
+					<div class="row">
+						<div class="offset-sm-3 col-sm-9">
+							<input type="submit" class="btn btn-success w-100" name="check" value="Login">
+						</div>
 					</div>
-				</div>
-				</fieldset>
-		</form>
-	</div>
-</body>
+					</fieldset>
+			</form>
+		</div>
+	</body>
 </html>

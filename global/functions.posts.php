@@ -214,11 +214,27 @@ function fc_post_print_currency($number) {
 	$comma_pos = stripos($number, ",");
 	$article_price_big = substr("$number", 0, $comma_pos);
 	$article_price_small = substr("$number", -2);
-	
 	$article_price_string = "<span class='price-predecimal'>$article_price_big</span><span class='price-decimal'>,$article_price_small</span>";
 		
 	return $article_price_string;
+}
 
+
+/**
+ * add tax and addion to net prices
+ */
+
+function fc_posts_calc_price($price,$addition,$tax) {
+	
+	$price = str_replace('.', '', $price);
+	$price = str_replace(',', '.', $price);
+	$price_net = $price*($addition+100)/100;
+	$price_gross = $price_net*($tax+100)/100;
+
+	$prices['gross'] = fc_post_print_currency($price_gross);
+	$prices['net'] = fc_post_print_currency($price_net);
+	
+	return $prices;
 }
 
 
@@ -250,7 +266,7 @@ function fc_set_pagination_query($display_mode,$start) {
 
 /**
  * check if the template $tpl_dir has the posts tpl file
- * if not, load files from the /default/ directory
+ * if not, load files from the /default/templates/posts/ directory
  * return tpl file contents (string)
  */
 
@@ -268,5 +284,145 @@ function fc_load_posts_tpl($tpl_dir,$tpl_file) {
 	return $contents;
 }
 
+/**
+ * check if the template $tpl_dir has the comments tpl file
+ * if not, load files from the /default/templates/comments/ directory
+ * return tpl file contents (string)
+ */
+
+function fc_load_comments_tpl($tpl_dir,$tpl_file) {
+	
+	$check_template = 'styles/'.basename($tpl_dir).'/templates/comments/'.$tpl_file;
+	
+	if(is_file($check_template)) {
+		$contents = file_get_contents($check_template);
+	} else {
+		$fallback_tpl = 'styles/default/templates/comments/'.$tpl_file;
+		$contents = file_get_contents($fallback_tpl);
+	}
+	
+	return $contents;
+}
+
+
+/**
+ * increase the hits counter
+ */
+ 
+function fc_increase_posts_hits($post_id) {
+	
+	global $db_posts;
+	
+	$post_data_hits = $db_posts->get("fc_posts","post_hits", [
+		"post_id" => $post_id
+	]);
+	
+	$post_data_hits = $post_data_hits+1;
+
+	$update = $db_posts->update("fc_posts", [
+		"post_hits" => $post_data_hits
+	],[
+		"post_id" => $post_id
+	]);
+		
+}
+
+/**
+ * get voting data for posts or comments
+ * return array $count['upv'] = x / $count['dnv'] = x, $count['all']
+ */
+
+function fc_get_voting_data($type,$id) {
+	
+	global $db_content;
+	$id = (int) $id;
+	
+	if($type == 'post') {
+		
+		$sql_cnt = "SELECT count(*) AS 'all_comments',
+									(SELECT count(*) FROM fc_comments WHERE (comment_type = 'upv' OR comment_type = 'dnv') AND comment_relation_id = $id) AS 'all',
+									(SELECT count(*) FROM fc_comments WHERE comment_type = 'upv' AND comment_relation_id = $id) AS 'upv',
+									(SELECT count(*) FROM fc_comments WHERE comment_type = 'dnv' AND comment_relation_id = $id) AS 'dnv'
+									FROM fc_comments";
+		
+		$count = $db_content->query("$sql_cnt")->fetch(PDO::FETCH_ASSOC);
+		
+		return $count;
+	}
+}
+
+
+/**
+ * check if user can vote on posts
+ * $id = comment id
+ * $name = user name or ip
+ * $type = array("upv","dnv") or ("evc")
+ * return true or false
+ */
+ 
+function fc_check_user_legitimacy($id,$user,$type) {
+	
+	global $db_content;
+	
+	$get_data = $db_content->select("fc_comments", "*",[
+			"AND" => [
+				"OR" => [
+					"comment_type" => $type
+				],
+				"comment_relation_id" => $id,
+				"comment_author" => $user
+			]
+		]);
+
+		
+		if(count($get_data) > 0) {
+			return false;
+		} else {
+			return true;
+		}
+}
+
+
+
+
+/**
+ * get data for events guestlist
+ * return number of commitments
+ */
+ 
+function fc_get_event_confirmation_data($id) {
+	
+	global $db_content;
+	$count_evc = $db_content->count("fc_comments", [
+		"AND" => [
+			"comment_type" => "evc",
+			"comment_relation_id" => $id
+		]
+	]);
+	
+	$event_data = array('evc' => $count_evc);
+	
+	return $event_data;
+}
+
+
+/**
+ * generate anonymous voter name
+ * we use this only if votings are allowed for all
+ */
+ 
+function fc_generate_anonymous_voter() {
+	
+		if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+		    $ip = $_SERVER['HTTP_CLIENT_IP'];
+		} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+		    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		} else {
+		    $ip = $_SERVER['REMOTE_ADDR'];
+		}
+	
+	
+	return md5($ip);
+}
 
 ?>

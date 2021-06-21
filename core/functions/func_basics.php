@@ -42,6 +42,12 @@ function buffer_script($script,$parameters=NULL) {
 	ob_start();
 	if(is_file("./content/plugins/$script")) {
 		include './content/plugins/'.$script;
+	} else if (is_dir("./content/plugins/$script")) {
+		
+		if(is_file("./content/plugins/$script/index.php")) {
+			include './content/plugins/'.$script.'/index.php';
+		}
+		
 	}
 
 	$content = ob_get_clean();
@@ -51,6 +57,11 @@ function buffer_script($script,$parameters=NULL) {
 }
 
 
+/**
+ * get the image data from $db_content
+ * if parameter data = array return only data
+ * if no parameter is set, return the image data styled with tpl file image.tpl
+ */
 
 function fc_get_images_data($image,$parameters=NULL) {
 
@@ -67,7 +78,11 @@ function fc_get_images_data($image,$parameters=NULL) {
 			"media_file[~]" => "%$image",
 			"media_lang" => "$languagePack"
 			]
-	]);	
+	]);
+	
+	if($data == 'array') {
+		return $imageData;
+	}
 	
 	$img_src = str_replace('../content/images/', '/content/images/', $imageData['media_file']);
 	$tpl = file_get_contents('./styles/'.$fc_template.'/templates/image.tpl');

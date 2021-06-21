@@ -54,6 +54,11 @@ $lang['label_remember_me'] = 'Angemeldet bleiben';
 $lang['label_entries'] = 'Einträge';
 $lang['label_entries_total'] = 'Gesamt';
 
+$lang['label_prices_discount'] = 'Staffelpreise';
+$lang['label_prices_snippet'] = 'Hinweise zu den Preisen';
+$lang['price_tag_label_gross'] = 'inkl. MwSt.';
+$lang['price_tag_label_net'] = 'zzgl. MwSt.';
+
 /* Buttons, Links */
 $lang['button_login'] = "Anmelden";
 $lang['button_profile'] = "Profil bearbeiten";
@@ -139,6 +144,17 @@ $lang['comment_form_title'] = 'Schreibe einen Kommentar';
 $lang['comment_msg_auth1'] = 'Du musst Dich einloggen um Kommentare zu schreiben.';
 $lang['comment_msg_auth2'] = 'Du musst Deinen Namen und Deine E-Mail Adresse angeben.';
 $lang['comments_title'] = 'Kommentare ({cnt_comments})';
+
+
+/* guest list */
+$lang['label_guestlist'] = 'Gästeliste';
+$lang['guestlist_description'] = 'Du kannst Dich in die Gästeliste eintragen.';
+$lang['guestlist_description_for_members'] = 'Es können sich nur registrierte Benutzer in die Gästeliste eintragen.';
+$lang['btn_guestlist_sign'] = 'Teilnehmen';
+
+$lang['guestlist_label_nbr_total_available'] = 'Verfügbare Plätze:';
+$lang['guestlist_label_nbr_commitments'] = 'Zusagen:';
+
 
 /* Dates */
 

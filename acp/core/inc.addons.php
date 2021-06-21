@@ -3,12 +3,21 @@
 //prohibit unauthorized access
 require 'core/access.php';
 
+
+/* delete addon */
+
+if(isset($_POST['delete_addon'])) {
+	fc_delete_addon($_POST['addon'],$_POST['type']);
+	$all_mods = get_all_moduls();
+	$all_plugins = get_all_plugins();
+}
+
+
 /**
  * list and access module
  * list plugins
  * list and access themes
  */
-
 
 $addon_mode = 'list_modules';
 $active_modules = 'active';

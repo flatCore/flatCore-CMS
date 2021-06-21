@@ -15,7 +15,7 @@ echo '<div class="card-header">' . $lang['f_user_drm'] . '</div>';
 echo '<div class="card-body">';
 
 $user_avatar = '<img src="images/avatar.png" class="rounded-circle avatar" width="50" height="50">';
-$user_avatar_path = '../'. FC_CONTENT_DIR . '/avatars/' . md5($_SESSION['user_nick']) . '.png';
+$user_avatar_path = '../content/avatars/' . md5($_SESSION['user_nick']) . '.png';
 if(is_file("$user_avatar_path")) {
 	$user_avatar = '<img src="'.$user_avatar_path.'" class="rounded-circle avatar" width="50" height="50">';
 }

@@ -64,14 +64,14 @@ function checkexistingdir($path) {
 /* collecting files and folders */
 
 
-$check_this[] = "../" . FC_CONTENT_DIR . "/";
+$check_this[] = FC_CONTENT_DIR . "/";
 $check_this[] = "../$img_path";
 $check_this[] = "../$files_path";
 $check_this[] = "../$img_tmb_path";
-$check_this[] = "../" . FC_CONTENT_DIR . "/avatars";
-$check_this[] = "../" . FC_CONTENT_DIR . "/plugins";
-$check_this[] = "../" . FC_CONTENT_DIR . "/SQLite";
-$check_this[] = "../" . FC_CONTENT_DIR . "/galleries";
+$check_this[] = FC_CONTENT_DIR . "/avatars";
+$check_this[] = FC_CONTENT_DIR . "/plugins";
+$check_this[] = FC_CONTENT_DIR . "/SQLite";
+$check_this[] = FC_CONTENT_DIR . "/galleries";
 sort($check_this,SORT_NATURAL | SORT_FLAG_CASE);
 
 $check_is_dir[] = "../modules/";

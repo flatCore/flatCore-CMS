@@ -1,10 +1,26 @@
 <?php
-//error_reporting(E_ALL ^E_NOTICE);
 //prohibit unauthorized access
 require 'core/access.php';
 $system_snippets_str = "'footer_text','extra_content_text','agreement_text','account_confirm','account_confirm_mail','no_access'";
 $system_snippets = explode(',',str_replace("'",'',$system_snippets_str));
 $modus = 'new';
+
+/* update missing textlib_type for core snippets */
+$upd_core_snippets = $db_content->update("fc_textlib", [
+	"textlib_type" =>  "snippet_core"
+], [
+	"textlib_name" => $system_snippets
+]);
+
+/* update missing textlib_type for user generated snippets */
+$upd_core_snippets = $db_content->update("fc_textlib", [
+	"textlib_type" =>  "snippet"
+], [
+	"OR" => [
+	"textlib_type" => null,
+	"textlib_type" => ""
+	]
+]);
 
 
 if(isset($_REQUEST['suggest_name'])) {
@@ -49,7 +65,6 @@ if(isset($_POST['delete_snippet'])) {
 	}
 	
 	print_sysmsg("$sys_message");
-
 }
 
 
@@ -64,8 +79,7 @@ if(isset($_POST['save_snippet'])) {
 	$snippet_theme = $snippet_themes[0];
 	$snippet_template = $snippet_themes[1];
 	
-	if(count($_POST['picker1_images']) > 1) {
-		
+	if(count($_POST['picker1_images']) > 1) {		
 		$snippet_thumbnail = implode("<->", array_unique($_POST['picker1_images']));
 	} else {
 		$st = $_POST['picker1_images'];
@@ -116,10 +130,10 @@ if(isset($_POST['save_snippet'])) {
 	
 	} else {
 		
-		
 		$data = $db_content->insert("fc_textlib", [
 			"textlib_content" =>  $_POST['textlib_content'],
 			"textlib_name" => $snippet_name,
+			"textlib_type" => 'snippet',
 			"textlib_lang" => $_POST['sel_language'],
 			"textlib_notes" => $_POST['textlib_notes'],
 			"textlib_groups" => $_POST['snippet_groups'],
@@ -210,19 +224,15 @@ for($i=0;$i<count($fc_labels);$i++) {
 }
 $snippet_label_filter = substr("$snippet_label_filter", 0, -3); // cut the last ' OR'
 
-$filter_string = "WHERE textlib_id IS NOT NULL AND textlib_type NOT IN('shortcode')";
 
 if($_SESSION['type'] == 'all') {
-	$filter_type = '';
+	$filter_string = "WHERE (textlib_type = 'snippet' OR textlib_type = 'snippet_core')";
 } else if($_SESSION['type'] == 'system') {
-	$filter_type = "textlib_name IN($system_snippets_str)";
+	$filter_string = "WHERE textlib_type = 'snippet_core'";
 } else if($_SESSION['type'] == 'own') {
-	$filter_type = "textlib_name NOT IN($system_snippets_str)";
+	$filter_string = "WHERE textlib_type = 'snippet'";
 }
 
-if($filter_type != "") {
-	$filter_string .= " AND ($filter_type) ";
-}
 
 if($set_snippet_keyword_filter != "") {
 	$filter_string .= " AND $set_snippet_keyword_filter";
@@ -239,8 +249,8 @@ if($snippet_lang_filter != "") {
 
 $sql_cnt = "SELECT count(*) AS 'cnt_all_snippets',
 (SELECT count(*) FROM fc_textlib WHERE textlib_type NOT IN('shortcode') ) AS 'cnt_snippets',
-(SELECT count(*) FROM fc_textlib WHERE textlib_name IN($system_snippets_str) ) AS 'cnt_system_snippets',
-(SELECT count(*) FROM fc_textlib WHERE textlib_name NOT IN($system_snippets_str) AND (textlib_type NOT IN('shortcode')) ) AS 'cnt_custom_snippets',
+(SELECT count(*) FROM fc_textlib WHERE textlib_type = 'snippet_core' ) AS 'cnt_system_snippets',
+(SELECT count(*) FROM fc_textlib WHERE textlib_type = 'snippet' ) AS 'cnt_custom_snippets',
 (SELECT count(*) FROM fc_textlib $filter_string ) AS 'cnt_filter_snippets'
 FROM fc_textlib";
 
@@ -280,38 +290,40 @@ foreach($system_snippets as $snippet) {
 }
 
 $snippets_list = $db_content->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-
 $cnt_pages = ceil($cnt['cnt_filter_snippets']/$files_per_page);
 
 $cnt_snippets = count($snippets_list);
 
-$pag_backlink = '<a class="btn btn-fc '.$disable_prev_start.'" href="acp.php?tn=pages&sub=snippets&start='.$prev_start.'">'.$icon['angle_double_left'].'</a>';
-$pag_forwardlink = '<a class="btn btn-fc '.$disable_next_start.'" href="acp.php?tn=pages&sub=snippets&start='.$next_start.'">'.$icon['angle_double_right'].'</a>';
+$pag_backlink = '<li class="page-item '.$disable_prev_start.'"><a class="page-link" href="acp.php?tn=pages&sub=snippets&start='.$prev_start.'">'.$icon['angle_double_left'].'</a></li>';
+$pag_forwardlink = '<li class="page-item '.$disable_next_start.'"><a class="page-link" href="acp.php?tn=pages&sub=snippets&start='.$next_start.'">'.$icon['angle_double_right'].'</a></li>';
 
 unset($pag_string);
 for($x=0;$x<$cnt_pages;$x++) {
 
-	$aclass = "btn btn-fc";
+	$aclass = "page-link";
 	$page_start = $x*$files_per_page;
 	$page_nbr = $x+1;
 	
 	if($page_start == $start) {
-		$aclass = "btn btn-fc active";
 		
+		$aclass = "page-link active";
 		$pag_start = 	$x-($show_numbers/2);
 		
 		if($pag_start < 0) {
 			$pag_start = 0;
 		}
 		
-		$pag_end = 		$pag_start+$show_numbers;
+		$pag_end = $pag_start+$show_numbers;
 		if($pag_end > $cnt_pages) {
 			$pag_end = $cnt_pages;
 		}
+		
+		$a_pag_string[] = '<li class="page-item active"><span class="page-link">'.$page_nbr.'</span></li>';	
+	} else {
+		$a_pag_string[] = '<li class="page-item"><a class="page-link" href="acp.php?tn=pages&sub=snippets&start='.$page_start.'">'.$page_nbr.'</a></li>';
 	}
 	
-	$a_pag_string[] = "<a class='$aclass' href='acp.php?tn=pages&sub=snippets&start=$page_start'>$page_nbr</a> ";
-
+	
 }
 
 /**
@@ -325,7 +337,6 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 } else {
 	
 	/* list snippets */
-	
 	
 	echo '<div class="app-container">';
 	echo '<div class="max-height-container">';
@@ -449,7 +460,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 		echo '<td class="text-right">';
 		echo '<div class="btn-group" role="group">';
 		echo '<a href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'" class="btn btn-fc btn-sm text-success">'.$lang['edit'].'</a>';
-		echo '<a href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'&duplicate=1" class="btn btn-fc btn-sm">'.$icon['copy'].'</a>';
+		echo '<a href="acp.php?tn=pages&sub=snippets&snip_id='.$get_snip_id.'&duplicate=1" class="btn btn-fc btn-sm" title="'.$lang['duplicate'].'">'.$icon['copy'].'</a>';
 		echo '</div>';
 		echo '</td>';	
 		echo '</tr>';
@@ -459,13 +470,15 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	
 	echo '</table>';
 	
-	echo '<div class="well well-sm text-center">';
-	echo $pag_backlink .' ';
+	echo '<div class="pt-3">';
+	echo '<ul class="pagination justify-content-center">';
+	echo $pag_backlink;
 	foreach(range($pag_start, $pag_end) as $number) {
     echo $a_pag_string[$number];
 	}
-	echo ' '. $pag_forwardlink;
-	echo '</div>'; //EOL PAGINATION
+	echo $pag_forwardlink;
+	echo '</ul>';
+	echo '</div>';
 	
 	echo '</div>';
 	
@@ -491,6 +504,11 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	echo '</div>';
 	echo '</form>';
 	
+	if($btn_remove_keyword != '') {
+		echo '<p class="p-2">'.$btn_remove_keyword.'</p>';
+	}
+	
+	
 	echo '<div class="btn-group d-flex my-3">';
 	echo '<a class="btn btn-fc w-100 '.$active_all.'" href="?tn=pages&sub=snippets&type=1">Alle <span class="badge badge-fc position-absolute top-0 end-0">'.$cnt['cnt_snippets'].'</span></a>';
 	echo '<a class="btn btn-fc w-100 '.$active_system.'" href="?tn=pages&sub=snippets&type=2">System <span class="badge badge-fc position-absolute top-0 end-0">'.$cnt['cnt_system_snippets'].'</span></a>';
@@ -506,13 +524,10 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	/* end of sidebar */
 
 
-
 	echo '</div>';
 	echo '</div>';
-	
-	
+		
 	echo '</div>';
-
 	echo '</div>'; // .app-container
 	
 	

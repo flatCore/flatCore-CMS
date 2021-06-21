@@ -81,9 +81,15 @@ $lang['label_product_supplier'] = 'Supplier';
 $lang['label_product_tax'] = 'Tax (%)';
 $lang['label_product_tax_alt1'] = 'Tax alt 2';
 $lang['label_product_tax_alt2'] = 'Tax alt 3';
-$lang['products_default_tax'] = 'Default Tax (%)';
+$lang['products_default_tax'] = 'Default Tax';
 $lang['products_default_currency'] = 'Default Currency';
 $lang['label_product_currency'] = 'Currency';
+$lang['label_product_price_net_purchasing'] = 'Purchasing Price (net)';
+$lang['label_product_price_addition'] = 'Addition';
+$lang['label_scaling_prices'] = 'Quantity Discount';
+$lang['label_product_price'] = 'price';
+$lang['label_product_net'] = 'net';
+$lang['label_product_gross'] = 'gross';
 $lang['label_product_price_net'] = 'Price (net)';
 $lang['label_product_price_gross'] = 'Price (gross)';
 $lang['label_product_amount'] = 'Amount';
@@ -106,6 +112,25 @@ $lang['label_fixed'] = 'Fix at the top';
 
 $lang['status_draft'] = 'Draft';
 $lang['status_public'] = 'Public';
+
+$lang['label_votings'] = 'Reactions/Votings';
+$lang['label_votings_off'] = 'Deactivated';
+$lang['label_votings_on_registered'] = 'For registered users';
+$lang['label_votings_on_global'] = 'For all Users';
+$lang['label_show_all_votings'] = 'Show all votings';
+
+$lang['label_event_guestlist'] = 'Guest list';
+$lang['label_guestlist_activate'] = 'Activate Guest list';
+$lang['label_guestlist_deactivate'] = 'Deactivate Guest list';
+$lang['label_guestlist_for_registered'] = 'For registered Users only';
+$lang['label_guestlist_for_everybody'] = 'Everybody can confirm';
+$lang['label_guestlist_public_no'] = 'Hide Guest list';
+$lang['label_guestlist_public_yes'] = 'Show Guest list';
+$lang['label_guestlist_show_nbr_no'] = 'Hide number of commitments';
+$lang['label_guestlist_show_nbr_yes'] = 'Show the number of commitments';
+$lang['label_guestlist_limit'] = 'Limit number of registrations (leave this field blank for unlimited registrations)';
+$lang['label_show_all_events'] = 'Show all Events';
+
 
 $lang['btn_upload'] = 'Upload';
 $lang['gallery_upload_help_text'] = 'You must save the gallery before you can add images.';

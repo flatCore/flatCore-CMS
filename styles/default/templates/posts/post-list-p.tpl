@@ -13,6 +13,7 @@
 				</div>
 				<div class="price-tag-inner">
 				{post_currency} {post_price_gross} <span class="product-unit">{post_product_unit}</span>
+				<span class="price-tag-note">{price_tag_label_gross}</span>
 				</div>
 			</div>
 			
@@ -21,8 +22,13 @@
 			{post_teaser}
 		</div>
 	</div>
-	<div class="text-end">
-		<p class="m-0 post-categories">{post_cats}</p>
-		<p><a class="btn btn-primary {read_more_class}" href="{post_href}">{read_more_text}</a></p>
+	<div class="row">
+		<div class="col-md-4">
+			{post_voting}
+		</div>
+		<div class="col-md-8 text-end">
+			<p class="m-0 post-categories">{post_cats}</p>
+			<p><a class="btn btn-primary {read_more_class}" href="{post_href}">{read_more_text}</a></p>
+		</div>
 	</div>
 </div>

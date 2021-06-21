@@ -483,6 +483,18 @@ function fc_add_url($url) {
 }
 
 
+/**
+ * delete page by id from pages table
+ */
+
+function fc_remove_page_from_index($id) {
+	$dbh = new PDO("sqlite:".INDEX_DB);
+	$sql = "DELETE FROM pages WHERE page_id = :id";
+	$sth = $dbh->prepare($sql);
+	$sth->bindParam(':id', $id, PDO::PARAM_STR);
+	$cnt_changes = $sth->execute();
+	$dbh = null;	
+}
 
 /**
  * delete URL from pages table

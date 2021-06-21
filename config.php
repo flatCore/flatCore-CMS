@@ -28,8 +28,9 @@ $fc_upload_img_types = array('gif','jpg','jpe','jpeg','png','svg','ico','webp');
 $fc_upload_file_types = array('pdf','doc','docx','ppt','pptx','xls','xlsx','mp3','mp4','m4a','wav','mpg','mov','avi','xml','epub','ogg');
 
 /* define Folder structure */
-define('FC_CONTENT_DIR',  "content");
-define('FC_ACP_DIR',  "acp");
+define('FC_CORE_DIR', dirname(__FILE__) . DIRECTORY_SEPARATOR);
+define('FC_CONTENT_DIR',  FC_CORE_DIR."content");
+define('FC_ACP_DIR', "acp");
 
 /* Database Files */
 $fc_db_content 	= FC_CONTENT_DIR . "/SQLite/content.sqlite3";
@@ -44,11 +45,10 @@ $fc_db_index 	= FC_CONTENT_DIR . "/SQLite/index.sqlite3";
  * images and other files
  */
  
-$img_path 	= FC_CONTENT_DIR . "/images";
-$img_tmb_path 	= FC_CONTENT_DIR . "/images_tmb";
-$files_path = FC_CONTENT_DIR . "/files";
+$img_path 	= "content/images";
+$img_tmb_path 	= "content/images_tmb";
+$files_path = "content/files";
 
-define('FC_CORE_DIR', dirname(__FILE__) . DIRECTORY_SEPARATOR);
 
 $fc_inc_dir = dirname($_SERVER['SCRIPT_NAME']);
 
