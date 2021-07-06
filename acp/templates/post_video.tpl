@@ -5,6 +5,7 @@
 				<div class="card-header">
 			<ul class="nav nav-tabs card-header-tabs" id="bsTabs" role="tablist">
 				<li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#content">{post_tab_content}</a></li>
+				<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#meta">{post_tab_meta}</a></li>
 				<li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#prefs">{post_tab_preferences}</a></li>
 			</ul>
 				</div>
@@ -34,6 +35,18 @@
 						</div>
 					</div>
 				</div>
+				
+				<div class="tab-pane fade" id="meta">
+					<div class="form-group">
+						<label>{label_title}</label>
+						<input class='form-control' name="post_meta_title" type="text" value="{post_meta_title}">
+					</div>
+					<div class="form-group">
+						<label>{label_description}</label>
+						<textarea class='form-control' rows="4" name="post_meta_description">{post_meta_description}</textarea>
+					</div>			
+				</div>
+				
 				<div class="tab-pane fade" id="prefs">
 					<div class="form-group">
 						<label>{label_author}</label>

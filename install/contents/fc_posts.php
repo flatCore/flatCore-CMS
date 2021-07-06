@@ -48,6 +48,9 @@ $cols = array(
 	"post_votings" => 'INTEGER(12)',
 	"post_labels" => "VARCHAR(50) NOT NULL DEFAULT ''",
 	"post_attachments" => "VARCHAR(255) NOT NULL DEFAULT ''",
+	/* meta data */
+	"post_meta_title" => "VARCHAR(255) NOT NULL DEFAULT ''",
+	"post_meta_description" => "VARCHAR(255) NOT NULL DEFAULT ''",
 	/* events */
 	"post_event_startdate"  => 'INTEGER(12)',
 	"post_event_enddate" => 'INTEGER(12)',
