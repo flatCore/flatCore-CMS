@@ -360,7 +360,22 @@ if($cnt_filter_posts > 0) {
 				$label .= '<span class="label-dot" style="background-color:'.$label_color.';" title="'.$label_title.'"></span>';
 			}
 		}
-	
+		
+		/* categories */
+		$get_post_categories = explode('<->',$get_posts[$i]['post_categories']);
+		$categories = '';
+		if($get_posts[$i]['post_categories'] != '') {
+			foreach($get_post_categories as $cats) {
+				
+				foreach($arr_categories as $cat) {
+					if($cats == $cat['cat_id']) {
+						$cat_title = $cat['cat_name'];
+						$cat_description = $cat['cat_description'];
+					}
+				}
+				$categories .= '<span class="badge bg-secondary" title="'.$cat_description.'">'.$cat_title.'</span> ';		
+			}
+		}
 		
 		$select_priority = '<select name="post_priority" class="form-control custom-select" onchange="this.form.submit()">';
 		for($x=1;$x<11;$x++) {
@@ -474,7 +489,7 @@ if($cnt_filter_posts > 0) {
 		echo '<td nowrap><small>'.$published_date.'<br>'.$release_date.'<br>'.$lastedit_date.'</small></td>';
 		echo '<td>'.$show_type.'</td>';
 		echo '<td>'.$show_thumb.'</td>';
-		echo '<td>'.$show_events_date.$show_items_price.$show_items_downloads.$show_items_redirects.'<h5 class="mb-0">'.$get_posts[$i]['post_title'].'</h5><small>'.$trimmed_teaser.'</small><br>'.$label.'</td>';
+		echo '<td>'.$show_events_date.$show_items_price.$show_items_downloads.$show_items_redirects.'<h5 class="mb-0">'.$get_posts[$i]['post_title'].'</h5><small>'.$trimmed_teaser.'</small><br>'.$categories.'<br>'.$label.'</td>';
 		echo '<td style="min-width: 150px;">';
 		echo '<nav class="nav justify-content-end">';
 		echo '<form class="form-inline mr-1" action="?tn=posts&sub=edit" method="POST"><button class="btn btn-fc btn-sm text-success" type="submit" name="post_id" value="'.$get_posts[$i]['post_id'].'">'.$lang['edit'].'</button></form> ';

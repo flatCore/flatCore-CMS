@@ -233,10 +233,10 @@ if($prefs_smarty_compile_check == 1) {
 
 /* reset of the user-defined theme */
 if(isset($_POST['reset_theme'])) {
-	unset($_SESSION['prefs_template']);
+	unset($_SESSION['prefs_template'],$_SESSION['prefs_template_stylesheet']);
 }
 
-/* set the theme defined by the user */
+/* set the theme - defined by the user */
 if(isset($_POST['set_theme'])) {
 	$set_theme = 'styles/'.sanitizeUserInputs($_POST['set_theme']);
 	if(is_dir($set_theme)) {
@@ -244,8 +244,33 @@ if(isset($_POST['set_theme'])) {
 	}
 }
 
+/**
+ * set the theme and stylesheet - defined by the user
+ * example: $_POST['set_theme_stylesheet'] = './styles/default/css/dark.css';
+ */
+ 
+if(isset($_POST['set_theme_stylesheet'])) {
+	$set_theme_stylesheet = explode("/",$_POST['set_theme_stylesheet']);
+	
+	$set_theme_folder = $set_theme_stylesheet[2];
+	$set_stylesheet = $set_theme_stylesheet[4];
+	
+	if(is_dir("./styles/$set_theme_folder")) {
+		$_SESSION['prefs_template'] = sanitizeUserInputs($set_theme_folder);
+	}
+	
+	if(is_file("./styles/$set_theme_folder/css/$set_stylesheet")) {
+		$_SESSION['prefs_template_stylesheet'] = sanitizeUserInputs($set_stylesheet);
+	}
+}
+
+
 if($_SESSION['prefs_template'] != '') {
 	$prefs_template = $_SESSION['prefs_template'];
+}
+
+if($_SESSION['prefs_template_stylesheet'] != '') {
+	$prefs_template_stylesheet = $_SESSION['prefs_template_stylesheet'];
 }
 
 // default template

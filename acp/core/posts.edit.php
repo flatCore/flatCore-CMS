@@ -100,6 +100,18 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 		fc_rename_gallery_image($_POST['sort_tmb']);
 	}
 	
+	/* metas */
+	if($_POST['post_meta_title'] == '') {
+		$post_meta_title = $_POST['post_title'];
+	} else {
+		$post_meta_title = $_POST['post_meta_title'];
+	}
+	if($_POST['post_meta_description'] == '') {
+		$post_meta_description = strip_tags($_POST['post_teaser']);
+	} else {
+		$post_meta_description = $_POST['post_meta_description'];
+	}
+	
 	/* save or update data */
 	
 	/* get all $cols */
@@ -566,6 +578,9 @@ $form_tpl = str_replace('{post_tags}', $post_data['post_tags'], $form_tpl);
 $form_tpl = str_replace('{post_rss_url}', $post_data['post_rss_url'], $form_tpl);
 $form_tpl = str_replace('{select_rss}', $select_rss, $form_tpl);
 $form_tpl = str_replace('{select_status}', $select_status, $form_tpl);
+
+$form_tpl = str_replace('{post_meta_title}', $post_data['post_meta_title'], $form_tpl);
+$form_tpl = str_replace('{post_meta_description}', $post_data['post_meta_description'], $form_tpl);
 
 $form_tpl = str_replace('{checkboxes_lang}', $select_lang, $form_tpl);
 $form_tpl = str_replace('{checkbox_categories}', $checkboxes_cat, $form_tpl);
