@@ -109,7 +109,7 @@ $lang['label_priority_top'] = 'wichtig';
 $lang['label_priority_bottom'] = 'normal';
 $lang['label_fixed'] = 'Oben festsetzen';
 
-$lang['status_draft'] = 'Eintwurf';
+$lang['status_draft'] = 'Entwurf';
 $lang['status_public'] = 'Öffentlich';
 
 $lang['label_votings'] = 'Reaktionen/Votings';
