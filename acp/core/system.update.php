@@ -263,7 +263,7 @@ function compare_versions() {
 	echo '<tr>';
 	echo "<td>$fc_version_name (Build $fc_version_build)</td>";
 	echo "<td>$remote_versions[1] (Build $remote_versions[2])</td>";
-	echo '<td><span class="badge bg-danger">Attention!</span> You should not perform this function in a real environment. Load latest from  <a href="?tn=system&sub=update&github=master">branch master</a> or load latest from <a href="?tn=system&sub=update&github=develop">develop develop</a></td>';
+	echo '<td><span class="badge bg-danger">Attention!</span> You should not perform this function in a real environment. Load latest from  <a href="?tn=system&sub=update&github=main">branch main</a> or load latest from <a href="?tn=system&sub=update&github=develop">develop develop</a></td>';
 	echo '</tr>';
 	echo '</table>';
 	
@@ -271,14 +271,14 @@ function compare_versions() {
 		
 	$start_dl = '';
 	
-	if(($remote_versions[2] > $fc_version_build) && ($remote_versions[2] != 'master')) {
+	if(($remote_versions[2] > $fc_version_build) && ($remote_versions[2] != 'main')) {
 		$start_dl  = 'acp.php?tn=system&sub=update&a=start';
 		if(isset($_GET['beta']) && $_GET['beta'] > 0) {
 			$start_dl .= '&beta=1';
 		}
 	}
 	if($remote_versions[2] == 'master') {
-		$start_dl  = 'acp.php?tn=system&sub=update&a=start&github=master';
+		$start_dl  = 'acp.php?tn=system&sub=update&a=start&github=main';
 	}
 	if($remote_versions[2] == 'main') {
 		$start_dl  = 'acp.php?tn=system&sub=update&a=start&github=main';
