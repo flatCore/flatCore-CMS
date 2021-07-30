@@ -116,6 +116,10 @@ $lang['btn_bulk_update'] = "Mehrere Updaten";
 $lang['btn_update_page_index'] = "Seite neu indexieren";
 $lang['btn_update_page_content'] = "Inhalt aktualisieren";
 
+$lang['btn_snippets_all'] = 'Alle';
+$lang['btn_snippets_system'] = 'System';
+$lang['btn_snippets_own'] = 'Eigene';
+
 /* Headlines */
 
 $lang['h_usermanagement'] = "Benutzer verwalten";

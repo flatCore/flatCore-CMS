@@ -22,7 +22,7 @@ $lang['tn_system_desc'] = "Preferences, Snippets and Backup";
 $lang['tn_contents'] = "Contents";
 $lang['tn_contents_desc'] = "Pages, Snippets, RSS Feeds create/edit/delete ...";
 $lang['tn_comments'] = 'Comments';
-$lang['tn_reactions'] = 'Reaktionen';
+$lang['tn_reactions'] = 'Reactions';
 
 /* Links and Buttons */
 $lang['back_to_page'] = "back to Homepage";
@@ -116,6 +116,10 @@ $lang['btn_bulk_index'] = "Bulk Index";
 $lang['btn_bulk_update'] = "Bulk Update";
 $lang['btn_update_page_index'] = "Update Index";
 $lang['btn_update_page_content'] = "Update Content";
+
+$lang['btn_snippets_all'] = 'All';
+$lang['btn_snippets_system'] = 'System';
+$lang['btn_snippets_own'] = 'Own';
 
 /* Headlines */
 
