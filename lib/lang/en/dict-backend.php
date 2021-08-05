@@ -387,8 +387,13 @@ $lang['f_prefs_maximage'] = "Max. size (Pixel)";
 $lang['f_prefs_showfilesize'] = "Show filesize";
 $lang['f_prefs_uploads_remain_unchanged'] = "Let uploads unchanged";
 
+$lang['themes_templates'] = 'Themes and Templates';
 $lang['f_prefs_active_template'] = "Active Theme";
-$lang['f_prefs_userstyles'] = "Allow selection by visitor";
+
+$lang['f_prefs_userstyles_off'] = "Do not allow selection by visitor";
+$lang['f_prefs_userstyles_on'] = "Allow selection by visitor. Only affects the selected default Theme. If a page has been assigned its own template, this selection remains unaffected.";
+$lang['f_prefs_userstyles_overwrite'] = "Allow selection by visitor. The templates selected by the user overwrite the template settings of a page. If the necessary files are available.";
+
 
 $lang['select_filesize_yes'] = "Show filesize";
 $lang['select_filesize_no'] = "Don't show filesize";
@@ -464,7 +469,7 @@ $lang['alert_prefs_cms_domain'] = 'lack of system settings: ' . $lang['prefs_cms
 $lang['alert_prefs_cms_base'] = 'lack of system settings: ' . $lang['prefs_cms_base'];
 
 $lang['cache'] = 'Cache';
-$lang['cache_lifetime'] = 'Cache Lifetime';
+$lang['cache_lifetime'] = 'Cache Lifetime (seconds)';
 $lang['compile_check'] = 'Compile Check';
 $lang['delete_cache'] = 'Clear Cache';
 
