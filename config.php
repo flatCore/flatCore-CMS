@@ -22,10 +22,10 @@ $fc_mod_rewrite = "permalink";
 $fc_rss_time_offset = '1800';
 
 /* allow image uploads in acp */
-$fc_upload_img_types = array('gif','jpg','jpe','jpeg','png','svg','ico','webp');
+$fc_upload_img_types = array('gif','jpg','jpe','jpeg','png','ico','webp');
 
 /* allow file uploads in acp */
-$fc_upload_file_types = array('pdf','doc','docx','ppt','pptx','xls','xlsx','mp3','mp4','m4a','wav','mpg','mov','avi','xml','epub','ogg');
+$fc_upload_file_types = array('pdf','doc','docx','ppt','pptx','xls','xlsx','mp3','mp4','m4a','wav','mpg','mov','avi','epub','ogg');
 
 /* define Folder structure */
 define('FC_CORE_DIR', dirname(__FILE__) . DIRECTORY_SEPARATOR);
