@@ -266,6 +266,7 @@ function fc_start_user_session($ud) {
 	if($arr_drm[5] == "drm_acp_editownpages")	{  $_SESSION['acp_editownpages'] = "allowed";  }
 	if($arr_drm[6] == "drm_moderator")	{  $_SESSION['drm_moderator'] = "allowed";  }
 	if($arr_drm[7] == "drm_can_publish")	{  $_SESSION['drm_can_publish'] = "true";  }
+	if($arr_drm[8] == "drm_acp_sensitive_files")	{  $_SESSION['drm_acp_sensitive_files'] = "allowed";  }
 	
 }
 

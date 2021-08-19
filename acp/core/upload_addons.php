@@ -4,42 +4,65 @@
 require 'core/access.php';
 require_once 'core/pclzip.lib.php';
 
-echo '<div class="alert alert-info mb-4">';
-echo '<p>'.$lang['section_is_beta'].'</p>';
-echo '</div>';
+$danger_zone_lifetime = 300;
 
-echo '<fieldset>';
-echo '<legend>Upload</legend>';
-echo '<div class="row">';
-echo '<div class="col-md-4">';
-echo '<div class="well well-sm">';
-echo '<form action="core/files.upload-script.php" id="dropAddons" class="dropzone dropzone-plugin dropzone-sm">';
-echo '<input type="hidden" name="upload_type" value="plugin">';
-echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
-echo '<div class="fallback"><input name="file" type="file"></div>';
-echo '</form>';
-echo '</div>';
-echo '</div>';
-echo '<div class="col-md-4">';
-echo '<div class="well well-sm">';
-echo '<form action="core/files.upload-script.php" id="dropAddons" class="dropzone dropzone-module dropzone-sm">';
-echo '<input type="hidden" name="upload_type" value="module">';
-echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
-echo '<div class="fallback"><input name="file" type="file"></div>';
-echo '</form>';
-echo '</div>';
-echo '</div>';
-echo '<div class="col-md-4">';
-echo '<div class="well well-sm">';
-echo '<form action="core/files.upload-script.php" id="dropAddons" class="dropzone dropzone-theme dropzone-sm">';
-echo '<input type="hidden" name="upload_type" value="theme">';
-echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
-echo '<div class="fallback"><input name="file" type="file"></div>';
-echo '</form>';
-echo '</div>';
-echo '</div>';
-echo '</div>';
-echo '</fieldset>';
+if($_POST['confirm_danger_zone'] == $_SESSION['user_nick']) {
+	$_SESSION['confirmed_danger_zone'] = 'confirmed';
+	$_SESSION['confirmed_danger_zone_time'] = time();
+}
+
+if((time() - $_SESSION['confirmed_danger_zone_time']) > $danger_zone_lifetime) {
+	$_SESSION['confirmed_danger_zone'] = '';
+}
+
+if($_SESSION['confirmed_danger_zone'] !== 'confirmed') {
+
+	/* confirm that you know it is dangerous here */
+	echo '<form action="?tn=moduls&sub=u" method="POST">';
+	echo '<div class="alert alert-danger mb-4">';
+	echo '<p>'.$lang['section_is_beta'].'</p>';
+	echo '<p>'.$lang['section_is_danger_zone'].'</p>';
+	echo '<button type="submit" class="btn btn-danger" name="confirm_danger_zone" value="'.$_SESSION['user_nick'].'">OKAY, I GET IT</button>';
+	echo '</div>';
+	echo '</form><hr>';
+
+} else {
+
+	echo '<fieldset class="mt-4">';
+	echo '<legend>Upload</legend>';
+	echo '<div class="row">';
+	echo '<div class="col-md-4">';
+	echo '<div class="well well-sm">';
+	echo '<form action="core/files.upload-script.php" id="dropAddons" class="dropzone dropzone-plugin dropzone-sm">';
+	echo '<input type="hidden" name="upload_type" value="plugin">';
+	echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+	echo '<div class="fallback"><input name="file" type="file"></div>';
+	echo '</form>';
+	echo '</div>';
+	echo '</div>';
+	echo '<div class="col-md-4">';
+	echo '<div class="well well-sm">';
+	echo '<form action="core/files.upload-script.php" id="dropAddons" class="dropzone dropzone-module dropzone-sm">';
+	echo '<input type="hidden" name="upload_type" value="module">';
+	echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+	echo '<div class="fallback"><input name="file" type="file"></div>';
+	echo '</form>';
+	echo '</div>';
+	echo '</div>';
+	echo '<div class="col-md-4">';
+	echo '<div class="well well-sm">';
+	echo '<form action="core/files.upload-script.php" id="dropAddons" class="dropzone dropzone-theme dropzone-sm">';
+	echo '<input type="hidden" name="upload_type" value="theme">';
+	echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+	echo '<div class="fallback"><input name="file" type="file"></div>';
+	echo '</form>';
+	echo '</div>';
+	echo '</div>';
+	echo '</div>';
+	echo '</fieldset>';
+
+}
+
 
 /* delete files */
 if(!empty($_GET['del'])) {
@@ -279,72 +302,66 @@ if(!empty($_GET['installtheme'])) {
 
 
 /* list uploaded files */
-
-if(is_dir('../upload')) {
-	$all_uploads = fc_scandir_rec('../upload');
-	
-	echo '<fieldset class="mt-3">';
-	echo '<legend>'.$lang['label_ready_to_install'].'</legend>';
-	
-	if(count($all_uploads) < 1) {
-		echo '<p class="text-muted">'.$lang['msg_nothing_to_install'].' <a href="?tn=moduls&sub=u" class="btn btn-link">'.$icon['sync_alt'].' reload</a></p>';
-	} else {
-	
-		echo '<table class="table table-condensed">';
-		foreach($all_uploads as $upload) {
-			
-			$this_pathinfo = pathinfo($upload);
-			$filemtime = date("Y-m-d H:i:s",filemtime($upload));
-			$pathinfo = print_r($this_pathinfo,true);
-			
-			if($this_pathinfo['dirname'] == '../upload/modules') {
-				
-				echo '<tr>';
-				echo '<td>Module:</td><td><strong>'.$this_pathinfo['basename'].'</strong> <small>Upload time: '.$filemtime.'</small></td>';
-				echo '<td>';
-				echo '<div class="btn-group float-end">';
-				echo '<a href="?tn=moduls&sub=u&mod='.$this_pathinfo['basename'].'" class="btn btn-fc">Install</a>';
-				echo '<a href="?tn=moduls&sub=u&dir=modules&del='.$this_pathinfo['basename'].'" class="btn btn-danger">'.$lang['delete'].'</a>';
-				echo '</div>';
-				echo '</td>';
-				echo '</tr>';
-				
-			} else if($this_pathinfo['dirname'] == '../upload/plugins') {
-				
-				echo '<tr>';
-				echo '<td>Plugin:</td><td><strong>'.$this_pathinfo['basename'].'</strong> <small>Upload time: '.$filemtime.'</small></td>';
-				echo '<td>';
-				echo '<div class="btn-group float-end">';
-				echo '<a href="?tn=moduls&sub=u&plg='.$this_pathinfo['basename'].'" class="btn btn-fc">Install</a>';
-				echo '<a href="?tn=moduls&sub=u&dir=plugins&del='.$this_pathinfo['basename'].'" class="btn btn-danger">'.$lang['delete'].'</a>';
-				echo '</div>';
-				echo '</td>';
-				echo '</tr>';
-				
-			} else if($this_pathinfo['dirname'] == '../upload/themes') {
-	
-				echo '<tr>';
-				echo '<td>Theme:</td><td><strong>'.$this_pathinfo['basename'].'</strong> <small>Upload time: '.$filemtime.'</small></td>';
-				echo '<td>';
-				echo '<div class="btn-group float-end">';
-				echo '<a href="?tn=moduls&sub=u&installtheme='.$this_pathinfo['basename'].'" class="btn btn-fc">Install</a>';
-				echo '<a href="?tn=moduls&sub=u&dir=themes&del='.$this_pathinfo['basename'].'" class="btn btn-danger">'.$lang['delete'].'</a>';
-				echo '</div>';
-				echo '</td>';
-				echo '</tr>';
-				
-			}
-			
-			
-		}
-		echo '</table>';
+if($_SESSION['confirmed_danger_zone'] == 'confirmed') {
+	if(is_dir('../upload')) {
+		$all_uploads = fc_scandir_rec('../upload');
 		
+		echo '<fieldset class="mt-3">';
+		echo '<legend>'.$lang['label_ready_to_install'].'</legend>';
+		
+		if(count($all_uploads) < 1) {
+			echo '<p class="text-muted">'.$lang['msg_nothing_to_install'].' <a href="?tn=moduls&sub=u" class="btn btn-link">'.$icon['sync_alt'].' reload</a></p>';
+		} else {
+		
+			echo '<table class="table table-condensed">';
+			foreach($all_uploads as $upload) {
+				
+				$this_pathinfo = pathinfo($upload);
+				$filemtime = date("Y-m-d H:i:s",filemtime($upload));
+				$pathinfo = print_r($this_pathinfo,true);
+				
+				if($this_pathinfo['dirname'] == '../upload/modules') {
+					
+					echo '<tr>';
+					echo '<td>Module:</td><td><strong>'.$this_pathinfo['basename'].'</strong> <small>Upload time: '.$filemtime.'</small></td>';
+					echo '<td>';
+					echo '<div class="btn-group float-end">';
+					echo '<a href="?tn=moduls&sub=u&mod='.$this_pathinfo['basename'].'" class="btn btn-fc">Install</a>';
+					echo '<a href="?tn=moduls&sub=u&dir=modules&del='.$this_pathinfo['basename'].'" class="btn btn-danger">'.$lang['delete'].'</a>';
+					echo '</div>';
+					echo '</td>';
+					echo '</tr>';
+					
+				} else if($this_pathinfo['dirname'] == '../upload/plugins') {
+					
+					echo '<tr>';
+					echo '<td>Plugin:</td><td><strong>'.$this_pathinfo['basename'].'</strong> <small>Upload time: '.$filemtime.'</small></td>';
+					echo '<td>';
+					echo '<div class="btn-group float-end">';
+					echo '<a href="?tn=moduls&sub=u&plg='.$this_pathinfo['basename'].'" class="btn btn-fc">Install</a>';
+					echo '<a href="?tn=moduls&sub=u&dir=plugins&del='.$this_pathinfo['basename'].'" class="btn btn-danger">'.$lang['delete'].'</a>';
+					echo '</div>';
+					echo '</td>';
+					echo '</tr>';
+					
+				} else if($this_pathinfo['dirname'] == '../upload/themes') {
+		
+					echo '<tr>';
+					echo '<td>Theme:</td><td><strong>'.$this_pathinfo['basename'].'</strong> <small>Upload time: '.$filemtime.'</small></td>';
+					echo '<td>';
+					echo '<div class="btn-group float-end">';
+					echo '<a href="?tn=moduls&sub=u&installtheme='.$this_pathinfo['basename'].'" class="btn btn-fc">Install</a>';
+					echo '<a href="?tn=moduls&sub=u&dir=themes&del='.$this_pathinfo['basename'].'" class="btn btn-danger">'.$lang['delete'].'</a>';
+					echo '</div>';
+					echo '</td>';
+					echo '</tr>';	
+				}
+			}
+			echo '</table>';	
+		}
+		echo '<fieldset>';
 	}
-	
-	
-	echo '<fieldset>';
 }
-
 
 
 

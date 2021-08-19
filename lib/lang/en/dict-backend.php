@@ -493,9 +493,18 @@ $lang['drm_user'] = "Manage User";
 $lang['drm_user_desc'] = "<strong>Attention!</strong> If this option is activated, the user can change all authorizations. Of course, this also applies to his own user rights.";
 $lang['drm_system'] = "Edit Preferences";
 $lang['drm_files'] = "Upload files";
+$lang['drm_sensitive_files'] = "Upload sensitive files";
+$lang['drm_sensitive_files_desc'] = "<strong>Attention!</strong> This option allows the user to install / uninstall themes, modules and plugins.";
 $lang['drm_no_access'] = "You do not have the required access rights for this action";
 $lang['drm_moderator'] = "Moderator";
 $lang['drm_user_can_publish'] = "User can publish";
+
+$lang['section_is_danger_zone'] = '<strong>Safety tips (incomplete)</strong><ul>
+																		<li>Only upload files if you are sure that they do not contain malicious code</li>
+																		<li>To test new addons it is advisable to use a test or staging page</li>
+																		<li>Check the system\'s read and write permissions</li>
+																		<li>Deactivate unneeded and critical PHP functions (exec, shell_exec, passthru, show_source ...)</li>
+																		</ul>';
 
 
 /* Messages */

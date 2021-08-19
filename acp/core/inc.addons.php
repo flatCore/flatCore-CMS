@@ -46,9 +46,12 @@ if(isset($a) && (is_file("../modules/$sub/info.inc.php"))) {
 
 if($sub == 'list' OR $sub == 'p' OR $sub == 'm' OR $sub == 't' OR $sub == 'u') {
 	echo '<div class="subHeader">';
-	echo '<div class="btn-group float-end" role="group">';
-	echo '<a href="?tn=moduls&sub=u" class="btn btn-fc '.$active_upload.'">'.$icon['upload'].' '.$lang['btn_install'].'</a>';
-	echo '</div>';
+	
+	if($_SESSION['drm_acp_sensitive_files'] == 'allowed') {
+		echo '<div class="btn-group float-end" role="group">';
+		echo '<a href="?tn=moduls&sub=u" class="btn btn-fc '.$active_upload.'">'.$icon['upload'].' '.$lang['btn_install'].'</a>';
+		echo '</div>';
+	}
 	
 	echo '<div class="btn-group" role="group">';
 	echo '<a href="?tn=moduls&sub=m" class="btn btn-fc '.$active_modules.'">Module</a>';
@@ -84,9 +87,13 @@ if($addon_mode == 'list_plugins') {
 }
 
 /* upload/update addons */
-
 if($addon_mode == 'upload') {
-	include 'upload_addons.php';
+	if($_SESSION['drm_acp_sensitive_files'] == 'allowed') {
+		include 'upload_addons.php';
+	} else {
+		echo '<div class="alert alert-danger">'.$lang['drm_no_access'].'</div>';
+	}
+	
 }
 
 

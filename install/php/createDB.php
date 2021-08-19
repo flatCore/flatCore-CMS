@@ -2,7 +2,7 @@
 
 /**
  * install flatCore
- * create the sqlite database files
+ * create the database
  */
 
 if(!defined('INSTALLER')) {
@@ -18,7 +18,7 @@ $mail = $_SESSION['temp_usermail'];
 $psw = $_SESSION['temp_userpsw'];
 
 $user_psw_hash = password_hash($psw, PASSWORD_DEFAULT);
-$drm_string = "drm_acp_pages|drm_acp_files|drm_acp_user|drm_acp_system|drm_acp_editpages|drm_acp_editownpages|drm_moderator|drm_can_publish";
+$drm_string = "drm_acp_pages|drm_acp_files|drm_acp_user|drm_acp_system|drm_acp_editpages|drm_acp_editownpages|drm_moderator|drm_can_publish|drm_acp_sensitive_files";
 $user_verified = "verified";
 $user_registerdate = time();
 

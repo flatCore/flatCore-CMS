@@ -66,7 +66,7 @@ if($_POST['delete_the_user']) {
 		]);
 	
 	if($cnt_changes->rowCount() > 0) {
-		$success_message = "$lang[msg_user_deleted]<br />";
+		$success_message = $lang['msg_user_deleted'].'<br />';
 		$show_form = "false";
 		record_log($_SESSION['user_nick'],"deleted user id: $edituser","0");
 	}
@@ -88,7 +88,7 @@ if($_POST['save_the_user']) {
 	}
 	
 	// drm -string- to save in database
-	$drm_string = "$drm_acp_pages|$drm_acp_files|$drm_acp_user|$drm_acp_system|$drm_acp_editpages|$drm_acp_editownpages|$drm_moderator|$drm_can_publish";
+	$drm_string = "$drm_acp_pages|$drm_acp_files|$drm_acp_user|$drm_acp_system|$drm_acp_editpages|$drm_acp_editownpages|$drm_moderator|$drm_can_publish|$drm_acp_sensitive_files";
 	
 	$user_psw_new	= $_POST['user_psw_new'];
 	$user_psw_reconfirmation = $_POST['user_psw_reconfirmation'];

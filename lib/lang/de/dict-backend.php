@@ -492,6 +492,8 @@ $lang['drm_user'] = "Benutzer verwalten";
 $lang['drm_user_desc'] = "<strong>Achtung!</strong> Ist diese Option aktiviert, kann der Benutzer sämtliche Berechtigungen ändern. Dies gilt natürlich auch für seine eigenen Benutzerrechte.";
 $lang['drm_system'] = "Einstellungen vornehmen";
 $lang['drm_files'] = "Dateien hochladen";
+$lang['drm_sensitive_files'] = "Sensible Dateien hochladen";
+$lang['drm_sensitive_files_desc'] = "<strong>Achtung!</strong> Diese Option erlaubt es dem Benutzer Themes, Module und Plugins zu installieren/deinstallieren.";
 $lang['drm_no_access'] = "Du hast nicht die nötigen Zugriffsrechte um diese Datensätze zu bearbeiten";
 $lang['drm_moderator'] = "Moderator";
 $lang['drm_user_can_publish'] = "Benutzer darf publizieren";
@@ -551,6 +553,13 @@ $lang['msg_nothing_to_install'] = 'Es sind noch keine Addons für die Installati
 
 $lang['msg_no_help_doc'] = 'Leider gibt es hierzu noch keine Anleitung';
 $lang['msg_no_entries_so_far'] = 'Bis jetzt gibt es hier noch keine Einträge';
+
+$lang['section_is_danger_zone'] = '<strong>Sicherheits Tipps (unvollständig)</strong><ul>
+																		<li>Lade nur Dateien hoch, wenn Du Dir sicher bist, dass sie keinen schädlichen Code enthalten</li>
+																		<li>Um neue Addons zu testen ist es ratsam eine Test oder Staging Seite zu nutzen</li>
+																		<li>Prüfe die Lese- und Schreibrechte des Systems</li>
+																		<li>Deaktiviere nicht benötigte und kritische PHP Funktionen (exec, shell_exec, passthru, show_source ...)</li>
+																		</ul>';
 
 /* System */
 
