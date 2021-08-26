@@ -54,6 +54,10 @@ for($i=0;$i<$nbrModuls;$i++) {
 			$bnt_check_in_out = '<a class="btn btn-sm btn-fc text-danger" href="acp.php?tn=moduls&disable='.$modFolder.'">'.$lang['btn_mod_disable'].'</a>';
 		}
 	}
+	
+	if($_SESSION['drm_acp_sensitive_files'] !== 'allowed') {
+		$bnt_check_in_out = '';
+	}
 			
 	include '../modules/'.$modFolder.'/info.inc.php';
 	

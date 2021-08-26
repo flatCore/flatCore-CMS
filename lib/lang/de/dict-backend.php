@@ -116,6 +116,10 @@ $lang['btn_bulk_update'] = "Mehrere Updaten";
 $lang['btn_update_page_index'] = "Seite neu indexieren";
 $lang['btn_update_page_content'] = "Inhalt aktualisieren";
 
+$lang['btn_snippets_all'] = 'Alle';
+$lang['btn_snippets_system'] = 'System';
+$lang['btn_snippets_own'] = 'Eigene';
+
 /* Headlines */
 
 $lang['h_usermanagement'] = "Benutzer verwalten";
@@ -383,8 +387,12 @@ $lang['f_prefs_maximage'] = "Max. Größe (Pixel)";
 $lang['f_prefs_showfilesize'] = "Dateigrößen anzeigen";
 $lang['f_prefs_uploads_remain_unchanged'] = "Dateien unverändert hochladen";
 
+$lang['themes_templates'] = 'Themes und Templates';
 $lang['f_prefs_active_template'] = "Ausgewähltes Theme";
-$lang['f_prefs_userstyles'] = "Auswahl durch Besucher erlauben";
+
+$lang['f_prefs_userstyles_off'] = "Auswahl durch Besucher unterbinden";
+$lang['f_prefs_userstyles_on'] = "Auswahl durch Besucher erlauben. Betrifft nur das ausgewählte Standard Theme. Wenn einer Seite ein eigenes Template zugewiesen wurde, bleibt diese Auswahl unberührt.";
+$lang['f_prefs_userstyles_overwrite'] = "Auswahl durch Besucher erlauben. Das vom Besucher ausgewählte Template überschreibt die Template Einstellungen einer Seite. Falls die nötigen Dateien vorhanden sind.";
 
 $lang['f_prefs_global_header'] = "Globale Headerangaben (HTML)";
 
@@ -460,7 +468,7 @@ $lang['alert_prefs_cms_domain'] = 'Fehlende Einstellung: ' . $lang['prefs_cms_do
 $lang['alert_prefs_cms_base'] = 'Fehlende Einstellung: ' . $lang['prefs_cms_base'];
 
 $lang['cache'] = 'Cache';
-$lang['cache_lifetime'] = 'Cache Lifetime';
+$lang['cache_lifetime'] = 'Cache Lifetime (Sekunden)';
 $lang['compile_check'] = 'Compile Check';
 $lang['delete_cache'] = 'Cache löschen';
 
@@ -484,6 +492,8 @@ $lang['drm_user'] = "Benutzer verwalten";
 $lang['drm_user_desc'] = "<strong>Achtung!</strong> Ist diese Option aktiviert, kann der Benutzer sämtliche Berechtigungen ändern. Dies gilt natürlich auch für seine eigenen Benutzerrechte.";
 $lang['drm_system'] = "Einstellungen vornehmen";
 $lang['drm_files'] = "Dateien hochladen";
+$lang['drm_sensitive_files'] = "Sensible Dateien hochladen";
+$lang['drm_sensitive_files_desc'] = "<strong>Achtung!</strong> Diese Option erlaubt es dem Benutzer Themes, Module und Plugins zu installieren/deinstallieren.";
 $lang['drm_no_access'] = "Du hast nicht die nötigen Zugriffsrechte um diese Datensätze zu bearbeiten";
 $lang['drm_moderator'] = "Moderator";
 $lang['drm_user_can_publish'] = "Benutzer darf publizieren";
@@ -543,6 +553,13 @@ $lang['msg_nothing_to_install'] = 'Es sind noch keine Addons für die Installati
 
 $lang['msg_no_help_doc'] = 'Leider gibt es hierzu noch keine Anleitung';
 $lang['msg_no_entries_so_far'] = 'Bis jetzt gibt es hier noch keine Einträge';
+
+$lang['section_is_danger_zone'] = '<strong>Sicherheits Tipps (unvollständig)</strong><ul>
+																		<li>Lade nur Dateien hoch, wenn Du Dir sicher bist, dass sie keinen schädlichen Code enthalten</li>
+																		<li>Um neue Addons zu testen ist es ratsam eine Test oder Staging Seite zu nutzen</li>
+																		<li>Prüfe die Lese- und Schreibrechte des Systems</li>
+																		<li>Deaktiviere nicht benötigte und kritische PHP Funktionen (exec, shell_exec, passthru, show_source ...)</li>
+																		</ul>';
 
 /* System */
 

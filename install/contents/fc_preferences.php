@@ -17,6 +17,10 @@
  * prefs_comments_max_entries -> maximum number of entries per thread
  * prefs_comments_max_level -> maximum depth of a thread
  *
+ * prefs_usertemplate - off 			-> user cannot activate own themes in the frontend
+ *										- on				-> user can activate own themes in the frontend
+ *										-	overwrite -> If the same tpl file is available, the user can also ignore the tpl file from fc_pages - page_template_layout
+ *
  */
 
 $database = "content";
@@ -34,10 +38,6 @@ $cols = array(
   "prefs_pagefavicon" => "VARCHAR(50) NOT NULL DEFAULT ''",
   "prefs_pagesglobalhead" => "VARCHAR(500) NOT NULL DEFAULT ''",
   "prefs_nbr_page_versions" => 'INTEGER(12)',
-  "prefs_template" => "VARCHAR(50) NOT NULL DEFAULT ''",
-  "prefs_template_layout" => "VARCHAR(100) NOT NULL DEFAULT ''",
-  "prefs_template_stylesheet" => "VARCHAR(100) NOT NULL DEFAULT ''",
-  "prefs_usertemplate" => "VARCHAR(50) NOT NULL DEFAULT ''",
   "prefs_default_language" => "VARCHAR(20) NOT NULL DEFAULT ''",
   "prefs_imagesuffix" => "VARCHAR(20) NOT NULL DEFAULT ''",
   "prefs_maximagewidth" => "VARCHAR(20) NOT NULL DEFAULT ''",
@@ -53,6 +53,13 @@ $cols = array(
   "prefs_logfile" => "VARCHAR(20) NOT NULL DEFAULT ''",
   "prefs_anonymize_ip" => "VARCHAR(20) NOT NULL DEFAULT ''",
   "prefs_xml_sitemap" => "VARCHAR(20) NOT NULL DEFAULT ''",
+  
+  /* Themes */
+  
+  "prefs_template" => "VARCHAR(50) NOT NULL DEFAULT ''",
+  "prefs_template_layout" => "VARCHAR(100) NOT NULL DEFAULT ''",
+  "prefs_template_stylesheet" => "VARCHAR(100) NOT NULL DEFAULT ''",
+  "prefs_usertemplate" => "VARCHAR(50) NOT NULL DEFAULT ''",
   
   /* Date and Time */
   

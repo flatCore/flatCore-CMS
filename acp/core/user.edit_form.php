@@ -174,26 +174,37 @@ if($arr_drm[4] == "drm_acp_editpages")	{  $checked_editpages = "checked";  }
 if($arr_drm[5] == "drm_acp_editownpages")	{  $checked_editownpages = "checked";  }
 if($arr_drm[6] == "drm_moderator")	{  $checked_moderator = "checked";  }
 if($arr_drm[7] == "drm_can_publish")	{  $checked_can_publish = "checked";  }
+if($arr_drm[8] == "drm_acp_sensitive_files")	{  $checked_sensitive_files = "checked";  }
 
 echo '<fieldset class="mt-5 fieldset-danger">';
 echo '<legend>'.$lang['f_user_drm'].'</legend>';
 
+echo '<h6>'.$lang['drm_description'].'</h6>';
+
+
+
+
+echo '<div class="alert alert-danger" role="alert">';
 $label_admin = $lang['drm_administrator'].'<br>'.$lang['drm_administrator_desc'];
 echo tpl_checkbox('drm_acp_class','administrator','check_admin',$label_admin,$checked_class);
 echo '<hr>';
-
-echo '<h6>'.$lang['drm_description'].'</h6>';
-
 $label_drm = $lang['drm_user'].'<br>'.$lang['drm_user_desc'];
-
 echo tpl_checkbox('drm_acp_user','drm_acp_user','check_user',$label_drm,$checked_user);
 echo '<hr>';
+$label_sensitive_files = $lang['drm_sensitive_files'].'<br>'.$lang['drm_sensitive_files_desc'];
+echo tpl_checkbox('drm_acp_sensitive_files','drm_acp_sensitive_files','check_sensitive_files',$label_sensitive_files,$checked_sensitive_files);
+echo '</div>';
+
+
 echo tpl_checkbox('drm_acp_pages','drm_acp_pages','check_page',$lang['drm_pages'],$checked_pages);
 echo tpl_checkbox('drm_acp_editpages','drm_acp_editpages','check_editpages',$lang['drm_editpages'],$checked_editpages);
 echo tpl_checkbox('drm_acp_editownpages','drm_acp_editownpages','check_ownpages',$lang['drm_editownpages'],$checked_editownpages);
 echo tpl_checkbox('drm_can_publish','drm_can_publish','check_pub',$lang['drm_user_can_publish'],$checked_can_publish);
 echo '<hr>';
 echo tpl_checkbox('drm_acp_files','drm_acp_files','check_files',$lang['drm_files'],$checked_files);
+
+
+
 echo '<hr>';
 echo tpl_checkbox('drm_acp_system','drm_acp_system','check_system',$lang['drm_system'],$checked_system);
 echo '<hr>';

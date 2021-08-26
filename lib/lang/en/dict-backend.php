@@ -22,7 +22,7 @@ $lang['tn_system_desc'] = "Preferences, Snippets and Backup";
 $lang['tn_contents'] = "Contents";
 $lang['tn_contents_desc'] = "Pages, Snippets, RSS Feeds create/edit/delete ...";
 $lang['tn_comments'] = 'Comments';
-$lang['tn_reactions'] = 'Reaktionen';
+$lang['tn_reactions'] = 'Reactions';
 
 /* Links and Buttons */
 $lang['back_to_page'] = "back to Homepage";
@@ -116,6 +116,10 @@ $lang['btn_bulk_index'] = "Bulk Index";
 $lang['btn_bulk_update'] = "Bulk Update";
 $lang['btn_update_page_index'] = "Update Index";
 $lang['btn_update_page_content'] = "Update Content";
+
+$lang['btn_snippets_all'] = 'All';
+$lang['btn_snippets_system'] = 'System';
+$lang['btn_snippets_own'] = 'Own';
 
 /* Headlines */
 
@@ -383,8 +387,13 @@ $lang['f_prefs_maximage'] = "Max. size (Pixel)";
 $lang['f_prefs_showfilesize'] = "Show filesize";
 $lang['f_prefs_uploads_remain_unchanged'] = "Let uploads unchanged";
 
+$lang['themes_templates'] = 'Themes and Templates';
 $lang['f_prefs_active_template'] = "Active Theme";
-$lang['f_prefs_userstyles'] = "Allow selection by visitor";
+
+$lang['f_prefs_userstyles_off'] = "Do not allow selection by visitor";
+$lang['f_prefs_userstyles_on'] = "Allow selection by visitor. Only affects the selected default Theme. If a page has been assigned its own template, this selection remains unaffected.";
+$lang['f_prefs_userstyles_overwrite'] = "Allow selection by visitor. The templates selected by the user overwrite the template settings of a page. If the necessary files are available.";
+
 
 $lang['select_filesize_yes'] = "Show filesize";
 $lang['select_filesize_no'] = "Don't show filesize";
@@ -460,7 +469,7 @@ $lang['alert_prefs_cms_domain'] = 'lack of system settings: ' . $lang['prefs_cms
 $lang['alert_prefs_cms_base'] = 'lack of system settings: ' . $lang['prefs_cms_base'];
 
 $lang['cache'] = 'Cache';
-$lang['cache_lifetime'] = 'Cache Lifetime';
+$lang['cache_lifetime'] = 'Cache Lifetime (seconds)';
 $lang['compile_check'] = 'Compile Check';
 $lang['delete_cache'] = 'Clear Cache';
 
@@ -484,9 +493,18 @@ $lang['drm_user'] = "Manage User";
 $lang['drm_user_desc'] = "<strong>Attention!</strong> If this option is activated, the user can change all authorizations. Of course, this also applies to his own user rights.";
 $lang['drm_system'] = "Edit Preferences";
 $lang['drm_files'] = "Upload files";
+$lang['drm_sensitive_files'] = "Upload sensitive files";
+$lang['drm_sensitive_files_desc'] = "<strong>Attention!</strong> This option allows the user to install / uninstall themes, modules and plugins.";
 $lang['drm_no_access'] = "You do not have the required access rights for this action";
 $lang['drm_moderator'] = "Moderator";
 $lang['drm_user_can_publish'] = "User can publish";
+
+$lang['section_is_danger_zone'] = '<strong>Safety tips (incomplete)</strong><ul>
+																		<li>Only upload files if you are sure that they do not contain malicious code</li>
+																		<li>To test new addons it is advisable to use a test or staging page</li>
+																		<li>Check the system\'s read and write permissions</li>
+																		<li>Deactivate unneeded and critical PHP functions (exec, shell_exec, passthru, show_source ...)</li>
+																		</ul>';
 
 
 /* Messages */

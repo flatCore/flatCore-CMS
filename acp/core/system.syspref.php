@@ -135,6 +135,24 @@ if(isset($_POST['save_prefs_misc'])) {
 		$prefs_xml_sitemap = 'off';
 	}
 	
+	$data = $db_content->update("fc_preferences", [
+			"prefs_rss_time_offset" =>  $_POST['prefs_rss_time_offset'],
+			"prefs_acp_session_lifetime" =>  $_POST['prefs_acp_session_lifetime'],
+			"prefs_logfile" =>  $prefs_logfile,
+			"prefs_anonymize_ip" =>  $prefs_anonymize_ip,
+			"prefs_xml_sitemap" =>  $prefs_xml_sitemap,
+			"prefs_nbr_page_versions" =>  $prefs_nbr_page_versions,
+			"prefs_pagesort_minlength" => $prefs_pagesort_minlength
+		], [
+		"prefs_id" => 1
+		]);
+	
+}
+
+/* save theme and template preferences */
+if(isset($_POST['save_prefs_themes'])) {
+
+
 	if(isset($_POST['prefs_smarty_cache'])) {
 		$prefs_smarty_cache = 1;
 	} else {
@@ -148,20 +166,14 @@ if(isset($_POST['save_prefs_misc'])) {
 	}
 	
 	$data = $db_content->update("fc_preferences", [
-			"prefs_rss_time_offset" =>  $_POST['prefs_rss_time_offset'],
-			"prefs_acp_session_lifetime" =>  $_POST['prefs_acp_session_lifetime'],
-			"prefs_logfile" =>  $prefs_logfile,
-			"prefs_anonymize_ip" =>  $prefs_anonymize_ip,
-			"prefs_xml_sitemap" =>  $prefs_xml_sitemap,
-			"prefs_nbr_page_versions" =>  $prefs_nbr_page_versions,
-			"prefs_pagesort_minlength" => $prefs_pagesort_minlength,
+			"prefs_usertemplate" => $_POST['prefs_usertemplate'],
 			"prefs_smarty_cache" =>  $prefs_smarty_cache,
 			"prefs_smarty_cache_lifetime" =>  $_POST['prefs_smarty_cache_lifetime'],
 			"prefs_smarty_compile_check" =>  $prefs_smarty_compile_check
 		], [
 		"prefs_id" => 1
 		]);
-	
+
 }
 
 /* delete smarty cache files */
@@ -447,8 +459,40 @@ echo tpl_form_control_group('',$lang['prefs_nbr_page_versions'],"<input class='f
 
 echo tpl_form_control_group('',$lang['prefs_pagesort_minlength'],"<input class='form-control' type='text' name='prefs_pagesort_minlength' value='$prefs_pagesort_minlength'>");
 
-echo '<hr>';
 
+
+
+
+echo '<input type="submit" class="btn btn-save" name="save_prefs_misc" value="'.$lang['save'].'">';
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+
+echo '</form>';
+echo '</fieldset>';
+
+/* themes and template */
+echo '<div id="themes" class="pt-2"></div>';
+
+echo '<fieldset>';
+echo '<legend>'.$lang['themes_templates'].'</legend>';
+echo '<form action="acp.php?tn=system&sub=sys_pref#themes" method="POST" class="form-horizontal">';
+
+if($prefs_usertemplate == '') {
+	$prefs_usertemplate = 'off';
+}
+echo '<div class="form-check">';
+echo '<input type="radio" class="form-check-input" id="usertpl_off" name="prefs_usertemplate" value="off" '.($prefs_usertemplate == "off" ? 'checked' :'').'>';
+echo '<label class="form-check-label" for="usertpl_off">'.$lang['f_prefs_userstyles_off'].'</label>';
+echo '</div>';
+echo '<div class="form-check">';
+echo '<input type="radio" class="form-check-input" id="usertpl_on" name="prefs_usertemplate" value="on" '.($prefs_usertemplate == "on" ? 'checked' :'').'>';
+echo '<label class="form-check-label" for="usertpl_on">'.$lang['f_prefs_userstyles_on'].'</label>';
+echo '</div>';
+echo '<div class="form-check">';
+echo '<input type="radio" class="form-check-input" id="usertpl_overwrite" name="prefs_usertemplate" value="overwrite" '.($prefs_usertemplate == "overwrite" ? 'checked' :'').'>';
+echo '<label class="form-check-label" for="usertpl_overwrite">'.$lang['f_prefs_userstyles_overwrite'].'</label>';
+echo '</div>';
+
+echo '<hr>';
 
 echo '<div class="form-group form-check mt-3">';
 echo '<input type="checkbox" class="form-check-input" id="cache" name="prefs_smarty_cache" '.($prefs_smarty_cache == "1" ? 'checked' :'').'>';
@@ -456,7 +500,7 @@ echo '<label class="form-check-label" for="cache">'.$lang['cache'].'</label>';
 echo '</div>';
 
 
-echo '<div class="form-group form-check mt-3">';
+echo '<div class="form-group form-check">';
 echo '<input type="checkbox" class="form-check-input" id="compile" name="prefs_smarty_compile_check" '.($prefs_smarty_compile_check == "1" ? 'checked' :'').'>';
 echo '<label class="form-check-label" for="compile">'.$lang['compile_check'].'</label>';
 echo '</div>';
@@ -467,18 +511,18 @@ $compile_size = fc_dir_size(FC_CONTENT_DIR.'/cache/templates_c/');
 $complete_size = readable_filesize($cache_size+$compile_size);
 
 echo '<div class="input-group mb-3">';
-echo '<input class="form-control" type="text" name="prefs_smarty_cache_lifetime" value="'.$prefs_smarty_cache_lifetime.'">';
-echo '<div class="input-group-append">';
+echo '<label class="form-label" for="cache_lifetime">'.$lang['cache_lifetime'].'</label>';
+echo '<div class="input-group mb-3">';
+echo '<input class="form-control" type="text" id="cache_lifetime" name="prefs_smarty_cache_lifetime" value="'.$prefs_smarty_cache_lifetime.'">';
 echo '<button class="btn btn-fc" type="submit" name="delete_smarty_cache">('.$complete_size.') '.$lang['delete_cache'].'</button>';
 echo '</div>';
-echo '</div>';
 
-echo '<input type="submit" class="btn btn-save" name="save_prefs_misc" value="'.$lang['save'].'">';
+
+echo '<input type="submit" class="btn btn-save" name="save_prefs_themes" value="'.$lang['save'].'">';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 
-echo '</form>';
-echo '</fieldset>';
 
+echo '</fieldset>';
 
 
 echo '</div>';
@@ -493,6 +537,7 @@ echo '<a href="#user" class="list-group-item list-group-item-ghost">'.$lang['f_p
 echo '<a href="#globalheader" class="list-group-item list-group-item-ghost">'.$lang['f_prefs_global_header'].'</a>';
 echo '<a href="#deletedresources" class="list-group-item list-group-item-ghost">'.$lang['label_deleted_resources'].'</a>';
 echo '<a href="#misc" class="list-group-item list-group-item-ghost">'.$lang['system_misc'].'</a>';
+echo '<a href="#themes" class="list-group-item list-group-item-ghost">'.$lang['themes_templates'].'</a>';
 echo '</div>';
 echo '</div>';
 

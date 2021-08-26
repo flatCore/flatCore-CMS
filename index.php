@@ -236,41 +236,50 @@ if(isset($_POST['reset_theme'])) {
 	unset($_SESSION['prefs_template'],$_SESSION['prefs_template_stylesheet']);
 }
 
-/* set the theme - defined by the user */
-if(isset($_POST['set_theme'])) {
-	$set_theme = 'styles/'.sanitizeUserInputs($_POST['set_theme']);
-	if(is_dir($set_theme)) {
-		$_SESSION['prefs_template'] = sanitizeUserInputs($_POST['set_theme']);
-	}
-}
-
 /**
- * set the theme and stylesheet - defined by the user
- * example: $_POST['set_theme_stylesheet'] = './styles/default/css/dark.css';
+ * $prefs_usertemplate - off|on|overwrite
+ * this option is intended for theme developers
  */
- 
-if(isset($_POST['set_theme_stylesheet'])) {
-	$set_theme_stylesheet = explode("/",$_POST['set_theme_stylesheet']);
+
+if($prefs_usertemplate == 'on' OR $prefs_usertemplate == 'overwrite') {
 	
-	$set_theme_folder = $set_theme_stylesheet[2];
-	$set_stylesheet = $set_theme_stylesheet[4];
-	
-	if(is_dir("./styles/$set_theme_folder")) {
-		$_SESSION['prefs_template'] = sanitizeUserInputs($set_theme_folder);
+	/* set the theme - defined by the user */
+	if(isset($_POST['set_theme'])) {
+		$set_theme = 'styles/'.sanitizeUserInputs($_POST['set_theme']);
+		if(is_dir($set_theme)) {
+			$_SESSION['prefs_template'] = sanitizeUserInputs($_POST['set_theme']);
+		}
 	}
 	
-	if(is_file("./styles/$set_theme_folder/css/$set_stylesheet")) {
-		$_SESSION['prefs_template_stylesheet'] = sanitizeUserInputs($set_stylesheet);
+	/**
+	 * set the theme and stylesheet - defined by the user
+	 * example: $_POST['set_theme_stylesheet'] = './styles/default/css/dark.css';
+	 */
+	 
+	if(isset($_POST['set_theme_stylesheet'])) {
+		$set_theme_stylesheet = explode("/",$_POST['set_theme_stylesheet']);
+		
+		$set_theme_folder = $set_theme_stylesheet[2];
+		$set_stylesheet = $set_theme_stylesheet[4];
+		
+		if(is_dir("./styles/$set_theme_folder")) {
+			$_SESSION['prefs_template'] = sanitizeUserInputs($set_theme_folder);
+		}
+		
+		if(is_file("./styles/$set_theme_folder/css/$set_stylesheet")) {
+			$_SESSION['prefs_template_stylesheet'] = sanitizeUserInputs($set_stylesheet);
+		}
 	}
-}
+	
+	
+	if($_SESSION['prefs_template'] != '') {
+		$prefs_template = $_SESSION['prefs_template'];
+	}
+	
+	if($_SESSION['prefs_template_stylesheet'] != '') {
+		$prefs_template_stylesheet = $_SESSION['prefs_template_stylesheet'];
+	}
 
-
-if($_SESSION['prefs_template'] != '') {
-	$prefs_template = $_SESSION['prefs_template'];
-}
-
-if($_SESSION['prefs_template_stylesheet'] != '') {
-	$prefs_template_stylesheet = $_SESSION['prefs_template_stylesheet'];
 }
 
 // default template
@@ -291,10 +300,20 @@ if(is_dir('styles/'.$page_contents['page_template'].'/templates/')) {
 	$fc_template = $page_contents['page_template'];
 	$fc_template_layout = $page_contents['page_template_layout'];
 	$fc_template_stylesheet = $page_contents['page_template_stylesheet'];
+	
+	if($prefs_usertemplate == 'overwrite') {
+		/* the user theme has the same tpl file, so we can overwrite */
+		if(is_file('./styles/'.$_SESSION['prefs_template'].'/templates/'.$page_contents['page_template_layout'])) {
+			$fc_template = $prefs_template;
+			$fc_template_layout = $prefs_template_layout;
+			$fc_template_stylesheet = $prefs_template_stylesheet;
+		}
+	}
+	
 }
 
-/* module has its own theme/template */
-//echo $page_contents['page_modul'];
+
+
 
 $smarty->assign('fc_template', $fc_template);
 $smarty->assign('fc_template_layout', $fc_template_layout);
