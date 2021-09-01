@@ -379,6 +379,12 @@ function fc_filter_filepath($str) {
 	return $str; 
 }
 
+function fc_return_clean_value($string) {
+	$string = stripslashes($string);
+	$string = htmlentities($string);
+	return $string;
+}
+
 
 /**
  * MAKE DATES LIKE 2008-12-24

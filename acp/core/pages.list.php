@@ -26,27 +26,6 @@ $cnt_result = count($result);
 
 
 echo '<div class="app-container">';
-
-/*
-echo '<div class="subHeader">';
-echo '<nav class="navbar navbar-expand-sm navbar-fc">';
-
-echo $nav_btn_group;
-echo $kw_form;
-
-echo '</nav>';
-
-if($btn_remove_keyword != '') {
-	echo '<div class="float-end">';
-	echo '<p style="padding-top:5px;">' . $btn_remove_keyword . '</p>';
-	echo '</div>';
-}
-
-echo '</div>';
-*/
-
-
-
 echo '<div class="max-height-container">';
 
 echo '<div class="row">';
@@ -80,9 +59,9 @@ for($i=0;$i<$cnt_result;$i++) {
 
 	$page_id = $result[$i]['page_id'];
 	$page_sort = $result[$i]['page_sort'];
-	$page_linkname = stripslashes($result[$i]['page_linkname']);
-	$page_title = stripslashes($result[$i]['page_title']);
-	$page_description = stripslashes($result[$i]['page_meta_description']);
+	$page_linkname = fc_return_clean_value($result[$i]['page_linkname']);
+	$page_title = fc_return_clean_value($result[$i]['page_title']);
+	$page_description = fc_return_clean_value($result[$i]['page_meta_description']);
 	$page_status = $result[$i]['page_status'];
 	$page_lastedit = $result[$i]['page_lastedit'];
 	$page_lastedit_from = $result[$i]['page_lastedit_from'];
@@ -163,6 +142,8 @@ for($i=0;$i<$cnt_result;$i++) {
 		$duplicate_button = '';
 	}
 	
+	$info_button = '<a href="#" class="btn btn-sm btn-fc w-100 page-info-btn" data-bs-target="pageInfoModal" data-id="'.$page_id.'" title="'.$lang['info'].'">'.$icon['info_circle'].'</a>';
+	
 	$arr_checked_admins = explode(",",$page_authorized_users);
 	if(in_array("$_SESSION[user_nick]", $arr_checked_admins)) {
 		$edit_button = '<button class="btn btn-sm btn-fc w-100" name="editpage" value="'.$page_id.'" title="'.$lang['edit'].'">'.$icon['edit'].'</button>';
@@ -206,13 +187,13 @@ for($i=0;$i<$cnt_result;$i++) {
 	
 	$str = array(
 		'{status-label}','{item-linkname}','{item-title}',
-		'{item-mod}','{item-class}','{item-indent}','{edit-btn}','{duplicate-btn}',
+		'{item-mod}','{item-class}','{item-indent}','{edit-btn}','{duplicate-btn}','{info-btn}',
 		'{comment-btn}','{item-permalink}','{item-lastedit}','{item-pagesort}','{item-template}',
 		'{item-redirect}','{frontend-link}','{item-description}','{item-lang}', '{page_labels}','{item-pi}'
 	);
 	$rplc = array(
 		$status_label,$page_linkname,$page_title,
-		$show_mod,$item_class,$indent,$edit_button,$duplicate_button,
+		$show_mod,$item_class,$indent,$edit_button,$duplicate_button,$info_button,
 		$page_comments_link,$page_permalink,$last_edit,$page_sort, $show_template_name,
 		$page_redirect,$frontend_link,$page_description,$page_lang_thumb,$label,$pi
 		);
@@ -260,9 +241,9 @@ for($i=0;$i<$cnt_result;$i++) {
 
 	$page_id = $result[$i]['page_id'];
 	$page_sort = $result[$i]['page_sort'];
-	$page_linkname = stripslashes($result[$i]['page_linkname']);
-	$page_title = stripslashes($result[$i]['page_title']);
-	$page_description = stripslashes($result[$i]['page_meta_description']);
+	$page_linkname = fc_return_clean_value($result[$i]['page_linkname']);
+	$page_title = fc_return_clean_value($result[$i]['page_title']);
+	$page_description = fc_return_clean_value($result[$i]['page_meta_description']);
 	$page_status = $result[$i]['page_status'];
 	$page_lastedit = $result[$i]['page_lastedit'];
 	$page_lastedit_from = $result[$i]['page_lastedit_from'];
@@ -341,6 +322,8 @@ for($i=0;$i<$cnt_result;$i++) {
 		$duplicate_button = '';
 	}
 	
+	$info_button = '<a href="#" class="btn btn-sm btn-fc w-100 page-info-btn" data-bs-target="pageInfoModal" data-id="'.$page_id.'" title="'.$lang['info'].'">'.$icon['info_circle'].'</a>';
+	
 	$arr_checked_admins = explode(",",$page_authorized_users);
 	if(in_array("$_SESSION[user_nick]", $arr_checked_admins)) {
 		$edit_button = '<button class="btn btn-sm btn-fc w-100" name="editpage" value="'.$page_id.'" title="'.$lang['edit'].'">'.$icon['edit'].'</button>';
@@ -383,13 +366,13 @@ for($i=0;$i<$cnt_result;$i++) {
 	
 	$str = array(
 		'{status-label}','{item-linkname}','{item-title}',
-		'{item-mod}','{item-class}','{item-indent}','{edit-btn}','{duplicate-btn}',
+		'{item-mod}','{item-class}','{item-indent}','{edit-btn}','{duplicate-btn}','{info-btn}',
 		'{comment-btn}','{item-permalink}','{item-lastedit}','{item-pagesort}','{item-template}',
 		'{item-redirect}','{frontend-link}','{item-description}','{item-lang}', '{page_labels}','{item-pi}'
 	);
 	$rplc = array(
 		$status_label,$page_linkname,$page_title,
-		$show_mod,$item_class,$indent,$edit_button,$duplicate_button,
+		$show_mod,$item_class,$indent,$edit_button,$duplicate_button,$info_button,
 		$page_comments_link,$page_permalink,$last_edit,$page_sort, $show_template_name,
 		$page_redirect,$frontend_link,$page_description,$page_lang_thumb,$label,$pi
 		);
@@ -444,5 +427,28 @@ echo '</div>';
 echo '</div>'; // .max-height-container
 
 echo '</div>'; // .app-container
+
+
+/* modal for page-info */
+
+
+echo '   <div class="modal fade" id="pageInfoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+ 
+     <!-- Modal content-->
+     <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Page Info</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+ 
+      </div>
+      <div class="modal-footer">
+       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+     </div>
+    </div>
+   </div>';
 
 ?>
