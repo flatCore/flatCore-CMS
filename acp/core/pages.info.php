@@ -76,15 +76,36 @@ echo '<tr><td class="text-end">'.$lang['f_page_title'].'</td><td><code>'.fc_retu
 echo '<tr><td class="text-end">'.$lang['f_meta_description'].'</td><td><code>'.fc_return_clean_value($page_data['page_meta_description']).'</code></td></tr>';
 echo '<tr><td class="text-end">'.$lang['f_meta_keywords'].'</td><td><code>'.fc_return_clean_value($page_data['page_meta_keywords']).'</code></td></tr>';
 echo '<tr><td class="text-end">'.$lang['f_meta_robots'].'</td><td><code>'.fc_return_clean_value($page_data['page_meta_robots']).'</code></td></tr>';
+echo '<tr><td class="text-end">'.$lang['f_page_status'].'</td><td><code>'.fc_return_clean_value($page_data['page_status']).'</code></td></tr>';
 
 echo '<tr><td class="text-end">'.$lang['f_page_linkname'].'</td><td><code>'.fc_return_clean_value($page_data['page_linkname']).'</code></td></tr>';
 echo '<tr><td class="text-end">'.$lang['f_page_permalink'].'</td><td><code>'.fc_return_clean_value($page_data['page_permalink']).'</code></td></tr>';
 echo '<tr><td class="text-end">'.$lang['f_page_permalink_short'].'</td><td><code>'.fc_return_clean_value($page_data['page_permalink_short']).'</code></td></tr>';
 echo '<tr><td class="text-end">'.$lang['h_page_hits'].'</td><td><code>'.fc_return_clean_value($page_data['page_permalink_short_cnt']).'</code></td></tr>';
-echo '<tr><td class="text-end">'.$lang['f_page_redirect'].'</td><td><code>'.fc_return_clean_value($page_data['page_redirect']).'</code></td></tr>';
-echo '<tr><td class="text-end">'.$lang['f_page_redirect_code'].'</td><td><code>'.fc_return_clean_value($page_data['page_redirect_code']).'</code></td></tr>';
-echo '<tr><td class="text-end">'.$lang['f_page_funnel_uri'].'</td><td><code>'.fc_return_clean_value($page_data['page_funnel_uri']).'</code></td></tr>';
+
+if($page_data['page_redirect'] != '') {
+	echo '<tr><td class="text-end">'.$lang['f_page_redirect'].'</td><td><code>'.fc_return_clean_value($page_data['page_redirect']).' ['.$page_data['page_redirect_code'].']</code></td></tr>';
+}
+
+
+echo '<tr><td class="text-end">'.$lang['tab_content'].'</td><td><code>'.fc_return_clean_value(first_words($page_data['page_content'],50)).'</code></td></tr>';
+echo '<tr><td class="text-end">'.$lang['tab_extracontent'].'</td><td><code>'.fc_return_clean_value(first_words($page_data['page_extracontent'],50)).'</code></td></tr>';
+
+
+
 echo '</table>';
+
+echo '<hr>';
+echo '<div class="btn-group d-flex justify-content-end">';
+if($_SESSION['acp_editpages'] == "allowed"){
+	echo '<form action="?tn=pages&sub=edit" method="POST">';
+	echo '<button class="btn btn-sm btn-fc ms-auto" name="editpage" value="'.$page_data['page_id'].'" title="'.$lang['edit'].'">'.$lang['edit'].'</button>';
+	echo '<button type="button" class="btn btn-sm btn-fc" data-bs-dismiss="modal">Close</button>';
+	echo '</form>';
+} else {
+	echo '<button type="button" class="btn btn-sm btn-fc" data-bs-dismiss="modal">Close</button>';
+}
+echo '</div>';
 
 
 exit;

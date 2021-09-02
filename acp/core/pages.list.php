@@ -432,7 +432,7 @@ echo '</div>'; // .app-container
 /* modal for page-info */
 
 
-echo '   <div class="modal fade" id="pageInfoModal" tabindex="-1" aria-hidden="true">
+echo '<div class="modal fade" id="pageInfoModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
  
      <!-- Modal content-->
@@ -443,9 +443,6 @@ echo '   <div class="modal fade" id="pageInfoModal" tabindex="-1" aria-hidden="t
       </div>
       <div class="modal-body">
  
-      </div>
-      <div class="modal-footer">
-       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
      </div>
     </div>
