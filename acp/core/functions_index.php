@@ -558,6 +558,9 @@ function fc_delete_excludes($id) {
  
 function fc_write_exclude_elements($element,$attribute) {
 	
+	$element = strip_tags($element);
+	$attribute = strip_tags($attribute);
+	
 	$dbh = new PDO("sqlite:".INDEX_DB);
 
 	$sql = "INSERT INTO excludes	(
@@ -603,6 +606,8 @@ function fc_get_exclude_elements() {
  */
 
 function fc_write_exclude_url($url) {
+	
+	$url = strip_tags($url);
 	
 	$dbh = new PDO("sqlite:".INDEX_DB);
 
