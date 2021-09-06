@@ -72,6 +72,10 @@ $page_data = $db_content->get("fc_pages", "*", [
 	
 
 echo '<table class="table table-sm">';
+echo '<tr><td class="text-end">ID</td><td><code>'.fc_return_clean_value($page_data['page_id']).'</code></td></tr>';
+echo '<tr><td class="text-end">Hash</td><td><code>'.fc_return_clean_value($page_data['page_hash']).'</code></td></tr>';
+echo '<tr><td class="text-end">'.$lang['f_page_classes'].'</td><td><code>'.fc_return_clean_value($page_data['page_classes']).'</code></td></tr>';
+
 echo '<tr><td class="text-end">'.$lang['f_page_title'].'</td><td><code>'.fc_return_clean_value($page_data['page_title']).'</code></td></tr>';
 echo '<tr><td class="text-end">'.$lang['f_meta_description'].'</td><td><code>'.fc_return_clean_value($page_data['page_meta_description']).'</code></td></tr>';
 echo '<tr><td class="text-end">'.$lang['f_meta_keywords'].'</td><td><code>'.fc_return_clean_value($page_data['page_meta_keywords']).'</code></td></tr>';
