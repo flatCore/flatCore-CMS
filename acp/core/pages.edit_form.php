@@ -961,9 +961,11 @@ for($i=0;$i<$cnt_labels;$i++) {
 		$checked_label = "";
 	}
 	
-	$checkbox_set_labels .= '<div class="checkbox"><label>';
- 	$checkbox_set_labels .= "<input type='checkbox' $checked_label name='set_page_labels[]' value='$label_id'> $label_title";
- 	$checkbox_set_labels .= '</label></div>';
+ 	
+	$checkbox_set_labels .= '<div class="form-check form-check-inline" style="border-bottom: 1px solid '.$label_color.'">';
+ 	$checkbox_set_labels .= '<input class="form-check-input" id="label'.$label_id.'" type="checkbox" '.$checked_label.' name="set_page_labels[]" value="'.$label_id.'">';
+ 	$checkbox_set_labels .= '<label class="form-check-label" for="label'.$label_id.'">'.$label_title.'</label>';
+	$checkbox_set_labels .= '</div>';
 	
 }
 
