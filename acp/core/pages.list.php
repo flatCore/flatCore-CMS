@@ -438,7 +438,7 @@ echo '<div class="modal fade" id="pageInfoModal" tabindex="-1" aria-hidden="true
      <!-- Modal content-->
      <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Page Info</h4>
+        <h4 class="modal-title">'.$icon['info_circle'].'</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">

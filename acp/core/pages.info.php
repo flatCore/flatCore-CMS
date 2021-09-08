@@ -79,6 +79,15 @@ echo '<tr><td class="text-end">'.$lang['f_page_classes'].'</td><td><code>'.fc_re
 echo '<tr><td class="text-end">'.$lang['f_page_title'].'</td><td><code>'.fc_return_clean_value($page_data['page_title']).'</code></td></tr>';
 echo '<tr><td class="text-end">'.$lang['f_meta_description'].'</td><td><code>'.fc_return_clean_value($page_data['page_meta_description']).'</code></td></tr>';
 echo '<tr><td class="text-end">'.$lang['f_meta_keywords'].'</td><td><code>'.fc_return_clean_value($page_data['page_meta_keywords']).'</code></td></tr>';
+if($page_data['page_thumbnail'] != '') {
+	echo '<tr><td class="text-end">'.$lang['page_thumbnail'].'</td>';
+	echo '<td>';
+	$thumbs = explode('<->', $page_data['page_thumbnail']);
+	echo'<img src="'.$thumbs[0].'" style="max-width:100px;height:auto;">';
+	echo '</td>';
+}
+
+
 echo '<tr><td class="text-end">'.$lang['f_meta_robots'].'</td><td><code>'.fc_return_clean_value($page_data['page_meta_robots']).'</code></td></tr>';
 echo '<tr><td class="text-end">'.$lang['f_page_status'].'</td><td><code>'.fc_return_clean_value($page_data['page_status']).'</code></td></tr>';
 
@@ -89,6 +98,16 @@ echo '<tr><td class="text-end">'.$lang['h_page_hits'].'</td><td><code>'.fc_retur
 
 if($page_data['page_redirect'] != '') {
 	echo '<tr><td class="text-end">'.$lang['f_page_redirect'].'</td><td><code>'.fc_return_clean_value($page_data['page_redirect']).' ['.$page_data['page_redirect_code'].']</code></td></tr>';
+}
+
+if($page_data['page_funnel_uri'] != '') {
+	echo '<tr><td class="text-end">'.$lang['f_page_funnel_uri'].'</td>';
+	echo'<td>';
+	$funnels = explode(',', $page_data['page_funnel_uri']);
+	foreach($funnels as $funnel) {
+		echo '<code>'.fc_return_clean_value($funnel).'</code><br>';
+	}
+	echo '</td>';
 }
 
 
