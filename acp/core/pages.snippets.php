@@ -199,7 +199,7 @@ if($_SESSION['snippet_filter'] != "") {
 		if($_REQUEST['rm_keyword'] == "$f") { continue; }
 		if($f == "") { continue; }
 		$btn_remove_keyword .= '<a class="btn btn-fc btn-sm" href="acp.php?tn=pages&sub=snippets&rm_keyword='.$f.'">'.$icon['times_circle'].' '.$f.'</a> ';
-		$set_snippet_keyword_filter .= "(textlib_name like '%$f%' OR textlib_title like '%$f%' OR textlib_keywords like '%$f%') AND";
+		$set_snippet_keyword_filter .= "(textlib_name like '%$f%' OR textlib_title like '%$f%' OR textlib_content like '%$f%' OR textlib_groups like '%$f%' OR textlib_keywords like '%$f%') AND";
 	}
 }
 $set_snippet_keyword_filter = substr("$set_snippet_keyword_filter", 0, -4); // cut the last ' AND'
