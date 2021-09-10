@@ -218,7 +218,7 @@ function resize_image($img, $name, $thumbnail_width, $thumbnail_height, $quality
 	$arr_image_details	= GetImageSize("$img");
 	$original_width		= $arr_image_details[0];
 	$original_height	= $arr_image_details[1];
-	
+
 	$a = $thumbnail_width / $thumbnail_height;
   $b = $original_width / $original_height;
 
@@ -241,12 +241,21 @@ function resize_image($img, $name, $thumbnail_width, $thumbnail_height, $quality
 	if($arr_image_details[2]==1) { $imgt = "imagegif"; $imgcreatefrom = "imagecreatefromgif";  }
 	if($arr_image_details[2]==2) { $imgt = "imagejpeg"; $imgcreatefrom = "imagecreatefromjpeg";  }
 	if($arr_image_details[2]==3) { $imgt = "imagepng"; $imgcreatefrom = "imagecreatefrompng";  }
+	if($arr_image_details[2]==18) { $imgt = "imagewebp"; $imgcreatefrom = "imagecreatefromwebp";  }
 
 	if($imgt == 'imagejpeg') { 
 		$old_image	= $imgcreatefrom("$img");
 		$new_image	= imagecreatetruecolor($new_width, $new_height);
 		imagecopyresampled($new_image,$old_image,0,0,0,0,$new_width,$new_height,$original_width,$original_height);
 		imagejpeg($new_image,"$name",$quality);
+		imagedestroy($new_image);
+	}
+	
+	if($imgt == 'imagewebp') { 
+		$old_image	= $imgcreatefrom("$img");
+		$new_image	= imagecreatetruecolor($new_width, $new_height);
+		imagecopyresampled($new_image,$old_image,0,0,0,0,$new_width,$new_height,$original_width,$original_height);
+		imagewebp($new_image,"$name",$quality);
 		imagedestroy($new_image);
 	}
 
@@ -375,6 +384,7 @@ function fc_create_tmb($img_src, $tmb_name, $tmb_width, $tmb_height, $tmb_qualit
 	if($arr_image_details[2]==1) { $imgt = "imagegif"; $imgcreatefrom = "imagecreatefromgif";  }
 	if($arr_image_details[2]==2) { $imgt = "imagejpeg"; $imgcreatefrom = "imagecreatefromjpeg";  }
 	if($arr_image_details[2]==3) { $imgt = "imagepng"; $imgcreatefrom = "imagecreatefrompng";  }
+	if($arr_image_details[2]==18) { $imgt = "imagewebp"; $imgcreatefrom = "imagecreatefromwebp";  }
 	
 	
 	if($imgt) { 

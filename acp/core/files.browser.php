@@ -644,7 +644,7 @@ for($i=0;$i<$cnt_get_files;$i++) {
 	
 	$fileinfo = pathinfo($filename);
 	$suffix = $fileinfo['extension'];
-	$ext = array("jpeg","jpg","png","svg","gif");
+	$ext = array("jpeg","jpg","png","svg","gif","webp");
 	
 	if(in_array($suffix,$ext) === true) {
 		$set_style = '';
