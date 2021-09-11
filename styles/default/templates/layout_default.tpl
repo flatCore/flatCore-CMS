@@ -13,7 +13,8 @@
 				{nocache}
 				{$login_box nocache}
 				{$status_box nocache}
-				{/nocache}			
+				{/nocache}
+				{include file='admin_helpers.tpl'}
 			</div>
 		</div>
 	</div>

@@ -3,9 +3,8 @@
  * flatCore - Free, Open Source, Content Management System
  * GNU General Public License (license.txt)
  *
- * copyright 2010-2020, Patrick Konstandin
- * Information and contribution at https://www.flatcore.org
- * E-Mail: support@flatcore.org
+ * https://www.flatcore.org
+ * support@flatcore.org
  */
 
 ini_set("url_rewriter.tags", '');
@@ -35,7 +34,7 @@ if(is_file(FC_CORE_DIR . "/maintance.html")) {
 
 $fc_prefs = fc_get_preferences();
 $languagePack = $fc_prefs['prefs_default_language'];
-
+$_SESSION['fc_admin_helpers'] = array();
 
 /* all requests -> strip_tags */
 foreach($_REQUEST as $key => $val) {
@@ -393,6 +392,33 @@ $smarty->assign('prepend_head_code', $prepend_head_code);
 $smarty->assign('append_head_code', $append_head_code);
 $smarty->assign('prepend_body_code', $prepend_body_code);
 $smarty->assign('append_body_code', $append_body_code);
+
+
+if($_SESSION['user_class'] == "administrator") {
+	$store = $_SESSION['fc_admin_helpers'];
+
+	if(isset($store['snippet'])) {
+		$smarty->assign('admin_helpers_snippets', $store['snippet']);
+	}
+	if(isset($store['plugin'])) {
+		$store['plugin'] = array_unique($store['plugin']);
+		$smarty->assign('admin_helpers_plugins', $store['plugin']);
+	}
+	if(isset($store['shortcodes'])) {
+		$store['shortcodes'] = array_unique($store['shortcodes']);
+		$smarty->assign('admin_helpers_shortcodes', $store['shortcodes']);
+	}
+	if(isset($store['images'])) {
+		$store['images'] = array_unique($store['images']);
+		$smarty->assign('admin_helpers_images', $store['images']);
+	}
+	if(isset($store['files'])) {
+		$store['files'] = array_unique($store['files']);
+		$smarty->assign('admin_helpers_files', $store['files']);
+		
+	}
+}
+
 
 // display the template
 $smarty->display('index.tpl',$cache_id);
