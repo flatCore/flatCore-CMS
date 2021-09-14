@@ -13,6 +13,11 @@ case "browse":
 	$subinc = "files.browser";
 	$sub_active[0] = "submenu_selected";
 	break;
+	
+case "edit":
+	$subinc = "files.edit";
+	$sub_active[0] = "submenu_selected";
+	break;
 
 case "upload":
 	$subinc = "files.upload";

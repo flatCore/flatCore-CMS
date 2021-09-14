@@ -11,17 +11,25 @@
 	<div class="col-md-2">
 		{show_filetime}
 	</div>
-	<div class="col-md-2 text-right p-1">
-		
-		<form action="?tn=filebrowser" method="POST">
-			<div class="btn-group d-flex">
-				{edit_button}
-				{delete_button}
-				<input type="hidden" name="file" value="{short_filename}">
-				<input  type="hidden" name="csrf_token" value="{csrf_token}">
+	<div class="col-md-2">
+		<div class="card-footer p-1">
+				<div  class="row">
+					<div class="col">
+						<form action="?tn=filebrowser&sub=edit" class="" method="POST">
+							{edit_button}
+							<input type="hidden" name="file" value="{filename}">
+							<input  type="hidden" name="csrf_token" value="{csrf_token}">
+						</form>
+					</div>
+					<div class="col">
+						<form action="?tn=filebrowser" class="" method="POST">
+							{delete_button}
+							<input type="hidden" name="file" value="{short_filename}">
+							<input  type="hidden" name="csrf_token" value="{csrf_token}">
+						</form>
+					</div>
+				</div>
 			</div>
-		</form>
-		
 	</div>
 </div>
 
