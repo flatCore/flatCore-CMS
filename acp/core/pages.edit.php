@@ -254,6 +254,8 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	} else {
 		$string_types = "";
 	}
+	
+	$page_permalink = fc_clean_permalink($page_permalink);
 
 	/**
 	 * modus update
