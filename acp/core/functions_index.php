@@ -47,6 +47,11 @@ function fc_crawler($id='') {
 	
 	if(isset($_POST['start_index']) && $_POST['start_index'] != '') {
 		$check_page = $_POST['start_index'];
+		/* we are indexing our own pages only */
+		$check_len = strlen($fc_base_url);
+		if(substr($check_page, 0,$check_len) != $fc_base_url) {
+			return;
+		}
 	}
 	
 
