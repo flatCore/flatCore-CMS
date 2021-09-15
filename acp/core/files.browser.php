@@ -467,8 +467,10 @@ echo '<div class="input-group">';
 echo '<input type="text" name="new_folder" class="form-control">';
 echo '<div class="input-group-append">';
 echo '<input type="submit" name="submit" value="'.$lang['create_new_folder'].'" class="btn btn-fc">';
+echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 echo '</div>';
 echo '</div>';
+echo '</form>';
 echo '</div>';
 
 echo '<div class="col-md-4">';
@@ -536,12 +538,17 @@ $disable_prev_start = '';
 
 
 if(isset($_GET['start'])) {
-	$start = (int) $_GET['start'];
+	$_SESSION['file_browser_start'] = (int) $_GET['start'];
+}
+
+if(isset($_SESSION['file_browser_start'])) {
+	$start = (int) $_SESSION['file_browser_start'];
 }
 
 if($start<0) {
 	$start = 0;
 }
+
 
 $next_start = $start+$files_per_page;
 $prev_start = $start-$files_per_page;
@@ -571,8 +578,8 @@ $get_files = fc_unique_multi_array($get_files,'media_file');
 $cnt_pages = ceil($nbr_of_files/$files_per_page);
 $cnt_get_files = count($get_files);
 
-$pag_backlink = '<a class="btn btn-fc '.$disable_prev_start.'" href="acp.php?tn=filebrowser&start='.$prev_start.'">'.$icon['angle_double_left'].'</a>';
-$pag_forwardlink = '<a class="btn btn-fc '.$disable_next_start.'" href="acp.php?tn=filebrowser&start='.$next_start.'">'.$icon['angle_double_right'].'</a>';
+$pag_backlink = '<li class="page-item"><a class="btn btn-fc '.$disable_prev_start.'" href="acp.php?tn=filebrowser&start='.$prev_start.'">'.$icon['angle_double_left'].'</a></li>';
+$pag_forwardlink = '<li class="page-item"><a class="btn btn-fc '.$disable_next_start.'" href="acp.php?tn=filebrowser&start='.$next_start.'">'.$icon['angle_double_right'].'</a></li>';
 
 unset($pag_string);
 for($x=0;$x<$cnt_pages;$x++) {
@@ -596,7 +603,7 @@ for($x=0;$x<$cnt_pages;$x++) {
 		}
 	}
 	
-	$a_pag_string[] = "<a class='$aclass' href='acp.php?tn=filebrowser&start=$page_start'>$page_nbr</a> ";
+	$a_pag_string[] = '<li class="page-item"><a class="'.$aclass.'" href="acp.php?tn=filebrowser&start='.$page_start.'">'.$page_nbr.'</a></li>';
 
 }
 
@@ -614,6 +621,16 @@ echo '<div class="row">';
 echo '<div class="col-md-9">';
 
 echo '<div class="card p-3">';
+
+echo '<nav aria-label="Page navigation example">';
+echo '<ul class="pagination justify-content-center">';
+echo $pag_backlink .' ';
+foreach(range($pag_start, $pag_end) as $number) {
+    echo $a_pag_string[$number];
+}
+echo ' '. $pag_forwardlink;
+echo '</ul>';
+echo '</nav>';
 
 echo '<div class="'.$tpl_container_class.'">';
 
@@ -637,14 +654,15 @@ for($i=0;$i<$cnt_get_files;$i++) {
 	
 	
 	$delete_btn = '<button type="submit" onclick="return confirm(\''.$lang['confirm_delete_file'].'\')" class="btn btn-fc btn-sm w-100 text-danger" name="delete" value="'.$id.'">'.$icon['trash_alt'].'</button>';
-	$edit_btn = '<a data-fancybox data-type="ajax" data-src="/acp/core/ajax.media.php?file='.$filename.'&folder='.$disk.'" href="javascript:;" class="btn btn-sm btn-fc w-100 text-success">'.$icon['edit'].'</a>';
-
+	//$edit_btn = '<a data-fancybox data-type="ajax" data-src="/acp/core/ajax.media.php?file='.$filename.'&folder='.$disk.'" href="javascript:;" class="btn btn-sm btn-fc w-100 text-success">'.$icon['edit'].'</a>';
+	
+	$edit_btn = '<button type="submit" class="btn btn-sm btn-fc w-100 text-success">'.$icon['edit'].'</button>';
 	
 	$tpl_list = $tpl_file;
 	
 	$fileinfo = pathinfo($filename);
 	$suffix = $fileinfo['extension'];
-	$ext = array("jpeg","jpg","png","svg","gif");
+	$ext = array("jpeg","jpg","png","svg","gif","webp");
 	
 	if(in_array($suffix,$ext) === true) {
 		$set_style = '';
@@ -710,13 +728,16 @@ for($i=0;$i<$cnt_get_files;$i++) {
 echo '</div>'; // columns
 
 
-echo '<div id="well well-sm"><p class="text-center">';
+echo '<nav aria-label="Page navigation example">';
+echo '<ul class="pagination justify-content-center">';
 echo $pag_backlink .' ';
 foreach(range($pag_start, $pag_end) as $number) {
     echo $a_pag_string[$number];
 }
 echo ' '. $pag_forwardlink;
-echo '</div>'; //EOL PAGINATION
+echo '</ul>';
+echo '</nav>';
+
 
 echo '</div>'; // card
 

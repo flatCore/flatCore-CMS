@@ -69,6 +69,18 @@ function get_textlib($textlib_name,$textlib_lang) {
 }
 
 
+function get_textlib_id($textlib_name,$textlib_lang) {
+	global $db_content;
+	$textlib = $db_content->get("fc_textlib", "textlib_id", [
+		"AND" => [
+			"textlib_name" => "$textlib_name",
+			"textlib_lang" => "$textlib_lang"
+		]
+	]);
+
+	return $textlib;	
+}
+
 
 function get_all_textlibs() {
 	

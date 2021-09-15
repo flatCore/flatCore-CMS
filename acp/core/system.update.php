@@ -263,7 +263,7 @@ function compare_versions() {
 	echo '<tr>';
 	echo "<td>$fc_version_name (Build $fc_version_build)</td>";
 	echo "<td>$remote_versions[1] (Build $remote_versions[2])</td>";
-	echo '<td><span class="badge bg-danger">Attention!</span> You should not perform this function in a real environment. Load latest from  <a href="?tn=system&sub=update&github=main">branch main</a> or load latest from <a href="?tn=system&sub=update&github=develop">branch develop</a></td>';
+	echo '<td><span class="badge bg-danger">Attention!</span> You should not perform this function in a real environment. Load latest from  <a href="?tn=system&sub=update&github=main">branch main</a> or load latest from <a href="?tn=system&sub=update&github=develop">branch develop</a>. Check the <a href="https://flatcore.org/release-notes/">release notes</a> for more information.</td>';
 	echo '</tr>';
 	echo '</table>';
 	

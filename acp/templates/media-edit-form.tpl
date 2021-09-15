@@ -1,4 +1,5 @@
-<div class="container">
+<div class="card p-3">
+	{message}
 	<form role="form" action="{form_action}" id="media_form" method="POST">
 		<div class="row">
 			<div class="col-md-8">
@@ -73,8 +74,8 @@
 			  <input type="hidden" name="set_lang" value="{set_lang}">
 			  <input type="hidden" name="filesize" value="{filesize}">
 			  <input type="hidden" name="file" value="{filename}">
-			  <input  type="hidden" name="csrf_token" value="{token}">
-			  <input type="submit" name="save" class="btn btn-save" value="{save}">
+			  <input type="hidden" name="csrf_token" value="{token}">
+			  <button type="submit" name="save" class="btn btn-save" value="save_media_data">{save}</button>
 				  
 			</div>
 			<div class="col-md-4">
@@ -110,7 +111,6 @@
 						</td>
 					</tr>
 				</table>
-				{message}
 			</div>
 		</div>
 	</form>

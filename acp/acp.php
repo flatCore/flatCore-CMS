@@ -465,8 +465,6 @@ if(isset($set_acptheme)) {
 						
 				
 				}
-			
-			
 			});
 			
 		</script>
@@ -949,9 +947,7 @@ $(function(){
 				}
       }  
     }
-       
-
-	  
+ 
 	  if(sidebarHelpState == "collapsed" || typeof sidebarHelpState==='undefined' || sidebarHelpState===null){
 			collapseHelpSidebar();
 	  } else {
@@ -982,11 +978,29 @@ $(function(){
         return false;
     })
 
-       
-    
 })
 
 //SIDEBAR
+
+
+				$('.page-info-btn').click(function(){
+				   
+				   var pageid = $(this).data('id');
+
+				   // AJAX request
+				   $.ajax({
+				    url: 'core/pages.info.php',
+				    type: 'post',
+				    data: {pageid: pageid},
+				    success: function(response){ 
+				      // Add response in Modal body
+				      $('#pageInfoModal .modal-body').html(response);
+				
+				      // Display Modal
+				      $('#pageInfoModal').modal('show'); 
+				    }
+				  });
+				 });
 	
 	
 	});

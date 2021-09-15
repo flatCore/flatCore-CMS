@@ -25,6 +25,7 @@
 						<div class="btn-group d-flex" role="group">
 							{edit-btn}
 							{duplicate-btn}
+							{info-btn}
 							{comment-btn}
 						</div>
 					</form>

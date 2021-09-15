@@ -44,18 +44,22 @@ foreach($mainmenu as $k => $v) {
 	$mainmenu[$k]['page_linkname'] = text_parser($mainmenu[$k]['page_linkname']);
 }
 
-foreach($submenu as $k => $v) {
-	$submenu[$k]['page_linkname'] = text_parser($submenu[$k]['page_linkname']);
+if(is_array($submenu)) {
+	foreach($submenu as $k => $v) {
+		$submenu[$k]['page_linkname'] = text_parser($submenu[$k]['page_linkname']);
+	}
 }
 
-foreach($bcmenu as $k => $v) {
-	$bcmenu[$k]['page_linkname'] = text_parser($bcmenu[$k]['page_linkname']);
+if(is_array($bcmenu)) {
+	foreach($bcmenu as $k => $v) {
+		$bcmenu[$k]['page_linkname'] = text_parser($bcmenu[$k]['page_linkname']);
+	}
 }
 
 
-$smarty->assign('homepage_linkname', text_parser($mainmenu['homepage_linkname']));
-$smarty->assign('homepage_title', $mainmenu['homepage_title']);
-unset($mainmenu['homepage_linkname'],$mainmenu['homepage_title']);
+$smarty->assign('homepage_linkname', text_parser($mainmenu[0]['homepage_linkname']));
+$smarty->assign('homepage_title', $mainmenu[0]['homepage_title']);
+unset($mainmenu[0]['homepage_linkname'],$mainmenu[0]['homepage_title']);
 
 $arr_mainmenu = @array_values($mainmenu);
 $arr_subnmenu = @array_values($submenu);
@@ -66,7 +70,7 @@ $smarty->assign('arr_bcmenue', $bcmenu);
 $smarty->assign('fc_sitemap', $fc_sitemap);
 
 /* submenu only if $submenu != empty */
-if(count($submenu) >= 1) {
+if(is_array($submenu) && count($submenu) >= 1) {
 	$smarty->assign('arr_submenue', $arr_subnmenu);
 	$smarty->assign('legend_toc', text_parser(FC_TOC_HEADER));
 }

@@ -63,6 +63,18 @@ if(isset($_GET['edit'])) {
 	$show_form = 'true';
 }
 
+if(isset($_POST['edit_shortcode'])) {
+	$get_shortcode_by_name = filter_var($_POST['edit_shortcode'],FILTER_SANITIZE_STRING);
+	if($get_shortcode_by_name != '') {
+		$get_shortcode = $db_content->get("fc_textlib", "*", [
+			"textlib_shortcode" => $get_shortcode_by_name
+		]);
+		$show_form = 'true';
+	}
+}
+
+
+
 if(is_numeric($last_insert_id)) {
 	$shortcode_id = (int) $last_insert_id;
 	$show_form = 'true';	

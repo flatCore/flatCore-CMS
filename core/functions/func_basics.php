@@ -36,7 +36,11 @@ function is_user_in_group($user_id,$user_group) {
 function buffer_script($script,$parameters=NULL) {
 
 	if($parameters !== NULL) {
-		$parameter = parse_str(html_entity_decode($parameters));
+		$parameter = parse_str(html_entity_decode($parameters),$output);
+	}
+	
+	foreach($output as $key => $val) {
+		$$key = $val;
 	}
 
 	ob_start();
@@ -70,7 +74,10 @@ function fc_get_images_data($image,$parameters=NULL) {
 	global $languagePack;
 	
 	if($parameters !== NULL) {
-		$parameter = parse_str(html_entity_decode($parameters));
+		$parameter = parse_str(html_entity_decode($parameters),$output);
+	}
+	foreach($output as $key => $val) {
+		$$key = $val;
 	}
 	
 	$imageData = $db_content->get("fc_media", "*", [
@@ -107,7 +114,10 @@ function fc_get_files_data($file,$parameters=NULL) {
 	global $languagePack;
 	
 	if($parameters !== NULL) {
-		$parameter = parse_str(html_entity_decode($parameters));
+		$parameter = parse_str(html_entity_decode($parameters),$output);
+	}
+	foreach($output as $key => $val) {
+		$$key = $val;
 	}
 	
 	$fileData = $db_content->get("fc_media", "*", [
@@ -158,14 +168,18 @@ function text_parser($text) {
 	
 	global $languagePack;
 	global $shortcodes;
-			
+
 	$text = str_replace('<p>[', '[', $text);
 	$text = str_replace(']</p>', ']', $text);
 	
 	/* replace all shortcodes */
 	if(is_array($shortcodes)) {
 		foreach($shortcodes as $k => $v) {
-			$text = str_replace($v['textlib_shortcode'], $v['textlib_content'], $text);
+			
+			$text = str_replace($v['textlib_shortcode'], $v['textlib_content'], $text,$count);
+			if($count > 0) {
+				fc_store_admin_helper('sc',$v['textlib_shortcode']);
+			}
 		}
 	}
 	
@@ -190,6 +204,7 @@ function text_parser($text) {
 	$text = preg_replace_callback(
 	    '/\[snippet\](.*?)\[\/snippet\]/si',
 	    function ($m) {
+		    fc_store_admin_helper('s',$m[1]);
 		    return get_textlib($m[1],$languagePack);
 	    },
 	    $text
@@ -214,7 +229,8 @@ function text_parser($text) {
 	$text = preg_replace_callback(
 	    '/\[plugin=(.*?)\](.*?)\[\/plugin\]/si',
 	    function ($m) {
-		   return buffer_script($m[1],$m[2]);
+		    fc_store_admin_helper('p',$m[1]);
+				return buffer_script($m[1],$m[2]);
 	    },
 	    $text
 	);
@@ -222,7 +238,8 @@ function text_parser($text) {
 	$text = preg_replace_callback(
 	    '/\[image=(.*?)\](.*?)\[\/image\]/si',
 	    function ($m) {
-		   return fc_get_images_data($m[1],$m[2]);
+		    fc_store_admin_helper('i',$m[1]);
+				return fc_get_images_data($m[1],$m[2]);
 	    },
 	    $text
 	);
@@ -230,7 +247,8 @@ function text_parser($text) {
 	$text = preg_replace_callback(
 	    '/\[file=(.*?)\](.*?)\[\/file\]/si',
 	    function ($m) {
-		   return fc_get_files_data($m[1],$m[2]);
+		    fc_store_admin_helper('f',$m[1]);
+				return fc_get_files_data($m[1],$m[2]);
 	    },
 	    $text
 	);
@@ -251,6 +269,77 @@ function text_parser($text) {
 
 }
 
+/**
+ * We store possibly existing plugins or snippets ...
+ * so we can enable faster access from frontend
+ * use smarty variable {$admin_helpers} in frontend
+ *
+ * $trigger p 	= plugin
+ * 					s 	= snippet
+ *					sc 	= shortcode
+ *					i|f	= media file / image or file from fc_media
+ * $lang = language
+ */
+function fc_store_admin_helper($trigger,$val) {
+	
+	global $languagePack;
+	
+	/* skip this function for visitors */
+	if($_SESSION['user_class'] != 'administrator') {
+		return;
+	}
+	
+	if($trigger === null) {
+	}
+	
+	if($lang === null) {
+	}
+	
+	
+	$store = $_SESSION['fc_admin_helpers'];
+
+	/* add a shortcode */
+	if($trigger == 'sc') {
+		
+		$stored_sc .= '<form action="/acp/acp.php?tn=pages&sub=shortcodes" method="POST" class="d-inline p-1">';
+		$stored_sc .= '<button class="btn btn-sm btn-secondary">'.$val.'</button>';
+		$stored_sc .= '<input type="hidden" name="edit_shortcode" value="'.$val.'">';
+		$stored_sc .= '</form>';
+		
+		$store['shortcodes'][] = $stored_sc;
+	}
+	
+	/* add a plugin */
+	if($trigger == 'p') {
+		$store['plugin'][] = $val;
+	}
+	
+	/* add a image */
+	if($trigger == 'i') {
+		$store['images'][] = $val;
+	}
+	
+	/* add a file */
+	if($trigger == 'f') {
+		$store['files'][] = $val;
+	}
+	
+	/* add a snippet */
+	if($trigger == 's') {
+		
+		$id = get_textlib_id($val,$languagePack);
+		
+		$stored_snippet .= '<form action="/acp/acp.php?tn=pages&sub=snippets" method="POST" class="d-inline p-1">';
+		$stored_snippet .= '<button class="btn btn-sm btn-secondary">'.$val.'</button>';
+		$stored_snippet .= '<input type="hidden" name="snip_id" value="'.$id.'">';
+		$stored_snippet .= '</form>';
+		
+		$store['snippet'][] = $stored_snippet;
+		
+	}
+		
+	$_SESSION['fc_admin_helpers'] = $store;	
+}
 
 
 /**

@@ -20,8 +20,8 @@ function show_mainmenu() {
 	for($i=0;$i<$count_result;$i++) {
 		
 		if($fc_nav[$i]['page_sort'] == 'portal') {
-			$menu['homepage_linkname'] = $fc_nav[$i]['page_linkname'];
-			$menu['homepage_title'] = $fc_nav[$i]['page_title'];
+			$menu[0]['homepage_linkname'] = $fc_nav[$i]['page_linkname'];
+			$menu[0]['homepage_title'] = $fc_nav[$i]['page_title'];
 		}
 	
 		if($fc_nav[$i]['page_sort'] == "" || $fc_nav[$i]['page_permalink'] == "" || $fc_nav[$i]['page_sort'] == 'portal') {

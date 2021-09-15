@@ -379,6 +379,25 @@ function fc_filter_filepath($str) {
 	return $str; 
 }
 
+function fc_return_clean_value($string) {
+	$string = stripslashes($string);
+	$string = htmlentities($string);
+	return $string;
+}
+
+function fc_clean_permalink($str) {
+	
+	$str = strtolower($str);
+	$a = array('ä','ö','ü','ß',' + ','//','(',')',';','\'','\\'); 
+	$b = array('ae','oe','ue','ss','-'.'/','','','','','');
+	$str = str_replace($a, $b, $str);
+	$str = preg_replace('/\s/s', '_', $str);  // replace blanks -> '_'
+	$string = htmlentities($string);
+	$str = trim($str);
+	
+	return $str; 
+}
+
 
 /**
  * MAKE DATES LIKE 2008-12-24
