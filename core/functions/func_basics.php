@@ -36,7 +36,11 @@ function is_user_in_group($user_id,$user_group) {
 function buffer_script($script,$parameters=NULL) {
 
 	if($parameters !== NULL) {
-		$parameter = parse_str(html_entity_decode($parameters));
+		$parameter = parse_str(html_entity_decode($parameters),$output);
+	}
+	
+	foreach($output as $key => $val) {
+		$$key = $val;
 	}
 
 	ob_start();
@@ -70,7 +74,10 @@ function fc_get_images_data($image,$parameters=NULL) {
 	global $languagePack;
 	
 	if($parameters !== NULL) {
-		$parameter = parse_str(html_entity_decode($parameters));
+		$parameter = parse_str(html_entity_decode($parameters),$output);
+	}
+	foreach($output as $key => $val) {
+		$$key = $val;
 	}
 	
 	$imageData = $db_content->get("fc_media", "*", [
@@ -107,7 +114,10 @@ function fc_get_files_data($file,$parameters=NULL) {
 	global $languagePack;
 	
 	if($parameters !== NULL) {
-		$parameter = parse_str(html_entity_decode($parameters));
+		$parameter = parse_str(html_entity_decode($parameters),$output);
+	}
+	foreach($output as $key => $val) {
+		$$key = $val;
 	}
 	
 	$fileData = $db_content->get("fc_media", "*", [
