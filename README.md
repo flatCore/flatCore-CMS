@@ -1,6 +1,4 @@
-<p align="center">
 <img src="https://www.flatcore.org/content/images/icon-flatcore-128.png">
-</p>
 
 ## flatCore CMS
 
@@ -12,6 +10,12 @@ flatCore is a lightweight Content Management System based on PHP and SQLite. MyS
 ### Usermanual and Developer Documentation
 * https://flatcore.org/documentation/
 * https://flatcore.org/de/dokumentation/
+
+#### Technical requirements
+
++ Software: PHP 7.3+
++ Web Server: Apache with PDO/SQLite Module and mod_rewrite
++ Database: SQLite, MySQL 5.6+ (optional)
 
 ### Contribution
 

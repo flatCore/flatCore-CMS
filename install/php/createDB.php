@@ -42,9 +42,9 @@ if(isset($_POST['install_mysql'])) {
 	try {
 		$database = new Medoo([
 	
-			'database_type' => 'mysql',
-			'database_name' => "$prefs_database_name",
-			'server' => "$prefs_database_host",
+			'type' => 'mysql',
+			'database' => "$prefs_database_name",
+			'host' => "$prefs_database_host",
 			'username' => "$prefs_database_username",
 			'password' => "$prefs_database_psw",
 		 
@@ -85,31 +85,31 @@ if(isset($_POST['install_mysql'])) {
 	
 	
 	$db_content = new Medoo([
-		'database_type' => 'sqlite',
-		'database_file' => CONTENT_DB
+		'type' => 'sqlite',
+		'database' => CONTENT_DB
 	]);
 	
 	$db_user = new Medoo([
-		'database_type' => 'sqlite',
-		'database_file' => USER_DB
+		'type' => 'sqlite',
+		'database' => USER_DB
 	]);
 	
 	$db_statistics = new Medoo([
-		'database_type' => 'sqlite',
-		'database_file' => STATS_DB
+		'type' => 'sqlite',
+		'database' => STATS_DB
 	]);
 	
 	$db_posts = new Medoo([
-		'database_type' => 'sqlite',
-		'database_file' => POSTS_DB
+		'type' => 'sqlite',
+		'database' => POSTS_DB
 	]);
 
 }
 
 define("INDEX_DB", "$fc_db_index");
 $db_index = new Medoo([
-	'database_type' => 'sqlite',
-	'database_file' => INDEX_DB
+	'type' => 'sqlite',
+	'database' => INDEX_DB
 ]);
 
 

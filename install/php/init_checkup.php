@@ -82,7 +82,7 @@ $check_is_dir[] = "../acp/";
 
 /* minimum php version */
 
-$needed_phpversion = "5.5";
+$needed_phpversion = "7.3";
 $loaded_extensions = get_loaded_extensions();
 
 echo '<fieldset>';

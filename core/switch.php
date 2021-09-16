@@ -59,10 +59,10 @@ if(is_array($bcmenu)) {
 
 $smarty->assign('homepage_linkname', text_parser($mainmenu[0]['homepage_linkname']));
 $smarty->assign('homepage_title', $mainmenu[0]['homepage_title']);
-unset($mainmenu[0]['homepage_linkname'],$mainmenu[0]['homepage_title']);
+unset($mainmenu[0]['homepage_linkname'],$mainmenu[0]['homepage_title'],$mainmenu[0]['page_linkname']);
 
-$arr_mainmenu = @array_values($mainmenu);
-$arr_subnmenu = @array_values($submenu);
+$arr_mainmenu = array_filter(array_values($mainmenu));
+$arr_subnmenu = array_filter(array_values($submenu));
 
 $smarty->assign('link_home', FC_INC_DIR . "/");
 $smarty->assign('arr_menue', $arr_mainmenu);
