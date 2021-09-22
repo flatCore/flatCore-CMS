@@ -46,16 +46,16 @@ if(is_file(FC_CORE_DIR.'/config_database.php')) {
 	]);
 	
 	$db_user = new Medoo([
-		'database' => 'sqlite',
+		'type' => 'sqlite',
 		'database' => USER_DB
 	]);
 	
 	$db_statistics = new Medoo([
-		'database' => 'sqlite',
+		'type' => 'sqlite',
 		'database' => STATS_DB
 	]);
 	$db_posts = new Medoo([
-		'database' => 'sqlite',
+		'type' => 'sqlite',
 		'database' => POSTS_DB
 	]);
 	
