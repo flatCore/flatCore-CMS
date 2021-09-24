@@ -8,6 +8,8 @@ Icon?
 ehthumbs.db
 Thumbs.db
 
+.idea/*
+
 # Database files and generated content #
 *.sqlite
 *.sqlite3
@@ -26,10 +28,10 @@ release-notes.html
 /modules/*
 !index.html
 
-# styles, except blucent #
+# styles, except default #
 /styles/**/*
-!/styles/blucent/*
-/styles/blucent/.DS_Store
+!/styles/default/*
+/styles/default/.DS_Store
 
 !index.html
 

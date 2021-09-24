@@ -8,8 +8,8 @@ $conn = false;
 try {
 	$db_mysql = new Medoo([
 
-		'database_type' => 'mysql',
-		'database_name' => $_POST['prefs_database_name'],
+		'type' => 'mysql',
+		'database' => $_POST['prefs_database_name'],
 		'server' => $_POST['prefs_database_host'],
 		'username' => $_POST['prefs_database_username'],
 		'password' => $_POST['prefs_database_psw'],

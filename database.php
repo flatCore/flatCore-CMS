@@ -15,16 +15,13 @@ if(is_file(FC_CORE_DIR.'/config_database.php')) {
 	$db_type = 'mysql';
 	 
 	$database = new Medoo([
-
-		'database_type' => 'mysql',
-		'database_name' => "$database_name",
-		'server' => "$database_host",
+		'type' => 'mysql',
+		'database' => "$database_name",
+		'host' => "$database_host",
 		'username' => "$database_user",
 		'password' => "$database_psw",
-	 
 		'charset' => 'utf8',
 		'port' => $database_port,
-	 
 		'prefix' => DB_PREFIX
 	]);
 	
@@ -44,22 +41,22 @@ if(is_file(FC_CORE_DIR.'/config_database.php')) {
 	define("POSTS_DB", "$fc_db_posts");
 	
 	$db_content = new Medoo([
-		'database_type' => 'sqlite',
-		'database_file' => CONTENT_DB
+		'type' => 'sqlite',
+		'database' => CONTENT_DB
 	]);
 	
 	$db_user = new Medoo([
-		'database_type' => 'sqlite',
-		'database_file' => USER_DB
+		'type' => 'sqlite',
+		'database' => USER_DB
 	]);
 	
 	$db_statistics = new Medoo([
-		'database_type' => 'sqlite',
-		'database_file' => STATS_DB
+		'type' => 'sqlite',
+		'database' => STATS_DB
 	]);
 	$db_posts = new Medoo([
-		'database_type' => 'sqlite',
-		'database_file' => POSTS_DB
+		'type' => 'sqlite',
+		'database' => POSTS_DB
 	]);
 	
 }
