@@ -39,6 +39,13 @@ if(isset($_POST['save_prefs_descriptions'])) {
 /* save system settings */
 
 if(isset($_POST['save_system'])) {
+	
+	if((substr("$prefs_cms_domain",0,7) !== 'http://')) {
+		$prefs_cms_domain = '';
+	}
+	if((substr("$prefs_cms_ssl_domain",0,8) !== 'https://')) {
+		$prefs_cms_ssl_domain = '';
+	}
 
 	$data = $db_content->update("fc_preferences", [
 		"prefs_cms_domain" =>  $prefs_cms_domain,
