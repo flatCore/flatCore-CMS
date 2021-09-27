@@ -20,6 +20,7 @@ echo '<li class="nav-item"><a class="nav-link" href="#position" data-bs-toggle="
 echo '<li class="nav-item"><a class="nav-link active" href="#info" data-bs-toggle="tab">'.$lang['tab_info'].'</a></li>';
 echo '<li class="nav-item"><a class="nav-link" href="#content" data-bs-toggle="tab">'.$lang['tab_content'].'</a></li>';
 echo '<li class="nav-item"><a class="nav-link" href="#meta" data-bs-toggle="tab">'.$lang['tab_meta'].'</a></li>';
+echo $theme_tab;
 
 echo '<li class="nav-item ms-auto"><a class="nav-link" href="#posts" data-bs-toggle="tab" title="'.$lang['tab_posts'].'">'.$icon['clipboard_list'].'</a></li>';
 echo '<li class="nav-item"><a class="nav-link" href="#addons" data-bs-toggle="tab" title="'.$lang['tab_addons'].'">'.$icon['cogs'].'</a></li>';
@@ -371,6 +372,12 @@ echo '</div>';
 echo"</div>";
 /* EOL tab_content */
 
+
+if($theme_tab != '') {
+	echo '<div class="tab-pane fade" id="theme_values">';
+	include("$theme_base".'/php/page_values.php');
+	echo '</div>';
+}
 
 
 

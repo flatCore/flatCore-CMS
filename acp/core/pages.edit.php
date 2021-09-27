@@ -46,7 +46,7 @@ if(preg_match("/custom_/i", implode(",", array_keys($_POST))) ){
   		$cf = $custom_fields[$i]; 		
   		$custom_fields[] = $cf;
   	}
-  }      
+  }   
 }
 
 
@@ -256,6 +256,13 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	}
 	
 	$page_permalink = fc_clean_permalink($page_permalink);
+	
+	/* theme values */
+	$page_template_values = '';
+	if(is_array($_POST['theme_values'])) {
+		$page_template_values = json_encode($_POST['theme_values'],JSON_UNESCAPED_UNICODE);
+	}
+	
 
 	/**
 	 * modus update
@@ -288,6 +295,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_template" => "$page_template",
 			"page_template_layout" => "$page_template_layout",
 			"page_template_stylesheet" => "$page_template_stylesheet",
+			"page_template_values" => "$page_template_values",
 			"page_meta_author" => "$page_meta_author",
 			"page_meta_keywords" => "$page_meta_keywords",
 			"page_meta_description" => "$page_meta_description",
@@ -361,6 +369,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_template" => "$page_template",
 			"page_template_layout" => "$page_template_layout",
 			"page_template_stylesheet" => "$page_template_stylesheet",
+			"page_template_values" => "$page_template_values",
 			"page_meta_author" => "$page_meta_author",
 			"page_meta_keywords" => "$page_meta_keywords",
 			"page_meta_description" => "$page_meta_description",
@@ -422,6 +431,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_template" => "$page_template",
 			"page_template_layout" => "$page_template_layout",
 			"page_template_stylesheet" => "$page_template_stylesheet",
+			"page_template_values" => "$page_template_values",
 			"page_meta_author" => "$page_meta_author",
 			"page_meta_keywords" => "$page_meta_keywords",
 			"page_meta_description" => "$page_meta_description",
@@ -496,6 +506,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_template" => "$page_template",
 			"page_template_layout" => "$page_template_layout",
 			"page_template_stylesheet" => "$page_template_stylesheet",
+			"page_template_values" => "$page_template_values",
 			"page_meta_author" => "$page_meta_author",
 			"page_meta_keywords" => "$page_meta_keywords",
 			"page_meta_description" => "$page_meta_description",
@@ -563,6 +574,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 			"page_template" => "$page_template",
 			"page_template_layout" => "$page_template_layout",
 			"page_template_stylesheet" => "$page_template_stylesheet",
+			"page_template_values" => "$page_template_values",
 			"page_meta_author" => "$page_meta_author",
 			"page_meta_keywords" => "$page_meta_keywords",
 			"page_meta_description" => "$page_meta_description",
@@ -649,6 +661,21 @@ if(is_numeric($editpage)) {
 	
 	foreach($page_data as $k => $v) {
 	   $$k = htmlentities(stripslashes($v), ENT_QUOTES, "UTF-8");
+	}
+	
+	/**
+	 * check if this page can handle theme values
+	 */
+	if($page_data['page_template'] == 'use_standard') {
+		// get theme from prefernces
+		$theme_base = '../styles/'.$fc_preferences['prefs_template'];
+	} else {
+		$theme_base = '../styles/'.$page_data['page_template'];
+	}
+	
+	$theme_tab = '';
+	if(is_file("$theme_base".'/php/page_values.php')) {
+		$theme_tab = '<li class="nav-item"><a class="nav-link" href="#theme_values" data-bs-toggle="tab">Theme</a></li>';
 	}
 	
 	if(is_array($restore_page_version)) {

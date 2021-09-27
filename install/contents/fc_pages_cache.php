@@ -50,6 +50,7 @@ $cols = array(
 	"page_template" => "VARCHAR(50) NOT NULL DEFAULT ''",
 	"page_template_layout" => "VARCHAR(50) NOT NULL DEFAULT ''",
 	"page_template_stylesheet" => "VARCHAR(50) NOT NULL DEFAULT ''",
+	"page_template_values" => "LONGTEXT NOT NULL DEFAULT ''",
 	"page_modul" => "VARCHAR(50) NOT NULL DEFAULT ''",
 	"page_modul_query" => "VARCHAR(255) NOT NULL DEFAULT ''",
 	"page_addon_string" => "VARCHAR(500) NOT NULL DEFAULT ''",

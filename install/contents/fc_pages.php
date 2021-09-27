@@ -41,6 +41,7 @@ $cols = array(
 	"page_template" => "VARCHAR(50) NOT NULL DEFAULT ''",
 	"page_template_layout" => "VARCHAR(50) NOT NULL DEFAULT ''",
 	"page_template_stylesheet" => "VARCHAR(50) NOT NULL DEFAULT ''",
+	"page_template_values" => "LONGTEXT NOT NULL DEFAULT ''",
 	"page_modul" => "VARCHAR(50) NOT NULL DEFAULT ''",
 	"page_modul_query" => "VARCHAR(255) NOT NULL DEFAULT ''",
 	"page_addon_string" => "VARCHAR(500) NOT NULL DEFAULT ''",
@@ -49,9 +50,9 @@ $cols = array(
 	"page_authorized_users" => "VARCHAR(255) NOT NULL DEFAULT ''",
 	"page_version" => 'INTEGER(50)',
 	"page_version_date" => "VARCHAR(50) NOT NULL DEFAULT ''",
-  "page_labels" => "VARCHAR(100) NOT NULL DEFAULT ''",
-  "page_categories" => "VARCHAR(100) NOT NULL DEFAULT ''",
-  "page_comments" => 'INTEGER(12)'
+	"page_labels" => "VARCHAR(100) NOT NULL DEFAULT ''",
+	"page_categories" => "VARCHAR(100) NOT NULL DEFAULT ''",
+	"page_comments" => 'INTEGER(12)'
   );
 
 ?>
