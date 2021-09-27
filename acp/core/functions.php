@@ -973,18 +973,9 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 		
 	} else {
 		$modus = 'new';
-		
 		$columns["media_file"] = "$filename";
-			
-		$cnt_changes = $db_content->insert("fc_media", $columns, [
-			"AND" => [
-				"media_file" => "$filename",
-				"media_lang" => "$lang"
-			]
-		]);
-		
+		$cnt_changes = $db_content->insert("fc_media", $columns);
 		$lastId = $db_content->id();
-		
 	}
 	
 	if($cnt_changes->rowCount() > 0) {
