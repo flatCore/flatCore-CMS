@@ -19,9 +19,11 @@ function show_mainmenu() {
 	
 	for($i=0;$i<$count_result;$i++) {
 		
+		/* push portal links to the and of the array */
 		if($fc_nav[$i]['page_sort'] == 'portal') {
-			$menu[0]['homepage_linkname'] = $fc_nav[$i]['page_linkname'];
-			$menu[0]['homepage_title'] = $fc_nav[$i]['page_title'];
+			$menu[$count_result+1]['homepage_linkname'] = $fc_nav[$i]['page_linkname'];
+			$menu[$count_result+1]['homepage_title'] = $fc_nav[$i]['page_title'];
+			$menu[$count_result+1]['homepage_permalink'] = $fc_nav[$i]['page_permalink'];
 		}
 	
 		if($fc_nav[$i]['page_sort'] == "" || $fc_nav[$i]['page_permalink'] == "" || $fc_nav[$i]['page_sort'] == 'portal') {
@@ -52,7 +54,6 @@ function show_mainmenu() {
 			$menu[$i]['link'] = FC_INC_DIR . "/" . $fc_nav[$i]['page_permalink'];
 		}
 	}
-	
 	
 	return $menu;
 
