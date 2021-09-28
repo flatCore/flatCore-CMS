@@ -416,6 +416,7 @@ if($prefs_pagethumbnail_prefix != '') {
 }
 
 $images = fc_get_all_media_data('image');
+$images = fc_unique_multi_array($images,'media_file');
 
 $page_thumbnail_array = explode("&lt;-&gt;", $page_thumbnail);
 $array_images = explode("<->", $post_data['post_images']);

@@ -1092,7 +1092,9 @@ function fc_select_img_widget($images,$seleced_img,$prefix='',$id=1) {
 		$choose_images .= '</optgroup>'."\r\n";
 	}
 	
-	for($i=0;$i<count($images);$i++) {
+	$cnt_images = count($images);
+	
+	for($i=0;$i<$cnt_images;$i++) {
 		
 		$img_filename = basename($images[$i]['media_file']);
 		$image_name = $images[$i]['media_file'];
