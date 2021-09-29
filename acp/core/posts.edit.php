@@ -292,7 +292,7 @@ $checkbox_fixed .= '</div>';
 
 /* image widget */
 $images = fc_get_all_media_data('image');
-
+$images = fc_unique_multi_array($images,'media_file');
 $array_images = explode("<->", $post_data['post_images']);
 $choose_images = fc_select_img_widget($images,$array_images,$prefs_posts_images_prefix,1);
 
