@@ -260,7 +260,10 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	/* theme values */
 	$page_template_values = '';
 	if(is_array($_POST['theme_values'])) {
-		$page_template_values = json_encode($_POST['theme_values'],JSON_UNESCAPED_UNICODE);
+		foreach($_POST['theme_values'] as $key => $value) {
+			$theme_values[$key] = htmlentities(stripslashes(utf8_encode($value)), ENT_QUOTES);
+		}
+		$page_template_values = json_encode($theme_values,JSON_UNESCAPED_UNICODE);
 	}
 	
 
