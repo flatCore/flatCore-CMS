@@ -48,6 +48,7 @@ $cols = array(
 	"post_votings" => 'INTEGER(12)',
 	"post_labels" => "VARCHAR(50) NOT NULL DEFAULT ''",
 	"post_attachments" => "VARCHAR(255) NOT NULL DEFAULT ''",
+	"post_template_values" => "LONGTEXT NOT NULL DEFAULT ''",
 	/* meta data */
 	"post_meta_title" => "VARCHAR(255) NOT NULL DEFAULT ''",
 	"post_meta_description" => "VARCHAR(255) NOT NULL DEFAULT ''",
@@ -70,6 +71,7 @@ $cols = array(
 	"post_product_price_net_purchasing" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"post_product_price_addition" => 'INTEGER(12)',
 	"post_product_price_net" => "VARCHAR(100) NOT NULL DEFAULT ''",
+	"post_product_features" => "LONGTEXT NOT NULL DEFAULT ''",
 	/* quantity discount | scaling prices */
 	"post_product_amount_s1" => 'INTEGER(12)',
 	"post_product_price_net_s1" => "VARCHAR(100) NOT NULL DEFAULT ''",
