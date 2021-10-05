@@ -41,3 +41,4 @@ release-notes.html
 config_database.php
 
 /content/SQLite/.DS_Store
+acp/theme/config.codekit3
