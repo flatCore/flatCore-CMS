@@ -107,8 +107,8 @@ echo '<div class="tab-pane fade" id="images">';
 
 
 $images = fc_get_all_media_data('image');
+$images = fc_unique_multi_array($images,'media_file');
 
-$page_thumbnail_array = explode("&lt;-&gt;", $textlib_images);
 $snippet_thumbnail_array = explode("&lt;-&gt;", $textlib_images);
 
 echo '<input class="filter-images form-control" name="filter-images" placeholder="Filter ..." type="text">';
