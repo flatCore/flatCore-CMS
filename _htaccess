@@ -7,3 +7,8 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?query=$1 [L,QSA]
 
 </IfModule>
+
+<FilesMatch "\.(pdf|doc|docx|xls|xlsx|xlsm)$" >
+    ForceType application/octet-stream
+    Header add Content-Disposition "attachment"
+</FilesMatch>
