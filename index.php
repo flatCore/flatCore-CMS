@@ -304,7 +304,7 @@ if(is_dir('styles/'.$page_contents['page_template'].'/templates/')) {
 		/* the user theme has the same tpl file, so we can overwrite */
 		if(is_file('./styles/'.$_SESSION['prefs_template'].'/templates/'.$page_contents['page_template_layout'])) {
 			$fc_template = $prefs_template;
-			$fc_template_layout = $prefs_template_layout;
+			$fc_template_layout = $page_contents['page_template_layout'];
 			$fc_template_stylesheet = $prefs_template_stylesheet;
 		}
 	}
