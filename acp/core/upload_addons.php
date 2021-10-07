@@ -6,6 +6,8 @@ require_once 'core/pclzip.lib.php';
 
 $danger_zone_lifetime = 300;
 
+
+
 if($_POST['confirm_danger_zone'] == $_SESSION['user_nick']) {
 	$_SESSION['confirmed_danger_zone'] = 'confirmed';
 	$_SESSION['confirmed_danger_zone_time'] = time();

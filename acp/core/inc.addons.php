@@ -89,7 +89,11 @@ if($addon_mode == 'list_plugins') {
 /* upload/update addons */
 if($addon_mode == 'upload') {
 	if($_SESSION['drm_acp_sensitive_files'] == 'allowed') {
-		include 'upload_addons.php';
+		if($fc_upload_addons === true) {
+			include 'upload_addons.php';
+		} else {
+			echo '<div class="alert alert-danger">'.$lang['upload_addons_deactivated'].'</div>';
+		}
 	} else {
 		echo '<div class="alert alert-danger">'.$lang['drm_no_access'].'</div>';
 	}

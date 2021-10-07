@@ -498,6 +498,7 @@ $lang['drm_sensitive_files_desc'] = "<strong>Attention!</strong> This option all
 $lang['drm_no_access'] = "You do not have the required access rights for this action";
 $lang['drm_moderator'] = "Moderator";
 $lang['drm_user_can_publish'] = "User can publish";
+$lang['upload_addons_deactivated'] = 'The upload function for addons is deactivated. This function can only be activated via the config.php file.';
 
 $lang['section_is_danger_zone'] = '<strong>Safety tips (incomplete)</strong><ul>
 																		<li>Only upload files if you are sure that they do not contain malicious code</li>

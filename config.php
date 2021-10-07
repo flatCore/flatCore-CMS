@@ -49,6 +49,9 @@ $img_path 	= "content/images";
 $img_tmb_path 	= "content/images_tmb";
 $files_path = "content/files";
 
+/* deactivate the addons upload function */
+$fc_upload_addons = false;
+
 
 $fc_inc_dir = dirname($_SERVER['SCRIPT_NAME']);
 

@@ -497,6 +497,7 @@ $lang['drm_sensitive_files_desc'] = "<strong>Achtung!</strong> Diese Option erla
 $lang['drm_no_access'] = "Du hast nicht die nötigen Zugriffsrechte um diese Datensätze zu bearbeiten";
 $lang['drm_moderator'] = "Moderator";
 $lang['drm_user_can_publish'] = "Benutzer darf publizieren";
+$lang['upload_addons_deactivated'] = 'Die Upload Funktion für Addons ist deaktiviert. Diese Funktion kann nur über die config.php Datei aktiviert werden.';
 
 
 /* Messages */
