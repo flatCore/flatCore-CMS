@@ -256,12 +256,12 @@ echo '<div class="well">';
 echo '<fieldset>';
 echo '<legend>Avatar</legend>';
 if(is_file("$user_avatar_path")) {
-	echo '<p class="text-center"><img src="'.$user_avatar_path.'" class="img-circle avatar"></p>';
+	echo '<p class="text-center"><img src="'.$user_avatar_path.'" class="rounded-circle avatar"></p>';
 	echo '<div class="checkbox">';
 	echo '<label><input type="checkbox" name="deleteAvatar"> ' . $lang['delete'] . '</label>';
 	echo '</div>';
 } else {
-	echo '<p class="text-center"><img src="images/avatar.png" class="img-circle avatar"></p>';
+	echo '<p class="text-center"><img src="images/avatar.png" class="rounded-circle avatar"></p>';
 }
 echo '</fieldset>';
 
