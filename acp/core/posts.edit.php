@@ -112,6 +112,9 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 		$post_meta_description = $_POST['post_meta_description'];
 	}
 	
+	$post_meta_title = fc_return_clean_value($post_meta_title);
+	$post_meta_description = fc_return_clean_value($post_meta_description);
+	
 	/* save or update data */
 	
 	/* get all $cols */
@@ -120,7 +123,7 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 	foreach($cols as $k => $v) {
 		if($k == 'post_id') {continue;}
 		$value = $$k;
-  	$inputs[$k] = "$value";
+		$inputs[$k] = "$value";
 	}
 	
 	if($modus == "update")	{

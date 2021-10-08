@@ -926,6 +926,16 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 		$lang = $languagePack;
 	}
 	
+	$title = fc_return_clean_value($title);
+	$notes = fc_return_clean_value($notes);
+	$keywords = fc_return_clean_value($keywords);
+	$text = fc_return_clean_value($text);
+	$alt = fc_return_clean_value($alt);
+	$priority = (int) $alt;
+	$credit = fc_return_clean_value($credit);
+	$license = fc_return_clean_value($license);
+	$version = fc_return_clean_value($version);
+	
 	/* labels */
 	if(is_array($labels)) {
 		sort($labels);

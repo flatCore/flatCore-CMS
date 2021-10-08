@@ -70,6 +70,10 @@ if(isset($_POST['delete_snippet'])) {
 
 /* Save Textsnippet */
 if(isset($_POST['save_snippet'])) {
+	
+	foreach($_POST as $key => $val) {
+		$$key = fc_clean_permalink($val);
+	}
 
 	$snippet_name = clean_filename($_POST['snippet_name']);
 	$timestamp =  time();
@@ -97,7 +101,11 @@ if(isset($_POST['save_snippet'])) {
 		$string_labels = implode(",", $arr_labels);
 	} else {
 		$string_labels = "";
-	}	
+	}
+	
+	$snippet_priority = (int) $_POST['snippet_priority'];
+	
+	
 
 	
 	if($_POST['modus'] == 'update') {
@@ -108,22 +116,22 @@ if(isset($_POST['save_snippet'])) {
 			"textlib_content" =>  $_POST['textlib_content'],
 			"textlib_name" => $snippet_name,
 			"textlib_lang" => $_POST['sel_language'],
-			"textlib_notes" => $_POST['textlib_notes'],
-			"textlib_groups" => $_POST['snippet_groups'],
-			"textlib_title" => $_POST['snippet_title'],
-			"textlib_keywords" => $_POST['snippet_keywords'],
-			"textlib_priority" => $_POST['snippet_priority'],
+			"textlib_notes" => $textlib_notes,
+			"textlib_groups" => $snippet_groups,
+			"textlib_title" => $snippet_title,
+			"textlib_keywords" => $snippet_keywords,
+			"textlib_priority" => $snippet_priority,
 			"textlib_lastedit" => $timestamp,
 			"textlib_lastedit_from" => $_SESSION['user_nick'],
 			"textlib_template" => $snippet_template,
 			"textlib_theme" => $snippet_theme,
 			"textlib_images" => $snippet_thumbnail,
 			"textlib_labels" => $string_labels,
-			"textlib_classes" => $_POST['snippet_classes'],
-			"textlib_permalink" => $_POST['snippet_permalink'],
-			"textlib_permalink_title" => $_POST['snippet_permalink_title'],
-			"textlib_permalink_name" => $_POST['snippet_permalink_name'],
-			"textlib_permalink_classes" => $_POST['snippet_permalink_classes']
+			"textlib_classes" => $snippet_classes,
+			"textlib_permalink" => $snippet_permalink,
+			"textlib_permalink_title" => $snippet_permalink_title,
+			"textlib_permalink_name" => $snippet_permalink_name,
+			"textlib_permalink_classes" => $snippet_permalink_classes
 		], [
 		"textlib_id" => $snip_id
 		]);
@@ -135,22 +143,22 @@ if(isset($_POST['save_snippet'])) {
 			"textlib_name" => $snippet_name,
 			"textlib_type" => 'snippet',
 			"textlib_lang" => $_POST['sel_language'],
-			"textlib_notes" => $_POST['textlib_notes'],
-			"textlib_groups" => $_POST['snippet_groups'],
-			"textlib_title" => $_POST['snippet_title'],
-			"textlib_keywords" => $_POST['snippet_keywords'],
-			"textlib_priority" => $_POST['snippet_priority'],
+			"textlib_notes" => $textlib_notes,
+			"textlib_groups" => $snippet_groups,
+			"textlib_title" => $snippet_title,
+			"textlib_keywords" => $snippet_keywords,
+			"textlib_priority" => $snippet_priority,
 			"textlib_lastedit" => $timestamp,
 			"textlib_lastedit_from" => $_SESSION['user_nick'],
 			"textlib_template" => $snippet_template,
 			"textlib_theme" => $snippet_theme,
 			"textlib_images" => $snippet_thumbnail,
 			"textlib_labels" => $string_labels,
-			"textlib_classes" => $_POST['snippet_classes'],
-			"textlib_permalink" => $_POST['snippet_permalink'],
-			"textlib_permalink_title" => $_POST['snippet_permalink_title'],
-			"textlib_permalink_name" => $_POST['snippet_permalink_name'],
-			"textlib_permalink_classes" => $_POST['snippet_permalink_classes']
+			"textlib_classes" => $snippet_classes,
+			"textlib_permalink" => $snippet_permalink,
+			"textlib_permalink_title" => $snippet_permalink_title,
+			"textlib_permalink_name" => $snippet_permalink_name,
+			"textlib_permalink_classes" => $snippet_permalink_classes
 		]);
 		
 	}

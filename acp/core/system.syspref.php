@@ -142,9 +142,12 @@ if(isset($_POST['save_prefs_misc'])) {
 		$prefs_xml_sitemap = 'off';
 	}
 	
+	$prefs_rss_time_offset = (int) $_POST['prefs_rss_time_offset'];
+	$prefs_acp_session_lifetime = (int) $_POST['prefs_acp_session_lifetime'];
+	
 	$data = $db_content->update("fc_preferences", [
-			"prefs_rss_time_offset" =>  $_POST['prefs_rss_time_offset'],
-			"prefs_acp_session_lifetime" =>  $_POST['prefs_acp_session_lifetime'],
+			"prefs_rss_time_offset" =>  $prefs_rss_time_offset,
+			"prefs_acp_session_lifetime" =>  $prefs_acp_session_lifetime,
 			"prefs_logfile" =>  $prefs_logfile,
 			"prefs_anonymize_ip" =>  $prefs_anonymize_ip,
 			"prefs_xml_sitemap" =>  $prefs_xml_sitemap,
@@ -172,10 +175,12 @@ if(isset($_POST['save_prefs_themes'])) {
 		$prefs_smarty_compile_check = 0;
 	}
 	
+	$prefs_smarty_cache_lifetime = (int) $_POST['prefs_smarty_cache_lifetime'];
+	
 	$data = $db_content->update("fc_preferences", [
-			"prefs_usertemplate" => $_POST['prefs_usertemplate'],
+			"prefs_usertemplate" => $prefs_usertemplate,
 			"prefs_smarty_cache" =>  $prefs_smarty_cache,
-			"prefs_smarty_cache_lifetime" =>  $_POST['prefs_smarty_cache_lifetime'],
+			"prefs_smarty_cache_lifetime" =>  $prefs_smarty_cache_lifetime,
 			"prefs_smarty_compile_check" =>  $prefs_smarty_compile_check
 		], [
 		"prefs_id" => 1
@@ -523,7 +528,7 @@ echo '<div class="input-group mb-3">';
 echo '<input class="form-control" type="text" id="cache_lifetime" name="prefs_smarty_cache_lifetime" value="'.$prefs_smarty_cache_lifetime.'">';
 echo '<button class="btn btn-fc" type="submit" name="delete_smarty_cache">('.$complete_size.') '.$lang['delete_cache'].'</button>';
 echo '</div>';
-
+echo '</div>';
 
 echo '<input type="submit" class="btn btn-save" name="save_prefs_themes" value="'.$lang['save'].'">';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
