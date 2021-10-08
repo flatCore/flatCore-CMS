@@ -146,10 +146,12 @@ foreach($arr_Styles as $template) {
 		$theme_data = fc_get_theme_options($template);
 		
 		echo '<div class="card mb-3">';
-		echo '<div class="card-header">Theme Options</div>';
-		echo '<div class="card-body">';
-		
+		echo '<div class="card-header">';
+		echo '<a class="" data-bs-toggle="collapse" href="#collapse'.$template.'" role="button" aria-expanded="false" aria-controls="collapse'.$template.'">+ Theme Options</a>';
+		echo '</div>';
+		echo '<div class="collapse" id="collapse'.$template.'">';
 		echo '<form action="?tn=moduls&sub=t" method="POST">';
+		echo '<div class="card-body">';
 		
 		foreach($theme_options as $key => $value) {
 			
@@ -179,6 +181,8 @@ foreach($arr_Styles as $template) {
 	
 		
 		echo '</form>';
+		
+		echo '</div>';
 		echo '</div>';
 
 	}
@@ -205,52 +209,6 @@ foreach($arr_Styles as $template) {
 	
 	echo $modal;
 	
-	
-	echo '<div class="table-responsive">';
-	echo '<table class="table table-sm">';
-	if(is_file('../styles/'.$template.'/info.xml')) {
-		$theme_xml = simplexml_load_file('../styles/'.$template.'/info.xml');
-		
-		echo '<tr>';
-		echo '<td>Theme:</td>';
-		echo '<td>' . $theme_xml->name . '</td>';
-		echo '</tr>';
-		echo '<tr>';
-		echo '<td>Version:</td>';
-		echo '<td>' . $theme_xml->version . '</td>';
-		echo '</tr>';
-		echo '<tr>';
-		echo '<td>License:</td>';
-		echo '<td>' . $theme_xml->license . '</td>';
-		echo '</tr>';
-		echo '<tr>';
-		echo '<td>Author:</td>';
-		echo '<td>' . $theme_xml->author . '</td>';
-		echo '</tr>';
-		if($theme_xml->author_url != '') {
-			echo '<tr>';
-			echo '<td>URL:</td>';
-			echo '<td><a href="'.$theme_xml->author_url.'">' . $theme_xml->author_url . '</a></td>';
-			echo '</tr>';		
-		}
-		echo '<tr>';
-		echo '<td>Requires</td>';
-		echo '<td>';
-		foreach ($theme_xml->requires -> core as $requires) {
-		    switch((string) $requires['type']) {
-		    case 'min':
-		        echo 'min: ' . $requires . '<br>';
-		        break;
-		    case 'max':
-		        echo 'max: ' . ($requires > 0 ? $requires : 'unknown');
-		        break;
-		    }
-		}
-		echo '</td>';
-		echo '<tr>';
-	}
-	echo '</table>';
-	echo '</div>';
 	
 	$btn_delete_addon = '<form class="d-inline ps-2" action="?tn=addons&sub=t" method="POST" onsubmit="return confirm(\''.$lang['confirm_delete_file'].'\');">';
 	$btn_delete_addon .= '<button type="submit" name="delete_addon" class="btn btn-sm btn-fc text-danger">'.$icon['trash_alt'].'</button>';
