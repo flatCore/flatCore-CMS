@@ -158,6 +158,7 @@ if($fc_prefs['prefs_cms_ssl_domain'] != '') {
 	$fc_base_url = $fc_prefs['prefs_cms_domain'] . $fc_prefs['prefs_cms_base'];
 }
 
+
 /**
  * if $fct_slug is in prefs_deleted_resources
  * show HTTP Status Code 410 and die
@@ -339,6 +340,10 @@ foreach($lang as $key => $val) {
 	$smarty->assign("lang_$key", $val);
 }
 
+foreach($fc_prefs as $key => $val) {
+	$smarty->assign("$key", $val);
+}
+
 
 if(!empty($page_contents['page_posts_categories'])) {
 	include 'core/posts.php';
@@ -352,6 +357,14 @@ $smarty->assign('nav_categories', $tpl_nav_cats);
 
 $tyo_search = fc_get_type_of_use_pages('search');
 $smarty->assign("search_uri", '/'.$tyo_search['page_permalink']);
+
+/* legal pages */
+$legal_pages = fc_get_legal_pages();
+$cnt_legal_pages = count($legal_pages);
+if($cnt_legal_pages > 0) {
+	$smarty->assign('legal_pages', $legal_pages);
+}
+
 
 
 $smarty->assign('languagePack', $languagePack);

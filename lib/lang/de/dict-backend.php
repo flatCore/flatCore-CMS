@@ -248,6 +248,9 @@ $lang['type_of_use_password'] = "Passwort zurücksetzen";
 $lang['type_of_use_sitemap'] = "Sitemap";
 $lang['type_of_use_404'] = "404 (Page not found)";
 $lang['type_of_use_display_post'] = "Beitrag anzeigen";
+$lang['type_of_use_imprint'] = "Impressum";
+$lang['type_of_use_privacy_policy'] = "Datenschutz";
+$lang['type_of_use_legal'] = "Rechtliche Hinweise";
 
 $lang['legend_structured_pages'] = "geordnete Seiten";
 $lang['legend_unstructured_pages'] = "einzelne Seiten";

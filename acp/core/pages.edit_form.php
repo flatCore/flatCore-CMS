@@ -263,7 +263,7 @@ $(function() {
 
 echo '<div class="form-group">';
 echo '<label>'.$lang['f_page_type_of_use'].'</label>';
-$page_types = array('normal', 'register', 'profile', 'search', 'password', '404','display_post');
+$page_types = array('normal', 'register', 'profile', 'search', 'password', '404','display_post', 'imprint','privacy_policy','legal');
 $select_page_type_of_use  = '<select name="page_type_of_use" class="custom-select form-control">';
 
 foreach($page_types as $types) {

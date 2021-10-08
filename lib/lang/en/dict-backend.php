@@ -250,6 +250,9 @@ $lang['type_of_use_password'] = "Reset Password";
 $lang['type_of_use_sitemap'] = "Sitemap";
 $lang['type_of_use_404'] = "404 (Page not found)";
 $lang['type_of_use_display_post'] = "Display Post";
+$lang['type_of_use_imprint'] = "Imprint";
+$lang['type_of_use_privacy_policy'] = "Privacy Policy";
+$lang['type_of_use_legal'] = "Legal";
 
 $lang['legend_structured_pages'] = "Ordered Pages";
 $lang['legend_unstructured_pages'] = "Single Pages";
