@@ -223,7 +223,7 @@ if($_SESSION['checked_redirect'] == "checked") {
 
 /* expand filter */
 if(isset($_POST['kw_filter'])) {
-	$_SESSION['kw_filter'] = $_SESSION['kw_filter'] . ' ' . $_POST['kw_filter'];
+	$_SESSION['kw_filter'] = $_SESSION['kw_filter'] . ' ' . clean_filename($_POST['kw_filter']);
 }
 
 $set_keyword_filter = "page_language = 'foobar' OR "; // reset -> result = 0

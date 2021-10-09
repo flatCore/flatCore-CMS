@@ -72,7 +72,7 @@ if(isset($_POST['delete_snippet'])) {
 if(isset($_POST['save_snippet'])) {
 	
 	foreach($_POST as $key => $val) {
-		$$key = fc_clean_permalink($val);
+		$$key = fc_return_clean_value($val);
 	}
 
 	$snippet_name = clean_filename($_POST['snippet_name']);
@@ -184,7 +184,7 @@ if(isset($_POST['save_snippet'])) {
 
 /* expand filter */
 if(isset($_POST['snippet_filter']) && (trim($_POST['snippet_filter']) != '')) {
-	$_SESSION['snippet_filter'] = $_SESSION['snippet_filter'] . ' ' . $_POST['snippet_filter'];
+	$_SESSION['snippet_filter'] = $_SESSION['snippet_filter'] . ' ' . clean_filename($_POST['snippet_filter']);
 }
 
 /* remove keyword from filter list */

@@ -381,7 +381,7 @@ function fc_filter_filepath($str) {
 
 function fc_return_clean_value($string) {
 	$string = stripslashes($string);
-	$string = htmlentities($string);
+	$string = htmlentities($string, ENT_QUOTES, "UTF-8");
 	return $string;
 }
 
