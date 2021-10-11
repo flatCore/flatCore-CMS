@@ -398,6 +398,33 @@ function fc_clean_permalink($str) {
 	return $str; 
 }
 
+/**
+ * format time and date
+ * formatting is set in preferences
+ * prefs_dateformat, prefs_timeformat
+ */
+ 
+ function fc_format_datetime($timestring) {
+	 
+	 global $lang;
+	 global $prefs_timeformat;
+	 global $prefs_dateformat;
+	 
+	 $date = date($prefs_dateformat,$timestring);
+	 
+	 if($date == date("$prefs_dateformat", time())) {
+		 $str_date = $lang['label_datetime_today'];
+	 } else if($date == date("$prefs_dateformat", time() - (24 * 60 * 60))) {
+		 $str_date = $lang['label_datetime_yesterday'];
+	 } else {
+		 $str_date = $date;
+	 }
+	 
+	 $time = date($prefs_timeformat,$timestring);
+ 
+	 return $str_date. ' ' .$time;
+ }
+
 
 /**
  * MAKE DATES LIKE 2008-12-24

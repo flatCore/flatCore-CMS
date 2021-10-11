@@ -483,6 +483,9 @@ $lang['label_datetime_timezone'] = 'Zeitzone';
 $lang['label_datetime_dateformat'] = 'Datumsformat';
 $lang['label_datetime_timeformat'] = 'Zeitformat';
 
+$lang['label_datetime_today'] = 'Heute';
+$lang['label_datetime_yesterday'] = 'Gestern';
+
 /* Rights Management */
 
 $lang['drm_description'] = "Der Benutzer darf folgende Aktionen durchführen";

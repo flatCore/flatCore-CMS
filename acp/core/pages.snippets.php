@@ -359,7 +359,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 	echo '<table class="table table-hover table-striped table-sm mt-3">';
 	
 	echo '<thead><tr>';
-	echo '<th>'.$lang['f_page_language'].'</th>';
+	echo '<th> </th>';
 	echo '<th>'.$lang['filename'].'</th>';
 	echo '<th>'.$lang['label_title'].'/'.$lang['label_content'].'</th>';
 	echo '<th>'.$lang['label_classes'].'</th>';

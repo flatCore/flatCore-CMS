@@ -130,7 +130,7 @@ for($i=0;$i<$cnt_result;$i++) {
 		$item_class .= ' page-list-item-redirect';
 	}
 	
-	$last_edit = date("d.m.Y H:i:s",$page_lastedit) . " ($page_lastedit_from)";
+	$last_edit = fc_format_datetime($page_lastedit) . " ($page_lastedit_from)";
 	
 	/* check for display edit button */
 	
@@ -310,7 +310,7 @@ for($i=0;$i<$cnt_result;$i++) {
 		$item_class .= ' page-list-item-redirect';
 	}
 	
-	$last_edit = date("d.m.Y H:i:s",$page_lastedit) . " ($page_lastedit_from)";
+	$last_edit = fc_format_datetime($page_lastedit) . " ($page_lastedit_from)";
 	
 	/* check for display edit button */
 	

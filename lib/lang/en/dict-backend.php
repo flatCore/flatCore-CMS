@@ -483,6 +483,9 @@ $lang['label_datetime_timezone'] = 'Timezone';
 $lang['label_datetime_dateformat'] = 'Dateformat';
 $lang['label_datetime_timeformat'] = 'Timeformat';
 
+$lang['label_datetime_today'] = 'Today';
+$lang['label_datetime_yesterday'] = 'Yesterday';
+
 
 /* rights management */
 
