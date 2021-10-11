@@ -234,7 +234,9 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	
 	/* page_meta_robots */
 	$page_meta_robots = implode(',',$_POST['page_meta_robots']);
-
+	$page_meta_description = fc_return_clean_value($page_meta_description);
+	$page_meta_keywords = fc_return_clean_value($page_meta_keywords);
+	
 	/* addon injection */
 	$page_addon_string = '';
 	if(is_array($_POST['addon'])) {
