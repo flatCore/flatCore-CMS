@@ -8,6 +8,10 @@ $show_form = 'false';
 /*save or update shortcode */
 if(isset($_POST['write_shortcode'])) {
 	
+	foreach($_POST as $key => $val) {
+		$$key = fc_return_clean_value($val);
+	}
+	
 	/* labels */
 	$arr_labels = $_POST['shortcode_labels'];
 	if(is_array($arr_labels)) {
@@ -30,7 +34,7 @@ if(isset($_POST['write_shortcode'])) {
 		// update shorcode
 		$data = $db_content->update("fc_textlib", [
 			"textlib_content" =>  $_POST['longcode'],
-			"textlib_shortcode" => $_POST['shortcode'],
+			"textlib_shortcode" => $shortcode,
 			"textlib_labels" => $string_labels,
 			"textlib_type" => "shortcode"
 		],[
@@ -42,7 +46,7 @@ if(isset($_POST['write_shortcode'])) {
 
 		$data = $db_content->insert("fc_textlib", [
 			"textlib_content" =>  $_POST['longcode'],
-			"textlib_shortcode" => $_POST['shortcode'],
+			"textlib_shortcode" => $shortcode,
 			"textlib_labels" => $string_labels,
 			"textlib_type" => "shortcode"
 		]);
