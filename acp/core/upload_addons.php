@@ -66,14 +66,27 @@ if($_SESSION['confirmed_danger_zone'] !== 'confirmed') {
 }
 
 
-/* delete files */
-if(!empty($_GET['del'])) {
-	$file = basename($_GET['del']);
-	$path = basename($_GET['dir']);
-	if(is_file("../upload/$path/$file")) {
-		unlink("../upload/$path/$file");
+/* delete uploaded zip files */
+
+if(isset($_POST['delete_uploaded_zip'])) {
+	$file = basename($_POST['delete_uploaded_zip']);
+	
+	if($_POST['dir'] == 't') {
+		$dir = 'themes';
+	} else if($_POST['dir'] == 'm') {
+		$dir = 'modules';
+	} else {
+		$dir = 'plugins';
 	}
+
+	
+	if(is_file("../upload/$dir/$file")) {
+		unlink("../upload/$dir/$file");
+	}
+	
 }
+
+
 
 
 /* check if we can write in /styles/, /modules/ and /content/plugins/ /*/
@@ -113,13 +126,13 @@ if(!is_writable('../content/plugins/')) {
  *
  */
  
-if(!empty($_GET['plg'])) {
+if(isset($_POST['install_uploaded_plg'])) {
 	
 	if(!is_dir("../upload/plugins/extract")) {
 		mkdir("../upload/plugins/extract", 0777);
 	}
 	unset($all_files);
-	$plugin = basename($_GET['plg']);
+	$plugin = basename($_POST['install_uploaded_plg']);
 	$archive = new PclZip("../upload/plugins/$plugin");
 	$list = $archive->extract(
 			PCLZIP_OPT_PATH, '../upload/plugins/extract',
@@ -178,13 +191,13 @@ if(!empty($_GET['plg'])) {
  * 3. copy xyz.mod and it's contents to /modules/
  */
  
-if(!empty($_GET['mod'])) {
+if(isset($_POST['install_uploaded_mod'])) {
 	
 	if(!is_dir("../upload/modules/extract")) {
 		mkdir("../upload/modules/extract", 0777);
 	}
 	
-	$mod = basename($_GET['mod']);
+	$mod = basename($_POST['install_uploaded_mod']);
 	$archive = new PclZip("../upload/modules/$mod");
 	$list = $archive->extract(
 			PCLZIP_OPT_PATH, '../upload/modules/extract',
@@ -232,19 +245,21 @@ if(!empty($_GET['mod'])) {
 	
 }
 
+
 /**
  * install themes
  * 1. extract zip file
  * 2. find theme folder from contents.php
  * 3. copy theme folder and it's contents to /styles/
  */
-if(!empty($_GET['installtheme'])) {
+ 
+if(isset($_POST['install_uploaded_tpl'])) {
 	
 	if(!is_dir("../upload/themes/extract")) {
 		mkdir("../upload/themes/extract", 0777);
 	}
 	unset($all_files);
-	$theme = basename($_GET['installtheme']);
+	$theme = basename($_POST['install_uploaded_tpl']);
 	$archive = new PclZip("../upload/themes/$theme");
 	$list = $archive->extract(
 			PCLZIP_OPT_PATH, '../upload/themes/extract',
@@ -260,7 +275,7 @@ if(!empty($_GET['installtheme'])) {
 		
 		if(is_file("../upload/themes/extract/$extracted/contents.php")) {
 			include '../upload/themes/extract/'.$extracted.'/contents.php';
-			/* themes root folder ($instRootDir) must be defined in contents.php */
+			// themes root folder ($instRootDir) must be defined in contents.php 
 			$all_files = fc_scandir_rec("../upload/themes/extract/$extracted/$instRootDir");
 		} else {
 			echo '<div class="alert alert-danger">This is not a compatible Theme</div>';
@@ -328,8 +343,14 @@ if($_SESSION['confirmed_danger_zone'] == 'confirmed') {
 					echo '<td>Module:</td><td><strong>'.$this_pathinfo['basename'].'</strong> <small>Upload time: '.$filemtime.'</small></td>';
 					echo '<td>';
 					echo '<div class="btn-group float-end">';
-					echo '<a href="?tn=moduls&sub=u&mod='.$this_pathinfo['basename'].'" class="btn btn-fc">Install</a>';
-					echo '<a href="?tn=moduls&sub=u&dir=modules&del='.$this_pathinfo['basename'].'" class="btn btn-danger">'.$lang['delete'].'</a>';
+					
+					echo '<form action="?tn=moduls&sub=u" method="POST">';
+					echo '<button class="btn btn-fc text-success" type="submit" name="install_uploaded_mod" value="'.$this_pathinfo['basename'].'">Install</button>';
+					echo '<button class="btn btn-fc text-danger" type="submit" name="delete_uploaded_zip" value="'.$this_pathinfo['basename'].'">Remove</button>';
+					echo '<input type="hidden" name="dir" value="m">';
+					echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+					echo '</form>';
+					
 					echo '</div>';
 					echo '</td>';
 					echo '</tr>';
@@ -340,8 +361,14 @@ if($_SESSION['confirmed_danger_zone'] == 'confirmed') {
 					echo '<td>Plugin:</td><td><strong>'.$this_pathinfo['basename'].'</strong> <small>Upload time: '.$filemtime.'</small></td>';
 					echo '<td>';
 					echo '<div class="btn-group float-end">';
-					echo '<a href="?tn=moduls&sub=u&plg='.$this_pathinfo['basename'].'" class="btn btn-fc">Install</a>';
-					echo '<a href="?tn=moduls&sub=u&dir=plugins&del='.$this_pathinfo['basename'].'" class="btn btn-danger">'.$lang['delete'].'</a>';
+					
+					echo '<form action="?tn=moduls&sub=u" method="POST">';
+					echo '<button class="btn btn-fc text-success" type="submit" name="install_uploaded_plg" value="'.$this_pathinfo['basename'].'">Install</button>';
+					echo '<button class="btn btn-fc text-danger" type="submit" name="delete_uploaded_zip" value="'.$this_pathinfo['basename'].'">Remove</button>';
+					echo '<input type="hidden" name="dir" value="p">';
+					echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+					echo '</form>';
+					
 					echo '</div>';
 					echo '</td>';
 					echo '</tr>';
@@ -352,8 +379,14 @@ if($_SESSION['confirmed_danger_zone'] == 'confirmed') {
 					echo '<td>Theme:</td><td><strong>'.$this_pathinfo['basename'].'</strong> <small>Upload time: '.$filemtime.'</small></td>';
 					echo '<td>';
 					echo '<div class="btn-group float-end">';
-					echo '<a href="?tn=moduls&sub=u&installtheme='.$this_pathinfo['basename'].'" class="btn btn-fc">Install</a>';
-					echo '<a href="?tn=moduls&sub=u&dir=themes&del='.$this_pathinfo['basename'].'" class="btn btn-danger">'.$lang['delete'].'</a>';
+					
+					echo '<form action="?tn=moduls&sub=u" method="POST">';
+					echo '<button class="btn btn-fc text-success" type="submit" name="install_uploaded_tpl" value="'.$this_pathinfo['basename'].'">Install</button>';
+					echo '<button class="btn btn-fc text-danger" type="submit" name="delete_uploaded_zip" value="'.$this_pathinfo['basename'].'">Remove</button>';
+					echo '<input type="hidden" name="dir" value="t">';
+					echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+					echo '</form>';
+					
 					echo '</div>';
 					echo '</td>';
 					echo '</tr>';	
@@ -413,6 +446,7 @@ function copy_recursive($source, $target) {
 		}
 	}
 }
+
 
 
 /**

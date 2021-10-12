@@ -89,12 +89,12 @@ function fc_delete_addon($addon,$type) {
 	if($type == 'm') {
 		$dir = '../modules';
 	} else if($type == 'p') {
-		$dir = FC_CONTENT_DIR.'/plugins';
+		$dir = '../content/plugins';
 	} else if($type == 't') {
 		$dir = '../styles';
 	}
 	
-	$remove_dir = $dir.'/'.$addon;
+	$remove_dir = $dir.'/'.basename($addon);
 	fc_reomove_addon_files($remove_dir);
 	$record_msg = 'removed addon: <strong>'.$addon.' ('.$type.')</strong>';
 	record_log($_SESSION['user_nick'],$record_msg,"8");
