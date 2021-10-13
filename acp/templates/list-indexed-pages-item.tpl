@@ -18,12 +18,14 @@
 				
 		</div>
 		<div class="col-md-4">
-			
-			<div class="btn-group float-end" role="group">
-				<a href="acp.php?tn=pages&sub=index&a=start&id={id}" class="btn btn-fc btn-sm text-success" title="{title_update_page_index}">{btn_start_index}</a>
-				<a href="acp.php?tn=pages&sub=index&a=update&id={id}" class="btn btn-fc btn-sm text-success" title="{title_update_page_content}">{btn_update_info}</a>
-				<a href="acp.php?tn=pages&sub=index&a=remove&id={id}" class="btn btn-danger btn-sm" title="{title_remove_page_from_index}">{btn_remove}</a>
-			</div>
+			<form action="?tn=pages&sub=index" method="POST">
+				<div class="btn-group float-end" role="group">
+				<button name="start_index_from" value="{id}">{btn_start_index}</button>
+				<button name="start_update_page" value="{id}">{btn_update_info}</button>
+				<button name="remove_page" value="{id}">{btn_remove}</button>
+				</div>
+				{csrf_token}
+			</form>
 		</div>
 	</div>
 </div>

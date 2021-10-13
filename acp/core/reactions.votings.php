@@ -146,6 +146,7 @@ foreach($get_posts as $posts) {
 }
 echo '<select>';
 echo '</div>';
+echo $hidden_csrf_token;
 echo '</form>';
 
 echo '</div>'; // card

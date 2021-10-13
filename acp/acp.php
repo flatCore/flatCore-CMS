@@ -982,12 +982,13 @@ $(function(){
 				$('.page-info-btn').click(function(){
 				   
 				   var pageid = $(this).data('id');
+				   var csrf_token = $(this).data('token');
 
 				   // AJAX request
 				   $.ajax({
 				    url: 'core/pages.info.php',
 				    type: 'post',
-				    data: {pageid: pageid},
+				    data: {pageid: pageid, csrf_token: csrf_token},
 				    success: function(response){ 
 				      // Add response in Modal body
 				      $('#pageInfoModal .modal-body').html(response);

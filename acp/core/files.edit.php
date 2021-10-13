@@ -8,6 +8,7 @@ require_once 'access.php';
 $set_lang = $languagePack;
 if(isset($_REQUEST['set_lang'])) {
 	$set_lang = $_REQUEST['set_lang'];
+	unset($media_data);
 }
 
 $form_tpl = file_get_contents('templates/media-edit-form.tpl');
@@ -36,7 +37,7 @@ $lastedit = date('d.m.Y H:i',filemtime("$realpath"));
 
 
 if(isset($_POST['save'])) {
-	$savedMedia = fc_write_media_data($_POST['realpath'],$_POST['title'],$_POST['notes'],$_POST['keywords'],$_POST['text'],$_POST['url'],$_POST['alt'],$set_lang,$_POST['credit'],$_POST['priority'],$_POST['license'],time(),$filesize,$_POST['version'],$_POST['media_labels']);
+	$savedMedia = fc_write_media_data($_POST['realpath'],$_POST['title'],$_POST['notes'],$_POST['keywords'],$_POST['text'],$_POST['url'],$_POST['alt'],$_POST['set_lang'],$_POST['credit'],$_POST['priority'],$_POST['license'],time(),$filesize,$_POST['version'],$_POST['media_labels']);
 	if($savedMedia == 'success') {
 		$message = '<div class="alert alert-success alert-auto-close">'.$lang['db_changed'].'</div>';
 	} else {
@@ -54,8 +55,8 @@ echo '<span class="ms-3">' . $media_filename.'</span>';
 echo '</div>';
 
 $arr_lang = get_all_languages();
-$langSwitch = '<form action="?tn=filebrowser&sub=edit">';
-$langSwitch .= '<div class="btn-group" role="group">';
+
+$langSwitch = '<div class="btn-group" role="group">';
 foreach($arr_lang as $langs) {
 	$btn_status = '';
 	if($langs['lang_sign'] == "$set_lang") { $btn_status = 'active'; }
@@ -64,7 +65,7 @@ foreach($arr_lang as $langs) {
 $langSwitch .= '</div>';
 $langSwitch .= '<input type="hidden" name="file" value="'.$media_filename.'">';
 $langSwitch .= '<input type="hidden" name="folder" value="'.$_REQUEST['folder'].'">';
-$langSwitch .= '</form>';
+
 
 $media_data = fc_get_media_data($realpath,$set_lang);
 

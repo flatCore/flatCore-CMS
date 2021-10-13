@@ -381,22 +381,50 @@ function fc_filter_filepath($str) {
 
 function fc_return_clean_value($string) {
 	$string = stripslashes($string);
-	$string = htmlentities($string);
+	$string = htmlentities($string, ENT_QUOTES, "UTF-8");
 	return $string;
 }
 
 function fc_clean_permalink($str) {
-	
+	$str = stripslashes($str);
+	$str = strip_tags($str);
 	$str = strtolower($str);
-	$a = array('ä','ö','ü','ß',' + ','//','(',')',';','\'','\\'); 
-	$b = array('ae','oe','ue','ss','-'.'/','','','','','');
+	$a = array('ä','ö','ü','ß',' + ','//','(',')',';','\'','\\','.','`','<','>'); 
+	$b = array('ae','oe','ue','ss','-'.'/','','','','','','','','','');
 	$str = str_replace($a, $b, $str);
 	$str = preg_replace('/\s/s', '_', $str);  // replace blanks -> '_'
-	$string = htmlentities($string);
+	$str = htmlentities($str, ENT_QUOTES, "UTF-8");
 	$str = trim($str);
 	
 	return $str; 
 }
+
+/**
+ * format time and date
+ * formatting is set in preferences
+ * prefs_dateformat, prefs_timeformat
+ */
+ 
+ function fc_format_datetime($timestring) {
+	 
+	 global $lang;
+	 global $prefs_timeformat;
+	 global $prefs_dateformat;
+	 
+	 $date = date($prefs_dateformat,$timestring);
+	 
+	 if($date == date("$prefs_dateformat", time())) {
+		 $str_date = $lang['label_datetime_today'];
+	 } else if($date == date("$prefs_dateformat", time() - (24 * 60 * 60))) {
+		 $str_date = $lang['label_datetime_yesterday'];
+	 } else {
+		 $str_date = $date;
+	 }
+	 
+	 $time = date($prefs_timeformat,$timestring);
+ 
+	 return $str_date. ' ' .$time;
+ }
 
 
 /**
@@ -926,6 +954,16 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 		$lang = $languagePack;
 	}
 	
+	$title = fc_return_clean_value($title);
+	$notes = fc_return_clean_value($notes);
+	$keywords = fc_return_clean_value($keywords);
+	$text = fc_return_clean_value($text);
+	$alt = fc_return_clean_value($alt);
+	$priority = (int) $alt;
+	$credit = fc_return_clean_value($credit);
+	$license = fc_return_clean_value($license);
+	$version = fc_return_clean_value($version);
+	
 	/* labels */
 	if(is_array($labels)) {
 		sort($labels);
@@ -973,18 +1011,9 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 		
 	} else {
 		$modus = 'new';
-		
 		$columns["media_file"] = "$filename";
-			
-		$cnt_changes = $db_content->insert("fc_media", $columns, [
-			"AND" => [
-				"media_file" => "$filename",
-				"media_lang" => "$lang"
-			]
-		]);
-		
+		$cnt_changes = $db_content->insert("fc_media", $columns);
 		$lastId = $db_content->id();
-		
 	}
 	
 	if($cnt_changes->rowCount() > 0) {
@@ -1101,7 +1130,9 @@ function fc_select_img_widget($images,$seleced_img,$prefix='',$id=1) {
 		$choose_images .= '</optgroup>'."\r\n";
 	}
 	
-	for($i=0;$i<count($images);$i++) {
+	$cnt_images = count($images);
+	
+	for($i=0;$i<$cnt_images;$i++) {
 		
 		$img_filename = basename($images[$i]['media_file']);
 		$image_name = $images[$i]['media_file'];

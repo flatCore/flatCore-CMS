@@ -306,7 +306,7 @@ if($cnt_filter_posts > 0) {
 		} else {
 			$icon_fixed_form .= '<button type="submit" class="btn btn-link" name="sfixed" value="'.$get_posts[$i]['post_id'].'">'.$icon['star_outline'].'</button>';
 		}
-		$icon_fixed_form .= '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+		$icon_fixed_form .= $hidden_csrf_token;
 		$icon_fixed_form .= '</form>';
 		
 		if($get_posts[$i]['post_status'] == '2') {
@@ -392,14 +392,15 @@ if($cnt_filter_posts > 0) {
 		$prio_form  = '<form action="acp.php?tn=posts&a=start" method="POST">';
 		$prio_form .= $select_priority;
 		$prio_form .= '<input type="hidden" name="prio_id" value="'.$get_posts[$i]['post_id'].'">';
-		$prio_form .= '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+		$prio_form .= $hidden_csrf_token;
 		$prio_form .= '</form>';
 		
-		$published_date = '<span title="'.date('Y-m-d H:i:s',$get_posts[$i]['post_date']).'">E: '.date('Y-m-d',$get_posts[$i]['post_date']).'</span>';
-		$release_date = '<span title="'.date('Y-m-d H:i:s',$get_posts[$i]['post_releasedate']).'">R: '.date('Y-m-d',$get_posts[$i]['post_releasedate']).'</span>';
+		
+		$published_date = '<span class="badge bg-secondary" title="Published">'.$icon['file'].' '.fc_format_datetime($get_posts[$i]['post_date']).'</span>';
+		$release_date = '<span class="badge bg-secondary" title="Released">'.$icon['clock'].' '.fc_format_datetime($get_posts[$i]['post_releasedate']).'</span>';
 		$lastedit_date = '';
 		if($get_posts[$i]['post_lastedit'] != '') {
-			$lastedit_date = '<span title="'.date('Y-m-d H:i:s',$get_posts[$i]['post_lastedit']).' ('.$get_posts[$i]['post_lastedit_from'].')">L: '.date('Y-m-d',$get_posts[$i]['post_lastedit']).'</span>';
+			$lastedit_date = '<span class="badge bg-secondary" title="Last edit">'.$icon['edit'].' '.fc_format_datetime($get_posts[$i]['post_lastedit']).'</span>';
 		}
 		
 		$show_events_date = '';
@@ -492,8 +493,14 @@ if($cnt_filter_posts > 0) {
 		echo '<td>'.$show_events_date.$show_items_price.$show_items_downloads.$show_items_redirects.'<h5 class="mb-0">'.$get_posts[$i]['post_title'].'</h5><small>'.$trimmed_teaser.'</small><br>'.$categories.'<br>'.$label.'</td>';
 		echo '<td style="min-width: 150px;">';
 		echo '<nav class="nav justify-content-end">';
-		echo '<form class="form-inline mr-1" action="?tn=posts&sub=edit" method="POST"><button class="btn btn-fc btn-sm text-success" type="submit" name="post_id" value="'.$get_posts[$i]['post_id'].'">'.$lang['edit'].'</button></form> ';
-		echo '<form class="form-inline" action="acp.php?tn=posts" method="POST"><button class="btn btn-danger btn-sm" type="submit" name="delete_id" value="'.$get_posts[$i]['post_id'].'">'.$icon['trash_alt'].'</button></form>';
+		echo '<form class="form-inline mr-1" action="?tn=posts&sub=edit" method="POST">';
+		echo '<button class="btn btn-fc btn-sm text-success" type="submit" name="post_id" value="'.$get_posts[$i]['post_id'].'">'.$lang['edit'].'</button>';
+		echo $hidden_csrf_token;
+		echo '</form> ';
+		echo '<form class="form-inline" action="acp.php?tn=posts" method="POST">';
+		echo '<button class="btn btn-danger btn-sm" type="submit" name="delete_id" value="'.$get_posts[$i]['post_id'].'">'.$icon['trash_alt'].'</button>';
+		echo $hidden_csrf_token;
+		echo '</form>';
 		echo '</nav>';
 		echo '</td>';
 		echo '</tr>';

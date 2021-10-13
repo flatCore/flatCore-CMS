@@ -112,6 +112,9 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 		$post_meta_description = $_POST['post_meta_description'];
 	}
 	
+	$post_meta_title = fc_return_clean_value($post_meta_title);
+	$post_meta_description = fc_return_clean_value($post_meta_description);
+	
 	/* save or update data */
 	
 	/* get all $cols */
@@ -120,7 +123,7 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 	foreach($cols as $k => $v) {
 		if($k == 'post_id') {continue;}
 		$value = $$k;
-  	$inputs[$k] = "$value";
+		$inputs[$k] = "$value";
 	}
 	
 	if($modus == "update")	{
@@ -292,7 +295,7 @@ $checkbox_fixed .= '</div>';
 
 /* image widget */
 $images = fc_get_all_media_data('image');
-
+$images = fc_unique_multi_array($images,'media_file');
 $array_images = explode("<->", $post_data['post_images']);
 $choose_images = fc_select_img_widget($images,$array_images,$prefs_posts_images_prefix,1);
 

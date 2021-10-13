@@ -130,7 +130,7 @@ for($i=0;$i<$cnt_result;$i++) {
 		$item_class .= ' page-list-item-redirect';
 	}
 	
-	$last_edit = date("d.m.Y H:i:s",$page_lastedit) . " ($page_lastedit_from)";
+	$last_edit = fc_format_datetime($page_lastedit) . " ($page_lastedit_from)";
 	
 	/* check for display edit button */
 	
@@ -142,7 +142,7 @@ for($i=0;$i<$cnt_result;$i++) {
 		$duplicate_button = '';
 	}
 	
-	$info_button = '<a href="#" class="btn btn-sm btn-fc w-100 page-info-btn" data-bs-target="pageInfoModal" data-id="'.$page_id.'" title="'.$lang['info'].'">'.$icon['info_circle'].'</a>';
+	$info_button = '<a href="#" class="btn btn-sm btn-fc w-100 page-info-btn" data-bs-target="pageInfoModal" data-id="'.$page_id.'" data-token="'.$_SESSION['token'].'" title="'.$lang['info'].'">'.$icon['info_circle'].'</a>';
 	
 	$arr_checked_admins = explode(",",$page_authorized_users);
 	if(in_array("$_SESSION[user_nick]", $arr_checked_admins)) {
@@ -189,13 +189,13 @@ for($i=0;$i<$cnt_result;$i++) {
 		'{status-label}','{item-linkname}','{item-title}',
 		'{item-mod}','{item-class}','{item-indent}','{edit-btn}','{duplicate-btn}','{info-btn}',
 		'{comment-btn}','{item-permalink}','{item-lastedit}','{item-pagesort}','{item-template}',
-		'{item-redirect}','{frontend-link}','{item-description}','{item-lang}', '{page_labels}','{item-pi}'
+		'{item-redirect}','{frontend-link}','{item-description}','{item-lang}', '{page_labels}','{item-pi}','{hidden_csrf_tokken}'
 	);
 	$rplc = array(
 		$status_label,$page_linkname,$page_title,
 		$show_mod,$item_class,$indent,$edit_button,$duplicate_button,$info_button,
 		$page_comments_link,$page_permalink,$last_edit,$page_sort, $show_template_name,
-		$page_redirect,$frontend_link,$page_description,$page_lang_thumb,$label,$pi
+		$page_redirect,$frontend_link,$page_description,$page_lang_thumb,$label,$pi,$hidden_csrf_token
 		);
 
 
@@ -310,7 +310,7 @@ for($i=0;$i<$cnt_result;$i++) {
 		$item_class .= ' page-list-item-redirect';
 	}
 	
-	$last_edit = date("d.m.Y H:i:s",$page_lastedit) . " ($page_lastedit_from)";
+	$last_edit = fc_format_datetime($page_lastedit) . " ($page_lastedit_from)";
 	
 	/* check for display edit button */
 	
@@ -322,7 +322,7 @@ for($i=0;$i<$cnt_result;$i++) {
 		$duplicate_button = '';
 	}
 	
-	$info_button = '<a href="#" class="btn btn-sm btn-fc w-100 page-info-btn" data-bs-target="pageInfoModal" data-id="'.$page_id.'" title="'.$lang['info'].'">'.$icon['info_circle'].'</a>';
+	$info_button = '<a href="#" class="btn btn-sm btn-fc w-100 page-info-btn" data-bs-target="pageInfoModal" data-id="'.$page_id.'" data-token="'.$_SESSION['token'].'" title="'.$lang['info'].'">'.$icon['info_circle'].'</a>';
 	
 	$arr_checked_admins = explode(",",$page_authorized_users);
 	if(in_array("$_SESSION[user_nick]", $arr_checked_admins)) {
@@ -368,13 +368,13 @@ for($i=0;$i<$cnt_result;$i++) {
 		'{status-label}','{item-linkname}','{item-title}',
 		'{item-mod}','{item-class}','{item-indent}','{edit-btn}','{duplicate-btn}','{info-btn}',
 		'{comment-btn}','{item-permalink}','{item-lastedit}','{item-pagesort}','{item-template}',
-		'{item-redirect}','{frontend-link}','{item-description}','{item-lang}', '{page_labels}','{item-pi}'
+		'{item-redirect}','{frontend-link}','{item-description}','{item-lang}', '{page_labels}','{item-pi}','{hidden_csrf_tokken}'
 	);
 	$rplc = array(
 		$status_label,$page_linkname,$page_title,
 		$show_mod,$item_class,$indent,$edit_button,$duplicate_button,$info_button,
 		$page_comments_link,$page_permalink,$last_edit,$page_sort, $show_template_name,
-		$page_redirect,$frontend_link,$page_description,$page_lang_thumb,$label,$pi
+		$page_redirect,$frontend_link,$page_description,$page_lang_thumb,$label,$pi,$hidden_csrf_token
 		);
 
 

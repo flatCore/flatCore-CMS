@@ -6,8 +6,9 @@ require 'core/access.php';
 $status_msg = '';
 
 /* delete items from excludes list */
-if(isset($_GET['del_exclude']) && is_numeric($_GET['del_exclude'])) {
-	fc_delete_excludes($_GET['del_exclude']);
+if(isset($_POST['del_exclude']) && is_numeric($_POST['del_exclude'])) {
+	$del_exclude = (int) $_POST['del_exclude'];
+	fc_delete_excludes($del_exclude);
 }
 
 if(isset($_POST['add_exclude_url'])) {
@@ -36,34 +37,31 @@ echo '<div class="row">';
 echo '<div class="col-sm-8">';
 
 
-if(isset($_GET['a']) && $_GET['a'] == 'start') {
-	if(empty($_GET['id'])) {
-		fc_crawler();
-	} else {
-		fc_crawler($_GET['id']);
-	}	
+if(isset($_POST['start_index_from']) && $_POST['start_index_from'] != '') {
+	fc_crawler($_POST['start_index_from']);
+}
+
+
+if(isset($_POST['start_update_page']) && $_POST['start_update_page'] != '') {
+	$fc_upi = fc_update_page_index($_POST['start_update_page']);
+	$status_msg = 'Script running '.$fc_upi['duration'].' seconds';
+}
+
+
+if(isset($_POST['remove_page']) && $_POST['remove_page'] != '') {
+	$fc_upi = fc_remove_page_from_index($_POST['remove_page']);
 }
 
 if(isset($_POST['start_index']) && $_POST['start_index'] != '') {
 	fc_crawler($_POST['start_index']);
 }
 
-
-if(isset($_GET['a']) && $_GET['a'] == 'update') {
-	$fc_upi = fc_update_page_index($_GET['id']);
-	$status_msg = 'Script running '.$fc_upi['duration'].' seconds';
-}
-
-if(isset($_GET['a']) && $_GET['a'] == 'update_bulk') {
+if(isset($_POST['start_update_bulk'])) {
 	fc_update_bulk_page_index();
 }
 
-if(isset($_GET['a']) && $_GET['a'] == 'index_bulk') {
+if(isset($_POST['start_index_bulk'])) {
 	fc_crawler_bulk();
-}
-
-if(isset($_GET['a']) && $_GET['a'] == 'remove') {
-	$fc_upi = fc_remove_page_from_index($_GET['id']);
 }
 
 
@@ -335,6 +333,8 @@ for($i=0;$i<$cnt_indexed_entries;$i++) {
 	$tpl = str_replace('{cnt_images_errors}', $cnt_images_errors, $tpl);
 	$tpl = str_replace('{images_str}', $img_str, $tpl);
 	
+	$tpl = str_replace('{csrf_token}', $hidden_csrf_token, $tpl);
+	
 	echo $tpl;
 }
 
@@ -371,10 +371,15 @@ echo '</div>';
 echo '</div>';
 echo '</form>';
 
+
+echo '<form action="?tn=pages&sub=index" method="POST">';
 echo '<div class="btn-group d-flex mt-3" role="group">';
-echo '<a href="acp.php?tn=pages&sub=index&a=index_bulk" class="btn btn-save">'.$icon['sitemap'].' '.$lang['btn_bulk_index'].'</a>';
-echo '<a href="acp.php?tn=pages&sub=index&a=update_bulk" class="btn btn-save">'.$icon['sync_alt'].' '.$lang['btn_bulk_update'].'</a>';
+echo '<button name="start_index_bulk" class="btn btn-save">'.$icon['sitemap'].' '.$lang['btn_bulk_index'].'</button>';
+echo '<button name="start_update_bulk" class="btn btn-save">'.$icon['sync_alt'].' '.$lang['btn_bulk_update'].'</button>';
 echo '</div>';
+echo $hidden_csrf_token;
+echo '</form>';
+
 
 echo '<hr>';
 
@@ -427,16 +432,20 @@ echo '</div>';
 
 echo '<h5 class="mt-3">Exclude elements</h5>';
 
+echo '<form action="acp.php?tn=pages&sub=index" method="POST">';
 echo '<table class="table table-sm">';
 foreach($exclude_items as $ex_item) {
 	echo '<tr>';
 	echo '<td><code>'.$ex_item['item_element'].'</code></td>';
 	echo '<td><code>'.$ex_item['item_attributes'].'</code></td>';
-	echo '<td class="text-end"><a href="acp.php?tn=pages&sub=index&del_exclude='.$ex_item['item_id'].'" class="btn btn-danger btn-sm">'.$icon['trash_alt'].'</a></td>';
+	echo '<td class="text-end">';
+	echo '<button name="del_exclude" value="'.$ex_item['item_id'].'" class="btn btn-danger btn-sm">'.$icon['trash_alt'].'</button>';
+	echo '</td>';
 	echo '<tr>';
 }
 echo '</table>';
-
+echo $hidden_csrf_token;
+echo '</form>';
 
 /* form for exclude elements */
 
@@ -468,18 +477,19 @@ echo '</form><hr>';
 
 echo '<h5>Exclude URLs</h5>';
 
-
-
-
-
+echo '<form action="acp.php?tn=pages&sub=index" method="POST">';
 echo '<table class="table table-sm">';
 foreach($exclude_urls as $ex_url) {
 	echo '<tr>';
 	echo '<td><code>'.$ex_url['item_url'].'</code></td>';
-	echo '<td class="text-end"><a href="acp.php?tn=pages&sub=index&del_exclude='.$ex_url['item_id'].'" class="btn btn-danger btn-sm">'.$icon['trash_alt'].'</a></td>';
+	echo '<td class="text-end">';
+	echo '<button name="del_exclude" value="'.$ex_url['item_id'].'" class="btn btn-danger btn-sm">'.$icon['trash_alt'].'</button>';
+	echo '</td>';
 	echo '<tr>';
 }
 echo '</table>';
+echo $hidden_csrf_token;
+echo '</form>';
 
 
 /* form for exclude urls */

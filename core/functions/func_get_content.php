@@ -126,7 +126,7 @@ function fc_check_funnel_uri($uri) {
 	global $db_content;
 
 	$pages = $db_content->select("fc_pages", ["page_permalink", "page_funnel_uri"], [
-		"page_funnel_uri[~]" => "$uri"
+		"page_funnel_uri[~]" => "%$uri%"
 	]);
 	
 	foreach($pages as $page) {

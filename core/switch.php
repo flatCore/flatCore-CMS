@@ -56,13 +56,18 @@ if(is_array($bcmenu)) {
 	}
 }
 
-
-$smarty->assign('homepage_linkname', text_parser($mainmenu[0]['homepage_linkname']));
-$smarty->assign('homepage_title', $mainmenu[0]['homepage_title']);
-unset($mainmenu[0]['homepage_linkname'],$mainmenu[0]['homepage_title'],$mainmenu[0]['page_linkname']);
-
 $arr_mainmenu = array_filter(array_values($mainmenu));
 $arr_subnmenu = array_filter(array_values($submenu));
+
+/* get the last key - it's the Home Link  */
+$last_key = array_key_last($arr_mainmenu);
+
+$smarty->assign('homepage_linkname', text_parser($arr_mainmenu[$last_key]['homepage_linkname']));
+$smarty->assign('homepage_title', $arr_mainmenu[$last_key]['homepage_title']);
+$smarty->assign('homepage_permalink', $arr_mainmenu[$last_key]['homepage_permalink']);
+
+unset($arr_mainmenu[$last_key]['homepage_linkname'],$arr_mainmenu[$last_key]['homepage_title'],$arr_mainmenu[$last_key]['homepage_permalink'],$arr_mainmenu[$last_key]['page_linkname']);
+$arr_mainmenu = array_filter(array_values($arr_mainmenu));
 
 $smarty->assign('link_home', FC_INC_DIR . "/");
 $smarty->assign('arr_menue', $arr_mainmenu);

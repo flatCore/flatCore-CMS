@@ -281,6 +281,11 @@ for($i=$start;$i<$end;$i++) {
 			break;
 	}
 	
+	$btn_edit_user  = '<form action="?tn=user&sub=edit" method="POST">';
+	$btn_edit_user .= '<button class="btn btn-sm btn-fc w-100" name="edituser" value="'.$user_id.'">'.$icon['edit'].' '.$lang['edit'].'</button>';
+	$btn_edit_user .= $hidden_csrf_token;
+	$btn_edit_user .= '</form>';
+	
 	echo '<tr>';
 	echo '<td class="'.$td_class.'" style="text-align:right;">'.$user_id.'</td>';
 	echo '<td>'.$user_avatar.'</td>';
@@ -288,7 +293,7 @@ for($i=$start;$i<$end;$i++) {
 	echo '<td class="'.$td_class.'">'.$show_registerdate.'</td>';
 	echo '<td class="'.$td_class.'">'.$user_firstname.' '.$user_lastname.'</td>';
 	echo '<td class="'.$td_class.'">'.$user_mail.'</td>';
-	echo '<td class="'.$td_class.'"><a class="btn btn-sm btn-fc w-100" href="acp.php?tn=user&sub=edit&edituser='.$user_id.'">'.$icon['edit'].' '.$lang['edit'].'</a></td>';
+	echo '<td class="'.$td_class.'">'.$btn_edit_user.'</td>';
 	echo '</tr>';
 
 

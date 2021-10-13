@@ -21,15 +21,15 @@
 				</p>
 				
 				<div class="controls-container clearfix">
-					<form action="?tn=pages&sub=edit" method="POST" class="">
+					<form action="?tn=pages&sub=edit" method="POST" class="d-inline">
 						<div class="btn-group d-flex" role="group">
 							{edit-btn}
 							{duplicate-btn}
-							{info-btn}
 							{comment-btn}
+							{info-btn}
+							{hidden_csrf_tokken}
 						</div>
 					</form>
-					
 				</div>
 			</div>
 		</div>

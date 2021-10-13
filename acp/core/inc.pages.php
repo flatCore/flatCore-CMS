@@ -223,7 +223,7 @@ if($_SESSION['checked_redirect'] == "checked") {
 
 /* expand filter */
 if(isset($_POST['kw_filter'])) {
-	$_SESSION['kw_filter'] = $_SESSION['kw_filter'] . ' ' . $_POST['kw_filter'];
+	$_SESSION['kw_filter'] = $_SESSION['kw_filter'] . ' ' . clean_filename($_POST['kw_filter']);
 }
 
 $set_keyword_filter = "page_language = 'foobar' OR "; // reset -> result = 0
@@ -353,6 +353,7 @@ if($sub == "list" OR $sub == "snippets") {
 	$kw_form .= '<div class="input-group">';
 	$kw_form .= '<span class="input-group-text">'.$icon['search'].'</span>';
 	$kw_form .= '<input class="form-control" type="text" name="kw_filter" value="" placeholder="'.$lang['button_search'].'">';
+	$kw_form .= $hidden_csrf_token;
 	$kw_form .= '</div>';
 	$kw_form .= '</form>';
 

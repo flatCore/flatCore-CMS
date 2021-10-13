@@ -250,6 +250,9 @@ $lang['type_of_use_password'] = "Reset Password";
 $lang['type_of_use_sitemap'] = "Sitemap";
 $lang['type_of_use_404'] = "404 (Page not found)";
 $lang['type_of_use_display_post'] = "Display Post";
+$lang['type_of_use_imprint'] = "Imprint";
+$lang['type_of_use_privacy_policy'] = "Privacy Policy";
+$lang['type_of_use_legal'] = "Legal";
 
 $lang['legend_structured_pages'] = "Ordered Pages";
 $lang['legend_unstructured_pages'] = "Single Pages";
@@ -480,6 +483,9 @@ $lang['label_datetime_timezone'] = 'Timezone';
 $lang['label_datetime_dateformat'] = 'Dateformat';
 $lang['label_datetime_timeformat'] = 'Timeformat';
 
+$lang['label_datetime_today'] = 'Today';
+$lang['label_datetime_yesterday'] = 'Yesterday';
+
 
 /* rights management */
 
@@ -498,6 +504,7 @@ $lang['drm_sensitive_files_desc'] = "<strong>Attention!</strong> This option all
 $lang['drm_no_access'] = "You do not have the required access rights for this action";
 $lang['drm_moderator'] = "Moderator";
 $lang['drm_user_can_publish'] = "User can publish";
+$lang['upload_addons_deactivated'] = 'The upload function for addons is deactivated. This function can only be activated via the config.php file.';
 
 $lang['section_is_danger_zone'] = '<strong>Safety tips (incomplete)</strong><ul>
 																		<li>Only upload files if you are sure that they do not contain malicious code</li>

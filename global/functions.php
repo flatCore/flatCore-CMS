@@ -27,6 +27,25 @@ function fc_get_preferences() {
 
 
 /**
+ * get the legal pages
+ */
+ 
+function fc_get_legal_pages() {
+	global $db_content;
+	global $languagePack;
+	
+	$pages = $db_content->select("fc_pages", ["page_linkname","page_title","page_permalink","page_type_of_use"], [
+		"AND" => [
+			"page_language" => $languagePack,
+			"page_type_of_use" => ["imprint", "privacy_policy", "legal"]
+		]
+	]);
+	
+	return $pages;
+}
+
+
+/**
  * get all categories
  * order by cat_sort
  */

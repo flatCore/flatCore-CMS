@@ -7,8 +7,8 @@ require 'core/access.php';
 $show_form = "true";
 $db_status = "unlocked";
 
-if($_REQUEST['edituser'] != "") {
-	$edituser = (int) $_REQUEST['edituser'];
+if($_POST['edituser'] != "") {
+	$edituser = (int) $_POST['edituser'];
 } else {
 	unset($edituser);
 }
@@ -113,48 +113,65 @@ if($_POST['save_the_user']) {
 	// modus update
 	if(is_numeric($edituser)) {
 		
-		$columns_update = [
+
+		/* unique check for user_nick and e-mail */
+				
+		$check_user = $db_user->get("fc_user", "user_nick", [
 			"user_nick" => "$user_nick",
-			"user_mail" => "$user_mail",
-			"user_verified" => "$user_verified",
-			"user_registerdate" => "$user_registerdate",
-			"user_drm" => "$drm_string",
-			"user_class" => "$drm_acp_class",
-			"user_firstname" => "$user_firstname",
-			"user_lastname" => "$user_lastname",
-			"user_company" => "$user_company",
-			"user_street" => "$user_street",
-			"user_street_nbr" => "$user_street_nbr",
-			"user_zipcode" => "$user_zipcode",
-			"user_city" => "$user_city",
-			"user_newsletter" => "$user_newsletter"
-		];
-		
-		if($set_psw == "true") {
-			$columns_update['user_psw_hash'] = "$user_psw";
-		}
-		
-		/* add the custom fields */
-		foreach($custom_fields as $f) {
-			$columns_update[$f] = "${$f}";
-		}
-		
-		
-		$cnt_changes = $db_user->update("fc_user",$columns_update, [
-			"user_id" => $edituser
+			"user_id[!]" => $edituser
 		]);
 		
-		if($_POST['deleteAvatar'] == 'on') {
-			$user_avatar_path = '../content/avatars/' . md5($user_nick) . '.png';
-			if(is_file($user_avatar_path)) {
-				unlink($user_avatar_path);
+		if(count($check_user) > 0) {
+			$error_message .= $lang['msg_user_exists'].'<br>';
+			$db_status = "locked";
+		}
+			
+		if($db_status == "unlocked") {
+			$columns_update = [
+				"user_nick" => "$user_nick",
+				"user_mail" => "$user_mail",
+				"user_verified" => "$user_verified",
+				"user_registerdate" => "$user_registerdate",
+				"user_drm" => "$drm_string",
+				"user_class" => "$drm_acp_class",
+				"user_firstname" => "$user_firstname",
+				"user_lastname" => "$user_lastname",
+				"user_company" => "$user_company",
+				"user_street" => "$user_street",
+				"user_street_nbr" => "$user_street_nbr",
+				"user_zipcode" => "$user_zipcode",
+				"user_city" => "$user_city",
+				"user_newsletter" => "$user_newsletter"
+			];
+			
+			if($set_psw == "true") {
+				$columns_update['user_psw_hash'] = "$user_psw";
+			}
+			
+			/* add the custom fields */
+			foreach($custom_fields as $f) {
+				$columns_update[$f] = "${$f}";
+			}
+			
+			
+			$cnt_changes = $db_user->update("fc_user",$columns_update, [
+				"user_id" => $edituser
+			]);
+			
+			if($_POST['deleteAvatar'] == 'on') {
+				$user_avatar_path = '../content/avatars/' . md5($user_nick) . '.png';
+				if(is_file($user_avatar_path)) {
+					unlink($user_avatar_path);
+				}
+			}
+										
+			if($cnt_changes->rowCount() > 0) {
+				$success_message .= $lang['msg_user_updated'].'<br>';
+				record_log($_SESSION['user_nick'],"update user id: $edituser via acp","5");
 			}
 		}
-									
-		if($cnt_changes->rowCount() > 0) {
-			$success_message .= $lang['msg_user_updated'].'<br>';
-			record_log($_SESSION['user_nick'],"update user id: $edituser via acp","5");
-		}
+	
+	
 	}
 	
 	

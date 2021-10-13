@@ -248,6 +248,9 @@ $lang['type_of_use_password'] = "Passwort zurücksetzen";
 $lang['type_of_use_sitemap'] = "Sitemap";
 $lang['type_of_use_404'] = "404 (Page not found)";
 $lang['type_of_use_display_post'] = "Beitrag anzeigen";
+$lang['type_of_use_imprint'] = "Impressum";
+$lang['type_of_use_privacy_policy'] = "Datenschutz";
+$lang['type_of_use_legal'] = "Rechtliche Hinweise";
 
 $lang['legend_structured_pages'] = "geordnete Seiten";
 $lang['legend_unstructured_pages'] = "einzelne Seiten";
@@ -480,6 +483,9 @@ $lang['label_datetime_timezone'] = 'Zeitzone';
 $lang['label_datetime_dateformat'] = 'Datumsformat';
 $lang['label_datetime_timeformat'] = 'Zeitformat';
 
+$lang['label_datetime_today'] = 'Heute';
+$lang['label_datetime_yesterday'] = 'Gestern';
+
 /* Rights Management */
 
 $lang['drm_description'] = "Der Benutzer darf folgende Aktionen durchführen";
@@ -497,6 +503,7 @@ $lang['drm_sensitive_files_desc'] = "<strong>Achtung!</strong> Diese Option erla
 $lang['drm_no_access'] = "Du hast nicht die nötigen Zugriffsrechte um diese Datensätze zu bearbeiten";
 $lang['drm_moderator'] = "Moderator";
 $lang['drm_user_can_publish'] = "Benutzer darf publizieren";
+$lang['upload_addons_deactivated'] = 'Die Upload Funktion für Addons ist deaktiviert. Diese Funktion kann nur über die config.php Datei aktiviert werden.';
 
 
 /* Messages */

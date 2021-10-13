@@ -198,6 +198,7 @@ for($i=0;$i<$cnt_comments;$i++) {
 	
 	echo '<form class="form-inline" action="?tn=reactions&sub=comments#comid'.$comment_id.'" method="POST">';
 	echo '<button type="submit" class="btn btn-sm w-100 btn-fc" name="editid" value="'.$comment_id.'">'.$lang['edit'].'</button>';
+	echo $hidden_csrf_token;
 	echo '</form>';
 	echo '</div>';
 	echo '<div class="col-md-1">';
@@ -207,11 +208,13 @@ for($i=0;$i<$cnt_comments;$i++) {
 	}
 	echo '<form class="form-inline" action="?tn=reactions&sub=comments" method="POST">';
 	echo '<button type="submit" class="btn btn-sm w-100 '.$btn_class.'" name="change_status" value="'.$comment_id.'">'.$icon['check'].'</button>';
+	echo $hidden_csrf_token;
 	echo '</form>';
 	echo '</div>';
 	echo '<div class="col-md-1">';	
 	echo '<form class="form-inline" action="?tn=reactions&sub=comments" method="POST">';
 	echo '<button type="submit" class="btn btn-sm w-100 btn-danger" name="delid" value="'.$comment_id.'">'.$icon['trash_alt'].'</button>';
+	echo $hidden_csrf_token;
 	echo '</form>';
 	echo '</div>';
 	echo '</div>';
@@ -275,6 +278,7 @@ echo '<select name="filter_by_status" class="custom-select form-control" onchang
 echo '<option value="all" '.$sel_status_all.'>'.$lang['label_all_comments'].'</option>';
 echo '<option value="1" '.$sel_status_1.'>'.$lang['label_comments_status1'].'</option>';
 echo '<option value="2" '.$sel_status_2.'>'.$lang['label_comments_status2'].'</option>';
+echo $hidden_csrf_token;
 echo '</select>';
 echo '</form>';
 echo '</fieldset>';
@@ -296,6 +300,7 @@ foreach($cpages as $k => $v) {
 }
 
 echo '</select>';
+echo $hidden_csrf_token;
 echo '</form>';
 echo '</fieldset>';
 
@@ -316,6 +321,7 @@ foreach($cposts as $k => $v) {
 }
 
 echo '</select>';
+echo $hidden_csrf_token;
 echo '</form>';
 echo '</fieldset>';
 

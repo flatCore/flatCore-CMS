@@ -30,11 +30,15 @@ release-notes.html
 
 # styles, except default #
 /styles/**/*
-!/styles/default/*
 /styles/default/.DS_Store
+
+!/styles/default/*
+!/styles/default/**/*
+!/styles/default/php/*
 
 !index.html
 
 config_database.php
 
 /content/SQLite/.DS_Store
+acp/theme/config.codekit3

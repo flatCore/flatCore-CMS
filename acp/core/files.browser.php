@@ -130,8 +130,9 @@ foreach($files_dirs as $d) {
 }
 $select_dir .= '</optgroup>';
 $select_dir .= '</select>';
-$select_dir  .= '</div>';
-$select_dir  .= '</div>';
+$select_dir .= '</div>';
+$select_dir .= '</div>';
+$select_dir .= $hidden_csrf_token;
 $select_dir .= '</form>';
 
 
@@ -612,6 +613,7 @@ if($disk != $path_img AND $disk != $path_files) {
 	echo '<form class="inline pull-right" action="acp.php?tn=filebrowser&sub=browse&selected_folder='.dirname($disk).'" method="POST">';
 	echo '<input type="submit" value="'.$lang['delete_folder'].'" class="btn btn-danger" onclick="return confirm(\''.$lang['confirm_delete_folder'].'\')">';
 	echo '<input type="hidden" name="delete_folder" value="'.$disk.'">';
+	echo $hidden_csrf_token;
 	echo '</form>';
 	echo '</div>';
 }
@@ -794,6 +796,7 @@ echo '<form action="acp.php?tn=filebrowser&sub=browse" method="POST" class="mt-4
 echo '<div class="btn-group d-flex" role="group">';
 echo '<button class="btn btn-sm btn-fc w-100" type="submit" name="rebuild" value="database">Database '.$icon['wrench'].'</button>';
 echo '<button class="btn btn-sm btn-fc w-100" type="submit" name="clear_tmb">Thumbnails '.$icon['trash_alt'].'</button>';
+echo $hidden_csrf_token;
 echo '</div>';
 echo '</form>';
 

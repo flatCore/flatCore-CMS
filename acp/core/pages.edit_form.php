@@ -20,6 +20,7 @@ echo '<li class="nav-item"><a class="nav-link" href="#position" data-bs-toggle="
 echo '<li class="nav-item"><a class="nav-link active" href="#info" data-bs-toggle="tab">'.$lang['tab_info'].'</a></li>';
 echo '<li class="nav-item"><a class="nav-link" href="#content" data-bs-toggle="tab">'.$lang['tab_content'].'</a></li>';
 echo '<li class="nav-item"><a class="nav-link" href="#meta" data-bs-toggle="tab">'.$lang['tab_meta'].'</a></li>';
+echo $theme_tab;
 
 echo '<li class="nav-item ms-auto"><a class="nav-link" href="#posts" data-bs-toggle="tab" title="'.$lang['tab_posts'].'">'.$icon['clipboard_list'].'</a></li>';
 echo '<li class="nav-item"><a class="nav-link" href="#addons" data-bs-toggle="tab" title="'.$lang['tab_addons'].'">'.$icon['cogs'].'</a></li>';
@@ -262,7 +263,7 @@ $(function() {
 
 echo '<div class="form-group">';
 echo '<label>'.$lang['f_page_type_of_use'].'</label>';
-$page_types = array('normal', 'register', 'profile', 'search', 'password', '404','display_post');
+$page_types = array('normal', 'register', 'profile', 'search', 'password', '404','display_post', 'imprint','privacy_policy','legal');
 $select_page_type_of_use  = '<select name="page_type_of_use" class="custom-select form-control">';
 
 foreach($page_types as $types) {
@@ -372,6 +373,12 @@ echo"</div>";
 /* EOL tab_content */
 
 
+if($theme_tab != '') {
+	echo '<div class="tab-pane fade" id="theme_values">';
+	include("$theme_base".'/php/page_values.php');
+	echo '</div>';
+}
+
 
 
 /* tab_meta */
@@ -409,6 +416,7 @@ if($prefs_pagethumbnail_prefix != '') {
 }
 
 $images = fc_get_all_media_data('image');
+$images = fc_unique_multi_array($images,'media_file');
 
 $page_thumbnail_array = explode("&lt;-&gt;", $page_thumbnail);
 $array_images = explode("<->", $post_data['post_images']);

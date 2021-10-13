@@ -8,6 +8,10 @@ $show_form = 'false';
 /*save or update shortcode */
 if(isset($_POST['write_shortcode'])) {
 	
+	foreach($_POST as $key => $val) {
+		$$key = fc_return_clean_value($val);
+	}
+	
 	/* labels */
 	$arr_labels = $_POST['shortcode_labels'];
 	if(is_array($arr_labels)) {
@@ -30,7 +34,7 @@ if(isset($_POST['write_shortcode'])) {
 		// update shorcode
 		$data = $db_content->update("fc_textlib", [
 			"textlib_content" =>  $_POST['longcode'],
-			"textlib_shortcode" => $_POST['shortcode'],
+			"textlib_shortcode" => $shortcode,
 			"textlib_labels" => $string_labels,
 			"textlib_type" => "shortcode"
 		],[
@@ -42,7 +46,7 @@ if(isset($_POST['write_shortcode'])) {
 
 		$data = $db_content->insert("fc_textlib", [
 			"textlib_content" =>  $_POST['longcode'],
-			"textlib_shortcode" => $_POST['shortcode'],
+			"textlib_shortcode" => $shortcode,
 			"textlib_labels" => $string_labels,
 			"textlib_type" => "shortcode"
 		]);
@@ -219,6 +223,7 @@ for($i=0;$i<$cnt_shortcodes;$i++) {
 	
 	$btn_delete  = '<form action="?tn=pages&sub=shortcodes" method="POST" class="d-inline">';
 	$btn_delete .= '<button type="submit" name="delete" value="'.$shortcodes[$i]['textlib_id'].'" class="btn btn-danger btn-sm">'.$icon['trash_alt'].'</button>';
+	$btn_delete .= $hidden_csrf_token;
 	$btn_delete .= '</form>';
 	
 	$get_sc_labels = explode(',',$shortcodes[$i]['textlib_labels']);
