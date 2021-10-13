@@ -1,8 +1,10 @@
-<img src="https://www.flatcore.org/content/images/icon-flatcore-128.png">
+<img src="https://www.flatcore.org/content/images/icon-flatcore-128.png" align="right">
 
 ## flatCore CMS
 
 flatCore is a lightweight Content Management System based on PHP and SQLite. MySQL database support is in progress and will be released soon.
+
+<img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/flatCore/flatCore-CMS"> <img alt="GitHub" src="https://img.shields.io/github/license/flatCore/flatCore-CMS"> <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/flatCore/flatCore-CMS"> [![huntr](https://cdn.huntr.dev/huntr_security_badge_mono.svg)](https://huntr.dev)
 
 * Official Site: https://flatcore.org
 * License: GNU GENERAL PUBLIC LICENSE Version 3
