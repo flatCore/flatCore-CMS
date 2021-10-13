@@ -27,6 +27,7 @@
 							{duplicate-btn}
 							{info-btn}
 							{comment-btn}
+							{hidden_csrf_tokken}
 						</div>
 					</form>
 					

@@ -189,13 +189,13 @@ for($i=0;$i<$cnt_result;$i++) {
 		'{status-label}','{item-linkname}','{item-title}',
 		'{item-mod}','{item-class}','{item-indent}','{edit-btn}','{duplicate-btn}','{info-btn}',
 		'{comment-btn}','{item-permalink}','{item-lastedit}','{item-pagesort}','{item-template}',
-		'{item-redirect}','{frontend-link}','{item-description}','{item-lang}', '{page_labels}','{item-pi}'
+		'{item-redirect}','{frontend-link}','{item-description}','{item-lang}', '{page_labels}','{item-pi}','{hidden_csrf_tokken}'
 	);
 	$rplc = array(
 		$status_label,$page_linkname,$page_title,
 		$show_mod,$item_class,$indent,$edit_button,$duplicate_button,$info_button,
 		$page_comments_link,$page_permalink,$last_edit,$page_sort, $show_template_name,
-		$page_redirect,$frontend_link,$page_description,$page_lang_thumb,$label,$pi
+		$page_redirect,$frontend_link,$page_description,$page_lang_thumb,$label,$pi,$hidden_csrf_tokken
 		);
 
 
@@ -368,13 +368,13 @@ for($i=0;$i<$cnt_result;$i++) {
 		'{status-label}','{item-linkname}','{item-title}',
 		'{item-mod}','{item-class}','{item-indent}','{edit-btn}','{duplicate-btn}','{info-btn}',
 		'{comment-btn}','{item-permalink}','{item-lastedit}','{item-pagesort}','{item-template}',
-		'{item-redirect}','{frontend-link}','{item-description}','{item-lang}', '{page_labels}','{item-pi}'
+		'{item-redirect}','{frontend-link}','{item-description}','{item-lang}', '{page_labels}','{item-pi}','{hidden_csrf_tokken}'
 	);
 	$rplc = array(
 		$status_label,$page_linkname,$page_title,
 		$show_mod,$item_class,$indent,$edit_button,$duplicate_button,$info_button,
 		$page_comments_link,$page_permalink,$last_edit,$page_sort, $show_template_name,
-		$page_redirect,$frontend_link,$page_description,$page_lang_thumb,$label,$pi
+		$page_redirect,$frontend_link,$page_description,$page_lang_thumb,$label,$pi,$hidden_csrf_tokken
 		);
 
 

@@ -353,6 +353,7 @@ if($sub == "list" OR $sub == "snippets") {
 	$kw_form .= '<div class="input-group">';
 	$kw_form .= '<span class="input-group-text">'.$icon['search'].'</span>';
 	$kw_form .= '<input class="form-control" type="text" name="kw_filter" value="" placeholder="'.$lang['button_search'].'">';
+	$kw_form .= $hidden_csrf_tokken;
 	$kw_form .= '</div>';
 	$kw_form .= '</form>';
 

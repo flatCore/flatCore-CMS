@@ -223,6 +223,7 @@ for($i=0;$i<$cnt_shortcodes;$i++) {
 	
 	$btn_delete  = '<form action="?tn=pages&sub=shortcodes" method="POST" class="d-inline">';
 	$btn_delete .= '<button type="submit" name="delete" value="'.$shortcodes[$i]['textlib_id'].'" class="btn btn-danger btn-sm">'.$icon['trash_alt'].'</button>';
+	$btn_delete .= $hidden_csrf_tokken;
 	$btn_delete .= '</form>';
 	
 	$get_sc_labels = explode(',',$shortcodes[$i]['textlib_labels']);
