@@ -10,7 +10,7 @@ if($_GET['sub'] == "new"){
 	$sub = "edit";
 }
 
-echo "<form action='acp.php?tn=user&sub=$sub&edituser=$edituser' class='form-horizontal' method='POST'>";
+echo "<form action='acp.php?tn=user&sub=$sub' class='form-horizontal' method='POST'>";
 
 $custom_fields = get_custom_user_fields();
 sort($custom_fields);
@@ -273,7 +273,9 @@ echo tpl_form_control_group('',$lang['f_user_registerdate'],"<pre class='form-co
 
 echo '<input type="hidden" name="user_registerdate" value="'.$user_registerdate.'">';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
-
+if(is_numeric($edituser)) {
+	echo '<input  type="hidden" name="edituser" value="'.$edituser.'">';
+}
 echo '<hr>';
 echo $delete_button;
 echo $submit_button;

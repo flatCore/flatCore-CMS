@@ -142,7 +142,7 @@ for($i=0;$i<$cnt_result;$i++) {
 		$duplicate_button = '';
 	}
 	
-	$info_button = '<a href="#" class="btn btn-sm btn-fc w-100 page-info-btn" data-bs-target="pageInfoModal" data-id="'.$page_id.'" title="'.$lang['info'].'">'.$icon['info_circle'].'</a>';
+	$info_button = '<a href="#" class="btn btn-sm btn-fc w-100 page-info-btn" data-bs-target="pageInfoModal" data-id="'.$page_id.'" data-token="'.$_SESSION['token'].'" title="'.$lang['info'].'">'.$icon['info_circle'].'</a>';
 	
 	$arr_checked_admins = explode(",",$page_authorized_users);
 	if(in_array("$_SESSION[user_nick]", $arr_checked_admins)) {
@@ -195,7 +195,7 @@ for($i=0;$i<$cnt_result;$i++) {
 		$status_label,$page_linkname,$page_title,
 		$show_mod,$item_class,$indent,$edit_button,$duplicate_button,$info_button,
 		$page_comments_link,$page_permalink,$last_edit,$page_sort, $show_template_name,
-		$page_redirect,$frontend_link,$page_description,$page_lang_thumb,$label,$pi,$hidden_csrf_tokken
+		$page_redirect,$frontend_link,$page_description,$page_lang_thumb,$label,$pi,$hidden_csrf_token
 		);
 
 
@@ -322,7 +322,7 @@ for($i=0;$i<$cnt_result;$i++) {
 		$duplicate_button = '';
 	}
 	
-	$info_button = '<a href="#" class="btn btn-sm btn-fc w-100 page-info-btn" data-bs-target="pageInfoModal" data-id="'.$page_id.'" title="'.$lang['info'].'">'.$icon['info_circle'].'</a>';
+	$info_button = '<a href="#" class="btn btn-sm btn-fc w-100 page-info-btn" data-bs-target="pageInfoModal" data-id="'.$page_id.'" data-token="'.$_SESSION['token'].'" title="'.$lang['info'].'">'.$icon['info_circle'].'</a>';
 	
 	$arr_checked_admins = explode(",",$page_authorized_users);
 	if(in_array("$_SESSION[user_nick]", $arr_checked_admins)) {
@@ -374,7 +374,7 @@ for($i=0;$i<$cnt_result;$i++) {
 		$status_label,$page_linkname,$page_title,
 		$show_mod,$item_class,$indent,$edit_button,$duplicate_button,$info_button,
 		$page_comments_link,$page_permalink,$last_edit,$page_sort, $show_template_name,
-		$page_redirect,$frontend_link,$page_description,$page_lang_thumb,$label,$pi,$hidden_csrf_tokken
+		$page_redirect,$frontend_link,$page_description,$page_lang_thumb,$label,$pi,$hidden_csrf_token
 		);
 
 

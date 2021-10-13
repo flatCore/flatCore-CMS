@@ -306,7 +306,7 @@ if($cnt_filter_posts > 0) {
 		} else {
 			$icon_fixed_form .= '<button type="submit" class="btn btn-link" name="sfixed" value="'.$get_posts[$i]['post_id'].'">'.$icon['star_outline'].'</button>';
 		}
-		$icon_fixed_form .= $hidden_csrf_tokken;
+		$icon_fixed_form .= $hidden_csrf_token;
 		$icon_fixed_form .= '</form>';
 		
 		if($get_posts[$i]['post_status'] == '2') {
@@ -392,7 +392,7 @@ if($cnt_filter_posts > 0) {
 		$prio_form  = '<form action="acp.php?tn=posts&a=start" method="POST">';
 		$prio_form .= $select_priority;
 		$prio_form .= '<input type="hidden" name="prio_id" value="'.$get_posts[$i]['post_id'].'">';
-		$prio_form .= $hidden_csrf_tokken;
+		$prio_form .= $hidden_csrf_token;
 		$prio_form .= '</form>';
 		
 		
@@ -495,11 +495,11 @@ if($cnt_filter_posts > 0) {
 		echo '<nav class="nav justify-content-end">';
 		echo '<form class="form-inline mr-1" action="?tn=posts&sub=edit" method="POST">';
 		echo '<button class="btn btn-fc btn-sm text-success" type="submit" name="post_id" value="'.$get_posts[$i]['post_id'].'">'.$lang['edit'].'</button>';
-		echo $hidden_csrf_tokken;
+		echo $hidden_csrf_token;
 		echo '</form> ';
 		echo '<form class="form-inline" action="acp.php?tn=posts" method="POST">';
 		echo '<button class="btn btn-danger btn-sm" type="submit" name="delete_id" value="'.$get_posts[$i]['post_id'].'">'.$icon['trash_alt'].'</button>';
-		echo $hidden_csrf_tokken;
+		echo $hidden_csrf_token;
 		echo '</form>';
 		echo '</nav>';
 		echo '</td>';

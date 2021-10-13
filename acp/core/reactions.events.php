@@ -139,6 +139,7 @@ foreach($get_events as $events) {
 }
 echo '<select>';
 echo '</div>';
+echo $hidden_csrf_token;
 echo '</form>';
 
 

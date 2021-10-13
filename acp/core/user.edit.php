@@ -7,8 +7,8 @@ require 'core/access.php';
 $show_form = "true";
 $db_status = "unlocked";
 
-if($_REQUEST['edituser'] != "") {
-	$edituser = (int) $_REQUEST['edituser'];
+if($_POST['edituser'] != "") {
+	$edituser = (int) $_POST['edituser'];
 } else {
 	unset($edituser);
 }

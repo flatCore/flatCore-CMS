@@ -7,8 +7,8 @@ echo '<div class="subHeader">';
 echo '<h3>RSS <small>Feed</small></h3>';
 echo '</div>';
 
-if($_REQUEST['delete'] != "") {
-	$delete = (int) $_REQUEST['delete'];	
+if($_POST['delete_rss_entry'] != "") {
+	$delete = (int) $_POST['delete_rss_entry'];	
 	$db_content->delete("fc_feeds", [
 		"feed_id" => $delete
 	]);
@@ -66,8 +66,10 @@ for($i=0;$i<$cnt_rssItems;$i++) {
 	echo $feed_text;
 	echo '<p><a href="'.$feed_url.'" target="_blank">'.$feed_url.'</a></p>';
 	echo '<hr>';
-	echo "<a class='btn btn-fc text-danger' href='acp.php?tn=pages&sub=rss&delete=$feed_id' onclick=\"return confirm('$lang[confirm_delete_data]')\">$lang[delete]</a>";
-
+	echo '<form action="?tn=pages&sub=rss" method="POST">';
+	echo '<button class="btn btn-danger" name="delete_rss_entry" value="'.$feed_id.'" onclick="return confirm(\''.$lang['confirm_delete_data'].'\')">'.$lang['delete'].'</button>';
+	echo $hidden_csrf_token;
+	echo '</form>';
 	echo '</div>';
 	echo '</div>';
 	

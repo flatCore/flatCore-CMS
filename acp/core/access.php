@@ -107,6 +107,6 @@ if(!empty($_POST)) {
 	}
 }
 
-$hidden_csrf_tokken = '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+$hidden_csrf_token = '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 
 ?>

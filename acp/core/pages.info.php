@@ -121,6 +121,7 @@ if($_SESSION['acp_editpages'] == "allowed"){
 	echo '<form action="?tn=pages&sub=edit" method="POST">';
 	echo '<button class="btn btn-sm btn-fc ms-auto" name="editpage" value="'.$page_data['page_id'].'" title="'.$lang['edit'].'">'.$lang['edit'].'</button>';
 	echo '<button type="button" class="btn btn-sm btn-fc" data-bs-dismiss="modal">Close</button>';
+	echo $hidden_csrf_token;
 	echo '</form>';
 } else {
 	echo '<button type="button" class="btn btn-sm btn-fc" data-bs-dismiss="modal">Close</button>';

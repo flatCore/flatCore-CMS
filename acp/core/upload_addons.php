@@ -25,6 +25,7 @@ if($_SESSION['confirmed_danger_zone'] !== 'confirmed') {
 	echo '<p>'.$lang['section_is_beta'].'</p>';
 	echo '<p>'.$lang['section_is_danger_zone'].'</p>';
 	echo '<button type="submit" class="btn btn-danger" name="confirm_danger_zone" value="'.$_SESSION['user_nick'].'">OKAY, I GET IT</button>';
+	echo $hidden_csrf_token;
 	echo '</div>';
 	echo '</form><hr>';
 

@@ -60,9 +60,9 @@ $submit_button = '<input type="submit" class="btn btn-save" name="new_category" 
 $delete_button = "";
 
 
-if(isset($_REQUEST['editcat']) && ($_REQUEST['editcat'] != '')) {
+if(isset($_POST['editcat']) && ($_POST['editcat'] != '')) {
 	
-	$editcat = (int) $_REQUEST['editcat'];
+	$editcat = (int) $_POST['editcat'];
 	
 	$submit_button = '<input type="submit" class="btn btn-save" name="update_category" value="'.$lang['update'].'">';
 	$delete_button = "<input type='submit' class='btn btn-fc text-danger' name='delete_category' value='$lang[delete]' onclick=\"return confirm('$lang[confirm_delete_data]')\">";
@@ -169,7 +169,10 @@ foreach($all_categories as $cats) {
 	echo '<div class="card-body">';
 	echo '<h5 class="card-title">'.$cats['cat_name'].'</h5>';
 	echo '<p class="card-text">'.$cats['cat_description'].'</p>';
-	echo '<a href="?tn=system&sub=categories&editcat='.$cats['cat_id'].'" class="card-link stretched-link float-end">'.$icon['edit'].' '.$lang['edit'].'</a>';
+	echo '<form action="?tn=system&sub=categories" method="POST">';
+	echo '<button name="editcat" value='.$cats['cat_id'].'" class="btn btn-fc">'.$icon['edit'].' '.$lang['edit'].'</button>';
+	echo $hidden_csrf_token;
+	echo '</form>';
 	echo '</div>';
 	echo '</div>';
 	echo '</div>';
