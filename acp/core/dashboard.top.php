@@ -3,15 +3,12 @@
 //prohibit unauthorized access
 require 'core/access.php';
 
-if(isset($_GET['a'])) {
-	
-	if($_GET['a'] == 'delete_cache') {
-		fc_delete_smarty_cache('all');
-	}
-	if($_GET['a'] == 'update_index') {
-		fc_update_bulk_page_index();
-	}
-	
+if(isset($_POST['delete_cache'])) {
+	fc_delete_smarty_cache('all');
+}
+
+if(isset($_POST['update_index'])) {
+	fc_update_bulk_page_index();
 }
 
 
@@ -64,15 +61,22 @@ for($i=0;$i<$cnt_user;$i++) {
 		if($user_result[$i]['user_class'] == "deleted"){
 			$user_nick = "<strike>$user_nick</strike>";
 		}
-		$user_latest5 .= '<a href="acp.php?tn=user&sub=edit&edituser='.$user_id.'" class="list-group-item list-group-item-ghost list-group-item-action flex-column align-items-start">';
+		
+		$user_latest5 .= '<div class="list-group-item list-group-item-ghost list-group-item-action flex-column align-items-start">';
 		$user_latest5 .= '<div class="d-flex w-100 justify-content-between">';
+		
 		$user_latest5 .= '<div>';
 		$user_latest5 .= '<h6 class="mb-0">'.$user_nick.'</h6>';
 		$user_latest5 .= '<small>'.$user_name.'</small>';
-		$user_latest5 .= '</div>';
 		$user_latest5 .= '<small>'.$user_registerdate.'</small>';
 		$user_latest5 .= '</div>';
-		$user_latest5 .= '</a>';
+		$user_latest5 .= '<form class="inline" action="?tn=user&sub=edit" method="POST">';	
+		$user_latest5 .= '<button name="edituser" value='.$user_id.'" class="btn btn-fc btn-sm">'.$icon['edit'].'</button>';
+		$user_latest5 .= $hidden_csrf_tokken;
+		$user_latest5 .= '</form>';
+		
+		$user_latest5 .= '</div>';
+		$user_latest5 .= '</div>';
 	}
 
 }
@@ -126,6 +130,7 @@ for($i=0;$i<$cnt_pages;$i++) {
 		$top5pages .= '</div>';
 		$top5pages .= '<form class="inline" action="?tn=pages&sub=edit" method="POST">';
 		$top5pages .= '<button class="btn btn-fc btn-sm" name="editpage" value="'.$allPages[$i]['page_id'].'">'.$icon['edit'].'</button>';
+		$top5pages .= $hidden_csrf_tokken;
 		$top5pages .= '</form>';
 		$top5pages .= '</div>';
 		
@@ -172,6 +177,7 @@ for($i=0;$i<$cnt_posts;$i++) {
 		$top5posts .= '</div>';
 		$top5posts .= '<form class="inline" action="?tn=posts&sub=edit" method="POST">';
 		$top5posts .= '<button class="btn btn-fc btn-sm" name="post_id" value="'.$allPosts[$i]['post_id'].'">'.$icon['edit'].'</button>';
+		$top5posts .= $hidden_csrf_tokken;
 		$top5posts .= '</form>';
 		$top5posts .= '</div>';
 		
@@ -210,6 +216,7 @@ for($i=0;$i<$cnt_comments;$i++) {
 		$top5comments .= '</div>';
 		$top5comments .= '<form class="inline" action="?tn=comments&sub=list#comid'.$allComments[$i]['comment_id'].'" method="POST">';
 		$top5comments .= '<button class="btn btn-fc btn-sm" name="editid" value="'.$allComments[$i]['comment_id'].'">'.$icon['edit'].'</button>';
+		$top5comments .= $hidden_csrf_tokken;
 		$top5comments .= '</form>';
 		$top5comments .= '</div>';
 		$top5comments .= '</div>';
@@ -286,8 +293,9 @@ $tpl_file = str_replace('{tab_user_stats}', $lang['h_status'], $tpl_file);
 
 $btn_page_overview = '<a href="acp.php?tn=pages" class="btn btn-fc btn-sm w-100">'.$icon['sitemap'].'</a>';
 $btn_new_page = '<a href="acp.php?tn=pages&sub=new" class="btn btn-fc btn-sm w-100">'.$icon['plus'].' '.$lang['new'].'</a>';
-$btn_update_index = '<a href="acp.php?tn=dashboard&a=update_index" class="btn btn-fc btn-sm w-100">'.$icon['sync_alt'].' Index</a>';
-$btn_delete_cache = '<a href="acp.php?tn=dashboard&a=delete_cache" class="btn btn-fc btn-sm w-100">'.$icon['trash_alt'].' Cache</a>';
+
+$btn_update_index = '<form action="?tn=dashboard" method="POST" class="d-inline"><button name="update_index" class="btn btn-fc btn-sm w-100 text-nowrap">'.$icon['sync_alt'].' Index</button>'.$hidden_csrf_tokken.'</form>';
+$btn_delete_cache = '<form action="?tn=dashboard" method="POST"><button name="delete_cache" class="btn btn-fc btn-sm w-100 text-nowrap">'.$icon['trash_alt'].' Cache</button>'.$hidden_csrf_tokken.'</form>';
 
 $btn_post_overview = '<a href="acp.php?tn=posts" class="btn btn-fc btn-sm w-100">'.$lang['tn_posts'].'</a>';
 $btn_new_post = '<a href="acp.php?tn=posts&sub=edit" class="btn btn-fc btn-sm w-100">'.$icon['plus'].' '.$lang['new'].'</a>';
