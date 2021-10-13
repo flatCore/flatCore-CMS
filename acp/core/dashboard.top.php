@@ -299,7 +299,7 @@ $btn_delete_cache = '<form action="?tn=dashboard" method="POST"><button name="de
 
 $btn_post_overview = '<a href="acp.php?tn=posts" class="btn btn-fc btn-sm w-100">'.$lang['tn_posts'].'</a>';
 $btn_new_post = '<a href="acp.php?tn=posts&sub=edit" class="btn btn-fc btn-sm w-100">'.$icon['plus'].' '.$lang['new'].'</a>';
-$btn_comments_overview = '<a href="acp.php?tn=comments" class="btn btn-fc btn-sm w-100">'.$lang['tn_comments'].'</a>';
+$btn_comments_overview = '<a href="acp.php?tn=reactions" class="btn btn-fc btn-sm w-100">'.$lang['tn_comments'].'</a>';
 
 $btn_user_overview = '<a href="acp.php?tn=user" class="btn btn-fc btn-sm w-100">'.$lang['list_user'].'</a>';
 $btn_new_user = '<a href="acp.php?tn=user&sub=new" class="btn btn-fc btn-sm w-100">'.$icon['plus'].' '.$lang['new_user'].'</a>';
