@@ -436,10 +436,6 @@ if($_SESSION['user_class'] == "administrator") {
 // display the template
 $smarty->display('index.tpl',$cache_id);
 
-if(($p == "clearallcache") AND ($_SESSION['user_class'] == "administrator")) {
-	$smarty->clearAllCache();
-}
-
 
 /* track the hits */
 if(!isset($preview)) {
