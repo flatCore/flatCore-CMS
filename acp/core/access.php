@@ -96,12 +96,17 @@ if(!isset($_SESSION['token'])) {
 	die('Error: CSRF Token is invalid');
 }
 
+/* stop all $_POST actions if csrf token is empty or invalid */
 
-if(sizeof($_POST)>1) {
+if(!empty($_POST)) {
+	if(empty($_POST['csrf_token'])) {
+		die('Error: CSRF Token is empty');
+	}
 	if($_POST['csrf_token'] !== $_SESSION['token']) {
 		die('Error: CSRF Token is invalid');	
 	}
 }
 
+$hidden_csrf_tokken = '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 
 ?>
