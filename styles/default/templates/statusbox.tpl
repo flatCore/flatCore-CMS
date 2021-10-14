@@ -12,6 +12,7 @@
 		<form action="/acp/acp.php?tn=pages&sub=edit" method="POST">
 			<div class="d-grid gap-2">
 				<button name="editpage" value="{$page_id}" class="btn btn-secondary btn-block">{$lang_button_edit_page}</button>
+				<input type="hidden" name="csrf_token" value="{$smarty.session.token}">
 			</div>
 		</form>
 		{/if}
