@@ -10,6 +10,7 @@
 ini_set("url_rewriter.tags", '');
 session_start();
 error_reporting(0);
+header("X-Frame-Options: SAMEORIGIN");
 
 $fc_start_time = microtime(true);
 require 'config.php';
