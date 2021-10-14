@@ -304,6 +304,7 @@ function fc_store_admin_helper($trigger,$val) {
 		$stored_sc .= '<form action="/acp/acp.php?tn=pages&sub=shortcodes" method="POST" class="d-inline p-1">';
 		$stored_sc .= '<button class="btn btn-sm btn-secondary">'.$val.'</button>';
 		$stored_sc .= '<input type="hidden" name="edit_shortcode" value="'.$val.'">';
+		$stored_sc .= '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 		$stored_sc .= '</form>';
 		
 		$store['shortcodes'][] = $stored_sc;
@@ -332,6 +333,7 @@ function fc_store_admin_helper($trigger,$val) {
 		$stored_snippet .= '<form action="/acp/acp.php?tn=pages&sub=snippets" method="POST" class="d-inline p-1">';
 		$stored_snippet .= '<button class="btn btn-sm btn-secondary">'.$val.'</button>';
 		$stored_snippet .= '<input type="hidden" name="snip_id" value="'.$id.'">';
+		$stored_snippet .= '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 		$stored_snippet .= '</form>';
 		
 		$store['snippet'][] = $stored_snippet;
