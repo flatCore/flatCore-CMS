@@ -152,7 +152,7 @@ if($parsed_content != $page_content) {
  */
 
 if(isset($_POST['page_psw']) && $_POST['page_psw'] != '') {
-	if(md5($_POST['page_psw']) == $page_psw) {
+	if(md5($_POST['page_psw']) === $page_psw) {
 		$_SESSION['page_psw'] = md5($_POST['page_psw']);
 	}
 }
@@ -161,7 +161,7 @@ if(isset($_GET['reset_page_psw'])) {
 	unset($_SESSION['page_psw']);
 }
 
-if($page_psw != '' && $_SESSION['page_psw'] != $page_psw) {
+if($page_psw !== '' && $_SESSION['page_psw'] !== $page_psw) {
 	$formaction = FC_INC_DIR . '/'.$fct_slug;
 	$page_title = 'Password Protected Page';
 	$page_meta_robots = 'noindex';
