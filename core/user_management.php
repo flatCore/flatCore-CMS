@@ -6,7 +6,7 @@
 
 unset($status_msg);
 
-if($goto == 'logout') {
+if($query == 'logout') {
 	if(is_numeric($_SESSION['user_id'])) {
 		// delete data from fc_tokens
 		$db_user->delete("fc_tokens",[
@@ -53,7 +53,7 @@ if(isset($_POST['login'])) {
 if($_SESSION['user_nick'] != "") {
 
 	$status_msg = $lang['msg_login_true'];
-	$link_logout = $fc_base_url.'?goto=logout';
+	$link_logout = $fc_base_url.'logout';
 	$link_profile = FC_INC_DIR . "/profile/";
 
 	/* user == administrator */

@@ -465,6 +465,9 @@ if($p == "register") {
 /* confirm new account */
 if($p == "account") {
 	
+	$user = fc_return_clean_value($_GET['user']);
+	$al = fc_return_clean_value($_GET['al']);
+	
 	$verify = $db_content->update("fc_user", [
 		"user_verified" => 'verified'
 		], [

@@ -101,9 +101,9 @@
 			<input name="avatar" type="file" size="50">
 			<hr>
 			<div class="btn-group">
-				<input class="btn btn-success btn-small" type="submit" name="upload_avatar" value="{$lang_button_save}">
-				{if isset($link_avatar_delete_url)}
-					<a class="btn btn-danger btn-small" href="{$link_avatar_delete_url}">{$link_avatar_delete_text}</a>
+				<input class="btn btn-success btn-sm" type="submit" name="upload_avatar" value="{$lang_button_save}">
+				{if isset($avatar_url)}
+					<input class="btn btn-danger btn-sm" type="submit" name="delete_avatar" value="{$link_avatar_delete_text}">
 				{/if}
 			</div>
 			
