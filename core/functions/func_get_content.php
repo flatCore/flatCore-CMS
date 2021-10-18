@@ -64,17 +64,28 @@ function fc_get_content($page, $mode = 'p') {
 		$languagePack = $page_contents['page_language'];
 	}
 
-	$nav_sql_filter = "WHERE page_language = '$languagePack' ";
 	if(empty($_SESSION['user_class']) && $_SESSION['user_class'] != 'administrator') {
-		$nav_sql_filter = "WHERE page_status != 'draft' AND page_status != 'ghost' AND page_language = '$languagePack'";
+
+		$fc_nav = $db_content->select("fc_pages", ['page_id', 'page_classes', 'page_hash', 'page_language', 'page_linkname', 'page_permalink', 'page_target', 'page_title', 'page_sort', 'page_status'], [
+				"AND" => [
+					"OR" => [
+						"page_status[!]" => ["draft","ghost"]
+				],
+				"page_language" => $languagePack
+			],
+				"ORDER" => ["page_sort" => "DESC"]
+			]);
+		
+	} else {
+
+		$fc_nav = $db_content->select("fc_pages", ['page_id', 'page_classes', 'page_hash', 'page_language', 'page_linkname', 'page_permalink', 'page_target', 'page_title', 'page_sort', 'page_status'], [
+				"page_language" => $languagePack
+			],[
+				"ORDER" => ["page_sort" => "DESC"]
+			]);
 	}
-
-	$nav_sql = "SELECT page_id, page_classes, page_hash, page_language, page_linkname, page_permalink, page_target, page_title, page_sort, page_status
-			  FROM fc_pages $nav_sql_filter ORDER BY page_sort DESC";
-
-	$fc_nav = $db_content->query("$nav_sql")->fetchAll();
+	
 	$fc_nav = fc_array_multisort($fc_nav, 'page_language', SORT_ASC, 'page_sort', SORT_ASC, SORT_NATURAL);
-
 	$contents = array($page_contents,$fc_nav);
 	
 	return $contents;

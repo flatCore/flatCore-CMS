@@ -33,14 +33,16 @@ if(is_file(FC_CORE_DIR . "/maintance.html")) {
 	die("We'll be back soon.");
 }
 
-$fc_prefs = fc_get_preferences();
-$languagePack = $fc_prefs['prefs_default_language'];
-$_SESSION['fc_admin_helpers'] = array();
-
 /* all requests -> strip_tags */
 foreach($_REQUEST as $key => $val) {
 	$$key = strip_tags($val); 
 }
+
+$fc_prefs = fc_get_preferences();
+$languagePack = $fc_prefs['prefs_default_language'];
+$_SESSION['fc_admin_helpers'] = array();
+
+
 
 /* reserved $_GET['p'] parameters */
 $a_allowed_p = array('register', 'account', 'profile', 'search', 'sitemap', 'logout', 'password','display_post');
