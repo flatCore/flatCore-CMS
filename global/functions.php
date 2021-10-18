@@ -10,8 +10,8 @@ use PHPMailer\PHPMailer\Exception;
  * 
  */
 
+include_once 'functions.sanitizer.php';
 include_once 'functions.posts.php';
-
 
 /**
  * get active preferences

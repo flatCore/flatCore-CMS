@@ -349,57 +349,7 @@ function fc_flatten_array(array $array) {
 
 
 
-/**
- * CLEAN VARS // URL PARAMETERS
- */
 
-function clean_vars($var) {
-	$chars = array('<', '>', '\\', '/', '=','..'); 
-	$var = str_replace($chars, "", $var);
-	$var = strip_tags($var);
-	return $var;
-}
-
-function clean_filename($str) {
-	$str = strtolower($str);
-	$a = array('ä','ö','ü','ß',' - ',' + ',' / ','/'); 
-	$b = array('ae','oe','ue','ss','-','-','-','-');
-	$str = str_replace($a, $b, $str);
-	$str = preg_replace('/\s/s', '_', $str);  // replace blanks -> '_'
-	$str = preg_replace('/[^a-z0-9_-]/isU', '', $str); // only a-z 0-9
-	$str = trim($str); 
-	return $str; 
-}
-
-function fc_filter_filepath($str) {
-	$str = strip_tags($str);
-	$remove_chars = array('<','>','\\','=','@','(',')',' ',',','%','');
-	$str = preg_replace('/\s/s', '_', $str);
-	$str = str_replace($remove_chars, "", $str);
-	return $str; 
-}
-
-function fc_return_clean_value($string) {
-	$string = stripslashes($string);
-	$remove_chars = array('$','`','{','}');
-	$string = htmlentities($string, ENT_QUOTES, "UTF-8");
-	$string = str_replace($remove_chars, "", $string);
-	return $string;
-}
-
-function fc_clean_permalink($str) {
-	$str = stripslashes($str);
-	$str = strip_tags($str);
-	$str = strtolower($str);
-	$a = array('ä','ö','ü','ß',' + ','//','(',')',';','\'','\\','.','`','<','>','$'); 
-	$b = array('ae','oe','ue','ss','-'.'/','','','','','','','','','','');
-	$str = str_replace($a, $b, $str);
-	$str = preg_replace('/\s/s', '_', $str);  // replace blanks -> '_'
-	$str = htmlentities($str, ENT_QUOTES, "UTF-8");
-	$str = trim($str);
-	
-	return $str; 
-}
 
 /**
  * format time and date

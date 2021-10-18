@@ -364,63 +364,11 @@ function bbcode_encode($text) {
 
 
 
-/**
- * remove tags [include] [script] [plugin] and [snippet]
- */
-
-function clean_visitors_input($text) {
-
-	$text = preg_replace("/\[snippet\](.*?)\[\/snippet\]/esi","",$text);
-	$text = preg_replace("/\[script\](.*?)\[\/script\]/esi","",$text);
-	$text = preg_replace("/\[include\](.*?)\[\/include\]/esi","",$text);
-	$text = preg_replace("/\[plugin=(.*?)\](.*?)\[\/plugin\]/esi","",$text);
-	
-	return $text;
-
-} // eol bbcode
 
 
 
 
-/**
- * clean filenames
- * used for upload and SEO URL
- */
 
-function clean_filename($str) {
-
-	$str = strtolower($str);
-
-	$a = array('ä',    'ö',    'ü',    'ß',    ' - ',    ' + ',    '_',    ' / ',    '/'); 
-	$b = array('ae',   'oe',   'ue',   'ss',   '-',      '-',      '_',    '-',      '-');
-	$str = str_replace($a, $b, $str);
-
-	$str = preg_replace('/\s/s', '_', $str);  // replace blanks -> '_'
-	$str = preg_replace('/[^a-z0-9_-]/isU', '', $str); // only a-z 0-9
-
-	$str = trim($str); 
-
-	return $str; 
-}  
-
-
-/**
- * sanitize user inputs
- *
- */
-
-function sanitizeUserInputs($str,$type='str',$flags=NULL) {
-	
-	if($type == 'str') {
-		$str = trim($str);	
-		$str = strip_tags($str);
-		$str = filter_var($str, FILTER_SANITIZE_STRING);
-		$str = htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
-	}
-	
-	return $str;
-	
-}
 
 /**
  * Generate cryptographically secure random strings
