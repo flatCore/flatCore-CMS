@@ -33,10 +33,6 @@ if(is_file(FC_CORE_DIR . "/maintance.html")) {
 	die("We'll be back soon.");
 }
 
-/* all requests -> strip_tags */
-foreach($_REQUEST as $key => $val) {
-	$$key = strip_tags($val); 
-}
 
 $fc_prefs = fc_get_preferences();
 $languagePack = $fc_prefs['prefs_default_language'];
@@ -53,7 +49,9 @@ $a_allowed_p = array('register', 'account', 'profile', 'search', 'sitemap', 'log
  * RewriteRule ^(.*)$ index.php?query=$1 [L,QSA]
  *
  */
- 
+
+$query = fc_clean_query($_GET['query']);
+
 if(!isset($query)) {
 	$query = '/';
 }
