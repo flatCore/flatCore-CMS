@@ -1,3 +1,4 @@
+{if $smarty.session.user_class == "administrator"}
 <div class="card p-1 mt-2">
 	<a class="btn btn-secondary w-100" data-bs-toggle="collapse" href="#collapseAdminHelpers" role="button" aria-expanded="false" aria-controls="collapseAdminHelpers">
     Admin Helpers
@@ -43,3 +44,4 @@
 		</div>
 	</div>
 </div>
+{/if}

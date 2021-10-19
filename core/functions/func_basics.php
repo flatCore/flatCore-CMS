@@ -285,7 +285,7 @@ function fc_store_admin_helper($trigger,$val) {
 	global $languagePack;
 	
 	/* skip this function for visitors */
-	if($_SESSION['user_class'] != 'administrator') {
+	if($_SESSION['user_class'] !== 'administrator') {
 		return;
 	}
 	

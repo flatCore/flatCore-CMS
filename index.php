@@ -36,7 +36,10 @@ if(is_file(FC_CORE_DIR . "/maintance.html")) {
 
 $fc_prefs = fc_get_preferences();
 $languagePack = $fc_prefs['prefs_default_language'];
-$_SESSION['fc_admin_helpers'] = array();
+
+if($_SESSION['user_class'] == "administrator") {
+	$_SESSION['fc_admin_helpers'] = array();
+}
 
 
 
@@ -407,7 +410,7 @@ $smarty->assign('append_head_code', $append_head_code);
 $smarty->assign('prepend_body_code', $prepend_body_code);
 $smarty->assign('append_body_code', $append_body_code);
 
-
+$store = '';
 if($_SESSION['user_class'] == "administrator") {
 	$store = $_SESSION['fc_admin_helpers'];
 
@@ -432,7 +435,6 @@ if($_SESSION['user_class'] == "administrator") {
 		
 	}
 }
-
 
 // display the template
 $smarty->display('index.tpl',$cache_id);
