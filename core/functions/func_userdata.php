@@ -241,6 +241,9 @@ function fc_user_login($user,$psw,$acp=NULL,$remember=NULL) {
  */
  
 function fc_start_user_session($ud) {
+	
+	/* reset session id */
+	session_regenerate_id(true);
 
 	$_SESSION['user_id'] = $ud['user_id'];
 	$_SESSION['user_nick'] = $ud['user_nick'];
