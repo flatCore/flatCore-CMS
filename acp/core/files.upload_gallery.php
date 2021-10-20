@@ -1,5 +1,21 @@
 <?php
 
+session_start();
+
+if($_SESSION['user_class'] != "administrator"){
+	header("location:../index.php");
+	die("PERMISSION DENIED!");
+}
+
+require '../../config.php';
+if(is_file('../../'.FC_CONTENT_DIR.'/config.php')) {
+	include '../../'.FC_CONTENT_DIR.'/config.php';
+}
+
+if($_POST['csrf_token'] !== $_SESSION['token']) {
+	die('Error: CSRF Token is invalid');
+}
+
 $year = date('Y',time());
 $gallery_id = 'gallery'. (int) $_REQUEST['gal'];
 $uploads_dir = '../../content/galleries/'.$year.'/'.$gallery_id;
@@ -20,19 +36,26 @@ if(!is_dir($uploads_dir)) {
 }
 
 if(array_key_exists('file',$_FILES) && $_FILES['file']['error'] == 0 ){
+	
 	$tmp_name = $_FILES["file"]["tmp_name"];
 	$timestring = microtime(true);
+	$random_int = random_int(0, 999);
 	      
-	$suffix = strrchr($_FILES["file"]["name"],".");
-	$org_name = $timestring . $suffix;
-	$img_name = $timestring."_img.jpg";
-	$tmb_name = $timestring."_tmb.jpg";
+	$suffix = substr(strrchr($_FILES["file"]["name"],"."),1);
+	$org_name = $timestring .'.'. $suffix;
+	$img_name = $timestring.$random_int."_img.jpg";
+	$tmb_name = $timestring.$random_int."_tmb.jpg";
+
+	if(!in_array($suffix, $fc_upload_img_types)) {
+		exit;
+	} else {
         
-	if(move_uploaded_file($tmp_name, "$uploads_dir/$org_name")) {
-		create_thumbs($uploads_dir,$org_name,$img_name, $max_width,$max_height,90);
-		create_thumbs($uploads_dir,$img_name,$tmb_name, $max_width_tmb,$max_height_tmb,80);
-		unlink("$uploads_dir/$org_name");
-		print ('Uploaded');
+		if(move_uploaded_file($tmp_name, "$uploads_dir/$org_name")) {
+			create_thumbs($uploads_dir,$org_name,$img_name, $max_width,$max_height,90);
+			create_thumbs($uploads_dir,$img_name,$tmb_name, $max_width_tmb,$max_height_tmb,80);
+			unlink("$uploads_dir/$org_name");
+			print ('Uploaded');
+		}
 	}
 }
 function create_thumbs($updir, $img, $name, $thumbnail_width, $thumbnail_height, $quality){
@@ -40,7 +63,7 @@ function create_thumbs($updir, $img, $name, $thumbnail_width, $thumbnail_height,
 	$original_width		= $arr_image_details[0];
 	$original_height	= $arr_image_details[1];
 	$a = $thumbnail_width / $thumbnail_height;
-  $b = $original_width / $original_height;
+	$b = $original_width / $original_height;
 	
 	
 	if ($a<$b) {
