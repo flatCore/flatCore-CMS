@@ -252,6 +252,7 @@ if($prefs_usertemplate == 'on' OR $prefs_usertemplate == 'overwrite') {
 		$set_theme = 'styles/'.sanitizeUserInputs($_POST['set_theme']);
 		if(is_dir($set_theme)) {
 			$_SESSION['prefs_template'] = sanitizeUserInputs($_POST['set_theme']);
+			unset($_SESSION['prefs_template_stylesheet']);
 		}
 	}
 	
