@@ -63,6 +63,11 @@ if(is_file(FC_CONTENT_DIR.'/plugins/query.controller.php')) {
 	include FC_CONTENT_DIR.'/plugins/query.controller.php';
 }
 
+if($query == 'logout' OR $_GET['goto'] == 'logout') {
+	$user_logout = fc_end_user_session();
+	$query = '/';
+}
+
 $fct_slug = $query;
 
 $active_mods = fc_get_active_mods();
@@ -374,6 +379,14 @@ if($cnt_legal_pages > 0) {
 
 $smarty->assign('languagePack', $languagePack);
 $smarty->assign("page_id", $page_contents['page_id']);
+
+if($user_logout != '') {
+	$smarty->assign("msg_status","alert alert-success",true);
+	$smarty->assign('msg_text', $lang['msg_logout'],true);
+	$output = $smarty->fetch("status_message.tpl");
+	$smarty->assign('msg_content', $output);
+}
+
 
 require 'core/user_management.php';
 require 'core/switch.php';

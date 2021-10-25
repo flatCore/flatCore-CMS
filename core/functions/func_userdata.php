@@ -273,4 +273,40 @@ function fc_start_user_session($ud) {
 	
 }
 
+
+/**
+ * logout
+ * end user session
+ */
+
+function fc_end_user_session() {
+	
+	global $db_user;
+
+	if(is_numeric($_SESSION['user_id'])) {
+		// delete data from fc_tokens
+		$db_user->delete("fc_tokens",[
+			"AND" => [
+			"user_id" => $_SESSION['user_id']
+			]
+		]);
+		
+		unset($_COOKIE['identifier']);
+		unset($_COOKIE['securitytoken']);
+		unset($_COOKIE['permit_cookies']);
+		setcookie('identifier', '', 1);
+		setcookie('securitytoken', '', 1);
+		setcookie('permit_cookies', '', 1);
+		$cookiesSet = array_keys($_COOKIE);
+		for ($x=0;$x<count($cookiesSet);$x++) setcookie($cookiesSet[$x],"",1);
+	}
+	session_destroy();
+	unset($_SESSION['user_nick']);
+	setcookie("PHPSESSID", "", 1);
+	
+	return 'logout';
+	
+}
+
+
 ?>
