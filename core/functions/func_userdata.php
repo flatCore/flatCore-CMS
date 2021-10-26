@@ -139,7 +139,7 @@ function fc_user_login($user,$psw,$acp=NULL,$remember=NULL) {
 	unset($result);
 	
 	if($acp == TRUE) {
-		$fc_db_user = '../'.$fc_db_user;
+		//$fc_db_user = '../'.$fc_db_user;
 	}
 		
 	$login_hash  = md5($psw.$user);
@@ -205,19 +205,19 @@ function fc_user_login($user,$psw,$acp=NULL,$remember=NULL) {
 		/* set cookie to remember user */
 		if($remember == TRUE) {
 			$identifier = randpsw($length=24);
-			$securitytoken = sha1(randpsw($length=24));
+			$securitytoken = randpsw($length=24);
+			$securitytoken_hashed = sha1($securitytoken);
 			$time = time();
 			
 			$db_user->insert("fc_tokens", [
 				"user_id" => $result['user_id'],
 				"identifier" => "$identifier",
-				"securitytoken" => "$securitytoken",
+				"securitytoken" => "$securitytoken_hashed",
 				"time" => "$time"
 			]);			
-			
-			
-			setcookie("identifier",$identifier,time()+(3600*24*365)); //1 Jahr Gültigkeit
-			setcookie("securitytoken",$securitytoken,time()+(3600*24*365)); //1 Jahr Gültigkeit			
+						
+			setcookie("identifier",$identifier,time()+(3600*24*365));
+			setcookie("securitytoken",$securitytoken,time()+(3600*24*365));		
 		}
 		
 		

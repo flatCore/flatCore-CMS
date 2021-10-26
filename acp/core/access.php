@@ -47,29 +47,27 @@ if(!function_exists('fc_start_user_session')) {
 if(($_SESSION['user_class'] != 'administrator') && isset($_COOKIE['identifier']) && isset($_COOKIE['securitytoken'])) {
 	$identifier = $_COOKIE['identifier'];
 	$securitytoken = $_COOKIE['securitytoken'];
-	
-	$dbh = new PDO("sqlite:../$fc_db_user");
-	$stmt = $dbh->prepare("SELECT * FROM fc_tokens WHERE identifier = :identifier");
-	$stmt->bindValue(':identifier', $identifier, PDO::PARAM_STR);
-	$stmt->execute();
-	$token_row = $stmt->fetch(PDO::FETCH_ASSOC);
+		
+	$token_row = $db_user->get("fc_tokens",["securitytoken","identifier","user_id"],["identifier" => $identifier]);
 	
 	//Token is correct
 	if(sha1($securitytoken) == $token_row['securitytoken']) {
 		// update Token
-		$new_securitytoken = randpsw($length=24);			
-		$insert = $dbh->prepare("UPDATE fc_tokens SET securitytoken = :securitytoken WHERE identifier = :identifier");
-		$insert->bindValue(':securitytoken', sha1($new_securitytoken), PDO::PARAM_STR);
-		$insert->bindValue(':identifier', $identifier, PDO::PARAM_STR);
-		$insert->execute();
+		$new_securitytoken = randpsw($length=24);
+		$new_securitytoken_hashed = sha1($new_securitytoken);
+		
+		$db_user->update("fc_tokens",[
+			"securitytoken" => "$new_securitytoken_hashed"
+			],[
+			"identifier" => $identifier
+		]);
+		
 		setcookie("identifier",$identifier,time()+(3600*24*365)); //1 Jahr Gültigkeit
 		setcookie("securitytoken",$new_securitytoken,time()+(3600*24*365)); //1 Jahr Gültigkeit
-		
-		// get user data an set SESSION
-		$stmt = $dbh->prepare("SELECT * FROM fc_user	WHERE user_id = :user_id AND user_verified = 'verified'");
-		$stmt->bindValue(':user_id', $token_row['user_id'], PDO::PARAM_INT);
-		$stmt->execute();
-		$user_data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+		$user_data = $db_user->select("fc_user","*",[
+			"user_id" => $token_row['user_id']
+		]);
 		fc_start_user_session($user_data);
 				
 		$_SESSION['user_class'] = 'administrator';
