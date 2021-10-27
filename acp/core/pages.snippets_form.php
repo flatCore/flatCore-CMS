@@ -66,7 +66,7 @@ echo '<div class="col-md-8">';
 
 echo '<div class="form-group">';
 echo '<label>'.$lang['label_title'].'</label>';
-echo '<input class="form-control" type="text" name="snippet_title" value="'.$textlib_title.'">';
+echo '<input class="form-control" type="text" name="snippet_title" value="'.html_entity_decode($textlib_title).'">';
 echo '</div>';
 
 echo '</div>';
@@ -86,7 +86,7 @@ echo '<div class="col-md-6">';
 
 echo '<div class="form-group">';
 echo '<label>'.$lang['label_keywords'].'</label>';
-echo '<input class="form-control" type="text" name="snippet_keywords" value="'.$textlib_keywords.'" data-role="tagsinput" />';
+echo '<input class="form-control" type="text" name="snippet_keywords" value="'.html_entity_decode($textlib_keywords).'" data-role="tagsinput" />';
 echo '</div>';
 
 echo '</div>';
@@ -128,12 +128,12 @@ echo '</div>';
 
 echo '<div class="form-group mt-2">';
 echo '<label>'.$lang['label_url_name'].'</label>';
-echo '<input class="form-control" type="text" name="snippet_permalink_name" value="'.$textlib_permalink_name.'" />';
+echo '<input class="form-control" type="text" name="snippet_permalink_name" value="'.html_entity_decode($textlib_permalink_name).'" />';
 echo '</div>';
 
 echo '<div class="form-group mt-2">';
 echo '<label>'.$lang['label_url_title'].'</label>';
-echo '<input class="form-control" type="text" name="snippet_permalink_title" value="'.$textlib_permalink_title.'" />';
+echo '<input class="form-control" type="text" name="snippet_permalink_title" value="'.html_entity_decode($textlib_permalink_title).'" />';
 echo '</div>';
 
 echo '<div class="form-group mt-2">';
