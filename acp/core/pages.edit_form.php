@@ -222,7 +222,7 @@ $sel_target .= '</select>';
 	
 echo '<div class="row">';
 echo '<div class="col-md-4">';
-echo tpl_form_control_group('',$lang['f_page_linkname'],'<input class="form-control" type="text" name="page_linkname" value="'.$page_linkname.'">');
+echo tpl_form_control_group('',$lang['f_page_linkname'],'<input class="form-control" type="text" name="page_linkname" value="'.html_entity_decode($page_linkname).'">');
 echo '</div>';
 echo '<div class="col-md-4">';
 echo tpl_form_control_group('',$lang['f_page_classes'],"<input class='form-control' type='text' name='page_classes' value='$page_classes'>");
@@ -387,7 +387,7 @@ echo '<div class="tab-pane fade" id="meta">';
 echo '<div class="row">';
 echo '<div class="col-md-6">';
 
-echo tpl_form_control_group('',$lang['f_page_title'],'<input class="form-control" type="text" name="page_title" value="'.$page_title.'">');
+echo tpl_form_control_group('',$lang['f_page_title'],'<input class="form-control" type="text" name="page_title" value="'.html_entity_decode($page_title).'">');
 
 if($page_meta_author == '') {
 	$page_meta_author = $_SESSION['user_firstname'] .' '. $_SESSION['user_lastname'];
@@ -403,7 +403,7 @@ if($prefs_publisher_mode == 'overwrite') {
 
 echo tpl_form_control_group('',$lang['f_meta_author'],'<input class="form-control" type="text" name="page_meta_author" value="'.$page_meta_author.'">');
 echo tpl_form_control_group('',$lang['f_meta_keywords'],'<input class="form-control" type="text" name="page_meta_keywords" value="'.$page_meta_keywords.'" data-role="tagsinput">');
-echo tpl_form_control_group('',$lang['f_meta_description'],"<textarea name='page_meta_description' class='form-control cntValues' rows='5'>$page_meta_description</textarea>");
+echo tpl_form_control_group('',$lang['f_meta_description'],"<textarea name='page_meta_description' class='form-control cntValues' rows='5'>".html_entity_decode($page_meta_description)."</textarea>");
 
 echo '</div>';
 echo '<div class="col-md-6">';

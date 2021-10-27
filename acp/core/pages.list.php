@@ -59,9 +59,9 @@ for($i=0;$i<$cnt_result;$i++) {
 
 	$page_id = $result[$i]['page_id'];
 	$page_sort = $result[$i]['page_sort'];
-	$page_linkname = fc_return_clean_value($result[$i]['page_linkname']);
-	$page_title = fc_return_clean_value($result[$i]['page_title']);
-	$page_description = fc_return_clean_value($result[$i]['page_meta_description']);
+	$page_linkname = $result[$i]['page_linkname'];
+	$page_title = $result[$i]['page_title'];
+	$page_description = $result[$i]['page_meta_description'];
 	$page_status = $result[$i]['page_status'];
 	$page_lastedit = $result[$i]['page_lastedit'];
 	$page_lastedit_from = $result[$i]['page_lastedit_from'];
