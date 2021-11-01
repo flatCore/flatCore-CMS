@@ -56,8 +56,12 @@ if(is_array($bcmenu)) {
 	}
 }
 
-$arr_mainmenu = array_filter(array_values($mainmenu));
-$arr_subnmenu = array_filter(array_values($submenu));
+if(is_array($mainmenu)) {
+	$arr_mainmenu = array_filter(array_values($mainmenu));
+}
+if(is_array($submenu)) {
+	$arr_subnmenu = array_filter(array_values($submenu));
+}
 
 /* get the last key - it's the Home Link  */
 $last_key = array_key_last($arr_mainmenu);

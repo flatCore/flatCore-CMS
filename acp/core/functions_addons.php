@@ -42,6 +42,7 @@ function get_all_moduls() {
 
 	$mdir = "../modules";
 	$cntMods = 0;
+	$arr_iMods = array();
 	$scanned_directory = array_diff(scandir($mdir), array('..', '.','.DS_Store'));
 		
 	foreach($scanned_directory as $mod_folder) {
