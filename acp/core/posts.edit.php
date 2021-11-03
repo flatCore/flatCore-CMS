@@ -237,7 +237,7 @@ for($i=0;$i<count($cats);$i++) {
 	}
 	$checkboxes_cat .= '<div class="form-check">';
 	$checkboxes_cat .= '<input class="form-check-input" id="cat'.$i.'" type="checkbox" name="post_categories[]" value="'.$cats[$i]['cat_id'].'" '.$checked.'>';
-	$checkboxes_cat .= '<label class="form-check-label" for="cat'.$i.'">'.$category.'</label>';
+	$checkboxes_cat .= '<label class="form-check-label" for="cat'.$i.'">'.$category.' <small>('.$cats[$i]['cat_lang'].')</small></label>';
 	$checkboxes_cat .= '</div>';
 }
 
