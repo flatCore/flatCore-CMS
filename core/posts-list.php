@@ -343,6 +343,7 @@ foreach($get_posts as $k => $post) {
 		$this_entry = str_replace("{post_price_net}", $post_price_net, $this_entry);
 		$this_entry = str_replace("{post_price_tax}", $tax, $this_entry);
 		$this_entry = str_replace("{post_currency}", $get_posts[$k]['post_product_currency'], $this_entry);
+		$this_entry = str_replace("{post_product_amount}", $get_posts[$k]['post_product_amount'], $this_entry);
 		$this_entry = str_replace("{post_product_unit}", $get_posts[$k]['post_product_unit'], $this_entry);
 		$this_entry = str_replace("{post_product_price_label}", $get_posts[$k]['post_product_price_label'], $this_entry);
 		$this_entry = str_replace("{price_tag_label_gross}", $lang['price_tag_label_gross'], $this_entry);
