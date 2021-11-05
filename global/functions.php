@@ -188,7 +188,7 @@ function fc_write_comment($data) {
 	if($data['input_name'] != '' && $data['input_mail'] != '' && $data['input_comment'] != '') {
 	
 		foreach($data as $key => $val) {
-			$$key = htmlspecialchars(strip_tags($val)); 
+			$$key = sanitizeUserInputs($val);
 		}
 		
 		$type = 'p';
