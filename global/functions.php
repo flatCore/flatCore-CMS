@@ -136,21 +136,35 @@ function fc_list_comments_thread($comments, $sorting, $tpl, $root=0, $level=0) {
 	    }
 	    	    
       $comment_time = date('d.m.Y H:i',$comments[$key]['comment_time']);
+      
+      /* default avatar image */
       $comment_avatar = '/styles/default/images/avatar.jpg';
+      
+      /* if it's a registrated user and if there is an avatar, use it */
+      if($comments[$key]['comment_author_id'] != '') {
+	      $check_avatar = './content/avatars/'.md5($comments[$key]['comment_author']).'.png';
+	      if(is_file($check_avatar)) {
+		      $comment_avatar = '/content/avatars/'.md5($comments[$key]['comment_author']).'.png';
+	      }      
+      }
+      
+      
+
+      
       $comment_avatar_img = '<img src="'.$comment_avatar.'" class="img-avatar img-fluid rounded-circle" alt="" title="'.$comments[$key]['comment_author'].'">';
-			$this_comment = $tpl;
+		$this_comment = $tpl;
 			
-			$this_comment = str_replace('{comment_author}', $comments[$key]['comment_author'], $this_comment);
-			$this_comment = str_replace('{comment_text}', $comments[$key]['comment_text'], $this_comment);
-			$this_comment = str_replace('{comment_time}', $comment_time, $this_comment);
-			$this_comment = str_replace('{comment_avatar}', $comment_avatar_img, $this_comment);
-			$this_comment = str_replace('{comment_id}', $comments[$key]['comment_id'], $this_comment);
-			$a_url = '?cid='.$comments[$key]['comment_id'].'#comment-form';
-			$this_comment = str_replace('{url_answer_comment}', $a_url, $this_comment);
-			$this_comment = str_replace('{level}', $level, $this_comment);
+		$this_comment = str_replace('{comment_author}', $comments[$key]['comment_author'], $this_comment);
+		$this_comment = str_replace('{comment_text}', $comments[$key]['comment_text'], $this_comment);
+		$this_comment = str_replace('{comment_time}', $comment_time, $this_comment);
+		$this_comment = str_replace('{comment_avatar}', $comment_avatar_img, $this_comment);
+		$this_comment = str_replace('{comment_id}', $comments[$key]['comment_id'], $this_comment);
+		$a_url = '?cid='.$comments[$key]['comment_id'].'#comment-form';
+		$this_comment = str_replace('{url_answer_comment}', $a_url, $this_comment);
+		$this_comment = str_replace('{level}', $level, $this_comment);
 						
-			$entry_str .= '<div class="comment-level comment-level-'.$level.'">';
-			$entry_str .=  $this_comment;
+		$entry_str .= '<div class="comment-level comment-level-'.$level.'">';
+		$entry_str .=  $this_comment;
            
       $entry_str .= fc_list_comments_thread($comments, $sorting, $tpl, $comment_id, $level+1);
       $entry_str .= '</div>';
@@ -212,6 +226,12 @@ function fc_write_comment($data) {
 			$parent_id = (int) $data['parent_id'];
 		}
 		
+		if(is_numeric($_SESSION['user_id'])) {
+			$comment_author_id = $_SESSION['user_id'];
+		} else {
+			$comment_author_id = '';
+		}
+		
 		
 		$input_comment = nl2br($input_comment);
 		
@@ -223,6 +243,7 @@ function fc_write_comment($data) {
 			"comment_status" =>  $comment_status,
 			"comment_time" =>  $comment_time,
 			"comment_author" =>  $input_name,
+			"comment_author_id" =>  $comment_author_id,
 			"comment_author_mail" =>  $input_mail,
 			"comment_text" =>  $input_comment
 		]);
