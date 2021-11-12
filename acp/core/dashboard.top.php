@@ -53,7 +53,7 @@ for($i=0;$i<$cnt_user;$i++) {
 	}
 	
 	if($i < 5) {
-		$user_registerdate = @date("d.m.Y",$user_result[$i]['user_registerdate']);
+		$user_registerdate = @date("d.m.Y",intval($user_result[$i]['user_registerdate']));
 		$user_id = $user_result[$i]['user_id'];
 		$user_nick = $user_result[$i]['user_nick'];
 		$user_name = $user_result[$i]['user_firstname'] . " " . $user_result[$i]['user_lastname'];
@@ -204,7 +204,7 @@ for($i=0;$i<$cnt_comments;$i++) {
 	
 	if($i < 5) {
 
-		$last_edit = @date("d.m.Y",$allComments[$i]['comment_lastedit']);
+		$last_edit = @date("d.m.Y",intval($allComments[$i]['comment_lastedit']));
 		$comment_text = first_words(strip_tags(html_entity_decode($allComments[$i]['comment_text'])),4);
 		
 		$top5comments .= '<div class="list-group-item list-group-item-ghost list-group-item-action flex-column align-items-start">';

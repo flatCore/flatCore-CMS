@@ -5,6 +5,7 @@ $table_name = "fc_categories";
 
 $cols = array(
   "cat_id" => 'INTEGER(50) NOT NULL PRIMARY KEY AUTO_INCREMENT',
+  "cat_lang"  => "VARCHAR(255) NOT NULL DEFAULT ''",
   "cat_name" => "VARCHAR(255) NOT NULL DEFAULT ''",
   "cat_name_clean" => "VARCHAR(255) NOT NULL DEFAULT ''",
   "cat_hash" => "VARCHAR(255) NOT NULL DEFAULT ''",

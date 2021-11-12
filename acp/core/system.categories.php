@@ -3,6 +3,8 @@
 //prohibit unauthorized access
 require 'core/access.php';
 
+$arr_lang = get_all_languages();
+
 foreach($_POST as $key => $val) {
 	$$key = @htmlspecialchars($val, ENT_QUOTES); 
 }
@@ -15,6 +17,7 @@ if(isset($_POST['update_category'])) {
 
 	$data = $db_content->update("fc_categories", [
 			"cat_name" =>  $cat_name,
+			"cat_lang" =>  $cat_lang,
 			"cat_name_clean" =>  $cat_name_clean,
 			"cat_sort" =>  $cat_sort,
 			"cat_description" =>  $cat_description,
@@ -34,6 +37,7 @@ if(isset($_POST['new_category'])) {
 	
 	$data = $db_content->insert("fc_categories", [
 			"cat_name" =>  $cat_name,
+			"cat_lang" =>  $cat_lang,
 			"cat_name_clean" =>  $cat_name_clean,
 			"cat_sort" =>  $cat_sort,
 			"cat_description" =>  $cat_description,
@@ -76,6 +80,7 @@ if(isset($_POST['editcat']) && ($_POST['editcat'] != '')) {
 	
 	$cat_name = $get_category['cat_name'];
 	$cat_sort = $get_category['cat_sort'];
+	$cat_lang = $get_category['cat_lang'];
 	$cat_thumbnail = $get_category['cat_thumbnail'];
 	$cat_description = $get_category['cat_description'];
 }
@@ -124,9 +129,37 @@ foreach($images as $img) {
 }
 $choose_tmb .= '</select>';
 
+echo '<div class="row">';
+echo '<div class="col-md-9">';
+
 echo '<div class="form-group">';
 echo '<label>'.$lang['category_thumbnail'].'</label>';
 echo $choose_tmb;
+echo '</div>';
+
+echo '</div>';
+echo '<div class="col-md-3">';
+
+if($cat_lang == '' && $prefs_default_language != '') {
+	$cat_lang = $prefs_default_language;
+}
+
+$select_cat_language  = '<select name="cat_lang" class="custom-select form-control">';
+for($i=0;$i<count($arr_lang);$i++) {
+	$lang_sign = $arr_lang[$i]['lang_sign'];
+	$lang_desc = $arr_lang[$i]['lang_desc'];
+	$lang_folder = $arr_lang[$i]['lang_folder'];
+	$select_cat_language .= "<option value='$lang_folder'".($cat_lang == "$lang_folder" ? 'selected="selected"' :'').">$lang_sign</option>";	
+}
+$select_cat_language .= '</select>';
+
+
+echo '<div class="form-group">';
+echo '<label>'.$lang['f_page_language'].'</label>';
+echo $select_cat_language;
+echo '</div>';
+
+echo '</div>';
 echo '</div>';
 
 
@@ -167,7 +200,7 @@ foreach($all_categories as $cats) {
 	echo '</div>';
 	echo '<div class="col-md-9">';
 	echo '<div class="card-body">';
-	echo '<h5 class="card-title">'.$cats['cat_name'].'</h5>';
+	echo '<h5 class="card-title">'.$cats['cat_name'].' ('.$cats['cat_lang'].')</h5>';
 	echo '<p class="card-text">'.$cats['cat_description'].'</p>';
 	echo '<form action="?tn=system&sub=categories" method="POST">';
 	echo '<button name="editcat" value='.$cats['cat_id'].'" class="btn btn-fc">'.$icon['edit'].' '.$lang['edit'].'</button>';

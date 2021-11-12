@@ -2,7 +2,7 @@
 
 $start_search = "true";
 
-$s = sanitizeUserInputs($s);
+$s = sanitizeUserInputs($_REQUEST['s']);
 
 if($s != '' && strlen($s) < 3) {
 	$start_search = "false";

@@ -2,9 +2,8 @@
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Upload into {post_id}</h5>
+        <h5 class="modal-title">Upload into Gallery ID #{post_id}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
@@ -26,6 +25,7 @@
 
 <form action="acp.php?tn=posts&sub=edit" method="POST" id="reload_form">
 	<input type="hidden" name="post_id" value="{post_id}">
+	<input type="hidden" name="csrf_token" value="{token}">
 </form>
 
 <script>

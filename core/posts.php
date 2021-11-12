@@ -41,10 +41,17 @@ $nav_categories_list = '';
 foreach($all_categories as $cats) {
 	
 	$this_nav_cat_item = $tpl_nav_cats_item;
-	$show_category_title = $cats['cat_name'];
+	$show_category_title = $cats['cat_description'];
+	$show_category_name = $cats['cat_name'];
 	$this_nav_cat_item = str_replace('{nav_item_title}', $show_category_title, $this_nav_cat_item);
+	$this_nav_cat_item = str_replace('{nav_item_name}', $show_category_name, $this_nav_cat_item);
 	$cat_link = '/'.$fct_slug.$cats['cat_name_clean'].'/';
 	$this_nav_cat_item = str_replace('{nav_item_link}', $cat_link, $this_nav_cat_item);
+
+	/* show only categories that match the language */
+	if($page_contents['page_language'] !== $cats['cat_lang']) {
+		continue;
+	}
 	
 	if($cats['cat_name_clean'] == $array_mod_slug[0]) {
 		// show only posts from this category

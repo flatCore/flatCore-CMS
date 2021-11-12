@@ -21,25 +21,54 @@ if(empty($_SESSION['visitor_csrf_token'])) {
 	$_SESSION['visitor_csrf_token'] = md5(uniqid(rand(), TRUE));
 }
 
+/**
+ * if there is no database config wie start the installer
+ * @var string $fc_db_content SQLite file
+ */
+
 if(!is_file('config_database.php') && !is_file("$fc_db_content")) {
 	header("location: /install/");
 	die();
 }
 
+/**
+ * connect the database
+ * @var string $db_content
+ * @var string $db_user
+ * @var string $db_statistics
+ * @var string $db_posts
+ */
+
 require FC_CORE_DIR.'/database.php';
+
+
+/**
+ * maintenance mode
+ */
 
 if(is_file(FC_CORE_DIR . "/maintance.html")) {
 	header("location:" . FC_INC_DIR . "/maintance.html");
 	die("We'll be back soon.");
 }
 
+/**
+ * get the preferences
+ * the most important for the frontend are
+ * default information and/or metas
+ * $fc_prefs['prefs_pagename'] $fc_prefs['prefs_pagetitle'] $fc_prefs['prefs_pagesubtitle'] $fc_prefs['prefs_pagedescription'] $fc_prefs['prefs_pagefavicon']
+ * language
+ * $fc_prefs['prefs_default_language']
+ * user management
+ * $fc_prefs['prefs_userregistration'] $fc_prefs['prefs_showloginform']
+ * templates
+ * $fc_prefs['prefs_template'] $fc_prefs['prefs_template_layout'] $fc_prefs['prefs_template_stylesheet']
+ */
+
 $fc_prefs = fc_get_preferences();
 $languagePack = $fc_prefs['prefs_default_language'];
-$_SESSION['fc_admin_helpers'] = array();
 
-/* all requests -> strip_tags */
-foreach($_REQUEST as $key => $val) {
-	$$key = strip_tags($val); 
+if($_SESSION['user_class'] == "administrator") {
+	$_SESSION['fc_admin_helpers'] = array();
 }
 
 /* reserved $_GET['p'] parameters */
@@ -51,7 +80,9 @@ $a_allowed_p = array('register', 'account', 'profile', 'search', 'sitemap', 'log
  * RewriteRule ^(.*)$ index.php?query=$1 [L,QSA]
  *
  */
- 
+
+$query = fc_clean_query($_GET['query']);
+
 if(!isset($query)) {
 	$query = '/';
 }
@@ -60,11 +91,20 @@ if(is_file(FC_CONTENT_DIR.'/plugins/query.controller.php')) {
 	include FC_CONTENT_DIR.'/plugins/query.controller.php';
 }
 
+if($query == 'logout' OR $_GET['goto'] == 'logout') {
+	$user_logout = fc_end_user_session();
+	$query = '/';
+}
+
 $fct_slug = $query;
 
 $active_mods = fc_get_active_mods();
 $cnt_active_mods = count($active_mods);
 
+/**
+ * get existing url from cache file
+ * @var array $existing_url
+ */
 include FC_CONTENT_DIR . '/cache/active_urls.php';
 if(in_array("$query", $existing_url)) {
 	$query_is_cached = true;
@@ -114,6 +154,10 @@ if($p == "") {
 	fc_check_funnel_uri($fct_slug);
 	fc_check_shortlinks($fct_slug);
 }
+
+/**
+ * show preview
+ */
 
 if(isset($preview) AND ($_SESSION['user_class'] == "administrator")) {
 	$p = (int) $preview;
@@ -190,17 +234,20 @@ if(is_dir("lib/lang/$page_contents[page_language]") AND ($page_contents['page_la
 /* include language */
 require(FC_CORE_DIR . "/lib/lang/index.php");
 
-/* preferences (data from fc_get_preferences() ) */
+/**
+ * preferences (data from fc_get_preferences() )
+ * in the future we will only use the format $fc_prefs['key']
+ */
 foreach($fc_prefs as $key => $val) {
 	$$key = stripslashes($val); 
 }
 
 
-if($prefs_dateformat == '') {
+if($fc_prefs['prefs_dateformat'] == '') {
 	$prefs_dateformat = 'Y-m-d';
 }
 
-if($prefs_timeformat == '') {
+if($fc_prefs['prefs_timeformat'] == '') {
 	$prefs_timeformat = 'H:i:s';
 }
 
@@ -216,16 +263,16 @@ $smarty->compile_dir = 'content/cache/templates_c/';
 $smarty->cache_dir = 'content/cache/cache/';
 $cache_id = md5($fct_slug.$mod_slug);
 
-if($prefs_smarty_cache == 1) {
+if($fc_prefs['prefs_smarty_cache'] == 1) {
 	$smarty->setCaching(Smarty::CACHING_LIFETIME_CURRENT);
-	if(is_numeric($prefs_smarty_cache_lifetime)) {
-		$smarty->setCacheLifetime($prefs_smarty_cache_lifetime);
+	if(is_numeric($fc_prefs['prefs_smarty_cache_lifetime'])) {
+		$smarty->setCacheLifetime($fc_prefs['prefs_smarty_cache_lifetime']);
 	}
 } else {
 	$smarty->setCaching(Smarty::CACHING_OFF);
 }
 
-if($prefs_smarty_compile_check == 1) {
+if($fc_prefs['prefs_smarty_compile_check'] == 1) {
 	$smarty->compile_check = true;
 } else {
 	$smarty->compile_check = false;
@@ -242,13 +289,14 @@ if(isset($_POST['reset_theme'])) {
  * this option is intended for theme developers
  */
 
-if($prefs_usertemplate == 'on' OR $prefs_usertemplate == 'overwrite') {
+if($fc_prefs['prefs_usertemplate'] == 'on' OR $fc_prefs['prefs_usertemplate'] == 'overwrite') {
 	
 	/* set the theme - defined by the user */
 	if(isset($_POST['set_theme'])) {
 		$set_theme = 'styles/'.sanitizeUserInputs($_POST['set_theme']);
 		if(is_dir($set_theme)) {
 			$_SESSION['prefs_template'] = sanitizeUserInputs($_POST['set_theme']);
+			unset($_SESSION['prefs_template_stylesheet']);
 		}
 	}
 	
@@ -301,7 +349,7 @@ if(is_dir('styles/'.$page_contents['page_template'].'/templates/')) {
 	$fc_template = $page_contents['page_template'];
 	$fc_template_layout = $page_contents['page_template_layout'];
 	$fc_template_stylesheet = $page_contents['page_template_stylesheet'];
-	
+
 	if($prefs_usertemplate == 'overwrite') {
 		/* the user theme has the same tpl file, so we can overwrite */
 		if(is_file('./styles/'.$_SESSION['prefs_template'].'/templates/'.$page_contents['page_template_layout'])) {
@@ -336,7 +384,10 @@ if(is_file("styles/$fc_template/php/index.php")) {
 
 $smarty->template_dir = 'styles/'.$fc_template.'/templates/';
 
-
+/**
+ * assign all translations to smarty
+ * @var array $lang
+ */
 foreach($lang as $key => $val) {
 	$smarty->assign("lang_$key", $val);
 }
@@ -354,6 +405,10 @@ if($page_contents['page_type_of_use'] == 'display_post') {
 	include 'core/posts.php';
 }
 
+/**
+ * categories for the blog
+ * @var array $tpl_nav_cats
+ */
 $smarty->assign('nav_categories', $tpl_nav_cats);
 
 $tyo_search = fc_get_type_of_use_pages('search');
@@ -371,6 +426,14 @@ if($cnt_legal_pages > 0) {
 $smarty->assign('languagePack', $languagePack);
 $smarty->assign("page_id", $page_contents['page_id']);
 
+if($user_logout != '') {
+	$smarty->assign("msg_status","alert alert-success",true);
+	$smarty->assign('msg_text', $lang['msg_logout'],true);
+	$output = $smarty->fetch("status_message.tpl");
+	$smarty->assign('msg_content', $output);
+}
+
+
 require 'core/user_management.php';
 require 'core/switch.php';
 
@@ -378,11 +441,6 @@ if(is_file('styles/'.$fc_template.'/php/options.php')) {
 	include 'styles/'.$fc_template.'/php/options.php';
 }
 
-// parse template vars
-$smarty->assign('prefs_pagename', $prefs_pagename);
-$smarty->assign('prefs_pagetitle', $prefs_pagetitle);
-$smarty->assign('prefs_pagesubtitle', $prefs_pagesubtitle);
-$smarty->assign('prefs_pagedescription', $prefs_pagedescription);
 $smarty->assign("p","$p");
 $smarty->assign("fc_inc_dir", FC_INC_DIR);
 
@@ -407,7 +465,7 @@ $smarty->assign('append_head_code', $append_head_code);
 $smarty->assign('prepend_body_code', $prepend_body_code);
 $smarty->assign('append_body_code', $append_body_code);
 
-
+$store = '';
 if($_SESSION['user_class'] == "administrator") {
 	$store = $_SESSION['fc_admin_helpers'];
 
@@ -433,7 +491,6 @@ if($_SESSION['user_class'] == "administrator") {
 	}
 }
 
-
 // display the template
 $smarty->display('index.tpl',$cache_id);
 
@@ -444,7 +501,7 @@ if(!isset($preview)) {
 }
 
 /* track more statistics */
-if($prefs_logfile == "on") {
+if($fc_prefs['prefs_logfile'] == "on") {
 	include_once 'core/logfile.php';
 }
 

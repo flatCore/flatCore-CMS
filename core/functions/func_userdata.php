@@ -139,7 +139,7 @@ function fc_user_login($user,$psw,$acp=NULL,$remember=NULL) {
 	unset($result);
 	
 	if($acp == TRUE) {
-		$fc_db_user = '../'.$fc_db_user;
+		//$fc_db_user = '../'.$fc_db_user;
 	}
 		
 	$login_hash  = md5($psw.$user);
@@ -205,19 +205,19 @@ function fc_user_login($user,$psw,$acp=NULL,$remember=NULL) {
 		/* set cookie to remember user */
 		if($remember == TRUE) {
 			$identifier = randpsw($length=24);
-			$securitytoken = sha1(randpsw($length=24));
+			$securitytoken = randpsw($length=24);
+			$securitytoken_hashed = sha1($securitytoken);
 			$time = time();
 			
 			$db_user->insert("fc_tokens", [
 				"user_id" => $result['user_id'],
 				"identifier" => "$identifier",
-				"securitytoken" => "$securitytoken",
+				"securitytoken" => "$securitytoken_hashed",
 				"time" => "$time"
 			]);			
-			
-			
-			setcookie("identifier",$identifier,time()+(3600*24*365)); //1 Jahr Gültigkeit
-			setcookie("securitytoken",$securitytoken,time()+(3600*24*365)); //1 Jahr Gültigkeit			
+						
+			setcookie("identifier",$identifier,time()+(3600*24*365));
+			setcookie("securitytoken",$securitytoken,time()+(3600*24*365));		
 		}
 		
 		
@@ -241,6 +241,9 @@ function fc_user_login($user,$psw,$acp=NULL,$remember=NULL) {
  */
  
 function fc_start_user_session($ud) {
+	
+	/* reset session id */
+	session_regenerate_id(true);
 
 	$_SESSION['user_id'] = $ud['user_id'];
 	$_SESSION['user_nick'] = $ud['user_nick'];
@@ -269,5 +272,41 @@ function fc_start_user_session($ud) {
 	if($arr_drm[8] == "drm_acp_sensitive_files")	{  $_SESSION['drm_acp_sensitive_files'] = "allowed";  }
 	
 }
+
+
+/**
+ * logout
+ * end user session
+ */
+
+function fc_end_user_session() {
+	
+	global $db_user;
+
+	if(is_numeric($_SESSION['user_id'])) {
+		// delete data from fc_tokens
+		$db_user->delete("fc_tokens",[
+			"AND" => [
+			"user_id" => $_SESSION['user_id']
+			]
+		]);
+		
+		unset($_COOKIE['identifier']);
+		unset($_COOKIE['securitytoken']);
+		unset($_COOKIE['permit_cookies']);
+		setcookie('identifier', '', 1);
+		setcookie('securitytoken', '', 1);
+		setcookie('permit_cookies', '', 1);
+		$cookiesSet = array_keys($_COOKIE);
+		for ($x=0;$x<count($cookiesSet);$x++) setcookie($cookiesSet[$x],"",1);
+	}
+	session_destroy();
+	unset($_SESSION['user_nick']);
+	setcookie("PHPSESSID", "", 1);
+	
+	return 'logout';
+	
+}
+
 
 ?>

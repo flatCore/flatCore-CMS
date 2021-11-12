@@ -85,6 +85,15 @@ $check_is_dir[] = "../acp/";
 $needed_phpversion = "7.3";
 $loaded_extensions = get_loaded_extensions();
 
+/**
+ * check if .htaccess exists
+ * if not, rename _htaccess
+ */
+
+if(!is_file("../.htaccess")) {
+	copy("../_htaccess","../.htaccess");
+}
+
 echo '<fieldset>';
 echo '<legend>'.$lang['files_and_folders'].'</legend>';
 

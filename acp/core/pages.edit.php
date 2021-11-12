@@ -153,8 +153,8 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	$page_sort = "$page_position.$page_order";
 	
 	$page_version = $_POST['page_version'];
-	$page_title = strip_tags($_POST['page_title']);
-	$page_linkname = strip_tags($_POST['page_linkname']);
+	$page_title = fc_return_clean_value($_POST['page_title']);
+	$page_linkname = fc_return_clean_value($_POST['page_linkname']);
 	
 	if($page_position == "portal") {
 		$page_sort = "portal";
@@ -236,6 +236,7 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	$page_meta_robots = implode(',',$_POST['page_meta_robots']);
 	$page_meta_description = fc_return_clean_value($page_meta_description);
 	$page_meta_keywords = fc_return_clean_value($page_meta_keywords);
+	$page_meta_author = fc_return_clean_value($page_meta_author);
 	
 	/* addon injection */
 	$page_addon_string = '';

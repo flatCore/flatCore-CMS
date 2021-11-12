@@ -9,6 +9,8 @@ flatCore is a lightweight Content Management System based on PHP and SQLite. MyS
 * Official Site: https://flatcore.org
 * License: GNU GENERAL PUBLIC LICENSE Version 3
 
+:star: give us a star, it motivates us a lot.
+
 ### Usermanual and Developer Documentation
 * https://flatcore.org/documentation/
 * https://flatcore.org/de/dokumentation/

@@ -155,24 +155,25 @@ if($_SESSION['user_nick'] == "") {
 	
 	
 	// show data in form	
-	if(is_file("content/avatars/".md5($_SESSION['user_nick']) . ".png")){
+	if(is_file("content/avatars/".md5($_SESSION['user_nick']) . ".png")) {
 
 		$avatar_url = FC_INC_DIR . "/content/avatars/".md5($_SESSION['user_nick']) . ".png";
 		$smarty->assign("avatar_url","$avatar_url");
 		
-		$link_avatar_delete_url = $fc_base_url.'?p=profile&delete_avatar=true';
+		$link_avatar_delete_url = $fc_base_url.'profile/';
 		$link_avatar_delete = '<a href="'.$link_avatar_delete_url.'">'.$lang['link_delete_avatar'].'</a>';
 		$link_avatar_delete_text = $lang['link_delete_avatar'];
 		
 		$smarty->assign("link_avatar_delete","$link_avatar_delete",true);
 		$smarty->assign("link_avatar_delete_url","$link_avatar_delete_url",true);
 		$smarty->assign("link_avatar_delete_text","$link_avatar_delete_text",true);
-		
-		if($delete_avatar == true) {
-			unlink("content/avatars/".md5($_SESSION['user_nick']) . ".png");
-			$smarty->assign("avatar_url","",true);
-			$smarty->assign("link_avatar_delete","",true);
-		}
+	}
+	
+	/* delete avatar */
+	if(isset($_POST['delete_avatar'])) {
+		unlink("content/avatars/".md5($_SESSION['user_nick']) . ".png");
+		$smarty->assign("avatar_url","",true);
+		$smarty->assign("link_avatar_delete","",true);
 	}
 	
 	

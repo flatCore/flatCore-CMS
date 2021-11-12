@@ -285,7 +285,7 @@ function fc_store_admin_helper($trigger,$val) {
 	global $languagePack;
 	
 	/* skip this function for visitors */
-	if($_SESSION['user_class'] != 'administrator') {
+	if($_SESSION['user_class'] !== 'administrator') {
 		return;
 	}
 	
@@ -304,6 +304,7 @@ function fc_store_admin_helper($trigger,$val) {
 		$stored_sc .= '<form action="/acp/acp.php?tn=pages&sub=shortcodes" method="POST" class="d-inline p-1">';
 		$stored_sc .= '<button class="btn btn-sm btn-secondary">'.$val.'</button>';
 		$stored_sc .= '<input type="hidden" name="edit_shortcode" value="'.$val.'">';
+		$stored_sc .= '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 		$stored_sc .= '</form>';
 		
 		$store['shortcodes'][] = $stored_sc;
@@ -332,6 +333,7 @@ function fc_store_admin_helper($trigger,$val) {
 		$stored_snippet .= '<form action="/acp/acp.php?tn=pages&sub=snippets" method="POST" class="d-inline p-1">';
 		$stored_snippet .= '<button class="btn btn-sm btn-secondary">'.$val.'</button>';
 		$stored_snippet .= '<input type="hidden" name="snip_id" value="'.$id.'">';
+		$stored_snippet .= '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 		$stored_snippet .= '</form>';
 		
 		$store['snippet'][] = $stored_snippet;
@@ -362,63 +364,11 @@ function bbcode_encode($text) {
 
 
 
-/**
- * remove tags [include] [script] [plugin] and [snippet]
- */
-
-function clean_visitors_input($text) {
-
-	$text = preg_replace("/\[snippet\](.*?)\[\/snippet\]/esi","",$text);
-	$text = preg_replace("/\[script\](.*?)\[\/script\]/esi","",$text);
-	$text = preg_replace("/\[include\](.*?)\[\/include\]/esi","",$text);
-	$text = preg_replace("/\[plugin=(.*?)\](.*?)\[\/plugin\]/esi","",$text);
-	
-	return $text;
-
-} // eol bbcode
 
 
 
 
-/**
- * clean filenames
- * used for upload and SEO URL
- */
 
-function clean_filename($str) {
-
-	$str = strtolower($str);
-
-	$a = array('ä',    'ö',    'ü',    'ß',    ' - ',    ' + ',    '_',    ' / ',    '/'); 
-	$b = array('ae',   'oe',   'ue',   'ss',   '-',      '-',      '_',    '-',      '-');
-	$str = str_replace($a, $b, $str);
-
-	$str = preg_replace('/\s/s', '_', $str);  // replace blanks -> '_'
-	$str = preg_replace('/[^a-z0-9_-]/isU', '', $str); // only a-z 0-9
-
-	$str = trim($str); 
-
-	return $str; 
-}  
-
-
-/**
- * sanitize user inputs
- *
- */
-
-function sanitizeUserInputs($str,$type='str',$flags=NULL) {
-	
-	if($type == 'str') {
-		$str = trim($str);	
-		$str = strip_tags($str);
-		$str = filter_var($str, FILTER_SANITIZE_STRING);
-		$str = htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
-	}
-	
-	return $str;
-	
-}
 
 /**
  * Generate cryptographically secure random strings
