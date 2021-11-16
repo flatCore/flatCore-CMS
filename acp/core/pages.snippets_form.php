@@ -287,7 +287,7 @@ echo '</div>';
 
 echo '<div class="alert alert-dark" style="padding:2px 3px;">';
 echo '<strong>'.$lang['label_notes'].':</strong>';
-echo '<textarea class="masked-textarea" name="textlib_notes" rows="5">'.$textlib_notes.'</textarea>';
+echo '<textarea class="masked-textarea" name="textlib_notes" rows="5">'.html_entity_decode($textlib_notes).'</textarea>';
 echo '</div>';
 
 echo '<div class="well well-sm">';
