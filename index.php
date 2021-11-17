@@ -129,7 +129,7 @@ for($i=0;$i<$cnt_active_mods;$i++) {
 }
 
 
-if($query == '/') {
+if($fct_slug == '/' OR $fct_slug == '') {
 	list($page_contents,$fc_nav) = fc_get_content('portal','page_sort');
 } else {
 	list($page_contents,$fc_nav) = fc_get_content($fct_slug,'permalink');
