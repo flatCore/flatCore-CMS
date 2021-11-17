@@ -182,7 +182,8 @@ if(is_array($fails)) {
 	
 }
 
-echo '<a href="/install/" class="btn btn-primary">Reload</a>';
+echo '<a href="/install/" class="btn btn-primary me-1">Reload</a>';
+echo '<a href="/acp/acp.php?tn=dashboard" class="btn btn-primary">ACP</a>';
 
 
 if(is_file('../maintance.html')) {
