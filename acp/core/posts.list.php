@@ -428,6 +428,10 @@ if($cnt_filter_posts > 0) {
 				$post_product_price_addition = 0;
 			}
 			
+			if(empty($get_posts[$i]['post_product_price_net'])) {
+				$get_posts[$i]['post_product_price_net'] = 0;
+			}
+			
 			$post_price_net = str_replace('.', '', $get_posts[$i]['post_product_price_net']);
 			$post_price_net = str_replace(',', '.', $post_price_net);
 			

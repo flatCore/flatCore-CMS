@@ -186,14 +186,16 @@ if($page_thumbnail == "") {
 	$page_thumbnail = $prefs_pagethumbnail;
 } else {
 	$page_thumbnail_array = explode("<->", $page_thumbnail);
-	$page_thumbnail = $page_thumbnail_array[0];
-	if(count($page_thumbnail_array > 0)) {
-		$page_thumbnail = array_shift($page_thumbnail_array);
-		foreach($page_thumbnail_array as $t) {
-			$t = str_replace('/content/', $fc_base_url.'content/', $t);
-			$thumb[] = $t;
+	if(is_array($page_thumbnail_array)) {
+		$page_thumbnail = $page_thumbnail_array[0];
+		if(count($page_thumbnail_array) > 0) {
+			$page_thumbnail = array_shift($page_thumbnail_array);
+			foreach($page_thumbnail_array as $t) {
+				$t = str_replace('/content/', $fc_base_url.'content/', $t);
+				$thumb[] = $t;
+			}
+			$smarty->assign('page_thumbnails', $thumb);
 		}
-		$smarty->assign('page_thumbnails', $thumb);
 	}
 }
 

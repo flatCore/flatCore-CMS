@@ -67,9 +67,16 @@ function fc_get_categories() {
  * $filter['status'] -> all|1|2
  */
 
-function fc_get_comments($start=0,$limit=100,$filter) {
+function fc_get_comments($start,$limit,$filter) {
 	
 	global $db_content;
+	
+	if(empty($start)) {
+		$start = 0;
+	}
+	if(empty($limit)) {
+		$limit = 100;
+	}	
 	
 	$filter_type = $filter['type'];
 	if($filter_type == 'all') {

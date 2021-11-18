@@ -83,11 +83,14 @@ if(isset($_POST['save_snippet'])) {
 	$snippet_theme = $snippet_themes[0];
 	$snippet_template = $snippet_themes[1];
 	
-	if(count($_POST['picker1_images']) > 1) {		
-		$snippet_thumbnail = implode("<->", array_unique($_POST['picker1_images']));
-	} else {
-		$st = $_POST['picker1_images'];
-		$snippet_thumbnail = $st[0].'<->';
+	$snippet_thumbnail = '';
+	if(is_array($_POST['picker1_images'])) {
+		if(count($_POST['picker1_images']) > 1) {		
+			$snippet_thumbnail = implode("<->", array_unique($_POST['picker1_images']));
+		} else {
+			$st = $_POST['picker1_images'];
+			$snippet_thumbnail = $st[0].'<->';
+		}
 	}
 	
 	if($snippet_name == '') {
@@ -377,7 +380,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 		$get_snip_lang = $snippets_list[$i]['textlib_lang'];
 		$get_snip_title = $snippets_list[$i]['textlib_title'];
 		$get_snip_content = $snippets_list[$i]['textlib_content'];
-		$get_snip_lastedit = $snippets_list[$i]['textlib_lastedit'];
+		$get_snip_lastedit = (int) $snippets_list[$i]['textlib_lastedit'];
 		$get_snip_lastedit_from = $snippets_list[$i]['textlib_lastedit_from'];
 		$get_snip_keywords = $snippets_list[$i]['textlib_keywords'];	
 		$get_snip_labels = explode(',',$snippets_list[$i]['textlib_labels']);

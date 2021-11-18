@@ -84,7 +84,9 @@ if($_POST['delete_the_user']) {
 if($_POST['save_the_user']) {
 
 	foreach($_POST as $key => $val) {
-		$$key = @strip_tags($val); 
+		if(is_string($val)) {
+			$$key = strip_tags($val);
+		}
 	}
 	
 	// drm -string- to save in database
@@ -121,10 +123,13 @@ if($_POST['save_the_user']) {
 			"user_id[!]" => $edituser
 		]);
 		
-		if(count($check_user) > 0) {
-			$error_message .= $lang['msg_user_exists'].'<br>';
-			$db_status = "locked";
+		if(is_array($check_user)) {
+			if(count($check_user) > 0) {
+				$error_message .= $lang['msg_user_exists'].'<br>';
+				$db_status = "locked";
+			}			
 		}
+
 			
 		if($db_status == "unlocked") {
 			$columns_update = [
