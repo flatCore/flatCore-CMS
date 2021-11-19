@@ -110,6 +110,10 @@ if(in_array("$query", $existing_url)) {
 	$query_is_cached = true;
 }
 
+/**
+ * loop through installed modules
+ */
+
 for($i=0;$i<$cnt_active_mods;$i++) {
 	
 	$mod_permalink = $active_mods[$i]['page_permalink'];
@@ -122,7 +126,7 @@ for($i=0;$i<$cnt_active_mods;$i++) {
 			$mod_slug = substr($query, $permalink_length);
 			$fct_slug = substr("$query",0,$permalink_length);
 			if($query_is_cached == true) {
-  			$fct_slug = $query;
+  				$fct_slug = $query;
 			}
 		}
 	}	
@@ -134,6 +138,8 @@ if($fct_slug == '/' OR $fct_slug == '') {
 } else {
 	list($page_contents,$fc_nav) = fc_get_content($fct_slug,'permalink');
 }
+
+/* include modul index.php if exists */
 
 foreach($active_mods as $mods) {
 	if(is_file('modules/'.$mods['page_modul'].'/global/index.php')) {
@@ -507,4 +513,3 @@ if($fc_prefs['prefs_logfile'] == "on") {
 
 
 ?>
-
