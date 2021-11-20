@@ -20,8 +20,6 @@ if($counter != '') {
 		], [
 		"page_id" => "$hits_page_id"
 		]);
-		
-	echo $db_statistics->last();
 	
 } else {
 		
