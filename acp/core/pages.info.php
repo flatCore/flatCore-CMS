@@ -40,10 +40,16 @@ if(is_file('../../config_database.php')) {
 	
 	
 	define("CONTENT_DB", "$fc_db_content");
+	define("STATS_DB", "$fc_db_stats");
 
 	$db_content = new Medoo([
 		'type' => 'sqlite',
 		'database' => CONTENT_DB
+	]);
+	
+	$db_statistics = new Medoo([
+		'type' => 'sqlite',
+		'database' => STATS_DB
 	]);
 	
 	
