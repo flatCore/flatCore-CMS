@@ -224,7 +224,7 @@ if(in_array("/$fct_slug", $deleted_resources)) {
 
 /* if is set page_redirect, we can stop here and go straight to the desired location */
 if($page_contents['page_redirect'] != '') {
-	include_once('core/tracker.php');
+	include_once 'core/tracker.php';
 	$redirect = $page_contents['page_redirect'];
 	$redirect_code = (int) $page_contents['page_redirect_code'];
 	header("location: $redirect",TRUE,$redirect_code);
