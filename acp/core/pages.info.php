@@ -51,6 +51,7 @@ if(is_file('../../config_database.php')) {
 
 require_once 'access.php';
 require_once 'functions.php';
+require_once '../../global/functions.php';
 require '../../lib/lang/'.$_SESSION['lang'].'/dict-backend.php';
 
 $set_lang = $_SESSION['lang'];
@@ -66,16 +67,20 @@ if(isset($_POST['pageid'])){
 $page_data = $db_content->get("fc_pages", "*", [
 		"page_id" => "$page_id"
 	]);
-	
 
+$page_impressions = $db_statistics->get("hits", "*", [
+		"page_id" => "$page_id"
+	]);
+	
 echo '<table class="table table-sm">';
-echo '<tr><td class="text-end">ID</td><td><code>'.fc_return_clean_value($page_data['page_id']).'</code></td></tr>';
+echo '<tr><td class="text-end">ID</td><td><code>'.$page_data['page_id'].'</code></td></tr>';
 echo '<tr><td class="text-end">Hash</td><td><code>'.fc_return_clean_value($page_data['page_hash']).'</code></td></tr>';
 echo '<tr><td class="text-end">'.$lang['f_page_classes'].'</td><td><code>'.fc_return_clean_value($page_data['page_classes']).'</code></td></tr>';
+echo '<tr><td class="text-end text-nowrap">Page impressions</td><td><code>'.$page_impressions['counter'].'</code></td></tr>';
 
-echo '<tr><td class="text-end">'.$lang['f_page_title'].'</td><td><code>'.fc_return_clean_value($page_data['page_title']).'</code></td></tr>';
-echo '<tr><td class="text-end">'.$lang['f_meta_description'].'</td><td><code>'.fc_return_clean_value($page_data['page_meta_description']).'</code></td></tr>';
-echo '<tr><td class="text-end">'.$lang['f_meta_keywords'].'</td><td><code>'.fc_return_clean_value($page_data['page_meta_keywords']).'</code></td></tr>';
+echo '<tr><td class="text-end">'.$lang['f_page_title'].'</td><td><code>'.$page_data['page_title'].'</code></td></tr>';
+echo '<tr><td class="text-end">'.$lang['f_meta_description'].'</td><td><code>'.$page_data['page_meta_description'].'</code></td></tr>';
+echo '<tr><td class="text-end">'.$lang['f_meta_keywords'].'</td><td><code>'.$page_data['page_meta_keywords'].'</code></td></tr>';
 if($page_data['page_thumbnail'] != '') {
 	echo '<tr><td class="text-end">'.$lang['page_thumbnail'].'</td>';
 	echo '<td>';
