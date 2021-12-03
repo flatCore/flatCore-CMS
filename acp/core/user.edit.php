@@ -110,7 +110,7 @@ if($_POST['save_the_user']) {
 			$set_psw = 'true';
 		}
 
-	}
+	}	
 	
 	// modus update
 	if(is_numeric($edituser)) {
@@ -253,6 +253,17 @@ if($_POST['save_the_user']) {
 	}
 	
 	
+	/**
+	 * upload avatar
+	 * convert to png and square format
+	 * rename file to md5(username)
+	 */
+	 
+
+	if(isset($_FILES['avatar'])) {
+		fc_upload_avatar($_FILES,$user_nick);
+	}
+	
 	
 	/**
 	 * update table fc_groups
@@ -326,7 +337,7 @@ if(is_numeric($edituser)){
 		
 	//no delete_button for myself
 	if($user_nick != $_SESSION['user_nick']){
-		$delete_button = '<input class="btn btn-danger btn-sm w-100" type="submit" name="delete_the_user" value="'.$lang['delete_user'].'" onclick="return confirm(\''.$lang['confirm_delete_user'].'\')">';
+		$delete_button = '<button class="btn btn-danger btn-sm w-100" type="submit" name="delete_the_user" onclick="return confirm(\''.$lang['confirm_delete_user'].'\')">'.$icon['trash_alt'].'</button>';
 	}
 
 } else {
@@ -335,7 +346,7 @@ if(is_numeric($edituser)){
 	echo"<h3>$lang[h_modus_newuser]</h3>";
 	echo '</div>';
 	
-	$submit_button = "<input class='btn btn-save' type='submit' name='save_the_user' value='$lang[save_new_user]'>";
+	$submit_button = "<input class='btn btn-save w-100' type='submit' name='save_the_user' value='$lang[save_new_user]'>";
 	$delete_button = "";
 }
 

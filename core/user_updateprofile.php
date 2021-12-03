@@ -65,50 +65,16 @@ if($_SESSION['user_nick'] == "") {
 	 */
 
 	if(isset($_POST['upload_avatar'])) {
-	
-		$uploads_dir = "content/avatars";
-		$max_width = 100;
 		
-		$tmp_name = $_FILES['avatar']['tmp_name'];
-		$org_name = $_FILES['avatar']['name'];
-		$new_name = md5($_SESSION['user_nick']);
-		$new_avatar_src = $uploads_dir.'/'.$new_name.'.png';
-		
-		list($width_upl, $height_upl, $type_upl) = getimagesize($tmp_name);
-    
-		if ($width_upl > $height_upl) {
-		  $y = 0;
-		  $x = ($width_upl - $height_upl) / 2;
-		  $smallestSide = $height_upl;
-		} else {
-		  $x = 0;
-		  $y = ($height_upl - $width_upl) / 2;
-		  $smallestSide = $width_upl;
-		}
-    
-		$imgt = '';
-		if($type_upl==1) { $imgt = imagecreatefromgif($tmp_name);  }
-		if($type_upl==2) { $imgt = imagecreatefromjpeg($tmp_name);  }
-		if($type_upl==3) { $imgt = imagecreatefrompng($tmp_name);  }
-		
-		
-		if($imgt != '') {
-
-			$new_image = imagecreatetruecolor($max_width, $max_width);
-			imagecopyresampled($new_image, $imgt, 0, 0, $x, $y, $max_width, $max_width, $smallestSide, $smallestSide);
-			
-					
-			if(imagepng($new_image, $new_avatar_src,9) === true) {
-				$smarty->assign("msg_status","alert alert-success",true);
-				$smarty->assign("register_message",$lang['msg_upload_avatar_success'],true);			
-			}
-			imagedestroy($new_image);
-		
+		$upload_avatar = fc_upload_avatar($_FILES,$_SESSION['user_nick']);
+		if($upload_avatar === true) {
+			$smarty->assign("msg_status","alert alert-success",true);
+			$smarty->assign("register_message",$lang['msg_upload_avatar_success'],true);
 		} else {
 			$smarty->assign("msg_status","alert alert-danger",true);
 			$smarty->assign("register_message",$lang['msg_upload_avatar_filetype'],true);
 		}
-		
+			
 	}
 	
 

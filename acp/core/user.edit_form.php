@@ -10,7 +10,7 @@ if($_GET['sub'] == "new"){
 	$sub = "edit";
 }
 
-echo "<form action='acp.php?tn=user&sub=$sub' class='form-horizontal' method='POST'>";
+echo '<form action="acp.php?tn=user&sub='.$sub.'" class="form-horizontal" method="POST" enctype="multipart/form-data">';
 
 $custom_fields = get_custom_user_fields();
 sort($custom_fields);
@@ -60,27 +60,6 @@ echo '<legend>'.$lang['f_user_status'].'</legend>';
 echo $select_user_status;
 echo '</fieldset>';
 
-
-
-
-
-if($user_newsletter == "none" OR $user_newsletter == ""){
-	$user_newsletter = "none";
-} else if($user_newsletter == "html"){
-	$checked2 = "checked";
-} else if($user_newsletter == "text"){
-	$checked3 = "checked";
-}
-
-$select_nwsl .= tpl_radio('user_newsletter','none','nwsl_no',$lang['f_user_newsletter_none'],($user_newsletter == "none" ? 'checked' :''));	
-$select_nwsl .= tpl_radio('user_newsletter','html','nwsl_html',$lang['f_user_newsletter_html'],($user_newsletter == "html" ? 'checked' :''));
-$select_nwsl .= tpl_radio('user_newsletter','text','nwsl_txt',$lang['f_user_newsletter_text'],($user_newsletter == "text" ? 'checked' :''));
-
-
-echo '<fieldset>';
-echo '<legend>'.$lang['f_user_newsletter'].'</legend>';
-echo $select_nwsl;
-echo '</fieldset>';
 
 echo '</div>';
 echo '<div class="col-md-6">';
@@ -203,8 +182,6 @@ echo tpl_checkbox('drm_can_publish','drm_can_publish','check_pub',$lang['drm_use
 echo '<hr>';
 echo tpl_checkbox('drm_acp_files','drm_acp_files','check_files',$lang['drm_files'],$checked_files);
 
-
-
 echo '<hr>';
 echo tpl_checkbox('drm_acp_system','drm_acp_system','check_system',$lang['drm_system'],$checked_system);
 echo '<hr>';
@@ -263,13 +240,18 @@ if(is_file("$user_avatar_path")) {
 } else {
 	echo '<p class="text-center"><img src="images/avatar.png" class="rounded-circle avatar"></p>';
 }
+
+echo '<hr><input name="avatar" class="form-control" type="file" size="50">';
+
 echo '</fieldset>';
 
 if($user_registerdate != "") {
 	$show_registerdate = @date("d.m.Y H:i:s",$user_registerdate);
 }
 
-echo tpl_form_control_group('',$lang['f_user_registerdate'],"<pre class='form-control'>$show_registerdate</pre>");
+
+
+echo tpl_form_control_group('',$lang['f_user_registerdate'],"<pre>$show_registerdate</pre>");
 
 echo '<input type="hidden" name="user_registerdate" value="'.$user_registerdate.'">';
 echo '<input  type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
@@ -277,8 +259,10 @@ if(is_numeric($edituser)) {
 	echo '<input  type="hidden" name="edituser" value="'.$edituser.'">';
 }
 echo '<hr>';
+echo '<div class="btn-group d-flex" role="group">';
 echo $delete_button;
 echo $submit_button;
+echo '</div>';
 echo '</div>';
 
 echo '</div>';
