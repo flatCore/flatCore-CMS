@@ -449,6 +449,11 @@ $lang['label_comments_status2'] = 'Public Comments';
 $lang['label_comments_max_entries'] = 'Maximum number of posts per thread';
 $lang['label_comments_max_level'] = 'Maximum depth of a thread';
 
+$lang['label_carts'] = 'Carts';
+$lang['carts_deactivated'] = 'Deactivate shopping carts';
+$lang['carts_for_registered'] = 'Enable shopping carts for registered users';
+$lang['carts_for_all'] = 'Enable shopping carts for all users';
+
 $lang['customize_database'] = 'Customize database';
 $lang['migrate_database'] = 'Migrate database';
 
