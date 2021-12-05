@@ -9,7 +9,7 @@
 
 ini_set("url_rewriter.tags", '');
 session_start();
-error_reporting(0);
+error_reporting(E_ALL ^E_NOTICE);
 header("X-Frame-Options: SAMEORIGIN");
 
 $fc_start_time = microtime(true);
@@ -65,7 +65,10 @@ if(is_file(FC_CORE_DIR . "/maintance.html")) {
  */
 
 $fc_prefs = fc_get_preferences();
-$languagePack = $fc_prefs['prefs_default_language'];
+$lang_dir = $fc_prefs['prefs_default_language'];
+
+include 'lib/lang/'.$lang_dir.'/index.php';
+$languagePack = $lang_sign;
 
 if($_SESSION['user_class'] == "administrator") {
 	$_SESSION['fc_admin_helpers'] = array();
