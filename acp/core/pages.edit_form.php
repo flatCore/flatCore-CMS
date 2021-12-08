@@ -733,22 +733,15 @@ echo '<div class="card-body" style="padding-left:30px;padding-right:30px;">';
 
 
 /* Select Language */
-$arr_lang = get_all_languages();
 
-if($page_language == '' && $prefs_default_language != '') {
-	$page_language = $prefs_default_language;
+if($page_language == '' && $default_lang_code != '') {
+	$page_language = $default_lang_code;
 }
 
 $select_page_language  = '<select name="page_language" class="custom-select form-control">';
-for($i=0;$i<count($arr_lang);$i++) {
-
-	$lang_sign = $arr_lang[$i]['lang_sign'];
-	$lang_desc = $arr_lang[$i]['lang_desc'];
-	$lang_folder = $arr_lang[$i]['lang_folder'];
-	$select_page_language .= "<option value='$lang_folder'".($page_language == "$lang_folder" ? 'selected="selected"' :'').">$lang_sign ($lang_desc)</option>";	
-
-} // eo $i
-
+foreach($lang_codes as $page_lang) {
+	$select_page_language .= "<option value='$page_lang'".($page_language == "$page_lang" ? 'selected="selected"' :'').">$page_lang</option>";
+}
 $select_page_language .= '</select>';
 
 echo '<div class="form-group">';

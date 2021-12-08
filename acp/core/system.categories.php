@@ -140,16 +140,13 @@ echo '</div>';
 echo '</div>';
 echo '<div class="col-md-3">';
 
-if($cat_lang == '' && $prefs_default_language != '') {
-	$cat_lang = $prefs_default_language;
+if($cat_lang == '' && $default_lang_code != '') {
+	$cat_lang = $default_lang_code;
 }
 
 $select_cat_language  = '<select name="cat_lang" class="custom-select form-control">';
-for($i=0;$i<count($arr_lang);$i++) {
-	$lang_sign = $arr_lang[$i]['lang_sign'];
-	$lang_desc = $arr_lang[$i]['lang_desc'];
-	$lang_folder = $arr_lang[$i]['lang_folder'];
-	$select_cat_language .= "<option value='$lang_folder'".($cat_lang == "$lang_folder" ? 'selected="selected"' :'').">$lang_sign</option>";	
+foreach($lang_codes as $lang_code) {
+	$select_cat_language .= "<option value='$lang_code'".($cat_lang == "$lang_code" ? 'selected="selected"' :'').">$lang_code</option>";	
 }
 $select_cat_language .= '</select>';
 

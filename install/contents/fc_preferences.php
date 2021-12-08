@@ -43,6 +43,7 @@ $cols = array(
   "prefs_pagesglobalhead" => "VARCHAR(500) NOT NULL DEFAULT ''",
   "prefs_nbr_page_versions" => 'INTEGER(12)',
   "prefs_default_language" => "VARCHAR(20) NOT NULL DEFAULT ''",
+  "prefs_deactivated_languages" => "VARCHAR(100) NOT NULL DEFAULT ''",
   "prefs_imagesuffix" => "VARCHAR(20) NOT NULL DEFAULT ''",
   "prefs_maximagewidth" => "VARCHAR(20) NOT NULL DEFAULT ''",
   "prefs_maximageheight" => "VARCHAR(20) NOT NULL DEFAULT ''",

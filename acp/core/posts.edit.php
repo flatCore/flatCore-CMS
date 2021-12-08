@@ -209,29 +209,21 @@ if($modus != 'update' && !isset($_GET['new'])) {
 
 
 
-
-
-
 /* language */
-$arr_lang = get_all_languages();
-$select_lang = '<select name="post_lang" class="form-control custom-select">';
-for($i=0;$i<count($arr_lang);$i++) {
-	$lang_folder = $arr_lang[$i]['lang_folder'];
-	
-	if(strpos($post_data['post_lang'], "$lang_folder") !== false) {
-		$selected = 'selected';
-	} else {
-		$selected = '';
-	}
-	
-	if($post_data['post_lang'] == "" AND $lang_folder == "$_SESSION[lang]") {
-		$selected = 'selected';
-	}
 
-	$select_lang .= '<option value="'.$lang_folder.'" '.$selected.'>'.$lang_folder.'</option>';
-	
+$post_lang = $post_data['post_lang'];
+
+if($post_lang == '' && $default_lang_code != '') {
+	$post_lang = $default_lang_code;
+}
+
+$select_lang  = '<select name="post_lang" class="custom-select form-control">';
+foreach($lang_codes as $lang_code) {
+	$select_lang .= "<option value='$lang_code'".($post_lang == "$lang_code" ? 'selected="selected"' :'').">$lang_code</option>";	
 }
 $select_lang .= '</select>';
+
+
 
 /* categories */
 

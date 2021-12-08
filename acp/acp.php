@@ -157,6 +157,33 @@ foreach($fc_preferences as $k => $v) {
    $$k = stripslashes($v);
 }
 
+/**
+ * $default_lang_code (string) the default language code
+ */
+ 
+if($prefs_default_language != '') {
+	include '../lib/lang/'.$prefs_default_language.'/index.php';
+	$default_lang_code = $lang_sign; // de|en|es ...
+}
+
+/**
+ * $lang_codes (array) all available lang codes
+ * hide languages from $prefs_deactivated_languages
+ */
+$arr_lang = get_all_languages();
+if($prefs_deactivated_languages != '') {
+	$arr_lang_deactivated = json_decode($prefs_deactivated_languages);
+}
+
+foreach($arr_lang as $l) {
+	if(is_array($arr_lang_deactivated) && (in_array($l['lang_folder'],$arr_lang_deactivated))) {
+		continue;
+	}
+	
+	$langs[] = $l['lang_sign'];
+}
+$lang_codes = array_values(array_unique($langs));
+
 /* build absolute URL */
 if($fc_preferences['prefs_cms_ssl_domain'] != '') {
 	$fc_base_url = $prefs_cms_ssl_domain . $prefs_cms_base;
@@ -542,9 +569,9 @@ if(isset($set_acptheme)) {
 			<?php
 				$arr_lang = get_all_languages();
 				for($i=0;$i<count($arr_lang);$i++) {
-	$lang_icon = '<img src="../lib/lang/'.$arr_lang[$i]['lang_folder'].'/flag.png" style="vertical-align: baseline; width:18px; height:auto;">';
-	echo '<a class="btn btn-fc" href="acp.php?set_lang='.$arr_lang[$i]['lang_folder'].'">'.$lang_icon.' '.$arr_lang[$i]['lang_desc'].'</a> ';
-}
+					$lang_icon = '<img src="../lib/lang/'.$arr_lang[$i]['lang_folder'].'/flag.png" style="vertical-align: baseline; width:18px; height:auto;">';
+					echo '<a class="btn btn-fc" href="acp.php?set_lang='.$arr_lang[$i]['lang_folder'].'">'.$lang_icon.' '.$arr_lang[$i]['lang_desc'].'</a> ';
+				}
 			?>
 			</p>
 			<hr>

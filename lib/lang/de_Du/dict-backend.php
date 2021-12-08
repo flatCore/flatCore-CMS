@@ -86,6 +86,7 @@ $lang['delete_user'] = "Benutzer löschen";
 $lang['system_preferences'] = "Einstellungen";
 $lang['system_mail'] = "E-Mail";
 $lang['system_language'] = "Sprache";
+$lang['system_deactivate_languages'] = 'Sprachen ausblenden';
 $lang['system_images'] = "Bilder/Uploads";
 $lang['system_textlib'] = "Textbausteine";
 $lang['system_design'] = "Layout & Design";

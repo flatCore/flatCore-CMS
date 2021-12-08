@@ -180,16 +180,13 @@ echo '<label class="btn btn-sm btn-fc"><input type="radio" class="btn-check" nam
 echo '</div>';
 echo '</div>';
 
-if($textlib_lang == '' && $prefs_default_language != '') {
-	$textlib_lang = $prefs_default_language;
+if($textlib_lang == '' && $default_lang_code != '') {
+	$textlib_lang = $default_lang_code;
 }
 
 $select_textlib_language  = '<select name="sel_language" class="custom-select form-control">';
-for($i=0;$i<count($arr_lang);$i++) {
-	$lang_sign = $arr_lang[$i]['lang_sign'];
-	$lang_desc = $arr_lang[$i]['lang_desc'];
-	$lang_folder = $arr_lang[$i]['lang_folder'];
-	$select_textlib_language .= "<option value='$lang_folder'".($textlib_lang == "$lang_folder" ? 'selected="selected"' :'').">$lang_sign</option>";	
+foreach($lang_codes as $lang_code) {
+	$select_textlib_language .= "<option value='$lang_code'".($textlib_lang == "$lang_code" ? 'selected="selected"' :'').">$lang_code</option>";	
 }
 $select_textlib_language .= '</select>';
 
