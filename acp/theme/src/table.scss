@@ -23,14 +23,15 @@
 
 .table-hover tbody tr:hover {
 	color: $font_color;
-	background: lighten($widget_background,2);
+	background: fade($widget_background,.2);
 }
 
-.table-striped tbody tr:nth-of-type(odd) {
+.table-striped tbody tr:nth-of-type(odd) > *,
+.table-striped tbody tr:nth-of-type(even) > * {
 	color: $font_color;
-	background-color: $table_striped_bg_odd;
 }
 
-.table-hover tbody tr:hover {
-	background-color: $widget_background;
+.table-hover tbody tr:nth-of-type(odd) > *,
+.table-hover tbody tr:nth-of-type(even) > * {
+	color: $font_color;
 }

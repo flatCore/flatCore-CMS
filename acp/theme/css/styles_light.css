@@ -12875,16 +12875,17 @@ textarea.form-control-lg {
 
 .table-hover tbody tr:hover {
   color: #222;
-  background: rgba(255, 255, 255, 0.45);
+  background: fade(rgba(255, 255, 255, 0.45), 0.2);
 }
 
-.table-striped tbody tr:nth-of-type(odd) {
+.table-striped tbody tr:nth-of-type(odd) > *,
+.table-striped tbody tr:nth-of-type(even) > * {
   color: #222;
-  background-color: rgba(255, 255, 255, 0.45);
 }
 
-.table-hover tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.45);
+.table-hover tbody tr:nth-of-type(odd) > *,
+.table-hover tbody tr:nth-of-type(even) > * {
+  color: #222;
 }
 
 .form-group {
