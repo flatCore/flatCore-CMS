@@ -37,6 +37,9 @@ $lastedit = date('d.m.Y H:i',filemtime("$realpath"));
 
 
 if(isset($_POST['save'])) {
+	
+	$filesize = filesize($_POST['realpath']);
+	
 	$savedMedia = fc_write_media_data($_POST['realpath'],$_POST['title'],$_POST['notes'],$_POST['keywords'],$_POST['text'],$_POST['url'],$_POST['alt'],$_POST['set_lang'],$_POST['credit'],$_POST['priority'],$_POST['license'],time(),$filesize,$_POST['version'],$_POST['media_labels']);
 	if($savedMedia == 'success') {
 		$message = '<div class="alert alert-success alert-auto-close">'.$lang['db_changed'].'</div>';
@@ -55,21 +58,6 @@ echo '<span class="ms-3">' . $media_filename.'</span>';
 echo '</div>';
 
 /* language */
-/*
-$post_lang = $post_data['post_lang'];
-
-if($post_lang == '' && $default_lang_code != '') {
-	$post_lang = $default_lang_code;
-}
-
-$select_lang  = '<select name="post_lang" class="custom-select form-control">';
-foreach($lang_codes as $lang_code) {
-	$select_lang .= "<option value='$lang_code'".($post_lang == "$lang_code" ? 'selected="selected"' :'').">$lang_code</option>";	
-}
-$select_lang .= '</select>';
-*/
-
-//$arr_lang = get_all_languages();
 
 $langSwitch = '<div class="btn-group" role="group">';
 foreach($lang_codes as $langs) {
