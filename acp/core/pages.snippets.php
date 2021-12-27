@@ -426,6 +426,7 @@ if(((isset($_REQUEST['snip_id'])) OR ($modus == 'update')) AND (!isset($delete_s
 				}
 				$kw_string .= ' <button type="submit" class="btn btn-fc btn-xs mr-1" name="snippet_filter" value="'.$kw.'">'.$kw.'</button> ';
 			}
+			$kw_string .= '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 			$kw_string .= '</form>';
 		}
 		
