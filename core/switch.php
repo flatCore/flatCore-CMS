@@ -203,12 +203,12 @@ if($page_thumbnail == "") {
 $page_thumbnail = str_replace('../content/', $fc_base_url.'content/', $page_thumbnail);
 $page_favicon = str_replace('../content/', $fc_base_url.'content/', $page_favicon);
 
-$smarty->assign('page_title', $page_title);
+$smarty->assign('page_title', html_entity_decode($page_title));
 $smarty->assign('prefs_pagesglobalhead', $prefs_pagesglobalhead);
 $smarty->assign('page_meta_author', $page_meta_author);
 $smarty->assign('page_meta_date', date('Y-m-d', $page_lastedit));
-$smarty->assign('page_meta_keywords', $page_meta_keywords);
-$smarty->assign('page_meta_description', $page_meta_description);
+$smarty->assign('page_meta_keywords', html_entity_decode($page_meta_keywords));
+$smarty->assign('page_meta_description', html_entity_decode($page_meta_description));
 $smarty->assign('page_thumbnail', $page_thumbnail);
 $smarty->assign('page_favicon', $page_favicon);
 $smarty->assign('page_hash', $page_hash);
