@@ -22,7 +22,7 @@ if(empty($_SESSION['visitor_csrf_token'])) {
 }
 
 /**
- * if there is no database config wie start the installer
+ * if there is no database config we start the installer
  * @var string $fc_db_content SQLite file
  */
 
@@ -46,8 +46,8 @@ require FC_CORE_DIR.'/database.php';
  * maintenance mode
  */
 
-if(is_file(FC_CORE_DIR . "/maintance.html")) {
-	header("location:" . FC_INC_DIR . "/maintance.html");
+if(is_file(FC_CORE_DIR . "/maintenance.html")) {
+	header("location:" . FC_INC_DIR . "/maintenance.html");
 	die("We'll be back soon.");
 }
 

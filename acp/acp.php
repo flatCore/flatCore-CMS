@@ -515,7 +515,7 @@ if(isset($set_acptheme)) {
 	<body>
 	
 		<?php
-		if(is_file('../maintance.html')) {
+		if(is_file('../maintenance.html')) {
 			echo '<div style="padding:3px 15px;background-color:#b00;color:#000;border-bottom:1px solid #d00;">';
 			echo $lang['msg_update_modus_activated'];
 			echo '</div>';

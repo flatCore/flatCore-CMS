@@ -1,7 +1,7 @@
 <?php
 
 /**
- * copy maintance.hml to root folder
+ * copy maintenance.hml to root folder
  * update existing tables
  */
 
@@ -16,7 +16,7 @@ if($_SESSION['user_class'] != "administrator"){
 	die("PERMISSION DENIED!");
 }
 
-copy('maintance.html', '../maintance.html');
+copy('maintenance.html', '../maintenance.html');
 
 
 require '../lib/Medoo.php';
@@ -186,8 +186,8 @@ echo '<a href="/install/" class="btn btn-primary me-1">Reload</a>';
 echo '<a href="/acp/acp.php?tn=dashboard" class="btn btn-primary">ACP</a>';
 
 
-if(is_file('../maintance.html')) {
-	unlink('../maintance.html');
+if(is_file('../maintenance.html')) {
+	unlink('../maintenance.html');
 }
 
 
