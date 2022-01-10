@@ -14204,10 +14204,16 @@ div.header-bc span:first-child {
   background-color: #eee;
 }
 
-.bg-dark {
-  background-color: #ccc;
+.bg-widget {
+  background: #191919;
+  color: inherit;
 }
 
+/*
+.bg-dark {
+	background-color: #ccc;
+}
+*/
 .page-list-item .ghost-btn {
   font-size: 14px;
 }

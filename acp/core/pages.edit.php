@@ -696,7 +696,7 @@ if(is_numeric($editpage)) {
 	}
 	
 	
-	$form_title = '<h3>'.$lang['h_modus_editpage'].' - <small>'.$page_title.' (Version: '.$page_version.' ID: '.$editpage.')</small></h3>';
+	$form_title = '<h3>'.$lang['h_modus_editpage'].' <span class="badge bg-widget">ID: '.$editpage.'</span> <span class="badge bg-widget">Version: '.$page_version.'</span></h3>';
 	//set submit button
 	$submit_button = "<input type='submit' class='btn btn-save w-100' name='save_the_page' value='$lang[update_page]'>";
 	$delete_button = "<hr><input type='submit' class='btn btn-danger btn-sm w-100' name='delete_the_page' value='$lang[delete_page]' onclick=\"return confirm('$lang[confirm_delete_data]')\">";
