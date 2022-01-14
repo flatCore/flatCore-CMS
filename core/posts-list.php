@@ -145,7 +145,6 @@ foreach($get_posts as $k => $post) {
 	/* entry date */
 	$entrydate_year = date('Y',$get_posts[$k]['post_date']);
 	
-	
 	/* post images */
 	$first_post_image = '';
 	$post_images = explode("<->", $get_posts[$k]['post_images']);

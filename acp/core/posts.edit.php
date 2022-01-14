@@ -703,6 +703,7 @@ $form_tpl = str_replace('{thumbnail_list_form}', $form_sort_tpl, $form_tpl);
 $form_tpl = str_replace('{post_type}', $post_data['post_type'], $form_tpl);
 $form_tpl = str_replace('{post_id}', $post_data['post_id'], $form_tpl);
 $form_tpl = str_replace('{post_date}', $post_data['post_date'], $form_tpl);
+$form_tpl = str_replace('{post_year}', date('Y',$post_data['post_date']), $form_tpl);
 $form_tpl = str_replace('{modus}', $modus, $form_tpl);
 $form_tpl = str_replace('{token}', $_SESSION['token'], $form_tpl);
 $form_tpl = str_replace('{formaction}', '?tn=posts&sub=edit', $form_tpl);
