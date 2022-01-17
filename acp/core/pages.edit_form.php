@@ -403,7 +403,7 @@ if($prefs_publisher_mode == 'overwrite') {
 
 echo tpl_form_control_group('',$lang['f_meta_author'],'<input class="form-control" type="text" name="page_meta_author" value="'.html_entity_decode($page_meta_author).'">');
 echo tpl_form_control_group('',$lang['f_meta_keywords'],'<input class="form-control" type="text" name="page_meta_keywords" value="'.html_entity_decode($page_meta_keywords).'" data-role="tagsinput">');
-echo tpl_form_control_group('',$lang['f_meta_description'],"<textarea name='page_meta_description' class='form-control cntValues' rows='5'>".html_entity_decode($page_meta_description)."</textarea>");
+echo tpl_form_control_group('',$lang['f_meta_description'],"<textarea name='page_meta_description' class='form-control cntWords cntChars' rows='5'>".html_entity_decode($page_meta_description)."</textarea>");
 
 echo '</div>';
 echo '<div class="col-md-6">';

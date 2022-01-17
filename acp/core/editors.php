@@ -28,7 +28,7 @@ if(!is_file("$editor_styles")) {
 }
 
 if(!is_file($tinyMCE_config)) {
-	$tinyMCE_config = 'js/tinyMCE_config.js';
+	$tinyMCE_config = 'theme/js/tinyMCE_config.js';
 }
 
 $tinyMCE_config_contents = file_get_contents($tinyMCE_config);

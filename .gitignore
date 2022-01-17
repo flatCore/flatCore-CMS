@@ -42,3 +42,5 @@ config_database.php
 
 /content/SQLite/.DS_Store
 acp/theme/config.codekit3
+acp/theme/node_modules/*
+acp/theme/node_modules/**/*
