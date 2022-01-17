@@ -9,7 +9,6 @@
  * - tags-input
  * - clipboard
  * - dropzone
- * - datetimepicker
  * - image-picker
  * - dirtyforms
  * - textcounter
