@@ -214,6 +214,7 @@ if($_SESSION['checked_ghost'] == "checked") {
 }
 
 if($_SESSION['checked_redirect'] == "checked") {
+	$set_status_filter .= "OR page_redirect <> '' AND page_redirect IS NOT NULL ";
 	$btn_status_redirect = 'active';
 	$dot_redirect = $icon['check_circle'];
 }
