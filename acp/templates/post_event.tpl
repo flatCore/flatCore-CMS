@@ -127,7 +127,11 @@
 					<div class="form-group">
 						<label>{label_description}</label>
 						<textarea class='form-control' rows="4" name="post_meta_description">{post_meta_description}</textarea>
-					</div>			
+					</div>
+					<div class="form-group">
+						<label>{label_keywords}</label>
+						<input type="text" class='form-control' name="post_tags" data-role="tagsinput" value="{post_tags}">
+					</div>
 				</div>
 				
 				<div class="tab-pane fade" id="prefs">
@@ -142,10 +146,6 @@
 					<div class="form-group">
 						<label>{label_slug}</label>
 						<input class='form-control' name="post_slug" type="text" value="{post_slug}">
-					</div>
-					<div class="form-group">
-						<label>{label_keywords}</label>
-						<textarea class='form-control' name="post_tags">{post_tags}</textarea>
 					</div>
 
 					<fieldset>
