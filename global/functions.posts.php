@@ -4,7 +4,7 @@
  * get posts
  */
 	
-function fc_get_post_entries($start=0,$limit=10,$filter) {
+function fc_get_post_entries($start,$limit,$filter) {
 	
 	global $db_posts;
 	global $db_type;
@@ -17,6 +17,14 @@ function fc_get_post_entries($start=0,$limit=10,$filter) {
 	if(FC_SOURCE == 'frontend') {
 		global $fc_prefs;
 	}
+	
+	if(empty($start)) {
+		$start = 0;
+	}
+	if(empty($limit)) {
+		$limit = 10;
+	}	
+	
 		
 	$limit_str = 'LIMIT '. (int) $start;
 	
@@ -225,6 +233,10 @@ function fc_post_print_currency($number) {
  */
 
 function fc_posts_calc_price($price,$addition,$tax) {
+	
+	if(empty($price)) {
+		$price = 0;
+	}
 	
 	$price = str_replace('.', '', $price);
 	$price = str_replace(',', '.', $price);

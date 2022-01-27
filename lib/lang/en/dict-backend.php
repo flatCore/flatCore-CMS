@@ -85,6 +85,7 @@ $lang['delete_user'] = "Delete User";
 $lang['system_preferences'] = "Preferences";
 $lang['system_mail'] = "E-Mail";
 $lang['system_language'] = "Language";
+$lang['system_deactivate_languages'] = 'Hide languages';
 $lang['system_images'] = "Images/Uploads";
 $lang['system_textlib'] = "Text snippets";
 $lang['system_design'] = "Layout & Design";
@@ -448,6 +449,11 @@ $lang['label_comments_status1'] = 'Wait for approval';
 $lang['label_comments_status2'] = 'Public Comments';
 $lang['label_comments_max_entries'] = 'Maximum number of posts per thread';
 $lang['label_comments_max_level'] = 'Maximum depth of a thread';
+
+$lang['label_carts'] = 'Carts';
+$lang['carts_deactivated'] = 'Deactivate shopping carts';
+$lang['carts_for_registered'] = 'Enable shopping carts for registered users';
+$lang['carts_for_all'] = 'Enable shopping carts for all users';
 
 $lang['customize_database'] = 'Customize database';
 $lang['migrate_database'] = 'Migrate database';

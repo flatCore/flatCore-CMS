@@ -246,7 +246,7 @@ echo '<legend><strong>'.$lang['customize_user'].'</strong> - '.$lang['add_custom
 
 echo '<form action="acp.php?tn=system&sub=customize" method="POST" class="form-horizontal">';
 
-echo tpl_form_control_group('',$lang[custom_field_name],"<input type='text' class='form-control' name='field_name_user' value='$field_name'>");
+echo tpl_form_control_group('',$lang['custom_field_name'],"<input type='text' class='form-control' name='field_name_user' value='$field_name'>");
 
 $radio_field_type = "
 			<label class='radio inline'><input type='radio' $sel1 name='field_type_user' value='one'> &lt;input type=&quot;text&quot; ... </label>

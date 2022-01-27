@@ -5,7 +5,7 @@ error_reporting(0);
 
 require_once 'access.php';
 
-$set_lang = $languagePack;
+$set_lang = $default_lang_code;
 if(isset($_REQUEST['set_lang'])) {
 	$set_lang = $_REQUEST['set_lang'];
 	unset($media_data);
@@ -37,6 +37,9 @@ $lastedit = date('d.m.Y H:i',filemtime("$realpath"));
 
 
 if(isset($_POST['save'])) {
+	
+	$filesize = filesize($_POST['realpath']);
+	
 	$savedMedia = fc_write_media_data($_POST['realpath'],$_POST['title'],$_POST['notes'],$_POST['keywords'],$_POST['text'],$_POST['url'],$_POST['alt'],$_POST['set_lang'],$_POST['credit'],$_POST['priority'],$_POST['license'],time(),$filesize,$_POST['version'],$_POST['media_labels']);
 	if($savedMedia == 'success') {
 		$message = '<div class="alert alert-success alert-auto-close">'.$lang['db_changed'].'</div>';
@@ -54,13 +57,13 @@ echo '<a class="btn btn-fc" href="?tn=filebrowser&sub=browse">'.$icon['angle_lef
 echo '<span class="ms-3">' . $media_filename.'</span>';
 echo '</div>';
 
-$arr_lang = get_all_languages();
+/* language */
 
 $langSwitch = '<div class="btn-group" role="group">';
-foreach($arr_lang as $langs) {
+foreach($lang_codes as $langs) {
 	$btn_status = '';
-	if($langs['lang_sign'] == "$set_lang") { $btn_status = 'active'; }
-	$langSwitch .= '<button type="submit" class="btn btn-fc btn-sm '.$btn_status.'" name="set_lang" value="'.$langs['lang_sign'].'">'.$langs['lang_sign'].'</button>';
+	if($langs == "$set_lang") { $btn_status = 'active'; }
+	$langSwitch .= '<button type="submit" class="btn btn-fc btn-sm '.$btn_status.'" name="set_lang" value="'.$langs.'">'.$langs.'</button>';
 }
 $langSwitch .= '</div>';
 $langSwitch .= '<input type="hidden" name="file" value="'.$media_filename.'">';

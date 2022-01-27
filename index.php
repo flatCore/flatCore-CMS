@@ -22,7 +22,7 @@ if(empty($_SESSION['visitor_csrf_token'])) {
 }
 
 /**
- * if there is no database config wie start the installer
+ * if there is no database config we start the installer
  * @var string $fc_db_content SQLite file
  */
 
@@ -46,8 +46,8 @@ require FC_CORE_DIR.'/database.php';
  * maintenance mode
  */
 
-if(is_file(FC_CORE_DIR . "/maintance.html")) {
-	header("location:" . FC_INC_DIR . "/maintance.html");
+if(is_file(FC_CORE_DIR . "/maintenance.html")) {
+	header("location:" . FC_INC_DIR . "/maintenance.html");
 	die("We'll be back soon.");
 }
 
@@ -65,7 +65,10 @@ if(is_file(FC_CORE_DIR . "/maintance.html")) {
  */
 
 $fc_prefs = fc_get_preferences();
-$languagePack = $fc_prefs['prefs_default_language'];
+$lang_dir = $fc_prefs['prefs_default_language'];
+
+include 'lib/lang/'.$lang_dir.'/index.php';
+$languagePack = $lang_sign;
 
 if($_SESSION['user_class'] == "administrator") {
 	$_SESSION['fc_admin_helpers'] = array();
@@ -110,6 +113,10 @@ if(in_array("$query", $existing_url)) {
 	$query_is_cached = true;
 }
 
+/**
+ * loop through installed modules
+ */
+
 for($i=0;$i<$cnt_active_mods;$i++) {
 	
 	$mod_permalink = $active_mods[$i]['page_permalink'];
@@ -122,18 +129,20 @@ for($i=0;$i<$cnt_active_mods;$i++) {
 			$mod_slug = substr($query, $permalink_length);
 			$fct_slug = substr("$query",0,$permalink_length);
 			if($query_is_cached == true) {
-  			$fct_slug = $query;
+  				$fct_slug = $query;
 			}
 		}
 	}	
 }
 
 
-if($query == '/') {
+if($fct_slug == '/' OR $fct_slug == '') {
 	list($page_contents,$fc_nav) = fc_get_content('portal','page_sort');
 } else {
 	list($page_contents,$fc_nav) = fc_get_content($fct_slug,'permalink');
 }
+
+/* include modul index.php if exists */
 
 foreach($active_mods as $mods) {
 	if(is_file('modules/'.$mods['page_modul'].'/global/index.php')) {
@@ -218,7 +227,7 @@ if(in_array("/$fct_slug", $deleted_resources)) {
 
 /* if is set page_redirect, we can stop here and go straight to the desired location */
 if($page_contents['page_redirect'] != '') {
-	include_once('core/tracker.php');
+	include_once 'core/tracker.php';
 	$redirect = $page_contents['page_redirect'];
 	$redirect_code = (int) $page_contents['page_redirect_code'];
 	header("location: $redirect",TRUE,$redirect_code);
@@ -507,4 +516,3 @@ if($fc_prefs['prefs_logfile'] == "on") {
 
 
 ?>
-

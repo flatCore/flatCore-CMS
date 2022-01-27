@@ -509,9 +509,13 @@ function mailto_admin($subject,$message) {
  * @example record_log("$_SESSION[user_nick]","the message","5");
  */
 
-function record_log($log_trigger = 'system', $log_entry, $log_priority = '0') {
+function record_log($log_trigger, $log_entry, $log_priority = '0') {
 
 	global $db_statistics;
+	
+	if(empty($log_trigger)) {
+		$log_trigger = 'undefined';
+	}
 	
 	$log_time = time();
 	
@@ -590,11 +594,10 @@ function fc_search($query, $currentPage=1, $itemsPerPage=10) {
 	$query = str_replace('-', ' ', $query);
 	
 	$dbh = new PDO("sqlite:$fc_db_index");
-	$dbh->query("SET NAMES 'utf-8'");
 	$dbh->sqliteCreateFunction('rank', 'rankinfo', 1);
 	
 	$sqlquery = 'SELECT COUNT(*) AS totalrows FROM pages WHERE page_content LIKE :searchstring';
-	$sth = $dbh->prepare($sql);
+	$sth = $dbh->prepare($sqlquery);
 	$sth->bindValue(':searchstring', "%{$query}%", PDO::PARAM_STR);
 	$sth->execute();
 	$arr_results = $sth->fetchAll(PDO::FETCH_ASSOC);

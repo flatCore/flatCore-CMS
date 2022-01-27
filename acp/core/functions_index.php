@@ -170,6 +170,9 @@ function fc_get_links($html) {
 function fc_get_html_data($html) {
 	
 	$data = array();
+	$h1 = array();
+	$h2 = array();
+	$h3 = array();
 	
 	$d = new DOMDocument();
 	$d->loadHTML($html,LIBXML_NOERROR);

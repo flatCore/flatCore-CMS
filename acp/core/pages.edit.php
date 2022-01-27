@@ -167,12 +167,15 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	}
 	
 	/* page thumbnails */
-	if(count($_POST['picker1_images']) > 1) {
-		$page_thumbnail = implode("<->", $_POST['picker1_images']);
-	} else {
-		$pt = $_POST['picker1_images'];
-		$page_thumbnail = $pt[0];
+	if(is_array($_POST['picker1_images'])) {
+		if(count($_POST['picker1_images']) > 1) {
+			$page_thumbnail = implode("<->", $_POST['picker1_images']);
+		} else {
+			$pt = $_POST['picker1_images'];
+			$page_thumbnail = $pt[0];
+		}		
 	}
+
 	
 	$page_hash = clean_filename($_POST['page_hash']);
 
@@ -233,7 +236,11 @@ if($_POST['save_the_page'] OR $_POST['preview_the_page']) {
 	$page_template_layout 	= $select_template[1];
 	
 	/* page_meta_robots */
-	$page_meta_robots = implode(',',$_POST['page_meta_robots']);
+	$page_meta_robots = '';
+	if(is_array($_POST['page_meta_robots'])) {
+		$page_meta_robots = implode(',',$_POST['page_meta_robots']);
+	}
+	
 	$page_meta_description = fc_return_clean_value($page_meta_description);
 	$page_meta_keywords = fc_return_clean_value($page_meta_keywords);
 	$page_meta_author = fc_return_clean_value($page_meta_author);
@@ -689,7 +696,7 @@ if(is_numeric($editpage)) {
 	}
 	
 	
-	$form_title = '<h3>'.$lang['h_modus_editpage'].' - <small>'.$page_title.' (Version: '.$page_version.' ID: '.$editpage.')</small></h3>';
+	$form_title = '<h3>'.$lang['h_modus_editpage'].' <span class="badge bg-widget">ID: '.$editpage.'</span> <span class="badge bg-widget">Version: '.$page_version.'</span></h3>';
 	//set submit button
 	$submit_button = "<input type='submit' class='btn btn-save w-100' name='save_the_page' value='$lang[update_page]'>";
 	$delete_button = "<hr><input type='submit' class='btn btn-danger btn-sm w-100' name='delete_the_page' value='$lang[delete_page]' onclick=\"return confirm('$lang[confirm_delete_data]')\">";

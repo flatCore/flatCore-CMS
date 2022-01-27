@@ -86,6 +86,7 @@ $lang['delete_user'] = "Benutzer löschen";
 $lang['system_preferences'] = "Einstellungen";
 $lang['system_mail'] = "E-Mail";
 $lang['system_language'] = "Sprache";
+$lang['system_deactivate_languages'] = 'Sprachen ausblenden';
 $lang['system_images'] = "Bilder/Uploads";
 $lang['system_textlib'] = "Textbausteine";
 $lang['system_design'] = "Layout & Design";
@@ -447,6 +448,11 @@ $lang['label_comments_status1'] = 'Noch nicht freigegeben';
 $lang['label_comments_status2'] = 'Öffentliche Kommentare';
 $lang['label_comments_max_entries'] = 'Maximale Anzahl von Beiträgen pro Thread';
 $lang['label_comments_max_level'] = 'Maximale Tiefe eines Threads';
+
+$lang['label_carts'] = 'Warenkörbe';
+$lang['carts_deactivated'] = 'Warenkörbe deaktivieren';
+$lang['carts_for_registered'] = 'Warenkörbe für registrierte Benutzer aktivieren';
+$lang['carts_for_all'] = 'Warenkörbe für alle Benutzer aktivieren';
 
 $lang['customize_database'] = 'Datenbank anpassen';
 $lang['migrate_database'] = 'Datenbank migrieren';

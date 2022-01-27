@@ -214,6 +214,7 @@ if($_SESSION['checked_ghost'] == "checked") {
 }
 
 if($_SESSION['checked_redirect'] == "checked") {
+	$set_status_filter .= "OR page_redirect <> '' AND page_redirect IS NOT NULL ";
 	$btn_status_redirect = 'active';
 	$dot_redirect = $icon['check_circle'];
 }
@@ -309,18 +310,17 @@ if($sub == "list" OR $sub == "snippets") {
 	$lang_filter_box .= '<div class="list-group list-group-flush">';
 	$lang_filter_box .= '<div class="btn-group">';
 
-	for($i=0;$i<count($arr_lang);$i++) {
-		$lang_desc = $arr_lang[$i]['lang_desc'];
-		$lang_folder = $arr_lang[$i]['lang_folder'];
+
+	foreach($lang_codes as $lang_code) {
 		
 		$this_btn_status = '';
-		if(strpos("$_SESSION[checked_lang_string]", "$lang_folder") !== false) {
+		if(strpos("$_SESSION[checked_lang_string]", "$lang_code") !== false) {
 			$this_btn_status = 'active';
 		} else {
 			$this_btn_status = '';
 		}
 		
-		$lang_filter_box .= '<a href="acp.php?tn=pages&sub='.$sub.'&switchLang='.$lang_folder.'" class="btn btn-sm btn-fc '.$this_btn_status.'">'.$lang_folder.'</a>';
+		$lang_filter_box .= '<a href="acp.php?tn=pages&sub='.$sub.'&switchLang='.$lang_code.'" class="btn btn-sm btn-fc '.$this_btn_status.'">'.$lang_code.'</a>';
 	}
 	
 	$lang_filter_box .= '</div>';

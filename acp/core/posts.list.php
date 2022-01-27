@@ -112,16 +112,12 @@ if($_GET['switchLang']) {
 
 /* filter buttons for languages */
 $lang_btn_group = '<div class="btn-group">';
-for($i=0;$i<count($arr_lang);$i++) {
-	$lang_desc = $arr_lang[$i]['lang_desc'];
-	$lang_folder = $arr_lang[$i]['lang_folder'];
-	
+foreach($lang_codes as $lang_code) {
 	$this_btn_status = '';
-	if(strpos("$_SESSION[checked_lang_string]", "$lang_folder") !== false) {
+	if(strpos("$_SESSION[checked_lang_string]", "$lang_code") !== false) {
 		$this_btn_status = 'active';
 	}
-	
-	$lang_btn_group .= '<a href="acp.php?tn=posts&switchLang='.$lang_folder.'" class="btn btn-sm btn-fc '.$this_btn_status.'">'.$lang_folder.'</a>';
+	$lang_btn_group .= '<a href="acp.php?tn=posts&switchLang='.$lang_code.'" class="btn btn-sm btn-fc '.$this_btn_status.'">'.$lang_code.'</a>';
 }
 $lang_btn_group .= '</div>';
 
@@ -426,6 +422,10 @@ if($cnt_filter_posts > 0) {
 			$post_product_price_addition = $get_posts[$i]['post_product_price_addition'];
 			if($post_product_price_addition == '') {
 				$post_product_price_addition = 0;
+			}
+			
+			if(empty($get_posts[$i]['post_product_price_net'])) {
+				$get_posts[$i]['post_product_price_net'] = 0;
 			}
 			
 			$post_price_net = str_replace('.', '', $get_posts[$i]['post_product_price_net']);

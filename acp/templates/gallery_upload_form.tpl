@@ -12,6 +12,7 @@
 						<input name="file" type="file" multiple />
 					</div>
 					<input type="hidden" name="gal" value="{post_id}">
+					<input type="hidden" name="post_year" value="{post_year}">
 					<input type="hidden" name="w" value="{max_img_width}">
 					<input type="hidden" name="w_tmb" value="{max_tmb_width}">
 					<input type="hidden" name="h" value="{max_img_height}">

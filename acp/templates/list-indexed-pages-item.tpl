@@ -20,9 +20,9 @@
 		<div class="col-md-4">
 			<form action="?tn=pages&sub=index" method="POST">
 				<div class="btn-group float-end" role="group">
-				<button name="start_index_from" value="{id}">{btn_start_index}</button>
-				<button name="start_update_page" value="{id}">{btn_update_info}</button>
-				<button name="remove_page" value="{id}">{btn_remove}</button>
+					<button class="btn btn-sm btn-fc text-success" name="start_index_from" value="{id}">{btn_start_index}</button>
+					<button class="btn btn-sm btn-fc text-success" name="start_update_page" value="{id}">{btn_update_info}</button>
+					<button class="btn btn-sm btn-fc text-danger" name="remove_page" value="{id}">{btn_remove}</button>
 				</div>
 				{csrf_token}
 			</form>

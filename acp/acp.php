@@ -157,6 +157,33 @@ foreach($fc_preferences as $k => $v) {
    $$k = stripslashes($v);
 }
 
+/**
+ * $default_lang_code (string) the default language code
+ */
+ 
+if($prefs_default_language != '') {
+	include '../lib/lang/'.$prefs_default_language.'/index.php';
+	$default_lang_code = $lang_sign; // de|en|es ...
+}
+
+/**
+ * $lang_codes (array) all available lang codes
+ * hide languages from $prefs_deactivated_languages
+ */
+$arr_lang = get_all_languages();
+if($prefs_deactivated_languages != '') {
+	$arr_lang_deactivated = json_decode($prefs_deactivated_languages);
+}
+
+foreach($arr_lang as $l) {
+	if(is_array($arr_lang_deactivated) && (in_array($l['lang_folder'],$arr_lang_deactivated))) {
+		continue;
+	}
+	
+	$langs[] = $l['lang_sign'];
+}
+$lang_codes = array_values(array_unique($langs));
+
 /* build absolute URL */
 if($fc_preferences['prefs_cms_ssl_domain'] != '') {
 	$fc_base_url = $prefs_cms_ssl_domain . $prefs_cms_base;
@@ -205,14 +232,10 @@ if(isset($set_acptheme)) {
 		
 		<link rel="icon" type="image/x-icon" href="images/favicon.ico" />
 		
-		<script src="js/jquery-3.6.0.min.js"></script>
-    
-    <script language="javascript" type="text/javascript" src="../lib/js/tinymce/tinymce.min.js"></script>
-    <script language="javascript" type="text/javascript" src="../lib/js/tinymce/jquery.tinymce.min.js"></script>
-
-
-		
-		
+		<script language="javascript" type="text/javascript" src="theme/js/backend.min.js?v=20200117"></script>
+		<script language="javascript" type="text/javascript" src="theme/js/tinymce/tinymce.min.js"></script>
+		<script language="javascript" type="text/javascript" src="theme/js/tinymce/jquery.tinymce.min.js"></script>		
+		<script src="theme/js/ace/ace.js" data-ace-base="theme/js/ace" type="text/javascript" charset="utf-8"></script>
 		
 		<?php
 		if($acptheme == 'dark') {
@@ -240,233 +263,6 @@ if(isset($set_acptheme)) {
 			}
 		</script>
 		
-				
-		<!-- uploader -->
-		<script src="../lib/js/dropzone.js"></script>
-		
-		<!-- ACE Editor -->
-		<script src="../lib/js/ace/ace.js" data-ace-base="../lib/js/ace" type="text/javascript" charset="utf-8"></script>
-		
-		<!-- dirty forms -->
-		<script src="../lib/js/jquery/jquery.dirtyforms.js" type="text/javascript" charset="utf-8"></script>
-		
-
-		
-		<!-- image picker -->
-		<script type="text/javascript" src="../lib/js/jquery/image-picker.min.js"></script>
-		
-		<!-- date/time picker -->
-		<script type="text/javascript" src="js/moment.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
-		
-		<script src="js/clipboard.min.js"></script>
-		
-		<script type="text/javascript" src="js/accounting.min.js"></script>
-
-		<script type="text/javascript">
-			
-			$.extend(true, $.fn.datetimepicker.defaults, {
-		    icons: {
-		      time: 'far fa-clock',
-		      date: 'far fa-calendar',
-		      up: 'fas fa-arrow-up',
-		      down: 'fas fa-arrow-down',
-		      previous: 'fas fa-chevron-left',
-		      next: 'fas fa-chevron-right',
-		      today: 'fas fa-calendar-check',
-		      clear: 'far fa-trash-alt',
-		      close: 'far fa-times-circle'
-		    }
-		  });
-		  
-			$(function(){
-				
-				$('.dp').datetimepicker({
-					timeZone: 'UTC',
-		    	format: 'YYYY-MM-DD HH:mm'
-		  	});
-		  	
-		  	function addTax(price,addition,tax) {
-					addition = parseInt(addition);
-					tax = parseInt(tax);
-			  	price = price*(addition+100)/100;
-			  	price = price*(tax+100)/100;
-			  	return price;
-		  	}
-		  	
-		  	function removeTax(price,addition,tax) {
-					addition = parseInt(addition);
-					tax = parseInt(tax);					
-			  	price = price*100/(addition+100);
-			  	price = price*100/(tax+100);
-			  	return price;
-		  	}
-		
-				if($("#price").val()) {
-					
-					get_price_net = $("#price").val();			
-					var e = document.getElementById("tax");
-					var get_tax = e.options[e.selectedIndex].text;
-					get_tax = parseInt(get_tax);
-					get_price_addition = $("#price_addition").val();
-					get_net_calc = get_price_net.replace(/\./g, '');
-					get_net_calc = get_net_calc.replace(",",".");
-					current_gross = addTax(get_net_calc,get_price_addition,get_tax);
-					current_gross = accounting.formatNumber(current_gross,4,".",",");
-					$('#price_total').val(current_gross);
-					
-					calculated_net = addTax(get_net_calc,get_price_addition,0);
-					calculated_net = accounting.formatNumber(calculated_net,4,".",",");
-					$('#calculated_net').html(calculated_net);
-					
-					$('.show_price_tax').html(get_tax);
-					$('.show_price_addition').html(get_price_addition);
-			
-					$('#price').keyup(function(){
-						get_price_net = $('#price').val();
-						get_price_addition = $("#price_addition").val();
-						get_net_calc = get_price_net.replace(/\./g, '');
-						get_net_calc = get_net_calc.replace(",",".");
-						current_gross = addTax(get_net_calc,get_price_addition,get_tax);
-						current_gross = accounting.formatNumber(current_gross,4,".",",");
-						$('#price_total').val(current_gross);
-						
-						calculated_net = addTax(get_net_calc,get_price_addition,0);
-						calculated_net = accounting.formatNumber(calculated_net,4,".",",");
-						$('#calculated_net').html(calculated_net);
-						
-					});
-					
-					$('#price_total').keyup(function(){
-						get_brutto = $('#price_total').val();
-						get_price_addition = $("#price_addition").val();
-						get_gross_calc = get_brutto.replace(/\./g, '');
-						get_gross_calc = get_gross_calc.replace(",",".");
-						current_net = removeTax(get_gross_calc,get_price_addition,get_tax);
-						current_net = accounting.formatNumber(current_net,4,".",",");
-						$('#price').val(current_net);
-						$('#calculated_net').html(current_net);
-					});
-					
-					$('#price_addition').keyup(function(){
-						get_price_net = $('#price').val();
-						get_price_addition = $("#price_addition").val();
-						
-						get_net_calc = get_price_net.replace(/\./g, '');
-						get_net_calc = get_net_calc.replace(",",".");
-						current_gross = addTax(get_net_calc,get_price_addition,get_tax);
-						current_gross = accounting.formatNumber(current_gross,4,".",",");
-						$('#price_total').val(current_gross);
-					});
-					
-					$('#tax').bind("change keyup", function(){
-						
-						var e = document.getElementById("tax");
-						var get_tax = e.options[e.selectedIndex].text;
-						get_tax = parseInt(get_tax);
-						
-						get_price_addition = $('#price_addition').val();
-						get_price_net = $('#price').val();
-						get_net_calc = get_price_net.replace(",",".");
-		
-						current_gross = addTax(get_net_calc,get_price_addition,get_tax);
-						current_gross = accounting.formatNumber(current_gross,4,".",",");
-		
-						$('#price_total').val(current_gross);
-					});
-					
-					
-					get_price_net_s1 = $('#price_s1').val();
-					price_s1 = showScaledPrices(get_price_net_s1,get_price_addition,get_tax);
-					$('#calculated_net_s1').html(price_s1['net']);
-					$('#calculated_gross_s1').html(price_s1['gross']);
-										
-					$('#price_s1').keyup(function(){
-						get_price_net_s1 = $('#price_s1').val();
-						price = showScaledPrices(get_price_net_s1,get_price_addition,get_tax);
-						$('#calculated_net_s1').html(price['net']);
-						$('#calculated_gross_s1').html(price['gross']);
-					});
-					
-					get_price_net_s2 = $('#price_s2').val();
-					price_s2 = showScaledPrices(get_price_net_s2,get_price_addition,get_tax);
-					$('#calculated_net_s2').html(price_s2['net']);
-					$('#calculated_gross_s2').html(price_s2['gross']);
-										
-					$('#price_s2').keyup(function(){
-						get_price_net_s2 = $('#price_s2').val();
-						price = showScaledPrices(get_price_net_s2,get_price_addition,get_tax);
-						$('#calculated_net_s2').html(price['net']);
-						$('#calculated_gross_s2').html(price['gross']);
-					});
-					
-					get_price_net_s3 = $('#price_s3').val();
-					price_s3 = showScaledPrices(get_price_net_s3,get_price_addition,get_tax);
-					$('#calculated_net_s3').html(price_s3['net']);
-					$('#calculated_gross_s3').html(price_s3['gross']);
-										
-					$('#price_s3').keyup(function(){
-						get_price_net_s3 = $('#price_s3').val();
-						price = showScaledPrices(get_price_net_s3,get_price_addition,get_tax);
-						$('#calculated_net_s3').html(price['net']);
-						$('#calculated_gross_s3').html(price['gross']);
-					});
-					
-					get_price_net_s4 = $('#price_s4').val();
-					price_s4 = showScaledPrices(get_price_net_s4,get_price_addition,get_tax);
-					$('#calculated_net_s4').html(price_s4['net']);
-					$('#calculated_gross_s4').html(price_s4['gross']);
-										
-					$('#price_s4').keyup(function(){
-						get_price_net_s4 = $('#price_s4').val();
-						price = showScaledPrices(get_price_net_s4,get_price_addition,get_tax);
-						$('#calculated_net_s4').html(price['net']);
-						$('#calculated_gross_s4').html(price['gross']);
-					});
-					
-					get_price_net_s5 = $('#price_s5').val();
-					price_s5 = showScaledPrices(get_price_net_s5,get_price_addition,get_tax);
-					$('#calculated_net_s5').html(price_s5['net']);
-					$('#calculated_gross_s5').html(price_s5['gross']);
-										
-					$('#price_s5').keyup(function(){
-						get_price_net_s5 = $('#price_s5').val();
-						price = showScaledPrices(get_price_net_s5,get_price_addition,get_tax);
-						$('#calculated_net_s5').html(price['net']);
-						$('#calculated_gross_s5').html(price['gross']);
-					});
-					
-
-					
-					function showScaledPrices(price,addition,tax) {
-						addition = parseInt(addition);
-						tax = parseInt(tax);
-						
-						price = price.replace(/\./g, '');
-						price = price.replace(",",".");
-						
-						price_net = price*(addition+100)/100;
-						price_gross = price_net*(tax+100)/100;
-						
-						price_net = accounting.formatNumber(price_net,4,".",",");
-						price_gross = accounting.formatNumber(price_gross,4,".",",");
-						
-						var prices = new Object();
-						prices['net'] = price_net;
-						prices['gross'] = price_gross;
-						
-						
-						return prices;
-					}
-						
-				
-				}
-			});
-			
-		</script>
-		
-		
-
 		
 		<?php
 
@@ -488,7 +284,7 @@ if(isset($set_acptheme)) {
 	<body>
 	
 		<?php
-		if(is_file('../maintance.html')) {
+		if(is_file('../maintenance.html')) {
 			echo '<div style="padding:3px 15px;background-color:#b00;color:#000;border-bottom:1px solid #d00;">';
 			echo $lang['msg_update_modus_activated'];
 			echo '</div>';
@@ -542,9 +338,9 @@ if(isset($set_acptheme)) {
 			<?php
 				$arr_lang = get_all_languages();
 				for($i=0;$i<count($arr_lang);$i++) {
-	$lang_icon = '<img src="../lib/lang/'.$arr_lang[$i]['lang_folder'].'/flag.png" style="vertical-align: baseline; width:18px; height:auto;">';
-	echo '<a class="btn btn-fc" href="acp.php?set_lang='.$arr_lang[$i]['lang_folder'].'">'.$lang_icon.' '.$arr_lang[$i]['lang_desc'].'</a> ';
-}
+					$lang_icon = '<img src="../lib/lang/'.$arr_lang[$i]['lang_folder'].'/flag.png" style="vertical-align: baseline; width:18px; height:auto;">';
+					echo '<a class="btn btn-fc" href="acp.php?set_lang='.$arr_lang[$i]['lang_folder'].'">'.$lang_icon.' '.$arr_lang[$i]['lang_desc'].'</a> ';
+				}
 			?>
 			</p>
 			<hr>
@@ -594,18 +390,6 @@ if(isset($set_acptheme)) {
 		    </div>
 		  </div>
 		</div>
-
-
-		<!-- Add fancyBox -->
-		<script type="text/javascript" src="./js/jquery.fancybox.min.js?v=2.1.5"></script>
-		
-		<!-- Tags -->
-		<script type="text/javascript" src="../lib/js/bootstrap-tagsinput.min.js"></script>
-		<script type="text/javascript" src="../lib/js/jquery/jquery.textareaCounter.plugin.js"></script>
-
-		<!-- bootstrap -->
-		<script src="theme/bootstrap5/js/bootstrap.bundle.min.js"></script>
-		
 
 
 		<script type="text/javascript">
@@ -710,323 +494,8 @@ if(isset($set_acptheme)) {
 				  }
 				}
 
-				/* dirty forms */
-				$('form').dirtyForms();
-				$.DirtyForms.dialog = false;
-				
-				
-				$("#toggleExpand").click(function() {
-				  $('.info-collapse').toggleClass('info-hide');
-				});
-				
-					
-		  	setTimeout(function() {
-		        $(".alert-auto-close").slideUp('slow');
-				}, 2000);
-			
-				$('#showVersions').collapse('hide');
-			
-				$('[data-bs-toggle="popover"]').popover();
-				$('[data-bs-toggle="tooltip"]').tooltip();
-				
-				var clipboard = new ClipboardJS('.copy-btn');
-
-												
-				$(".fancybox-ajax").fancybox({
-					type: 'ajax',
-					minWidth: '450px',
-					height: '90%'
-				});
-				
-				$(".fancybox-iframe").fancybox({
-					type: 'iframe',
-					width: '90%',
-					height: '90%',
-					buttons: ['close']
-				});			
-				
-				
-				$("select.image-picker").imagepicker({
-		    	hide_select : true,
-		      show_label  : true
-				});
-				
-				$('.filter-images').keyup(function() {
-		    	var value = $(this).val();
-					var exp = new RegExp('^' + value, 'i');
-				
-			    $('.thumbnail').not('.selected').each(function() {
-			        var isMatch = exp.test($('p:first', this).text());
-			        $(this).toggle(isMatch);
-			    });
-				});
-				
-				Dropzone.options.myDropzone = {
-			  	init: function() {
-			    	this.on("success", function(file, responseText) {
-							file.previewTemplate.appendChild(document.createTextNode(responseText));
-						});
-					}
-				};
-				
-				Dropzone.options.dropAddons = {
-			  	init: function() {
-			    	this.on("success", function(file, responseText) {
-			      	window.location.href = "acp.php?tn=moduls&sub=u";
-						});
-					}
-				};
-	
-
-			  $('.cntValues').textareaCount({   
-			      'originalStyle': 'text-left',
-			      'displayFormat': '<span class="badge bg-secondary">#input</span> <span class="badge bg-secondary">#words</span>'  
-			  });  
-			  
-		
-
-				
-				/* css and html editor for page header */
-				if($('#CSSeditor').length != 0) {
-					var CSSeditor = ace.edit("CSSeditor");
-					var CSStextarea = $('textarea[class*=aceEditor_css]').hide();
-				  CSSeditor.$blockScrolling = Infinity;
-				  CSSeditor.getSession().setValue(CSStextarea.val());
-				  CSSeditor.setTheme("ace/theme/" + ace_theme);
-				  CSSeditor.getSession().setMode("ace/mode/css");
-				  CSSeditor.getSession().setUseWorker(false);
-				  CSSeditor.setShowPrintMargin(false);
-				  CSSeditor.getSession().on('change', function(){
-						CSStextarea.val(CSSeditor.getSession().getValue());
-					});
-				}
-				
-				if($('#HTMLeditor').length != 0) {
-					var HTMLeditor = ace.edit("HTMLeditor");
-					var HTMLtextarea = $('textarea[class*=aceEditor_html]').hide();
-				  HTMLeditor.$blockScrolling = Infinity;
-				  HTMLeditor.getSession().setValue(HTMLtextarea.val());
-				  HTMLeditor.setTheme("ace/theme/" + ace_theme);
-				  HTMLeditor.getSession().setMode({ path:'ace/mode/html', inline:true });
-				  HTMLeditor.getSession().setUseWorker(false);
-				  HTMLeditor.setShowPrintMargin(false);
-					HTMLeditor.getSession().on('change', function(){
-						HTMLtextarea.val(HTMLeditor.getSession().getValue());
-					});
-			  }
-			  
-			  /* ace editor instead of <pre>, readonly */
-			  $('textarea[data-editor]').each(function () {
-			  	var textarea = $(this);
-			  	var mode = textarea.data('editor');
-					var editDiv = $('<div>', {
-                position: 'absolute',
-                width: '100%',
-                height: '400px',
-                'class': textarea.attr('class')
-            }).insertBefore(textarea);
-            textarea.css('display', 'none');
-            var editor = ace.edit(editDiv[0]);
-            editor.$blockScrolling = Infinity;
-            editor.getSession().setValue(textarea.val());
-            editor.setTheme("ace/theme/" + ace_theme);
-            editor.getSession().setMode("ace/mode/" + mode);
-            editor.getSession().setUseWorker(false);
-            editor.setShowPrintMargin(false);
-            editor.setReadOnly(true);
-			  });
-			  
+				  
 			});
-
-	$(document).ready(function() {
-   	stretchAppContainer();
-   	
-	  $( "div.scroll-box" ).each(function() {
-	  	var divTop = $(this).offset().top;
-	   	var newHeight = $('div.app-container').innerHeight() - divTop +40;
-	   	$(this).height(newHeight);
-	  });
-
-	
-	
-	//SIDEBAR
-	
-var sidebarState = sessionStorage.getItem('sidebarState');
-var sidebarHelpState = sessionStorage.getItem('sidebarHelpState');
-
-windowWidth = $(window).width();
-
-$(window).resize(function() {
-  windowWidth = $(window).width();
-
-  if( windowWidth < 992 ){ //992 is the value of $screen-md-min in boostrap variables.scss
-		$('#page-sidebar-inner').addClass('sidebar-collapsed').removeClass('sidebar-expanded');
-		$('#page-content').addClass('sb-collapsed').removeClass('sb-expanded');
-		$('#page-sidebar').addClass('sb-collapsed').removeClass('sb-expanded');
-  } else {
-    
-    if(sidebarState){
-			$('#page-sidebar-inner').addClass('sidebar-collapsed').removeClass('sidebar-expanded');
-			$('#page-content').addClass('sb-collapsed').removeClass('sb-expanded');
-			$('#page-sidebar').addClass('sb-collapsed').removeClass('sb-expanded');
-     } else {
-		 	$('#page-sidebar-inner').addClass('sidebar-expanded').removeClass('sidebar-collapsed');
-		 	$('#page-content').addClass('sb-expanded').removeClass('sb-collapsed');
-		 	$('#page-sidebar').addClass('sb-expanded').removeClass('sb-collapsed');
-     }
-  }  
-});
-
-function setSidebarState(item,value){
-    sessionStorage.setItem(item, value);
-}
-
-function clearSidebarState(item){
-    sessionStorage.removeItem(item);
-}
-
-function collapseSidebar(){
-    $('#page-sidebar-inner').addClass('sidebar-collapsed').removeClass('sidebar-expanded');
-    $('#page-content').addClass('sb-collapsed').removeClass('sb-expanded');
-    $('#page-sidebar').addClass('sb-collapsed').removeClass('sb-expanded');
-    $('.caret_left').addClass('d-none');
-    $('.caret_right').removeClass('d-none');
-}
-
-function expandSidebar(){
-    $('#page-sidebar-inner').addClass('sidebar-expanded').removeClass('sidebar-collapsed');
-    $('#page-content').addClass('sb-expanded').removeClass('sb-collapsed');
-    $('#page-sidebar').addClass('sb-expanded').removeClass('sb-collapsed');
-    $('.caret_right').addClass('d-none');
-    $('.caret_left').removeClass('d-none');
-}
-
-function collapseHelpSidebar(){
-    $('#page-sidebar-help-inner').addClass('sidebar-help-collapsed').removeClass('sidebar-help-expanded');
-    $('#page-content').addClass('sb-help-collapsed').removeClass('sb-help-expanded');
-    $('#page-sidebar-help').addClass('sb-help-collapsed').removeClass('sb-help-expanded');
-    setSidebarState('sidebarHelpState','collapsed');
-}
-
-function expandHelpSidebar(){
-    $('#page-sidebar-help-inner').addClass('sidebar-help-expanded').removeClass('sidebar-help-collapsed');
-    $('#page-content').addClass('sb-help-expanded').removeClass('sb-help-collapsed');
-    $('#page-sidebar-help').addClass('sb-help-expanded').removeClass('sb-help-collapsed');
-    setSidebarState('sidebarHelpState','expanded');
-}
-
-
-
-$(function(){
-
-    /** check sessionStorage to expand/collapse sidebar onload **/
-    if (sidebarState == "collapsed") {
-    	collapseSidebar();
-    } else {
-
-    	if( windowWidth < 992 ) {
-				$('#page-sidebar-inner').addClass('sidebar-collapsed').removeClass('sidebar-expanded');
-				$('#page-content').addClass('sb-collapsed').removeClass('sb-expanded');
-				$('#page-sidebar').addClass('sb-collapsed').removeClass('sb-expanded');
-      } else {
-      
-      	if(sidebarState){
-					$('#page-sidebar-inner').addClass('sidebar-collapsed').removeClass('sidebar-expanded');
-					$('#page-content').addClass('sb-collapsed').removeClass('sb-expanded');
-					$('#page-sidebar').addClass('sb-collapsed').removeClass('sb-expanded');
-        } else {
-					$('#page-sidebar-inner').addClass('sidebar-expanded').removeClass('sidebar-collapsed');
-					$('#page-content').addClass('sb-expanded').removeClass('sb-collapsed');
-					$('#page-sidebar').addClass('sb-expanded').removeClass('sb-collapsed');
-				  $('.caret_right').addClass('d-none');
-					$('.caret_left').removeClass('d-none');
-				}
-      }  
-    }
- 
-	  if(sidebarHelpState == "collapsed" || typeof sidebarHelpState==='undefined' || sidebarHelpState===null){
-			collapseHelpSidebar();
-	  } else {
-			expandHelpSidebar();
-	  }
-
-
-    /** collapse the sidebar navigation **/    
-    $('#toggleNav').click(function(){
-        if(!($('#page-sidebar-inner').hasClass('sidebar-collapsed'))) { // if sidebar is not yet collapsed
-          collapseSidebar();
-          setSidebarState('sidebarState','collapsed');
-        } else {
-        	expandSidebar();
-          clearSidebarState('sidebarState');
-        }
-        return false;
-    })
-    
-    /** toggle the sidebar for help **/    
-    $('.toggle_sb_help').click(function(){
-        if(!($('#page-sidebar-help-inner').hasClass('sidebar-help-expanded'))) {
-          
-          expandHelpSidebar();
-        } else {
-        	collapseHelpSidebar();
-        }
-        return false;
-    })
-
-})
-
-//SIDEBAR
-
-
-				$('.page-info-btn').click(function(){
-				   
-				   var pageid = $(this).data('id');
-				   var csrf_token = $(this).data('token');
-
-				   // AJAX request
-				   $.ajax({
-				    url: 'core/pages.info.php',
-				    type: 'post',
-				    data: {pageid: pageid, csrf_token: csrf_token},
-				    success: function(response){ 
-				      // Add response in Modal body
-				      $('#pageInfoModal .modal-body').html(response);
-				
-				      // Display Modal
-				      $('#pageInfoModal').modal('show'); 
-				    }
-				  });
-				 });
-	
-	
-	});
-	
-
-
-  $(window).resize(function () {
-  	stretchAppContainer();
-		$( "div.scroll-box" ).each(function() {
-			var divTop = $(this).offset().top;
-		  var newHeight = $('div.app-container').innerHeight() - divTop +40;
-		  $(this).height(newHeight);
-		});
-  });
-
-
-  function stretchAppContainer() {
-  	var appContainer = $('div.app-container');
-  	if(appContainer.length) {
-	  	if(window.matchMedia('(max-width: 767px)').matches) {
-				appContainer.height('auto');
-			} else {
-    		var divTop = appContainer.offset().top;
-				var winHeight = $(window).height();
-				var divHeight = winHeight - divTop;
-				appContainer.height(divHeight);
-			}
-    }
-  }
 
    
 	<?php

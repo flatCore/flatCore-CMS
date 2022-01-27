@@ -1,6 +1,4 @@
 <?php
-
-error_reporting(E_ALL ^E_ALL);
 	
 //prohibit unauthorized access
 require 'core/access.php';
@@ -27,7 +25,9 @@ if((isset($_POST['post_id'])) && is_numeric($_POST['post_id'])) {
 if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_tmb'])) {
 	
 	foreach($_POST as $key => $val) {
-		$$key = @htmlspecialchars($val, ENT_QUOTES); 
+		if(is_string($val)) {
+			$$key = @htmlspecialchars($val, ENT_QUOTES);
+		}
 	}
 	
 	$post_releasedate = time();
@@ -67,18 +67,26 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 		$post_slug = "$post_date_year/$post_date_month/$post_date_day/$clean_title/";
 	}
 
-	$post_categories = @implode("<->", $_POST['post_categories']);
+	$post_categories = '';
+	if(is_array($_POST['post_categories'])) {
+		$post_categories = implode("<->", $_POST['post_categories']);
+	}
 	
-	$post_images_string = @implode("<->", $_POST['picker1_images']);
-	$post_images_string = "<->$post_images_string<->";
-	$post_images = $post_images_string;
+	$post_images = '';
+	if(is_array($_POST['picker1_images'])) {
+		$post_images_string = implode("<->", $_POST['picker1_images']);
+		$post_images_string = "<->$post_images_string<->";
+		$post_images = $post_images_string;
+	}
 	
 	$product_price_net = str_replace('.', '', $_POST['post_product_price_net']);
 	$product_price_net = str_replace(',', '.', $product_price_net);
 	
 	/* labels */
-	
-	$post_labels = implode(",", $_POST['post_labels']);
+	$post_labels = '';
+	if(is_array($_POST['post_labels'])) {
+		$post_labels = implode(",", $_POST['post_labels']);
+	}
 	
 	/* fix on top */
 	
@@ -201,29 +209,21 @@ if($modus != 'update' && !isset($_GET['new'])) {
 
 
 
-
-
-
 /* language */
-$arr_lang = get_all_languages();
-$select_lang = '<select name="post_lang" class="form-control custom-select">';
-for($i=0;$i<count($arr_lang);$i++) {
-	$lang_folder = $arr_lang[$i]['lang_folder'];
-	
-	if(strpos($post_data['post_lang'], "$lang_folder") !== false) {
-		$selected = 'selected';
-	} else {
-		$selected = '';
-	}
-	
-	if($post_data['post_lang'] == "" AND $lang_folder == "$_SESSION[lang]") {
-		$selected = 'selected';
-	}
 
-	$select_lang .= '<option value="'.$lang_folder.'" '.$selected.'>'.$lang_folder.'</option>';
-	
+$post_lang = $post_data['post_lang'];
+
+if($post_lang == '' && $default_lang_code != '') {
+	$post_lang = $default_lang_code;
+}
+
+$select_lang  = '<select name="post_lang" class="custom-select form-control">';
+foreach($lang_codes as $lang_code) {
+	$select_lang .= "<option value='$lang_code'".($post_lang == "$lang_code" ? 'selected="selected"' :'').">$lang_code</option>";	
 }
 $select_lang .= '</select>';
+
+
 
 /* categories */
 
@@ -703,6 +703,7 @@ $form_tpl = str_replace('{thumbnail_list_form}', $form_sort_tpl, $form_tpl);
 $form_tpl = str_replace('{post_type}', $post_data['post_type'], $form_tpl);
 $form_tpl = str_replace('{post_id}', $post_data['post_id'], $form_tpl);
 $form_tpl = str_replace('{post_date}', $post_data['post_date'], $form_tpl);
+$form_tpl = str_replace('{post_year}', date('Y',$post_data['post_date']), $form_tpl);
 $form_tpl = str_replace('{modus}', $modus, $form_tpl);
 $form_tpl = str_replace('{token}', $_SESSION['token'], $form_tpl);
 $form_tpl = str_replace('{formaction}', '?tn=posts&sub=edit', $form_tpl);

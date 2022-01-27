@@ -16,7 +16,8 @@ if($_POST['csrf_token'] !== $_SESSION['token']) {
 	die('Error: CSRF Token is invalid');
 }
 
-$year = date('Y',time());
+$year = (int) $_REQUEST['post_year'];
+
 $gallery_id = 'gallery'. (int) $_REQUEST['gal'];
 $uploads_dir = '../../content/galleries/'.$year.'/'.$gallery_id;
 

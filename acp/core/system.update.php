@@ -80,10 +80,10 @@ if(isset($_GET['a']) && $_GET['a'] == 'start') {
  * 1. load the zip file from flatcore.org...
  * 2. mkdir acp/update and acp/update/extract 
  * 		copy the zip file into /acp/update and extract the files
- * 3. copy the file maintance.html to the root (starts the update modus in frontend)
+ * 3. copy the file maintenance.html to the root (starts the update modus in frontend)
  * 4. copy the files to their destination
  * 5. run the updatescript and check up the database
- * 6. delete maintance.html from root - (ends the update modus in frontend)
+ * 6. delete maintenance.html from root - (ends the update modus in frontend)
  *
  */
 
@@ -125,7 +125,7 @@ function start_update() {
 		echo "ERROR : ".$archive->errorInfo(true);
 	}
 	
-	copy('../install/maintance.html', '../maintance.html');
+	copy('../install/maintenance.html', '../maintenance.html');
 	
 	move_new_files();
 
@@ -146,7 +146,7 @@ function start_update() {
 	 */
 	
 	rmdir_recursive("update");
-	unlink("../maintance.html");
+	unlink("../maintenance.html");
 	
 }
 

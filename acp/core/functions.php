@@ -492,11 +492,15 @@ function get_page_impression($pid) {
  * write a log message
  */
 
-function record_log($log_trigger = 'system', $log_entry, $log_priority = '0') {
+function record_log($log_trigger, $log_entry, $log_priority = '0') {
 
 	$log_time = time();
 	
 	global $db_statistics;
+	
+	if(empty($log_trigger)) {
+		$log_trigger = 'undefined';
+	}
 	
 	$db_statistics->insert("log", [
 		"log_time" => $log_time,

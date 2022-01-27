@@ -1,13 +1,11 @@
 /**
- * flatCore ACP
+ * flatCore Backend Theme
  */
 
-@import 'dropzone';
-@import 'bootstrap-datetimepicker.min';
-@import 'jquery.fancybox.min';
 
-// Bootstrap Core 5.1.1
-@import '../bootstrap5/scss/bootstrap';
+// Bootstrap
+@import '../node_modules/bootstrap/scss/bootstrap';
+@import '../node_modules/bootstrap-icons/font/bootstrap-icons';
 
 @import "cards";
 @import "table";
@@ -15,6 +13,10 @@
 @import "sidebar";
 @import "buttons";
 @import "posts";
+
+@import '../node_modules/dropzone/dist/dropzone';
+@import '../node_modules/@eonasdan/tempus-dominus/src/sass/tempus-dominus';
+
 
 ::selection {
 	background-color: $brand_primary;
@@ -37,8 +39,6 @@ html, body {
 
 
 /* Layout */
-
-
 
 a#dashboard {
 	display: block;
@@ -100,6 +100,11 @@ div#bigHeader {
 
 #currentSeconds {
 	font-weight: bold;
+}
+
+.text-count-wrapper {
+	display: inline;
+	padding: 5px;
 }
 
 .bottom-bar {
@@ -750,9 +755,16 @@ div.header-bc span:first-child {
 	background-color: #eee;
 }
 
+.bg-widget {
+	background: $widget_background;
+	color: inherit;
+}
+
+/*
 .bg-dark {
 	background-color: #ccc;
 }
+*/
 
 .page-list-item .ghost-btn {
 	font-size: 14px;
@@ -1134,6 +1146,17 @@ img.avatar {
 
 /* dropzone */
 
+.dropzone {
+	background: transparent;
+	.dz-button {
+		opacity: 0;
+	}
+	
+	.dz-preview.dz-image-preview {
+		background: transparent;
+	}
+	
+}
 
 .dropzone.dropzone-sm {
 	min-height: 200px;
@@ -1142,7 +1165,13 @@ img.avatar {
 
 form.dropzone-default {
 	border: 1px dashed #999;
-
+	min-height: 400px;
+	height: 400px;
+	
+	.dz-message {
+		height: 100%;
+	}
+	
 	.dz-default.dz-message {
 		background: transparent url(../../images/filedrop.png) no-repeat center center;
 	}

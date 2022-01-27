@@ -14,6 +14,10 @@
  *                              - 2 -> user have to fill out name and e-mail
  *                              - 3 -> accept all anonymous inputs
  *
+ * prefs_posts_products_cart 	- 1 -> deactivated
+ *										- 2 -> activated for registered users
+ *										- 3 -> activated for all users
+ *
  * prefs_comments_max_entries -> maximum number of entries per thread
  * prefs_comments_max_level -> maximum depth of a thread
  *
@@ -39,6 +43,7 @@ $cols = array(
   "prefs_pagesglobalhead" => "VARCHAR(500) NOT NULL DEFAULT ''",
   "prefs_nbr_page_versions" => 'INTEGER(12)',
   "prefs_default_language" => "VARCHAR(20) NOT NULL DEFAULT ''",
+  "prefs_deactivated_languages" => "VARCHAR(100) NOT NULL DEFAULT ''",
   "prefs_imagesuffix" => "VARCHAR(20) NOT NULL DEFAULT ''",
   "prefs_maximagewidth" => "VARCHAR(20) NOT NULL DEFAULT ''",
   "prefs_maximageheight" => "VARCHAR(20) NOT NULL DEFAULT ''",
@@ -103,6 +108,7 @@ $cols = array(
 	"prefs_posts_products_tax_alt1" => 'INTEGER(12)',
 	"prefs_posts_products_tax_alt2" => 'INTEGER(12)',
 	"prefs_posts_products_default_currency" => "VARCHAR(100) NOT NULL DEFAULT ''",
+	"prefs_posts_products_cart" => 'INTEGER(12)',
 	"prefs_posts_event_time_offset" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"prefs_posts_default_guestlist" => 'INTEGER(12)',
 	"prefs_posts_default_votings" => 'INTEGER(12)',
