@@ -2,7 +2,7 @@
 
 ## flatCore CMS
 
-flatCore is a lightweight Content Management System based on PHP and SQLite. MySQL database support is in progress and will be released soon.
+flatCore is a lightweight Content Management System based on PHP and MySQL or SQLite.
 
 <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/flatCore/flatCore-CMS"> <img alt="GitHub" src="https://img.shields.io/github/license/flatCore/flatCore-CMS"> <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/flatCore/flatCore-CMS"> [![huntr](https://cdn.huntr.dev/huntr_security_badge_mono.svg)](https://huntr.dev)
 
@@ -34,7 +34,6 @@ This branch will be merged into main branch, as soon as a new stable version is 
 + bootstrap-tagsinput - https://github.com/bootstrap-tagsinput/bootstrap-tagsinput
 + clipboard.js- https://github.com/zenorocha/clipboard.js
 + DropzoneJS - http://www.dropzonejs.com
-+ fancyBox - http://fancyapps.com/fancybox/3/
 + featherlight - https://github.com/noelboss/featherlight/
 + image-picker - https://github.com/rvera/image-picker
 + jQuery - https://jquery.com/
