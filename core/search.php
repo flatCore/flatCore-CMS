@@ -9,12 +9,17 @@ if($s != '' && strlen($s) < 3) {
 	$search_msg = $lang['msg_search_undersized'];
 }
 
+$msg_no_serach_results = get_textlib('no_search_results',$languagePack);
+if($msg_no_serach_results == '') {
+	$msg_no_serach_results = $lang['msg_search_no_results'];
+}
+
 if($s != '' && $start_search == "true") {
 
 	$sr = fc_search($s,1,10);
 	$cnt_result = count($sr);
 	if($cnt_result < 1) {
-		$search_msg = $lang['msg_search_no_results'];
+		$search_msg = $msg_no_serach_results;
 	} else {
 		$search_msg = sprintf($lang['msg_search_results'], $cnt_result);
 		

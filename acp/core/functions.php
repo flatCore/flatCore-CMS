@@ -928,7 +928,7 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 		$string_labels = "";
 	}	
 		
-	$filetype = mime_content_type("../$filename");
+	$filetype = mime_content_type(realpath($filename));
 	
 	$cnt = $db_content->count("fc_media", [
 		"AND" => [
