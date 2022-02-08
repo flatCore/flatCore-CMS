@@ -64,15 +64,36 @@ if(isset($_POST['start_index_bulk'])) {
 	fc_crawler_bulk();
 }
 
+if(isset($_POST['limit_index_items'])) {
+	$_SESSION['limit_index_items'] = (int) $_POST['limit_index_items'];
+}
+
+if(!isset($_SESSION['limit_index_items'])) {
+	$_SESSION['limit_index_items'] = 10;
+}
 
 
+// $active_btn10 ... $active_btn25 ... $active_btn0
+${active_btn.$_SESSION['limit_index_items']} = 'active';
 
-
+$cnt_all_indexed_entries = fc_get_nbr_of_indexed_pages();
 $indexed_entries = fc_get_indexed_pages();
-$cnt_indexed_entries = count($indexed_entries);
+$cnt_get_indexed_entries = count($indexed_entries);
 
 echo '<fieldset>';
-echo '<legend>' . $lang['page_index'] . ' ('.$cnt_indexed_entries.')</legend>';
+echo '<legend>' . $lang['page_index'] . ' ('.$cnt_all_indexed_entries.')</legend>';
+
+echo '<div class="well well-sm">';
+echo '<form action="?tn=pages&sub=index" method="POST">';
+echo '<button class="btn btn-fc '.$active_btn10.'" name="limit_index_items" value="10">10</button>';
+echo '<button class="btn btn-fc '.$active_btn25.'" name="limit_index_items" value="25">25</button>';
+echo '<button class="btn btn-fc '.$active_btn50.'" name="limit_index_items" value="50">50</button>';
+echo '<button class="btn btn-fc '.$active_btn100.'" name="limit_index_items" value="100">100</button>';
+echo '<button class="btn btn-fc '.$active_btn0.'" name="limit_index_items" value="0">All (slow)</button>';
+echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
+echo '</form>';
+echo '</div>';
+
 echo '<div class="scroll-box">';
 echo '<div class="p-3">';
 
@@ -93,7 +114,7 @@ $ce_h2 = 0;
 $ce_description = 0;
 $ce_title = 0;
 
-for($i=0;$i<$cnt_indexed_entries;$i++) {
+for($i=0;$i<$cnt_get_indexed_entries;$i++) {
 
 	/* reset error counter for each page */
 	$ce_page_img_title = 0;

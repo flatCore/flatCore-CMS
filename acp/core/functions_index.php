@@ -524,8 +524,16 @@ function fc_delete_url($url) {
  */
 
 function fc_get_indexed_pages() {
+	
 	$dbh = new PDO("sqlite:".INDEX_DB);
-	$sql = "SELECT * FROM pages ORDER BY indexed_time ASC";
+	
+	$limit = (int) $_SESSION['limit_index_items'];
+	
+	if($limit == 0) {
+		$sql = "SELECT * FROM pages ORDER BY indexed_time ASC";
+	} else {
+		$sql = "SELECT * FROM pages ORDER BY indexed_time ASC LIMIT 0,$limit";
+	}
 
 	$items = $dbh->query($sql);
 	$items = $items->fetchAll(PDO::FETCH_ASSOC);
@@ -533,6 +541,23 @@ function fc_get_indexed_pages() {
 	$dbh = null;
 	
 	return $items;	
+}
+
+/**
+ * get the number of entries from pages table
+ * return int
+ */
+ 
+function fc_get_nbr_of_indexed_pages() {
+	
+	$dbh = new PDO("sqlite:".INDEX_DB);
+	$sql = "SELECT COUNT(*) AS nbr FROM pages";
+	$items = $dbh->query($sql);
+	$items = $items->fetch(PDO::FETCH_ASSOC);
+	$dbh = null;
+		
+	return (int) $items['nbr'];
+	
 }
 
 
