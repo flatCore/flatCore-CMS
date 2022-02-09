@@ -7,7 +7,7 @@ require 'core/access.php';
 
 unset($result);
 /* $_SESSION[filter_string] was defined in inc.pages.php */
-$sql = "SELECT page_id, page_language, page_linkname, page_title, page_meta_description, page_sort, page_lastedit, page_lastedit_from, page_status, page_template, page_modul, page_authorized_users, page_permalink, page_redirect, page_redirect_code, page_labels, page_psw
+$sql = "SELECT page_id, page_thumbnail, page_language, page_linkname, page_title, page_meta_description, page_sort, page_lastedit, page_lastedit_from, page_status, page_template, page_modul, page_authorized_users, page_permalink, page_redirect, page_redirect_code, page_labels, page_psw
 		FROM fc_pages
 		$_SESSION[filter_string]
 		ORDER BY page_language ASC, page_sort *1 ASC, LENGTH(page_sort), page_sort ASC, page_linkname ASC";
@@ -74,6 +74,12 @@ for($i=0;$i<$cnt_result;$i++) {
 	$page_modul = $result[$i]['page_modul'];
 	$page_cnt_comments = $result[$i]['cnt_comments'];
 	$page_labels = explode(',',$result[$i]['page_labels']);
+	$page_thumbs = explode('<->',$result[$i]['page_thumbnail']);
+	
+	$page_thumb_src = 'images/fc-logo.svg';
+	if($page_thumbs[0] != '') {
+		$page_thumb_src = $page_thumbs[0];
+	}
 	
 	$page_lang_thumb = '<img src="/lib/lang/'.$page_language.'/flag.png" width="15" title="'.$page_language.'" alt="'.$page_language.'">';
 	
@@ -186,13 +192,13 @@ for($i=0;$i<$cnt_result;$i++) {
 	
 	
 	$str = array(
-		'{status-label}','{item-linkname}','{item-title}',
+		'{status-label}','{item-linkname}','{item-title}','{item-tmb-src}',
 		'{item-mod}','{item-class}','{item-indent}','{edit-btn}','{duplicate-btn}','{info-btn}',
 		'{comment-btn}','{item-permalink}','{item-lastedit}','{item-pagesort}','{item-template}',
 		'{item-redirect}','{frontend-link}','{item-description}','{item-lang}', '{page_labels}','{item-pi}','{hidden_csrf_tokken}'
 	);
 	$rplc = array(
-		$status_label,$page_linkname,$page_title,
+		$status_label,$page_linkname,$page_title,$page_thumb_src,
 		$show_mod,$item_class,$indent,$edit_button,$duplicate_button,$info_button,
 		$page_comments_link,$page_permalink,$last_edit,$page_sort, $show_template_name,
 		$page_redirect,$frontend_link,$page_description,$page_lang_thumb,$label,$pi,$hidden_csrf_token
@@ -255,6 +261,12 @@ for($i=0;$i<$cnt_result;$i++) {
 	$page_modul = $result[$i]['page_modul'];
 	$page_cnt_comments = $result[$i]['cnt_comments'];
 	$page_labels = explode(',',$result[$i]['page_labels']);
+	$page_thumbs = explode('<->',$result[$i]['page_thumbnail']);
+
+	$page_thumb_src = 'images/fc-logo.svg';
+	if($page_thumbs[0] != '') {
+		$page_thumb_src = $page_thumbs[0];
+	}
 	
 	$page_lang_thumb = '<img src="/lib/lang/'.$page_language.'/flag.png" width="15" title="'.$page_language.'" alt="'.$page_language.'">';
 		
@@ -365,13 +377,13 @@ for($i=0;$i<$cnt_result;$i++) {
 	$page_comments_link = '';
 	
 	$str = array(
-		'{status-label}','{item-linkname}','{item-title}',
+		'{status-label}','{item-linkname}','{item-title}','{item-tmb-src}',
 		'{item-mod}','{item-class}','{item-indent}','{edit-btn}','{duplicate-btn}','{info-btn}',
 		'{comment-btn}','{item-permalink}','{item-lastedit}','{item-pagesort}','{item-template}',
 		'{item-redirect}','{frontend-link}','{item-description}','{item-lang}', '{page_labels}','{item-pi}','{hidden_csrf_tokken}'
 	);
 	$rplc = array(
-		$status_label,$page_linkname,$page_title,
+		$status_label,$page_linkname,$page_title,$page_thumb_src,
 		$show_mod,$item_class,$indent,$edit_button,$duplicate_button,$info_button,
 		$page_comments_link,$page_permalink,$last_edit,$page_sort, $show_template_name,
 		$page_redirect,$frontend_link,$page_description,$page_lang_thumb,$label,$pi,$hidden_csrf_token

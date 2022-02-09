@@ -19401,6 +19401,9 @@ div.header-bc span:first-child {
 .page-list-item:hover {
   box-shadow: 0px 7px 12px -7px rgba(0, 0, 0, 0.7);
 }
+.page-list-item .small {
+  font-size: 0.875em;
+}
 
 .page-list-item-public:hover {
   border-color: fade(#5cb85c, 50);
@@ -19472,11 +19475,15 @@ div.header-bc span:first-child {
 }
 
 .page-list-item-ghost .label-page-status {
-  border-color: transparent fade(#5cb85c, 25%) transparent transparent;
+  border-color: transparent #bcdbbc transparent transparent;
 }
 
 .page-list-item-draft .label-page-status {
   border-color: transparent #989898 transparent transparent;
+}
+
+.page-list-item-redirect .label-page-status {
+  border-color: transparent #078dfe transparent transparent;
 }
 
 .text-public, .text-public.active {

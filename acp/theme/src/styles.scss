@@ -620,6 +620,9 @@ div.header-bc span:first-child {
 	&:hover {
 		box-shadow: 0px 7px 12px -7px rgba(0,0,0,0.7);
 	}
+	.small {
+		font-size: $small-font-size;
+	}
 }
 
 
@@ -708,11 +711,15 @@ div.header-bc span:first-child {
 }
 
 .page-list-item-ghost .label-page-status {
-	border-color: transparent fade($color_public,25%) transparent transparent;
+	border-color: transparent $color_ghost transparent transparent;
 }
 
 .page-list-item-draft .label-page-status {
 	border-color: transparent $color_draft transparent transparent;
+}
+
+.page-list-item-redirect .label-page-status {
+	border-color: transparent $color_redirect transparent transparent;
 }
 
 .text-public, .text-public.active {
