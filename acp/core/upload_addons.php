@@ -2,7 +2,6 @@
 
 //prohibit unauthorized access
 require 'core/access.php';
-require_once 'core/pclzip.lib.php';
 
 $danger_zone_lifetime = 300;
 
@@ -134,15 +133,16 @@ if(isset($_POST['install_uploaded_plg'])) {
 	}
 	unset($all_files);
 	$plugin = basename($_POST['install_uploaded_plg']);
-	$archive = new PclZip("../upload/plugins/$plugin");
-	$list = $archive->extract(
-			PCLZIP_OPT_PATH, '../upload/plugins/extract',
-			PCLZIP_OPT_STOP_ON_ERROR,
-			PCLZIP_OPT_SET_CHMOD, 0777
-			);
-	if($list == 0) {
-		echo "ERROR : ".$archive->errorInfo(true);
+	
+	$archive = new ZipArchive;
+	
+	if($archive->open("../upload/plugins/$plugin") === TRUE) {
+		$archive->extractTo('../upload/plugins/extract');
+		$archive->close();
+	} else {
+		echo '<div class="alert alert-warning mb-4">Error: can not open zip file</div>';
 	}
+	
 	$extracted = basename("$plugin",".zip");
 	
 	if(is_dir("../upload/plugins/extract/$extracted"))	{
@@ -199,14 +199,14 @@ if(isset($_POST['install_uploaded_mod'])) {
 	}
 	
 	$mod = basename($_POST['install_uploaded_mod']);
-	$archive = new PclZip("../upload/modules/$mod");
-	$list = $archive->extract(
-			PCLZIP_OPT_PATH, '../upload/modules/extract',
-			PCLZIP_OPT_STOP_ON_ERROR,
-			PCLZIP_OPT_SET_CHMOD, 0777
-			);
-	if($list == 0) {
-		echo "ERROR : ".$archive->errorInfo(true);
+	
+	$archive = new ZipArchive;
+	
+	if($archive->open("../upload/modules/$mod") === TRUE) {
+		$archive->extractTo('../upload/modules/extract');
+		$archive->close();
+	} else {
+		echo '<div class="alert alert-warning mb-4">Error: can not open zip file</div>';
 	}
 	
 	$extracted = basename("$mod",".zip");
@@ -261,14 +261,14 @@ if(isset($_POST['install_uploaded_tpl'])) {
 	}
 	unset($all_files);
 	$theme = basename($_POST['install_uploaded_tpl']);
-	$archive = new PclZip("../upload/themes/$theme");
-	$list = $archive->extract(
-			PCLZIP_OPT_PATH, '../upload/themes/extract',
-			PCLZIP_OPT_STOP_ON_ERROR,
-			PCLZIP_OPT_SET_CHMOD, 0777
-			);
-	if($list == 0) {
-		echo "ERROR : ".$archive->errorInfo(true);
+	
+	$archive = new ZipArchive;
+	
+	if($archive->open("../upload/themes/$theme") === TRUE) {
+		$archive->extractTo('../upload/themes/extract');
+		$archive->close();
+	} else {
+		echo '<div class="alert alert-warning mb-4">Error: can not open zip file</div>';
 	}
 	
 	$extracted = basename("$theme",".zip");
