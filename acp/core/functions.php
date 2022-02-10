@@ -915,7 +915,7 @@ function fc_write_media_data($filename,$title=NULL,$notes=NULL,$keywords=NULL,$t
 	$keywords = fc_return_clean_value($keywords);
 	$text = fc_return_clean_value($text);
 	$alt = fc_return_clean_value($alt);
-	$priority = (int) $alt;
+	$priority = (int) $priority;
 	$credit = fc_return_clean_value($credit);
 	$license = fc_return_clean_value($license);
 	$version = fc_return_clean_value($version);

@@ -1,16 +1,11 @@
 <?php
 
 //prohibit unauthorized access
-require("core/access.php");
+require 'core/access.php';
 
-$remove_files = array();
-
-/*
 $remove_files = array(
-'test.html',
-'acp/test.html'
+	'core/pclzip.lib.php'
 );
-*/
 
 
 
