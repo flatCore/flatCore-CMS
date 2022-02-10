@@ -3,11 +3,15 @@ set_time_limit (0);
 
 //prohibit unauthorized access
 require 'core/access.php';
-require_once 'core/pclzip.lib.php';
+//require_once 'core/pclzip.lib.php';
 include 'updatelist.php';
 
 define('INSTALLER', TRUE);
 include '../install/php/functions.php';
+
+if(!extension_loaded('zip')) { 
+	echo '<div class="alert alert-warning mb-4">The required extension <strong>ZIP</strong> is not installed</div>';
+}
 
 $_SESSION['protocol'] = '';
 $_SESSION['errors_cnt'] = 0;
@@ -113,16 +117,13 @@ function start_update() {
 		copy("$source_file","./update/$get_file");
 	}
 		
-	$archive = new PclZip("update/$get_file");
+	$archive = new ZipArchive;
 	
-	$list = $archive->extract(
-			PCLZIP_OPT_PATH, 'update/extract',
-			PCLZIP_OPT_STOP_ON_ERROR,
-			PCLZIP_OPT_SET_CHMOD, 0777
-			);
-			
-	if($list == 0) {
-		echo "ERROR : ".$archive->errorInfo(true);
+	if($archive->open("update/$get_file") === TRUE) {
+		$archive->extractTo('update/extract');
+		$archive->close();
+	} else {
+		echo '<div class="alert alert-warning mb-4">Error: can not open zip file</div>';
 	}
 	
 	copy('../install/maintenance.html', '../maintenance.html');
