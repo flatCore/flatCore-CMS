@@ -3,7 +3,6 @@ set_time_limit (0);
 
 //prohibit unauthorized access
 require 'core/access.php';
-//require_once 'core/pclzip.lib.php';
 include 'updatelist.php';
 
 define('INSTALLER', TRUE);
@@ -227,8 +226,8 @@ function remove_old_files() {
 	global $remove_files;
 	
 	foreach ($remove_files as $file) {
-    	if(is_file("../$file")) {
-	    	unlink("../$file");
+    	if(is_file("$file")) {
+	    	unlink("$file");
     	}    
    }
 }
