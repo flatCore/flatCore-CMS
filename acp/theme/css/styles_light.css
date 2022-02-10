@@ -19956,14 +19956,20 @@ form.dropzone-default .dz-default.dz-message {
 
 form.dropzone-plugin .dz-default.dz-message {
   background: transparent url(../../images/filedrop-plugin.png) no-repeat center center;
+  height: 100%;
+  margin: 0;
 }
 
 form.dropzone-module .dz-default.dz-message {
   background: transparent url(../../images/filedrop-module.png) no-repeat center center;
+  height: 100%;
+  margin: 0;
 }
 
 form.dropzone-theme .dz-default.dz-message {
   background: transparent url(../../images/filedrop-theme.png) no-repeat center center;
+  height: 100%;
+  margin: 0;
 }
 
 /* image-picker */

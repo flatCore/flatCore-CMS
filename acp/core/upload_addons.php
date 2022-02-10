@@ -36,7 +36,7 @@ if($_SESSION['confirmed_danger_zone'] !== 'confirmed') {
 	echo '<div class="row">';
 	echo '<div class="col-md-4">';
 	echo '<div class="well well-sm">';
-	echo '<form action="core/files.upload-script.php" id="dropAddons" class="dropzone dropzone-plugin dropzone-sm">';
+	echo '<form action="core/files.upload-script.php" id="dropAddons" class="p-0 dropzone dropzone-plugin dropzone-sm">';
 	echo '<input type="hidden" name="upload_type" value="plugin">';
 	echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 	echo '<div class="fallback"><input name="file" type="file"></div>';
@@ -45,7 +45,7 @@ if($_SESSION['confirmed_danger_zone'] !== 'confirmed') {
 	echo '</div>';
 	echo '<div class="col-md-4">';
 	echo '<div class="well well-sm">';
-	echo '<form action="core/files.upload-script.php" id="dropAddons" class="dropzone dropzone-module dropzone-sm">';
+	echo '<form action="core/files.upload-script.php" id="dropAddons" class="p-0 dropzone dropzone-module dropzone-sm">';
 	echo '<input type="hidden" name="upload_type" value="module">';
 	echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 	echo '<div class="fallback"><input name="file" type="file"></div>';
@@ -54,7 +54,7 @@ if($_SESSION['confirmed_danger_zone'] !== 'confirmed') {
 	echo '</div>';
 	echo '<div class="col-md-4">';
 	echo '<div class="well well-sm">';
-	echo '<form action="core/files.upload-script.php" id="dropAddons" class="dropzone dropzone-theme dropzone-sm">';
+	echo '<form action="core/files.upload-script.php" id="dropAddons" class="p-0 dropzone dropzone-theme dropzone-sm">';
 	echo '<input type="hidden" name="upload_type" value="theme">';
 	echo '<input type="hidden" name="csrf_token" value="'.$_SESSION['token'].'">';
 	echo '<div class="fallback"><input name="file" type="file"></div>';
