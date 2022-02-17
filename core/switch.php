@@ -255,7 +255,7 @@ if(is_file("$le_cache_file")) {
 }
 
 for($i=0;$i<5;$i++) {
-	$arr_lastedit[$i]['page_linkname'] = text_parser($arr_lastedit[$i]['page_linkname']);
+	$arr_lastedit[$i]['page_linkname'] = text_parser(html_entity_decode($arr_lastedit[$i]['page_linkname']));
 }
 $smarty->assign('arr_lastedit', $arr_lastedit);
 
@@ -274,7 +274,7 @@ if(is_file("$mc_cache_file")) {
 }
 
 for($i=0;$i<5;$i++) {
-	$arr_mostclicked[$i]['linkname'] = text_parser($arr_mostclicked[$i]['linkname']);
+	$arr_mostclicked[$i]['linkname'] = text_parser(html_entity_decode($arr_mostclicked[$i]['linkname']));
 }
 $smarty->assign('arr_mostclicked', $arr_mostclicked,true);
 
