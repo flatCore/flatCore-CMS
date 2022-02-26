@@ -245,6 +245,8 @@ function fc_posts_calc_price($price,$addition,$tax) {
 
 	$prices['gross'] = fc_post_print_currency($price_gross);
 	$prices['net'] = fc_post_print_currency($price_net);
+	$prices['gross_raw'] = $price_gross;
+	$prices['net_raw'] = $price_net;
 	
 	return $prices;
 }

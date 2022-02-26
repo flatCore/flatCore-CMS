@@ -72,6 +72,8 @@ $cols = array(
 	"post_product_price_addition" => 'INTEGER(12)',
 	"post_product_price_net" => "VARCHAR(100) NOT NULL DEFAULT ''",
 	"post_product_features" => "LONGTEXT NOT NULL DEFAULT ''",
+	"post_product_shipping_mode" => 'INTEGER(12)',
+	"post_product_shipping_cat" => 'INTEGER(12)',
 	/* quantity discount | scaling prices */
 	"post_product_amount_s1" => 'INTEGER(12)',
 	"post_product_price_net_s1" => "VARCHAR(100) NOT NULL DEFAULT ''",

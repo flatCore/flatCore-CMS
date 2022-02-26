@@ -407,6 +407,38 @@ $select_tax .= '<option value="2" '.$sel_tax_2.'>'.$fc_preferences['prefs_posts_
 $select_tax .= '<option value="3" '.$sel_tax_3.'>'.$fc_preferences['prefs_posts_products_tax_alt2'].'</option>';
 $select_tax .= '</select>';
 
+/* select shipping mode */
+
+if(($post_data['post_product_shipping_mode'] == '1') OR ($post_data['post_product_shipping_mode'] == '')) {
+	$sel_shipping_mode_1 = 'selected';
+} else {
+	$sel_shipping_mode_2 = 'selected';
+}
+
+$select_shipping_mode = "<select name='post_product_shipping_mode' class='form-control custom-select' id='shipping_mode'>";
+$select_shipping_mode .= '<option value="1" '.$sel_shipping_mode_1.'>'.$lang['label_shipping_mode_digital'].'</option>';
+$select_shipping_mode .= '<option value="2" '.$sel_shipping_mode_2.'>'.$lang['label_shipping_mode_deliver'].'</option>';
+$select_shipping_mode .= '</select>';
+
+/* select shipping category */
+if($post_data['post_product_shipping_cat'] == '0' OR $post_data['post_product_shipping_cat'] == '') {
+	$sel_shipping_cat_0 = 'selected';
+} else if($post_data['post_product_shipping_cat'] == '1') {
+	$sel_shipping_cat_1 = 'selected';
+} else if($post_data['post_product_shipping_cat'] == '2') {
+	$sel_shipping_cat_2 = 'selected';
+} else if($post_data['post_product_shipping_cat'] == '3') {
+	$sel_shipping_cat_3 = 'selected';
+}
+
+$select_shipping_category = "<select name='post_product_shipping_cat' class='form-control custom-select' id='shipping_mode_cat'>";
+$select_shipping_category .= '<option value="0" '.$sel_shipping_cat_0.'>'.$lang['label_shipping_costs_no_cat'].'</option>';
+$select_shipping_category .= '<option value="1" '.$sel_shipping_cat_1.'>'.$lang['label_shipping_costs_cat1'].'</option>';
+$select_shipping_category .= '<option value="2" '.$sel_shipping_cat_2.'>'.$lang['label_shipping_costs_cat2'].'</option>';
+$select_shipping_category .= '<option value="3" '.$sel_shipping_cat_3.'>'.$lang['label_shipping_costs_cat3'].'</option>';
+$select_shipping_category .= '</select>';
+
+
 $post_product_price_net = $post_data['post_product_price_net'];
 if($post_product_price_net == '') {
 	$post_product_price_net = '0,00';
@@ -671,6 +703,9 @@ $form_tpl = str_replace('{post_product_unit}', $post_data['post_product_unit'], 
 $form_tpl = str_replace('{post_product_price_net}', $post_product_price_net, $form_tpl);
 $form_tpl = str_replace('{post_product_price_gross}', $post_product_price_gross, $form_tpl);
 $form_tpl = str_replace('{select_tax}', $select_tax, $form_tpl);
+$form_tpl = str_replace('{select_shipping_mode}', $select_shipping_mode, $form_tpl);
+$form_tpl = str_replace('{select_shipping_category}', $select_shipping_category, $form_tpl);
+
 $form_tpl = str_replace('{snippet_select_pricelist}', $snippet_select_pricelist, $form_tpl);
 $form_tpl = str_replace('{snippet_select_text}', $snippet_select_text, $form_tpl);
 

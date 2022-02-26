@@ -150,8 +150,19 @@ $all_plugins = get_all_plugins();
 $fc_labels = fc_get_labels();
 $cnt_labels = count($fc_labels);
 
-/* READ THE PREFS */
-$fc_preferences = get_preferences();
+/**
+ * read the preferences
+ * OLD: do not use the old $prefs_default_language
+ * NEW: use $fc_preferences['default_language']
+ */
+ 
+$fc_get_preferences = fc_get_preferences();
+
+foreach($fc_get_preferences as $k => $v) {
+	$key = $fc_get_preferences[$k]['option_key'];
+	$value = $fc_get_preferences[$k]['option_value'];
+	$fc_preferences[$key] = $value;
+}
 
 foreach($fc_preferences as $k => $v) {
    $$k = stripslashes($v);

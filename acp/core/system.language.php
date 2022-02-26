@@ -6,30 +6,28 @@ require 'core/access.php';
 
 if(isset($_POST['save_prefs_language'])) {
 	
-	$data = $db_content->update("fc_preferences", [
-		"prefs_default_language" =>  $_POST['prefs_default_language']
-	], [
-	"prefs_id" => 1
-	]);
-		
+	foreach($_POST as $key => $val) {
+		$data[htmlentities($key)] = htmlentities($val);
+	}
+	fc_write_option($data,'fc');		
 }
 
 if(isset($_POST['save_hide_language'])) {
 		
-	$hide_langs_json = json_encode($_POST['hide_langs']);
-	
-	$data = $db_content->update("fc_preferences", [
-		"prefs_deactivated_languages" =>  $hide_langs_json
-	], [
-	"prefs_id" => 1
-	]);
-		
+	$data['prefs_deactivated_languages'] = json_encode($_POST['hide_langs']);
+	fc_write_option($data,'fc');
 }
 
 
 if(isset($_POST)) {
 	/* read the preferences again */
-	$fc_preferences = get_preferences();
+	$fc_get_preferences = fc_get_preferences();
+	
+	foreach($fc_get_preferences as $k => $v) {
+		$key = $fc_get_preferences[$k]['option_key'];
+		$value = $fc_get_preferences[$k]['option_value'];
+		$fc_preferences[$key] = $value;
+	}
 	
 	foreach($fc_preferences as $k => $v) {
 	   $$k = stripslashes($v);

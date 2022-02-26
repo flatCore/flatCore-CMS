@@ -3,36 +3,26 @@
 //prohibit unauthorized access
 require("core/access.php");
 
-foreach($_POST as $key => $val) {
-	$$key = @htmlspecialchars($val, ENT_QUOTES); 
-}
-
-
 /* save upload preferences */
 if(isset($_POST['update_posts'])) {
-
-	$data = $db_content->update("fc_preferences", [
-		"prefs_posts_entries_per_page" =>  $prefs_posts_entries_per_page,
-		"prefs_posts_images_prefix" =>  $prefs_posts_images_prefix,
-		"prefs_posts_default_banner" =>  $prefs_posts_default_banner,
-		"prefs_posts_url_pattern" =>  $prefs_posts_url_pattern,
-		"prefs_posts_products_default_tax" =>  $prefs_posts_products_default_tax,
-		"prefs_posts_products_tax_alt1" =>  $prefs_posts_products_tax_alt1,
-		"prefs_posts_products_tax_alt2" =>  $prefs_posts_products_tax_alt2,
-		"prefs_posts_products_default_currency" =>  $prefs_posts_products_default_currency,
-		"prefs_posts_products_cart" => $prefs_posts_products_cart,
-		"prefs_posts_event_time_offset" =>  $prefs_posts_event_time_offset,
-		"prefs_posts_default_guestlist" => $prefs_posts_default_guestlist,
-		"prefs_posts_default_votings" => $prefs_posts_default_votings
-	], [
-	"prefs_id" => 1
-	]);	
+	
+	foreach($_POST as $key => $val) {
+		$data[htmlentities($key)] = htmlentities($val);
+	}
+	fc_write_option($data,'fc');
 }
 
 
 
 if(isset($_POST)) {
-	$fc_preferences = get_preferences();
+	/* read the preferences again */
+	$fc_get_preferences = fc_get_preferences();
+	
+	foreach($fc_get_preferences as $k => $v) {
+		$key = $fc_get_preferences[$k]['option_key'];
+		$value = $fc_get_preferences[$k]['option_value'];
+		$fc_preferences[$key] = $value;
+	}
 	
 	foreach($fc_preferences as $k => $v) {
 	   $$k = stripslashes($v);
@@ -103,63 +93,6 @@ echo '<div class="form-check">
 	 		</div>';
 
 echo '</fieldset>';
-
-
-/* products */
-
-echo '<fieldset>';
-echo '<legend>'.$lang['post_type_product'].'</legend>';
-
-echo '<div class="row">';
-echo '<div class="col">';
-echo '<div class="form-group">
-				<label>' . $lang['products_default_tax'] . '</label>
-				<input type="text" class="form-control" name="prefs_posts_products_default_tax" value="'.$prefs_posts_products_default_tax.'">
-			</div>';
-echo '</div>';
-echo '<div class="col">';
-echo '<div class="form-group">
-				<label>' . $lang['label_product_tax_alt1'] . '</label>
-				<input type="text" class="form-control" name="prefs_posts_products_tax_alt1" value="'.$prefs_posts_products_tax_alt1.'">
-			</div>';
-echo '</div>';
-echo '<div class="col">';
-echo '<div class="form-group">
-				<label>' . $lang['label_product_tax_alt2'] . '</label>
-				<input type="text" class="form-control" name="prefs_posts_products_tax_alt2" value="'.$prefs_posts_products_tax_alt2.'">
-			</div>';
-echo '</div>';
-echo '</div>';
-			
-
-echo '<div class="form-group">
-				<label>' . $lang['products_default_currency'] . '</label>
-				<input type="text" class="form-control" name="prefs_posts_products_default_currency" value="'.$prefs_posts_products_default_currency.'">
-			</div>';
-
-
-$sel_carts1 = '';
-$sel_carts2 = '';
-$sel_carts3 = '';
-
-if($prefs_posts_products_cart == 1 OR $prefs_posts_products_cart == '') {
-	$sel_carts1 = 'selected';
-} else if($prefs_posts_products_cart == 2) {
-	$sel_carts2 = 'selected';
-} else if($prefs_posts_products_cart == 3) {
-	$sel_carts2 = 'selected';
-}
-
-echo '<div class="form-group">';
-echo '<label>' . $lang['label_carts'] . '</label>';
-echo '<select class="form-control custom-select" name="prefs_posts_products_cart">';
-echo '<option value="1" '.$sel_carts1.'>'.$lang['carts_deactivated'].'</option>';
-echo '<option value="2" '.$sel_carts2.'>'.$lang['carts_for_registered'].'</option>';
-echo '<option value="3" '.$sel_carts2.'>'.$lang['carts_for_all'].'</option>';
-echo '</select>';
-echo '</div>';
-
-echo'</fieldset>';
 
 
 

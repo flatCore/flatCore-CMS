@@ -109,6 +109,7 @@ function get_all_languages($d='../lib/lang') {
 /**
  * get all preferences
  * return as array
+ * @deprecated - this function will be removed in the near future. Use fc_get_preferences() from global functions.
  */
  
 function get_preferences() {
@@ -119,6 +120,59 @@ function get_preferences() {
 	]);
 	
 	return $prefs;
+}
+
+/**
+ * write preferences
+ * table fc_options
+ */
+
+function fc_write_option($data,$module) {
+	
+	global $db_content;
+
+	foreach($data as $key => $val) {
+		
+		if($key == '') {
+			continue;
+		}
+		
+		if(substr($key, 0, 6 ) !== "prefs_") {
+			continue;
+		}
+		
+		/* check if exists */
+		$entry = $db_content->get("fc_options","*", [
+			"option_key" =>  $key,
+			"option_module" => $module
+		]);
+		
+		if($entry['option_key'] != '') {
+
+
+			$data = $db_content->update("fc_options", [
+				"option_value" =>  $val,
+			], [
+				"AND" => [
+					"option_key" => $key,
+					"option_module" => $module
+				]
+			]);
+			
+		} else {
+
+			$data = $db_content->insert("fc_options", [
+				"option_value" =>  $val,
+				"option_key" => $key,
+				"option_module" => $module
+			]);
+			
+		}
+				
+		
+		
+	}	
+	
 }
 
 

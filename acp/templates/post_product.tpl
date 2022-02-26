@@ -41,18 +41,20 @@
 
 				<div class="tab-pane fade" id="product">
 					
-					<div class="form-group">
-						<label>{label_product_number}</label>
-						<input class='form-control' name="post_product_number" type="text" value="{post_product_number}">
-					</div>
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>{label_product_number}</label>
+								<input class='form-control' name="post_product_number" type="text" value="{post_product_number}">
+							</div>
+						</div>
+						<div class="col-md-4">
 							<div class="form-group">
 								<label>{label_product_manufacturer}</label>
 								<input class='form-control' name="post_product_manufacturer" type="text" value="{post_product_manufacturer}">
 							</div>
 						</div>
-						<div class="col-md-6">				
+						<div class="col-md-4">				
 							<div class="form-group">
 								<label>{label_product_supplier}</label>
 								<input class='form-control' name="post_product_supplier" type="text" value="{post_product_supplier}">
@@ -95,8 +97,18 @@
 								<input class='form-control' name="post_product_unit" type="text" value="{post_product_unit}">
 							</div>	
 						</div>
-
-
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>{label_shipping}</label>
+								{select_shipping_mode}
+							</div>	
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>{label_shipping_costs_cat}</label>
+								{select_shipping_category}
+							</div>	
+						</div>
 
 
 

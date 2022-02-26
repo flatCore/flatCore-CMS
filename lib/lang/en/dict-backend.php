@@ -23,6 +23,7 @@ $lang['tn_contents'] = "Contents";
 $lang['tn_contents_desc'] = "Pages, Snippets, RSS Feeds create/edit/delete ...";
 $lang['tn_comments'] = 'Comments';
 $lang['tn_reactions'] = 'Reactions';
+$lang['tn_shop'] = "Shop";
 
 /* Links and Buttons */
 $lang['back_to_page'] = "back to Homepage";
@@ -364,6 +365,26 @@ $lang['label_active_theme'] = 'Active Theme';
 $lang['label_installed_themes'] = 'Installed Themes';
 
 $lang['label_show_entries'] = '%s of %s Entries are displayed';
+
+/* shop/shipping */
+$lang['label_shipping'] = 'Shipping';
+$lang['label_shipping_costs_flat'] = 'Flat rate shipping';
+$lang['label_shipping_costs_cat'] = 'Shipping costs categories';
+$lang['label_shipping_costs_no_cat'] = 'No category';
+$lang['label_shipping_costs_cat1'] = 'Shipping costs category 1';
+$lang['label_shipping_costs_cat2'] = 'Shipping costs category 2';
+$lang['label_shipping_costs_cat3'] = 'Shipping costs category 3';
+$lang['label_shipping_costs_by_weight'] = 'Shipping costs by weight';
+
+$lang['label_shipping_mode'] = 'Shipping costs calculation';
+$lang['label_shipping_mode_flat'] = 'Only charge the flat rate for shipping';
+$lang['label_shipping_mode_cats'] = 'The most expensive category in the shopping cart determines the shipping costs';
+
+$lang['label_payment_methods'] = 'Payment methods';
+$lang['label_payment_bank_transfer'] = 'Bank transfer';
+$lang['label_payment_bank_invoice'] = 'Invoice';
+$lang['label_payment_costs'] = 'Costs';
+
 
 /* Preferences */
 

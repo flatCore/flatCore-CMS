@@ -4,62 +4,51 @@
 require 'core/access.php';
 
 
-foreach($_POST as $key => $val) {
-	$$key = @htmlspecialchars($val, ENT_QUOTES); 
-}
-
 
 /* save thumbnail */
 
 if(isset($_POST['save_prefs_thumbnail'])) {
 	
-	$data = $db_content->update("fc_preferences", [
-		"prefs_pagethumbnail" =>  $prefs_pagethumbnail,
-		"prefs_pagethumbnail_prefix" => $prefs_pagethumbnail_prefix,
-		"prefs_pagefavicon" => $prefs_pagefavicon
-	], [
-	"prefs_id" => 1
-	]);
-
+	foreach($_POST as $key => $val) {
+		$data[htmlentities($key)] = htmlentities($val);
+	}
+	fc_write_option($data,'fc');
 }
 
 
 /* save upload preferences */
 if(isset($_POST['save_prefs_upload'])) {
 	
+	foreach($_POST as $key => $val) {
+		$data[htmlentities($key)] = htmlentities($val);
+	}
+	
+	
 	if(isset($_POST['prefs_showfilesize'])) {
-		$prefs_showfilesize = 'yes';
+		$data['prefs_showfilesize'] = 'yes';
 	} else {
-		$prefs_showfilesize = 'no';
+		$data['prefs_showfilesize'] = 'no';
 	}
 	
 	if(isset($_POST['prefs_uploads_remain_unchanged'])) {
-		$prefs_upload_unchanged = 'yes';
+		$data['prefs_uploads_remain_unchanged'] = 'yes';
 	} else {
-		$prefs_upload_unchanged = 'no';
+		$data['prefs_uploads_remain_unchanged'] = 'no';
 	}
 	
-	$data = $db_content->update("fc_preferences", [
-		"prefs_imagesuffix" =>  $prefs_imagesuffix,
-		"prefs_maximagewidth" => $prefs_maximagewidth,
-		"prefs_maximageheight" => $prefs_maximageheight,
-		"prefs_maxtmbwidth" => $prefs_maxtmbwidth,
-		"prefs_maxtmbheight" => $prefs_maxtmbheight,
-		"prefs_filesuffix" => $prefs_filesuffix,
-		"prefs_maxfilesize" => $prefs_maxfilesize,
-		"prefs_showfilesize" => $prefs_showfilesize,
-		"prefs_uploads_remain_unchanged" => $prefs_upload_unchanged
-	], [
-	"prefs_id" => 1
-	]);	
-	
-
+	fc_write_option($data,'fc');
 }
 
 
 if(isset($_POST)) {
 	/* read the preferences again */
-	$fc_preferences = get_preferences();
+	$fc_get_preferences = fc_get_preferences();
+	
+	foreach($fc_get_preferences as $k => $v) {
+		$key = $fc_get_preferences[$k]['option_key'];
+		$value = $fc_get_preferences[$k]['option_value'];
+		$fc_preferences[$key] = $value;
+	}
 	
 	foreach($fc_preferences as $k => $v) {
 	   $$k = stripslashes($v);

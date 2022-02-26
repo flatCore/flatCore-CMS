@@ -125,7 +125,7 @@ $sql_tokens_table = fc_generate_sql_query("fc_tokens.php",$db_type);
 $sql_feeds_table = fc_generate_sql_query("fc_feeds.php",$db_type);
 $sql_pages_table = fc_generate_sql_query("fc_pages.php",$db_type);
 $sql_pages_cache_table = fc_generate_sql_query("fc_pages_cache.php",$db_type);
-$sql_preferences_table = fc_generate_sql_query("fc_preferences.php",$db_type);
+$sql_options_table = fc_generate_sql_query("fc_options.php",$db_type);
 $sql_textlib_table = fc_generate_sql_query("fc_textlib.php",$db_type);
 $sql_comments_table = fc_generate_sql_query("fc_comments.php",$db_type);
 $sql_media_table = fc_generate_sql_query("fc_media.php",$db_type);
@@ -189,7 +189,7 @@ $page_lastedit = time();
 
 $dbh_content->query($sql_pages_table);
 $dbh_content->query($sql_pages_cache_table);
-$dbh_content->query($sql_preferences_table);
+$dbh_content->query($sql_options_table);
 $dbh_content->query($sql_textlib_table);
 $dbh_content->query($sql_comments_table);
 $dbh_content->query($sql_media_table);
@@ -239,6 +239,119 @@ $dbh_content->insert("fc_pages", [
 
 /* insert preferences */
 
+$dbh_content->insert("fc_options", [
+	[
+		"option_key" => "prefs_pagename",
+		"option_value" => "flatCore",
+		"option_module" => "fc"
+	], [
+		"option_key" => "prefs_pagetitle",
+		"option_value" => "flatCore CMS",
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_pagesubtitle",
+		"option_value" => "Content Management System",
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_template",
+		"option_value" => "default",
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_template_layout",
+		"option_value" => "layout_default.tpl",
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_showloginform",
+		"option_value" => "yes",
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_xml_sitemap",
+		"option_value" => "off",
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_logfile",
+		"option_value" => "off",
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_rss_time_offset",
+		"option_value" => 86400,
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_cms_domain",
+		"option_value" => "$prefs_cms_domain",
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_cms_ssl_domain",
+		"option_value" => "$prefs_cms_ssl_domain",
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_cms_base",
+		"option_value" => "$prefs_cms_base",
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_default_language",
+		"option_value" => "$languagePack",
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_nbr_page_versions",
+		"option_value" => 25,
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_acp_session_lifetime",
+		"option_value" => 86400,
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_posts_entries_per_page",
+		"option_value" => 10,
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_posts_event_time_offset",
+		"option_value" => 86400,
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_comments_mode",
+		"option_value" => 3,
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_comments_authorization",
+		"option_value" => 1,
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_comments_max_entries",
+		"option_value" => 100,
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_comments_max_level",
+		"option_value" => 3,
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_pagesort_minlength",
+		"option_value" => 3,
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_maximagewidth",
+		"option_value" => 1024,
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_maximageheight",
+		"option_value" => 1024,
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_maxtmbwidth",
+		"option_value" => 350,
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_maxtmbheight",
+		"option_value" => 350,
+		"option_module" => "fc"		
+	], [
+		"option_key" => "prefs_maxfilesize",
+		"option_value" => 2500,
+		"option_module" => "fc"		
+	]
+]);
+
+/*
 $dbh_content->insert("fc_preferences", [
 	"prefs_status" => "active",
 	"prefs_pagename" => "flatCore",
@@ -270,6 +383,7 @@ $dbh_content->insert("fc_preferences", [
 	"prefs_maxtmbheight" => 350,
 	"prefs_maxfilesize" => 2500
 ]);
+*/
 
 
 

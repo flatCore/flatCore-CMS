@@ -12,16 +12,44 @@ use PHPMailer\PHPMailer\Exception;
 
 include_once 'functions.sanitizer.php';
 include_once 'functions.posts.php';
+include_once 'functions.cart.php';
 
 /**
  * get active preferences
  */
  
 function fc_get_preferences() {
-	global $db_content;	
-	$prefs = $db_content->get("fc_preferences", "*", [
-		"prefs_status" => "active"
+	
+	global $db_content;
+	
+	$prefs = $db_content->select("fc_options", "*", [
+		"option_module" => "fc"
 	]);
+	
+	if(count($prefs) < 1) {
+		echo '<p class="alert alert-danger">There are no options</p>';
+	
+		/* read the old prefs from fc_preferences and write it to fc_options */
+		$prefs = $db_content->get("fc_preferences", "*", [
+			"prefs_status" => "active"
+		]);
+		
+		foreach($prefs as $key => $value) {		
+			$db_content->insert("fc_options", [
+				"option_module" => 'fc',
+				"option_key" => $key,
+				"option_value" => $value
+			]);
+		}
+	
+		$prefs = $db_content->select("fc_options", "*", [
+			"option_module" => "fc"
+		]);	
+	
+	}
+	
+	
+
 	return $prefs;
 }
 

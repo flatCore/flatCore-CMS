@@ -3,26 +3,24 @@
 //prohibit unauthorized access
 require 'core/access.php';
 
-foreach($_POST as $key => $val) {
-	$$key = @htmlspecialchars($val, ENT_QUOTES); 
-}
-
 if(isset($_POST['save_prefs_contacts'])) {
 	
-	$data = $db_content->update("fc_preferences", [
-		"prefs_mailer_adr" =>  $prefs_mailer_adr,
-		"prefs_mailer_name" => $prefs_mailer_name,
-		"prefs_mailer_type" => $_POST['prefs_mailer_type']
-	], [
-	"prefs_id" => 1
-	]);
-
+	foreach($_POST as $key => $val) {
+		$data[htmlentities($key)] = htmlentities($val);
+	}
+	fc_write_option($data,'fc');
 }
 
 
 if(isset($_POST)) {
 	/* read the preferences again */
-	$fc_preferences = get_preferences();
+	$fc_get_preferences = fc_get_preferences();
+	
+	foreach($fc_get_preferences as $k => $v) {
+		$key = $fc_get_preferences[$k]['option_key'];
+		$value = $fc_get_preferences[$k]['option_value'];
+		$fc_preferences[$key] = $value;
+	}
 	
 	foreach($fc_preferences as $k => $v) {
 	   $$k = stripslashes($v);

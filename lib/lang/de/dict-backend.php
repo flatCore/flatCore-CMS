@@ -24,6 +24,7 @@ $lang['tn_contents_desc'] = "Seiten, Textvorlagen, RSS Feeds erstellen/bearbeite
 $lang['tn_comments'] = 'Kommentare';
 $lang['tn_reactions'] = 'Reaktionen';
 $lang['tn_reactions_desc'] = 'Kommentare, Bewertungen und Zusagen von Events';
+$lang['tn_shop'] = "Shop";
 
 /* Links and Buttons */
 
@@ -364,6 +365,28 @@ $lang['label_installed_themes'] = 'Installierte Themes';
 $lang['label_image_selected'] = 'ausgewählte Bilder';
 
 $lang['label_show_entries'] = 'Es werden %s von %s Beiträgen angezeigt';
+
+/* shop/shipping */
+$lang['label_shipping'] = 'Versand';
+$lang['label_shipping_costs_flat'] = 'Versandkostenpauschale';
+$lang['label_shipping_costs_cat'] = 'Versandkosten Kategorien';
+$lang['label_shipping_costs_no_cat'] = 'Keine Kategorie';
+$lang['label_shipping_costs_cat1'] = 'Versandkosten Kategorie 1';
+$lang['label_shipping_costs_cat2'] = 'Versandkosten Kategorie 2';
+$lang['label_shipping_costs_cat3'] = 'Versandkosten Kategorie 3';
+$lang['label_shipping_costs_by_weight'] = 'Versandkosten nach Gewicht';
+
+$lang['label_shipping_mode'] = 'Versandkosten-Berechnung';
+$lang['label_shipping_mode_flat'] = 'Nur die Versandkostenpauschale berechnen';
+$lang['label_shipping_mode_cats'] = 'Die teuerste Kategorie im Warenkorb bestimmt die Versandkosten';
+
+$lang['label_shipping_mode_digital'] = 'Dieser Artikel wird nicht ausgeliefert';
+$lang['label_shipping_mode_deliver'] = 'Dieser Artikel wird ausgeliefert';
+
+$lang['label_payment_methods'] = 'Bezahlarten';
+$lang['label_payment_bank_transfer'] = 'Überweisung';
+$lang['label_payment_bank_invoice'] = 'Rechnung';
+$lang['label_payment_costs'] = 'Kosten';
 
 /* Preferences */
 

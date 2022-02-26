@@ -14,6 +14,17 @@ if($target_page[0] == '') {
 	$target_page[0] = $fct_slug;
 }
 
+
+/**
+ * check if we show the shopping cart
+ */
+$tpl_btn_add_to_cart = '';
+if($fc_prefs['prefs_posts_products_cart'] == 2 OR $fc_prefs['prefs_posts_products_cart'] == 3) {
+	$tpl_btn_add_to_cart = fc_load_posts_tpl($fc_template,'btn-add-to-cart.tpl');
+	$tpl_btn_add_to_cart = str_replace('{btn_add_to_cart}', $lang['btn_add_to_cart'], $tpl_btn_add_to_cart);
+	
+}
+
 /**
  * template files
  * check if the page template $fc_template hast the posts tpl files
@@ -349,6 +360,8 @@ foreach($get_posts as $k => $post) {
 		$this_entry = str_replace("{price_tag_label_net}", $lang['price_tag_label_net'], $this_entry);
 		
 		$this_entry = str_replace("{read_more_text}", $lang['btn_open_product'], $this_entry);
+		$this_entry = str_replace("{btn_add_to_cart}", $tpl_btn_add_to_cart, $this_entry);
+		$this_entry = str_replace('{post_id}', $get_posts[$k]['post_id'], $this_entry);
 	}
 	
 	

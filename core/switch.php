@@ -467,6 +467,10 @@ if($p == "register") {
 	}
 }
 
+/* show checkout */
+if($p == "checkout") {
+	include 'checkout.php';
+}
 
 /* confirm new account */
 if($p == "account") {

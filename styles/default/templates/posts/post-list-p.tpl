@@ -22,13 +22,20 @@
 			{post_teaser}
 		</div>
 	</div>
-	<div class="row">
+	<div class="row mb-3">
 		<div class="col-md-4">
 			{post_voting}
 		</div>
 		<div class="col-md-8 text-end">
 			<p class="m-0 post-categories">{post_cats}</p>
-			<p><a class="btn btn-primary {read_more_class}" href="{post_href}">{read_more_text}</a></p>
+			<div class="row">
+				<div class="col-md-8 text-end">
+					{btn_add_to_cart}
+				</div>
+				<div class="col-md-4 text-end">
+					<a class="btn btn-primary w-100 {read_more_class}" href="{post_href}">{read_more_text}</a>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

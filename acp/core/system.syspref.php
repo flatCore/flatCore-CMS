@@ -8,7 +8,7 @@ require 'core/access.php';
  */
 
 foreach($_POST as $key => $val) {
-	$$key = @htmlspecialchars($val, ENT_QUOTES); 
+	$$key = htmlspecialchars($val, ENT_QUOTES);
 }
 
 
@@ -18,22 +18,16 @@ foreach($_POST as $key => $val) {
 if(isset($_POST['save_prefs_descriptions'])) {
 	
 	if(isset($_POST['prefs_publisher_mode'])) {
-		$prefs_publisher_mode = 'overwrite';
+		$data['prefs_publisher_mode'] = 'overwrite';
 	} else {
-		$prefs_publisher_mode = 'no';
+		$data['prefs_publisher_mode'] = 'no';
 	}
 	
-	$data = $db_content->update("fc_preferences", [
-		"prefs_pagename" =>  $prefs_pagename,
-		"prefs_pagedescription" => $prefs_pagedescription,
-		"prefs_pagetitle" => $prefs_pagetitle,
-		"prefs_pagesubtitle" => $prefs_pagesubtitle,
-		"prefs_default_publisher" => $prefs_default_publisher,
-		"prefs_publisher_mode" => $prefs_publisher_mode
-	], [
-	"prefs_id" => 1
-	]);
+	foreach($_POST as $key => $val) {
+		$data[htmlentities($key)] = htmlentities($val);
+	}
 	
+	fc_write_option($data,'fc');
 }
 
 /* save system settings */
@@ -41,34 +35,28 @@ if(isset($_POST['save_prefs_descriptions'])) {
 if(isset($_POST['save_system'])) {
 	
 	if((substr("$prefs_cms_domain",0,7) !== 'http://')) {
-		$prefs_cms_domain = '';
+		$data['prefs_cms_domain'] = $prefs_cms_domain = '';
 	}
 	if((substr("$prefs_cms_ssl_domain",0,8) !== 'https://')) {
-		$prefs_cms_ssl_domain = '';
+		$data['prefs_cms_ssl_domain'] = '';
 	}
-
-	$data = $db_content->update("fc_preferences", [
-		"prefs_cms_domain" =>  $prefs_cms_domain,
-		"prefs_cms_ssl_domain" => $prefs_cms_ssl_domain,
-		"prefs_cms_base" => $prefs_cms_base
-	], [
-	"prefs_id" => 1
-	]);
-
+	
+	foreach($_POST as $key => $val) {
+		$data[htmlentities($key)] = htmlentities($val);
+	}
+	
+	fc_write_option($data,'fc');
 }
 
 /* save date/time settings */
 
 if(isset($_POST['save_datetime'])) {
 
-	$data = $db_content->update("fc_preferences", [
-		"prefs_timezone" =>  $prefs_timezone,
-		"prefs_dateformat" => $prefs_dateformat,
-		"prefs_timeformat" => $prefs_timeformat
-	], [
-	"prefs_id" => 1
-	]);
-
+	foreach($_POST as $key => $val) {
+		$data[htmlentities($key)] = htmlentities($val);
+	}
+	
+	fc_write_option($data,'fc');
 }
 
 
@@ -77,115 +65,96 @@ if(isset($_POST['save_datetime'])) {
 /* save user preferences */
 if(isset($_POST['save_prefs_user'])) {
 	
+	foreach($_POST as $key => $val) {
+		$data[htmlentities($key)] = htmlentities($val);
+	}
+	
 	if(isset($_POST['prefs_userregistration'])) {
-		$prefs_userregistration = 'yes';
+		$data['prefs_userregistration'] = 'yes';
 	} else {
-		$prefs_userregistration = 'no';
+		$data['prefs_userregistration'] = 'no';
 	}
 	
 	if(isset($_POST['prefs_showloginform'])) {
-		$prefs_showloginform = 'yes';
+		$data['prefs_showloginform'] = 'yes';
 	} else {
-		$prefs_showloginform = 'no';
+		$data['prefs_showloginform'] = 'no';
 	}
 
-	$data = $db_content->update("fc_preferences", [
-		"prefs_userregistration" =>  $prefs_userregistration,
-		"prefs_showloginform" => $prefs_showloginform
-	], [
-	"prefs_id" => 1
-	]);
-	
+	fc_write_option($data,'fc');	
 }
 
 
 /* save head preferences */
+/* we kick this feature out asap */
 if(isset($_POST['save_prefs_head'])) {
-		
-	$data = $db_content->update("fc_preferences", [
-		"prefs_pagesglobalhead" =>  $_POST['prefs_pagesglobalhead']
-	], [
-	"prefs_id" => 1
-	]);	
-	
+	fc_write_option($_POST,'fc');	
 }
 
 /* save deleted resources */
 if(isset($_POST['save_deleted_resources'])) {
-		
-	$data = $db_content->update("fc_preferences", [
-			"prefs_deleted_resources" =>  $_POST['prefs_deleted_resources']
-		], [
-		"prefs_id" => 1
-		]);
+	
+	foreach($_POST as $key => $val) {
+		$data[htmlentities($key)] = htmlentities($val);
+	}
+	
+	fc_write_option($data,'fc');
 }
 
 
 /* save misc preferences */
 if(isset($_POST['save_prefs_misc'])) {
 	
+	foreach($_POST as $key => $val) {
+		$data[htmlentities($key)] = htmlentities($val);
+	}
+	
 	if(isset($_POST['prefs_logfile'])) {
-		$prefs_logfile = 'on';
+		$data['prefs_logfile'] = 'on';
 	} else {
-		$prefs_logfile = 'off';
+		$data['prefs_logfile'] = 'off';
 	}
 	
 	if(isset($_POST['prefs_anonymize_ip'])) {
-		$prefs_anonymize_ip = 'on';
+		$data['prefs_anonymize_ip'] = 'on';
 	} else {
-		$prefs_anonymize_ip = 'off';
+		$data['prefs_anonymize_ip'] = 'off';
 	}
 	
 	if(isset($_POST['prefs_xml_sitemap'])) {
-		$prefs_xml_sitemap = 'on';
+		$data['prefs_xml_sitemap'] = 'on';
 	} else {
-		$prefs_xml_sitemap = 'off';
+		$data['prefs_xml_sitemap'] = 'off';
 	}
 	
-	$prefs_rss_time_offset = (int) $_POST['prefs_rss_time_offset'];
-	$prefs_acp_session_lifetime = (int) $_POST['prefs_acp_session_lifetime'];
+	$data['prefs_rss_time_offset'] = (int) $_POST['prefs_rss_time_offset'];
+	$data['prefs_acp_session_lifetime'] = (int) $_POST['prefs_acp_session_lifetime'];
 	
-	$data = $db_content->update("fc_preferences", [
-			"prefs_rss_time_offset" =>  $prefs_rss_time_offset,
-			"prefs_acp_session_lifetime" =>  $prefs_acp_session_lifetime,
-			"prefs_logfile" =>  $prefs_logfile,
-			"prefs_anonymize_ip" =>  $prefs_anonymize_ip,
-			"prefs_xml_sitemap" =>  $prefs_xml_sitemap,
-			"prefs_nbr_page_versions" =>  $prefs_nbr_page_versions,
-			"prefs_pagesort_minlength" => $prefs_pagesort_minlength
-		], [
-		"prefs_id" => 1
-		]);
-	
+	fc_write_option($data,'fc');	
 }
 
 /* save theme and template preferences */
 if(isset($_POST['save_prefs_themes'])) {
 
+	foreach($_POST as $key => $val) {
+		$data[htmlentities($key)] = htmlentities($val);
+	}
 
 	if(isset($_POST['prefs_smarty_cache'])) {
-		$prefs_smarty_cache = 1;
+		$data['prefs_smarty_cache'] = 1;
 	} else {
-		$prefs_smarty_cache = 0;
+		$data['prefs_smarty_cache'] = 0;
 	}
 	
 	if(isset($_POST['prefs_smarty_compile_check'])) {
-		$prefs_smarty_compile_check = 1;
+		$data['prefs_smarty_compile_check'] = 1;
 	} else {
-		$prefs_smarty_compile_check = 0;
+		$data['prefs_smarty_compile_check'] = 0;
 	}
 	
-	$prefs_smarty_cache_lifetime = (int) $_POST['prefs_smarty_cache_lifetime'];
+	$data['prefs_smarty_cache_lifetime'] = (int) $_POST['prefs_smarty_cache_lifetime'];
 	
-	$data = $db_content->update("fc_preferences", [
-			"prefs_usertemplate" => $prefs_usertemplate,
-			"prefs_smarty_cache" =>  $prefs_smarty_cache,
-			"prefs_smarty_cache_lifetime" =>  $prefs_smarty_cache_lifetime,
-			"prefs_smarty_compile_check" =>  $prefs_smarty_compile_check
-		], [
-		"prefs_id" => 1
-		]);
-
+	fc_write_option($data,'fc');
 }
 
 /* delete smarty cache files */
@@ -204,7 +173,13 @@ if($sys_message != ""){
 
 if(isset($_POST)) {
 	/* read the preferences again */
-	$fc_preferences = get_preferences();
+	$fc_get_preferences = fc_get_preferences();
+	
+	foreach($fc_get_preferences as $k => $v) {
+		$key = $fc_get_preferences[$k]['option_key'];
+		$value = $fc_get_preferences[$k]['option_value'];
+		$fc_preferences[$key] = $value;
+	}
 	
 	foreach($fc_preferences as $k => $v) {
 	   $$k = stripslashes($v);

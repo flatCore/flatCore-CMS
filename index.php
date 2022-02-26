@@ -64,7 +64,31 @@ if(is_file(FC_CORE_DIR . "/maintenance.html")) {
  * $fc_prefs['prefs_template'] $fc_prefs['prefs_template_layout'] $fc_prefs['prefs_template_stylesheet']
  */
 
-$fc_prefs = fc_get_preferences();
+$fc_get_preferences = fc_get_preferences();
+
+foreach($fc_get_preferences as $k => $v) {
+	$key = $fc_get_preferences[$k]['option_key'];
+	$value = $fc_get_preferences[$k]['option_value'];
+	$fc_prefs[$key] = $value;
+}
+ 
+foreach($fc_prefs as $key => $val) {
+	$$key = stripslashes($val); 
+}
+
+
+if($fc_prefs['prefs_dateformat'] == '') {
+	$prefs_dateformat = 'Y-m-d';
+}
+
+if($fc_prefs['prefs_timeformat'] == '') {
+	$prefs_timeformat = 'H:i:s';
+}
+
+
+
+
+
 $lang_dir = $fc_prefs['prefs_default_language'];
 
 include 'lib/lang/'.$lang_dir.'/index.php';
@@ -75,7 +99,7 @@ if($_SESSION['user_class'] == "administrator") {
 }
 
 /* reserved $_GET['p'] parameters */
-$a_allowed_p = array('register', 'account', 'profile', 'search', 'sitemap', 'logout', 'password','display_post');
+$a_allowed_p = array('register', 'account', 'profile', 'search', 'sitemap', 'logout', 'password','display_post','checkout');
 
 /*
  * mod_rewrite
@@ -243,22 +267,7 @@ if(is_dir("lib/lang/$page_contents[page_language]") AND ($page_contents['page_la
 /* include language */
 require(FC_CORE_DIR . "/lib/lang/index.php");
 
-/**
- * preferences (data from fc_get_preferences() )
- * in the future we will only use the format $fc_prefs['key']
- */
-foreach($fc_prefs as $key => $val) {
-	$$key = stripslashes($val); 
-}
 
-
-if($fc_prefs['prefs_dateformat'] == '') {
-	$prefs_dateformat = 'Y-m-d';
-}
-
-if($fc_prefs['prefs_timeformat'] == '') {
-	$prefs_timeformat = 'H:i:s';
-}
 
 
 if(!empty($page_contents['page_modul'])) {
@@ -442,6 +451,15 @@ if($user_logout != '') {
 	$smarty->assign('msg_content', $output);
 }
 
+if($fc_prefs['prefs_posts_products_cart'] == 2 OR $fc_prefs['prefs_posts_products_cart'] == 3) {
+	/* add product to the shopping cart */
+	if(isset($_POST['add_to_cart'])) {
+		$fc_cart = fc_add_to_cart();
+	}
+	
+	/* amount of items in the shopping cart */
+	$cnt_items = fc_return_cart_amount();
+}
 
 require 'core/user_management.php';
 require 'core/switch.php';
