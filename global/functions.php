@@ -396,6 +396,30 @@ function fc_get_shortcodes($filter=NULL) {
 }
 
 
+
+/**
+ * get posts features from fc_textlib
+ * textlib_type = post_feature
+ */
+
+function fc_get_posts_features() {
+	
+	global $db_content;
+	
+	
+	$features = $db_content->select("fc_textlib", "*",[
+		"textlib_type" => 'post_feature',
+		"ORDER" => [
+			"textlib_priority" => "DESC"
+		]
+	]);
+	
+	return $features;
+}
+
+
+
+
 /**
  * get saved data from table fc_themes
  * $theme (string) name of the theme

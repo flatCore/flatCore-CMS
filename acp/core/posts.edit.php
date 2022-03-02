@@ -123,6 +123,8 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
 	$post_meta_title = fc_return_clean_value($post_meta_title);
 	$post_meta_description = fc_return_clean_value($post_meta_description);
 	
+	$post_product_features = json_encode($_POST['post_product_features'],JSON_FORCE_OBJECT);
+	
 	/* save or update data */
 	
 	/* get all $cols */
@@ -439,6 +441,27 @@ $select_shipping_category .= '<option value="3" '.$sel_shipping_cat_3.'>'.$lang[
 $select_shipping_category .= '</select>';
 
 
+/* features */
+$all_posts_features = fc_get_posts_features();
+$get_post_features = json_decode($post_data['post_product_features'],true);
+
+foreach($all_posts_features as $feature) {
+	
+	$feature_id = $feature['textlib_id'];
+	$checked_feature = '';
+	if(is_array($get_post_features)) {
+		if(array_search("$feature_id", $get_post_features) !== false) {
+			$checked_feature = 'checked';
+		}
+	}
+	
+	$checkbox_features .= '<div class="form-check">';
+	$checkbox_features .= '<input class="form-check-input" id="feature_'.$feature_id.'" type="checkbox" name="post_product_features[]" value="'.$feature_id.'" '.$checked_feature.'>';
+	$checkbox_features .= '<label class="form-check-label" for="feature_'.$feature_id.'">'.$feature['textlib_title'].'</label>';
+	$checkbox_features .= '</div>';
+}
+
+
 $post_product_price_net = $post_data['post_product_price_net'];
 if($post_product_price_net == '') {
 	$post_product_price_net = '0,00';
@@ -727,6 +750,9 @@ $form_tpl = str_replace('{post_product_price_gross_s2}', $post_product_price_gro
 $form_tpl = str_replace('{post_product_price_gross_s3}', $post_product_price_gross_s3, $form_tpl);
 $form_tpl = str_replace('{post_product_price_gross_s4}', $post_product_price_gross_s4, $form_tpl);
 $form_tpl = str_replace('{post_product_price_gross_s5}', $post_product_price_gross_s5, $form_tpl);
+
+$form_tpl = str_replace('{checkboxes_features}', $checkbox_features, $form_tpl);
+
 
 /* galleries */
 

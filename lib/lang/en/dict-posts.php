@@ -5,6 +5,7 @@
 $lang['post_list'] = 'Overview';
 $lang['post_edit'] = 'Edit';
 $lang['post_new_edit'] = 'New/Edit';
+$lang['post_features'] = 'Features';
 
 $lang['select_post_type'] = 'Choose a template';
 
@@ -25,6 +26,7 @@ $lang['post_tab_product'] = 'Product';
 $lang['post_tab_info'] = 'Informations';
 $lang['post_tab_prices'] = 'Price';
 $lang['post_tab_file'] = 'File';
+$lang['post_tab_features'] = 'Features';
 
 $lang['msg_post_deleted'] = 'The entry has been deleted';
 $lang['msg_no_posts_to_show'] = 'There are no entries here at the moment';

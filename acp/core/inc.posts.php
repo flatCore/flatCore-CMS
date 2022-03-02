@@ -13,6 +13,10 @@ switch ($sub) {
 		$subinc = "posts.edit";
 		break;
 		
+	case "features":
+		$subinc = "posts.features";
+		break;
+		
 	default:
 		$subinc = "pages.list";
 		break;
