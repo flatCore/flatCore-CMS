@@ -337,8 +337,8 @@ function fc_send_mail($recipient,$subject,$message) {
 	$mail->setFrom("$prefs_mailer_adr", "$prefs_mailer_name");
 	$mail->addAddress($recipient['mail'], $recipient['name']);
 	   
-  $mail->isHTML(true);
-  $mail->CharSet = 'utf-8';
+	$mail->isHTML(true);
+	$mail->CharSet = 'utf-8';
 	$mail->Subject = "$subject";
 	$mail->Body = "$message";
 	  
@@ -351,6 +351,120 @@ function fc_send_mail($recipient,$subject,$message) {
 	}
 	return $return;
 }
+
+/**
+ * create html file resp. string
+ * return string
+ * send via fc_send_mail() or force download as file
+ * $data (array) 'subject','preheader','title','salutation','body','footer','tpl'
+ *
+ * get the content from mail template f.e. /styles/default/templates-mail/mail.tpl
+ * get the styles /styles/default/templates-mail/styles.css
+ * get the mail body template from $data['tpl']
+ * bring everything together and return as string
+ */
+
+function fc_build_html_file($data) {
+	
+	global $fc_preferences;
+	global $languagePack;
+	
+	$tpl_dir = FC_CORE_DIR.'styles/'.$fc_preferences['prefs_template'];
+	$tpl_file = file_get_contents($tpl_dir.'/templates-mail/mail.tpl');
+	$tpl_style = file_get_contents($tpl_dir.'/templates-mail/styles.css');
+	$tpl_body = file_get_contents($tpl_dir.'/templates-mail/'.basename($data['tpl']));
+	
+	
+	$footer = $data['footer'];
+	if($data['footer'] == '') {
+		$footer = fc_get_textlib('footer_text_mail','','content');
+	}
+	
+	
+	$tpl_file = str_replace('{styles}', $tpl_style, $tpl_file);
+	$tpl_file = str_replace('{mail_body}', $tpl_body, $tpl_file);
+	$tpl_file = str_replace('{mail_title}', $mail_title, $tpl_file);
+	$tpl_file = str_replace('{mail_footer}', $footer, $tpl_file);
+	
+	return $tpl_file;	
+}
+
+
+/**
+ * get textlib content
+ * $name (string) name of the entry
+ * $lang (string) language of the entry
+ * $type (sting) 'all' | 'content' | 'tpl'
+ * $type = 'all' returns all contents as array
+ * $type = 'content' returns only the text as string
+ * $type = 'tpl' use snippet it's template. Return as string.
+ */
+
+function fc_get_textlib($name,$lang,$type) {
+
+	global $db_content;
+	global $languagePack;
+	
+	if($lang == '') {
+		$lang = $languagePack;
+	}
+
+	
+	$textlibData = $db_content->get("fc_textlib", "*", [
+		"AND" => [
+			"textlib_name" => "$name",
+			"textlib_lang" => "$lang"
+		]
+	]);
+	
+	if($type == 'all') {
+		return $textlibData;
+	}
+	
+	if($type == 'content') {
+		return $textlibData['textlib_content'];
+	}
+	
+	if($type == 'tpl') {
+		
+		foreach($textlibData as $k => $v) {
+	   		$$k = stripslashes($v);
+		}
+		
+		$get_tpl_file = 'styles/default/templates/snippet.tpl';
+		
+		if($textlib_theme != '' OR $textlib_theme != 'use_standard') {
+			$get_tpl_file = 'styles/'.$textlib_theme.'/templates/'.$textlib_template;
+		}
+		
+			
+		$get_tpl_file = 'styles/'.$textlib_theme.'/templates/'.$textlib_template;
+		
+		if(is_file("$get_tpl_file")) {
+			$tpl_file = file_get_contents($get_tpl_file);
+			
+			$snippet_thumbnail_array = explode("<->", $textlib_images);
+			if(count($snippet_thumbnail_array) > 0) {
+				foreach($snippet_thumbnail_array as $img) {
+					$img = str_replace('../content/', '/content/', $img);
+					$tpl_file = str_replace('{$snippet_img_src}',$img,$tpl_file);						
+				}
+			}
+			
+			$tpl_file = str_replace('{$snippet_title}',$textlib_title,$tpl_file);
+			$tpl_file = str_replace('{$snippet_text}',$textlib_content,$tpl_file);
+			$tpl_file = str_replace('{$snippet_teaser}',$textlib_teaser,$tpl_file);
+			$tpl_file = str_replace('{$snippet_classes}',$textlib_classes,$tpl_file);
+			$tpl_file = str_replace('{$snippet_url}',$textlib_permalink,$tpl_file);
+			$tpl_file = str_replace('{$snippet_url_name}',$textlib_permalink_name,$tpl_file);
+			$tpl_file = str_replace('{$snippet_url_title}',$textlib_permalink_title,$tpl_file);
+			$tpl_file = str_replace('{$snippet_url_classes}',$textlib_permalink_classes,$tpl_file);
+			return $tpl_file;
+		}
+	}
+
+}
+
 
 
 /**

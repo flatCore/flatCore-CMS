@@ -59,21 +59,22 @@ $lang['price_tag_label_gross'] = 'VAT included';
 $lang['price_tag_label_net'] = 'plus VAT';
 
 /* Buttons, Links */
-$lang['button_login'] 			= "Login";
-$lang['button_profile'] 		= "Edit Profile";
-$lang['button_logout'] 			= "Logout";
-$lang['button_save'] 			= "Save";
-$lang['button_delete'] 			= "Delete";
-$lang['button_send'] 			= "Send";
-$lang['button_search'] 			= "Search";
-$lang['button_send_register'] 	= "Submit Registration";
-$lang['button_back'] 			= "back";
-$lang['button_next'] 			= "forward";
-$lang['button_top'] 			= "top";
-$lang['button_acp'] 			= "Administration";
+$lang['button_login'] = "Login";
+$lang['button_profile'] = "Edit Profile";
+$lang['button_orders'] = "Orders";
+$lang['button_logout'] = "Logout";
+$lang['button_save'] = "Save";
+$lang['button_delete'] = "Delete";
+$lang['button_send'] = "Send";
+$lang['button_search'] = "Search";
+$lang['button_send_register'] = "Submit Registration";
+$lang['button_back'] = "back";
+$lang['button_next'] = "forward";
+$lang['button_top'] = "top";
+$lang['button_acp'] = "Administration";
 $lang['button_acp_edit_page'] = "Edit Page";
-$lang['link_delete_avatar']		= "Delete Avatar";
-$lang['link_register'] 			= "Register now ...";
+$lang['link_delete_avatar'] = "Delete Avatar";
+$lang['link_register'] = "Register now ...";
 $lang['btn_read_more'] = "Read more";
 $lang['btn_download'] = "Download";
 $lang['btn_show_gallery'] = "Show {cnt_images} Images";
@@ -169,6 +170,25 @@ $lang['btn_guestlist_sign'] = 'Confirm';
 $lang['guestlist_label_nbr_total_available'] = 'Available Seats:';
 $lang['guestlist_label_nbr_commitments'] = 'Commitments:';
 
+/* shopping cart and checkout */
+$lang['label_shopping_cart'] = 'Shopping cart';
+$lang['label_cnt_sc_items'] = 'Articles in your shopping cart: ';
+$lang['label_price'] = 'Price';
+$lang['label_product_amount'] = 'Amount';
+$lang['label_product_info'] = 'Product';
+$lang['label_tax'] = 'Tax';
+$lang['label_net'] = 'Net';
+$lang['label_gross'] = 'Gross';
+$lang['price_subtotal'] = 'Subtotal';
+$lang['price_total'] = 'Total price';
+$lang['label_pm_bank_transfer'] = 'Bank transfer';
+$lang['label_pm_invoice'] = 'Invoice';
+$lang['label_pm_cash'] = 'Cash';
+$lang['label_pm_paypal'] = 'PayPal';
+$lang['label_payment_method'] = 'Payment method';
+$lang['label_invoice_address'] = 'Invoice Address';
+$lang['msg_accept_terms'] = 'You must confirm that you have read and accepted the legal notices and terms.';
+$lang['msg_order_send'] = '<b>Thank you very much!</b> Your order has been sent.';
 
 /* Dates */
 $lang['m01'] = "January";

@@ -10,6 +10,7 @@ include_once 'functions_addons.php';
 include_once 'functions_database.php';
 include_once 'functions_cache.php';
 include_once 'functions_index.php';
+include_once 'functions_shop.php';
 
 
 /**

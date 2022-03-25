@@ -264,6 +264,17 @@ $this_entry = str_replace("{form_action}", $form_action, $this_entry);
 
 
 /* products */
+
+/**
+ * check if we show the shopping cart
+ */
+$tpl_btn_add_to_cart = '';
+if($fc_prefs['prefs_posts_products_cart'] == 2 OR $fc_prefs['prefs_posts_products_cart'] == 3) {
+	$tpl_btn_add_to_cart = fc_load_posts_tpl($fc_template,'btn-add-to-cart.tpl');
+	$tpl_btn_add_to_cart = str_replace('{btn_add_to_cart}', $lang['btn_add_to_cart'], $tpl_btn_add_to_cart);
+}
+$this_entry = str_replace("{btn_add_to_cart}", $tpl_btn_add_to_cart, $this_entry);
+
 if($post_data['post_product_tax'] == '1') {
 	$tax = $fc_prefs['prefs_posts_products_default_tax'];
 } else if($post_data['post_product_tax'] == '2') {
@@ -345,6 +356,11 @@ if($post_data['post_product_textlib_price'] != 'no_snippet') {
 }
 
 $this_entry = str_replace("{post_thumbnails}", $thumbnails_str, $this_entry);
+
+$this_entry = str_replace('{post_id}', $get_post_id, $this_entry);
+$form_action = '/'.$fct_slug.$mod_slug;
+$this_entry = str_replace("{form_action}", $form_action, $this_entry);
+	
 
 if($post_data['post_meta_title'] == '') {
 	$post_data['post_meta_title'] = $post_data['post_title'];

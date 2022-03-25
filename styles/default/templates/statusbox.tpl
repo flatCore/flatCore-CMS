@@ -4,6 +4,11 @@
 	
 	<div class="list-group" style="margin-bottom:0;">
 		<a href="{$link_profile}" class="list-group-item">{$lang_button_profile}</a>
+		
+		{if orders_uri != ''}
+			<a href="{$orders_uri}" class="list-group-item">{$lang_button_orders}</a>
+		{/if}
+		
 		<a href="{$link_logout}" class="list-group-item">{$lang_button_logout}</a>
 	
 		{if $smarty.session.user_class == "administrator"}

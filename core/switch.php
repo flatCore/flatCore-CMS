@@ -472,6 +472,11 @@ if($p == "checkout") {
 	include 'checkout.php';
 }
 
+/* show checkout */
+if($p == "orders") {
+	include 'orders.php';
+}
+
 /* confirm new account */
 if($p == "account") {
 	

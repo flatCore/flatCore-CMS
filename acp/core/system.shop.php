@@ -163,31 +163,66 @@ echo'</fieldset>';
 echo '<fieldset>';
 echo '<legend>'.$lang['label_payment_methods'].'</legend>';
 
-echo '<div class="row">';
-echo '<div class="col">';
+echo '<table class="table">';
+echo '<tr>';
+echo '<td>Active</td>';
+echo '<td>Type</td>';
+echo '<td>'.$lang['label_payment_costs'].'</td>';
+echo '</tr>';
 
+echo '<tr>';
+echo '<td>';
 $check_bt = ($prefs_pm_bank_transfer == 1) ? 'checked' : '';
-echo '<div class="form-check">';
 echo '<input class="form-check-input" type="checkbox" name="prefs_pm_bank_transfer" value="1" id="checkBankTransfer" '.$check_bt.'>';
+echo '</td>';
+echo '<td>';
 echo '<label class="form-check-label" for="checkBankTransfer">'.$lang['label_payment_bank_transfer'].'</label>';
-echo '</div>';
+echo '</td>';
+echo '<td>';
+echo '<input type="text" class="form-control" name="prefs_payment_costs_bt" value="'.$prefs_payment_costs_bt.'">';
+echo '</td>';
+echo '</tr>';
 
-echo '</div>';
-echo '<div class="col">';
+echo '<tr>';
+echo '<td>';
+$check_paypal = ($prefs_pm_paypal == 1) ? 'checked' : '';
+echo '<input class="form-check-input" type="checkbox" name="prefs_pm_paypal" value="1" id="checkPayPal" '.$check_paypal.'>';
+echo '</td>';
+echo '<td>';
+echo '<label class="form-check-label" for="checkPayPal">'.$lang['label_payment_paypal'].'</label>';
+echo '</td>';
+echo '<td>';
+echo '<input type="text" class="form-control" name="prefs_payment_costs_paypal" value="'.$prefs_payment_costs_paypal.'">';
+echo '</td>';
+echo '</tr>';
 
-echo '<div class="form-group">
-				<label>' . $lang['label_payment_costs'] . '</label>
-				<input type="text" class="form-control" name="prefs_payment_costs_bt" value="'.$prefs_payment_costs_bt.'">
-			</div>';
-
-echo '</div>';
-echo '</div>';
-
+echo '<tr>';
+echo '<td>';
 $check_invoice = ($prefs_pm_invoice == 1) ? 'checked' : '';
-echo '<div class="form-check">';
 echo '<input class="form-check-input" type="checkbox" name="prefs_pm_invoice" value="1" id="checkInvoice" '.$check_invoice.'>';
-echo '<label class="form-check-label" for="checkInvoice">'.$lang['label_payment_bank_invoice'].'</label>';
-echo '</div>';
+echo '</td>';
+echo '<td>';
+echo '<label class="form-check-label" for="checkInvoice">'.$lang['label_payment_invoice'].'</label>';
+echo '</td>';
+echo '<td>';
+echo '<input type="text" class="form-control" name="prefs_payment_costs_invoice" value="'.$prefs_payment_costs_invoice.'">';
+echo '</td>';
+echo '</tr>';
+
+echo '<tr>';
+echo '<td>';
+$check_cash = ($prefs_pm_cash == 1) ? 'checked' : '';
+echo '<input class="form-check-input" type="checkbox" name="prefs_pm_cash" value="1" id="checkCash" '.$check_cash.'>';
+echo '</td>';
+echo '<td>';
+echo '<label class="form-check-label" for="checkCash">'.$lang['label_payment_cash'].'</label>';
+echo '</td>';
+echo '<td>';
+echo '<input type="text" class="form-control" name="prefs_payment_costs_cash" value="'.$prefs_payment_costs_cash.'">';
+echo '</td>';
+echo '</tr>';
+
+echo '</table>';
 
 echo'</fieldset>';
 

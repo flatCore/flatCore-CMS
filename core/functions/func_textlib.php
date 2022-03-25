@@ -13,7 +13,8 @@ function print_msg($file,$l) {
 
 
 /**
- * Text Snippets
+ * @deprecated
+ * new: fc_get_textlib() in global/*
  */
 
 

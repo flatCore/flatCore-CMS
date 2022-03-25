@@ -12,7 +12,9 @@
 					{post_currency} {post_price_gross} <span class="product-amount">{post_product_amount}</span> <span class="product-unit">{post_product_unit}</span>
 					<span class="price-tag-note">{price_tag_label_gross}</span>
 				</div>
+				{btn_add_to_cart}
 			</div>
+			
 		</div>
 	</div>
 		

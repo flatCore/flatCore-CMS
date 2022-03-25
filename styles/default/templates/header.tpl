@@ -2,7 +2,12 @@
 
 	<div class="container pt-3 mb-3">
 		
-
+		{if $cnt_shopping_cart_items != ''}
+			<div class="shopping-cart-container">
+				<a href="{$shopping_cart_uri}" title="{$lang_label_shopping_cart}"><i class="bi bi-cart-fill"></i> {$cnt_shopping_cart_items}</a>
+			</div>
+		{/if}
+		
 		{if is_array($legal_pages) }
 		<div class="legal-pages-container">
 			<ul>

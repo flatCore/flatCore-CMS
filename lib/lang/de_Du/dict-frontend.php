@@ -62,6 +62,7 @@ $lang['price_tag_label_net'] = 'zzgl. MwSt.';
 /* Buttons, Links */
 $lang['button_login'] = "Anmelden";
 $lang['button_profile'] = "Profil bearbeiten";
+$lang['button_orders'] = "Bestellungen";
 $lang['button_logout'] = "Abmelden";
 $lang['button_save'] = "Speichern";
 $lang['button_delete'] = "Löschen";
@@ -155,6 +156,25 @@ $lang['btn_guestlist_sign'] = 'Teilnehmen';
 $lang['guestlist_label_nbr_total_available'] = 'Verfügbare Plätze:';
 $lang['guestlist_label_nbr_commitments'] = 'Zusagen:';
 
+/* shopping cart and checkout */
+$lang['label_shopping_cart'] = 'Warenkorb';
+$lang['label_cnt_sc_items'] = 'Artikel im Warenkorb';
+$lang['label_price'] = 'Preis';
+$lang['label_product_amount'] = 'Menge';
+$lang['label_product_info'] = 'Produkt';
+$lang['label_tax'] = 'Steuer';
+$lang['label_net'] = 'Netto';
+$lang['label_gross'] = 'Brutto';
+$lang['price_subtotal'] = 'Zwischensumme';
+$lang['price_total'] = 'Gesamtpreis';
+$lang['label_pm_bank_transfer'] = 'Überweisung';
+$lang['label_pm_invoice'] = 'Rechnung';
+$lang['label_pm_cash'] = 'Barzahlung';
+$lang['label_pm_paypal'] = 'PayPal';
+$lang['label_payment_method'] = 'Zahlungsmethode';
+$lang['label_invoice_address'] = 'Rechnungsadresse';
+$lang['msg_accept_terms'] = 'Du musst bestätigen, dass Du die rechtlichen Hinweise und Bestimmungen gelesen und akzeptiert hast.';
+$lang['msg_order_send'] = '<b>Vielen Dank!</b> Deine Bestellung wurde gesendet.';
 
 /* Dates */
 

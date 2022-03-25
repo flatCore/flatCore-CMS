@@ -16,6 +16,10 @@ switch ($sub) {
 	case "events":
 		$subinc = "reactions.events";
 		break;
+		
+	case "orders":
+		$subinc = "reactions.orders";
+		break;
 				
 	default:
 		$subinc = "reactions.comments";

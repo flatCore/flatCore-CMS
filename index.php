@@ -99,7 +99,7 @@ if($_SESSION['user_class'] == "administrator") {
 }
 
 /* reserved $_GET['p'] parameters */
-$a_allowed_p = array('register', 'account', 'profile', 'search', 'sitemap', 'logout', 'password','display_post','checkout');
+$a_allowed_p = array('register', 'account', 'profile', 'search', 'sitemap', 'logout', 'password','display_post','checkout','orders');
 
 /*
  * mod_rewrite
@@ -226,6 +226,14 @@ if($p == "404") {
 
 if($page_contents['page_type_of_use'] == 'register') {
 	$p = 'register';
+}
+
+if($page_contents['page_type_of_use'] == 'checkout') {
+	$p = 'checkout';
+}
+
+if($page_contents['page_type_of_use'] == 'orders') {
+	$p = 'orders';
 }
 
 
@@ -451,15 +459,40 @@ if($user_logout != '') {
 	$smarty->assign('msg_content', $output);
 }
 
+/* get permalink for orders page */
+$orders_page = fc_get_type_of_use_pages('orders');
+if($orders_page['page_permalink'] == '') {
+	$orders_uri = '/orders/';
+} else {
+	$orders_uri = '/'.$orders_page['page_permalink'];
+}
+
+$smarty->assign('orders_uri', $orders_uri);
+
+
 if($fc_prefs['prefs_posts_products_cart'] == 2 OR $fc_prefs['prefs_posts_products_cart'] == 3) {
 	/* add product to the shopping cart */
 	if(isset($_POST['add_to_cart'])) {
 		$fc_cart = fc_add_to_cart();
 	}
 	
+	/* get permalink for shopping cart */
+	$checkout_page = fc_get_type_of_use_pages('checkout');
+	if($checkout_page['page_permalink'] == '') {
+		$sc_uri = '/checkout/';
+	} else {
+		$sc_uri = '/'.$checkout_page['page_permalink'];
+	}
+	
+	$smarty->assign('shopping_cart_uri', $sc_uri);
+	
 	/* amount of items in the shopping cart */
 	$cnt_items = fc_return_cart_amount();
+	if($cnt_items > 0) {
+		$smarty->assign('cnt_shopping_cart_items', $cnt_items);
+	}
 }
+
 
 require 'core/user_management.php';
 require 'core/switch.php';

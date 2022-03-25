@@ -255,6 +255,8 @@ $lang['type_of_use_display_post'] = "Display Post";
 $lang['type_of_use_imprint'] = "Imprint";
 $lang['type_of_use_privacy_policy'] = "Privacy Policy";
 $lang['type_of_use_legal'] = "Legal";
+$lang['type_of_use_checkout'] = "Shopping cart";
+$lang['type_of_use_orders'] = "Orders";
 
 $lang['legend_structured_pages'] = "Ordered Pages";
 $lang['legend_unstructured_pages'] = "Single Pages";
@@ -382,8 +384,28 @@ $lang['label_shipping_mode_cats'] = 'The most expensive category in the shopping
 
 $lang['label_payment_methods'] = 'Payment methods';
 $lang['label_payment_bank_transfer'] = 'Bank transfer';
-$lang['label_payment_bank_invoice'] = 'Invoice';
+$lang['label_payment_invoice'] = 'Invoice';
+$lang['label_payment_cash'] = 'Cash';
+$lang['label_payment_paypal'] = 'PayPal';
 $lang['label_payment_costs'] = 'Costs';
+
+$lang['label_order_nbr'] = 'Order number';
+$lang['label_order_date'] = 'Date';
+
+$lang['label_status_order'] = 'Order status';
+$lang['status_order_received'] = 'Received';
+$lang['status_order_completed'] = 'Completed';
+$lang['status_order_canceled'] = 'Canceled';
+
+$lang['label_status_payment'] = 'Payment';
+$lang['status_payment_open'] = 'Open';
+$lang['status_payment_paid'] = 'Paid';
+
+$lang['label_status_shipping'] = 'Shipping';
+$lang['status_shipping_prepared'] = 'Prepared';
+$lang['status_shipping_shipped'] = 'Shipped';
+
+$lang['nav_orders'] = 'Orders';
 
 
 /* Preferences */

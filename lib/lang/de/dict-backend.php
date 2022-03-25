@@ -253,6 +253,8 @@ $lang['type_of_use_display_post'] = "Beitrag anzeigen";
 $lang['type_of_use_imprint'] = "Impressum";
 $lang['type_of_use_privacy_policy'] = "Datenschutz";
 $lang['type_of_use_legal'] = "Rechtliche Hinweise";
+$lang['type_of_use_checkout'] = "Warenkorb anzeigen";
+$lang['type_of_use_orders'] = "Bestellungen anzeigen";
 
 $lang['legend_structured_pages'] = "geordnete Seiten";
 $lang['legend_unstructured_pages'] = "einzelne Seiten";
@@ -385,8 +387,29 @@ $lang['label_shipping_mode_deliver'] = 'Dieser Artikel wird ausgeliefert';
 
 $lang['label_payment_methods'] = 'Bezahlarten';
 $lang['label_payment_bank_transfer'] = 'Überweisung';
-$lang['label_payment_bank_invoice'] = 'Rechnung';
+$lang['label_payment_invoice'] = 'Rechnung';
+$lang['label_payment_cash'] = 'Barzahlung';
+$lang['label_payment_paypal'] = 'PayPal';
 $lang['label_payment_costs'] = 'Kosten';
+
+$lang['label_order_nbr'] = 'Bestellnummer';
+$lang['label_order_date'] = 'Datum';
+
+$lang['label_status_order'] = 'Bestellstatus';
+$lang['status_order_received'] = 'Eingegangen';
+$lang['status_order_completed'] = 'Erledigt';
+$lang['status_order_canceled'] = 'Storniert';
+
+$lang['label_status_payment'] = 'Zahlung';
+$lang['status_payment_open'] = 'Offen';
+$lang['status_payment_paid'] = 'Bezahlt';
+
+$lang['label_status_shipping'] = 'Versand';
+$lang['status_shipping_prepared'] = 'Vorbereitet';
+$lang['status_shipping_shipped'] = 'Versendet';
+
+$lang['nav_orders'] = 'Bestellungen';
+
 
 /* Preferences */
 
