@@ -35,8 +35,10 @@ release-notes.html
 !/styles/default/*
 !/styles/default/**/*
 !/styles/default/php/*
-
-!index.html
+!/styles/default/templates/*
+!/styles/default/templates/posts/*
+!/styles/default/templates/comments/*
+!/styles/default/templates-mail/*
 
 config_database.php
 
