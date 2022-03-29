@@ -597,46 +597,78 @@ echo '<legend>'.$lang['select_post_type'].'</legend>';
 	}
 
 	echo '<div class="form-check">';
-	echo '<input type="checkbox" class="form-check-input" id="type_m" name="page_post_types[]" value="m" '.$check_m.'>';
+	echo '<input type="checkbox" class="form-check-input post-types post-type-group" id="type_m" name="page_post_types[]" value="m" '.$check_m.'>';
 	echo '<label class="form-check-label" for="type_m">'.$lang['post_type_message'].'</label>';
 	echo '</div>';
 	
 	echo '<div class="form-check">';
-	echo '<input type="checkbox" class="form-check-input" id="type_i" name="page_post_types[]" value="i" '.$check_i.'>';
+	echo '<input type="checkbox" class="form-check-input post-types post-type-group" id="type_i" name="page_post_types[]" value="i" '.$check_i.'>';
 	echo '<label class="form-check-label" for="type_i">'.$lang['post_type_image'].'</label>';
 	echo '</div>';
 	
 	echo '<div class="form-check">';
-	echo '<input type="checkbox" class="form-check-input" id="type_g" name="page_post_types[]" value="g" '.$check_g.'>';
+	echo '<input type="checkbox" class="form-check-input post-types post-type-group" id="type_g" name="page_post_types[]" value="g" '.$check_g.'>';
 	echo '<label class="form-check-label" for="type_g">'.$lang['post_type_gallery'].'</label>';
 	echo '</div>';
 	
 	echo '<div class="form-check">';
-	echo '<input type="checkbox" class="form-check-input" id="type_v" name="page_post_types[]" value="v" '.$check_v.'>';
+	echo '<input type="checkbox" class="form-check-input post-types post-type-group" id="type_v" name="page_post_types[]" value="v" '.$check_v.'>';
 	echo '<label class="form-check-label" for="type_v">'.$lang['post_type_video'].'</label>';
 	echo '</div>';
 	
 	echo '<div class="form-check">';
-	echo '<input type="checkbox" class="form-check-input" id="type_p" name="page_post_types[]" value="p" '.$check_p.'>';
-	echo '<label class="form-check-label" for="type_p">'.$lang['post_type_product'].'</label>';
-	echo '</div>';
-	
-	echo '<div class="form-check">';
-	echo '<input type="checkbox" class="form-check-input" id="type_l" name="page_post_types[]" value="l" '.$check_l.'>';
+	echo '<input type="checkbox" class="form-check-input post-types post-type-group" id="type_l" name="page_post_types[]" value="l" '.$check_l.'>';
 	echo '<label class="form-check-label" for="type_l">'.$lang['post_type_link'].'</label>';
 	echo '</div>';
 	
 	echo '<div class="form-check">';
-	echo '<input type="checkbox" class="form-check-input" id="type_f" name="page_post_types[]" value="f" '.$check_f.'>';
+	echo '<input type="checkbox" class="form-check-input post-types post-type-group" id="type_f" name="page_post_types[]" value="f" '.$check_f.'>';
 	echo '<label class="form-check-label" for="type_f">'.$lang['post_type_file'].'</label>';
 	echo '</div>';
-	
-	echo '<hr>';
 
-	echo '<div class="form-check">';
-	echo '<input type="checkbox" class="form-check-input" id="type_e" name="page_post_types[]" value="e" '.$check_e.'>';
-	echo '<label class="form-check-label" for="type_e">'.$lang['post_type_event'].'</label>';
-	echo '</div>';
+    echo '<hr>';
+
+    echo '<div class="form-check">';
+    echo '<input type="checkbox" class="form-check-input post-types post-type-single" id="type_e" name="page_post_types[]" value="e" '.$check_e.'>';
+    echo '<label class="form-check-label" for="type_e">'.$lang['post_type_event'].'</label>';
+    echo '</div>';
+
+    echo '<hr>';
+
+    echo '<div class="form-check">';
+    echo '<input type="checkbox" class="form-check-input post-types post-type-single" id="type_p" name="page_post_types[]" value="p" '.$check_p.'>';
+    echo '<label class="form-check-label" for="type_p">'.$lang['post_type_product'].'</label>';
+    echo '</div>';
+
+
+
+
+
+    ?>
+
+
+<script>
+    $(function() {
+        $('input#type_p').change(function() {
+            if($('input#type_p').prop('checked')) {
+                $("input#type_e").prop('checked', false);
+                $("input.post-type-group").prop('checked', false);
+            }
+        });
+        $('input#type_e').change(function() {
+            if($('input#type_e').prop('checked')) {
+                $("input#type_p").prop('checked', false);
+                $("input.post-type-group").prop('checked', false);
+            }
+        });
+        $('input.post-type-group').change(function() {
+            $("input#type_p").prop('checked', false);
+            $("input#type_e").prop('checked', false);
+        });
+    });
+</script>
+
+<?php
 
 
 echo '</fieldset>';
