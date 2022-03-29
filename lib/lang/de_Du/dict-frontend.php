@@ -173,6 +173,7 @@ $lang['label_pm_cash'] = 'Barzahlung';
 $lang['label_pm_paypal'] = 'PayPal';
 $lang['label_payment_method'] = 'Zahlungsmethode';
 $lang['label_invoice_address'] = 'Rechnungsadresse';
+$lang['label_cart_comment'] = 'Kommentar oder Notiz zu Deiner Bestellung hinzufügen';
 $lang['msg_accept_terms'] = 'Du musst bestätigen, dass Du die rechtlichen Hinweise und Bestimmungen gelesen und akzeptiert hast.';
 $lang['msg_order_send'] = '<b>Vielen Dank!</b> Deine Bestellung wurde gesendet.';
 $lang['btn_send_order'] = 'Kaufen';

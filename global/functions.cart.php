@@ -257,12 +257,14 @@ function fc_send_order($data) {
 	$order_status_shipping = 1;
 	$order_status_payment = 1;
 	$order_invoice_address = $data['order_invoice_address'];
+    $order_invoice_mail = $data['user_mail'];
 	$order_products = $data['order_products'];
 	$order_price_total = $data['order_price_total'];
 	$order_shipping_type = $data['order_shipping_type'];
 	$order_shipping_costs = $data['order_shipping_costs'];
 	$order_payment_type = $data['order_payment_type'];
 	$order_payment_costs = $data['order_payment_costs'];
+    $order_comment = clean_visitors_input($data['order_comment']);
 	
 	$db_content->insert("fc_orders", [
 		"user_id" => "$user_id",
@@ -272,13 +274,15 @@ function fc_send_order($data) {
 		"order_status_shipping" => "$order_status_shipping",
 		"order_status_payment" => "$order_status_payment",
 		"order_invoice_address" => "$order_invoice_address",
+        "order_invoice_mail" => "$order_invoice_mail",
 		"order_products" => "$order_products",
 		"order_price_total" => $order_price_total,
 		"order_shipping_type" => "$order_shipping_type",
 		"order_shipping_costs" => "$order_shipping_costs",
 		"order_payment_type" => "$order_payment_type",
 		"order_payment_costs" => "$order_payment_costs",
-		"order_currency" => $fc_prefs['prefs_posts_products_default_currency']
+		"order_currency" => $fc_prefs['prefs_posts_products_default_currency'],
+        "order_user_comment" => "$order_comment"
 		
 	]);
 

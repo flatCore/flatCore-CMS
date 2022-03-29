@@ -82,6 +82,13 @@
 
 <form action="{$shopping_cart_uri}" method="POST">
 	<div class="card p-2 mb-4">
+
+		<div>
+			<label for="cartComment">{$lang_label_cart_comment}</label>
+			<textarea class="form-control" id="cartComment" name="cart_comment"></textarea>
+		</div>
+		<hr>
+
 		<div class="row">
 			<div class="col-md-8">
 				<div class="form-check">

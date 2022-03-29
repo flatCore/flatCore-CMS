@@ -22,6 +22,7 @@ $cols = array(
   "order_nbr"  => "VARCHAR(25) NOT NULL DEFAULT ''",
   "order_time"  => 'INTEGER(12)',
   "order_invoice_address"  => "VARCHAR(255) NOT NULL DEFAULT ''",
+  "order_invoice_mail"  => "VARCHAR(100) NOT NULL DEFAULT ''",
   "order_status"  => 'INTEGER(12)',
   "order_status_shipping"  => 'INTEGER(12)',
   "order_status_payment"  => 'INTEGER(12)',
@@ -31,7 +32,9 @@ $cols = array(
   "order_shipping_type"  => "VARCHAR(100) NOT NULL DEFAULT ''",
   "order_shipping_costs"  => "VARCHAR(100) NOT NULL DEFAULT ''",
   "order_payment_type"  => "VARCHAR(100) NOT NULL DEFAULT ''",
-  "order_payment_costs"  => "VARCHAR(100) NOT NULL DEFAULT ''"
-  );
+  "order_payment_costs"  => "VARCHAR(100) NOT NULL DEFAULT ''",
+  "order_user_comment" => "LONGTEXT NOT NULL DEFAULT ''",
+  "order_admin_comment" => "LONGTEXT NOT NULL DEFAULT ''"
+);
 
 ?>

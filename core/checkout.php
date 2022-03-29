@@ -183,6 +183,7 @@ if($_POST['order'] == 'send') {
 		$cart_items_str = json_encode($cart_items, JSON_FORCE_OBJECT);
 		
 		$order_data['user_id'] = $get_cd['user_id'];
+        $order_data['user_mail'] = $get_cd['user_mail'];
 		$order_data['order_invoice_address'] = $client_data;
 		$order_data['order_products'] = $cart_items_str;
 		$order_data['order_price_total'] = $cart_price_total;
@@ -190,6 +191,7 @@ if($_POST['order'] == 'send') {
 		$order_data['order_shipping_costs'] = $shipping_costs;
 		$order_data['order_payment_type'] = $_SESSION['set_payment'];
 		$order_data['order_payment_costs'] = $payment_costs;
+        $order_data['order_comment'] = $_POST['cart_comment'];
 		
 		$order_id = fc_send_order($order_data);
 		
