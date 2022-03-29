@@ -197,6 +197,7 @@ if($_POST['order'] == 'send') {
 			$smarty->assign("cart_alert_success",$lang['msg_order_send'],true);
             /* remove items from fc_carts */
             fc_clear_cart($order_data['user_id']);
+            $cnt_cart_items = 0;
 		}
 	}
 	
@@ -212,7 +213,7 @@ $smarty->assign('cart_price_total', fc_post_print_currency($cart_price_total), t
 $smarty->assign('currency', $fc_prefs['prefs_posts_products_default_currency'], true);
 
 
-$cart_table = $smarty->fetch("cart_table.tpl",$cache_id);
+$cart_table = $smarty->fetch("shopping_cart.tpl",$cache_id);
 
 $smarty->assign('page_content', $cart_table, true);
 
