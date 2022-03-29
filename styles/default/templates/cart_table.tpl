@@ -112,7 +112,7 @@
 			</div>
 			<div class="col-md-2">
 				
-					<button type="submit" class="btn btn-success w-100" name="order" value="send">KAUFEN</button>
+					<button type="submit" class="btn btn-success w-100" name="order" value="send">{$lang_btn_send_order}</button>
 				
 			</div>
 		</div>

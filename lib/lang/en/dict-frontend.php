@@ -189,6 +189,7 @@ $lang['label_payment_method'] = 'Payment method';
 $lang['label_invoice_address'] = 'Invoice Address';
 $lang['msg_accept_terms'] = 'You must confirm that you have read and accepted the legal notices and terms.';
 $lang['msg_order_send'] = '<b>Thank you very much!</b> Your order has been sent.';
+$lang['btn_send_order'] = 'Buy';
 
 /* Dates */
 $lang['m01'] = "January";
