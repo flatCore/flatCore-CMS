@@ -193,16 +193,14 @@ if($_POST['order'] == 'send') {
 		
 		$order_id = fc_send_order($order_data);
 		
-		
 		if($order_id > 0) {
-			$smarty->assign("cart_alert_success",$lang['msg_order_send'],true);			
+			$smarty->assign("cart_alert_success",$lang['msg_order_send'],true);
+            /* remove items from fc_carts */
+            fc_clear_cart($order_data['user_id']);
 		}
-					
 	}
 	
 }
-
-
 
 $smarty->assign("cnt_items",$cnt_cart_items,true);
 $smarty->assign('cart_price_net', fc_post_print_currency($price_all_net), true);

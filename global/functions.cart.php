@@ -155,6 +155,32 @@ function fc_remove_from_cart($id) {
 	}
 }
 
+
+/**
+ * @param $user user id for clients or hash for guest
+ * @return void
+ */
+function fc_clear_cart($user) {
+
+    global $db_content;
+
+    if(is_numeric($user)) {
+        $data = $db_content->delete("fc_carts", [
+            "AND" => [
+                "cart_user_id" => $user,
+                "cart_status" => "progress"
+            ]
+        ]);
+    } else {
+        $data = $db_content->delete("fc_carts", [
+            "AND" => [
+                "cart_user_hash" => $user,
+                "cart_status" => "progress"
+            ]
+        ]);
+    }
+}
+
 /**
  * get payment methods
  * at the moment we have no third party payment methods
@@ -255,9 +281,9 @@ function fc_send_order($data) {
 		"order_currency" => $fc_prefs['prefs_posts_products_default_currency']
 		
 	]);
-	
+
 	$order_id = $db_content->id();
-	
+
 	return $order_id;
 }
 
