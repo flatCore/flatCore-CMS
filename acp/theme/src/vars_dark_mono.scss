@@ -37,14 +37,8 @@ $color_queue: $color_ghost;
 $color_banned: #f0ad4e;
 $color_deleted: #d9534f;
 
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6 {
-	font-weight: 200;
-	color: lighten($brand_primary,5);
-	small {
-		font-weight: 300;
-	}
-}
+$headings-font-weight: 300;
+$headings-color: lighten($brand_secondary,5);
 
 /* tables */
 
@@ -57,5 +51,25 @@ $table_striped_color_odd: $font_color;
 $navbar-fc-bg: $widget_background;
 $navbar-fc-btn-bg: lighten($widget_background,15);
 $navbar-fc-btn-active: darken($brand_primary,0);
+
+/* accordion */
+
+$accordion-color: $font_color;
+$accordion-bg: $widget_background;
+$accordion-border-color: darken($widget_background,20);
+
+$accordion-button-active-bg: $brand_primary;
+$accordion-button-active-color: $font_color;
+
+/* list group */
+
+$list-group-bg: $widget_background;
+$list-group-color: $font_color;
+$list-group-hover-bg: darken($widget_background,5);
+$list-group-active-color: $font_color;
+$list-group-active-bg: $brand_primary;
+$list-group-action-active-color: $font_color;
+$list-group-action-active-bg: darken($brand_primary,10);
+$list-group-action-hover-color: $brand_primary;
 
 @import "styles";
