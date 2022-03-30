@@ -153,7 +153,7 @@ $cnt_labels = count($fc_labels);
 /**
  * read the preferences
  * OLD: do not use the old $prefs_default_language
- * NEW: use $fc_preferences['default_language']
+ * NEW: use $fc_prefs['default_language']
  */
  
 $fc_get_preferences = fc_get_preferences();
@@ -162,9 +162,10 @@ foreach($fc_get_preferences as $k => $v) {
 	$key = $fc_get_preferences[$k]['option_key'];
 	$value = $fc_get_preferences[$k]['option_value'];
 	$fc_preferences[$key] = $value;
+    $fc_prefs[$key] = $value;
 }
 
-foreach($fc_preferences as $k => $v) {
+foreach($fc_prefs as $k => $v) {
    $$k = stripslashes($v);
 }
 
