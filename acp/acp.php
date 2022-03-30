@@ -294,16 +294,7 @@ if(isset($set_acptheme)) {
 		
 	</head>
 	<body>
-	
-		<?php
-		if(is_file('../maintenance.html')) {
-			echo '<div style="padding:3px 15px;background-color:#b00;color:#000;border-bottom:1px solid #d00;">';
-			echo $lang['msg_update_modus_activated'];
-			echo '</div>';
-		}
-		
-		?>
-	
+
 		<div id="page-sidebar">
 			<a id="sidebar-dashboard" href="acp.php?tn=dashboard"></a>
 			<div id="page-sidebar-inner">
@@ -319,6 +310,14 @@ if(isset($set_acptheme)) {
 		</div>
 			
 		<div id="page-content">
+
+            <?php
+            if(is_file('../maintenance.html')) {
+                echo '<div class="alert alert-danger rounded-0 m-0">';
+                echo $lang['msg_update_modus_activated'];
+                echo '</div>';
+            }
+            ?>
 
 
     <div id="expireDiv" class="expire-hidden">
