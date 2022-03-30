@@ -200,6 +200,18 @@ if($_POST['order'] == 'send') {
             /* remove items from fc_carts */
             fc_clear_cart($order_data['user_id']);
             $cnt_cart_items = 0;
+
+            /* send order confirmation via mail */
+            $mail_data['tpl'] = 'order-confirmation.tpl';
+            $mail_data['subject'] = 'Your Order has been sent';
+            $build_html_mail = fc_build_html_file($mail_data);
+
+            $recipient['name'] = $get_cd['user_firstname'].' '.$get_cd['user_lastname'];
+            $recipient['mail'] = $get_cd['user_mail'];
+            $subject = $mail_data['subject'];
+
+            $send_mail = fc_send_mail($recipient,$subject,$build_html_mail);
+
 		}
 	}
 	

@@ -214,6 +214,12 @@ function fc_list_comments_thread($comments, $sorting, $tpl, $root=0, $level=0) {
 }
 
 
+/**
+ * store a comment
+ * @param array $data 'input_name' 'input_mail' 'input_comment'
+ * @return void
+ */
+
 function fc_write_comment($data) {
 	
 	global $db_content;
@@ -295,11 +301,12 @@ function fc_write_comment($data) {
 
 /**
  * sending e-mails
- * $recipient -> array() 'name' and 'mail'
- * $subject -> string()
- * $message -> string()
- *
  * store your smtp settings in /content/config_smtp.php
+ *
+ * @param array $recipient 'mail' and 'name'
+ * @param string $subject subject of the email
+ * @param string $message string/html content of the email
+ * @return 1 if success or ErrorInfo if failed
  */
 
 
@@ -354,22 +361,21 @@ function fc_send_mail($recipient,$subject,$message) {
 
 /**
  * create html file resp. string
- * return string
  * send via fc_send_mail() or force download as file
- * $data (array) 'subject','preheader','title','salutation','body','footer','tpl'
- *
  * get the content from mail template f.e. /styles/default/templates-mail/mail.tpl
  * get the styles /styles/default/templates-mail/styles.css
  * get the mail body template from $data['tpl']
  * bring everything together and return as string
+ * @param array $data 'subject','preheader','title','salutation','body','footer','tpl'
+ * @return string html formatted string
  */
 
 function fc_build_html_file($data) {
 	
-	global $fc_preferences;
+	global $fc_prefs;
 	global $languagePack;
 	
-	$tpl_dir = FC_CORE_DIR.'styles/'.$fc_preferences['prefs_template'];
+	$tpl_dir = FC_CORE_DIR.'styles/'.$fc_prefs['prefs_template'];
 	$tpl_file = file_get_contents($tpl_dir.'/templates-mail/mail.tpl');
 	$tpl_style = file_get_contents($tpl_dir.'/templates-mail/styles.css');
 	$tpl_body = file_get_contents($tpl_dir.'/templates-mail/'.basename($data['tpl']));
@@ -379,8 +385,7 @@ function fc_build_html_file($data) {
 	if($data['footer'] == '') {
 		$footer = fc_get_textlib('footer_text_mail','','content');
 	}
-	
-	
+
 	$tpl_file = str_replace('{styles}', $tpl_style, $tpl_file);
 	$tpl_file = str_replace('{mail_body}', $tpl_body, $tpl_file);
 	$tpl_file = str_replace('{mail_title}', $mail_title, $tpl_file);
@@ -392,13 +397,16 @@ function fc_build_html_file($data) {
 
 /**
  * get textlib content
- * $name (string) name of the entry
- * $lang (string) language of the entry
- * $type (sting) 'all' | 'content' | 'tpl'
- * $type = 'all' returns all contents as array
- * $type = 'content' returns only the text as string
- * $type = 'tpl' use snippet it's template. Return as string.
+ * @param string $name name of the entry
+ * @param string $lang language of the entry
+ * @param string $type 'all' returns all contents as array
+ * @param string $type 'content' returns only the text as string
+ * @param string $type 'tpl' use snippet it's template. Return as string.
+ *
+ * @global $db_content database settings
+ * @global $languagePack the language required
  */
+
 
 function fc_get_textlib($name,$lang,$type) {
 
@@ -436,9 +444,6 @@ function fc_get_textlib($name,$lang,$type) {
 		if($textlib_theme != '' OR $textlib_theme != 'use_standard') {
 			$get_tpl_file = 'styles/'.$textlib_theme.'/templates/'.$textlib_template;
 		}
-		
-			
-		$get_tpl_file = 'styles/'.$textlib_theme.'/templates/'.$textlib_template;
 		
 		if(is_file("$get_tpl_file")) {
 			$tpl_file = file_get_contents($get_tpl_file);
