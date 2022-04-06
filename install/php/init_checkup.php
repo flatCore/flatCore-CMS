@@ -19,7 +19,7 @@ function checkwritable($path) {
 	global $icon;
 	
 	echo '<div class="row">';
-	echo '<div class="col-md-4">'.$path.'</div>';
+    echo '<div class="col-md-4"><span title="'.$path.'">'.$icon['info_circle'].'</span> '.basename($path).'</div>';
 	echo '<div class="col-md-8">';
 	if(!is_writable("$path")){
 	
@@ -46,7 +46,7 @@ function checkexistingdir($path) {
 	
 	if(!is_dir("$path")){
 		echo '<div class="row">';
-		echo '<div class="col-md-4">'.$path.'</div>';
+		echo '<div class="col-md-4"><span title="'.$path.'">'.basename($path).'</span></div>';
 		echo '<div class="col-md-8">';
 		echo '<div class="alert alert-danger">' . $lang['missing_folder'] . '</div>';
 		$goto_install[] = "false";
