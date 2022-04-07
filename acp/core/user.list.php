@@ -96,10 +96,10 @@ if($_SESSION['checked_deleted'] == "checked") {
 
 
 $status_btn_group  = '<div class="btn-group">';
-$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusVerified" class="btn btn-fc '.$btn_status_verified.'">'.$icon['user_check'].'</span></a>';
-$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusWaiting" class="btn btn-fc '.$btn_status_waiting.'">'.$icon['user_clock'].'</a>';
-$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusPaused" class="btn btn-fc '.$btn_status_paused.'">'.$icon['user_lock'].'</a>';
-$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusDeleted" class="btn btn-fc '.$btn_status_deleted.'">'.$icon['user_slash'].'</a>';
+$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusVerified" class="btn btn-fc '.$btn_status_verified.'">'.$icon['check'].'</span></a>';
+$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusWaiting" class="btn btn-fc '.$btn_status_waiting.'">'.$icon['clock'].'</a>';
+$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusPaused" class="btn btn-fc '.$btn_status_paused.'">'.$icon['lock'].'</a>';
+$status_btn_group .= '<a href="acp.php?tn=user&sub=list&switch=statusDeleted" class="btn btn-fc '.$btn_status_deleted.'">'.$icon['trash'].'</a>';
 $status_btn_group .= '</div>';
 
 

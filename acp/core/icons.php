@@ -1,131 +1,152 @@
 <?php
 
 /**
- * icons from fontawesome
+ * icons from bootstrap
  */
 
-$icon['address_book'] = '<i class="fas fa-address-book"></i>';
-$icon['address_card'] = '<i class="far fa-address-card"></i>';
-$icon['angle_left']  = '<i class="fas fa-angle-left"></i>';
-$icon['angle_right']  = '<i class="fas fa-angle-right"></i>';
-$icon['angle_up']  = '<i class="fas fa-angle-up"></i>';
-$icon['angle_down']  = '<i class="fas fa-angle-down"></i>';
-$icon['angle_double_right']  = '<i class="fas fa-angle-double-right"></i>';
-$icon['angle_double_left']  = '<i class="fas fa-angle-double-left"></i>';
+$icon['activity'] = '<i class="bi bi-activity"></i>';
+$icon['arrow_repeat'] = '<i class="bi bi-arrow-repeat"></i>';
+$icon['sync_alt'] = '<i class="bi bi-arrow-repeat"></i>';
 
-$icon['arrow_down']  = '<i class="fas fa-arrow-down"></i>';
-$icon['arrow_up']  = '<i class="fas fa-arrow-up"></i>';
-$icon['arrow_left']  = '<i class="fas fa-arrow-left"></i>';
-$icon['arrow_right']  = '<i class="fas fa-arrow-right"></i>';
+$icon['arrow_down']  = '<i class="bi bi-arrow-down"></i>';
+$icon['arrow_up']  = '<i class="bi bi-arrow-up"></i>';
+$icon['arrow_left']  = '<i class="bi bi-arrow-left"></i>';
+$icon['arrow_right']  = '<i class="bi bi-arrow-right"></i>';
 
-$icon['at']  = '<i class="fas fa-at"></i>';
+$icon['cart'] = '<i class="bi bi-cart"></i>';
+$icon['calendar_event'] = '<i class="bi bi-calendar-event"></i>';
+$icon['chat_square_dots'] = '<i class="bi bi-chat-square-dots"></i>';
+$icon['caret_left'] = '<i class="bi bi-caret-left"></i>';
+$icon['caret_right'] = '<i class="bi bi-caret-right"></i>';
+$icon['caret_right_fill'] = '<i class="bi bi-caret-right-fill"></i>';
+$icon['check'] = '<i class="bi bi-check"></i>';
+$icon['check_lg'] = '<i class="bi bi-check-lg"></i>';
+$icon['clipboard'] = '<i class="bi bi-clipboard"></i>';
+$icon['code'] = '<i class="bi bi-code"></i>';
+$icon['code_slash'] = '<i class="bi bi-code-slash"></i>';
 
-$icon['ban'] = '<i class="fas fa-ban"></i>';
-$icon['bars'] = '<i class="fas fa-bars"></i>';
-$icon['bookmark'] = '<i class="fas fa-bookmark"></i>';
+$icon['speedometer'] = '<i class="bi bi-speedometer"></i>';
+$icon['diagram_3'] = '<i class="bi bi-diagram-3"></i>';
+$icon['sitemap'] = '<i class="bi bi-diagram-3"></i>';
 
-$icon['calendar_check'] = '<i class="fas fa-calendar-check"></i>';
-$icon['check'] = '<i class="fas fa-check"></i>';
-$icon['circle_alt'] = '<i class="far fa-circle"></i>';
-$icon['check_circle'] = '<i class="fas fa-check-circle"></i>';
-$icon['caret_left'] = '<i class="fas fa-caret-left"></i>';
-$icon['caret_right'] = '<i class="fas fa-caret-right"></i>';
-$icon['circle'] = '<i class="fas fa-circle"></i>';
-$icon['clipboard'] = '<i class="fas fa-clipboard"></i>';
-$icon['clipboard_list'] = '<i class="fas fa-clipboard-list"></i>';
-$icon['code'] = '<i class="fas fa-code"></i>';
-$icon['comments'] = '<i class="fas fa-comments"></i>';
-$icon['compress']  = '<i class="fas fa-compress"></i>';
-$icon['copy']  = '<i class="fas fa-copy"></i>';
-$icon['clipboard_list']  = '<i class="fas fa-clipboard-list"></i>';
-$icon['clock']  = '<i class="far fa-clock"></i>';
-$icon['cogs'] = '<i class="fas fa-cogs"></i>';
+$icon['edit'] = '<i class="bi bi-pencil-square"></i>';
 
-$icon['edit'] = '<i class="fas fa-edit"></i>';
-$icon['exclamation_triangle']  = '<i class="fas fa-exclamation-triangle"></i>';
-$icon['eye']  = '<i class="fas fa-eye"></i>';
-$icon['eye_slash']  = '<i class="fas fa-eye-slash"></i>';
+$icon['files'] = '<i class="bi bi-files"></i>';
+$icon['file_earmark_post'] = '<i class="bi bi-file-earmark-post"></i>';
+$icon['folder'] = '<i class="bi bi-folder"></i>';
+$icon['gear'] = '<i class="bi bi-gear"></i>';
 
-$icon['chart_bar'] = '<i class="fas fa-chart-bar"></i>';
-$icon['code'] = '<i class="fas fa-code"></i>';
-$icon['cog'] = '<i class="fas fa-cog"></i>';
-$icon['database'] = '<i class="fas fa-database"></i>';
-$icon['dot_circle'] = '<i class="fas fa-dot-circle"></i>';
-$icon['download'] = '<i class="fas fa-download"></i>';
+$icon['house'] = '<i class="bi bi-house"></i>';
+$icon['home'] = '<i class="bi bi-house"></i>';
 
-$icon['file'] = '<i class="fas fa-file"></i>';
-$icon['file_alt'] = '<i class="fas fa-file-alt"></i>';
-$icon['filter'] = '<i class="fas fa-filter"></i>';
-$icon['folder_open'] = '<i class="fas fa-folder-open"></i>';
+$icon['images'] = '<i class="bi bi-images"></i>';
 
-$icon['github'] = '<i class="fab fa-github"></i>';
+$icon['logout'] = '<i class="bi bi-box-arrow-in-left"></i>';
 
-$icon['handshake'] = '<i class="fas fa-handshake"></i>';
-$icon['home'] = '<i class="fas fa-home"></i>';
+$icon['plugin'] = '<i class="bi bi-plugin"></i>';
+$icon['upload'] = '<i class="bi bi-upload"></i>';
+$icon['people'] = '<i class="bi bi-people"></i>';
+$icon['people_fill'] = '<i class="bi bi-people-fill"></i>';
+$icon['person'] = '<i class="bi bi-person"></i>';
+$icon['person_fill'] = '<i class="bi bi-person-fill"></i>';
+$icon['person_check'] = '<i class="bi bi-person-check"></i>';
+$icon['person_dash'] = '<i class="bi bi-person-dash"></i>';
+$icon['person_plus'] = '<i class="bi bi-person-plus"></i>';
+$icon['person_x'] = '<i class="bi bi-person-x"></i>';
+$icon['plus'] = '<i class="bi bi-plus"></i>';
 
-$icon['info_circle'] = '<i class="fas fa-info-circle"></i>';
-$icon['images'] = '<i class="fas fa-images"></i>';
+$icon['question'] = '<i class="bi bi-question"></i>';
 
-$icon['language'] = '<i class="fas fa-language"></i>';
-$icon['level_up_alt'] = '<i class="fas fa-level-up-alt"></i>';
-$icon['link'] = '<i class="fas fa-link"></i>';
-$icon['list'] = '<i class="fas fa-list"></i>';
-$icon['lock'] = '<i class="fas fa-lock"></i>';
-$icon['lock_open'] = '<i class="fas fa-lock-open"></i>';
-$icon['long_arrow_alt_right'] = '<i class="fas fa-long-arrow-alt-right"></i>';
+$icon['rss'] = '<i class="bi bi-rss"></i>';
 
-$icon['map_marker_alt'] = '<i class="fas fa-map-marker-alt"></i>';
-
-$icon['paper_clip'] = '<i class="fas fa-paperclip"></i>';
-$icon['paper_plane'] = '<i class="fas fa-paper-plane"></i>';
-$icon['paste'] = '<i class="fas fa-paste"></i>';
-$icon['pencil_ruler'] = '<i class="fas fa-pencil-ruler"></i>';
-$icon['plus'] = '<i class="fas fa-plus"></i>';
-
-$icon['question'] = '<i class="fas fa-question"></i>';
-
-$icon['rss'] = '<i class="fas fa-rss"></i>';
-
-$icon['search'] = '<i class="fas fa-search"></i>';
-$icon['server'] = '<i class="fas fa-server"></i>';
-$icon['share'] = '<i class="fas fa-share"></i>';
-$icon['shopping_basket'] = '<i class="fas fa-shopping-basket"></i>';
-$icon['sign_out_alt'] = '<i class="fas fa-sign-out-alt"></i>';
-$icon['sitemap'] = '<i class="fas fa-sitemap"></i>';
-$icon['star'] = '<i class="fas fa-star"></i>';
-$icon['star_outline'] = '<i class="far fa-star"></i>';
-$icon['store'] = '<i class="fas fa-store"></i>';
-$icon['sync_alt'] = '<i class="fas fa-sync-alt"></i>';
-
-$icon['table'] = '<i class="fas fa-table"></i>';
-$icon['tags'] = '<i class="fas fa-tags"></i>';
-$icon['tasks'] = '<i class="fas fa-tasks"></i>';
-$icon['th'] = '<i class="fas fa-th"></i>';
-$icon['th_large'] = '<i class="fas fa-th-large"></i>';
-$icon['th_list'] = '<i class="fas fa-th-list"></i>';
-$icon['thumbs_up'] = '<i class="fas fa-thumbs-up"></i>';
-$icon['thumbs_down'] = '<i class="fas fa-thumbs-down"></i>';
-$icon['trash_alt'] = '<i class="far fa-trash-alt"></i>';
-$icon['times_circle'] = '<i class="fas fa-times-circle"></i>';
-$icon['tools'] = '<i class="fas fa-tools"></i>';
-$icon['toggle_on'] = '<i class="fas fa-toggle-on"></i>';
-$icon['toggle_off'] = '<i class="fas fa-toggle-off"></i>';
-
-$icon['users'] = '<i class="fas fa-users"></i>';
-$icon['user'] = '<i class="fas fa-user"></i>';
-$icon['user_check'] = '<i class="fas fa-user-check"></i>';
-$icon['user_clock'] = '<i class="fas fa-user-clock"></i>';
-$icon['user_cog'] = '<i class="fas fa-user-cog"></i>';
-$icon['user_edit'] = '<i class="fas fa-user-edit"></i>';
-$icon['user_friends'] = '<i class="fas fa-user-friends"></i>';
-$icon['user_lock'] = '<i class="fas fa-user-lock"></i>';
-$icon['user_minus']  = '<i class="fas fa-user-minus"></i>';
-$icon['user_plus'] = '<i class="fas fa-user-plus"></i>';
-$icon['user_slash'] = '<i class="fas fa-user-slash"></i>';
-$icon['user_plus'] = '<i class="fas fa-user-plus"></i>';
-$icon['upload'] = '<i class="fas fa-upload"></i>';
-
-$icon['wrench'] = '<i class="fas fa-wrench"></i>';
+$icon['shop'] = '<i class="bi bi-shop"></i>';
+$icon['translate'] = '<i class="bi bi-translate"></i>';
+$icon['trash'] = '<i class="bi bi-trash"></i>';
+$icon['trash_alt'] = '<i class="bi bi-trash"></i>';
 
 
-?>
+$icon['at']  = '<i class="bi bi-at"></i>';
+
+$icon['ban'] = '<i class="bi bi-slash-circle"></i>';
+$icon['bars'] = '<i class="bi bi-chart-bar"></i>';
+$icon['bookmark'] = '<i class="bi bi-bookmark"></i>';
+
+$icon['calendar_check'] = '<i class="bi bi-calendar-check"></i>';
+$icon['circle_alt'] = '<i class="bi bi-circle"></i>';
+$icon['check_circle'] = '<i class="bi bi-check-circle"></i>';
+
+$icon['circle'] = '<i class="bi bi-circle"></i>';
+$icon['clipboard_list'] = '<i class="bi bi-clipboard-fill"></i>';
+$icon['comments'] = '<i class="bi bi-chat"></i>';
+$icon['compress']  = '<i class="bi bi-file-earmark-zip"></i>';
+$icon['copy']  = '<i class="bi bi-clipboard-plus"></i>';
+$icon['clock']  = '<i class="bi bi-clock"></i>';
+$icon['cogs'] = '<i class="bi bi-gear"></i>';
+$icon['cog'] = '<i class="bi bi-gear"></i>';
+
+$icon['exclamation_triangle']  = '<i class="bi bi-exclamation-triangle"></i>';
+$icon['eye']  = '<i class="bi bi-eye"></i>';
+$icon['eye_slash']  = '<i class="bi bi-eye-slash"></i>';
+
+$icon['chart_bar'] = '<i class="bi bi-bar-chart"></i>';
+
+$icon['database'] = '<i class="bi bi-hdd-network"></i>';
+$icon['dot_circle'] = '<i class="bi bi-circle"></i>';
+$icon['download'] = '<i class="bi bi-download"></i>';
+
+$icon['file'] = '<i class="bi bi-file-earmark"></i>';
+$icon['file_alt'] = '<i class="bi bi-file-earmark"></i>';
+$icon['filter'] = '<i class="bi bi-filter"></i>';
+$icon['folder_open'] = '<i class="bi bi-folder2-open"></i>';
+
+$icon['github'] = '<i class="bi bi-github"></i>';
+
+$icon['info_circle'] = '<i class="bi bi-info-circle"></i>';
+$icon['images'] = '<i class="bi bi-images"></i>';
+
+$icon['language'] = '<i class="bi bi-translate"></i>';
+$icon['level_up_alt'] = '<i class="bi bi-level-up-alt"></i>';
+$icon['link'] = '<i class="bi bi-link"></i>';
+$icon['list'] = '<i class="bi bi-list"></i>';
+$icon['lock'] = '<i class="bi bi-lock"></i>';
+$icon['lock_open'] = '<i class="bi bi-unlock"></i>';
+$icon['long_arrow_alt_right'] = '<i class="bi bi-arrow-right"></i>';
+
+$icon['map_marker_alt'] = '<i class="bi bi-geo-alt"></i>';
+
+$icon['paper_clip'] = '<i class="bi bi-paperclip"></i>';
+$icon['paper_plane'] = '<i class="bi bi-send"></i>';
+$icon['paste'] = '<i class="bi bi-clipboard-plus"></i>';
+
+
+$icon['search'] = '<i class="bi bi-search"></i>';
+$icon['server'] = '<i class="bi bi-server"></i>';
+$icon['share'] = '<i class="bi bi-share"></i>';
+$icon['shopping_basket'] = '<i class="bi bi-basket"></i>';
+$icon['sign_out_alt'] = '<i class="bi bi-box-arrow-left"></i>';
+
+$icon['star'] = '<i class="bi-star-fill"></i>';
+$icon['star_outline'] = '<i class="bi bi-star"></i>';
+$icon['store'] = '<i class="bi bi-shop"></i>';
+
+$icon['table'] = '<i class="bi bi-table"></i>';
+$icon['tags'] = '<i class="bi bi-tags"></i>';
+$icon['tasks'] = '<i class="bi bi-list-task"></i>';
+$icon['thumbs_up'] = '<i class="bi bi-hand-thumbs-up"></i>';
+$icon['thumbs_down'] = '<i class="bi bi-hand-thumbs-down"></i>';
+
+$icon['times_circle'] = '<i class="bi bi-clock"></i>';
+$icon['tools'] = '<i class="bi bi-tools"></i>';
+$icon['toggle_on'] = '<i class="bi bi-toggle-on"></i>';
+$icon['toggle_off'] = '<i class="bi bi-toggle-off"></i>';
+
+$icon['users'] = '<i class="bi bi-people"></i>';
+$icon['user'] = '<i class="bi bi-person"></i>';
+$icon['user_check'] = '<i class="bi bi-person-check"></i>';
+$icon['user_friends'] = '<i class="bi bi-person-hearts"></i>';
+$icon['user_lock'] = '<i class="bi bi-person-x"></i>';
+$icon['user_minus']  = '<i class="bi bi-person-dash"></i>';
+$icon['user_plus'] = '<i class="bi bi-person-plus"></i>';
+$icon['user_slash'] = '<i class="bi bi-person-dash"></i>';
+
+$icon['wrench'] = '<i class="bi bi-wrench"></i>';

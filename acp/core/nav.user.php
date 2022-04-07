@@ -12,9 +12,9 @@ echo '<li><a class="sidebar-nav '.($sub == "new" ? 'sidebar-nav-active' :'').'" 
 
 
 if($sub == "edit") {
-	echo '<li><a class="sidebar-nav '.($sub == "edit" ? 'sidebar-nav-active' :'').'" href="#">'.$icon['user_edit'].' '.$lang['edit_user'].'</a></li>';
+	echo '<li><a class="sidebar-nav '.($sub == "edit" ? 'sidebar-nav-active' :'').'" href="#">'.$icon['edit'].' '.$lang['edit_user'].'</a></li>';
 } else {
-	echo '<li><a href="#"><span class="sidebar-nav sidebar-nav-disabled">'.$icon['user_edit'].' '.$lang['edit_user'].'</span></a></li>';
+	echo '<li><a href="#"><span class="sidebar-nav sidebar-nav-disabled">'.$icon['edit'].' '.$lang['edit_user'].'</span></a></li>';
 }
 
 echo '<li><a class="sidebar-nav '.($sub == "groups" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=user&sub=groups">'.$icon['user_friends'].' '.$lang['edit_groups'].'</a></li>';

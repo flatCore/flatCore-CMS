@@ -16,7 +16,7 @@ $nbrModuls = count($all_mods);
 
 echo '<ul class="nav">';
 
-$mod_subnav = '<li><a class="sidebar-nav '.($sub == "list" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=moduls&sub=list">'.$icon['code'].' '.$lang['tn_moduls'].'</a></li>';
+$mod_subnav = '<li><a class="sidebar-nav '.($sub == "list" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=moduls&sub=list">'.$icon['plugin'].' '.$lang['tn_moduls'].'</a></li>';
 
 for($i=0;$i<$nbrModuls;$i++) {
 
@@ -26,7 +26,7 @@ for($i=0;$i<$nbrModuls;$i++) {
 	include '../modules/'.$modFolder.'/info.inc.php';
 	$cnt_modnav = count($modnav);
 
-	$mod_subnav .= '<li><a class="sidebar-nav '.($sub == "$modFolder" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=moduls&sub='.$modFolder.'&a=start">'.$icon['angle_right'].' '.$mod['name'].'</a></li>';
+	$mod_subnav .= '<li><a class="sidebar-nav '.($sub == "$modFolder" ? 'sidebar-nav-active' :'').'" href="acp.php?tn=moduls&sub='.$modFolder.'&a=start">'.$icon['caret_right_fill'].' '.$mod['name'].'</a></li>';
 	
 	//Show submenue of the current modul
 	if($sub == "$modFolder") {

@@ -302,8 +302,7 @@ a.topnav_selected,
 a.topnav:visited,
 a.topnav_selected:visited {
 	position: relative;
-	display: inline-block;
-	min-width: 100px;
+	//display: inline-block;
 	text-align: center;
 	font-size: 12px;
 	line-height: 40px;
@@ -313,6 +312,21 @@ a.topnav_selected:visited {
 	height: 40px;
 	transition: background 0.3s linear, color 0.3s linear;
 	margin-right: 1px;
+	padding-left: 10px;
+	padding-right: 10px;
+	span.top-nav-icon {
+		font-size: 18px;
+		margin-right: 5px;
+	}
+	span.top-nav-text {
+		display: none;
+	}
+	@include media-breakpoint-up(lg) {
+		span.top-nav-text {
+			display: inline-block;
+		}
+	}
+
 }
 
 a.topnav:hover {
@@ -331,19 +345,7 @@ a.topnav_selected,
 a.topnav_selected:visited {
 	background-color: $brand_primary;
 	color: #fff;
-	/*
-	span.mm {
-		position: absolute;
-		bottom: 0;
-		left: 50%;
-		width: 0; 
-		height: 0; 
-		border-left: 6px solid transparent;
-		border-right: 6px solid transparent;
-		border-bottom: 4px solid $content_bg;
-		margin-left: -6px;
-	}
-	*/
+
 }
 
 
