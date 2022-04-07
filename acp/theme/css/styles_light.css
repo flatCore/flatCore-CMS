@@ -18124,6 +18124,7 @@ div#page-sidebar .sidebar-collapsed {
   padding-bottom: 5px;
 }
 div#page-sidebar .sidebar-collapsed i {
+  display: inline-block;
   width: 50px;
   text-align: center;
 }
