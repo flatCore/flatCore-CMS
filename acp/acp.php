@@ -6,6 +6,7 @@ require '../lib/Medoo.php';
 use Medoo\Medoo;
 
 require '../lib/Spyc/Spyc.php';
+include 'core/icons.php';
 
 require '../config.php';
 if(is_file(FC_CONTENT_DIR.'/config.php')) {
@@ -89,7 +90,6 @@ $db_index = new Medoo([
 
 require 'core/access.php';
 include 'versions.php';
-include 'core/icons.php';
 include '../lib/parsedown/Parsedown.php';
 
 

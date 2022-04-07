@@ -23,7 +23,8 @@ if(empty($_SESSION['visitor_csrf_token'])) {
 
 /**
  * if there is no database config we start the installer
- * @var string $fc_db_content SQLite file
+ * @var string $fc_db_content SQLite file from config.php or /content/config.php
+ * @var string $database_host is set in config_database
  */
 
 if(!is_file('config_database.php') && !is_file("$fc_db_content")) {
