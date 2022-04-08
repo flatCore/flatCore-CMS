@@ -646,7 +646,7 @@ if(strpos("$_SESSION[checked_type_string]", "l") !== false) {
 echo '<a href="acp.php?tn=posts&type=l" class="'.$class.'">'.$icon_toggle.' '.$lang['post_type_link'].'</a>';
 
 
-if(strpos("$_SESSION[checked_type_string]", "p") !== false) {
+if(strpos("$_SESSION[checked_type_string]", "f") !== false) {
 	$class = 'list-group-item list-group-item-ghost p-1 px-2 active';
 	$icon_toggle = $icon['check_circle'];
 } else {
