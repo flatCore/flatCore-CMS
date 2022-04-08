@@ -9,7 +9,6 @@
   "private": true,
   "dependencies": {
     "@eonasdan/tempus-dominus": "^6.0.0-beta4",
-    "@popperjs/core": "^2.11.5",
     "accounting": "^0.4.1",
     "ace-builds": "^1.4.14",
     "bootstrap": "^5.1.3",

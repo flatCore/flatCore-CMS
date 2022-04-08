@@ -1,8 +1,7 @@
 /**
  * Prepend to this file:
  * - jquery
- * - bootstrap
- * - popper
+ * - bootstrap.bundle
  * - accounting
  * - tempus dominus
  * - tempus dominus jQuery Provider
