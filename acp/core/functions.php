@@ -1208,7 +1208,7 @@ function fc_list_gallery_thumbs($gid) {
 		$thumbs .= '<div class="tmb">';
 		$thumbs .= '<div class="tmb-preview"><img src="'.$tmb.'" class="img-fluid"></div>';
 		$thumbs .= '<div class="tmb-actions d-flex btn-group">';
-		$thumbs .= '<button type="submit" name="sort_tmb" value="'.$tmb.'" class="btn btn-sm btn-fc w-100">'.$icon['angle_up'].'</button>';
+		$thumbs .= '<button type="submit" name="sort_tmb" value="'.$tmb.'" class="btn btn-sm btn-fc w-100">'.$icon['arrow_up'].'</button>';
 		$thumbs .= '<button type="submit" name="del_tmb" value="'.$tmb.'" class="btn btn-sm btn-danger w-50">'.$icon['trash_alt'].'</button>';
 		$thumbs .= '</div>';
 		$thumbs .= '</div>';
