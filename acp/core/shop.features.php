@@ -1,7 +1,7 @@
 <?php
 	
 //prohibit unauthorized access
-require 'core/access.php';
+require __DIR__.'/access.php';
 
 
 
@@ -115,10 +115,10 @@ if($show_form == true) {
 $posts_features = fc_get_posts_features();
 $cnt_posts_features = count($posts_features);
 
-//print_r($posts_features);
-
 echo '<div class="row">';
 echo '<div class="col-md-9">';
+
+echo '<div class="card p-3">';
 
 echo '<table class="table table-sm">';
 echo '<tr>';
@@ -133,7 +133,7 @@ for($i=0;$i<$cnt_posts_features;$i++) {
 	echo '<td>'.$posts_features[$i]['textlib_lang'].'</td>';
 	echo '<td><strong>'.$posts_features[$i]['textlib_title'].'</strong><br>'.$posts_features[$i]['textlib_content'].'</td>';
 	echo '<td class="text-end">';
-	echo '<form action="?tn=posts&sub=features" method="POST">';
+	echo '<form action="?tn=shop&sub=features" method="POST">';
 	echo '<button type="submit" class="btn btn-fc text-success" name="edit" value="'.$posts_features[$i]['textlib_id'].'">'.$icon['edit'].'</button>';
 	echo '<button type="submit" class="btn btn-fc text-danger" name="delete" value="'.$posts_features[$i]['textlib_id'].'">'.$icon['trash_alt'].'</button>';
 	echo $hidden_csrf_token;
@@ -144,10 +144,12 @@ for($i=0;$i<$cnt_posts_features;$i++) {
 
 echo '</table>';
 
+echo '</div>'; // card
+
 echo '</div>';
 echo '<div class="col-md-3">';
 
-echo '<a href="?tn=posts&sub=features&edit=new" class="btn btn-success w-100">'.$lang['new'].'</a>';
+echo '<a href="?tn=shop&sub=features&edit=new" class="btn btn-success w-100">'.$lang['new'].'</a>';
 
 echo '</div>';
 echo '</div>';

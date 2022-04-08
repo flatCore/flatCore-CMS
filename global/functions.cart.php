@@ -2,6 +2,152 @@
 
 //error_reporting(E_ALL ^E_NOTICE);
 
+
+/**
+ * @param int $start
+ * @param int $limit
+ * @param array $filter
+ * @return array
+ */
+
+function fc_get_products($start,$limit,$filter) {
+
+    global $db_posts;
+    global $db_type;
+    global $time_string_start;
+    global $time_string_end;
+    global $time_string_now;
+    global $fc_preferences;
+    global $fc_labels;
+
+    if(FC_SOURCE == 'frontend') {
+        global $fc_prefs;
+    }
+
+    if(empty($start)) {
+        $start = 0;
+    }
+    if(empty($limit)) {
+        $limit = 10;
+    }
+
+
+    $limit_str = 'LIMIT '. (int) $start;
+
+    if($limit == 'all') {
+        $limit_str = '';
+    } else {
+        $limit_str .= ', '. (int) $limit;
+    }
+
+
+    /**
+     * order and direction
+     * we ignore $order and $direction
+     */
+
+    $order = "ORDER BY post_fixed ASC, post_priority DESC, post_id DESC";
+
+    if($direction == 'ASC') {
+        $direction = 'ASC';
+    } else {
+        $direction = 'DESC';
+    }
+
+    /* set filters */
+    $sql_filter_start = "WHERE post_type LIKE '%p%' ";
+
+    /* language filter */
+    $sql_lang_filter = "post_lang IS NULL OR ";
+    $lang = explode('-', $filter['languages']);
+    foreach($lang as $l) {
+        if($l != '') {
+            $sql_lang_filter .= "(post_lang LIKE '%$l%') OR ";
+        }
+    }
+    $sql_lang_filter = substr("$sql_lang_filter", 0, -3); // cut the last ' OR'
+
+
+    /* status filter */
+    $sql_status_filter = "post_status IS NULL OR ";
+    $status = explode('-', $filter['status']);
+    foreach($status as $s) {
+        if($s != '') {
+            $sql_status_filter .= "(post_status LIKE '%$s%') OR ";
+        }
+    }
+    $sql_status_filter = substr("$sql_status_filter", 0, -3); // cut the last ' OR'
+
+
+    /* category filter */
+    if($filter['categories'] == 'all' OR $filter['categories'] == '') {
+        $sql_cat_filter = '';
+    } else {
+
+        $cats = explode(',', $filter['categories']);
+        foreach($cats as $c) {
+            if($c != '') {
+                $sql_cat_filter .= "(post_categories LIKE '%$c%') OR ";
+            }
+        }
+        $sql_cat_filter = substr("$sql_cat_filter", 0, -3); // cut the last ' OR'
+    }
+
+    /* label filter */
+    if($filter['labels'] == 'all' OR $filter['labels'] == '') {
+        $sql_label_filter = '';
+    } else {
+
+        $checked_labels_array = explode('-', $filter['labels']);
+
+        for($i=0;$i<count($fc_labels);$i++) {
+            $label = $fc_labels[$i]['label_id'];
+            if(in_array($label, $checked_labels_array)) {
+                $sql_label_filter .= "post_labels LIKE '%,$label,%' OR post_labels LIKE '%,$label' OR post_labels LIKE '$label,%' OR post_labels = '$label' OR ";
+            }
+        }
+        $sql_label_filter = substr("$sql_label_filter", 0, -3); // cut the last ' OR'
+    }
+
+    $sql_filter = $sql_filter_start;
+
+    if($sql_lang_filter != "") {
+        $sql_filter .= " AND ($sql_lang_filter) ";
+    }
+
+    if($sql_status_filter != "") {
+        $sql_filter .= " AND ($sql_status_filter) ";
+    }
+    if($sql_cat_filter != "") {
+        $sql_filter .= " AND ($sql_cat_filter) ";
+    }
+    if($sql_label_filter != "") {
+        $sql_filter .= " AND ($sql_label_filter) ";
+    }
+
+    if(FC_SOURCE == 'frontend') {
+        $sql_filter .= "AND post_releasedate <= '$time_string_now' ";
+    }
+
+    if($time_string_start != '') {
+        $sql_filter .= "AND post_releasedate >= '$time_string_start' AND post_releasedate <= '$time_string_end' AND post_releasedate < '$time_string_now' ";
+    }
+
+    $sql = "SELECT * FROM fc_posts $sql_filter $order $limit_str";
+
+    $entries = $db_posts->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+
+    $sql_cnt = "SELECT count(*) AS 'P', (SELECT count(*) FROM fc_posts WHERE post_type LIKE '%p%') AS 'A' ,(SELECT count(*) FROM fc_posts $sql_filter) AS 'F' ";
+    $stat = $db_posts->query("$sql_cnt")->fetch(PDO::FETCH_ASSOC);
+
+    /* number of posts that match the filter */
+    $entries[0]['cnt_products_match'] = $stat['F'];
+    $entries[0]['cnt_products_all'] = $stat['A'];
+    return $entries;
+}
+
+
+
 /**
  * add a product to cart
  * 
