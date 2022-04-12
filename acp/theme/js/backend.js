@@ -14,6 +14,8 @@
  * - moment
  */
 
+tempusDominus.extend(tempusDominus.plugins.moment_parse, 'YYYY-MM-DD HH:mm');
+
 $(function() {
 	
 
@@ -39,13 +41,26 @@ $(function() {
 	var clipboard = new ClipboardJS('.copy-btn');
 
 	/* time picker */
+
 	$('.dp').tempusDominus({
-		hooks: {
-			inputFormat: (context, date) => {
-				return moment(date).format('YYYY-MM-DD HH:mm')
-      	}
-      }
-	});				
+		display: {
+			icons: {
+				time: 'bi bi-clock',
+				date: 'bi bi-calendar',
+				up: 'bi bi-arrow-up',
+				down: 'bi bi-arrow-down',
+				previous: 'bi bi-chevron-left',
+				next: 'bi bi-chevron-right',
+				today: 'bi bi-calendar-check',
+				clear: 'bi bi-trash',
+				close: 'bi bi-x',
+			},
+			components: {
+				useTwentyfourHour: true,
+				seconds: false
+			}
+		}
+	});
 
 	/**
 	 * image picker for choosing thumbnails
