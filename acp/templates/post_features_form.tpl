@@ -1,5 +1,5 @@
 
-<div class="card p-2">
+<div class="card p-2 mb-3">
 
 <form action="" method="POST">	
 	<div class="row">
