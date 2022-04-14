@@ -23,6 +23,16 @@ if(isset($_POST['change_status_payment'])) {
     ]);
 }
 
+if(isset($_POST['change_status_shipping'])) {
+    $order_id = (int) $_POST['id'];
+    $shipping_status = (int) $_POST['change_status_shipping'];
+    $update = $db_content->update("fc_orders", [
+        "order_status_shipping" => $shipping_status
+    ],[
+        "id" => $order_id
+    ]);
+}
+
 if(isset($_POST['send_order_mail'])) {
 
 

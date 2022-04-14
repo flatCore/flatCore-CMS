@@ -80,6 +80,12 @@
 
 <hr>
 
+{if $checkout_error_msg != ''}
+	<div class="alert alert-info">
+		{$checkout_error_msg}
+	</div>
+{else}
+
 <form action="{$shopping_cart_uri}" method="POST">
 	<div class="card p-2 mb-4">
 
@@ -110,3 +116,4 @@
 		</div>
 	</div>
 </form>
+{/if}

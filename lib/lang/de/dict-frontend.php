@@ -179,6 +179,7 @@ $lang['label_invoice_address'] = 'Rechnungsadresse';
 $lang['label_cart_comment'] = 'Kommentar oder Notiz zur Bestellung hinzufügen';
 $lang['msg_accept_terms'] = 'Sie müssen bestätigen, dass Sie die rechtlichen Hinweise und Bestimmungen gelesen und akzeptiert haben.';
 $lang['msg_order_send'] = '<b>Vielen Dank!</b> Ihre Bestellung wurde gesendet.';
+$lang['msg_missing_mandatory_informations'] = 'Wir benötigen Ihre vollständige Adresse um die Bestellung abzuschließen';
 $lang['btn_send_order'] = 'Kaufen';
 
 /* Dates */

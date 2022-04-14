@@ -190,6 +190,7 @@ $lang['label_invoice_address'] = 'Invoice Address';
 $lang['label_cart_comment'] = 'Add comment or note to your order';
 $lang['msg_accept_terms'] = 'You must confirm that you have read and accepted the legal notices and terms.';
 $lang['msg_order_send'] = '<b>Thank you very much!</b> Your order has been sent.';
+$lang['msg_missing_mandatory_informations'] = 'We need your full postal address to complete the order';
 $lang['btn_send_order'] = 'Buy';
 
 /* Dates */

@@ -6,6 +6,14 @@ error_reporting(E_ALL ^E_NOTICE);
  * send order
  */
 
+
+$price_all_net = 0; // reset price net
+$price_all_gross = 0; // reset price gross
+$shipping_costs = 0; // reset shipping costs
+$shipping_products = 0; // number of products which will be shipped
+$store_shipping_cat = 0; // reset shipping category
+$checkout_error = '';
+
 if(isset($_POST['remove_from_cart'])) {
 	$id = (int) $_POST['remove_from_cart'];
 	fc_remove_from_cart($id);
@@ -54,16 +62,25 @@ $client_data = '';
 if($get_cd['user_company'] != '') {
 	$client_data .= $get_cd['user_company'].'<br>';
 }
+
+/**
+ * check if we have all mandatory information
+ * firstname, lastname, street, street nbr, zip and city
+ */
+
+if($get_cd['user_firstname'] == '' ||
+    $get_cd['user_lastname'] == '' ||
+    $get_cd['user_street'] == '' ||
+    $get_cd['user_street_nbr'] == '' ||
+    $get_cd['user_zipcode'] == '' ||
+    $get_cd['user_city'] == '') {
+    $checkout_error = 'missing_mandatory_informations';
+}
+
 $client_data .= $get_cd['user_firstname']. ' '.$get_cd['user_lastname'].'<br>';
 $client_data .= $get_cd['user_street']. ' '.$get_cd['user_street_nbr'].'<br>';
 $client_data .= $get_cd['user_zipcode']. ' '.$get_cd['user_city'].'<br>';
 
-
-$price_all_net = 0; // reset price net
-$price_all_gross = 0; // reset price gross
-$shipping_costs = 0; // reset shipping costs
-$shipping_products = 0; // number of products which will be shipped
-$store_shipping_cat = 0; // reset shipping category
 
 for($i=0;$i<$cnt_cart_items;$i++) {
 	
@@ -217,6 +234,11 @@ if($_POST['order'] == 'send') {
 	
 }
 
+if($checkout_error == 'missing_mandatory_informations') {
+    $checkout_error_msg = $lang['msg_missing_mandatory_informations'];
+}
+
+$smarty->assign("checkout_error_msg",$checkout_error_msg,true);
 $smarty->assign("cnt_items",$cnt_cart_items,true);
 $smarty->assign('cart_price_net', fc_post_print_currency($price_all_net), true);
 $smarty->assign('cart_price_gross', fc_post_print_currency($price_all_gross), true);
