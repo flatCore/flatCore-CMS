@@ -15,7 +15,12 @@
 	<tr>
 		<td>{$item.nbr}</td>
 		<td><small class="text-muted">{$item.product_number}</small><br>{$item.title}</td>
-		<td>{$item.amount}</td>
+		<td>
+			<form action="{$shopping_cart_uri}" method="POST">
+				<input type="number" name="cart_product_amount" value="{$item.amount}" class="form-control" onchange="this.form.submit()">
+				<input type="hidden" name="cart_item_key" value="{$item.cart_id}">
+			</form>
+		</td>
 		<td class="text-end">{$currency} {$item.price_net_format}</td>
 		<td class="text-center">{$item.tax} %</td>
 		<td class="text-end">{$currency} {$item.price_gross_format}</td>

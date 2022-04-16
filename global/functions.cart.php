@@ -205,6 +205,49 @@ function fc_add_to_cart() {
 }
 
 
+/**
+ * @param $item
+ * @param $amount
+ * @return void
+ */
+
+function fc_update_cart_item_amount($item,$amount){
+    global $db_content;
+
+    $item = (int) $item;
+    $amount = (int) $amount;
+
+    /* check if user or visitor */
+    if(is_numeric($_SESSION['user_id'])) {
+        $cart_user_id = $_SESSION['user_id'];
+
+        $db_content->update("fc_carts", [
+            "cart_product_amount" => $amount
+        ], [
+            "AND" => [
+                "cart_id" => $item,
+                "cart_user_id" => $cart_user_id,
+                "cart_status" => "progress"
+            ]
+        ]);
+
+    } else {
+
+        $cart_user_hash = $_SESSION['visitor_csrf_token'];
+        $db_content->update("fc_carts", [
+            "cart_product_amount" => $amount
+        ], [
+            "AND" => [
+                "cart_id" => $item,
+                "cart_user_hash" => $cart_user_hash,
+                "cart_status" => "progress"
+            ]
+        ]);
+
+    }
+}
+
+
 function fc_return_cart_amount() {
 	
 	global $db_content;

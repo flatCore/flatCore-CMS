@@ -19,6 +19,12 @@ if(isset($_POST['remove_from_cart'])) {
 	fc_remove_from_cart($id);
 }
 
+if(isset($_POST['cart_product_amount'])) {
+    $new_amount = (int) $_POST['cart_product_amount'];
+    $item_key = $_POST['cart_item_key'];
+    fc_update_cart_item_amount($item_key,$new_amount);
+}
+
 
 $get_cart_items = fc_return_my_cart();
 $cnt_cart_items = count($get_cart_items);
@@ -119,7 +125,7 @@ for($i=0;$i<$cnt_cart_items;$i++) {
 		$post_product_price_addition = 0;
 	}
 
-	$post_prices = fc_posts_calc_price($this_item['post_product_price_net'],$post_product_price_addition,$tax);
+	$post_prices = fc_posts_calc_price($this_item['post_product_price_net'],$post_product_price_addition,$tax,$cart_item[$i]['amount']);
 	$cart_item[$i]['price_net_format'] = $post_prices['net'];
 	$cart_item[$i]['price_gross_format'] = $post_prices['gross'];
 	$cart_item[$i]['price_net_raw'] = $post_prices['net_raw'];

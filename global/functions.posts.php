@@ -232,7 +232,7 @@ function fc_post_print_currency($number) {
  * add tax and addion to net prices
  */
 
-function fc_posts_calc_price($price,$addition,$tax) {
+function fc_posts_calc_price($price,$addition,$tax,$amount=1) {
 	
 	if(empty($price)) {
 		$price = 0;
@@ -240,8 +240,9 @@ function fc_posts_calc_price($price,$addition,$tax) {
 	
 	$price = str_replace('.', '', $price);
 	$price = str_replace(',', '.', $price);
-	$price_net = $price*($addition+100)/100;
-	$price_gross = $price_net*($tax+100)/100;
+    $price_sum = $price*$amount;
+	$price_net = $price_sum * ($addition+100)/100;
+	$price_gross = $price_net * ($tax+100)/100;
 
 	$prices['gross'] = fc_post_print_currency($price_gross);
 	$prices['net'] = fc_post_print_currency($price_net);
