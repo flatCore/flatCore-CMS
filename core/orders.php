@@ -70,11 +70,16 @@ for($i=0;$i<$cnt_orders;$i++) {
 	$order_item[$i]['date'] = date("d.m.Y H:i",$get_orders[$i]['order_time']);
 	$order_item[$i]['status'] = $get_orders[$i]['order_status'];
 	$order_item[$i]['status_payment'] = $get_orders[$i]['order_status_payment'];
-	
+    $order_item[$i]['status_shipping'] = $get_orders[$i]['order_status_shipping'];
+    $order_item[$i]['currency'] = $get_orders[$i]['order_currency'];
+
 	$order_item[$i]['price'] = fc_post_print_currency($get_orders[$i]['order_price_total']);
 	
 	$order_products = json_decode($get_orders[$i]['order_products'],true);
-	$cnt_order_products = count($order_products);
+    $cnt_order_products = 0;
+    if(is_array($order_products)) {
+	    $cnt_order_products = count($order_products);
+    }
 	//print_r($order_products);
 	
 	$products_str = '';
@@ -90,6 +95,7 @@ for($i=0;$i<$cnt_orders;$i++) {
 		
 		$products[$x]['title'] = $order_products[$x]['title'];
 		$products[$x]['product_nbr'] = $order_products[$x]['product_number'];
+        $products[$x]['amount'] = $order_products[$x]['amount'];
 		$products[$x]['price_gross'] = $this_item_price_gross;
 		$products[$x]['post_id'] = $post_id;
 				

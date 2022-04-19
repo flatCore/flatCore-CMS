@@ -192,8 +192,17 @@ $lang['msg_accept_terms'] = 'You must confirm that you have read and accepted th
 $lang['msg_order_send'] = '<b>Thank you very much!</b> Your order has been sent.';
 $lang['msg_missing_mandatory_informations'] = 'We need your full postal address to complete the order';
 $lang['btn_send_order'] = 'Buy';
+$lang['order_status'] = 'Status';
+$lang['label_orders'] = 'Orders';
+$lang['status_payment_open'] = 'Payment pending';
+$lang['status_payment_paid'] = 'Paid';
+$lang['status_shipping_open'] = 'Shipping is being prepared';
+$lang['status_shipping_done'] = 'Order has been shipped';
 
 /* Dates */
+
+$lang['label_date'] = "Date";
+
 $lang['m01'] = "January";
 $lang['m02'] = "February";
 $lang['m03'] = "March";

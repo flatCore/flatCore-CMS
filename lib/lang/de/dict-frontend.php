@@ -181,8 +181,16 @@ $lang['msg_accept_terms'] = 'Sie müssen bestätigen, dass Sie die rechtlichen H
 $lang['msg_order_send'] = '<b>Vielen Dank!</b> Ihre Bestellung wurde gesendet.';
 $lang['msg_missing_mandatory_informations'] = 'Wir benötigen Ihre vollständige Adresse um die Bestellung abzuschließen';
 $lang['btn_send_order'] = 'Kaufen';
+$lang['order_status'] = 'Status';
+$lang['label_orders'] = 'Bestellungen';
+$lang['status_payment_open'] = 'Bezahlung ausstehend';
+$lang['status_payment_paid'] = 'Bezahlt';
+$lang['status_shipping_open'] = 'Versand wird vorbereitet';
+$lang['status_shipping_done'] = 'Versendet';
 
 /* Dates */
+
+$lang['label_date'] = "Datum";
 
 $lang['m01'] = "Januar";
 $lang['m02'] = "Februar";
