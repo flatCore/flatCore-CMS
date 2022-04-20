@@ -480,44 +480,76 @@ function fc_send_order($data) {
 	return $order_id;
 }
 
+
 /**
- * get orders
- * $mode - 	if int show orders by user id
- *				if str 'all' show all orders
- * $status - 1 | 2 | 'all'
+ * @param mixed $user if is numeric get orders by user id
+ * @param array $filter status_payment, status_shipping, status_order
+ * @param array $sort key and direction
+ * @param integer $start start for pagination
+ * @param integer $limit number of entries
+ * @return void
  */
 
-function fc_get_orders($mode,$status) {
+function fc_get_orders($user, $filter, $sort, $start=0, $limit=10) {
 	
 	global $db_content;
+
+    if(isset($filter['status_shipping'])) {
+        $set_filter_status_shipping = $filter['status_shipping'];
+    }
+    if(isset($filter['status_payment'])) {
+        $set_filter_status_payment = $filter['status_payment'];
+    }
+    if(isset($filter['status_order'])) {
+        $set_filter_status_order = $filter['status_order'];
+    }
+
+    if(empty($set_filter_status_payment)) {
+        $set_filter_status_payment = [1,2,3];
+    }
+    if(empty($set_filter_status_shipping)) {
+        $set_filter_status_shipping = [1,2,3];
+    }
+    if(empty($set_filter_status_order)) {
+        $set_filter_status_order = [1,2,3];
+    }
+
+    if(empty($sort['key'])) {
+        $sort['key'] = 'order_time';
+    }
+    if(empty($sort['direction'])) {
+        $sort['direction'] = 'DESC';
+    }
+
 	/* check if user or visitor */
-	if(is_numeric($mode)) {
-		$user_id = (int) $mode;
+	if(is_numeric($user)) {
+		$user_id = (int) $user;
 		
 		$orders = $db_content->select("fc_orders", "*", [
 			"AND" => [
 				"user_id" => $user_id,
-				"order_status" => "$status"
+				"order_status" => $set_filter_status_order,
+                "order_status_shipping" => $set_filter_status_shipping,
+                "order_status_payment" => $set_filter_status_payment
 			],
 			"ORDER" => [
-				"order_time" => "DESC"
+                $sort['key'] => $sort['direction']
 			]
 		]);
 		
-	} else if($mode == 'all') {
-		
-		if($status == 'all') {
-			$status = [1,2,3];
-		}
+	} else if($user == 'all') {
 
 		$orders = $db_content->select("fc_orders", "*", [
 			"AND" => [
-				"order_status" => $status
+                "order_status" => $set_filter_status_order,
+                "order_status_shipping" => $set_filter_status_shipping,
+                "order_status_payment" => $set_filter_status_payment
 			],
 			"ORDER" => [
-				"order_time" => "DESC"
+                $sort['key'] => $sort['direction']
 			]
 		]);
+
 	} else {
 		return;
 	}

@@ -59,9 +59,15 @@ if(isset($_POST['dl_p_file']) OR isset($_POST['dl_p_file_ext'])) {
 
 
 $user_id = (int) $_SESSION['user_id'];
-$order_status = 1;
+$order_filter = array();
+$order_filter['status_payment'] = [];
+$order_filter['status_shipping'] = [];
+$order_filter['status_order'] = [];
 
-$get_orders = fc_get_orders($user_id,$order_status);
+$order_sort['key'] = '';
+$order_sort['direction'] = '';
+
+$get_orders = fc_get_orders($user_id,$order_filter,$order_sort);
 $cnt_orders = count($get_orders);
 
 for($i=0;$i<$cnt_orders;$i++) {

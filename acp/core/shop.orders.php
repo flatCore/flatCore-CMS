@@ -58,8 +58,58 @@ if(isset($_POST['send_order_mail'])) {
 
 }
 
+/* reset limit, start and filter */
+$order_filter = array();
+$order_filter['status_payment'] = [];
+$order_filter['status_shipping'] = [];
+$order_filter['status_order'] = [];
+$start = 0;
+$limit = 100;
+$order_sort['key'] = '';
+$order_sort['direction'] = '';
 
-$orders = fc_get_orders('all','all');
+/* default: check all orders */
+if(!isset($_SESSION['checked_order_filter'])) {
+    $_SESSION['checked_order_filter'] = '-paid-unpaid-shipped-unshipped-completed-received-canceled-';
+}
+
+if(isset($_GET['sof'])) {
+    $needle = '-'.$_GET['sof'].'-';
+    if(strpos("$_SESSION[checked_order_filter]", "$needle") !== false) {
+        $checked_sof_string = str_replace($needle, '-', $_SESSION['checked_order_filter']);
+    } else {
+        $add_filter = '-'.$_GET['sof'].'-';
+        $checked_sof_string = $_SESSION['checked_order_filter'].$add_filter;
+    }
+    $checked_sof_string = str_replace('--', '-', $checked_sof_string);
+    $_SESSION['checked_order_filter'] = "$checked_sof_string";
+}
+
+if(strpos("$_SESSION[checked_order_filter]", "-paid-") !== false) {
+    array_push($order_filter['status_payment'],2);
+}
+if(strpos("$_SESSION[checked_order_filter]", "-unpaid-") !== false) {
+    array_push($order_filter['status_payment'],1);
+}
+if(strpos("$_SESSION[checked_order_filter]", "-shipped-") !== false) {
+    array_push($order_filter['status_shipping'],2);
+}
+if(strpos("$_SESSION[checked_order_filter]", "-unshipped-") !== false) {
+    array_push($order_filter['status_shipping'],1);
+}
+if(strpos("$_SESSION[checked_order_filter]", "-received-") !== false) {
+    array_push($order_filter['status_order'],1);
+}
+if(strpos("$_SESSION[checked_order_filter]", "-completed-") !== false) {
+    array_push($order_filter['status_order'],2);
+}
+if(strpos("$_SESSION[checked_order_filter]", "-canceled-") !== false) {
+    array_push($order_filter['status_order'],3);
+}
+
+
+
+$orders = fc_get_orders('all', $order_filter, $order_sort, $start, $limit);
 $cnt_orders = count($orders);
 
 echo '<div class="subHeader">';
@@ -169,7 +219,7 @@ if(is_numeric($_POST['open_order'])) {
 
 /* list orders */
 
-echo '<table class="table table-striped table-hover">';
+echo '<table class="table table-hover table-sm">';
 echo '<tr>';
 echo '<td>#</td>';
 echo '<td>'.$lang['label_order_nbr'].'</td>';
@@ -202,6 +252,14 @@ for($i=0;$i<$cnt_orders;$i++) {
     $select_status_order .= $hidden_csrf_token;
     $select_status_order .= '</form>';
 
+    $class_status_order = '';
+    if($sel_so[2] == 'selected') {
+        $class_status_order = 'table-success';
+    }
+    if($sel_so[3] == 'selected') {
+        $class_status_order = 'table-danger';
+    }
+
     /* payment status */
     $sel_sp = array_fill(0, 3, '');
     $sel_sp[$order_status_payment] = 'selected';
@@ -214,6 +272,11 @@ for($i=0;$i<$cnt_orders;$i++) {
     $select_status_payment .= '<input type="hidden" name="id" value="'.$orders[$i]['id'].'">';
     $select_status_payment .= $hidden_csrf_token;
     $select_status_payment .= '</form>';
+
+    $class_payment = '';
+    if($sel_sp[2] == 'selected') {
+        $class_payment = 'table-success';
+    }
 
     /* shipping status */
     $sel_ss = array_fill(0, 3, '');
@@ -228,6 +291,11 @@ for($i=0;$i<$cnt_orders;$i++) {
     $select_status_shipping .= $hidden_csrf_token;
     $select_status_shipping .= '</form>';
 
+    $class_shipping = '';
+    if($sel_ss[2] == 'selected') {
+        $class_shipping = 'table-success';
+    }
+
 
     $btn_open_order  = '<form action="?tn=shop&sub=orders" method="POST">';
     $btn_open_order .= '<button type="submit" class="btn btn-fc w-100" name="open_order" value="'.$orders[$i]['id'].'">'.$icon['edit'].'</button>';
@@ -239,9 +307,9 @@ for($i=0;$i<$cnt_orders;$i++) {
     echo '<td>'.$orders[$i]['order_nbr'].'</td>';
     echo '<td>'.$order_time.'</td>';
     echo '<td class="text-end">'.fc_post_print_currency($orders[$i]['order_price_total']).'</td>';
-    echo '<td>'.$select_status_payment.'</td>';
-    echo '<td>'.$select_status_shipping.'</td>';
-    echo '<td>'.$select_status_order.'</td>';
+    echo '<td class="'.$class_payment.'">'.$select_status_payment.'</td>';
+    echo '<td class="'.$class_shipping.'">'.$select_status_shipping.'</td>';
+    echo '<td class="'.$class_status_order.'">'.$select_status_order.'</td>';
     echo '<td>'.$btn_open_order.'</td>';
     echo '</tr>';
 
@@ -257,7 +325,85 @@ echo '<div class="col-md-3">';
 
 echo '<div class="card p-3">';
 
-echo 'filter';
+echo '<h6>Filter</h6>';
+
+/* filter payment */
+echo '<div class="card mt-2">';
+echo '<div class="card-header p-1 px-2">'.$lang['label_status_payment'].'</div>';
+echo '<div class="list-group list-group-flush">';
+
+$class = 'list-group-item list-group-item-ghost p-1 px-2';
+$icon_toggle = $icon['circle_alt'];
+if(strpos("$_SESSION[checked_order_filter]", "-paid-") !== false) {
+    $class = 'list-group-item list-group-item-ghost p-1 px-2 active';
+    $icon_toggle = $icon['check_circle'];
+}
+echo '<a href="?tn=shop&sub=orders&sof=paid" class="'.$class.'">'.$icon_toggle.' '.$lang['status_payment_paid'].'</a>';
+
+$class = 'list-group-item list-group-item-ghost p-1 px-2';
+$icon_toggle = $icon['circle_alt'];
+if(strpos("$_SESSION[checked_order_filter]", "-unpaid-") !== false) {
+    $class = 'list-group-item list-group-item-ghost p-1 px-2 active';
+    $icon_toggle = $icon['check_circle'];
+}
+echo '<a href="?tn=shop&sub=orders&sof=unpaid" class="'.$class.'">'.$icon_toggle.' '.$lang['status_payment_open'].'</a>';
+echo '</div>';
+echo '</div>';
+
+/* filter shipping */
+echo '<div class="card mt-2">';
+echo '<div class="card-header p-1 px-2">'.$lang['label_status_shipping'].'</div>';
+echo '<div class="list-group list-group-flush">';
+
+$class = 'list-group-item list-group-item-ghost p-1 px-2';
+$icon_toggle = $icon['circle_alt'];
+if(strpos("$_SESSION[checked_order_filter]", "-shipped-") !== false) {
+    $class = 'list-group-item list-group-item-ghost p-1 px-2 active';
+    $icon_toggle = $icon['check_circle'];
+}
+echo '<a href="?tn=shop&sub=orders&sof=shipped" class="'.$class.'">'.$icon_toggle.' '.$lang['status_shipping_shipped'].'</a>';
+
+$class = 'list-group-item list-group-item-ghost p-1 px-2';
+$icon_toggle = $icon['circle_alt'];
+if(strpos("$_SESSION[checked_order_filter]", "-unshipped-") !== false) {
+    $class = 'list-group-item list-group-item-ghost p-1 px-2 active';
+    $icon_toggle = $icon['check_circle'];
+}
+echo '<a href="?tn=shop&sub=orders&sof=unshipped" class="'.$class.'">'.$icon_toggle.' '.$lang['status_shipping_prepared'].'</a>';
+echo '</div>';
+echo '</div>';
+
+/* filter order status */
+echo '<div class="card mt-2">';
+echo '<div class="card-header p-1 px-2">'.$lang['label_status_order'].'</div>';
+echo '<div class="list-group list-group-flush">';
+
+$class = 'list-group-item list-group-item-ghost p-1 px-2';
+$icon_toggle = $icon['circle_alt'];
+if(strpos("$_SESSION[checked_order_filter]", "-received-") !== false) {
+    $class = 'list-group-item list-group-item-ghost p-1 px-2 active';
+    $icon_toggle = $icon['check_circle'];
+}
+echo '<a href="?tn=shop&sub=orders&sof=received" class="'.$class.'">'.$icon_toggle.' '.$lang['status_order_received'].'</a>';
+
+$class = 'list-group-item list-group-item-ghost p-1 px-2';
+$icon_toggle = $icon['circle_alt'];
+if(strpos("$_SESSION[checked_order_filter]", "-completed-") !== false) {
+    $class = 'list-group-item list-group-item-ghost p-1 px-2 active';
+    $icon_toggle = $icon['check_circle'];
+}
+echo '<a href="?tn=shop&sub=orders&sof=completed" class="'.$class.'">'.$icon_toggle.' '.$lang['status_order_completed'].'</a>';
+
+$class = 'list-group-item list-group-item-ghost p-1 px-2';
+$icon_toggle = $icon['circle_alt'];
+if(strpos("$_SESSION[checked_order_filter]", "-canceled-") !== false) {
+    $class = 'list-group-item list-group-item-ghost p-1 px-2 active';
+    $icon_toggle = $icon['check_circle'];
+}
+echo '<a href="?tn=shop&sub=orders&sof=canceled" class="'.$class.'">'.$icon_toggle.' '.$lang['status_order_canceled'].'</a>';
+echo '</div>';
+echo '</div>';
+
 
 echo '</div>'; // card
 
