@@ -1,0 +1,97 @@
+{
+  "_from": "@tinymce/tinymce-jquery@2.0.0",
+  "_id": "@tinymce/tinymce-jquery@2.0.0",
+  "_inBundle": false,
+  "_integrity": "sha512-afxm4UVIsi8roxyFiZu+SX4pARyYRWDw3XsMFu4E2eQwuTNpO+jA7qdbqCx3zzcl68clie4jAPmxSUUiJMabEQ==",
+  "_location": "/@tinymce/tinymce-jquery",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "@tinymce/tinymce-jquery@2.0.0",
+    "name": "@tinymce/tinymce-jquery",
+    "escapedName": "@tinymce%2ftinymce-jquery",
+    "scope": "@tinymce",
+    "rawSpec": "2.0.0",
+    "saveSpec": null,
+    "fetchSpec": "2.0.0"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@tinymce/tinymce-jquery/-/tinymce-jquery-2.0.0.tgz",
+  "_shasum": "2ecd445b8ed6b9d2dd9194fe2a19f83efa34520e",
+  "_spec": "@tinymce/tinymce-jquery@2.0.0",
+  "_where": "/Users/patrick/CloudStation/CloudStation/Server/flatCore-dev/acp/theme",
+  "author": {
+    "name": "Tiny Technologies"
+  },
+  "bugs": {
+    "url": "https://github.com/tinymce/tinymce-jquery/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {},
+  "deprecated": false,
+  "description": "Official TinyMCE integration for jQuery",
+  "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@ephox/agar": "^7.0.1",
+    "@ephox/bedrock-client": "^13.0.0",
+    "@ephox/bedrock-server": "^13.1.0",
+    "@ephox/katamari": "^9.0.1",
+    "@ephox/mcagar": "^8.0.1",
+    "@ephox/sand": "^6.0.1",
+    "@ephox/sugar": "^9.0.1",
+    "@ephox/swag": "^4.5.0",
+    "@storybook/addon-actions": "^6.4.20",
+    "@storybook/addon-essentials": "^6.4.20",
+    "@storybook/addon-links": "^6.4.20",
+    "@storybook/html": "^6.4.20",
+    "@storybook/storybook-deployer": "^2.8.11",
+    "@tinymce/beehive-flow": "^0.17.0",
+    "@tinymce/eslint-plugin": "^2.0.1",
+    "@types/express": "^4.17.13",
+    "@types/jquery": "^3.5.13",
+    "babel-loader": "^8.2.4",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.70.1",
+    "rollup-plugin-uglify": "^6.0.4",
+    "tinymce": "^6.0.1",
+    "ts-loader": "^9.2.8",
+    "tslib": "^2.3.1",
+    "typescript": "^4.6.3",
+    "webpack": "^5.72.0"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE.txt"
+  ],
+  "homepage": "https://github.com/tinymce/tinymce-jquery#readme",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "name": "@tinymce/tinymce-jquery",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tinymce/tinymce-jquery.git"
+  },
+  "scripts": {
+    "build": "yarn run clean && tsc -p ./tsconfig.json && rollup -c rollup.config.js",
+    "build-storybook": "build-storybook",
+    "clean": "rimraf lib list",
+    "deploy-storybook": "yarn storybook-to-ghpages --source-branch=main",
+    "lint": "eslint src",
+    "storybook": "start-storybook -p 6006",
+    "test": "bedrock-auto -b chrome-headless -d src/test/ts",
+    "test-manual": "bedrock -d src/test/ts"
+  },
+  "version": "2.0.0"
+}

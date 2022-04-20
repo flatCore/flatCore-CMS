@@ -244,9 +244,9 @@ if(isset($set_acptheme)) {
 		
 		<link rel="icon" type="image/x-icon" href="images/favicon.ico" />
 		
-		<script language="javascript" type="text/javascript" src="theme/js/backend.min.js?v=20200117"></script>
-		<script language="javascript" type="text/javascript" src="theme/js/tinymce/tinymce.min.js"></script>
-		<script language="javascript" type="text/javascript" src="theme/js/tinymce/jquery.tinymce.min.js"></script>		
+		<script src="theme/js/backend.min.js?v=20200117"></script>
+		<script src="theme/js/tinymce/tinymce.min.js"></script>
+		<script src="theme/js/tinymce-jquery/dist/tinymce-jquery.min.js"></script>
 		<script src="theme/js/ace/ace.js" data-ace-base="theme/js/ace" type="text/javascript" charset="utf-8"></script>
 		
 		<?php
