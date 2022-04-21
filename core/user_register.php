@@ -116,12 +116,20 @@ if($send_data == 'true') {
 	$email_msg = str_replace("{USERNAME}","$username",$email_msg);
 	$email_msg = str_replace("{SITENAME}","$prefs_pagetitle",$email_msg);
 	$email_msg = str_replace("{ACTIVATIONLINK}","$user_activationlink",$email_msg);
-	
-  
-	$subject = "Account | $prefs_pagetitle";
-	$message = "$email_msg";
+
 	$recipient = array('name' => $username, 'mail' => $mail);
-	$testmail = fc_send_mail($recipient,$subject,$message);
+
+    /* build mail content 'subject','preheader','title','salutation','body','footer','tpl' */
+    $mail_data['tpl'] = 'mail.tpl';
+    $mail_data['subject'] = "Account | $prefs_pagetitle";
+    $mail_data['preheader'] = "Welcome | $username $mail";
+    $mail_data['title'] = "Welcome | $username $mail";
+    $mail_data['salutation'] = "Welcome $username";
+    $mail_data['body'] = "$email_msg";
+
+    $build_html_mail = fc_build_html_file($mail_data);
+
+	$send_mail_to_user = fc_send_mail($recipient,$mail_data['subject'],$build_html_mail);
 	
 	$smarty->assign("msg_status","alert alert-success",true);
 	$smarty->assign("register_message",$lang['msg_register_success'],true);
@@ -129,11 +137,13 @@ if($send_data == 'true') {
 	record_log("user_register","new user $username","6");
 	
 	/* send notification to admin */
+    $admin_mail['name'] = $fc_prefs['prefs_mailer_name'];
+    $admin_mail['mail'] = $fc_prefs['prefs_mailer_adr'];
+
 	$admin_notification_text  = $lang['msg_register_admin_notification_text'].'<hr>';
 	$admin_notification_text .= 'Username: <b>'.$username.'</b><br>';
 	$admin_notification_text .= 'E-Mail: '.$mail.'<br>';
 	$admin_notification_text .= 'Server: '.$prefs_pagetitle.'<br>';
-	$admin_mail = array('name' => $prefs_mailer_name, 'mail' => $prefs_mailer_adr);
 	$copymail = fc_send_mail($admin_mail,$lang['msg_register_admin_notification_subject'],$admin_notification_text);
 
 } else {
