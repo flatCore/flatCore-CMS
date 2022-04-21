@@ -376,19 +376,28 @@ function fc_build_html_file($data) {
 	global $languagePack;
 	
 	$tpl_dir = FC_CORE_DIR.'styles/'.$fc_prefs['prefs_template'];
-	$tpl_file = file_get_contents($tpl_dir.'/templates-mail/mail.tpl');
 	$tpl_style = file_get_contents($tpl_dir.'/templates-mail/styles.css');
-	$tpl_body = file_get_contents($tpl_dir.'/templates-mail/'.basename($data['tpl']));
-	
+
+    if($data['tpl'] == '') {
+        $tpl_file = file_get_contents($tpl_dir.'/templates-mail/mail.tpl');
+    } else {
+        $tpl_file = file_get_contents($tpl_dir.'/templates-mail/'.basename($data['tpl']));
+    }
 	
 	$footer = $data['footer'];
 	if($data['footer'] == '') {
 		$footer = fc_get_textlib('footer_text_mail','','content');
 	}
 
+
+
+
 	$tpl_file = str_replace('{styles}', $tpl_style, $tpl_file);
-	$tpl_file = str_replace('{mail_body}', $tpl_body, $tpl_file);
-	$tpl_file = str_replace('{mail_title}', $mail_title, $tpl_file);
+    $tpl_file = str_replace('{mail_subject}', $data['subject'], $tpl_file);
+    $tpl_file = str_replace('{mail_salutation}', $data['salutation'], $tpl_file);
+	$tpl_file = str_replace('{mail_body}', $data['body'], $tpl_file);
+	$tpl_file = str_replace('{mail_title}', $data['title'], $tpl_file);
+    $tpl_file = str_replace('{mail_preheader}', $data['preheader'], $tpl_file);
 	$tpl_file = str_replace('{mail_footer}', $footer, $tpl_file);
 	
 	return $tpl_file;	
