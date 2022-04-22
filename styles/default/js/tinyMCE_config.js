@@ -1,5 +1,5 @@
 $(function () {
-    $('textarea.mceEditor').tinymce({
+    $('textarea.mceEditor, textarea.mceEditor_small').tinymce({
         selector: 'textarea.mceEditor',
         language: languagePack,
         language_url: '/acp/theme/js/tinymce-languages/' + languagePack + '.js',
@@ -8,7 +8,7 @@ $(function () {
         element_format: "html",
         allow_html_in_named_anchor: true,
         entity_encoding: "raw",
-        menubar: "edit insert format table tools view",
+        menubar: "edit insert format",
         removed_menuitems: 'fontfamily fontsize',
         toolbar_items_size: 'small',
         content_css: "../styles/default/css/editor.css?v=1",
@@ -18,8 +18,7 @@ $(function () {
             'searchreplace', 'visualblocks', 'code', 'fullscreen', 'wordcount', 'template',
             'media', 'table'
         ],
-        toolbar1: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link unlink anchor image media code",
-        toolbar2: "styles | table | removeformat | subscript superscript | fullscreen visualblocks | template ",
+        toolbar1: "styles | bold italic underline subscript superscript removeformat | alignleft aligncenter alignright | bullist numlist | table | link unlink anchor image | fullscreen visualblocks  code",
         image_list: "core/imagelist.php",
         image_advtab: true,
         image_title: true,
