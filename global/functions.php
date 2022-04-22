@@ -360,13 +360,109 @@ function fc_send_mail($recipient,$subject,$message) {
 }
 
 /**
+ * @param array $recipient 'type', 'name' and 'mail'
+ * @param integer $order the order id
+ * @param string $reason this will change the subject
+ * @return void
+ */
+
+function fc_send_order_status($recipient,$order,$reason) {
+
+    global $fc_prefs;
+    global $languagePack;
+    global $lang;
+
+    $order_id = (int) $order;
+    $this_order = fc_get_order_details($order_id);
+
+    if($recipient['type'] == 'client') {
+        // get client data
+        $user_data = fc_get_userdata_by_id($this_order['user_id']);
+        $recipient['name'] = $user_data['user_firstname'].' '.$user_data['user_lastname'];
+        $recipient['mail'] = $user_data['user_mail'];
+        if($recipient['mail'] == '') {
+            return 'error';
+        }
+    } else {
+        // send to admin
+        $recipient['name'] = $fc_prefs['prefs_mailer_name'];
+        $recipient['mail'] = $fc_prefs['prefs_mailer_adr'];
+    }
+
+    if($reason == 'notification') {
+        $subject = "Notification: Order status # ".$this_order['order_nbr'];
+    } else if($reason == 'change_payment_status'){
+        $subject = "We changed the Payment Status # ".$this_order['order_nbr'];
+    } else if($reason == 'change_shipping_status') {
+        $subject = "We changed the Shipping Status # ".$this_order['order_nbr'];
+    } else {
+        $subject = "We changed something in # ".$this_order['order_nbr'];
+    }
+
+
+    $order_invoice_address = html_entity_decode($this_order['order_invoice_address']);
+
+    $mail_data['body_tpl'] = 'send-order-status.tpl';
+    $mail_data['subject'] = $subject;
+    $mail_data['salutation'] = $subject;
+
+    $build_html_mail = fc_build_html_file($mail_data);
+
+    if($this_order['order_status_payment'] == 2) {
+        $build_html_mail = str_replace("{payment_status}",$lang['status_payment_paid'],$build_html_mail);
+    } else {
+        $build_html_mail = str_replace("{payment_status}",$lang['status_payment_open'],$build_html_mail);
+    }
+    if($this_order['order_status_shipping'] == 2) {
+        $build_html_mail = str_replace("{shipping_status}",$lang['status_shipping_done'],$build_html_mail);
+    } else {
+        $build_html_mail = str_replace("{shipping_status}",$lang['status_shipping_open'],$build_html_mail);
+    }
+    $build_html_mail = str_replace("{order_nbr}",$this_order['order_nbr'],$build_html_mail);
+    $build_html_mail = str_replace("{invoice_address}",$order_invoice_address,$build_html_mail);
+    $price_total = fc_post_print_currency($this_order['order_price_total']). ' '.$this_order['order_currency'];
+    $build_html_mail = str_replace("{price_total}",$price_total,$build_html_mail);
+
+    $order_products = json_decode($this_order['order_products'],true);
+    $cnt_order_products = count($order_products);
+
+    $products_str = '<table role="presentation" border="0" cellpadding="0" cellspacing="0">';
+    $products_str .= '<tr>';
+    $products_str .= '<td>#</td>';
+    $products_str .= '<td>'.$lang['label_product_info'].'</td>';
+    $products_str .= '<td>'.$lang['label_product_amount'].'</td>';
+    $products_str .= '<td>'.$lang['label_price'].' ('.$lang['label_gross'].')</td>';
+    $products_str .= '</tr>';
+    for($i=0;$i<$cnt_order_products;$i++) {
+        $products_str .= '<tr>';
+        $products_str .= '<td>'.$order_products[$i]['product_number'].'</td>';
+        $products_str .= '<td>'.$order_products[$i]['title'].'</td>';
+        $products_str .= '<td>'.$order_products[$i]['amount'].'</td>';
+        $products_str .= '<td>'.fc_post_print_currency($order_products[$i]['price_gross_raw']).' '.$this_order['order_currency'].'</td>';
+        $products_str .= '</tr>';
+    }
+    $products_str .= '</table>';
+
+    $build_html_mail = str_replace("{order_products}",$products_str,$build_html_mail);
+
+    foreach($lang as $key => $val) {
+        $search = '{lang_'.$key.'}';
+        $build_html_mail = str_replace("$search","$val",$build_html_mail);
+    }
+
+    $send_mail = fc_send_mail($recipient, $subject, $build_html_mail);
+    return $send_mail;
+}
+
+
+/**
  * create html file resp. string
  * send via fc_send_mail() or force download as file
  * get the content from mail template f.e. /styles/default/templates-mail/mail.tpl
  * get the styles /styles/default/templates-mail/styles.css
  * get the mail body template from $data['tpl']
  * bring everything together and return as string
- * @param array $data 'subject','preheader','title','salutation','body','footer','tpl'
+ * @param array $data 'subject','preheader','title','salutation','body','footer','tpl', 'body_tpl'
  * @return string html formatted string
  */
 
@@ -383,14 +479,16 @@ function fc_build_html_file($data) {
     } else {
         $tpl_file = file_get_contents($tpl_dir.'/templates-mail/'.basename($data['tpl']));
     }
-	
+
+    if($data['body_tpl'] != '') {
+        $tpl_body_file = file_get_contents($tpl_dir . '/templates-mail/' . basename($data['body_tpl']));
+        $tpl_file = str_replace('{mail_body}', $tpl_body_file, $tpl_file);
+    }
+
 	$footer = $data['footer'];
 	if($data['footer'] == '') {
 		$footer = fc_get_textlib('footer_text_mail','','content');
 	}
-
-
-
 
 	$tpl_file = str_replace('{styles}', $tpl_style, $tpl_file);
     $tpl_file = str_replace('{mail_subject}', $data['subject'], $tpl_file);
@@ -477,6 +575,23 @@ function fc_get_textlib($name,$lang,$type) {
 		}
 	}
 
+}
+
+
+/**
+ * @param integer $id
+ * @return mixed
+ */
+
+function fc_get_userdata_by_id($id) {
+
+    global $db_user;
+
+    $user_data = $db_user->get("fc_user", "*", [
+        "user_id" => $id
+    ]);
+
+    return $user_data;
 }
 
 

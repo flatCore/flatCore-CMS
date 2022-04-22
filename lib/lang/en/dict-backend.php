@@ -406,6 +406,7 @@ $lang['status_shipping_prepared'] = 'Prepared';
 $lang['status_shipping_shipped'] = 'Shipped';
 
 $lang['nav_orders'] = 'Orders';
+$lang['btn_send_mail_to_admin'] = 'Send me a copy';
 
 
 /* Preferences */

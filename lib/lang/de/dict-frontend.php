@@ -174,6 +174,7 @@ $lang['label_pm_bank_transfer'] = 'Überweisung';
 $lang['label_pm_invoice'] = 'Rechnung';
 $lang['label_pm_cash'] = 'Barzahlung';
 $lang['label_pm_paypal'] = 'PayPal';
+$lang['label_payment'] = 'Bezahlung';
 $lang['label_payment_method'] = 'Zahlungsmethode';
 $lang['label_invoice_address'] = 'Rechnungsadresse';
 $lang['label_cart_comment'] = 'Kommentar oder Notiz zur Bestellung hinzufügen';
@@ -183,10 +184,14 @@ $lang['msg_missing_mandatory_informations'] = 'Wir benötigen Ihre vollständige
 $lang['btn_send_order'] = 'Kaufen';
 $lang['order_status'] = 'Status';
 $lang['label_orders'] = 'Bestellungen';
+$lang['label_order_nbr'] = 'Bestellnummer';
 $lang['status_payment_open'] = 'Bezahlung ausstehend';
 $lang['status_payment_paid'] = 'Bezahlt';
+$lang['label_shipping'] = 'Versand';
 $lang['status_shipping_open'] = 'Versand wird vorbereitet';
 $lang['status_shipping_done'] = 'Versendet';
+$lang['mail_subj_status_payment_done'] = 'Ihre Zahlung ist bei uns eingegangen';
+$lang['mail_subj_status_shipping_done'] = 'Ihre Bestellung wurde versendet';
 
 /* Dates */
 

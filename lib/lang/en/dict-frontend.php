@@ -185,6 +185,7 @@ $lang['label_pm_bank_transfer'] = 'Bank transfer';
 $lang['label_pm_invoice'] = 'Invoice';
 $lang['label_pm_cash'] = 'Cash';
 $lang['label_pm_paypal'] = 'PayPal';
+$lang['label_payment'] = 'Payment';
 $lang['label_payment_method'] = 'Payment method';
 $lang['label_invoice_address'] = 'Invoice Address';
 $lang['label_cart_comment'] = 'Add comment or note to your order';
@@ -194,10 +195,14 @@ $lang['msg_missing_mandatory_informations'] = 'We need your full postal address 
 $lang['btn_send_order'] = 'Buy';
 $lang['order_status'] = 'Status';
 $lang['label_orders'] = 'Orders';
+$lang['label_order_nbr'] = 'Order number';
 $lang['status_payment_open'] = 'Payment pending';
 $lang['status_payment_paid'] = 'Paid';
+$lang['label_shipping'] = 'Versand';
 $lang['status_shipping_open'] = 'Shipping is being prepared';
 $lang['status_shipping_done'] = 'Order has been shipped';
+$lang['mail_subj_status_payment_done'] = 'We have received your payment';
+$lang['mail_subj_status_shipping_done'] = 'Your order has been shipped';
 
 /* Dates */
 

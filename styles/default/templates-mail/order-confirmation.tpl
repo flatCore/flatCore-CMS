@@ -19,3 +19,5 @@
         </td>
     </tr>
 </table>
+<hr>
+{mail_body}

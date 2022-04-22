@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL ^E_NOTICE);
+//error_reporting(E_ALL ^E_NOTICE);
 //prohibit unauthorized access
 require 'core/access.php';
 
@@ -13,6 +13,9 @@ if(isset($_POST['change_order_status'])) {
     ]);
 }
 
+/**
+ * change status of payment
+ */
 if(isset($_POST['change_status_payment'])) {
     $order_id = (int) $_POST['id'];
     $payment_status = (int) $_POST['change_status_payment'];
@@ -21,7 +24,24 @@ if(isset($_POST['change_status_payment'])) {
     ],[
         "id" => $order_id
     ]);
+
+    if($payment_status == 2) {
+        // sending email to customer
+        $order_id = (int) $_POST['id'];
+        $recipient['type'] = 'client';
+        $reason = 'change_payment_status';
+        $send_mail = fc_send_order_status($recipient,$order_id,$reason);
+        if($send_mail == 1) {
+           echo '<div class="alert alert-success">';
+           echo 'Changed payment status and send e-mail notification to client';
+           echo '</div>';
+        }
+    }
 }
+
+/**
+ * change status of shipping
+ */
 
 if(isset($_POST['change_status_shipping'])) {
     $order_id = (int) $_POST['id'];
@@ -31,31 +51,30 @@ if(isset($_POST['change_status_shipping'])) {
     ],[
         "id" => $order_id
     ]);
+
+    if($shipping_status == 2) {
+        // sending email to customer
+        $order_id = (int) $_POST['id'];
+        $recipient['type'] = 'client';
+        $reason = 'change_shipping_status';
+        $send_mail = fc_send_order_status($recipient,$order_id,$reason);
+        if($send_mail == 1) {
+            echo '<div class="alert alert-success">';
+            echo 'Changed shipping status and send e-mail notification to client';
+            echo '</div>';
+        }
+    }
 }
 
+/**
+ * sending order status/details to admin
+ */
+
 if(isset($_POST['send_order_mail'])) {
-
-
-    $mail_data['tpl'] = 'send-order-status.tpl';
-
-    $build_html_mail = fc_build_html_file($mail_data);
-
-    $recipient['name'] = $fc_preferences['prefs_mailer_name'];
-    $recipient['mail'] = $fc_preferences['prefs_mailer_adr'];
-    $subject = "Sending order status";
-
-    //echo '<textarea class="form-control" row="8">'.$build_html_mail.'</textarea>';
-
-
-    $send_mail = fc_send_mail($recipient,$subject,$build_html_mail);
-
-    if($send_mail == 1) {
-        echo '<div class="text-success">GESENDET</div>';
-    } else {
-        echo '<div class="text-danger">'.$send_mail.'</div>';
-    }
-
-
+    $order_id = (int) $_POST['open_order'];
+    $recipient['type'] = 'admin';
+    $reason = 'notification';
+    $send_mail = fc_send_order_status($recipient,$order_id,$reason);
 }
 
 /* reset limit, start and filter */
@@ -124,11 +143,6 @@ if(isset($_POST['update_order'])) {
     $order_data = $_POST;
 
     $update_order = fc_update_order($order_data);
-
-    if($update_order == 1) {
-        $edit_order_msg = '<div class="text-success">'.$lang['db_changed'].'</div>';
-    }
-
 }
 
 
@@ -192,6 +206,7 @@ if(is_numeric($_POST['open_order'])) {
 
         $products_str .= '<td>'.$order_products[$i]['product_number'].'</td>';
         $products_str .= '<td>'.$order_products[$i]['title'].'</td>';
+        $products_str .= '<td>'.$order_products[$i]['amount'].'</td>';
         $products_str .= '<td>'.fc_post_print_currency($order_products[$i]['price_net_raw']).'</td>';
         $products_str .= '<td>'.$order_products[$i]['tax'].'</td>';
         $products_str .= '<td>'.fc_post_print_currency($order_products[$i]['price_gross_raw']).'</td>';
@@ -210,6 +225,7 @@ if(is_numeric($_POST['open_order'])) {
     $order_form_tpl = str_replace('{order_price_total}', fc_post_print_currency($get_order['order_price_total']), $order_form_tpl);
     $order_form_tpl = str_replace('{form_action}', "?tn=shop&sub=orders", $order_form_tpl);
     $order_form_tpl = str_replace('{btn_update}', $lang['update'], $order_form_tpl);
+    $order_form_tpl = str_replace('{send_order_mail}', $lang['btn_send_mail_to_admin'], $order_form_tpl);
     $order_form_tpl = str_replace('{edit_order_msg}', $edit_order_msg, $order_form_tpl);
 
     echo $order_form_tpl;
