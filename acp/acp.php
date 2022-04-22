@@ -450,7 +450,7 @@ if(isset($set_acptheme)) {
 		  		}
 		  		if(mode == 'optE2') {
 			  		/* switch to plain textarea */
-			  		if(tinymce.editors.length > 0) {
+			  		if(tinymce.get().length > 0) {
 				  		tinymce.EditorManager.execCommand('mceRemoveEditor',true, '#textEditor');
 				  		$('div.mceEditor').remove();
 							tinymce.remove('.switchEditor');
@@ -463,7 +463,7 @@ if(isset($set_acptheme)) {
 		  		}
 		  		if(mode == 'optE3') {
 			  		/* switch to ace editor */
-			  		if(tinymce.editors.length > 0) {
+			  		if(tinymce.get().length > 0) {
 			  			tinymce.EditorManager.execCommand('mceRemoveEditor',true, '#textEditor');
 			  			$('div.mceEditor').remove();
 							tinymce.remove();

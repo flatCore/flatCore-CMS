@@ -89,6 +89,7 @@ input.form-control[readonly] {
 #HTMLeditor,
 .form-control {
 	border: 1px solid darken($input_background,10) !important;
+	background: $input_background;
 }
 
 .mce-panel {

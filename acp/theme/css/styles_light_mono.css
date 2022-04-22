@@ -18071,6 +18071,7 @@ input.form-control[readonly] {
 #HTMLeditor,
 .form-control {
   border: 1px solid #e6e6e6 !important;
+  background: #fff;
 }
 
 .mce-panel {
