@@ -53,7 +53,7 @@ if(isset($_POST['save'])) {
 
 
 echo '<div class="subHeader">';
-echo '<a class="btn btn-fc" href="?tn=filebrowser&sub=browse">'.$icon['angle_left'].'</a> ';
+echo '<a class="btn btn-fc" href="?tn=filebrowser&sub=browse">'.$icon['arrow_left'].'</a> ';
 echo '<span class="ms-3">' . $media_filename.'</span>';
 echo '</div>';
 

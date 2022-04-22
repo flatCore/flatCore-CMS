@@ -105,7 +105,7 @@ $icon['info_circle'] = '<i class="bi bi-info-circle"></i>';
 $icon['images'] = '<i class="bi bi-images"></i>';
 
 $icon['language'] = '<i class="bi bi-translate"></i>';
-$icon['level_up_alt'] = '<i class="bi bi-level-up-alt"></i>';
+$icon['level_up_alt'] = '<i class="bi bi-arrow-90deg-up"></i>';
 $icon['link'] = '<i class="bi bi-link"></i>';
 $icon['list'] = '<i class="bi bi-list"></i>';
 $icon['lock'] = '<i class="bi bi-lock"></i>';
