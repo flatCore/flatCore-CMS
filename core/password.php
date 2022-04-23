@@ -46,13 +46,20 @@ if($_POST['ask_for_psw']) {
 		/* generate the message */
 		$email_msg = str_replace("{USERNAME}","$user_nick",$lang['forgotten_psw_mail_info']);
 		$email_msg = str_replace("{RESET_LINK}","$reset_link",$email_msg);
+
+        $mail_data['tpl'] = 'mail.tpl';
+        $mail_data['subject'] = $lang['forgotten_psw_mail_subject'].' '.$prefs_pagetitle;
+        $mail_data['preheader'] = $lang['forgotten_psw_mail_subject'].' '.$prefs_pagetitle;
+        $mail_data['title'] = $lang['forgotten_psw_mail_subject'].' '.$prefs_pagetitle;
+        $mail_data['salutation'] = "Password reset | $user_nick";
+        $mail_data['body'] = "$email_msg";
+
+        $build_html_mail = fc_build_html_file($mail_data);
 		
 		/* send register mail to the new user */
 
-		$subject = $lang['forgotten_psw_mail_subject'].' '.$prefs_pagetitle;
-		$message = "$email_msg";
 		$recipient = array('name' => $user_nick, 'mail' => $mail);
-		$send_reset_mail = fc_send_mail($recipient,$subject,$message);
+        $send_reset_mail = fc_send_mail($recipient,$mail_data['subject'],$build_html_mail);
 		
 		$psw_message = $lang['msg_forgotten_psw_step1'];
 	
@@ -104,11 +111,18 @@ if($_GET['token'] != "") {
 	$email_msg = str_replace("{temp_psw}","$temp_psw",$email_msg);
 
 	/* send register mail to the new user */
-  
-	$subject = $lang['forgotten_psw_mail_subject'].' '.$prefs_pagetitle;
-	$message = "$email_msg";
+
+    $mail_data['tpl'] = 'mail.tpl';
+    $mail_data['subject'] = $lang['forgotten_psw_mail_subject'].' '.$prefs_pagetitle;
+    $mail_data['preheader'] = $lang['forgotten_psw_mail_subject'].' '.$prefs_pagetitle;
+    $mail_data['title'] = $lang['forgotten_psw_mail_subject'].' '.$prefs_pagetitle;
+    $mail_data['salutation'] = "New Password | $user_nick";
+    $mail_data['body'] = "$email_msg";
+
+    $build_html_mail = fc_build_html_file($mail_data);
+
 	$recipient = array('name' => $user_nick, 'mail' => $user_mail);
-	$send_reset_mail = fc_send_mail($recipient,$subject,$message);
+	$send_reset_mail = fc_send_mail($recipient,$mail_data['subject'],$build_html_mail);
 	
 	$psw_message = $lang['msg_forgotten_psw_step2'];
 	
