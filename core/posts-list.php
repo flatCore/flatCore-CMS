@@ -16,16 +16,6 @@ if($target_page[0] == '') {
 
 
 /**
- * check if we show the shopping cart
- */
-$tpl_btn_add_to_cart = '';
-if($fc_prefs['prefs_posts_products_cart'] == 2 OR $fc_prefs['prefs_posts_products_cart'] == 3) {
-	$tpl_btn_add_to_cart = fc_load_posts_tpl($fc_template,'btn-add-to-cart.tpl');
-	$tpl_btn_add_to_cart = str_replace('{btn_add_to_cart}', $lang['btn_add_to_cart'], $tpl_btn_add_to_cart);
-	
-}
-
-/**
  * template files
  * check if the page template $fc_template hast the posts tpl files
  * if not, load files from the default directory
@@ -39,7 +29,6 @@ $tpl_list_g = fc_load_posts_tpl($fc_template,'post-list-g.tpl');
 $tpl_list_v = fc_load_posts_tpl($fc_template,'post-list-v.tpl');
 $tpl_list_e = fc_load_posts_tpl($fc_template,'post-list-e.tpl');
 $tpl_list_l = fc_load_posts_tpl($fc_template,'post-list-l.tpl');
-$tpl_list_p = fc_load_posts_tpl($fc_template,'post-list-p.tpl');
 $tpl_list_f = fc_load_posts_tpl($fc_template,'post-list-f.tpl');
 
 $tpl_pagination = fc_load_posts_tpl($fc_template,'pagination.tpl');
@@ -222,9 +211,6 @@ foreach($get_posts as $k => $post) {
 	if($get_posts[$k]['post_type'] == 'e') {
 		$this_entry = $tpl_list_e;
 	}
-	if($get_posts[$k]['post_type'] == 'p') {
-		$this_entry = $tpl_list_p;
-	}
 	if($get_posts[$k]['post_type'] == 'f') {
 		$this_entry = $tpl_list_f;
 	}
@@ -328,44 +314,7 @@ foreach($get_posts as $k => $post) {
 	$this_entry = str_replace("{post_event_hotline}", $get_posts[$k]['post_event_hotline'], $this_entry);
 	$this_entry = str_replace("{post_event_price_note}", $get_posts[$k]['post_event_price_note'], $this_entry);
 	$this_entry = str_replace("{post_tpl_event_prices}", $price_list, $this_entry);
-	
-	/* products */
-	if($get_posts[$k]['post_type'] == 'p') {
-		
-		if($get_posts[$k]['post_product_tax'] == '1') {
-			$tax = $fc_prefs['prefs_posts_products_default_tax'];
-		} else if($get_posts[$k]['post_product_tax'] == '2') {
-			$tax = $fc_prefs['prefs_posts_products_tax_alt1'];
-		} else {
-			$tax = $fc_prefs['prefs_posts_products_tax_alt2'];
-		}
-		
-		$post_product_price_addition = $get_posts[$k]['post_product_price_addition'];
-		if($post_product_price_addition == '') {
-			$post_product_price_addition = 0;
-		}
-		
-		$post_prices = fc_posts_calc_price($get_posts[$k]['post_product_price_net'],$post_product_price_addition,$tax);
-		$post_price_net = $post_prices['net'];
-		$post_price_gross = $post_prices['gross'];
-		
-		$this_entry = str_replace("{post_price_gross}", $post_price_gross, $this_entry);
-		$this_entry = str_replace("{post_price_net}", $post_price_net, $this_entry);
-		$this_entry = str_replace("{post_price_tax}", $tax, $this_entry);
-		$this_entry = str_replace("{post_currency}", $get_posts[$k]['post_product_currency'], $this_entry);
-		$this_entry = str_replace("{post_product_amount}", $get_posts[$k]['post_product_amount'], $this_entry);
-		$this_entry = str_replace("{post_product_unit}", $get_posts[$k]['post_product_unit'], $this_entry);
-		$this_entry = str_replace("{post_product_price_label}", $get_posts[$k]['post_product_price_label'], $this_entry);
-		$this_entry = str_replace("{price_tag_label_gross}", $lang['price_tag_label_gross'], $this_entry);
-		$this_entry = str_replace("{price_tag_label_net}", $lang['price_tag_label_net'], $this_entry);
-		
-		$this_entry = str_replace("{read_more_text}", $lang['btn_open_product'], $this_entry);
-		$this_entry = str_replace("{btn_add_to_cart}", $tpl_btn_add_to_cart, $this_entry);
-		$this_entry = str_replace('{post_id}', $get_posts[$k]['post_id'], $this_entry);
-	}
-	
-	
-	
+
 	/* links */
 	$this_entry = str_replace("{post_external_link}", $get_posts[$k]['post_link'], $this_entry);
 	$redirect = '?goto='.$get_posts[$k]['post_id'];
@@ -381,9 +330,6 @@ foreach($get_posts as $k => $post) {
 	
 	$this_entry = str_replace("{read_more_text}", $lang['btn_read_more'], $this_entry);
 	$this_entry = str_replace('{post_href}', $post_href, $this_entry);
-	
-
-
 
 
 	/* file */
@@ -426,5 +372,3 @@ if($display_mode == 'list_posts_category') {
 
 
 $modul_content = $page_content.$debug_string;
-
-?>
