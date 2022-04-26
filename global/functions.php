@@ -395,6 +395,8 @@ function fc_send_order_status($recipient,$order,$reason) {
         $subject = "We changed the Payment Status # ".$this_order['order_nbr'];
     } else if($reason == 'change_shipping_status') {
         $subject = "We changed the Shipping Status # ".$this_order['order_nbr'];
+    } else if($reason == 'order_confirmation') {
+        $subject = "Your Order has been sent # ".$this_order['order_nbr'];
     } else {
         $subject = "We changed something in # ".$this_order['order_nbr'];
     }
