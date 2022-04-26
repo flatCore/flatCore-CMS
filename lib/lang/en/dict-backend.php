@@ -262,6 +262,7 @@ $lang['type_of_use_orders'] = "Orders";
 
 $lang['legend_structured_pages'] = "Ordered Pages";
 $lang['legend_unstructured_pages'] = "Single Pages";
+$lang['legend_all_pages'] = "All Pages";
 
 $lang['f_page_status_puplic'] = "Public";
 $lang['f_page_status_private'] = "Privat";

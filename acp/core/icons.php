@@ -18,6 +18,8 @@ $icon['calendar_event'] = '<i class="bi bi-calendar-event"></i>';
 $icon['chat_square_dots'] = '<i class="bi bi-chat-square-dots"></i>';
 $icon['caret_left'] = '<i class="bi bi-caret-left"></i>';
 $icon['caret_right'] = '<i class="bi bi-caret-right"></i>';
+$icon['caret_down'] = '<i class="bi bi-caret-down"></i>';
+$icon['caret_up'] = '<i class="bi bi-caret-up"></i>';
 $icon['caret_right_fill'] = '<i class="bi bi-caret-right-fill"></i>';
 $icon['check'] = '<i class="bi bi-check"></i>';
 $icon['check_lg'] = '<i class="bi bi-check-lg"></i>';
@@ -42,6 +44,9 @@ $icon['home'] = '<i class="bi bi-house"></i>';
 $icon['images'] = '<i class="bi bi-images"></i>';
 
 $icon['logout'] = '<i class="bi bi-box-arrow-in-left"></i>';
+
+$icon['palette'] = '<i class="bi bi-palette"></i>';
+$icon['palette2'] = '<i class="bi bi-palette2"></i>';
 
 $icon['plugin'] = '<i class="bi bi-plugin"></i>';
 $icon['upload'] = '<i class="bi bi-upload"></i>';

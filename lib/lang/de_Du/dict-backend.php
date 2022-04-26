@@ -260,6 +260,7 @@ $lang['type_of_use_orders'] = "Bestellungen anzeigen";
 
 $lang['legend_structured_pages'] = "geordnete Seiten";
 $lang['legend_unstructured_pages'] = "einzelne Seiten";
+$lang['legend_all_pages'] = "alle Seiten";
 
 $lang['f_page_status_puplic'] = "Öffentlich";
 $lang['f_page_status_private'] = "Privat";

@@ -24,6 +24,54 @@ foreach($result as $p) {
 
 $cnt_result = count($result);
 
+if($_SESSION['switchPageList'] == '') {
+	$_SESSION['switchPageList'] = 'both';
+}
+
+if(isset($_POST['switchPageList'])) {
+	if($_POST['switchPageList'] == 'showBothPages') {
+		$_SESSION['switchPageList'] = 'both';
+	} else if($_POST['switchPageList'] == 'showStructuredPages') {
+		$_SESSION['switchPageList'] = 'structured';
+	} else if($_POST['switchPageList'] == 'showUnstructuredPages') {
+		$_SESSION['switchPageList'] = 'unstructured';
+	}
+}
+
+$class_switchPageList = array_fill(0, 3, '');
+print_r($sel_switchPageList);
+if($_SESSION['switchPageList'] == 'both') {
+	$class_col_left = 'col-6';
+	$class_col_right = 'col-6';
+	$class_switchPageList[0] = 'active';
+} else if($_SESSION['switchPageList'] == 'structured') {
+	$class_col_left = 'col-12';
+	$class_col_right = 'd-none';
+	$class_switchPageList[1] = 'active';
+} else if($_SESSION['switchPageList'] == 'unstructured') {
+	$class_col_left = 'd-none';
+	$class_col_right = 'col-12';
+	$class_switchPageList[2] = 'active';
+}
+
+echo '<div class="subHeader d-flex">';
+
+echo '<form action="?tn=pages&sub=list" method="post">';
+echo '<div class="btn-group" role="group">';
+
+echo '<button type="submit" name="switchPageList" value="showBothPages" class="btn btn-fc '.$class_switchPageList[0].'">'.$lang['legend_all_pages'].'</button>';
+echo '<button type="submit" name="switchPageList" value="showStructuredPages" class="btn btn-fc '.$class_switchPageList[1].'">'.$lang['legend_structured_pages'].'</button>';
+echo '<button type="submit" name="switchPageList" value="showUnstructuredPages" class="btn btn-fc '.$class_switchPageList[2].'">'.$lang['legend_unstructured_pages'].'</button>';
+
+
+echo '</div>';
+echo $hidden_csrf_token;
+echo '</form>';
+
+echo '<a href="?tn=pages&sub=new#position" class="btn btn-fc text-success ms-auto">'.$icon['plus'].' '.$lang['new_page'].'</a>';
+
+echo '</div>'; //subHeader
+
 
 echo '<div class="app-container">';
 echo '<div class="max-height-container">';
@@ -32,17 +80,15 @@ echo '<div class="row">';
 echo '<div class="col-md-9">';
 
 echo '<div class="row">';
-echo '<div class="col-sm-6">';
+echo '<div class="'.$class_col_left.'">';
 
 /**
  * list all pages where page_sort != empty
  */
 
-$btn_list_toggler = '<a id="toggleExpand" class="px-2">'.$icon['angle_down'].'</a>';
-
 
 echo '<div class="card">';
-echo '<div class="card-header">' . $lang['legend_structured_pages'] . ' '.$btn_list_toggler.'</div>';
+echo '<div class="card-header">' . $lang['legend_structured_pages'] . '</div>';
 echo '<div class="card-body">';
 echo '<div class="scroll-box">';
 echo '<div class="pages-list-container">';
@@ -218,7 +264,7 @@ echo '</div>'; // card-body
 echo '</div>'; // card
 
 echo '</div>';
-echo '<div class="col-sm-6">';
+echo '<div class="'.$class_col_right.'">';
 
 
 
@@ -409,7 +455,6 @@ echo '</div>';
 echo '</div>';
 echo '<div class="col-md-3">';
 
-echo '<a href="?tn=pages&sub=new#position" class="btn btn-success w-100">'.$icon['plus'].' '.$lang['new_page'].'</a><hr>';
 
 /* sidebar */
 
