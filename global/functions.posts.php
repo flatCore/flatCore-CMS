@@ -361,7 +361,7 @@ function fc_get_voting_data($type,$id) {
 									FROM fc_comments";
 		
 		$count = $db_content->query("$sql_cnt")->fetch(PDO::FETCH_ASSOC);
-		
+
 		return $count;
 	}
 }

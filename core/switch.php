@@ -477,6 +477,12 @@ if($p == "orders") {
 	include 'orders.php';
 }
 
+/* list products */
+if($p == "list-products") {
+	include 'products.php';
+}
+
+
 /* confirm new account */
 if($p == "account") {
 	

@@ -193,6 +193,11 @@ $lang['status_shipping_done'] = 'Versendet';
 $lang['mail_subj_status_payment_done'] = 'Ihre Zahlung ist bei uns eingegangen';
 $lang['mail_subj_status_shipping_done'] = 'Ihre Bestellung wurde versendet';
 
+$lang['label_sort_price_asc'] = 'Preis aufsteigend';
+$lang['label_sort_price_desc'] = 'Preis absteigend';
+$lang['label_sort_topseller'] = 'Topseller';
+$lang['label_sort_name'] = 'Name';
+
 /* Dates */
 
 $lang['label_date'] = "Datum";

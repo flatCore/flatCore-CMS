@@ -24,6 +24,35 @@ $products_filter['types'] = $page_contents['page_posts_types'];
 $products_filter['status'] = $str_status;
 $products_filter['categories'] = $page_contents['page_posts_categories'];
 
+if(isset($_POST['sort_by'])) {
+    if($_POST['sort_by'] == 'ts') {
+        $_SESSION['products_sort_by'] = 'ts';
+    } else if($_POST['sort_by'] == 'name') {
+        $_SESSION['products_sort_by'] = 'name';
+    } else if($_POST['sort_by'] == 'pasc') {
+        $_SESSION['products_sort_by'] = 'pasc';
+    } else if($_POST['sort_by'] == 'pdesc') {
+        $_SESSION['products_sort_by'] = 'pdesc';
+    } else {
+        $_SESSION['products_sort_by'] = 'name';
+    }
+}
+
+if($_SESSION['products_sort_by'] == 'name') {
+    $smarty->assign('class_sort_name', "active");
+} else if($_SESSION['products_sort_by'] == 'ts') {
+    $smarty->assign('class_sort_topseller', "active");
+} else if($_SESSION['products_sort_by'] == 'pasc') {
+    $smarty->assign('class_sort_price_asc', "active");
+} else if($_SESSION['products_sort_by'] == 'pdesc') {
+    $smarty->assign('class_sort_price_desc', "active");
+} else {
+    $_SESSION['products_sort_by'] = 'name';
+    $smarty->assign('class_sort_name', "active");
+}
+
+$products_filter['sort_by'] = $_SESSION['products_sort_by'];
+
 
 if(substr("$mod_slug", -5) == '.html') {
     $get_product_id = (int) basename(end(explode("-", $mod_slug)));

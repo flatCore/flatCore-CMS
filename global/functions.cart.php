@@ -42,8 +42,7 @@ function fc_get_products($start,$limit,$filter) {
 
 
     /**
-     * order and direction
-     * we ignore $order and $direction
+     * default order and direction
      */
 
     $order = "ORDER BY post_fixed ASC, post_priority DESC, post_id DESC";
@@ -53,6 +52,24 @@ function fc_get_products($start,$limit,$filter) {
     } else {
         $direction = 'DESC';
     }
+
+    /* we have a custom order rule */
+    if($filter['sort_by'] != '') {
+        if($filter['sort_by'] == 'name') {
+            $order = "ORDER BY post_fixed ASC, post_title ASC, post_priority DESC";
+        }
+        if($filter['sort_by'] == 'pasc') {
+            $order = "ORDER BY post_fixed ASC, post_product_price_net*1 ASC, post_priority DESC";
+        }
+        if($filter['sort_by'] == 'pdesc') {
+            $order = "ORDER BY post_fixed ASC, post_product_price_net*1 DESC, post_priority DESC";
+        }
+        if($filter['sort_by'] == 'ts') {
+            $order = "ORDER BY post_fixed ASC, post_product_cnt_sales DESC, post_priority DESC";
+        }
+
+    }
+
 
     /* set filters */
     $sql_filter_start = "WHERE post_type LIKE '%p%' ";

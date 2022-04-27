@@ -204,6 +204,11 @@ $lang['status_shipping_done'] = 'Order has been shipped';
 $lang['mail_subj_status_payment_done'] = 'We have received your payment';
 $lang['mail_subj_status_shipping_done'] = 'Your order has been shipped';
 
+$lang['label_sort_price_asc'] = 'Price ascending';
+$lang['label_sort_price_desc'] = 'Price descending';
+$lang['label_sort_topseller'] = 'Topseller';
+$lang['label_sort_name'] = 'Name';
+
 /* Dates */
 
 $lang['label_date'] = "Date";

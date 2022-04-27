@@ -438,19 +438,10 @@ foreach($fc_prefs as $key => $val) {
 	$smarty->assign("$key", $val);
 }
 
-/*
-if(!empty($page_contents['page_posts_categories'])) {
-	include 'core/posts.php';
-}
-
-if($page_contents['page_type_of_use'] == 'display_post') {
-	include 'core/posts.php';
-}
-*/
 
 if($page_contents['page_posts_types'] != '' OR $page_contents['page_type_of_use'] == 'display_post' OR $page_contents['page_type_of_use'] == 'display_product') {
     if($page_contents['page_posts_types'] == 'p' OR $page_contents['page_type_of_use'] == 'display_product') {
-        include 'core/products.php';
+        $p = 'list-products';
     } else if($page_contents['page_type_of_use'] == 'display_post') {
         include 'core/posts.php';
     } else {
