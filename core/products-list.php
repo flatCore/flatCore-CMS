@@ -227,8 +227,7 @@ foreach ($get_products as $k => $post) {
     //$this_entry = str_replace("{form_action}", $form_action, $this_entry);
 
     if ($get_products[$k]['post_status'] == '2') {
-        $draft_msg = '<div style="background:#aaa;color:#fff;padding:5px;margin-top:-5px;margin-left:-5px;margin-bottom:5px;display:inline-block"><small>' . $lang['post_is_draft'] . '</small></div>';
-        $this_entry = '<div style="opacity:0.75;border: 1px dotted #aaa; padding: 5px;margin-bottom:15px;">' . $draft_msg . $this_entry . '</div>';
+        $get_products[$k]['draft_message'] = '<div class="alert alert-draft"><small>' . $lang['post_is_draft'] . '</small></div>';
     }
 
 
