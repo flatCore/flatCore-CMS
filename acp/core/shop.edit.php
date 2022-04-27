@@ -255,15 +255,19 @@ $array_images = explode("<->", $post_data['post_images']);
 $choose_images = fc_select_img_widget($images,$array_images,$prefs_posts_images_prefix,1);
 
 /* status | draft or published */
-if($post_data['post_status'] == "draft") {
+if($post_data['post_status'] == "2") {
     $sel_status_draft = "selected";
-} else {
+} else if($post_data['post_status'] == "1") {
     $sel_status_published = "selected";
+} else if($post_data['post_status'] == "3") {
+    $sel_status_ghost = "selected";
 }
+
 $select_status = "<select name='post_status' class='form-control custom-select'>";
 if($_SESSION['drm_can_publish'] == "true") {
     $select_status .= '<option value="2" '.$sel_status_draft.'>'.$lang['status_draft'].'</option>';
     $select_status .= '<option value="1" '.$sel_status_published.'>'.$lang['status_public'].'</option>';
+    $select_status .= '<option value="3" '.$sel_status_ghost.'>'.$lang['status_ghost'].'</option>';
 } else {
     /* user can not publish */
     $select_status .= '<option value="draft" selected>'.$lang['status_draft'].'</option>';
@@ -312,7 +316,7 @@ $select_votings .= '<option value="3" '.$sel_votings_3.'>'.$lang['label_votings_
 $select_votings .= '</select>';
 
 
-/* autor */
+/* author */
 
 if($post_data['post_author'] == '') {
     $post_data['post_author'] = $_SESSION['user_firstname'] .' '. $_SESSION['user_lastname'];

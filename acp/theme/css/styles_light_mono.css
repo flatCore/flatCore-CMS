@@ -18582,6 +18582,30 @@ tr.item_is_draft,
 tr.item_is_draft:hover {
   opacity: 0.5;
 }
+tr.item_is_draft h5 span.badge-fc, tr.item_is_draft .h5 span.badge-fc,
+tr.item_is_draft:hover h5 span.badge-fc {
+  float: right;
+  font-size: 11px;
+  vertical-align: top;
+  background: #0dcaf0;
+  font-weight: normal;
+  margin-right: 5px;
+  margin-left: auto;
+}
+
+tr.item_is_ghost,
+tr.item_is_ghost:hover {
+  opacity: 0.7;
+}
+tr.item_is_ghost h5 span.badge-fc, tr.item_is_ghost .h5 span.badge-fc,
+tr.item_is_ghost:hover h5 span.badge-fc {
+  float: right;
+  font-size: 11px;
+  vertical-align: top;
+  background: #0d6efd;
+  font-weight: normal;
+  margin-right: 5px;
+}
 
 span.categories-list {
   padding: 1px 4px;

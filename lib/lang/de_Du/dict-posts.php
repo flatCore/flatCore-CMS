@@ -113,6 +113,7 @@ $lang['label_fixed'] = 'Oben festsetzen';
 
 $lang['status_draft'] = 'Entwurf';
 $lang['status_public'] = 'Öffentlich';
+$lang['status_ghost'] = 'Unsichtbar';
 
 $lang['label_votings'] = 'Reaktionen/Votings';
 $lang['label_votings_off'] = 'Deaktivieren';

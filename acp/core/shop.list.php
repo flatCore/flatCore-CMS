@@ -218,7 +218,8 @@ if($cnt_filter_posts > 0) {
 
         $type_class = 'label-type label-'.$get_posts[$i]['post_type'];
         $icon_fixed = '';
-        $draft_class = '';
+        $add_row_class = '';
+        $add_label = '';
 
         $icon_fixed_form = '<form action="?tn=posts" method="POST" class="form-inline">';
         if($get_posts[$i]['post_fixed'] == '1') {
@@ -230,7 +231,12 @@ if($cnt_filter_posts > 0) {
         $icon_fixed_form .= '</form>';
 
         if($get_posts[$i]['post_status'] == '2') {
-            $draft_class = 'item_is_draft';
+            $add_row_class = 'item_is_draft';
+            $add_label = '<span class="badge badge-fc">'.$lang['status_draft'].'</span>';
+        }
+        if($get_posts[$i]['post_status'] == '3') {
+            $add_row_class = 'item_is_ghost';
+            $add_label = '<span class="badge badge-fc">'.$lang['status_ghost'].'</span>';
         }
 
         /* trim teaser to $trim chars */
@@ -371,13 +377,13 @@ if($cnt_filter_posts > 0) {
 
 
 
-        echo '<tr class="'.$draft_class.'">';
+        echo '<tr class="'.$add_row_class.'">';
         echo '<td>'.$get_posts[$i]['post_id'].'</td>';
         echo '<td>'.$icon_fixed_form.'</td>';
         echo '<td>'.$prio_form.'</td>';
         echo '<td nowrap><small>'.$published_date.'<br>'.$release_date.'<br>'.$lastedit_date.'</small></td>';
         echo '<td>'.$show_thumb.'</td>';
-        echo '<td>'.$show_events_date.$show_items_price.$show_items_downloads.$show_items_redirects.'<h5 class="mb-0">'.$get_posts[$i]['post_title'].'</h5><small>'.$trimmed_teaser.'</small><br>'.$categories.'<br>'.$label.'</td>';
+        echo '<td>'.$show_items_price.'<h5 class="mb-0">'.$get_posts[$i]['post_title'].$add_label.'</h5><small>'.$trimmed_teaser.'</small><br>'.$categories.'<br>'.$label.'</td>';
         echo '<td style="min-width: 150px;">';
         echo '<nav class="nav justify-content-end">';
         echo '<form class="form-inline mr-1" action="?tn=shop&sub=edit" method="POST">';
@@ -468,17 +474,24 @@ echo '<div class="card-header p-1 px-2">'.$lang['label_status'].'</div>';
 echo '<div class="btn-group d-flex">';
 if(strpos("$_SESSION[checked_status_string]", "2") !== false) {
     $icon_toggle = $icon['check_circle'];
-    echo '<a href="acp.php?tn=shop&status=2" class="btn btn-sm btn-fc active w-100">'.$icon_toggle.' '.$lang['status_draft'].'</a>';
+    echo '<a href="acp.php?tn=shop&status=2" class="btn btn-sm btn-fc active w-100">'.$icon_toggle.'<br>'.$lang['status_draft'].'</a>';
 } else {
     $icon_toggle = $icon['circle_alt'];
-    echo '<a href="acp.php?tn=shop&status=2" class="btn btn-sm btn-fc w-100">'.$icon_toggle.' '.$lang['status_draft'].'</a>';
+    echo '<a href="acp.php?tn=shop&status=2" class="btn btn-sm btn-fc w-100">'.$icon_toggle.'<br>'.$lang['status_draft'].'</a>';
 }
 if(strpos("$_SESSION[checked_status_string]", "1") !== false) {
     $icon_toggle = $icon['check_circle'];
-    echo '<a href="acp.php?tn=shop&status=1" class="btn btn-sm btn-fc active w-100">'.$icon_toggle.' '.$lang['status_public'].'</a>';
+    echo '<a href="acp.php?tn=shop&status=1" class="btn btn-sm btn-fc active w-100">'.$icon_toggle.'<br>'.$lang['status_public'].'</a>';
 } else {
     $icon_toggle = $icon['circle_alt'];
-    echo '<a href="acp.php?tn=shop&status=1" class="btn btn-sm btn-fc w-100">'.$icon_toggle.' '.$lang['status_public'].'</a>';
+    echo '<a href="acp.php?tn=shop&status=1" class="btn btn-sm btn-fc w-100">'.$icon_toggle.'<br>'.$lang['status_public'].'</a>';
+}
+if(strpos("$_SESSION[checked_status_string]", "3") !== false) {
+    $icon_toggle = $icon['check_circle'];
+    echo '<a href="acp.php?tn=shop&status=3" class="btn btn-sm btn-fc active w-100">'.$icon_toggle.'<br>'.$lang['status_ghost'].'</a>';
+} else {
+    $icon_toggle = $icon['circle_alt'];
+    echo '<a href="acp.php?tn=shop&status=3" class="btn btn-sm btn-fc w-100">'.$icon_toggle.'<br>'.$lang['status_ghost'].'</a>';
 }
 echo '</div>';
 

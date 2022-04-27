@@ -96,6 +96,32 @@
 tr.item_is_draft,
 tr.item_is_draft:hover {
 	opacity: 0.5;
+	h5 {
+		span.badge-fc {
+			float: right;
+			font-size: 11px;
+			vertical-align: top;
+			background: $info;
+			font-weight: normal;
+			margin-right: 5px;
+			margin-left: auto;
+		}
+	}
+}
+
+tr.item_is_ghost,
+tr.item_is_ghost:hover {
+	opacity: 0.7;
+	h5 {
+		span.badge-fc {
+			float: right;
+			font-size: 11px;
+			vertical-align: top;
+			background: $primary;
+			font-weight: normal;
+			margin-right: 5px;
+		}
+	}
 }
 
 
