@@ -11,7 +11,7 @@
             </form>
         </div>
         <div class="col-md-4 col-sm-12 text-right">
-
+            {if $show_pagination == true}
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-end">
                     <li>
@@ -27,7 +27,7 @@
                     </li>
                 </ul>
             </nav>
-
+            {/if}
         </div>
     </div>
 </div>

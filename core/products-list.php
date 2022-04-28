@@ -251,6 +251,7 @@ $smarty->assign('form_action', $form_action);
 $smarty->assign('product_cnt', $cnt_filter_products);
 $smarty->assign('products', $get_products);
 
+$smarty->assign('show_pagination', $show_pagination);
 $smarty->assign('pagination', $pagination);
 
 $smarty->assign('show_shopping_cart', $show_shopping_cart);
