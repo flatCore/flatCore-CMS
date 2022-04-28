@@ -35,7 +35,7 @@
 {foreach $products as $product => $value}
 
 
-    <div class="post-list-product">
+    <div class="post-list-product {$value.product_css_classes}">
         {$value.draft_message}
         <div class="row">
             <div class="col-md-4">

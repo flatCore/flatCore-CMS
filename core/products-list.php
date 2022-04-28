@@ -225,6 +225,7 @@ foreach ($get_products as $k => $post) {
 
     if ($get_products[$k]['post_status'] == '2') {
         $get_products[$k]['draft_message'] = '<div class="alert alert-draft"><small>' . $lang['post_is_draft'] . '</small></div>';
+        $get_products[$k]['product_css_classes'] = 'draft';
     }
 
 }

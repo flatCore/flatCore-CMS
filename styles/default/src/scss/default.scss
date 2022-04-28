@@ -221,7 +221,24 @@ a.post-headline-link:hover {
 .post-list-file {
 	border-bottom: 1px solid #ddd;
 	margin-bottom: 15px;
+	&.draft {
+		opacity: 0.8;
+		border: 1px solid $info;
+		padding: 15px;
+
+		.alert-draft {
+			margin-top: -15px;
+			margin-left: -15px;
+			margin-right: -15px;
+			border-radius: 0;
+			padding: 5px 15px;
+			background: #ddd;
+			color: $info;
+		}
+
+	}
 }
+
 
 .post-thumbnail {
 	background: rgba(0,0,0,0.1);
