@@ -22,8 +22,8 @@ echo '<li class="nav-item"><a class="nav-link" href="#content" data-bs-toggle="t
 echo '<li class="nav-item"><a class="nav-link" href="#meta" data-bs-toggle="tab">'.$lang['tab_meta'].'</a></li>';
 echo $theme_tab;
 
-echo '<li class="nav-item ms-auto"><a class="nav-link" href="#posts" data-bs-toggle="tab" title="'.$lang['tab_posts'].'">'.$icon['clipboard_list'].'</a></li>';
-echo '<li class="nav-item"><a class="nav-link" href="#addons" data-bs-toggle="tab" title="'.$lang['tab_addons'].'">'.$icon['cogs'].'</a></li>';
+echo '<li class="nav-item ms-auto"><a class="nav-link" href="#posts" data-bs-toggle="tab" title="'.$lang['tab_posts'].'">'.$icon['file_earmark_post'].'</a></li>';
+echo '<li class="nav-item"><a class="nav-link" href="#addons" data-bs-toggle="tab" title="'.$lang['tab_addons'].'">'.$icon['plugin'].'</a></li>';
 echo '<li class="nav-item"><a class="nav-link" href="#head" data-bs-toggle="tab" title="'.$lang['tab_head'].'">'.$icon['code'].'</a></li>';
 if($cnt_custom_fields > 0) {
 	echo '<li class="nav-item"><a class="nav-link" href="#custom" data-bs-toggle="tab" title="'.$lang['legend_custom_fields'].'">'.$icon['th_list'].'</a></li>';
@@ -536,37 +536,8 @@ echo '</div>'; /* EOL tab addons */
 echo '<div class="tab-pane fade" id="posts">';
 
 
-echo '<fieldset>';
-echo '<legend>'.$lang['categories'].'</legend>';
-
-$categories = fc_get_categories();
-$page_cats_array = explode(',', $page_posts_categories);
-
-$checked_cat_all = '';
-if(in_array('all', $page_cats_array)) {
-	$checked_cat_all = 'checked';
-}
-	
-echo '<div class="form-check">';
-echo '<input type="checkbox" class="form-check-input" id="cat_all" name="page_post_categories[]" value="all" '.$checked_cat_all.'>';
-echo '<label class="form-check-label" for="cat_all">'.$lang['label_all_categories'].'</label>';
-echo '</div><hr>';
-
-
-for($i=0;$i<count($categories);$i++) {
-	
-	$checked_cat = '';
-	if(in_array($categories[$i]['cat_id'], $page_cats_array)) {
-		$checked_cat = 'checked';
-	}
-	
-	echo '<div class="form-check">';
-	echo '<input type="checkbox" class="form-check-input" id="cat'.$i.'" name="page_post_categories[]" value="'.$categories[$i]['cat_id'].'" '.$checked_cat.'>';
-	echo '<label class="form-check-label" for="cat'.$i.'">'.$categories[$i]['cat_name'].' <small>('.$categories[$i]['cat_lang'].')</small></label>';
-	echo '</div>';
-}
-
-echo '</fieldset>';
+echo '<div class="row">';
+echo '<div class="col-6">';
 
 echo '<fieldset>';
 echo '<legend>'.$lang['select_post_type'].'</legend>';
@@ -673,6 +644,44 @@ echo '<legend>'.$lang['select_post_type'].'</legend>';
 
 echo '</fieldset>';
 
+echo '</div>';
+echo '<div class="col-6">';
+
+echo '<fieldset>';
+echo '<legend>'.$lang['categories'].'</legend>';
+
+$categories = fc_get_categories();
+$page_cats_array = explode(',', $page_posts_categories);
+
+$checked_cat_all = '';
+if(in_array('all', $page_cats_array)) {
+    $checked_cat_all = 'checked';
+}
+
+echo '<div class="form-check">';
+echo '<input type="checkbox" class="form-check-input" id="cat_all" name="page_post_categories[]" value="all" '.$checked_cat_all.'>';
+echo '<label class="form-check-label" for="cat_all">'.$lang['label_all_categories'].'</label>';
+echo '</div><hr>';
+
+
+for($i=0;$i<count($categories);$i++) {
+
+    $checked_cat = '';
+    if(in_array($categories[$i]['cat_id'], $page_cats_array)) {
+        $checked_cat = 'checked';
+    }
+
+    echo '<div class="form-check">';
+    echo '<input type="checkbox" class="form-check-input" id="cat'.$i.'" name="page_post_categories[]" value="'.$categories[$i]['cat_id'].'" '.$checked_cat.'>';
+    echo '<label class="form-check-label" for="cat'.$i.'">'.$categories[$i]['cat_name'].' <small>('.$categories[$i]['cat_lang'].')</small></label>';
+    echo '</div>';
+}
+
+echo '</fieldset>';
+
+echo '</div>'; // col
+echo '</div>'; // row
+
 echo '</div>'; /* EOL tab posts */
 
 if($cnt_custom_fields > 0) {
@@ -729,7 +738,7 @@ echo '<h5>'.$lang['snippets'].'</h5>';
 $snippets = $db_content->select("fc_textlib","textlib_name", [
 	"OR" => [
 		"textlib_type" => "",
-		"textlib_type[!]" => "shortcode"
+		"textlib_type[!]" => ["shortcode","post_feature"]
 	]
 ]);
 
