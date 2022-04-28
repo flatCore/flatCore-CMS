@@ -223,26 +223,21 @@ foreach ($get_products as $k => $post) {
         $show_cart_btn = true;
     }
 
-
-    //$this_entry = str_replace("{form_action}", $form_action, $this_entry);
-
     if ($get_products[$k]['post_status'] == '2') {
         $get_products[$k]['draft_message'] = '<div class="alert alert-draft"><small>' . $lang['post_is_draft'] . '</small></div>';
     }
 
-
-    $posts_list .= $this_entry;
-
 }
 
-$page_content = $tpl_list_index;
-$page_content = str_replace('{pagination}', $tpl_pagination, $page_content);
-$page_content = str_replace('{post_list}', $posts_list, $page_content);
-$page_content = str_replace("{post_cnt}", $cnt_filter_posts, $page_content);
-$page_content = str_replace("{lang_entries}", $lang['label_entries'], $page_content);
-$page_content = str_replace("{lang_entries_total}", $lang['label_entries_total'], $page_content);
-$page_content = str_replace("{post_start_nbr}", $show_start, $page_content);
-$page_content = str_replace("{post_end_nbr}", $show_end, $page_content);
+/* check if we hide the shopping cart button */
+if($fc_prefs['prefs_posts_products_cart'] == 2 OR $fc_prefs['prefs_posts_products_cart'] == 3) {
+    $show_shopping_cart = true;
+    if($fc_prefs['prefs_posts_products_cart'] == 2 && $_SESSION['user_nick'] == '') {
+        $show_shopping_cart = false;
+    }
+} else {
+    $show_shopping_cart = false;
+}
 
 if ($display_mode == 'list_posts_category') {
     $category_message = str_replace('{categorie}', $selected_category_title, $lang['posts_category_filter']);
@@ -258,7 +253,7 @@ $smarty->assign('products', $get_products);
 
 $smarty->assign('pagination', $pagination);
 
-
+$smarty->assign('show_shopping_cart', $show_shopping_cart);
 $smarty->assign('btn_add_to_cart', $lang['btn_add_to_cart']);
 $smarty->assign('btn_read_more', $lang['btn_open_product']);
 
