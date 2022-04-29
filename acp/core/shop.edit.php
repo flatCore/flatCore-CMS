@@ -96,6 +96,15 @@ if(isset($_POST['save_post']) OR isset($_POST['del_tmb']) OR isset($_POST['sort_
         $post_fixed = 2;
     }
 
+    /* stock mode */
+    if($_POST['post_product_ignore_stock'] == 1) {
+        // ignore stock
+        $post_product_stock_mode = 1;
+    } else {
+        // activate stock
+        $post_product_stock_mode = 2;
+    }
+
     /* metas */
     if($_POST['post_meta_title'] == '') {
         $post_meta_title = $_POST['post_title'];
@@ -497,7 +506,14 @@ foreach($all_files as $file) {
 }
 $select_file .= '</select>';
 
+$post_data['post_product_nbr_stock'] = (int) $post_data['post_product_nbr_stock'];
+$post_data['post_product_cnt_sales'] = (int) $post_data['post_product_cnt_sales'];
 
+if($post_data['post_product_stock_mode'] == 1) {
+    $checkIgnoreStock = 'checked';
+} else {
+    $checkIgnoreStock = '';
+}
 
 /* print the form */
 
@@ -534,7 +550,7 @@ for($i=0;$i<$cnt_labels;$i++) {
 $form_tpl = str_replace('{post_labels}', $checkbox_set_labels, $form_tpl);
 
 
-
+$form_tpl = str_replace('{checkIgnoreStock}', $checkIgnoreStock, $form_tpl);
 
 /* user inputs */
 
@@ -588,6 +604,9 @@ $form_tpl = str_replace('{post_product_price_gross}', $post_product_price_gross,
 $form_tpl = str_replace('{select_tax}', $select_tax, $form_tpl);
 $form_tpl = str_replace('{select_shipping_mode}', $select_shipping_mode, $form_tpl);
 $form_tpl = str_replace('{select_shipping_category}', $select_shipping_category, $form_tpl);
+
+$form_tpl = str_replace('{post_product_nbr_stock}', $post_data['post_product_nbr_stock'], $form_tpl);
+$form_tpl = str_replace('{post_product_cnt_sales}', $post_data['post_product_cnt_sales'], $form_tpl);
 
 $form_tpl = str_replace('{snippet_select_pricelist}', $snippet_select_pricelist, $form_tpl);
 $form_tpl = str_replace('{snippet_select_text}', $snippet_select_text, $form_tpl);

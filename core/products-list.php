@@ -92,6 +92,16 @@ if ($show_end > $cnt_filter_products) {
     $show_end = $cnt_filter_products;
 }
 
+/* check if we hide the shopping cart button */
+if($fc_prefs['prefs_posts_products_cart'] == 2 OR $fc_prefs['prefs_posts_products_cart'] == 3) {
+    $show_shopping_cart = true;
+    if($fc_prefs['prefs_posts_products_cart'] == 2 && $_SESSION['user_nick'] == '') {
+        $show_shopping_cart = false;
+    }
+} else {
+    $show_shopping_cart = false;
+}
+
 //eol pagination
 
 $posts_list = '';
@@ -186,9 +196,6 @@ foreach ($get_products as $k => $post) {
     }
 
 
-
-
-
     if ($get_products[$k]['post_product_tax'] == '1') {
         $tax = $fc_prefs['prefs_posts_products_default_tax'];
     } else if ($get_products[$k]['post_product_tax'] == '2') {
@@ -228,17 +235,16 @@ foreach ($get_products as $k => $post) {
         $get_products[$k]['product_css_classes'] = 'draft';
     }
 
+    if($show_shopping_cart == true) {
+        $get_products[$k]['show_shopping_cart'] = true;
+        if ($get_products[$k]['post_product_stock_mode'] == 2 && $get_products[$k]['post_product_nbr_stock'] < 1) {
+            $get_products[$k]['show_shopping_cart'] = false;
+        }
+    }
+
 }
 
-/* check if we hide the shopping cart button */
-if($fc_prefs['prefs_posts_products_cart'] == 2 OR $fc_prefs['prefs_posts_products_cart'] == 3) {
-    $show_shopping_cart = true;
-    if($fc_prefs['prefs_posts_products_cart'] == 2 && $_SESSION['user_nick'] == '') {
-        $show_shopping_cart = false;
-    }
-} else {
-    $show_shopping_cart = false;
-}
+
 
 if ($display_mode == 'list_posts_category') {
     $category_message = str_replace('{categorie}', $selected_category_title, $lang['posts_category_filter']);

@@ -217,6 +217,7 @@ if($_POST['order'] == 'send') {
         $order_data['order_comment'] = $_POST['cart_comment'];
 		
 		$order_id = fc_send_order($order_data);
+        fc_recalculate_stock_sales($cart_items);
 		
 		if($order_id > 0) {
 			$smarty->assign("cart_alert_success",$lang['msg_order_send'],true);

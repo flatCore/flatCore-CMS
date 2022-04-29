@@ -79,7 +79,7 @@
                 </p>
                 <div class="row">
                     <div class="col-md-8 text-end">
-                        {if $show_shopping_cart == true}
+                        {if $value.show_shopping_cart == true}
                         <form action="{$form_action}" method="POST" class="d-inline">
                             <button class="btn btn-success" name="add_to_cart" value="{$value.product_id}">{$btn_add_to_cart}</button>
                             <input type="hidden" name="csrf_token" value="{$csrf_token}">

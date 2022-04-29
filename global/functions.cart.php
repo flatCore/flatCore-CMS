@@ -497,6 +497,44 @@ function fc_send_order($data) {
 	return $order_id;
 }
 
+/**
+ * @param array $items amount and item
+ * @return void
+ *
+ * if an order was sent, increse sales and if necessary, reduce stock
+ */
+
+function fc_recalculate_stock_sales($items) {
+    global $db_posts;
+    $cnt_items = count($items);
+
+    for($i=0;$i<$cnt_items;$i++) {
+
+        $post_id = (int) $items[$i]['post_id'];
+        $amount = (int) $items[$i]['amount'];
+
+        $stock_mode = $db_posts->get("fc_posts", "post_product_stock_mode", [
+            "post_id" => $post_id
+        ]);
+
+        if($stock_mode == 1) {
+            /* ignore stock counter */
+            $db_posts->update("fc_posts", [
+                "post_product_cnt_sales[+]" => $amount
+            ], [
+                "post_id" => $post_id
+            ]);
+        } else {
+            $db_posts->update("fc_posts", [
+                "post_product_cnt_sales[+]" => $amount,
+                "post_product_nbr_stock[-]" => $amount
+            ], [
+                "post_id" => $post_id
+            ]);
+        }
+    }
+}
+
 
 /**
  * @param mixed $user if is numeric get orders by user id
