@@ -477,9 +477,14 @@ if($p == "orders") {
 	include 'orders.php';
 }
 
-/* list products */
-if($p == "list-products") {
+/* list or display products */
+if($p == "products") {
 	include 'products.php';
+}
+
+/* list or display events */
+if($p == "events") {
+	include 'events.php';
 }
 
 

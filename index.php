@@ -438,16 +438,31 @@ foreach($fc_prefs as $key => $val) {
 	$smarty->assign("$key", $val);
 }
 
+/**
+ * check if we have 'page_posts_type' then display posts
+ * check if we have 'page_type_of_use'
+ */
 
-if($page_contents['page_posts_types'] != '' OR $page_contents['page_type_of_use'] == 'display_post' OR $page_contents['page_type_of_use'] == 'display_product') {
+if($page_contents['page_posts_types'] != '' OR $page_contents['page_type_of_use'] != '') {
+    $show_posts = true;
     if($page_contents['page_posts_types'] == 'p' OR $page_contents['page_type_of_use'] == 'display_product') {
-        $p = 'list-products';
-    } else if($page_contents['page_type_of_use'] == 'display_post') {
-        include 'core/posts.php';
-    } else {
+        $p = 'products';
+        $show_posts = false;
+    }
+    if($page_contents['page_posts_types'] == 'e' OR $page_contents['page_type_of_use'] == 'display_event') {
+        $p = 'events';
+        $show_posts = false;
+    }
+    if($page_contents['page_type_of_use'] == 'display_post') {
         include 'core/posts.php';
     }
+    if($show_posts === true) {
+        include 'core/posts.php';
+    }
+
+
 }
+
 
 /**
  * categories for the blog

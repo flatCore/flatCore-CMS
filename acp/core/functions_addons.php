@@ -202,7 +202,11 @@ function mods_check_in() {
 	$x = 0;
 	for($i=0;$i<$cnt_items;$i++) {
 	
-		if($items[$i]['page_modul'] != "" OR $items[$i]['page_posts_categories'] != "" OR $items[$i]['page_type_of_use'] == "display_post") {
+		if($items[$i]['page_modul'] != "" OR
+            $items[$i]['page_posts_categories'] != "" OR
+            $items[$i]['page_type_of_use'] == "display_post" OR
+            $items[$i]['page_type_of_use'] == "display_product" OR
+            $items[$i]['page_type_of_use'] == "display_event") {
 			
 			if($items[$i]['page_posts_categories'] != '') {
 				$items[$i]['page_modul'] = 'fc_post';
@@ -211,6 +215,12 @@ function mods_check_in() {
 			if($items[$i]['page_type_of_use'] == 'display_post') {
 				$items[$i]['page_modul'] = 'fc_post';
 			}
+            if($items[$i]['page_type_of_use'] == 'display_product') {
+                $items[$i]['page_modul'] = 'fc_shop';
+            }
+            if($items[$i]['page_type_of_use'] == 'display_event') {
+                $items[$i]['page_modul'] = 'fc_events';
+            }
 			
 			$string .= "\$active_mods[$x]['page_modul'] = \"" . $items[$i]['page_modul'] . "\";\n";
 			$string .= "\$active_mods[$x]['page_permalink'] = \"" . $items[$i]['page_permalink'] . "\";\n";			
