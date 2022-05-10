@@ -6,7 +6,8 @@
 				{include file='content.tpl'}
 			</div> <!-- eo leftBox -->
 			<div id="fc-sub-content" class="col">
-				{$nav_categories}
+
+				{include file='navigation-categories.tpl'}
 				{include file='toc.tpl'}
 				{include file='extracontent.tpl'}
 				{include file='extracontent_global.tpl'}

@@ -6,7 +6,6 @@ error_reporting(E_ALL ^E_NOTICE);
  * send order
  */
 
-
 $price_all_net = 0; // reset price net
 $price_all_gross = 0; // reset price gross
 $shipping_costs = 0; // reset shipping costs

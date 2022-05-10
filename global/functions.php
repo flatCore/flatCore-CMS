@@ -158,59 +158,51 @@ function fc_get_comments($start,$limit,$filter) {
  * $sorting array() for sorting by id and parent_id
  */
 
-function fc_list_comments_thread($comments, $sorting, $tpl, $root=0, $level=0) {
+function fc_list_comments_thread($comments, $sorting, $root=0, $level=0) {
 
 	global $lang;
 
-  if(isset($sorting[$root])) {
-  	foreach($sorting[$root] as $key => $comment_id) {
-	     
-	    $padding = (int) (20*$level);
-	    if(!is_numeric($padding)) {
-		  	$padding = 0;
-	    }
-	    	    
-      $comment_time = date('d.m.Y H:i',$comments[$key]['comment_time']);
-      
-      /* default avatar image */
-      $comment_avatar = '/styles/default/images/avatar.jpg';
-      
-      /* if it's a registrated user and if there is an avatar, use it */
-      if($comments[$key]['comment_author_id'] != '') {
-	      $check_avatar = './content/avatars/'.md5($comments[$key]['comment_author']).'.png';
-	      if(is_file($check_avatar)) {
-		      $comment_avatar = '/content/avatars/'.md5($comments[$key]['comment_author']).'.png';
-	      }      
-      }
-      
-      
+    if(!is_array($sorting[$root])) {
+        return;
+    }
 
+  	    foreach($sorting[$root] as $key => $comment_id) {
+	     
+	        $padding = (int) (20*$level);
+	        if(!is_numeric($padding)) {
+		  	    $padding = 0;
+	        }
+	    	    
+            $comment_time = date('d.m.Y H:i',$comments[$key]['comment_time']);
       
-      $comment_avatar_img = '<img src="'.$comment_avatar.'" class="img-avatar img-fluid rounded-circle" alt="" title="'.$comments[$key]['comment_author'].'">';
-		$this_comment = $tpl;
-			
-		$this_comment = str_replace('{comment_author}', $comments[$key]['comment_author'], $this_comment);
-		$this_comment = str_replace('{comment_text}', $comments[$key]['comment_text'], $this_comment);
-		$this_comment = str_replace('{comment_time}', $comment_time, $this_comment);
-		$this_comment = str_replace('{comment_avatar}', $comment_avatar_img, $this_comment);
-		$this_comment = str_replace('{comment_id}', $comments[$key]['comment_id'], $this_comment);
-		$a_url = '?cid='.$comments[$key]['comment_id'].'#comment-form';
-		$this_comment = str_replace('{url_answer_comment}', $a_url, $this_comment);
-		$this_comment = str_replace('{level}', $level, $this_comment);
-						
-		$entry_str .= '<div class="comment-level comment-level-'.$level.'">';
-		$entry_str .=  $this_comment;
-           
-      $entry_str .= fc_list_comments_thread($comments, $sorting, $tpl, $comment_id, $level+1);
-      $entry_str .= '</div>';
+            /* default avatar image */
+            $comment_avatar = '/styles/default/images/avatar.jpg';
+      
+            /* if it's a registrated user and if there is an avatar, use it */
+            if($comments[$key]['comment_author_id'] != '') {
+	            $check_avatar = './content/avatars/'.md5($comments[$key]['comment_author']).'.png';
+	            if(is_file($check_avatar)) {
+		            $comment_avatar = '/content/avatars/'.md5($comments[$key]['comment_author']).'.png';
+	            }
+            }
+      
+            $comment_avatar_img = '<img src="'.$comment_avatar.'" class="img-avatar img-fluid rounded-circle" alt="" title="'.$comments[$key]['comment_author'].'">';
+            $a_url = '?cid='.$comments[$key]['comment_id'].'#comment-form';
+
+            $thread[$key] = array(
+                'author' => $comments[$key]['comment_author'],
+                'text' => $comments[$key]['comment_text'],
+                'id' => $comments[$key]['comment_id'],
+                'parent_id' => $comments[$key]['comment_parent_id'],
+                'avatar' => $comment_avatar_img,
+                'time' => $comment_time,
+                'url_answer_comment' => $a_url,
+            );
 
      }
-  }
+
   
-  $entry_str = str_replace('{lang_answer}', $lang['btn_send_answer'], $entry_str);
-  
-  return $entry_str;
-  
+  return $thread;
 }
 
 

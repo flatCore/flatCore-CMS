@@ -76,7 +76,7 @@
 
                     </div>
                     <div class="col-md-4 text-end">
-                        <a class="btn btn-primary w-100 {$read_more_class}" href="{$value.product_href}">{$btn_read_more}</a>
+                        <a class="btn btn-primary w-100 {$read_more_class}" href="{$value.event_href}">{$btn_read_more}</a>
                     </div>
                 </div>
             </div>

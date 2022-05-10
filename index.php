@@ -443,7 +443,7 @@ foreach($fc_prefs as $key => $val) {
  * check if we have 'page_type_of_use'
  */
 
-if($page_contents['page_posts_types'] != '' OR $page_contents['page_type_of_use'] != '') {
+if($page_contents['page_posts_types'] != '' OR $page_contents['page_type_of_use'] != 'normal') {
     $show_posts = true;
     if($page_contents['page_posts_types'] == 'p' OR $page_contents['page_type_of_use'] == 'display_product') {
         $p = 'products';
@@ -454,21 +454,17 @@ if($page_contents['page_posts_types'] != '' OR $page_contents['page_type_of_use'
         $show_posts = false;
     }
     if($page_contents['page_type_of_use'] == 'display_post') {
-        include 'core/posts.php';
+        $p = 'posts';
     }
     if($show_posts === true) {
-        include 'core/posts.php';
+        $p = 'posts';
     }
-
+    if($page_contents['page_type_of_use'] == 'checkout') {
+        $p = 'checkout';
+    }
 
 }
 
-
-/**
- * categories for the blog
- * @var array $tpl_nav_cats
- */
-$smarty->assign('nav_categories', $tpl_nav_cats);
 
 $tyo_search = fc_get_type_of_use_pages('search');
 $smarty->assign("search_uri", '/'.$tyo_search['page_permalink']);

@@ -212,13 +212,19 @@ a.post-headline-link:hover {
 
 
 .post-list-message,
+.post-list-m,
 .post-list-event,
 .post-list-link,
+.post-list-l,
 .post-list-video,
+.post-list-v,
 .post-list-image,
+.post-list-i,
 .post-list-gallery,
+.post-list-g,
 .post-list-product,
-.post-list-file {
+.post-list-file,
+.post-list-f {
 	border-bottom: 1px solid #ddd;
 	margin-bottom: 15px;
 	&.draft {

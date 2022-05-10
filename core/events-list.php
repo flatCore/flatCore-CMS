@@ -235,3 +235,5 @@ $smarty->assign('btn_read_more', $lang['btn_open_product']);
 
 $events_page = $smarty->fetch("events-list.tpl", $cache_id);
 $smarty->assign('page_content', $events_page, true);
+
+$smarty->assign('categories', $categories);

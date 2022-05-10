@@ -32,6 +32,46 @@ if(substr("$mod_slug", -5) == '.html') {
 $all_categories = fc_get_categories();
 $array_mod_slug = explode("/", $mod_slug);
 
+foreach($all_categories as $cats) {
+
+    $this_nav_cat_item = $tpl_nav_cats_item;
+    $show_category_title = $cats['cat_description'];
+    $show_category_name = $cats['cat_name'];
+    $cat_href = '/'.$fct_slug.$cats['cat_name_clean'].'/';
+
+    /* show only categories that match the language */
+    if($page_contents['page_language'] !== $cats['cat_lang']) {
+        continue;
+    }
+    $cat_class = '';
+    if($cats['cat_name_clean'] == $array_mod_slug[0]) {
+        $cat_class = 'active';
+    }
+
+    $categories[] = array(
+        "cat_href" => $cat_href,
+        "cat_title" => $show_category_title,
+        "cat_name" => $show_category_name,
+        "cat_class" => $cat_class
+    );
+
+
+    if($cats['cat_name_clean'] == $array_mod_slug[0]) {
+        // show only posts from this category
+        $posts_filter['categories'] = $cats['cat_id'];
+        $display_mode = 'list_posts_category';
+
+        if($array_mod_slug[1] == 'p') {
+            if(is_numeric($array_mod_slug[2])) {
+                $posts_start = $array_mod_slug[2];
+            } else {
+                header("HTTP/1.1 301 Moved Permanently");
+                header("Location: /$fct_slug");
+                header("Connection: close");
+            }
+        }
+    }
+}
 
 /* pagination f.e. /p/2/ or /p/3/ .... */
 if($array_mod_slug[0] == 'p') {

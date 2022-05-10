@@ -327,6 +327,31 @@ if(($page_status == "draft") AND ($_SESSION['user_class'] != "administrator")){
 	$smarty->assign('extra_content', "");
 }
 
+/* show checkout */
+if($p == "checkout") {
+	include 'checkout.php';
+}
+
+/* show checkout */
+if($p == "orders") {
+	include 'orders.php';
+}
+
+/* list or display products */
+if($p == "products") {
+	include 'products.php';
+}
+
+/* list or display events */
+if($p == "events") {
+	include 'events.php';
+}
+
+/* list or display posts */
+if($p == "posts") {
+	include 'posts.php';
+}
+
 
 /* comments */
 
@@ -387,7 +412,7 @@ if(($page_comments == 1 OR $post_data['post_comments'] == 1) && $prefs_comments_
 	
 		$smarty->assign("comment_form_title",$lang['comment_form_title']);
 		$smarty->assign("comment_form_intro",$comment_form_intro);
-		$comments_form = $smarty->fetch("comments/comment_form.tpl",$cache_id);
+		$comments_form = $smarty->fetch("comment_form.tpl",$cache_id);
 		$smarty->assign('comment_form', $comments_form, true);
 		$smarty->assign('comment_send_success', $fc_snippet_comment_send_success, true);
 		
@@ -404,16 +429,11 @@ if(($page_comments == 1 OR $post_data['post_comments'] == 1) && $prefs_comments_
 		$filter['relation_id'] = (int) $post_data['post_id'];
 		$filter['type'] = 'b';
 	}
-	
-	if(is_file(FC_CORE_DIR.'/styles/'.$fc_template.'/templates/comments/comment_entry.tpl')){
-		$comment_tpl = file_get_contents(FC_CORE_DIR.'/styles/'.$fc_template.'/templates/comments/comment_entry.tpl');
-	} else {
-		$comment_tpl = file_get_contents(FC_CORE_DIR.'/styles/default/templates/comments/comment_entry.tpl');
-	}
-	
+
 	$comments = fc_get_comments(0,100,$filter);
 	$cnt_comment = count($comments);
-	
+
+	/* we use sorting later for display thread view */
 	$sorting = [];
 	foreach ($comments as $comment_key => $comment) {
 		if($comment['comment_parent_id'] == '') {
@@ -422,10 +442,15 @@ if(($page_comments == 1 OR $post_data['post_comments'] == 1) && $prefs_comments_
 	  $sorting[$comment['comment_parent_id']][$comment_key] = $comment['comment_id'];
 	}
 
-	$thread = fc_list_comments_thread($comments, $sorting, $comment_tpl, 0);
+	$thread = fc_list_comments_thread($comments,$sorting,0,0);
 
 	$smarty->assign('show_page_comments', 'true', true);
-	$smarty->assign('comments_thread', $thread);
+	$smarty->assign('comments', $thread, true);
+	$smarty->assign('lang_answer', $lang['btn_send_answer'], true);
+	$comment_tpl = $smarty->fetch("comment_entry.tpl",$cache_id);
+
+
+	$smarty->assign('comments_thread', $comment_tpl);
 	$comments_title = str_replace('{cnt_comments}', $cnt_comment, $lang['comments_title']);
 	$smarty->assign('comments_intro', "<p>$comments_title</p>");
 
@@ -445,46 +470,26 @@ if($p == "register") {
 	}
 
 	if($prefs_userregistration != "yes") {
-	
+
 		$smarty->assign("msg_title",$lang['legend_register']);
-		$smarty->assign("msg_text",$lang['msg_register_intro_disabled']);	
+		$smarty->assign("msg_text",$lang['msg_register_intro_disabled']);
 		$output = $smarty->fetch("status_message.tpl",$cache_id);
 		$smarty->assign('page_content', $output, true);
-	
+
 	} else {
-		
+
 		// INCLUDE/SHOW AGREEMENT TEXT
 		$agreement_txt = get_textlib("agreement_text", $languagePack);
 		$smarty->assign("agreement_text",$agreement_txt);
-	
+
 		if($_POST['send_registerform']) {
 			include 'user_register.php';
 		}
-	
+
 		$output = $smarty->fetch("registerform.tpl",$cache_id);
 		$smarty->assign('page_content', $output, true);
-	
+
 	}
-}
-
-/* show checkout */
-if($p == "checkout") {
-	include 'checkout.php';
-}
-
-/* show checkout */
-if($p == "orders") {
-	include 'orders.php';
-}
-
-/* list or display products */
-if($p == "products") {
-	include 'products.php';
-}
-
-/* list or display events */
-if($p == "events") {
-	include 'events.php';
 }
 
 
