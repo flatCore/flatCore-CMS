@@ -26,7 +26,7 @@ echo '<li class="nav-item ms-auto"><a class="nav-link" href="#posts" data-bs-tog
 echo '<li class="nav-item"><a class="nav-link" href="#addons" data-bs-toggle="tab" title="'.$lang['tab_addons'].'">'.$icon['plugin'].'</a></li>';
 echo '<li class="nav-item"><a class="nav-link" href="#head" data-bs-toggle="tab" title="'.$lang['tab_head'].'">'.$icon['code'].'</a></li>';
 if($cnt_custom_fields > 0) {
-	echo '<li class="nav-item"><a class="nav-link" href="#custom" data-bs-toggle="tab" title="'.$lang['legend_custom_fields'].'">'.$icon['th_list'].'</a></li>';
+	echo '<li class="nav-item"><a class="nav-link" href="#custom" data-bs-toggle="tab" title="'.$lang['legend_custom_fields'].'">'.$icon['list'].'</a></li>';
 }
 echo '<li class="nav-item"><a class="nav-link" href="#shortcodes" data-bs-toggle="tab" title="Shortcodes">'.$icon['clipboard'].'</a></li>';
 
