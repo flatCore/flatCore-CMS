@@ -13,6 +13,8 @@ $lang['tn_pages'] = "Pages";
 $lang['tn_pages_desc'] = "Edit content, Creating/Edit pages ...";
 $lang['tn_posts'] = "Posts";
 $lang['tn_posts_desc'] = "Create and manage posts, events, galleries ...";
+$lang['tn_events'] = "Events";
+$lang['tn_events_desc'] = "Create and manage Events ...";
 $lang['tn_filebrowser'] = "Files";
 $lang['tn_filebrowser_desc'] = "Upload and manage images, graphics and files";
 $lang['tn_usermanagement'] = "User";
@@ -122,6 +124,8 @@ $lang['btn_update_page_content'] = "Update Content";
 $lang['btn_snippets_all'] = 'All';
 $lang['btn_snippets_system'] = 'System';
 $lang['btn_snippets_own'] = 'Own';
+
+$lang['btn_bookings'] = 'Bookings';
 
 /* Headlines */
 

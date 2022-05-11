@@ -15,6 +15,7 @@ $icon['arrow_right']  = '<i class="bi bi-arrow-right"></i>';
 
 $icon['cart'] = '<i class="bi bi-cart"></i>';
 $icon['calendar_event'] = '<i class="bi bi-calendar-event"></i>';
+$icon['calendar_check'] = '<i class="bi bi-calendar-check"></i>';
 $icon['chat_square_dots'] = '<i class="bi bi-chat-square-dots"></i>';
 $icon['caret_left'] = '<i class="bi bi-caret-left"></i>';
 $icon['caret_right'] = '<i class="bi bi-caret-right"></i>';

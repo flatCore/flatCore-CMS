@@ -12,7 +12,9 @@ $lang['tn_moduls_desc'] = "Auf installierte Module und Themes zugreifen";
 $lang['tn_pages'] = "Seiten";
 $lang['tn_pages_desc'] = "Inhalte bearbeiten, Seiten anlegen/löschen ...";
 $lang['tn_posts'] = "Beiträge";
-$lang['tn_posts_desc'] = "Erstelle und verwalte Beiträge, Events, Galerien ...";
+$lang['tn_posts_desc'] = "Erstelle und verwalte Beiträge, Galerien ...";
+$lang['tn_events'] = "Events";
+$lang['tn_events_desc'] = "Erstelle und verwalte Veranstaltungen ...";
 $lang['tn_filebrowser'] = "Dateien";
 $lang['tn_filebrowser_desc'] = "Bilder, Grafiken, Dateien hochladen und verwalten";
 $lang['tn_usermanagement'] = "Benutzer";
@@ -121,6 +123,8 @@ $lang['btn_update_page_content'] = "Inhalt aktualisieren";
 $lang['btn_snippets_all'] = 'Alle';
 $lang['btn_snippets_system'] = 'System';
 $lang['btn_snippets_own'] = 'Eigene';
+
+$lang['btn_bookings'] = 'Reservierungen';
 
 /* Headlines */
 
