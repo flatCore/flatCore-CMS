@@ -375,6 +375,7 @@ $lang['label_installed_themes'] = 'Installed Themes';
 
 $lang['label_show_entries'] = '%s of %s Entries are displayed';
 $lang['label_show_events'] = '%s of %s events are displayed';
+$lang['label_show_products'] = '%s of %s products are displayed';
 
 $lang['label_data_submited'] = 'Submited';
 $lang['label_data_lastedit'] = 'Last edit';

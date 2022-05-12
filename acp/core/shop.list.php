@@ -192,7 +192,7 @@ $prevPage = $posts_start-$posts_limit;
 $cnt_pages = ceil($cnt_filter_posts / $posts_limit);
 
 echo '<div class="subHeader">';
-echo '<h3>' . sprintf($lang['label_show_entries'], $cnt_filter_posts, $cnt_posts) .'</h3>';
+echo '<h3>' . sprintf($lang['label_show_products'], $cnt_filter_posts, $cnt_posts) .'</h3>';
 echo '</div>';
 
 echo '<div class="row">';
@@ -206,11 +206,11 @@ if($cnt_filter_posts > 0) {
 
     echo '<thead><tr>';
     echo '<th>#</th>';
-    echo '<th>'.$icon['star'].'</th>';
+    echo '<th class="text-center">'.$icon['star'].'</th>';
     echo '<th>'.$lang['label_priority'].'</th>';
-    echo '<th nowrap>'.$lang['label_date'].'</th>';
     echo '<th></th>';
     echo '<th>'.$lang['label_post_title'].'</th>';
+    echo '<th>'.$lang['label_price'].'</th>';
     echo '<th></th>';
     echo '</tr></thead>';
 
@@ -223,9 +223,9 @@ if($cnt_filter_posts > 0) {
 
         $icon_fixed_form = '<form action="?tn=posts" method="POST" class="form-inline">';
         if($get_posts[$i]['post_fixed'] == '1') {
-            $icon_fixed_form .= '<button type="submit" class="btn btn-link" name="rfixed" value="'.$get_posts[$i]['post_id'].'">'.$icon['star'].'</button>';
+            $icon_fixed_form .= '<button type="submit" class="btn btn-link w-100" name="rfixed" value="'.$get_posts[$i]['post_id'].'">'.$icon['star'].'</button>';
         } else {
-            $icon_fixed_form .= '<button type="submit" class="btn btn-link" name="sfixed" value="'.$get_posts[$i]['post_id'].'">'.$icon['star_outline'].'</button>';
+            $icon_fixed_form .= '<button type="submit" class="btn btn-link w-100" name="sfixed" value="'.$get_posts[$i]['post_id'].'">'.$icon['star_outline'].'</button>';
         }
         $icon_fixed_form .= $hidden_csrf_token;
         $icon_fixed_form .= '</form>';
@@ -299,7 +299,7 @@ if($cnt_filter_posts > 0) {
                         $cat_description = $cat['cat_description'];
                     }
                 }
-                $categories .= '<span class="badge bg-secondary" title="'.$cat_description.'">'.$cat_title.'</span> ';
+                $categories .= '<span class="text-muted small" title="'.$cat_description.'">'.$icon['tags'].' '.$cat_title.'</span> ';
             }
         }
 
@@ -322,21 +322,15 @@ if($cnt_filter_posts > 0) {
         $prio_form .= '</form>';
 
 
-        $published_date = '<span class="badge bg-secondary" title="Published">'.$icon['file'].' '.fc_format_datetime($get_posts[$i]['post_date']).'</span>';
-        $release_date = '<span class="badge bg-secondary" title="Released">'.$icon['clock'].' '.fc_format_datetime($get_posts[$i]['post_releasedate']).'</span>';
+        $published_date = '<span title="'.$lang['label_data_submited'].'">'.$icon['save'].': '.fc_format_datetime($get_posts[$i]['post_date']).'</span>';
+        $release_date = '<span title="'.$lang['label_data_releasedate'].'">'.$icon['calendar_check'].': '.fc_format_datetime($get_posts[$i]['post_releasedate']).'</span>';
         $lastedit_date = '';
         if($get_posts[$i]['post_lastedit'] != '') {
-            $lastedit_date = '<span class="badge bg-secondary" title="Last edit">'.$icon['edit'].' '.fc_format_datetime($get_posts[$i]['post_lastedit']).'</span>';
+            $lastedit_date = '<span title="'.$lang['label_data_lastedit'].'">'.$icon['edit'].': '.fc_format_datetime($get_posts[$i]['post_lastedit']).'</span>';
         }
 
-        $show_events_date = '';
-        if($get_posts[$i]['post_type'] == 'e') {
-            $show_events_date = '<div class="float-end small well well-sm">';
-            $show_events_date .= date('Y-m-d',$get_posts[$i]['post_event_startdate']);
-            $show_events_date .= '<br>';
-            $show_events_date .= date('Y-m-d',$get_posts[$i]['post_event_enddate']);
-            $show_events_date .= '</div>';
-        }
+        $show_items_dates = '<span class="text-muted small">'.$published_date.' | '.$lastedit_date.' | '.$release_date.'</span>';
+
 
         $show_items_price = '';
         if($get_posts[$i]['post_type'] == 'p') {
@@ -367,11 +361,10 @@ if($cnt_filter_posts > 0) {
             $post_price_net_calculated = fc_post_print_currency($post_price_net_calculated);
             $post_price_gross = fc_post_print_currency($post_price_gross);
 
-            $show_items_price = '<div class="float-end small well well-sm ms-2">';
-            //$show_items_price .= fc_post_print_currency($post_price_net) . '<br>';
-            $show_items_price .= $post_price_net_calculated . '<br>';
-            $show_items_price .= '<small>incl. '.$post_product_price_addition . '%'. ' + '.$tax.'%</small><br>';
-            $show_items_price .= '<strong>'.$post_price_gross.'</strong>';
+            $show_items_price = '<div class="card p-2 text-nowrap">';
+            $show_items_price .= '<span class="small">'.$get_posts[$i]['post_product_currency'].' '.$post_price_net_calculated . '</span>';
+            $show_items_price .= '<span class="small">incl. '.$post_product_price_addition . '%'. ' + '.$tax.'%</span>';
+            $show_items_price .= '<span class="text-success">'.$get_posts[$i]['post_product_currency'].' '.$post_price_gross.'</span>';
             $show_items_price .= '</div>';
         }
 
@@ -381,9 +374,9 @@ if($cnt_filter_posts > 0) {
         echo '<td>'.$get_posts[$i]['post_id'].'</td>';
         echo '<td>'.$icon_fixed_form.'</td>';
         echo '<td>'.$prio_form.'</td>';
-        echo '<td nowrap><small>'.$published_date.'<br>'.$release_date.'<br>'.$lastedit_date.'</small></td>';
         echo '<td>'.$show_thumb.'</td>';
-        echo '<td>'.$show_items_price.'<h5 class="mb-0">'.$get_posts[$i]['post_title'].$add_label.'</h5><small>'.$trimmed_teaser.'</small><br>'.$categories.'<br>'.$label.'</td>';
+        echo '<td><h5 class="mb-0">'.$get_posts[$i]['post_title'].$add_label.'</h5><small>'.$trimmed_teaser.'</small><br>'.$show_items_dates.'<br>'.$categories.'<br>'.$label.'</td>';
+        echo '<td>'.$show_items_price.'</td>';
         echo '<td style="min-width: 150px;">';
         echo '<nav class="nav justify-content-end">';
         echo '<form class="form-inline mr-1" action="?tn=shop&sub=edit" method="POST">';

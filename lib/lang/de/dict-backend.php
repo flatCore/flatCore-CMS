@@ -375,6 +375,7 @@ $lang['label_image_selected'] = 'ausgewählte Bilder';
 
 $lang['label_show_entries'] = 'Es werden %s von %s Beiträgen angezeigt';
 $lang['label_show_events'] = 'Es werden %s von %s Events angezeigt';
+$lang['label_show_products'] = 'Es werden %s von %s Produkten angezeigt';
 
 $lang['label_data_submited'] = 'Eingetragen';
 $lang['label_data_lastedit'] = 'Zuletzt bearbeitet';
