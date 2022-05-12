@@ -118,6 +118,7 @@ $lang['label_fixed'] = 'Fix at the top';
 $lang['status_draft'] = 'Draft';
 $lang['status_public'] = 'Public';
 $lang['status_ghost'] = 'Invisible';
+$lang['status_past_events'] = 'Past Events';
 
 $lang['label_votings'] = 'Reactions/Votings';
 $lang['label_votings_off'] = 'Deactivated';

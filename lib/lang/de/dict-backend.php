@@ -374,6 +374,7 @@ $lang['label_installed_themes'] = 'Installierte Themes';
 $lang['label_image_selected'] = 'ausgewählte Bilder';
 
 $lang['label_show_entries'] = 'Es werden %s von %s Beiträgen angezeigt';
+$lang['label_show_events'] = 'Es werden %s von %s Events angezeigt';
 
 /* shop/shipping */
 $lang['label_shipping'] = 'Versand';

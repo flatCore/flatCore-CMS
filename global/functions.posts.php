@@ -202,13 +202,7 @@ function fc_get_event_entries($start,$limit,$filter) {
      * we ignore $order and $direction
      */
 
-    $order = 'ORDER BY post_fixed DESC, sortdate_events ASC, post_priority DESC';
-
-    if($direction == 'ASC') {
-        $direction = 'ASC';
-    } else {
-        $direction = 'DESC';
-    }
+    $order = 'ORDER BY post_fixed ASC, sortdate_events ASC, post_priority DESC';
 
     /* set filters */
     $sql_filter_start = "WHERE post_id IS NOT NULL AND (post_type LIKE '%e%') ";
@@ -280,8 +274,16 @@ function fc_get_event_entries($start,$limit,$filter) {
         $sql_filter .= " AND ($sql_label_filter) ";
     }
 
+    /* we hide past events in frontend */
     if(FC_SOURCE == 'frontend') {
         $sql_filter .= "AND post_releasedate <= '$time_string_now' ";
+        $time_hide_events = $time_string_now-$fc_prefs['prefs_posts_event_time_offset'];
+        $sql_filter .= "AND post_event_enddate >= '$time_hide_events' ";
+    }
+
+    /* hide past events in backend */
+    if(FC_SOURCE !== 'frontend' AND $_SESSION['show_past_events'] == 2) {
+        $time_string_now = time();
         $time_hide_events = $time_string_now-$fc_prefs['prefs_posts_event_time_offset'];
         $sql_filter .= "AND post_event_enddate >= '$time_hide_events' ";
     }
@@ -298,11 +300,12 @@ function fc_get_event_entries($start,$limit,$filter) {
 
     $entries = $db_posts->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 
-    $sql_cnt = "SELECT count(*) AS 'A', (SELECT count(*) FROM fc_posts $sql_filter) AS 'F'";
+    $sql_cnt = "SELECT count(*) AS 'A', (SELECT count(*) FROM fc_posts $sql_filter) AS 'filter_events', (SELECT count(*) FROM fc_posts WHERE post_type LIKE '%e%') AS 'all_events'";
     $stat = $db_posts->query("$sql_cnt")->fetch(PDO::FETCH_ASSOC);
 
     /* number of posts that match the filter */
-    $entries[0]['cnt_events'] = $stat['F'];
+    $entries[0]['cnt_events'] = $stat['filter_events'];
+    $entries[0]['cnt_all_events'] = $stat['all_events'];
     return $entries;
 
 }

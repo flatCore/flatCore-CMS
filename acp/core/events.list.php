@@ -91,7 +91,7 @@ foreach($lang_codes as $lang_code) {
     if(strpos("$_SESSION[checked_lang_string]", "$lang_code") !== false) {
         $this_btn_status = 'active';
     }
-    $lang_btn_group .= '<a href="acp.php?tn=posts&switchLang='.$lang_code.'" class="btn btn-sm btn-fc '.$this_btn_status.'">'.$lang_code.'</a>';
+    $lang_btn_group .= '<a href="acp.php?tn=events&switchLang='.$lang_code.'" class="btn btn-sm btn-fc '.$this_btn_status.'">'.$lang_code.'</a>';
 }
 $lang_btn_group .= '</div>';
 
@@ -109,6 +109,11 @@ if($_GET['status']) {
     }
     $checked_status_string = str_replace('--', '-', $checked_status_string);
     $_SESSION['checked_status_string'] = "$checked_status_string";
+}
+
+/* change status for past events */
+if($_GET['show_past_events']) {
+    $_SESSION['show_past_events'] = (int) $_GET['show_past_events'];
 }
 
 /* default: check all categories */
@@ -206,15 +211,15 @@ $events_filter['labels'] = $_SESSION['checked_label_str'];
 $get_events = fc_get_event_entries($events_start,$events_limit,$events_filter);
 
 $cnt_filter_events = $get_events[0]['cnt_events'];
+$cnt_all_events = $get_events[0]['cnt_all_events'];
 $cnt_get_events = count($get_events);
-$cnt_posts = fc_cnt_post_entries();
 
 $nextPage = $events_start+$events_limit;
 $prevPage = $events_start-$events_limit;
 $cnt_pages = ceil($cnt_filter_events / $events_limit);
 
 echo '<div class="subHeader">';
-echo '<h3>' . sprintf($lang['label_show_entries'], $cnt_filter_events, $cnt_posts['All']) .'</h3>';
+echo '<h3>' . sprintf($lang['label_show_events'], $cnt_filter_events, $cnt_all_events) .'</h3>';
 echo '</div>';
 
 
@@ -406,12 +411,12 @@ echo '<div class="col-md-2">';
 if($prevPage < 0) {
     echo '<a class="btn btn-fc w-100 disabled" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>';
 } else {
-    echo '<a class="btn btn-fc w-100" href="acp.php?tn=posts&posts_start='.$prevPage.'" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>';
+    echo '<a class="btn btn-fc w-100" href="acp.php?tn=events&events_start='.$prevPage.'" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>';
 }
 
 echo '</div>';
 echo '<div class="col-md-8">';
-echo '<form action="acp.php?tn=posts" method="POST">';
+echo '<form action="acp.php?tn=events" method="POST">';
 echo '<select class="form-control custom-select" name="setPage" onchange="this.form.submit()">';
 for($i=0;$i<$cnt_pages;$i++) {
     $x = $i+1;
@@ -427,7 +432,7 @@ echo '</form>';
 echo '</div>';
 echo '<div class="col-md-2">';
 if($nextPage < ($cnt_filter_posts-$posts_limit)+$posts_limit) {
-    echo '<a class="btn btn-fc w-100" href="acp.php?tn=posts&posts_start='.$nextPage.'" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>';
+    echo '<a class="btn btn-fc w-100" href="acp.php?tn=events&events_start='.$nextPage.'" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>';
 } else {
     echo '<a class="btn btn-fc w-100 disabled" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>';
 }
@@ -454,20 +459,28 @@ echo '<div class="card-header p-1 px-2">'.$lang['label_status'].'</div>';
 echo '<div class="btn-group d-flex">';
 if(strpos("$_SESSION[checked_status_string]", "2") !== false) {
     $icon_toggle = $icon['check_circle'];
-    echo '<a href="acp.php?tn=posts&status=2" class="btn btn-sm btn-fc active w-100">'.$icon_toggle.' '.$lang['status_draft'].'</a>';
+    echo '<a href="acp.php?tn=events&status=2" class="btn btn-sm btn-fc active w-100">'.$icon_toggle.' '.$lang['status_draft'].'</a>';
 } else {
     $icon_toggle = $icon['circle_alt'];
-    echo '<a href="acp.php?tn=posts&status=2" class="btn btn-sm btn-fc w-100">'.$icon_toggle.' '.$lang['status_draft'].'</a>';
+    echo '<a href="acp.php?tn=events&status=2" class="btn btn-sm btn-fc w-100">'.$icon_toggle.' '.$lang['status_draft'].'</a>';
 }
 if(strpos("$_SESSION[checked_status_string]", "1") !== false) {
     $icon_toggle = $icon['check_circle'];
-    echo '<a href="acp.php?tn=posts&status=1" class="btn btn-sm btn-fc active w-100">'.$icon_toggle.' '.$lang['status_public'].'</a>';
+    echo '<a href="acp.php?tn=events&status=1" class="btn btn-sm btn-fc active w-100">'.$icon_toggle.' '.$lang['status_public'].'</a>';
 } else {
     $icon_toggle = $icon['circle_alt'];
-    echo '<a href="acp.php?tn=posts&status=1" class="btn btn-sm btn-fc w-100">'.$icon_toggle.' '.$lang['status_public'].'</a>';
+    echo '<a href="acp.php?tn=events&status=1" class="btn btn-sm btn-fc w-100">'.$icon_toggle.' '.$lang['status_public'].'</a>';
 }
 echo '</div>';
 
+/* show or hide past events  */
+echo '<div class="btn-group d-flex mt-1">';
+if($_SESSION['show_past_events'] == 1 OR $_SESSION['show_past_events'] == '') {
+    echo '<a href="acp.php?tn=events&show_past_events=2" class="btn btn-sm btn-fc active w-100">'.$icon['check_circle'].' '.$lang['status_past_events'].'</a>';
+} else {
+    echo '<a href="acp.php?tn=events&show_past_events=1" class="btn btn-sm btn-fc w-100">'.$icon['circle_alt'].' '.$lang['status_past_events'].'</a>';
+}
+echo '</div>';
 
 echo '</div>';
 

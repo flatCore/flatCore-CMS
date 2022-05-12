@@ -374,6 +374,7 @@ $lang['label_active_theme'] = 'Active Theme';
 $lang['label_installed_themes'] = 'Installed Themes';
 
 $lang['label_show_entries'] = '%s of %s Entries are displayed';
+$lang['label_show_events'] = '%s of %s events are displayed';
 
 /* shop/shipping */
 $lang['label_shipping'] = 'Shipping';
