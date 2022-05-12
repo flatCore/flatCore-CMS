@@ -41,19 +41,8 @@ function fc_get_post_entries($start,$limit,$filter) {
 	 */
 
 	$order = "ORDER BY post_fixed ASC, sortdate DESC, post_priority DESC, post_id DESC";
-	
-	if(FC_SOURCE == 'frontend') {
-		if($filter['types'] == 'e') {
-			$order = 'ORDER BY post_fixed DESC, sortdate_events ASC, post_priority DESC';
-		}
-	}
-	
-	if($direction == 'ASC') {
-		$direction = 'ASC';
-	} else {
-		$direction = 'DESC';
-	}
-		
+
+
 	/* set filters */
 	$sql_filter_start = 'WHERE post_id IS NOT NULL ';
 	
@@ -139,13 +128,6 @@ function fc_get_post_entries($start,$limit,$filter) {
 	
 	if(FC_SOURCE == 'frontend') {
 		$sql_filter .= "AND post_releasedate <= '$time_string_now' ";
-		
-		if($filter['types'] == 'e') {
-			// we show events longer (from event end)
-			$time_hide_events = $time_string_now-$fc_prefs['prefs_posts_event_time_offset'];
-			$sql_filter .= "AND post_event_enddate >= '$time_hide_events' ";
-		}
-		
 	}
 
 	if($time_string_start != '') {
@@ -153,9 +135,9 @@ function fc_get_post_entries($start,$limit,$filter) {
 	}
 	
 	if($db_type == 'sqlite') {
-		$sql = "SELECT *, strftime('%Y-%m-%d',datetime(post_releasedate, 'unixepoch')) as 'sortdate', strftime('%Y-%m-%d',datetime(post_event_startdate, 'unixepoch')) as 'sortdate_events' FROM fc_posts $sql_filter $order $limit_str";
+		$sql = "SELECT *, strftime('%Y-%m-%d',datetime(post_releasedate, 'unixepoch')) as 'sortdate' FROM fc_posts $sql_filter $order $limit_str";
 	} else {
-		$sql = "SELECT *, FROM_UNIXTIME(post_releasedate,'%Y-%m-%d') as 'sortdate', FROM_UNIXTIME(post_event_startdate,'%Y-%m-%d') as 'sortdate_events' FROM fc_posts $sql_filter $order $limit_str";
+		$sql = "SELECT *, FROM_UNIXTIME(post_releasedate,'%Y-%m-%d') as 'sortdate' FROM fc_posts $sql_filter $order $limit_str";
 	}
 
 	$entries = $db_posts->query($sql)->fetchAll(PDO::FETCH_ASSOC);
