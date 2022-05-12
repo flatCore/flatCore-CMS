@@ -142,11 +142,12 @@ function fc_get_post_entries($start,$limit,$filter) {
 
 	$entries = $db_posts->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 			
-	$sql_cnt = "SELECT count(*) AS 'A', (SELECT count(*) FROM fc_posts $sql_filter) AS 'F'";
+	$sql_cnt = "SELECT count(*) AS 'A', (SELECT count(*) FROM fc_posts $sql_filter) AS 'filter_posts',  (SELECT count(*) FROM fc_posts WHERE post_type IN ('m','i','g','f','v','l') ) AS 'all_posts'";
 	$stat = $db_posts->query("$sql_cnt")->fetch(PDO::FETCH_ASSOC);
 
 	/* number of posts that match the filter */
-	$entries[0]['cnt_posts'] = $stat['F'];
+	$entries[0]['cnt_posts'] = $stat['filter_posts'];
+    $entries[0]['cnt_all_posts'] = $stat['all_posts'];
 	return $entries;
 	
 }
