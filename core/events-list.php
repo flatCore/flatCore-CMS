@@ -27,8 +27,8 @@ if ($sql_start < 0) {
     $sql_start = 0;
 }
 
-$get_events = fc_get_post_entries($sql_start, $events_limit, $events_filter);
-$cnt_filter_events = $get_events[0]['cnt_posts'];
+$get_events = fc_get_event_entries($sql_start, $events_limit, $events_filter);
+$cnt_filter_events = $get_events[0]['cnt_events'];
 $cnt_get_events = count($get_events);
 
 $nextPage = $events_start + $events_limit;
