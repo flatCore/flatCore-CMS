@@ -376,6 +376,10 @@ $lang['label_image_selected'] = 'ausgewählte Bilder';
 $lang['label_show_entries'] = 'Es werden %s von %s Beiträgen angezeigt';
 $lang['label_show_events'] = 'Es werden %s von %s Events angezeigt';
 
+$lang['label_data_submited'] = 'Eingetragen';
+$lang['label_data_lastedit'] = 'Zuletzt bearbeitet';
+$lang['label_data_releasedate'] = 'Veröffentlich';
+
 /* shop/shipping */
 $lang['label_shipping'] = 'Versand';
 $lang['label_shipping_costs_flat'] = 'Versandkostenpauschale';

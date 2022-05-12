@@ -376,6 +376,10 @@ $lang['label_installed_themes'] = 'Installed Themes';
 $lang['label_show_entries'] = '%s of %s Entries are displayed';
 $lang['label_show_events'] = '%s of %s events are displayed';
 
+$lang['label_data_submited'] = 'Submited';
+$lang['label_data_lastedit'] = 'Last edit';
+$lang['label_data_releasedate'] = 'Release';
+
 /* shop/shipping */
 $lang['label_shipping'] = 'Shipping';
 $lang['label_shipping_costs_flat'] = 'Flat rate shipping';

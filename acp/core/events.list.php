@@ -235,10 +235,9 @@ if($cnt_get_events > 0) {
 
     echo '<thead><tr>';
     echo '<th>#</th>';
-    echo '<th>' . $icon['star'] . '</th>';
+    echo '<th class="text-center">' . $icon['star'] . '</th>';
     echo '<th>' . $lang['label_priority'] . '</th>';
     echo '<th nowrap>' . $lang['label_date'] . '</th>';
-    echo '<th></th>';
     echo '<th>' . $lang['label_post_title'] . '</th>';
     echo '<th></th>';
     echo '</tr></thead>';
@@ -250,9 +249,9 @@ if($cnt_get_events > 0) {
 
         $icon_fixed_form = '<form action="?tn=events" method="POST" class="form-inline">';
         if($get_events[$i]['post_fixed'] == '1') {
-            $icon_fixed_form .= '<button type="submit" class="btn btn-link" name="rfixed" value="'.$get_events[$i]['post_id'].'">'.$icon['star'].'</button>';
+            $icon_fixed_form .= '<button type="submit" class="btn btn-link w-100" name="rfixed" value="'.$get_events[$i]['post_id'].'">'.$icon['star'].'</button>';
         } else {
-            $icon_fixed_form .= '<button type="submit" class="btn btn-link" name="sfixed" value="'.$get_events[$i]['post_id'].'">'.$icon['star_outline'].'</button>';
+            $icon_fixed_form .= '<button type="submit" class="btn btn-link w-100" name="sfixed" value="'.$get_events[$i]['post_id'].'">'.$icon['star_outline'].'</button>';
         }
         $icon_fixed_form .= $hidden_csrf_token;
         $icon_fixed_form .= '</form>';
@@ -321,7 +320,7 @@ if($cnt_get_events > 0) {
                         $cat_description = $cat['cat_description'];
                     }
                 }
-                $categories .= '<span class="badge bg-secondary" title="'.$cat_description.'">'.$cat_title.'</span> ';
+                $categories .= '<span class="text-muted small" title="'.$cat_description.'">'.$icon['tags'].' '.$cat_title.'</span> ';
             }
         }
 
@@ -344,19 +343,21 @@ if($cnt_get_events > 0) {
         $prio_form .= $hidden_csrf_token;
         $prio_form .= '</form>';
 
-        $published_date = '<span class="badge bg-secondary" title="Published">'.$icon['file'].' '.fc_format_datetime($get_events[$i]['post_date']).'</span>';
-        $release_date = '<span class="badge bg-secondary" title="Released">'.$icon['clock'].' '.fc_format_datetime($get_events[$i]['post_releasedate']).'</span>';
+        $published_date = '<span title="'.$lang['label_data_submited'].'">'.$icon['save'].': '.fc_format_datetime($get_events[$i]['post_date']).'</span>';
+        $release_date = '<span title="'.$lang['label_data_releasedate'].'">'.$icon['calendar_check'].': '.fc_format_datetime($get_events[$i]['post_releasedate']).'</span>';
         $lastedit_date = '';
         if($get_events[$i]['post_lastedit'] != '') {
-            $lastedit_date = '<span class="badge bg-secondary" title="Last edit">'.$icon['edit'].' '.fc_format_datetime($get_events[$i]['post_lastedit']).'</span>';
+            $lastedit_date = '<span title="'.$lang['label_data_lastedit'].'">'.$icon['edit'].': '.fc_format_datetime($get_events[$i]['post_lastedit']).'</span>';
         }
 
-        $show_events_date = '';
+        $show_items_dates = '<span class="text-muted small">'.$published_date.' | '.$lastedit_date.' | '.$release_date.'</span>';
 
-        $show_events_date = '<div class="float-end small well well-sm">';
-        $show_events_date .= date('Y-m-d',$get_events[$i]['post_event_startdate']);
-        $show_events_date .= '<br>';
-        $show_events_date .= date('Y-m-d',$get_events[$i]['post_event_enddate']);
+        $show_events_date = '';
+        $show_events_date = '<div class="card p-1">';
+        $show_events_date .= '<span>'.$icon['calendar_event'] .' '.fc_format_datetime($get_events[$i]['post_event_startdate']).'</span>';
+        if($get_events[$i]['post_event_startdate'] != $get_events[$i]['post_event_enddate']) {
+            $show_events_date .= '<span>' . $icon['arrow_right'] . ' ' . fc_format_datetime($get_events[$i]['post_event_enddate']) . '</span>';
+        }
         $show_events_date .= '</div>';
 
 
@@ -364,10 +365,9 @@ if($cnt_get_events > 0) {
         echo '<td>'.$get_events[$i]['post_id'].'</td>';
         echo '<td>'.$icon_fixed_form.'</td>';
         echo '<td>'.$prio_form.'</td>';
-        echo '<td nowrap><small>'.$published_date.'<br>'.$release_date.'<br>'.$lastedit_date.'</small></td>';
-        echo '<td>'.$show_type.'</td>';
+        echo '<td nowrap><small>'.$show_events_date.'</small></td>';
+        echo '<td><h5 class="mb-0">'.$get_events[$i]['post_title'].'</h5><small>'.$trimmed_teaser.'</small><br>'.$show_items_dates.'<br>'.$categories.'<br>'.$label.'</td>';
         echo '<td>'.$show_thumb.'</td>';
-        echo '<td>'.$show_events_date.$show_items_price.$show_items_downloads.$show_items_redirects.'<h5 class="mb-0">'.$get_events[$i]['post_title'].'</h5><small>'.$trimmed_teaser.'</small><br>'.$categories.'<br>'.$label.'</td>';
         echo '<td style="min-width: 150px;">';
         echo '<nav class="nav justify-content-end">';
         echo '<form class="form-inline mr-1" action="?tn=events&sub=edit" method="POST">';

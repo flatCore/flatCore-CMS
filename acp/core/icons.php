@@ -65,6 +65,8 @@ $icon['question'] = '<i class="bi bi-question"></i>';
 
 $icon['rss'] = '<i class="bi bi-rss"></i>';
 
+$icon['save'] = '<i class="bi bi-save"></i>';
+
 $icon['shop'] = '<i class="bi bi-shop"></i>';
 $icon['translate'] = '<i class="bi bi-translate"></i>';
 $icon['trash'] = '<i class="bi bi-trash"></i>';
