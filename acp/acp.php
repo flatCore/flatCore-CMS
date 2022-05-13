@@ -296,10 +296,9 @@ if(isset($set_acptheme)) {
 	<body>
 
 		<div id="page-sidebar">
-			<a id="sidebar-dashboard" href="acp.php?tn=dashboard"></a>
+			<a id="sidebar-dashboard" href="acp.php?tn=dashboard" title="Dashboard"></a>
 			<div id="page-sidebar-inner">
-			<?php include 'core/'.$navinc.'.php'; ?>
-			<?php include 'core/sidebar_footer.php'; ?>
+                <?php include 'core/sidebar.php'; ?>
 			</div>
 		</div>
 		
