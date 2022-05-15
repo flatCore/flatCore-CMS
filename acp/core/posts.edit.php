@@ -198,12 +198,10 @@ if($modus != 'update' && !isset($_GET['new'])) {
 	echo '<legend>'.$lang['select_post_type'].'</legend>';
 	echo '<div class="btn-group d-flex" role="group">';
 	echo '<a href="acp.php?tn=posts&sub=edit&new=m" class="btn btn-fc w-100"><span class="color-message">'.$icon['plus'].'</span> '.$lang['post_type_message'].'</a>';
-	echo '<a href="acp.php?tn=posts&sub=edit&new=e" class="btn btn-fc w-100"><span class="color-event">'.$icon['plus'].'</span> '.$lang['post_type_event'].'</a>';
 	echo '<a href="acp.php?tn=posts&sub=edit&new=i" class="btn btn-fc w-100"><span class="color-image">'.$icon['plus'].'</span> '.$lang['post_type_image'].'</a>';
 	echo '<a href="acp.php?tn=posts&sub=edit&new=g" class="btn btn-fc w-100"><span class="color-gallery">'.$icon['plus'].'</span> '.$lang['post_type_gallery'].'</a>';
 	echo '<a href="acp.php?tn=posts&sub=edit&new=v" class="btn btn-fc w-100"><span class="color-video">'.$icon['plus'].'</span> '.$lang['post_type_video'].'</a>';
 	echo '<a href="acp.php?tn=posts&sub=edit&new=l" class="btn btn-fc w-100"><span class="color-link">'.$icon['plus'].'</span> '.$lang['post_type_link'].'</a>';
-	echo '<a href="acp.php?tn=posts&sub=edit&new=p" class="btn btn-fc w-100"><span class="color-product">'.$icon['plus'].'</span> '.$lang['post_type_product'].'</a>';
 	echo '<a href="acp.php?tn=posts&sub=edit&new=f" class="btn btn-fc w-100"><span class="color-file">'.$icon['plus'].'</span> '.$lang['post_type_file'].'</a>';
 	echo '</div>';
 	echo '</fieldset>';
@@ -772,5 +770,3 @@ $form_tpl = str_replace('{submit_button}', $submit_btn, $form_tpl);
 
 
 echo $form_tpl;
-
-?>
