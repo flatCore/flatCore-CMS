@@ -39,7 +39,7 @@ if(isset($_POST['switchPageList'])) {
 }
 
 $class_switchPageList = array_fill(0, 3, '');
-print_r($sel_switchPageList);
+
 if($_SESSION['switchPageList'] == 'both') {
 	$class_col_left = 'col-6';
 	$class_col_right = 'col-6';

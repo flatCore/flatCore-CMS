@@ -471,7 +471,7 @@ echo '<div class="col-md-3">';
 
 
 /* sidebar */
-
+echo '<div class="card p-2">';
 
 echo '<button class="btn w-100 btn-success dropdown-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNew">'.$lang['label_new_post'].'</button>';
 
@@ -638,8 +638,7 @@ echo $label_filter_box;
 
 echo '</fieldset>';
 
-
-
+echo '</div>'; // card
 
 
 echo '</div>';

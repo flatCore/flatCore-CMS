@@ -407,10 +407,8 @@ echo '<div class="col-md-3">';
 
 
 /* sidebar */
-
+echo '<div class="card p-2">';
 echo '<a class="btn btn-success w-100" href="?tn=shop&sub=edit&new=p"><span class="color-product">'.$icon['plus'].'</span> '.$lang['post_type_product'].'</a>';
-
-
 
 echo '<hr>';
 
@@ -503,7 +501,7 @@ echo $label_filter_box;
 echo '</fieldset>';
 
 
-
+echo '</div>'; // card
 
 
 echo '</div>';

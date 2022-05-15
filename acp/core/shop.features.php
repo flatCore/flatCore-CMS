@@ -115,8 +115,17 @@ if($show_form == true) {
 $posts_features = fc_get_posts_features();
 $cnt_posts_features = count($posts_features);
 
+echo '<div class="subHeader d-flex">';
+echo 'MERKMALE';
+echo '</div>';
+
+echo '<div class="app-container">';
+echo '<div class="max-height-container">';
+
 echo '<div class="row">';
 echo '<div class="col-md-9">';
+
+echo '<div class="scroll-box">';
 
 echo '<div class="card p-3">';
 
@@ -138,22 +147,25 @@ for($i=0;$i<$cnt_posts_features;$i++) {
 	echo '<button type="submit" class="btn btn-fc text-danger" name="delete" value="'.$posts_features[$i]['textlib_id'].'">'.$icon['trash_alt'].'</button>';
 	echo $hidden_csrf_token;
 	echo '</form>';
-	echo'</td>';
+	echo '</td>';
 	echo '</tr>';
 }
 
 echo '</table>';
 
 echo '</div>'; // card
+echo '</div>'; // scroll-box
 
 echo '</div>';
 echo '<div class="col-md-3">';
 
+echo '<div class="card p-2">'; // sidebar
 echo '<a href="?tn=shop&sub=features&edit=new" class="btn btn-success w-100">'.$lang['new'].'</a>';
+echo '</div>'; // card
 
-echo '</div>';
-echo '</div>';
+echo '</div>'; // col
+echo '</div>'; //row
 
 
-
-?>
+echo '</div>'; // .max-height-container
+echo '</div>'; // .app-container
