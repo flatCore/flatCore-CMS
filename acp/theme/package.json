@@ -3,7 +3,7 @@
   "name": "flatCoreBackendTheme",
   "private": true,
   "dependencies": {
-    "@eonasdan/tempus-dominus": "^6.0.0-beta5",
+    "@eonasdan/tempus-dominus": "^6.0.0-beta5.1",
     "@popperjs/core": "^2.11.5",
     "@tinymce/tinymce-jquery": "^2.0.0",
     "accounting": "^0.4.1",
