@@ -433,27 +433,19 @@ if(($page_comments == 1 OR $post_data['post_comments'] == 1) && $prefs_comments_
 	$comments = fc_get_comments(0,100,$filter);
 	$cnt_comment = count($comments);
 
-	/* we use sorting later for display thread view */
-	$sorting = [];
-	foreach ($comments as $comment_key => $comment) {
-		if($comment['comment_parent_id'] == '') {
-			$comment['comment_parent_id'] = 0;
-		}
-	  $sorting[$comment['comment_parent_id']][$comment_key] = $comment['comment_id'];
+	$thread = [];
+	foreach($comments as $e) {
+		fc_build_thread_array($thread, $e);
 	}
-
-	$thread = fc_list_comments_thread($comments,$sorting,0,0);
 
 	$smarty->assign('show_page_comments', 'true', true);
 	$smarty->assign('comments', $thread, true);
 	$smarty->assign('lang_answer', $lang['btn_send_answer'], true);
 	$comment_tpl = $smarty->fetch("comment_entry.tpl",$cache_id);
 
-
 	$smarty->assign('comments_thread', $comment_tpl);
 	$comments_title = str_replace('{cnt_comments}', $cnt_comment, $lang['comments_title']);
 	$smarty->assign('comments_intro', "<p>$comments_title</p>");
-
 }
 
 

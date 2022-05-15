@@ -151,58 +151,55 @@ function fc_get_comments($start,$limit,$filter) {
 	return $comments;
 }
 
-
-
 /**
- * $comments array() from comments table
- * $sorting array() for sorting by id and parent_id
+ * @param $array
+ * @param $data
+ * @return void
  */
 
-function fc_list_comments_thread($comments, $sorting, $root=0, $level=0) {
+function fc_build_thread_array(&$array, $data) {
 
-	global $lang;
-
-    if(!is_array($sorting[$root])) {
-        return;
+    $comment_time = date('d.m.Y H:i',$data['comment_time']);
+    /* default avatar image */
+    $comment_avatar = '/styles/default/images/avatar.jpg';
+    /* if it's a registrated user and if there is an avatar, use it */
+    if($data['comment_author_id'] != '') {
+        $check_avatar = './content/avatars/'.md5($data['comment_author']).'.png';
+        if(is_file($check_avatar)) {
+            $comment_avatar = '/content/avatars/'.md5($data['comment_author']).'.png';
+        }
     }
 
-  	    foreach($sorting[$root] as $key => $comment_id) {
-	     
-	        $padding = (int) (20*$level);
-	        if(!is_numeric($padding)) {
-		  	    $padding = 0;
-	        }
-	    	    
-            $comment_time = date('d.m.Y H:i',$comments[$key]['comment_time']);
-      
-            /* default avatar image */
-            $comment_avatar = '/styles/default/images/avatar.jpg';
-      
-            /* if it's a registrated user and if there is an avatar, use it */
-            if($comments[$key]['comment_author_id'] != '') {
-	            $check_avatar = './content/avatars/'.md5($comments[$key]['comment_author']).'.png';
-	            if(is_file($check_avatar)) {
-		            $comment_avatar = '/content/avatars/'.md5($comments[$key]['comment_author']).'.png';
-	            }
-            }
-      
-            $comment_avatar_img = '<img src="'.$comment_avatar.'" class="img-avatar img-fluid rounded-circle" alt="" title="'.$comments[$key]['comment_author'].'">';
-            $a_url = '?cid='.$comments[$key]['comment_id'].'#comment-form';
+    $avatar_img_src = $comment_avatar;
+    $a_url = '?cid='.$data['comment_id'].'#comment-form';
 
-            $thread[$key] = array(
-                'author' => $comments[$key]['comment_author'],
-                'text' => $comments[$key]['comment_text'],
-                'id' => $comments[$key]['comment_id'],
-                'parent_id' => $comments[$key]['comment_parent_id'],
-                'avatar' => $comment_avatar_img,
-                'time' => $comment_time,
-                'url_answer_comment' => $a_url,
-            );
-
-     }
-
-  
-  return $thread;
+    if ($data["comment_parent_id"] == 0) {
+        $array[] = [
+            "id" => $data["comment_id"],
+            "author" => $data["comment_author"],
+            "text" => $data["comment_text"],
+            "avatar_img_src" => $avatar_img_src,
+            "url_answer_comment" => $a_url,
+            "time" => $comment_time,
+            "childs" => []
+        ];
+        return $array;
+    }
+    foreach($array as &$e) {
+        if ($e["id"] == $data["comment_parent_id"]) {
+            $e["childs"][] = [
+                "id" => $data["comment_id"],
+                "author" => $data["comment_author"],
+                "text" => $data["comment_text"],
+                "avatar_img_src" => $avatar_img_src,
+                "url_answer_comment" => $a_url,
+                "time" => $comment_time,
+                "childs"=> []
+            ];
+            break;
+        }
+        fc_build_thread_array($e["childs"], $data);
+    }
 }
 
 
