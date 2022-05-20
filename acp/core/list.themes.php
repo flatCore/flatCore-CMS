@@ -15,32 +15,17 @@ if(isset($_POST['saveDesign'])) {
 	$prefs_template = $select_template[0];
 	$prefs_template_layout = $select_template[1];
 
-	
-	$data = $db_content->update("fc_preferences", [
-		"prefs_template" =>  $prefs_template,
-		"prefs_template_layout" =>  $prefs_template_layout,
-		"prefs_template_stylesheet" =>  $select_template_sytlesheet
-	], [
-		"prefs_id" => 1
-	]);	
 
-	
-	if($data->rowCount() > 0) {
-		$sys_message = "{OKAY} $lang[db_changed]";
-		record_log($_SESSION['user_nick'],"edit system design <b>$prefs_template</b>","6");
-		
-		/* read the preferences again */
-		$fc_preferences = get_preferences();
-		foreach($fc_preferences as $k => $v) {
-			$$k = stripslashes($v);
-		}
-		
-		fc_delete_smarty_cache('all');
-		
-	} else {
-		$sys_message = "{ERROR} $lang[db_not_changed]";
-		record_log($_SESSION['user_nick'],"error on saving system design","11");
-	}
+    $data = [
+        "prefs_template" =>  "$prefs_template",
+        "prefs_template_layout" =>  "$prefs_template_layout",
+        "prefs_template_stylesheet" =>  "$select_template_sytlesheet"
+    ];
+
+    fc_write_option($data,'fc');
+    record_log($_SESSION['user_nick'],"edit system design <b>$prefs_template</b>","6");
+    fc_delete_smarty_cache('all');
+
 
 }
 
@@ -49,12 +34,6 @@ if(isset($_POST['save_theme_options'])) {
 	$save_theme_options = fc_write_theme_options($_POST);	
 	echo $save_theme_options;
 	
-}
-
-
-
-if($sys_message != ""){
-	print_sysmsg("$sys_message");
 }
 
 
