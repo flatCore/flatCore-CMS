@@ -305,6 +305,8 @@ if($cnt_filter_posts > 0) {
 		if($get_posts[$i]['post_status'] == '2') {
 			$draft_class = 'item_is_draft';
 		}
+
+        $post_lang_thumb = '<img src="/lib/lang/'.$get_posts[$i]['post_lang'].'/flag.png" width="15" title="'.$get_posts[$i]['post_lang'].'" alt="'.$get_posts[$i]['post_lang'].'">';
 		
 		/* trim teaser to $trim chars */
 		$trim = 150;
@@ -440,7 +442,7 @@ if($cnt_filter_posts > 0) {
 		echo '<td>'.$prio_form.'</td>';
 		echo '<td>'.$show_type.'</td>';
 		echo '<td>'.$show_thumb.'</td>';
-		echo '<td>'.$show_items_downloads.$show_items_redirects.'<h5 class="mb-0">'.$get_posts[$i]['post_title'].'</h5><small>'.$trimmed_teaser.'</small><br>'.$show_items_dates.'<br>'.$categories.'<br>'.$label.'</td>';
+		echo '<td>'.$show_items_downloads.$show_items_redirects.'<h5 class="mb-0">'.$post_lang_thumb.' '.$get_posts[$i]['post_title'].'</h5><small>'.$trimmed_teaser.'</small><br>'.$show_items_dates.'<br>'.$categories.'<br>'.$label.'</td>';
 		echo '<td style="min-width: 150px;">';
 		echo '<nav class="nav justify-content-end">';
 		echo '<form class="form-inline mr-1" action="?tn=posts&sub=edit" method="POST">';

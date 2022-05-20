@@ -239,6 +239,8 @@ if($cnt_filter_posts > 0) {
             $add_label = '<span class="badge badge-fc">'.$lang['status_ghost'].'</span>';
         }
 
+        $product_lang_thumb = '<img src="/lib/lang/'.$get_posts[$i]['post_lang'].'/flag.png" width="15" title="'.$get_posts[$i]['post_lang'].'" alt="'.$get_posts[$i]['post_lang'].'">';
+
         /* trim teaser to $trim chars */
         $trim = 150;
         $teaser = strip_tags(htmlspecialchars_decode($get_posts[$i]['post_teaser']));
@@ -375,7 +377,7 @@ if($cnt_filter_posts > 0) {
         echo '<td>'.$icon_fixed_form.'</td>';
         echo '<td>'.$prio_form.'</td>';
         echo '<td>'.$show_thumb.'</td>';
-        echo '<td><h5 class="mb-0">'.$get_posts[$i]['post_title'].$add_label.'</h5><small>'.$trimmed_teaser.'</small><br>'.$show_items_dates.'<br>'.$categories.'<br>'.$label.'</td>';
+        echo '<td><h5 class="mb-0">'.$product_lang_thumb.' '.$get_posts[$i]['post_title'].$add_label.'</h5><small>'.$trimmed_teaser.'</small><br>'.$show_items_dates.'<br>'.$categories.'<br>'.$label.'</td>';
         echo '<td>'.$show_items_price.'</td>';
         echo '<td style="min-width: 150px;">';
         echo '<nav class="nav justify-content-end">';
