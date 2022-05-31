@@ -162,8 +162,12 @@ if(!isset($_SESSION['checked_cat_string'])) {
 	$_SESSION['checked_cat_string'] = 'all';
 }
 /* filter by categories */
-if($_GET['cat']) {
-	$_SESSION['checked_cat_string'] = $_GET['cat'];
+if(isset($_GET['cat'])) {
+    if($_GET['cat'] !== 'all') {
+        $_SESSION['checked_cat_string'] = (int)$_GET['cat'];
+    } else {
+        $_SESSION['checked_cat_string'] = 'all';
+    }
 }
 
 $cat_all_active = '';
@@ -179,7 +183,7 @@ $cat_btn_group .= '<a href="acp.php?tn=posts&cat=all" class="list-group-item lis
 foreach($arr_categories as $c) {
 	$cat_active = '';
 	$icon_toggle = $icon['circle_alt'];
-	if(strpos($_SESSION['checked_cat_string'], $c['cat_id']) !== false) {
+    if($_SESSION['checked_cat_string'] == $c['cat_id']) {
 		$icon_toggle = $icon['check_circle'];
 		$cat_active = 'active';
 	}
