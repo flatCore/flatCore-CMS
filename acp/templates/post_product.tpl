@@ -77,7 +77,12 @@
 								<input class='form-control' name="post_product_price_label" type="text" value="{post_product_price_label}">
 							</div>
 						</div>
-						
+						<div class="col-md-8">
+							<div class="form-group">
+								<label>{label_url}</label>
+								<input class='form-control' name="post_link" type="text" value="{post_link}">
+							</div>
+						</div>
 
 						
 					</div>
