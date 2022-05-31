@@ -47,6 +47,7 @@ if($cnt_pages > 1) {
 		if($i == 0 && $posts_start < 1) {
 			$set_start = 1;
 			$active_class = 'active';
+            $current_page = 1;
 		}
 
 		if($set_start == $posts_start) {
@@ -118,7 +119,7 @@ foreach($get_posts as $k => $post) {
 	/* post images */
 	$first_post_image = '';
 	$post_images = explode("<->", $get_posts[$k]['post_images']);
-	if($post_images[1] != "") {
+	if(isset($post_images[1])) {
         $get_posts[$k]['post_tmb_src'] = '/' . $img_path . '/' . str_replace('../content/images/','',$post_images[1]);
 	} else if($fc_prefs['prefs_posts_default_banner'] == "without_image") {
         $get_posts[$k]['post_tmb_src'] = '';
@@ -199,7 +200,7 @@ foreach($get_posts as $k => $post) {
 		}
 		
 		if($get_posts[$k]['post_votings'] == 3) {
-			if($_SESSION['user_nick'] == '') {
+			if(!isset($_SESSION['user_nick'])) {
 				$voter_name = fc_generate_anonymous_voter();
 				$voter_data = fc_check_user_legitimacy($get_posts[$k]['post_id'],$voter_name,$voting_type);	
 			} else {
@@ -242,19 +243,19 @@ foreach($get_posts as $k => $post) {
 	}
 
 
-	$this_entry = str_replace('{post_href}', $post_href, $this_entry);
+	//$this_entry = str_replace('{post_href}', $post_href, $this_entry);
 
 
 	/* file */
 	//$this_entry = str_replace("{lang_download}", $lang['btn_download'], $this_entry);
-	$this_entry = str_replace("{post_file_version}", $get_posts[$k]['post_file_version'], $this_entry);
-	$this_entry = str_replace("{post_file_license}", $get_posts[$k]['post_file_license'], $this_entry);
-	$filepath = str_replace('../','/',$get_posts[$k]['post_file_attachment']);
-	$this_entry = str_replace("{post_file_attachment}", $filepath, $this_entry);
-	$this_entry = str_replace("{post_file_attachment_external}", $get_posts[$k]['post_file_attachment_external'], $this_entry);
+	//$this_entry = str_replace("{post_file_version}", $get_posts[$k]['post_file_version'], $this_entry);
+	//$this_entry = str_replace("{post_file_license}", $get_posts[$k]['post_file_license'], $this_entry);
+	//$filepath = str_replace('../','/',$get_posts[$k]['post_file_attachment']);
+	//$this_entry = str_replace("{post_file_attachment}", $filepath, $this_entry);
+	//$this_entry = str_replace("{post_file_attachment_external}", $get_posts[$k]['post_file_attachment_external'], $this_entry);
 	
 	$form_action = '/'.$fct_slug.$mod_slug;
-	$this_entry = str_replace("{form_action}", $form_action, $this_entry);
+	//$this_entry = str_replace("{form_action}", $form_action, $this_entry);
 
 
     if ($get_posts[$k]['post_status'] == '2') {

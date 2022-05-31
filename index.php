@@ -15,6 +15,12 @@ header("X-Frame-Options: SAMEORIGIN");
 $fc_start_time = microtime(true);
 require 'config.php';
 
+/* resets */
+$prepend_head_code = '';
+$append_head_code = '';
+$prepend_body_code = '';
+$append_body_code = '';
+
 define("FC_SOURCE", "frontend");
 
 if(empty($_SESSION['visitor_csrf_token'])) {
@@ -301,6 +307,7 @@ if(!empty($page_contents['page_modul'])) {
 /* START SMARTY */
 require_once('lib/Smarty/Smarty.class.php');
 $smarty = new Smarty;
+$smarty->setErrorReporting(0);
 $smarty->compile_dir = 'content/cache/templates_c/';
 $smarty->cache_dir = 'content/cache/cache/';
 $cache_id = md5($fct_slug.$mod_slug);
@@ -555,7 +562,7 @@ $smarty->assign('prepend_body_code', $prepend_body_code);
 $smarty->assign('append_body_code', $append_body_code);
 
 $store = '';
-if($_SESSION['user_class'] == "administrator") {
+if(isset($_SESSION['user_class']) AND $_SESSION['user_class'] == "administrator") {
 	$store = $_SESSION['fc_admin_helpers'];
 
 	if(isset($store['snippet'])) {

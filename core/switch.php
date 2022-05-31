@@ -354,8 +354,12 @@ if($p == "posts") {
 
 
 /* comments */
+$post_comments = 0;
+if(isset($post_data) AND $post_data['post_comments'] == 1) {
+	$post_comments = 1;
+}
 
-if(($page_comments == 1 OR $post_data['post_comments'] == 1) && $prefs_comments_mode != 3) {
+if(($page_comments == 1 OR $post_comments == 1) && $prefs_comments_mode != 3) {
 	/* comments are activated for this page */
 	
 	$show_comments_form = FALSE;
@@ -557,7 +561,7 @@ if((in_array("$p", $a_allowed_p)) OR ($p == "")) {
 	$show_404 = "false";
 }
 
-if($show_404 == "true") {
+if(isset($show_404) AND $show_404 == "true") {
 	$output = $smarty->fetch("404.tpl");
 	$smarty->assign('page_content', $output);
 }

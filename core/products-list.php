@@ -39,6 +39,7 @@ if ($cnt_pages > 1) {
         if ($i == 0 && $products_start < 1) {
             $set_start = 1;
             $active_class = 'active';
+            $current_page = 1;
         }
 
         if ($set_start == $products_start) {

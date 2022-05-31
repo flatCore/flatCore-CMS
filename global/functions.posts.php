@@ -93,7 +93,7 @@ function fc_get_post_entries($start,$limit,$filter) {
 	}
 	
 	/* label filter */
-	if($filter['labels'] == 'all' OR $filter['labels'] == '') {
+	if(!isset($filter['labels']) OR $filter['labels'] == 'all' OR $filter['labels'] == '') {
 		$sql_label_filter = '';
 	} else {
 
