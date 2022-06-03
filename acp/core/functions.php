@@ -658,9 +658,9 @@ function add_feed($title, $text, $url, $sub_id, $feed_name, $time = NULL) {
 
 function generate_xml_sitemap() {
 
-	global $languagePack;
 	global $fc_base_url;
 	global $db_content;
+    global $fc_prefs;
 	
 	$file = "../sitemap.xml";
 	$tpl_sitemap = file_get_contents('templates/sitemap.tpl');
@@ -671,12 +671,13 @@ function generate_xml_sitemap() {
 	"prefs_id" => 1
 	]);
 		
-	if($prefs_xml_sitemap == "on") {
+	if($fc_prefs['prefs_xml_sitemap'] == "on") {
 	
 
 		$results = $db_content->select("fc_pages", "*", [
 			"AND" => [
-				"page_status[!]" => ["draft","private","ghost"]
+				"page_status[!]" => ["draft","private","ghost"],
+                "page_meta_robots[!~]" => ["AND" => ["noindex", "none","noarchive"]]
 			],
 			"ORDER" => [
 				"page_lastedit" => "DESC"
@@ -684,13 +685,12 @@ function generate_xml_sitemap() {
 		]);
 		
 		$cnt_results = count($results);
-		
+
 		/* generate content for xml file */	
 		$url_set = "";
 		
 		for($i=0;$i<$cnt_results;$i++) {
-		
-			$page_id = $results[$i]['page_id'];
+            
 			$page_permalink = $results[$i]['page_permalink'];
 			$page_lastedit = date("Y-m-d",$results[$i]['page_lastedit']);
 			
