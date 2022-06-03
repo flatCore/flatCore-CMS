@@ -518,7 +518,7 @@ function print_sysmsg($msg) {
 
 	$msg = substr(strstr($msg, '}'), 2);
 	echo '<div class="'.$style.' alert-dismissible" role="alert">';
-	echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>';
+	echo '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
 	echo $msg;
 	echo '</div>';
 }
@@ -690,7 +690,7 @@ function generate_xml_sitemap() {
 		$url_set = "";
 		
 		for($i=0;$i<$cnt_results;$i++) {
-            
+
 			$page_permalink = $results[$i]['page_permalink'];
 			$page_lastedit = date("Y-m-d",$results[$i]['page_lastedit']);
 			
