@@ -1,3 +1,9 @@
+# +++ Attention +++
+The project flatCore CMS pauses for an undefined time! For various reasons, it is currently not possible for me to spend the necessary time that a project with this scope requires.
+
+# +++ Achtung +++
+Das Projekt flatCore CMS pausiert auf unbestimmte Zeit! Aus verschiedenen Gründen ist es mir derzeit nicht möglich, die nötige Zeit aufzubringen, die ein Projekt mit diesem Umfang benötigt.
+
 <img src="https://www.flatcore.org/content/images/icon-flatcore-128.png" align="right">
 
 ## flatCore CMS
