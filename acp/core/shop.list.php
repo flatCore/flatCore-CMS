@@ -54,7 +54,9 @@ if(!isset($_SESSION['checked_lang_string'])) {
 
 /* change status of $_GET['switchLang'] */
 if($_GET['switchLang']) {
-    if(strpos("$_SESSION[checked_lang_string]", "$_GET[switchLang]") !== false) {
+    $langs = explode('-',$_SESSION['checked_lang_string']);
+    //if(strpos("$_SESSION[checked_lang_string]", "$_GET[switchLang]") !== false) {
+    if(in_array($_GET['switchLang'],$langs)){
         $checked_lang_string = str_replace("$_GET[switchLang]-", '', $_SESSION['checked_lang_string']);
     } else {
         $checked_lang_string = $_SESSION['checked_lang_string'] . "$_GET[switchLang]-";
@@ -185,7 +187,6 @@ $posts_filter['status'] = $_SESSION['checked_status_string'];
 $posts_filter['categories'] = $_SESSION['checked_cat_string'];
 $posts_filter['labels'] = $_SESSION['checked_label_str'];
 
-
 $get_posts = fc_get_products($posts_start,$posts_limit,$posts_filter);
 $cnt_filter_posts = $get_posts[0]['cnt_products_match'];
 $cnt_get_posts = count($get_posts);
@@ -309,20 +310,8 @@ if($cnt_filter_posts > 0) {
             }
         }
 
-        $select_priority = '<select name="post_priority" class="form-control custom-select" onchange="this.form.submit()">';
-        for($x=1;$x<11;$x++) {
-            $option_add = '';
-            $sel_prio = '';
-            if($get_posts[$i]['post_priority'] == $x) {
-                $sel_prio = 'selected';
-            }
-            $select_priority .= '<option value="'.$x.'" '.$sel_prio.'>'.$x.'</option>';
-        }
-        $select_priority .= '</select>';
-
-
         $prio_form  = '<form action="acp.php?tn=shop&a=start" method="POST">';
-        $prio_form .= $select_priority;
+        $prio_form .= '<input type="number" name="post_priority" value="'.$get_posts[$i]['post_priority'].'" class="form-control" onchange="this.form.submit()">';
         $prio_form .= '<input type="hidden" name="prio_id" value="'.$get_posts[$i]['post_id'].'">';
         $prio_form .= $hidden_csrf_token;
         $prio_form .= '</form>';

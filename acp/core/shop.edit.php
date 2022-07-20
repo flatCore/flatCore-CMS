@@ -229,22 +229,7 @@ if($post_data['post_releasedate'] > 0) {
 
 
 /* priority */
-$select_priority = "<select name='post_priority' class='form-control custom-select'>";
-for($i=1;$i<11;$i++) {
-    $option_add = '';
-    $sel_prio = '';
-    if($i == 1) {
-        $option_add = ' ('.$lang['label_priority_bottom'].')';
-    }
-    if($i == 10) {
-        $option_add = ' ('.$lang['label_priority_top'].')';
-    }
-    if($post_data['post_priority'] == $i) {
-        $sel_prio = 'selected';
-    }
-    $select_priority .= '<option value="'.$i.'" '.$sel_prio.'>'.$i.' '.$option_add.'</option>';
-}
-$select_priority .= '</select>';
+$select_priority = '<input type="number" name="post_priority" value="'.$post_data['post_priority'].'" class="form-control">';
 
 
 /* fix post on top */
