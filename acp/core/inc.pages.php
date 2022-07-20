@@ -68,13 +68,14 @@ if(!isset($_SESSION['checked_lang_string'])) {
 }
 
 /* change status of $_GET[switchLang] */
-if(isset($_GET['switchLang'])) {
-		if(strpos("$_SESSION[checked_lang_string]", "$_GET[switchLang]") !== false) {
-			$checked_lang_string = str_replace("$_GET[switchLang]-", '', $_SESSION['checked_lang_string']);
-		} else {
-			$checked_lang_string = $_SESSION['checked_lang_string'] . "$_GET[switchLang]-";
-		}
-		$_SESSION['checked_lang_string'] = "$checked_lang_string";
+if($_GET['switchLang']) {
+    $langs = explode('-',$_SESSION['checked_lang_string']);
+    if(in_array($_GET['switchLang'],$langs)){
+        $checked_lang_string = str_replace("$_GET[switchLang]-", '', $_SESSION['checked_lang_string']);
+    } else {
+        $checked_lang_string = $_SESSION['checked_lang_string'] . "$_GET[switchLang]-";
+    }
+    $_SESSION['checked_lang_string'] = "$checked_lang_string";
 }
 
 
@@ -94,7 +95,7 @@ $count_pages = $db_content->query($sql_count_pages)->fetch(PDO::FETCH_ASSOC);
 $set_lang_filter = "";
 for($i=0;$i<count($arr_lang);$i++) {
 	$lang_folder = $arr_lang[$i]['lang_folder'];
-	if(strpos("$_SESSION[checked_lang_string]", "$lang_folder") !== false) {
+    if(in_array($lang_folder,$langs)){
 		$set_lang_filter .= "page_language = '$lang_folder' OR ";
 	}
 }
@@ -310,11 +311,10 @@ if($sub == "list" OR $sub == "snippets") {
 	$lang_filter_box .= '<div class="list-group list-group-flush">';
 	$lang_filter_box .= '<div class="btn-group">';
 
-
 	foreach($lang_codes as $lang_code) {
 		
 		$this_btn_status = '';
-		if(strpos("$_SESSION[checked_lang_string]", "$lang_code") !== false) {
+        if(in_array($lang_code, $langs)) {
 			$this_btn_status = 'active';
 		} else {
 			$this_btn_status = '';

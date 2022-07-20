@@ -55,7 +55,6 @@ if(!isset($_SESSION['checked_lang_string'])) {
 /* change status of $_GET['switchLang'] */
 if($_GET['switchLang']) {
     $langs = explode('-',$_SESSION['checked_lang_string']);
-    //if(strpos("$_SESSION[checked_lang_string]", "$_GET[switchLang]") !== false) {
     if(in_array($_GET['switchLang'],$langs)){
         $checked_lang_string = str_replace("$_GET[switchLang]-", '', $_SESSION['checked_lang_string']);
     } else {
