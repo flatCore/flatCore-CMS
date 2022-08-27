@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL ^ E_NOTICE);
+//error_reporting(E_ALL ^ E_NOTICE);
 
 // get the posting-page by 'type_of_use' and $languagePack
 $target_page = $db_content->select("fc_pages", "page_permalink", [
