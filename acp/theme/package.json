@@ -22,6 +22,6 @@
     "jquery-text-counter": "^0.9.0",
     "jquery.dirtyforms": "^2.0.0",
     "moment": "^2.29.2",
-    "tinymce": "^5.10.2"
+    "tinymce": "^5.10.7"
   }
 }
